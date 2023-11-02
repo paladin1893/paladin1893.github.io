@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+       
+      <meta name="keywords" content="RS,GPS,GIS,QGIS,Opticks,QT,OpenCV,OSG" />
+       
+      <meta name="description" content="地理信息系统，遥感科学，卫星导航定位技术综合研究。" />
+      
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>电力仿真软件 |  帕拉丁的游鱼</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/favicon.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    <link rel="alternate" href="/atom.xml" title="帕拉丁的游鱼" type="application/atom+xml">
+</head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-电力仿真软件"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  电力仿真软件
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/05/19/%E7%94%B5%E5%8A%9B%E4%BB%BF%E7%9C%9F%E8%BD%AF%E4%BB%B6/" class="article-date">
+  <time datetime="2023-05-19T06:55:47.000Z" itemprop="datePublished">2023-05-19</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">2k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">6 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>转自<br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/286645843">https://zhuanlan.zhihu.com/p/286645843</a></p>
+<p>工欲善其事，必先利其器。电力系统分析工作中，软件应用是回避不了的一个环节。</p>
+<p>什么时候用什么软件，哪种软件更适合，还是有些差异，故形成下文，供参考。</p>
+<p>1、什么时候需要用系统仿真软件？</p>
+<p>总体上来讲，涉及到系统层面的，排除系统规模特别小的，计算基本只能依靠软件，这是由电力计算的专业特性决定的。</p>
+<p>当然，仿真计算得出的只是数据和曲线，是原料，需要分析、加工，从而得出结论。</p>
+<p>电网规划，肯定需要进行软件仿真的。网架规划后的电气校核，属于全面性的计算，工作量比较大，软件仿真不可或缺。</p>
+<p>电网规划的范围很广，核心内容是网架规划，需要校核很多东西，线路过载？短路超标？稳定与否？无功欠缺？等等。</p>
+<p>专项仿真计算，除了电网规划以外的概括。比如说电能质量计算、过电压计算、直流系统仿真、保护计算等等。</p>
+<p>这方面的仿真计算，领域更加细化，深度要求也更高一些。</p>
+<p>电力系统仿真也分两类，稳态和暂态。暂态又分为机电暂态和电磁暂态，大致对应于下图中的有效值范畴、瞬时值范畴。</p>
+<p>机电暂态和电磁暂态，通俗的讲，主要是针对不同时间颗粒度的电气过程，采取不同样的计算模型。电磁暂态的时间颗粒度更短，计算模型精度更高。</p>
+<p>所以仿真软件里面，用于稳态和机电暂态的是一类，用于电磁暂态的是另一类。</p>
+<p>2、稳态和机电暂态仿真软件。</p>
+<p>国内的有两个，BPA和PSASP，都是电力规划工程师日常打交道的东西，计算潮流、短路、稳定这些常规的数据。</p>
+<p>BPA。严格意义上，其实也不算国内的，它是上世纪60年代由美国邦纳维尔电力局开发的，1996年终止了开发和维护，现在是中国电科院系统所在维护升级。</p>
+<p>BPA还是挺不错的，用的熟练了对系统架构，各项参数取值，稳定分析都会有较深的认识。</p>
+<p>唯一的不好之处，在于这个软件很难找到破解版，是需要软件狗的，即使有破解版，估计计算的节点也受限制。</p>
+<p>PSASP。和BPA类似，功能基本差不多，也是用来搭网架、算潮流、算短路、算稳定的。</p>
+<p>但这软件有点不好的，界面式操作，有点不方便，设置参数一个个的弄，很费时间。</p>
+<p>BPA是代码式的，就比较好，EXCEL整理数据，一起复制就可以了，而且对参数的熟悉比PSASP要高的多，天天操作代码必然会了解参数。</p>
+<p>这软件也有比BPA好的，即BPA不支持用户自定义，学生做课题可能不太适合，而PSASP有，这个软件也要软件狗。</p>
+<p>PSS/E。西门子旗下的NB软件，比较贵，每年都要交钱，国外通常只认这个。</p>
+<p>PSS/E能处理潮流计算、故障分析、网络等值、动态仿真和安全运行优化等问题。输入输出可根据用户要求进行设计，它要求使用者有一定的编程基础。</p>
+<p>实际上，PSS/E只是西门子系统仿真软件的输变电包，配网包是PSS/SINCAL。SINCAL主要也是国外在用。</p>
+<p>PSS/E这软件也是很难上手的，但是上手了，功能相当强大，还是比上两个软件严谨些。</p>
+<p>特别在一些模型的考虑上，比如输电系统塔型都要自己设置，还有比如负荷模型也很灵活。</p>
+<p>软件的潮流输出图形，非常漂亮，包含所有电气元件的接线图，网络结构和潮流参数，一目了然，而BPA和PSASP通常只是节点图，简洁，但是应的东西不是很全面，各有各的好处。</p>
+<p>Digsilent。也是一个综合性的电力系统仿真软件。大家知道他，是因为它在仿真微电网、新能源发电、配电网可靠性方面的强大表现。</p>
+<p>软件本身，对于新能源、配电网、电能质量等用户侧相关的元素和模型，确实考虑的比较多一些，所以这些领域的应用比较广。</p>
+<p>当然，它本身还是一个侧重电网侧的仿真软件，如果需要对新能源里面，一些控制系统和策略进行建模仿真，可以联合MATLAB一起做，也比较常见。</p>
+<p>ETAP。也是个比较综合性的软件，是一个美国软件。功能上个人感觉和Digsilent差距不大，最近国内也有一些推广。</p>
+<p>这个软件在短路和保护计算上，还是有他的特点，特别是在一些工业企业的相对独立的配电系统中，感觉应用比较多。</p>
+<p>3、电磁暂态仿真软件。</p>
+<p>主要有两个，都是国外的：EMTP/ATP和PSCAD。</p>
+<p>EMTP/ATP的功能非常强大，也比较权威，侧重的是系统的运行情况而不是个别开关的细节，很多论坛上也有破解版。</p>
+<p>让大家比较熟知的，就是用于过电压分析。</p>
+<p>这块软件还是比较难上手的，就过电压计算来说，因为既涉及过电压系统的理论知识，里面的模型设定和参数整定又需要经验积累，更需要一些工程实践经验。当初我们学这个软件，也异常艰难。</p>
+<p>下图为算感应电压前需要搭的一个简单的输电系统。ATP理论多看看ATP-theory book中文版，实践就多看看用户手册。</p>
+<p>PSCAD全称PSCAD/EMTDC，EMTDC是其仿真计算核心，PSCAD为EMTDC提供图形操作界面。</p>
+<p>它和EMTP基本类似，原理相同，模型库相似。图形化界面，更容易上手，但是感觉在工程中用的极少，一般都是学校科研项目。</p>
+<p>原因主要在于，EMTP擅长保护和过电压仿真，PSACD擅长交直流仿真，而实际工程里面前者比较多。</p>
+<p>PSCAD的界面看的比较舒服，系统仿真软件里的一股清流。在仿真的同时，可以改变控制参数，从而直观地看到各种测量结果和参数曲线，模型库也比较全，也可以自定义。</p>
+<p>学校里面如果有RTDS（实时数模仿真），配合起来用还是不错的。几年前和高校合作过一个科研项目，轻型直流输电方面的，效果还可以。</p>
+<p>4、软件和自行分析计算的关系。</p>
+<p>这两者应该是相对独立的，该软件去做的事情，就应该应用软件；该掌握原理，自行分析的，就应该自行去分析。</p>
+<p>实际上，工程里面，需要用软件的场合，都是手算不了的地方。比如说潮流计算，3000个节点，你给我手算一个，显然不现实。</p>
+<p>软件包含的底层原理，大致了解一下，基本就可以了。</p>
+<p>电力系统相关的知识面太广，网架规划、短路分析、无功、稳定、过电压、电能质量等等，光一个稳定，要研究透估计就得花个几年时间。</p>
+<p>所以很多时候，只需要掌握清楚核心原理，其他的交给工具书，交给软件，这样你的专业知识体系，才会更清晰，更有条理。</p>
+<p>以上，感谢阅读。</p>
+<p>PS1：某些图片和数据来源于网络，若有侵权，请联系删除</p>
+<p>PS2：微信公众号：严同笔记。继续行业分享，欢迎关注。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://paladin1893.github.io/2023/05/19/%E7%94%B5%E5%8A%9B%E4%BB%BF%E7%9C%9F%E8%BD%AF%E4%BB%B6/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%94%B5%E5%8A%9B/" rel="tag">电力</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2023/05/20/%E7%94%B5%E5%8A%9B%E7%B3%BB%E7%BB%9F%E8%A7%84%E5%88%92/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            电力系统规划
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2023/05/18/%E7%A2%B3%E8%AE%A1%E9%87%8F%E7%A2%B3%E7%9B%91%E6%B5%8B%E5%85%A8%E6%96%B9%E4%BD%8D%E8%A7%A3%E8%AF%BB/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">碳计量碳监测全方位解读</div>
+      </a>
+    
+  </nav>
+
+  
+   
+    
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2022-2023
+        <i class="ri-heart-fill heart_icon"></i> paladin1893
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="帕拉丁的游鱼"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/friends">友链</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

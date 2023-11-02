@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+       
+      <meta name="keywords" content="RS,GPS,GIS,QGIS,Opticks,QT,OpenCV,OSG" />
+       
+      <meta name="description" content="地理信息系统，遥感科学，卫星导航定位技术综合研究。" />
+      
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title> 帕拉丁的游鱼</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/favicon.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    <link rel="alternate" href="/atom.xml" title="帕拉丁的游鱼" type="application/atom+xml">
+</head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      
+<section class="cover">
+    
+  <div class="cover-frame">
+    <div class="bg-box">
+      <img src="/images/cover1.jpg" alt="image frame" />
+    </div>
+    <div class="cover-inner text-center text-white">
+      <h1><a href="/">帕拉丁的游鱼</a></h1>
+      <div id="subtitle-box">
+        
+        <span id="subtitle"></span>
+        
+      </div>
+      <div>
+        
+      </div>
+    </div>
+  </div>
+  <div class="cover-learn-more">
+    <a href="javascript:void(0)" class="anchor"><i class="ri-arrow-down-line"></i></a>
+  </div>
+</section>
+
+
+
+<script src="https://cdn.staticfile.org/typed.js/2.0.12/typed.min.js"></script>
+
+
+<!-- Subtitle -->
+
+  <script>
+    try {
+      var typed = new Typed("#subtitle", {
+        strings: ['面朝大海，春暖花开', '愿你一生努力，一生被爱', '想要的都拥有，得不到的都释怀'],
+        startDelay: 0,
+        typeSpeed: 200,
+        loop: true,
+        backSpeed: 100,
+        showCursor: true
+      });
+    } catch (err) {
+      console.log(err)
+    }
+  </script>
+  
+<div id="main">
+  <section class="outer">
+  
+  
+  
+
+<div class="notice" style="margin-top:50px">
+    <i class="ri-heart-fill"></i>
+    <div class="notice-content" id="broad"></div>
+</div>
+<script type="text/javascript">
+    fetch('https://v1.hitokoto.cn')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("broad").innerHTML = data.hitokoto;
+        })
+        .catch(console.error)
+</script>
+
+<style>
+    .notice {
+        padding: 20px;
+        border: 1px dashed #e6e6e6;
+        color: #969696;
+        position: relative;
+        display: inline-block;
+        width: 100%;
+        background: #fbfbfb50;
+        border-radius: 10px;
+    }
+
+    .notice i {
+        float: left;
+        color: #999;
+        font-size: 16px;
+        padding-right: 10px;
+        vertical-align: middle;
+        margin-top: -2px;
+    }
+
+    .notice-content {
+        display: initial;
+        vertical-align: middle;
+    }
+</style>
+  
+  <article class="articles">
+    
+    
+    
+    
+    <article
+  id="post-CentOS7下的GItLab安装与删除"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/07/22/CentOS7%E4%B8%8B%E7%9A%84GItLab%E5%AE%89%E8%A3%85%E4%B8%8E%E5%88%A0%E9%99%A4/"
+    >CentOS7下的GitLab安装与删除</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/07/22/CentOS7%E4%B8%8B%E7%9A%84GItLab%E5%AE%89%E8%A3%85%E4%B8%8E%E5%88%A0%E9%99%A4/" class="article-date">
+  <time datetime="2023-07-22T04:04:33.000Z" itemprop="datePublished">2023-07-22</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="一-GitLab-安装"><a href="#一-GitLab-安装" class="headerlink" title="一. GitLab 安装"></a>一. GitLab 安装</h1><h2 id="1-安装和配置必须的依赖项"><a href="#1-安装和配置必须的依赖项" class="headerlink" title="1. 安装和配置必须的依赖项"></a>1. 安装和配置必须的依赖项</h2><pre><code>sudo yum install -y curl policycoreutils-python openssh-server perl
+sudo systemctl enable sshd
+sudo systemctl start sshd
+sudo firewall-cmd --permanent --add-service=http
+sudo firewall-cmd --permanent --add-service=https
+sudo systemctl reload firewalld
+
+sudo yum install postfix
+sudo systemctl enable postfix
+sudo systemctl start postfix
+</code></pre>
+<h2 id="2-下载-安装极狐GitLab"><a href="#2-下载-安装极狐GitLab" class="headerlink" title="2. 下载/安装极狐GitLab"></a>2. 下载/安装极狐GitLab</h2><p>配置极狐GitLab 软件源镜像。</p>
+<ul>
+<li><p>旗舰版、官网教程</p>
+<p>  curl -fsSL <a target="_blank" rel="noopener" href="https://packages.gitlab.cn/repository/raw/scripts/setup.sh">https://packages.gitlab.cn/repository/raw/scripts/setup.sh</a> | /bin/bash<br>  sudo EXTERNAL_URL=”<a href="https://192.168.10.33:9998&quot;">https://192.168.10.33:9998&quot;</a> yum install -y gitlab-jh</p>
+</li>
+<li><p>社区版，CSDN参考</p>
+<p>  curl <a target="_blank" rel="noopener" href="https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh">https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh</a> | sudo bash<br>  sudo EXTERNAL_URL=”<a href="http://192.168.10.33:9998&quot;">http://192.168.10.33:9998&quot;</a> yum install -y gitlab-ce</p>
+<p>  gitlab-ctl reconfigure</p>
+<p>  gitlab-ctl start || gitlab-ctl restart</p>
+</li>
+</ul>
+<h2 id="4-设置开机自启动"><a href="#4-设置开机自启动" class="headerlink" title="4 设置开机自启动"></a>4 设置开机自启动</h2><pre><code>sudo systemctl enable gitlab-runsvdir.service
+</code></pre>
+<h2 id="5-切换目录使用命令进入控制台修改用户状态"><a href="#5-切换目录使用命令进入控制台修改用户状态" class="headerlink" title="5.切换目录使用命令进入控制台修改用户状态"></a>5.切换目录使用命令进入控制台修改用户状态</h2><pre><code>1) 切换到相应路径下: cd /opt/gitlab/bin/
+2) 打开控制台: sudo gitlab-rails console -e production
+3) 查询用户账号信息并赋值给u: u=User.where(id:1).first
+4) 设置该用户名的密码: u.password=&#39;Demo9999&#39;
+5) 确认密码: u.password_confirmation=&#39;Demo9999&#39;
+6) 保存信息： u.save 
+7) 退出: exit
+</code></pre>
+<h1 id="二-GitLab-卸载"><a href="#二-GitLab-卸载" class="headerlink" title="二. GitLab 卸载"></a>二. GitLab 卸载</h1><h2 id="1、停止-gitlab服务"><a href="#1、停止-gitlab服务" class="headerlink" title="1、停止 gitlab服务"></a>1、停止 gitlab服务</h2><pre><code>gitlab-ctl stop
+</code></pre>
+<h2 id="2、卸载-gitlab（社区版）"><a href="#2、卸载-gitlab（社区版）" class="headerlink" title="2、卸载 gitlab（社区版）"></a>2、卸载 gitlab（社区版）</h2><pre><code>rpm -e gitlab-ce 或者  yum remove gitlab-ce
+</code></pre>
+<h2 id="3、查看-gitlab-进程"><a href="#3、查看-gitlab-进程" class="headerlink" title="3、查看 gitlab 进程"></a>3、查看 gitlab 进程</h2><pre><code>ps aux | grep gitlab 
+</code></pre>
+<h2 id="4、杀掉gitlab-service进程，该进程与runsvdir相关（带有好多…………-的进程）"><a href="#4、杀掉gitlab-service进程，该进程与runsvdir相关（带有好多…………-的进程）" class="headerlink" title="4、杀掉gitlab service进程，该进程与runsvdir相关（带有好多…………. 的进程）"></a>4、杀掉gitlab service进程，该进程与runsvdir相关（带有好多…………. 的进程）</h2><pre><code>kill -9 xxxxxx
+</code></pre>
+<p>其实就是强杀/opt/gitlab/service进程</p>
+<p>如果还不知道怎么杀，就重启服务器也行。</p>
+<h2 id="5、查找并删除所有包含-gitlab-的遗留文件"><a href="#5、查找并删除所有包含-gitlab-的遗留文件" class="headerlink" title="5、查找并删除所有包含 gitlab 的遗留文件"></a>5、查找并删除所有包含 gitlab 的遗留文件</h2><pre><code>find / -name *gitlab*|xargs rm -rf  
+find / -name gitlab |xargs rm -rf 
+
+find / -name postgres |xargs rm -rf 
+
+删除gitlab-ctl uninstall时自动在root下备份的配置文件（ls /root/gitlab* 看看有没有，有也删除）
+</code></pre>
+<h2 id="6、根据上面列出来的目录清单主要删除一下目录"><a href="#6、根据上面列出来的目录清单主要删除一下目录" class="headerlink" title="6、根据上面列出来的目录清单主要删除一下目录"></a>6、根据上面列出来的目录清单主要删除一下目录</h2><pre><code>rm -rf /etc/gitlab
+rm -rf /opt/gitlab
+rm -rf /log/gitlab
+rm -rf /var/opt/gitlab
+rm -rf /var/log/gitlab
+rm -rf /run/gitlab
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS7/" rel="tag">CentOS7</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GitLab/" rel="tag">GitLab</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-WinRar删除文件有妙用"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/07/21/WinRar%E5%88%A0%E9%99%A4%E6%96%87%E4%BB%B6%E6%9C%89%E5%A6%99%E7%94%A8/"
+    >WinRar删除文件有妙用</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/07/21/WinRar%E5%88%A0%E9%99%A4%E6%96%87%E4%BB%B6%E6%9C%89%E5%A6%99%E7%94%A8/" class="article-date">
+  <time datetime="2023-07-21T01:04:33.000Z" itemprop="datePublished">2023-07-21</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>经常出现文件删掉了，文件夹无法删除，出现“该项目不在请确认该项目位置,然后重试”的场景</p>
+<p>使用WinRar的压缩功能，把文件夹选中，点右键选中压缩功能，在弹窗中勾选压缩后自动删除源文件，压缩。神奇的事情发生了，可以把源文件删掉。win11亲测有效。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WinRar/" rel="tag">WinRar</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%88%A0%E9%99%A4%E6%96%87%E4%BB%B6/" rel="tag">删除文件</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-RPM软件包名中的el5、el6、el7是什么"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/07/20/RPM%E8%BD%AF%E4%BB%B6%E5%8C%85%E5%90%8D%E4%B8%AD%E7%9A%84el5%E3%80%81el6%E3%80%81el7%E6%98%AF%E4%BB%80%E4%B9%88/"
+    >RPM软件包名中的el5、el6、el7是什么</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/07/20/RPM%E8%BD%AF%E4%BB%B6%E5%8C%85%E5%90%8D%E4%B8%AD%E7%9A%84el5%E3%80%81el6%E3%80%81el7%E6%98%AF%E4%BB%80%E4%B9%88/" class="article-date">
+  <time datetime="2023-07-20T04:04:33.000Z" itemprop="datePublished">2023-07-20</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>EL 是 Red Hat Enterprise Linux 的简写。同理，OL 大概是 Oracle Linux的意思吧。</p>
+<p>EL6 表示软件包可以在 Red Hat 6.x，CentOS 6.x，CloudLinux 6.x 进行安装<br>EL5 表示软件包可以在 Red Hat 5.x，CentOS 5.x，CloudLinux 5.x 进行安装<br>EL7 表示软件包可以在 Red Hat 7.x，CentOS 7.x，CloudLinux 7.x 进行安装</p>
+<p>————————————————<br>版权声明：本文为CSDN博主「liaowenxiong」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/liaowenxiong/article/details/117136545">https://blog.csdn.net/liaowenxiong/article/details/117136545</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RPM/" rel="tag">RPM</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-Github国内镜像网址，亲测好用"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/07/19/Github%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F%E7%BD%91%E5%9D%80%EF%BC%8C%E4%BA%B2%E6%B5%8B%E5%A5%BD%E7%94%A8/"
+    >Github国内镜像网址，亲测好用</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/07/19/Github%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F%E7%BD%91%E5%9D%80%EF%BC%8C%E4%BA%B2%E6%B5%8B%E5%A5%BD%E7%94%A8/" class="article-date">
+  <time datetime="2023-07-19T13:40:33.000Z" itemprop="datePublished">2023-07-19</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>不定期测试更新可用网址。建议先收藏</p>
+<p><a target="_blank" rel="noopener" href="https://kgithub.com/">https://kgithub.com/</a></p>
+<p>使用方式：<br>将github源网址前面加k即可。</p>
+<p>比如：<a target="_blank" rel="noopener" href="https://github.com/spring-projects/spring-boot">https://github.com/spring-projects/spring-boot</a></p>
+<p>改为：<a target="_blank" rel="noopener" href="https://kgithub.com/spring-projects/spring-boot">https://kgithub.com/spring-projects/spring-boot</a></p>
+<p>然后可以查看代码，查看issue和评论，默认自动带上k，方便。</p>
+<p>限制：<br>1.不能注册</p>
+<p>2.不能上传文件，可以登录，可以在线编辑</p>
+<p>3.来自raw.githubusercontent.com的下载可使用raw.kgithub.com替代</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Github/" rel="tag">Github</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-电价机制迎来新变化，拉大峰谷价差，建立“尖峰”电价"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/07/18/%E7%94%B5%E4%BB%B7%E6%9C%BA%E5%88%B6%E8%BF%8E%E6%9D%A5%E6%96%B0%E5%8F%98%E5%8C%96%EF%BC%8C%E6%8B%89%E5%A4%A7%E5%B3%B0%E8%B0%B7%E4%BB%B7%E5%B7%AE%EF%BC%8C%E5%BB%BA%E7%AB%8B%E2%80%9C%E5%B0%96%E5%B3%B0%E2%80%9D%E7%94%B5%E4%BB%B7/"
+    >电价机制迎来新变化 拉大峰谷价差，建立“尖峰”电价</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/07/18/%E7%94%B5%E4%BB%B7%E6%9C%BA%E5%88%B6%E8%BF%8E%E6%9D%A5%E6%96%B0%E5%8F%98%E5%8C%96%EF%BC%8C%E6%8B%89%E5%A4%A7%E5%B3%B0%E8%B0%B7%E4%BB%B7%E5%B7%AE%EF%BC%8C%E5%BB%BA%E7%AB%8B%E2%80%9C%E5%B0%96%E5%B3%B0%E2%80%9D%E7%94%B5%E4%BB%B7/" class="article-date">
+  <time datetime="2023-07-18T10:30:23.000Z" itemprop="datePublished">2023-07-18</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>来源：人民日报海外版</p>
+<p>拉大峰谷价差，建立“尖峰”电价——电价机制迎来新变化</p>
+<p>“最大用电负荷创历史新高”——今夏，全国各地高温天气频繁，发用电量连刷新纪录。国家能源局数据显示，7月，全社会用电量达7758亿千瓦时，同比增长12.8%。</p>
+<p>为缓解电力供需矛盾，国家发改委日前印发《关于进一步完善分时电价机制的通知》（下称《通知》），部署各地进一步完善分时电价机制。完善分时电价机制有何考量？具体作了哪些调整？对工商业和普通居民用电有啥影响？</p>
+<p>适应电力供需新形势</p>
+<p>立秋后，暑热未消。下班回到家，王东从冰箱里拿出一罐冰可乐一饮而尽。“天气太热了，每天都离不开冷饮和空调。”家住上海市长宁区的王东抱怨，高温“炙烤”模式下，家里的空调几乎从早开到晚，7月的电费因此比上个月翻了一番。</p>
+<p>受全国多地持续大范围高温天气影响，进入迎峰度夏以来，全国发用电量持续攀升。数据显示，7月14日，全国用电量达271.87亿千瓦时，比去年夏季最高值增长超10%。华东、华中、南网3个区域电网和河北南网、上海、江苏等12个省级电网最高用电负荷均创历史新高。</p>
+<p>日前，发改委下发《通知》，要求各地进一步完善分时电价机制。这将对用电产生哪些影响？</p>
+<p>据介绍，分时电价机制，是基于电能时间价值设计的，是引导用户削峰填谷、保障电力系统安全稳定经济运行的一项重要机制安排。通过对各时段制定不同的电价水平，引导电力用户在高峰时段少用电、低谷时段多用电。</p>
+<p>自上世纪80年代起，国家开始推行分时电价：四川等地按月划分丰水期、枯水期，对电力供应紧张的枯水期执行丰枯电价；上海等地按季划分夏季、非夏季，对盛夏用电高峰期执行更高的季节性电价……截至目前，全国已有29个省份实施了分时电价机制。</p>
+<p>“总体来看，这些年峰谷分时电价机制实施效果不错。”华北电力大学能源互联网研究中心主任曾鸣告诉本报记者，“尤其是用电占比大的工商业，由于其用电成本较高，对于能降低用电成本的削峰填谷机制也较重视。因此，多数工商业用户会通过积极调整用电时间等方式，达到降低成本的目的。”</p>
+<p>不过，随着近年来中国电力消费结构加快变化，用电负荷对气温变化更敏感，电力系统负荷夏、冬两季尖峰化特征日益突出，电力供需呈现“平时充裕、尖峰紧张”“整体平衡、局部紧张”新特征，原有的分时电价机制已难以适应新形势。</p>
+<p>国家发改委发布的数据显示，各地夏季最热、冬季最冷时段的全年累计时间普遍低于60个小时，但对应的尖峰电力需求可较平时高出1亿千瓦以上，保障电力系统安全稳定运行面临更大挑战，去年以来部分地方已不得不实施有序用电。</p>
+<p>“进一步完善分时电价机制，特别是优化峰谷电价机制、出台尖峰电价机制，有利于充分发挥电价信号作用，引导用户错峰用电，保障电力系统安全稳定运行，降低经济社会运行成本。”国家发改委价格司相关负责人表示。</p>
+<p>合理拉大峰谷价差</p>
+<p>此次完善分时电价，做了哪些调整？</p>
+<p>据介绍，调整主要包括优化峰谷电价机制、建立尖峰电价机制、建立健全季节性电价机制和丰枯电价机制、明确分时电价机制执行范围、建立动态调整机制、加强与电力市场的衔接等6个方面。其中，最大的亮点是合理拉大了峰谷电价价差，为引导电力用户削峰填谷、促进储能加快发展释放了清晰强烈的价格信号。</p>
+<p>数据显示，目前，国内居民生活用电峰谷价差平均值在2∶1以下，工商业用电峰谷价差平均值在3∶1以下。面对不断攀升的用电负荷，偏低的峰谷电价价差可能削弱分时电价机制的经济性调节作用。</p>
+<p>对此，新分时电价机制作出调整：电力系统峰谷差率超过40%的地方，峰谷电价价差原则上不低于4∶1，其他地方原则上不低于3∶1。各地应建立尖峰电价机制，尖峰时段根据前两年当地电力系统最高负荷95%及以上用电负荷出现的时段合理确定，尖峰电价在峰段电价基础上的上浮比例原则上不低于20%。</p>
+<p>“此次调整增加了电价的浮动范围，有利于在电力供需矛盾极为突出的情况下，引导用户错峰用电，保障电力系统安全。”北京理工大学能源与环境政策研究中心副主任廖华告诉本报记者。</p>
+<p>对于高峰用电的成本支出，江苏省昆山市一家笔记本电脑零部件企业负责人颇有感触。“夏季是我们的用电高峰期，不仅办公楼空调用电负担加重，还得加大生产车间换气设备投入。每到7月，电费就会比其他月份高出十几万元。”提及此次分时电价调整，他有些担忧：“拉大峰谷电价价差，会不会导致电费总体上涨？”</p>
+<p>国家发改委价格司相关负责人表示，进一步完善分时电价机制，要坚持一项原则：保持电网企业的销售电价总水平基本稳定。</p>
+<p>“也就是说，进一步完善分时电价机制，对社会总体用电成本影响较小，电网企业不会因此多收钱。”该负责人说。具体看，由于合理拉大了峰谷电价价差，高峰时段的电价会有所上调，低谷时段的电价会有所下调，能够错峰用电、在低谷时段多用电的用户用电成本会下降，在高峰时段用电的用户用电成本会有所上升。考虑到部分商业用户错峰用电难度大，同时明确对部分不适宜错峰用电的一般工商业电力用户，各地可研究制定平均电价，由用户自行选择。</p>
+<p>对于居民用电，国家发改委的《通知》作出要求：有条件的地方，要按程序推广居民峰谷电价机制，逐步拉大峰谷电价价差，引导居民用户在高峰时段少用电、低谷时段多用电，发挥削峰填谷的作用。“总的看，此次进一步完善分时电价机制，对居民用电价格的影响较小。”发改委相关负责人表示。</p>
+<p>推动构建新型电力市场</p>
+<p>进一步完善分时电价机制，对能源产业发展有何现实意义？</p>
+<p>“无论是鼓励高峰抑制用电，还是低谷促进用电，从经济层面看来，执行峰谷电价的积极意义都不小。”国网能源研究院财会与审计研究所所长李成仁接受本报记者采访表示，“前者可以降低电力系统投入，后者则能提高电力系统利用率。随着负荷峰谷差降低，还可能减少调峰资源的投入，节约燃料等运行成本。”</p>
+<p>近年来，可再生能源装机规模和发电量不断增长，以风、光等为代表的新能源跻身发电“生力军”。由于“极热无风”“晚峰无光”“云来无光”“冬季枯水”，新能源存在一定“靠天吃饭”的特性。专家认为，推行新的分时电价机制，有助于提高可再生电力资源利用效率，加快推进能源系统转型升级。同时，也将为抽水蓄能、新型储能发展创造更大的空间。</p>
+<p>“供应方面，分时电价机制有助于促进新能源发展和消纳。需求方面，能进一步推动储能和智能用电技术发展。”廖华说。通过拉大峰谷价差，鼓励高峰时段以较高价格发电，低谷时段以较低价格蓄能，将为储能技术提供发展动力。“在电价可变情形下，今后可以逐步推广更智能的用电设施，根据电价波动，智能调整用电时段。比如，未来可推广电动汽车智能充电技术和设施，根据电价水平自动决定是否充电。”</p>
+<p>着眼中长期，完善分时电价机制，还将有力推动实现碳达峰、碳中和目标。“分时电价能促进可再生能源的消纳，从而助力实现‘双碳’目标。特别是中国电力市场还处于初期建设阶段、政府定价将在相当长时间内存在的情况下，分时电价机制将发挥非常重要的作用。”李成仁表示。</p>
+<p>“未来，以风光为代表的可再生能源比例越来越大，发电出力曲线也会因此变化。执行分时电价机制，就是将需求侧的灵活性资源与供应侧的波动性曲线相匹配，这有利于建立新型电力系统和新型电力市场。长远来看，有助于‘双碳’目标的实现。”曾鸣说。</p>
+<p>在具体执行方面，曾鸣认为，各地发电结构不一，新能源比例和出力特征不同。他建议，各地应因地制宜，划定分时电价的各种时段和具体价差。</p>
+<p>廖睿灵</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%94%B5%E5%8A%9B/" rel="tag">电力</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-南方区域（广东）储能规模化应用的机遇和挑战"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/07/17/%E5%8D%97%E6%96%B9%E5%8C%BA%E5%9F%9F%EF%BC%88%E5%B9%BF%E4%B8%9C%EF%BC%89%E5%82%A8%E8%83%BD%E8%A7%84%E6%A8%A1%E5%8C%96%E5%BA%94%E7%94%A8%E7%9A%84%E6%9C%BA%E9%81%87%E5%92%8C%E6%8C%91%E6%88%98/"
+    >南方区域（广东）储能规模化应用的机遇和挑战</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/07/17/%E5%8D%97%E6%96%B9%E5%8C%BA%E5%9F%9F%EF%BC%88%E5%B9%BF%E4%B8%9C%EF%BC%89%E5%82%A8%E8%83%BD%E8%A7%84%E6%A8%A1%E5%8C%96%E5%BA%94%E7%94%A8%E7%9A%84%E6%9C%BA%E9%81%87%E5%92%8C%E6%8C%91%E6%88%98/" class="article-date">
+  <time datetime="2023-07-17T12:42:38.000Z" itemprop="datePublished">2023-07-17</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>2018年7月2-4日，由上海逍天电子科技有限公司和华东储能领跑者联盟（EESA）联合主办的“2018中国国际光储充大会”于上海佘山召开。大会期间，共有百位演讲嘉宾分享了他们的专题报告。</p>
+<p>南方区域（广东）储能规模化应用的机遇和挑战</p>
+<p>南方电网储能科研团队，广东电网电科院储能技术研究所，易斌</p>
+<p>01</p>
+<p>储能应用需求及现状</p>
+<p>广东电力系统运行特点：</p>
+<p>从电网安全稳定运行的角度来看，广东电力系统运行特点明显，对灵活性快速调节资源的需求大。</p>
+<p>广东电力系统运行特点：一是，电源装机容量大、煤电占比高。截至2017年底，广东统调装机容量1.07亿千瓦，其中燃煤机组占比54%。二是，省内快速调节资源紧张，调峰困难。燃气燃油机组、水电机组、蓄能机组占比仅28%，随着风电、光伏发电、核电等电源不断投产，预计未来系统调峰更为困难。三是，电网负荷水平高、峰谷差大，负荷曲线波动大及调频困难。2017年最高统调负荷10858万千瓦，负荷水平全国第一。广东电网高峰负荷日谷峰比达到0.62，高峰负荷当日的高峰与低谷负荷的差值甚至达到广西最高统调负荷的2倍。广东负荷攀升和下降速度快，部分时段变化速率较大，达80万kW/分钟。</p>
+<p>▲ 2017年底广东电网地理接线图</p>
+<p>▲ 广东电力系统运行特点</p>
+<p>▲ 广东电网2017年高峰负荷日统调负荷曲线</p>
+<p>广东可再生能源发展情况：</p>
+<p>目前，广东省可再生能源以陆上风电、集中式光伏、分布式光伏和生物质发电为主，截至2018年5月，可再生能源并网总容量785.8万千瓦；光伏发电部分，分布式光伏所占比重大，且以城市区域分布式光伏发电较多，过去两年集中式光伏规模增长快。</p>
+<p>▲ 截至2018年5月广东可再生能源并网容量（万千瓦）</p>
+<p>▲ 集中式和分布式光伏对比（万千瓦）</p>
+<p>注：广东省不含广州、深圳，不含水电</p>
+<p>广东省沿海平均风速较大，风功率密度和风能利用小时数较高，湍流强度较低，风能资源丰富、品质较好，十分适宜发展海上风电。</p>
+<p>《广东省海上风电发展规划(2017-2030)（修编）》，2020年海上风电建成投产200万千瓦，2030年约3000万千瓦。</p>
+<p>全省规划海上风电场址23个，总装机容量6685万千瓦。近海浅水区15个，装机985万千瓦；近海深水区8个，装机5700万千瓦。</p>
+<p>用户侧需求较大：</p>
+<p>广东省2017年全社会用电量5958.97亿千瓦时，全国排名第一，其中工业用电量3815.29亿千瓦时，占比64%；</p>
+<p>珠三角地区电价水平相对较高，也是工业用户聚集地，工业用户通过储能削峰填谷，可节约可观的用电成本。</p>
+<p>注1：五市是指广州、珠海、佛山、中山、东莞。</p>
+<p>注2：2017年1月1日起执行电价表。</p>
+<p>注3：一般工商业用电的峰谷电价执行范围仅限于原普通工业专变用户。</p>
+<p>注4：上述电价不含各项政府性基金及附加。</p>
+<p>储能应用现状：</p>
+<p>受储能技术成本因素制约，储能在广东应用规模较小，主要分布在少数的工业用户、工业园区、微电网示范区，发电侧储能应用刚刚起步。</p>
+<p>但市场空间和发展潜力较大。</p>
+<p>相关政策解读及市场机遇</p>
+<p>02</p>
+<p>广东电力市场建设概况：</p>
+<p>当前广东中长期市场主要包括年度双边协商交易、年度合同电量集中交易、发电合同电量转让交易、月度集中竞争交易等四个交易品种，后续随着现货市场建立，交易品种将会更丰富。</p>
+<p>年度集中竞价：为减少场外双边合同产生的利益分配不均衡，2018年广东省新增加了该类交易作为补充。</p>
+<p>发电合同转让：为鼓励高参数、技术改造先进的大机组多发满发，2017年广东省增加了该类交易</p>
+<p>2017年电力市场交易：</p>
+<p>2017年广东电力市场交易电量突破千亿度，其中年度长协电量827.17亿度、月度集中竞价交易电量319.64亿度，培育市场主体6211个。</p>
+<p>▲ 部分数据来源于广东省经济和信息化委网站公布数据</p>
+<p>2018年随着市场主体准入条件进一步放宽，参与市场的用户进一步增多，市场化交易电量规模也进一步扩大。</p>
+<p>电力现货市场建设：</p>
+<p>广东电力市场改革不断深入，将逐步建立电能量现货市场、调频辅助服务市场和调峰辅助服务市场等运营规则，储能设施获得与其他资源同等身份参与电力市场的可能性变大。</p>
+<p>▲ 从2017年第获批首批电力现货市场建设试点地区以来，广东电力现货市场建设节奏加快，取了较多阶段性的成果</p>
+<p>南方（以广东起步）调频市场模拟运行情况：</p>
+<p>2018年1-2月，南方（以广东起步）调频市场模拟运行期间，共交易调频里程共计323.49万兆瓦，平均日交易里程4.45万兆瓦，平均日调频补偿费用191.97万元，平均成交价格34.79元/兆瓦。</p>
+<p>注：数据来源广东中调“南方区域（以广东起步）调频市场试运行情况汇报”</p>
+<p>南方区域“两个细则”(2017版)：</p>
+<p>新修订的《两个细则》首度承认了储能电站可提供充电调峰服务，并明确基本条件、补偿标准、考核标准等。</p>
+<p>第三条本细则适用于南方区域地市级及以上电力调度机构直接调度的并与电力调度机构签订并网调度协议的容量为2MW/0.5小时及以上的储能电站。其他类型储能电站参照执行。</p>
+<p>第十九条储能电站应具备自动发电控制（AGC）功能。</p>
+<p>第二十一条储能电站根据电力调度机构指令进入充电状态的，按其提供充电调峰服务统计，对充电电量进行补偿，具体补偿标准为0.05 万元/兆瓦时。</p>
+<p>智能电网专项规划：</p>
+<p>响应国家智能电网发展指导意见和配电网建设改造行动计划等政策，积极开展智能电网专项规划，并明确推广储能系统与电网协调优化运行技术，应用储能构建综合能源利用体系，推进用户侧和配电网储能应用试点，提升电网可靠性和供电服务水平、提高电力设备利用率。电网企业对储能的重视将促进储能产业的发展和规模化应用。</p>
+<p>▲ 9个智能电网示范区</p>
+<p>03</p>
+<p>规模化应用的问题与挑战</p>
+<p>发电侧储能应用：</p>
+<p>◆《广东调频辅助服务市场交易规则（试行）》的发布有效激励电厂进行灵活性改造，提升了系统调节性能；</p>
+<p>◇ 目前部分电厂准备通过加装电池储能装置进行灵活性改造，储能的确迎来重要的发展机遇；</p>
+<p>◆但电力调频辅助服务的分担共享机制还不健全，调频市场收益规模存在一定投资风险；</p>
+<p>◇ 据悉，南方（以广东起步）调频市场正式运行时，市场机组总数约为153台</p>
+<p>用户侧需求较大：</p>
+<p>◆受储能投资成本和循环寿命等影响，储能在延缓电力输配设施扩容升级的技术经济性优势还不明显（甚至没优势）；</p>
+<p>◇推动电网侧储能发展的政策和市场机制仍不完善，商业模式单一，储能的多元价值及其效益无法得到体现；</p>
+<p>◆ 电网还缺少系统性的电网侧储能应用规划设计；</p>
+<p>◇ 两个细则中的充电调峰服务，在实操层面还存在一定问题</p>
+<p>用户侧储能应用：</p>
+<p>◆ 应用模式单一，商业模式单一，主要靠削峰填谷获取收益；</p>
+<p>◇ 广东广州、珠海、佛山、中山、东莞等5市峰谷价差不算太高，大工业峰谷价0.6997元/kWh（全国排第五），一般工商业0.9214元/kWh（全国排第三）；</p>
+<p>◆管理制度不完善，补贴政策短期内不可实现，远期看电力现货市场体现用户侧储能等灵活性资源价值；</p>
+<p>◇目前的市场环境下，“天时、地利、人和”兼备，才能获得较好的收益率</p>
+<p>总结</p>
+<p>1</p>
+<p>广东负荷水平高、峰谷差大，对调峰调频等辅助服务的需求较高，特别是在新能源比例不但增大的背景下，系统对灵活的调峰、调频、备用的需求将进一步增大。但受储能技术成本和寿命的制约，应用规模仍较小，增长潜力较大。</p>
+<p>2</p>
+<p>受电力市场建设政策、能源规划政策等外部因素推动，以及电网自身升级改造内在需求驱动，储能将迎来快速发展的机遇，应该值得关注。</p>
+<p>3</p>
+<p>但总体来说需谨慎分析市场规模，并考虑市场规则变化和政策不完善的投资风险。</p>
+<p>转载请注明来源：光储充一体化电站</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%94%B5%E5%8A%9B/" rel="tag">电力</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+  </article>
+  
+
+  
+  <nav class="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/2/">上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/35/">35</a><a class="extend next" rel="next" href="/page/4/">下一页</a>
+  </nav>
+  
+</section>
+</div>
+
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2022-2023
+        <i class="ri-heart-fill heart_icon"></i> paladin1893
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="帕拉丁的游鱼"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/friends">友链</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

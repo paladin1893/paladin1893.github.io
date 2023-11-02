@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+       
+      <meta name="keywords" content="RS,GPS,GIS,QGIS,Opticks,QT,OpenCV,OSG" />
+       
+      <meta name="description" content="地理信息系统，遥感科学，卫星导航定位技术综合研究。" />
+      
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>多能互补 |  帕拉丁的游鱼</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/favicon.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    <link rel="alternate" href="/atom.xml" title="帕拉丁的游鱼" type="application/atom+xml">
+</head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-多能互补"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  多能互补
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/05/23/%E5%A4%9A%E8%83%BD%E4%BA%92%E8%A1%A5/" class="article-date">
+  <time datetime="2023-05-23T07:20:13.000Z" itemprop="datePublished">2023-05-23</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">3.3k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">11 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>转自<br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/24610241">https://zhuanlan.zhihu.com/p/24610241</a></p>
+<p>今年7月4日，国家发改委、能源局印发了《推进多能互补集成优化示范工程建设的实施意见》，一时间，此类示范工程的申报工作如火如荼，十天之内，地方申报的多能互补集成优化示范工程建设项目已经超过250个（指标为20-30个），热情之高，干劲之足，令人惊叹。</p>
+<p>前两天，结果出来了，首批多能互补集成优化示范工程入选项目23个，其中用户侧17个，电源侧6个，前段时间参与了申报工作，这次也入选了，借此，聊聊火热的背后，还有些什么。</p>
+<p>一、何谓多能互补？</p>
+<p>多能互补，字面理解，多种能源互相补充，综合利用，提高能源输出和利用效率。</p>
+<p>常规来讲，我们平时理解的多能互补，就是用户端，特别是工业和产业园区，实施能源综合梯级利用，典型的，如冷热电三联供项目。申报通知中，对此类常规理解作了一定延伸，使得多能互补项目的定义更为完善，申报的示范工程分为两类：</p>
+<p>一是面向终端用户电、热、冷、气等多种用能需求，优化布局建设一体化集成供能基础设施，实现多能协同供应和能源综合梯级利用；二是利用大型综合能源基地风能、太阳能、水能、煤炭、天然气等资源组合优势，推进风光水火储多能互补系统建设运行。</p>
+<p>第一类工程针对用户侧，主要为天然气分布式能源，主要为常说的（冷）热电三联供，即以天然气为主要燃料带动发电设备运行，产生的电力供应用户，发电后排出的余热通过余热回收利用设备向用户供热、供冷，大大提高整个系统的一次能源利用率，实现了能源的梯级利用。</p>
+<p>第二类工程针对电源侧，互补的形式有多种。比如：“风-风互补”，不同风电场之间可能具有互补性，打捆送出可降低出力变化率；“风-光互补”，从负荷去线上看，风光之间没有明显的互补特性，但是在某些特定区域，特别是风电夜晚大发，白天出力时，共用输出通道，可提高线路利用率；“水-光（风）互补”，具有日调节及以上能力的水电站启停快，调整出力能适应新能源的出力变化；“煤电-光（风）互补”，优先次序低于水电调节，目前哈密、酒泉均采用新能源与煤电打捆的方式，但此种方式幅度有限；“抽蓄-光（风）互补”， 利用蓄能电站的储能作用，效果较佳。</p>
+<p>二、智慧能源的落脚点</p>
+<p>多能互补是能源互联网、智慧能源的落脚点，个人认为，是当前最重要理念和切入点。</p>
+<p>一直以来，能源互联网、智慧能源给大众的感觉，非常高大上，难免有些不接地气，确实，概念炒作太多，没有具体落地点，对行业的发展比较不利。</p>
+<p>多能互补示范工程来的正是时候。能源互联网核心就是横向互补、纵向优化，提高能源效率。所以，抛开互联等信息技术不谈，多能互补下的综合能源系统，应该是智慧能源在能源专业范畴中的精髓，也是智慧能源的工程具体化。</p>
+<p>实际上，多能互补和综合能源系统也不是一个新概念，热电联产和冰蓄冷本质上已经属于局部的多能互补，“楼宇型”和“区域型”天然气分布式能源系统也时常可见，但这些项目无论是实际能效转化，还是和用户侧的互动，总体感觉，和智慧能源的要求存在差距。</p>
+<p>所以，本次申报的多能互补项目，作为智慧能源的切入点，除了常规的天然气分布式以外，应该体现智能互联，互动响应等元素。以深圳前海多能互补、协鑫苏州园区项目为例，初步包含了供应侧的冷热电三联供和分布式新能源，传输侧的智能配网，用户侧的智能社区（需求响应等），平台侧的能源管理系统，应该是本次试点的方向。</p>
+<p>三、“小系统”与“大系统”</p>
+<p>示范项目的分类，对应能源系统发展的两类方向：“小系统”和“大系统”。</p>
+<p>用户侧项目（小系统）面向终端，以能源自给自足，合理联络为主；电源侧项目（大系统）面向跨地区配置，以能源输送为主。</p>
+<p>诚然，国际上电网和能源系统发展的潮流为“小系统”，区域化、智能化，就地平衡；但目前国内能源资源分布不均，所以“大系统”也将在一定范围内存在，得到一定发展也是理所应当的。</p>
+<p>但是，“大系统”的发展，应该得到充分论证，毕竟不远的将来，分布式能源给电力和能源系统带来的影响是巨大的，“大系统”存在但必须结合远景能源系统构成，谨慎决策。毕竟，电源侧打捆送出只是一种模式，不能因为是新能源，而忽略其成本及可靠性的合理范围，盲目支持。</p>
+<p>本次示范项目的比例也和上述观点相符，“十三五”期间，国家级终端一体化集成供能示范工程（用户侧项目）20项以上，国家级风光水火储多能互补示范工程（电源侧项目）3项以上。即用户侧小系统平衡为主，电源侧大系统输送为辅，符合能源系统和国际发展趋势。</p>
+<p>四、国内的发展&amp;与国外的差距</p>
+<p>用户侧多能互补。</p>
+<p>国内由于发展天然气分布式能源时间较短，大约十几年，处于起步状态。但自2011年起，中国天然气分布式能源项目装机容量快速增长。2014年底，已建成和建设中项目达到104个，装机容量已达3.8GW。</p>
+<p>然而，根据我国制定的天然气分布式建设规划，“十二五”期间要建设1000个左右天然气分布式能源项目，但截止到2015年底，我国建成和在建项目总和约为100个左右，仅完成了十分之一。天然气发电装机占总装机容量仅为3%，而发达国家占比均在25%-35%不等，与它们还存在着相当大的差距。</p>
+<p>国外发达国家天然气分布式能源（冷热电三联供）发展的较早，也较为成熟。以美国为例，在天然气供给充足和环境保护的双重推动下，美国的分布式天然气得到了长足的发展，据美国能源部2012年的不完全统计，全美约3500个大学、医院、政府机构、金融中心、工业小区等建立了区域冷热电联供项目，装机总量超过了85GW，占到国总发电量的12%，到2020年，约占总发电装机量的29%。另外，欧洲和日本的发展也十分迅速。</p>
+<p>日本东京地区天然气分布式能源</p>
+<p>电源侧多能互补。</p>
+<p>国内由于“三北”地区新能源富集，近年来新能源基地打捆互补送出一直是研究和实践的热点，当然其中也存在很多问题，火电比例较大的成本问题，故障下的电源和负荷两侧的稳定问题等等，哈密-郑州直流目前的实际输送功率不高也正是因为这些问题。</p>
+<p>国外基本没有大电源基地的打捆输送，比较接近电源侧多能互补的，应该是“虚拟电厂”概念。</p>
+<p>“虚拟电厂”通过分布式电力管理系统将电网中分布式电源、可控负荷和储能装置聚合成一个虚拟的可控集合体，参与电网的运行和调度。即随着分布式能源比例的不断提高，在原有的大电网中，高效的控制这些分散的小型“电厂”。也算是电源侧多能互补的一种体现，当然，“虚拟电厂”不仅限于电源侧。</p>
+<p>例如德国北部港口城市库克斯港市的虚拟电厂项目，系统由风力（600千瓦）发电、太阳能（80千瓦）发电、冷藏仓库（250千瓦和260千瓦）、热电联产系统（460千瓦和5.5千瓦）构成。通过转移冷藏仓库的热需求，来抵消风力发电的变动。通过整合风力发电、太阳能发电及冷藏仓库的电力需求，能够如同一座发电站一样进行电力控制。</p>
+<p>个人认为，“虚拟电厂”思路应该也适用于大电源基地的消纳。</p>
+<p>多能互补项目的关键</p>
+<p>用户侧多能互补，关键在于经济性。只有经济性好，才有产业化的希望。经济性的影响因素，一是实际效率，二是价格，三是智能互联。</p>
+<p>实际效率。主要取决于机组/负荷匹配，即针对不同用户的负荷情况，通过分析全年负荷变化情况来选择系统各装置的机组容量，并对选定的机组配置方案进行优化分析，尽量提高其能源利用率。国内现在不少项目，由于电负荷预测不准、机组容量配置不合理，经济性很差，有的已经停运，有的靠着国家补贴存活。</p>
+<p>天然气分布式有其适用场景，冷热负荷需要连续且基本稳定，同时原动机所提供的冷热负荷用户能消纳，所发电能或自用或上网。冷热负荷预测和特性分析十分重要，直接决定机组规模。</p>
+<p>机组/负荷匹配工作做好不容易，项目自投的还好，否则非常容易夸大负荷，从而造成机组配置冗余，需要既懂负荷，又懂机组，还懂天然气的跨界人才。这方面的具体工作我们一直在做，有时确实感觉从理论到实际还是有差距。</p>
+<p>价格。分布式能源系统的经济性与当地的电价、气价有着密切的关系，对应不同的价格体系，分布式能源系统的经济性可能有着根本性的不同。尤其是天然气价格，是整个分布式天然气项目能否存活的关键，燃料成本几乎占到项目总成本的70%-80%，目前的价格机制来看，大多数地区不是很理想，但试点工程背景下，应该会有改善。</p>
+<p>智能互联。现在大多数多能互补工程都在独立园区或区域，如何组织这个独立系统，使供应侧、传输侧、需求侧、平台侧各部分都做到智能高效，是目前的重要课题，也是我们一直在具体探索的事情，智能互联这部分和主动配电网关联比较近，网架优化、终端主站建设方案、通信方案、主动控制方案、主动服务方案等等，之前都做过，但需要融入多能互补工程，并扩展延伸至能源系统。</p>
+<p>电源侧多能互补，关键在于是否真正互补，即最终的互补效果。比如多种电能混合输送的调度问题，稳定问题，特高压的经济性问题，都值得关注。</p>
+<p>多能互补和增量配售电</p>
+<p>无需多言，将这两者联系在一起几乎是必然的，配售电对电源和综合能源服务的需求，让这两者天然地结合起来，各种园区就是天然地应用场景，两类试点工程推行时间相隔不长，结合起来，大有文章可做。</p>
+<p>你看，试点通知中提到，到2020年，各省（区、市）新建产业园区采用终端一体化集成供能系统的比例达到50%左右，既有产业园区实施能源综合梯级利用改造的比例达到30%左右，市场巨大，很多人都要开始忙碌了。</p>
+<p>多能互补相关的，暂时就写这么多吧，后面对应工程中的心得体会，到时再总结，学习之路，漫长而充实。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://paladin1893.github.io/2023/05/23/%E5%A4%9A%E8%83%BD%E4%BA%92%E8%A1%A5/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%94%B5%E5%8A%9B/" rel="tag">电力</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2023/05/24/%E5%8F%91%E7%94%9F%E4%BA%86%E4%BA%BA%E5%91%98%E7%88%AC%E5%88%B0%E7%94%B5%E5%A1%94%E7%9A%84%E6%83%85%E5%86%B5%E4%B8%8B%EF%BC%8C%E9%AB%98%E5%8E%8B%E7%94%B5%E5%A1%94%E8%83%BD%E5%90%A6%E7%B4%A7%E6%80%A5%E6%96%AD%E7%94%B5%EF%BC%9F/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            发生了人员爬到电塔的情况下，高压电塔能否紧急断电？
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2023/05/22/%E7%94%B5%E5%8A%9B%E7%B3%BB%E7%BB%9F%E6%95%88%E7%8E%87/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">电力系统效率</div>
+      </a>
+    
+  </nav>
+
+  
+   
+    
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2022-2023
+        <i class="ri-heart-fill heart_icon"></i> paladin1893
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="帕拉丁的游鱼"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/friends">友链</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

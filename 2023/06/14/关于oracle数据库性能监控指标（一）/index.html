@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+       
+      <meta name="keywords" content="RS,GPS,GIS,QGIS,Opticks,QT,OpenCV,OSG" />
+       
+      <meta name="description" content="地理信息系统，遥感科学，卫星导航定位技术综合研究。" />
+      
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>关于oracle数据库性能监控指标（一） |  帕拉丁的游鱼</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/favicon.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    <link rel="alternate" href="/atom.xml" title="帕拉丁的游鱼" type="application/atom+xml">
+</head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-关于oracle数据库性能监控指标（一）"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  关于oracle数据库性能监控指标（一）
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/06/14/%E5%85%B3%E4%BA%8Eoracle%E6%95%B0%E6%8D%AE%E5%BA%93%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7%E6%8C%87%E6%A0%87%EF%BC%88%E4%B8%80%EF%BC%89/" class="article-date">
+  <time datetime="2023-06-14T06:34:56.000Z" itemprop="datePublished">2023-06-14</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">1.5k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">7 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>1、当前连接会话数以及当前并发连接个数</p>
+<pre><code>-- 当前活跃用户会话数
+Select count(*) from v$session where status=&#39;ACTIVE&#39; and USERNAME is not null;
+-- 当前活跃系统会话数
+Select count(*) from v$session where USER# = 0;
+-- 当前非活跃会话数
+Select count(*) from v$session where status=&#39;INACTIVE&#39;
+</code></pre>
+<p>2、表空间利用率(各个表空间的大小以及使用情况)</p>
+<pre><code>SELECT UPPER(F.TABLESPACE_NAME) &quot;表空间名&quot;,
+       D.TOT_GROOTTE_MB &quot;表空间大小(M)&quot;,
+       D.TOT_GROOTTE_MB - F.TOTAL_BYTES &quot;已使用空间(M)&quot;,
+       TO_CHAR(ROUND((D.TOT_GROOTTE_MB - F.TOTAL_BYTES) / D.TOT_GROOTTE_MB * 100,
+                     2),
+               &#39;990.99&#39;) || &#39;%&#39; &quot;使用比&quot;,
+       F.TOTAL_BYTES &quot;空闲空间(M)&quot;,
+       F.MAX_BYTES &quot;最大块(M)&quot;
+  FROM (SELECT TABLESPACE_NAME,
+               ROUND(SUM(BYTES) / (1024 * 1024), 2) TOTAL_BYTES,
+               ROUND(MAX(BYTES) / (1024 * 1024), 2) MAX_BYTES
+          FROM SYS.DBA_FREE_SPACE
+         GROUP BY TABLESPACE_NAME) F,
+       (SELECT DD.TABLESPACE_NAME,
+               ROUND(SUM(DD.BYTES) / (1024 * 1024), 2) TOT_GROOTTE_MB
+          FROM SYS.DBA_DATA_FILES DD
+         GROUP BY DD.TABLESPACE_NAME) D
+ WHERE D.TABLESPACE_NAME = F.TABLESPACE_NAME
+ ORDER BY 1;
+</code></pre>
+<p>3、Oracle IOPS(每秒的IO)和吞吐量</p>
+<p>网上给出的答案是这样的。我对这个答案有一些疑惑，如果是物理io请求，那么这样得到的是io的总数，而不是每秒的io啊，另一个方法请看第 18 条。</p>
+<pre><code>SELECT sum(decode(name,
+                  &#39;physical read IO requests&#39;,
+                  value,
+                  &#39;physical write IO requests&#39;,
+                  value,
+                  0)) AS iops,
+       sum(decode(name,
+                  &#39;physical read bytes&#39;,
+                  value,
+                  &#39;physical write bytes&#39;,
+                  value,
+                  0)) / 1024 / 1024 AS mbps
+  FROM v$sysstat
+ WHERE name IN (&#39;physical read IO requests&#39;,
+                &#39;physical write IO requests&#39;,
+                &#39;physical read bytes&#39;,
+                &#39;physical read total bytes&#39;,
+                &#39;physical write bytes&#39;,
+                &#39;physical write total bytes&#39;,
+                &#39;physical read total IO requests&#39;,
+                &#39;physical write total IO requests&#39;);
+</code></pre>
+<p>4、碎片程度</p>
+<pre><code>SELECT tablespace_name,
+       round(sqrt(max(blocks) / sum(blocks)) *
+             (100 / sqrt(sqrt(count(blocks)))),
+             2) FSFI
+  FROM dba_free_space
+ GROUP BY tablespace_name
+ ORDER BY 1;
+</code></pre>
+<p>5、高速缓存命中率</p>
+<pre><code>-- 高速缓存命中率
+SELECT NAME,
+       PHYSICAL_READS,
+       DB_BLOCK_GETS,
+       CONSISTENT_GETS,
+       1 - (PHYSICAL_READS / (DB_BLOCK_GETS + CONSISTENT_GETS)) &quot;Hit Ratio&quot;
+  FROM V$BUFFER_POOL_STATISTICS
+ WHERE NAME = &#39;DEFAULT&#39;;
+-- 或者
+SELECT physical_reads,
+       db_block_gets,
+       consistent_gets,
+       NAME,
+       100 * (1 - (physical_reads /
+       (consistent_gets + db_block_gets - physical_reads))) &quot;Data Buffer Hit Ratio&quot;
+  FROM v$buffer_pool_statistics;
+
+-- 共享池命中率
+select sum(pinhits - reloads) / sum(pins) * 100 &quot;hit radio&quot;
+  from v$librarycache;
+
+-- 共享区字典缓冲区命中率
+select sum(gets - getmisses - usage - fixed) / sum(gets) from v$rowcache;
+
+-- 共享区缓存命中率
+select sum(pins - reloads) / sum(pins) from v$librarycache;
+</code></pre>
+<p>6、库高速缓存命中率</p>
+<pre><code>SELECT TO_CHAR(ROUND((1 - SUM(getmisses) / SUM(gets)) * 100, 1)) || &#39;%&#39; &quot;Dictionary Cache Hit Ratio&quot;
+  FROM v$rowcache;
+</code></pre>
+<p>7、字典缓存命中率</p>
+<pre><code>SELECT sum(gets - getmisses - usage - fixed) / sum(gets) FROM v$rowcache;
+</code></pre>
+<p>8、空闲的共享池内存</p>
+<pre><code>SELECT *
+  FROM V$SGASTAT
+ WHERE NAME = &#39;free memory&#39;
+   AND POOL = &#39;shared pool&#39;;
+</code></pre>
+<p>9、共享池使用率</p>
+<pre><code>SELECT (1 - ROUND(BYTES / (select sum(value) &quot;total sga MB&quot; from v$sga), 2)) * 100 || &#39;%&#39;
+  FROM V$SGASTAT
+ WHERE NAME = &#39;free memory&#39;
+   AND POOL = &#39;shared pool&#39;;
+</code></pre>
+<p>10、数据库服务启动时间</p>
+<pre><code>select * from sys.v_$instance;
+</code></pre>
+<p>11、共享缓冲池中重做日志命中率</p>
+<pre><code>SELECT name,
+       gets,
+       misses,
+       immediate_gets,
+       immediate_misses,
+       Decode(gets, 0, 0, misses / gets * 100) ratio1,
+       Decode(immediate_gets + immediate_misses,
+              0,
+              0,
+              immediate_misses / (immediate_gets + immediate_misses) * 100) ratio2
+  FROM v$latch
+ WHERE name IN (&#39;redo allocation&#39;, &#39;redo copy&#39;);
+</code></pre>
+<p>12、当前oracle所有进程执行进度</p>
+<pre><code>--当前进程的数量
+select count(*) from v$process;
+
+SELECT A.USERNAME,
+       A.TARGET,
+       A.SID,
+       a.SERIAL#,
+       A.OPNAME,
+       ROUND(A.SOFAR * 100 / A.TOTALWORK, 0) || &#39;%&#39; AS &quot;执行进度&quot;,
+       A.TIME_REMAINING &quot;剩余秒数&quot;,
+       TRUNC(A.TIME_REMAINING / 60, 2) &quot;剩余分钟&quot;,
+       TRUNC(A.TIME_REMAINING / 60 / 60, 2) &quot;剩余小时&quot;,
+       B.SQL_TEXT &quot;执行SQL&quot;,
+       B.LAST_ACTIVE_TIME &quot;开始时间&quot;
+  FROM V$SESSION_LONGOPS A, V$SQLAREA B
+ WHERE A.TIME_REMAINING &lt;&gt; 0
+   AND A.SQL_ADDRESS = B.ADDRESS
+   AND A.SQL_HASH_VALUE = B.HASH_VALUE
+</code></pre>
+<p>13a、查询SGA和PGA的使用情况</p>
+<pre><code>select name,
+       round(total, 2),
+       round(total - free, 2) used,
+       round(free, 2) free,
+       round((total - free) / total * 100, 2) pctused
+  from (select &#39;SGA&#39; name,
+               (select sum(value / 1024 / 1024) from v$sga) total,
+               (select sum(bytes / 1024 / 1024)
+                  from v$sgastat
+                 where name = &#39;free memory&#39;) free
+          from dual)
+union
+select name,
+       round(total, 2),
+       round(used, 2) used,
+       round(total - used, 2) free,
+       round(used / total * 100, 2) pctused
+  from (select &#39;PGA&#39; name,
+               (select value / 1024 / 1024 total
+                  from v$pgastat
+                 where name = &#39;aggregate PGA target parameter&#39;) total,
+               (select value / 1024 / 1024 used
+                  from v$pgastat
+                 where name = &#39;total PGA allocated&#39;) used
+          from dual);
+</code></pre>
+<p>13b、查看会话的内存占用情况</p>
+<pre><code>SELECT server &quot;连接类型&quot;,
+       s.username &quot;用户名&quot;,
+       OSUSEr &quot;系统用户&quot;,
+       NAME,
+       round(VALUE / 1024 / 1024, 2) &quot;占用内存(M)&quot;,
+       s.SID &quot;会话ID&quot;,
+       s.serial# 会话序列号,
+       spid &quot;系统进程ID&quot;,
+       p.PGA_USED_MEM,
+       p.PGA_ALLOC_MEM,
+       p.PGA_FREEABLE_MEM,
+       p.PGA_MAX_MEM
+  FROM v$session s, v$sesstat st, v$statname sn, v$process p
+ WHERE st.SID = s.SID
+   AND st.statistic# = sn.statistic#
+   AND sn.NAME LIKE &#39;session pga memory&#39;
+   AND p.addr = s.paddr
+ ORDER BY VALUE DESC;
+</code></pre>
+<p>14、查询耗时最长的10条sql</p>
+<pre><code>select *
+  from (select v.sql_id,
+               v.child_number,
+               v.sql_text,
+               v.elapsed_time,
+               v.cpu_time,
+               v.disk_reads,
+               rank() over(order by v.elapsed_time desc) elapsed_rank
+          from v$sql v) a
+ where elapsed_rank &lt;= 10;
+</code></pre>
+<p>15、MTS</p>
+<pre><code>select busy / (busy + idle) shared_servers_busy from v$dispatcher;
+</code></pre>
+<p>16、表级锁</p>
+<pre><code>select sess.sid,
+       sess.serial#,
+       lo.oracle_username,
+       lo.os_user_name,
+       ao.object_name,
+       lo.locked_mode
+  from v$locked_object lo, dba_objects ao, v$session sess
+ where ao.object_id = lo.object_id
+   and lo.session_id = sess.sid;
+</code></pre>
+<p>17、正在等待锁的所有会话</p>
+<pre><code>SELECT * FROM DBA_WAITERS;
+</code></pre>
+<p>18、TPS,QPS,MBPS</p>
+<pre><code>SELECT &#39;Qps|&#39; AS begin1,
+       (SELECT sum(value)
+          FROM gv$sysmetric
+         WHERE metric_name = &#39;I/O Requests per Second&#39;) AS b1,
+       &#39;|&#39; AS end1,
+       &#39;Tps|&#39; AS begin2,
+       (SELECT sum(value)
+          FROM gv$sysmetric
+         WHERE metric_name = &#39;User Transaction Per Sec&#39;) AS b2,
+       &#39;|&#39; AS end2,
+       &#39;Mbps|&#39; AS begin3,
+       (SELECT sum(value)
+          FROM gv$sysmetric
+         WHERE metric_name = &#39;I/O Megabytes per Second&#39;) AS b3,
+       &#39;|&#39; AS end3
+  FROM dual;
+</code></pre>
+<p>19、数据库容量大小（GB）以及数据库各个表空间大小</p>
+<pre><code>-- 数据库总大小
+SELECT ROUND(SUM(BYTES) / 1024 / 1024 / 1024, 2) || &#39;GB&#39;
+  FROM DBA_DATA_FILES;
+-- 数据库各个表空间大小
+select tablespace_name, sum(bytes) / 1024 / 1024 as MB
+  from dba_data_files
+ group by tablespace_name;
+</code></pre>
+<p>20、审计信息</p>
+<pre><code>-- 具体的审计信息
+select * from dba_audit_trail;
+--是否打开审计功能 (默认是未开启，NONE表示未开启，其他的应该就是开启，比如 DB_EXTENDED)
+SELECT * from v$parameter WHERE name = &#39;audit_trail&#39;;
+</code></pre>
+<p>21、当前数据库的版本信息</p>
+<pre><code>SELECT * from v$version;
+</code></pre>
+<p>22、获取不用用户不同操作的审计执行频率</p>
+<pre><code>SELECT username, action_name, count(*) c
+  FROM dba_audit_trail
+ GROUP BY username, action_name
+ ORDER BY c DESC;
+</code></pre>
+<p>23、查询不同用户的连接数</p>
+<pre><code>SELECT username, count(username)
+  FROM v$session
+ WHERE username IS NOT NULL
+ GROUP BY username;
+</code></pre>
+<p>24、被锁定或者已经过期的用户</p>
+<pre><code>select username, lock_date
+  from dba_users
+ WHERE ACCOUNT_STATUS in (&#39;LOCKED&#39;, &#39;EXPIRED &amp; LOCKED&#39;)
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://paladin1893.github.io/2023/06/14/%E5%85%B3%E4%BA%8Eoracle%E6%95%B0%E6%8D%AE%E5%BA%93%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7%E6%8C%87%E6%A0%87%EF%BC%88%E4%B8%80%EF%BC%89/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Oracle/" rel="tag">Oracle</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2023/06/15/%E5%85%B3%E4%BA%8Eoracle%E6%95%B0%E6%8D%AE%E5%BA%93%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7%E6%8C%87%E6%A0%87%EF%BC%88%E4%BA%8C%EF%BC%89/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            关于oracle数据库性能监控指标（二）
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2023/06/13/Oracle%E7%9A%84SGA%E3%80%81PGA%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F%E6%9C%89%E4%BB%80%E4%B9%88%E7%94%A8%EF%BC%9F/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">Oracle的SGA、PGA是什么？有什么用？</div>
+      </a>
+    
+  </nav>
+
+  
+   
+    
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2022-2023
+        <i class="ri-heart-fill heart_icon"></i> paladin1893
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="帕拉丁的游鱼"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/friends">友链</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

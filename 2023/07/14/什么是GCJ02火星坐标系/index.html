@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+       
+      <meta name="keywords" content="RS,GPS,GIS,QGIS,Opticks,QT,OpenCV,OSG" />
+       
+      <meta name="description" content="地理信息系统，遥感科学，卫星导航定位技术综合研究。" />
+      
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>什么是GCJ02火星坐标系 |  帕拉丁的游鱼</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/favicon.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    <link rel="alternate" href="/atom.xml" title="帕拉丁的游鱼" type="application/atom+xml">
+</head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-什么是GCJ02火星坐标系"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  什么是GCJ02火星坐标系
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/07/14/%E4%BB%80%E4%B9%88%E6%98%AFGCJ02%E7%81%AB%E6%98%9F%E5%9D%90%E6%A0%87%E7%B3%BB/" class="article-date">
+  <time datetime="2023-07-14T15:27:13.000Z" itemprop="datePublished">2023-07-14</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">2.1k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">7 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>概述</p>
+<p>在谷歌还没有发布谷歌地图时，在GIS领域常见的坐标系主要有WGS84经纬度坐标、北京54坐标或西安80坐标等；但自从谷歌地图发布之后，其海量的高清卫星免费影像是让整个GIS领域为之震惊的，但同时也为安全问题带来了一定的隐患。为了对实际坐标进行加密，于是国测局研究了一套算法，凡是公开发布的商业互联网地图，一定要在此加密算法的基础上进行发布，这样一来地图的坐标就与实地的坐标不相符了，于是大家把这种坐标戏称为“火星坐标”，这里我们就针对这一坐标作一些更为详细的说明。</p>
+<h1 id="什么是火星坐标系？"><a href="#什么是火星坐标系？" class="headerlink" title="什么是火星坐标系？"></a>什么是火星坐标系？</h1><p>关于什么是火星坐标系，我们先来看看百度百科的解释。</p>
+<p>火星坐标系</p>
+<p>保密插件，也叫做加密插件或者加偏或者SM模组，是对真实地图或者导航坐标系统进行人为的加偏处理，按照一定的加偏算法，将真实的坐标加密成虚假的坐标。加偏处理不是线性的加偏，所以各地的偏移情况都会有所不同。加密后的坐标也常被人称为火星坐标系统。</p>
+<p>中文名：火星坐标系统</p>
+<p>别称：加密插件</p>
+<p>外文名：无释义</p>
+<p>性质：加密后的坐标</p>
+<p>释义：国家保密插件</p>
+<p>意义：真实的坐标加密成虚假的坐标</p>
+<p>所有的电子地图、导航设备，都需要加入该保密插件。第一步，地图公司测绘地图，测绘完成后，送到国家测绘局，将真实坐标的电子地图，加密成“火星坐标”，这样的地图才是可以出版和发布的，然后才可以让GPS公司处理。第二步，所有的GPS公司，只要需要汽车导航的，需要用到导航电子地图的，都需要在软件中加入该保密算法，将COM口读出来的真实的坐标信号，加密转换成ZF要求的保密的坐标。这样，GPS导航仪和导航电子地图就可以完全匹配，GPS也就可以正常工作了。</p>
+<h1 id="什么是GCJ-02？"><a href="#什么是GCJ-02？" class="headerlink" title="什么是GCJ-02？"></a>什么是GCJ-02？</h1><p>关于什么是GCJ-02，也先来看看百度百科的解释。</p>
+<p>GCJ02</p>
+<p>GCJ-02是由中国国家测绘局（G表示Guojia国家，C表示Cehui测绘，J表示Ju局）制订的地理信息系统的坐标系统。</p>
+<p>中文名:国家测量局02号标准</p>
+<p>外文名:GCJ-02</p>
+<p>它是一种对经纬度数据的加密算法，即加入随机的偏差。</p>
+<p>国内出版的各种地图系统（包括电子形式），必须至少采用GCJ-02对地理位置进行首次加密。</p>
+<p>火星坐标系的本质？<br>综上所述，其实火星坐标系和GCJ-02是同一种事物，它是国家测量(绘)局制定的02号标准，是一种对经纬度坐标进行非线性的随机加偏算法。</p>
+<p>为了响应国家制定的标准，国内所有在线地图服务商（如百度地图、高德地图、搜狗地图和SOSO地图等）和国外部分在线地图服务商(如谷歌地图、必应地图和雅虎地图等)都必须进行GCJ-02加密才对公众进行开放，这就是为什么大家在用地图时总是发现有偏移的原因。</p>
+<p>GCJ-02只是一种坐标偏移标准（算法），对投影没有任何限制，如果再以投影为基础作细分，则可以分为GCJ-02经纬度投影和GCJ-02 Web 墨卡托投影。在水经注万能地图下载器无论是导入或导出矢量数据时都可以对GCJ-02经纬度投影和GCJ-02墨卡托投影进行很好的支持。</p>
+<p>下载器中的GCJ02坐标系</p>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><p>当然了，你可能发现有一些地图是没有偏移的，比如天地图、谷歌地球、谷歌卫星地图（国外服务器）、必应卫星地图和OpenStreetMap地图等，这里分别作出说明。</p>
+<p>1）为什么天地图没有偏移</p>
+<p>天地图是在国测局主导下生产建设的地图，是为了促进地理信息资源共享和高效利用，提高测绘地理信息公共服务能力和水平，改进测绘地理信息成果的服务方式，更好地满足国家信息化建设的需要，为社会公众的工作和生活提供方便。这样一个关乎国家民生的地图，你说能随意偏移吗，有必要偏移吗？</p>
+<p>那么为什么其它百度或高德等公众地图就一定要用GCJ-02加密呢？制作过地图或搞过测绘的朋友一定了解，对于国家一些重要的机构是不能出现在地图中的（有地图测绘相关的法律法规），比如一些军事管理区或国防战备设施等，它就像一柄利剑，且能随意示人？对于这些敏感的重要信息，国家天地图肯定是可以进行了严格管控的，但对于其它商用地图，在监管困难的情况下，于是就制定了GCJ-02标准，这就是商用地图必须要采用GCJ-02加密的根本原因。</p>
+<p>2）为什么谷歌地球没有偏移</p>
+<p>谷歌地球（Google Earth）是针对全球的，坐标完全没有偏移，由于没有详细的标注信息，服务器不在国内，且也不是主要针对国内用户，因此ZF也没有对其采取强硬措施，但现在谷歌地球（Google Earth）越来越难登录，一般需要采取翻墙才能访问，这是不争的事实。</p>
+<p>3）为什么谷歌卫星地图（国外服务器）没有偏移？</p>
+<p>Web版谷歌地图分两种，一种是谷歌国外服务器在线地图，通过<a target="_blank" rel="noopener" href="http://map.google.com访问,一个是谷歌国内服务器在线地图,通过http//map.google.cn%E8%AE%BF%E9%97%AE%E3%80%82">http://map.google.com访问，一个是谷歌国内服务器在线地图，通过http://map.google.cn访问。</a></p>
+<p>而谷歌国外服务器在线地图，也分三种，分别是谷歌卫星地图、谷歌电子地图和谷歌地表地形图。</p>
+<p>谷歌卫星地图同谷歌地球（Google Earth）一样，谷歌国外服务器在线地图的卫星地图，由于服务器不在国内，且也不是主要针对国内用户，因此卫星地图是没有偏移的，也没有详细的标注信息，而且访问也需要翻墙才可以。它与谷歌地球（Google Earth）卫星影像的主要区别是采用的坐标系是WGS84 Web墨卡托投影且有Google水印，而谷歌地球（Google Earth）卫星影像采用的是WGS84地球坐标系且没有Google水印，它们的共同点是坐标都没有偏移。</p>
+<p>对于谷歌电子地图和谷歌地表地形图而言，由于有详细的标注信息，也在国家的管控下进行了GCJ-02加密。</p>
+<p>4）为什么必应卫星地图没有偏移？</p>
+<p>必应卫星地图的情况与谷歌卫星地图（国外服务）基本相同，投影为WGS84 Web 墨卡托且坐标没有偏移，而必应电子地图还是有偏移的。</p>
+<p>5）为什么OpenStreetMap地图没有偏移？</p>
+<p>OpenStreetMap是一个网上地图协作计划，目标是创造一个内容自由且能让所有人编辑的世界地图，相对于其它主流地图来讲，可能影响力还没有这么大，国内用户用得相对较少，信息的详细程序也比较有限，因此ZF还没有对其进行管控。</p>
+<p>以上内容纯粹是揣测猜想,仅供大家参考,也欢迎业界专业人士能批评指正,以正本清源!</p>
+<p>结语</p>
+<p>以上就是GCJ02火星坐标系的详细说明，主要包括了什么是火星坐标系、什么是GCJ-02和火星坐标系的本质等功能。</p>
+<p>转载自<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/93612082">https://zhuanlan.zhihu.com/p/93612082</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://paladin1893.github.io/2023/07/14/%E4%BB%80%E4%B9%88%E6%98%AFGCJ02%E7%81%AB%E6%98%9F%E5%9D%90%E6%A0%87%E7%B3%BB/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%9D%90%E6%A0%87%E7%B3%BB/" rel="tag">坐标系</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2023/07/15/%E6%97%B6%E7%A9%BA%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%8F%8AGIS%E5%9C%A8%E5%95%86%E4%B8%9A%E5%8C%96%E9%80%89%E5%9D%80%E4%B8%AD%E7%9A%84%E6%8E%A2%E7%B4%A2%E5%BA%94%E7%94%A8/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            时空大数据及GIS在商业化选址中的探索应用
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2023/07/13/CGJ02%E3%80%81BD09%E3%80%81%E8%A5%BF%E5%AE%8980%E3%80%81%E5%8C%97%E4%BA%AC54%E3%80%81CGCS2000%E5%B8%B8%E7%94%A8%E5%9D%90%E6%A0%87%E7%B3%BB%E8%AF%A6%E8%A7%A3/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">CGJ02、BD09、西安80、北京54、CGCS2000常用坐标系详解</div>
+      </a>
+    
+  </nav>
+
+  
+   
+    
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2022-2023
+        <i class="ri-heart-fill heart_icon"></i> paladin1893
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="帕拉丁的游鱼"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/friends">友链</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

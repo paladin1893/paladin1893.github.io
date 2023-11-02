@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+       
+      <meta name="keywords" content="RS,GPS,GIS,QGIS,Opticks,QT,OpenCV,OSG" />
+       
+      <meta name="description" content="地理信息系统，遥感科学，卫星导航定位技术综合研究。" />
+      
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>碳路者-杨东旭：碳监测背后硬科技中国碳卫星为碳排称重 |  帕拉丁的游鱼</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/favicon.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    <link rel="alternate" href="/atom.xml" title="帕拉丁的游鱼" type="application/atom+xml">
+</head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-碳路者-杨东旭：碳监测背后硬科技中国碳卫星为碳排称重"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  碳路者-杨东旭：碳监测背后硬科技中国碳卫星为碳排称重
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/05/12/%E7%A2%B3%E8%B7%AF%E8%80%85-%E6%9D%A8%E4%B8%9C%E6%97%AD%EF%BC%9A%E7%A2%B3%E7%9B%91%E6%B5%8B%E8%83%8C%E5%90%8E%E7%A1%AC%E7%A7%91%E6%8A%80%E4%B8%AD%E5%9B%BD%E7%A2%B3%E5%8D%AB%E6%98%9F%E4%B8%BA%E7%A2%B3%E6%8E%92%E7%A7%B0%E9%87%8D/" class="article-date">
+  <time datetime="2023-05-12T04:07:49.000Z" itemprop="datePublished">2023-05-12</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">2.3k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">7 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>今年5月份，地球大气中的二氧化碳月平均浓度为419ppm，也就是0.0419%，这是人类有记录以来的二氧化碳浓度最高值。虽然二氧化碳在大气中的占比很少，但随着它们的浓度越来越高，已经造成了显著的全球变暖效应，二氧化碳浓度的日常监测至关重要。</p>
+<p>2016年12月22日凌晨3时22分，随着一颗卫星发射升空，我国二氧化碳的监测视角，从地面升高至地球上空700公里。这是我国首颗全球二氧化碳监测科学实验卫星（简称“中国碳卫星”），也是全球第三颗碳卫星，它实现了我国空间温室气体高精度监测的从无到有，为应对全球气候变化贡献了“中国力量”。碳卫星是多部门百余名专家共同潜心科研多年的成果，而中科院大气物理研究所副研究员杨东旭便是这百余名专家中的一员。</p>
+<h1 id="攻克碳卫星核心技术，自主研发反演系统"><a href="#攻克碳卫星核心技术，自主研发反演系统" class="headerlink" title="攻克碳卫星核心技术，自主研发反演系统"></a>攻克碳卫星核心技术，自主研发反演系统</h1><p>碳排放的计算主要依赖于清单方法，政府间气候变化专门委员会（IPCC）制定了《2006年IPCC国家温室气体清单指南》（下称《指南》），要求各国清单须按照《指南》的方法编制。即便如此，国际上很多声音提出，不同行政区域之间上报标准不一致导致的偏差问题、统计管理上相互不透明等问题无法避免，利用碳监测卫星，通过大气反演的方法，进行全球人为排放的监测方式更优成为共识。</p>
+<p>发射碳卫星，各国都在努力。2009年，美国率先发射碳卫星，但因发射失败而坠入南极附近海域；同年，日本成功发射了国际上第一颗温室气体专用探测卫星GOSAT；美国OCO-2紧随其后，于2014年发射升空。据杨东旭介绍，“碳卫星虽然没有完全解决掉国别间偏差和不透明等问题，但是向着国际间碳监测的‘公平公正、查漏补缺’迈出了一大步。”</p>
+<p>2007年，杨东旭在中科院读研究生时，开始接触碳卫星科研领域，从此参与研发碳卫星成了他毕生的事业。2009年，国家遥感中心组织专家组开始碳卫星项目的前期战略研究工作；2011年，在863计划的支持下，“全球二氧化碳监测科学实验卫星与应用示范”重大项目（中国碳卫星）正式由科技部立项，彼时临近博士毕业的杨东旭正式参与其中。</p>
+<p>“几乎是摸着石头过河，困难在于这个项目在我国属于‘前无古人’——没有基础，没有借鉴，一切从零开始。”回忆起刚立项时的情景，杨东旭十分感慨，“为了争分夺秒研发碳卫星的算法，我当时几度办了延期毕业，也放弃了一些国外研究所和学校的机会，在攻克碳卫星面前，一切都得让路。”</p>
+<p>碳卫星需要什么，杨东旭就研究什么。从科学问题倒推碳卫星需要什么样的核心指标，为实现做好碳卫星的目标，杨东旭自主研发了温室气体卫星反演系统——中国科学院大气物理研究所碳反演系统（IAPCAS），助力实现了国产卫星的高精度全球碳监测，在我国温室气体高精度遥感反演方面突破了“卡脖子”的技术瓶颈和欧美国家的技术封锁。据介绍，IAPCAS高精度模拟了太阳辐射在大气中的传输过程，充分优化气溶胶光学性质随波长的变化以及卷云的连续吸收等特征，显著降低了误差，提高了反演精度，大幅提高了计算效率。</p>
+<h1 id="四年突破“不可能”，碳卫星及观测数据被世界认可"><a href="#四年突破“不可能”，碳卫星及观测数据被世界认可" class="headerlink" title="四年突破“不可能”，碳卫星及观测数据被世界认可"></a>四年突破“不可能”，碳卫星及观测数据被世界认可</h1><p>据杨东旭回忆，2012年在国际会议上谈到要研制自己的碳卫星，国际同行觉得不可思议，觉得我们没有任何基础，甚至公开说“不可能”。</p>
+<p>然而，从“不可能”到“能”，中国只用了4年。这四年里的艰辛，只有像杨东旭这样的一线科研专家们才知道。从无到有，实现技术突破；又后发赶上，比肩国际领先水平。“我们现在碳卫星的整体水平已经赶超日本，比肩美国了。”杨东旭说。</p>
+<p>二氧化碳在大气中的浓度本就非常低。数据质量特别是观测精度，是制约卫星数据有效应用的瓶颈，CO2的卫星监测精度需求高于0.5%，这在卫星大气成分遥感领域中是非常高的要求。</p>
+<p>杨东旭介绍，最开始我们对观测精度定的目标很高，日本GOSAT初级数据产品的精度将近20ppm（单位意义：体积混合比百万分之一）,当时我们的目标底线是4ppm，也就是说最差也要达到日本数据误差的20%左右。</p>
+<p>为什么定这么高呢？“我们认为，只有到达了这个精度以后，数据才能真正地发挥科学上的应用价值。”杨东旭解释，我们不仅要从“不可能”做到“可能”，还要从“可能”做到“更好”。</p>
+<p>“现在我们的碳卫星观测精度优于了1.3ppm，跻身于全球先进地位。”杨东旭补充，中欧开展了针对中国碳卫星全球碳监测的相关合作研究，中国碳卫星加入欧洲空间局（ESA）第三方卫星计划，我国碳卫星及其观测数据逐渐被世界认可。</p>
+<p>“2019年，我在另外一个国际大会上见到当年说‘不可能’的国际同行，对我们非常礼貌，说中国碳卫星已经做成全球品牌了。现在只要说到卫星碳监测，大家都会提到中国的碳卫星。”杨东旭骄傲地说，“如今在全球温室气体监测大会上，大会前几个的口头报告里总会有留给中国碳卫星的一席之地。”</p>
+<h1 id="下一代碳卫星研制已经启动"><a href="#下一代碳卫星研制已经启动" class="headerlink" title="下一代碳卫星研制已经启动"></a>下一代碳卫星研制已经启动</h1><p>尽管1.3ppm的观测精度已经让中国碳卫星跻身于全球领先地位，但是杨东旭认为还可以更好。“我们正在设计下一代碳卫星。”杨东旭说，“靠一颗卫星解决不了所有问题。”</p>
+<p>对于碳监测的未来，专家团队有更宏大的设想。杨东旭介绍，对于传统的碳排核算方法来说，碳卫星其实是一个补充的独立手段，从整体来看，更希望最终会建成一整套卫星体系，“我们正在设计的下一代卫星系统将做到更高精度，超越现有的1.3ppm达到1ppm以内，去做更深入的工作；除了精度以外，还要解决幅宽较窄的问题，未来下一代碳卫星的幅宽更宽，甚至做到全球覆盖；达到全球覆盖以后，一天覆盖一次可能也不够，会再考虑一天覆盖几次，以应对大气的快速变化；解决天上卫星的问题以后，我们地面的反演、同化等系统也要跟上，同时天地一体化的协同观测也非常重要，从而形成碳的监测体系，要将更高科技的技术应用到产品中去，用更新的方法去做更新的事情。”</p>
+<p>据悉，我国下一代碳卫星（TanSat-2）的论证设计工作已经开始，卫星的研制工作也即将启动。新一代卫星将在第一代卫星所具有的技术优势基础上，进一步提升探测能力，并以应用需求与科学需求为出发点。目标测量将以人为排放、全球碳汇等为重点，以高定量、高时频、高分辨探测，来提高排放量和碳汇的计算精度。</p>
+<p>正如杨东旭所介绍，下一代碳卫星将是一个天基系统，希望每天可多次覆盖一个城市或点源，同时将具备协同大气污染物的观测能力，更好地用于对人为碳排放量进行独立测算。</p>
+<p>对于普通民众如何参与到碳减排工作中，杨东旭谈到：“双碳是个大概念，包括了我们未来生活、生产和发展形势与机遇；双碳工作和目标门槛高，因此可持续发展需要硬核的科技力量做强有力的支撑；把最前沿的科学变成大众的认知，把最先进的技术应用于发展建设，将有助于全社会真正走向低碳、可持续、高质量发展。”</p>
+<p>新京报零碳研究院研究员 陶野</p>
+<p>编辑 曲筱艺 李铮</p>
+<p>校对 薛京宁</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://paladin1893.github.io/2023/05/12/%E7%A2%B3%E8%B7%AF%E8%80%85-%E6%9D%A8%E4%B8%9C%E6%97%AD%EF%BC%9A%E7%A2%B3%E7%9B%91%E6%B5%8B%E8%83%8C%E5%90%8E%E7%A1%AC%E7%A7%91%E6%8A%80%E4%B8%AD%E5%9B%BD%E7%A2%B3%E5%8D%AB%E6%98%9F%E4%B8%BA%E7%A2%B3%E6%8E%92%E7%A7%B0%E9%87%8D/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%A2%B3%E6%8E%92%E6%94%BE%E7%9B%91%E6%B5%8B/" rel="tag">碳排放监测</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2023/05/13/%E7%A2%B3%E7%9B%91%E6%B5%8B%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF%E9%94%81%E7%A2%B3%E7%9A%84%E5%85%B3%E9%94%AE%E4%B8%80%E6%AD%A5/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            碳监测为什么是锁碳的关键一步
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2023/05/11/%E8%83%BD%E7%A2%B3%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B04/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">能碳管理平台4</div>
+      </a>
+    
+  </nav>
+
+  
+   
+    
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2022-2023
+        <i class="ri-heart-fill heart_icon"></i> paladin1893
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="帕拉丁的游鱼"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/friends">友链</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

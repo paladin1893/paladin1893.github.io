@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+       
+      <meta name="keywords" content="RS,GPS,GIS,QGIS,Opticks,QT,OpenCV,OSG" />
+       
+      <meta name="description" content="地理信息系统，遥感科学，卫星导航定位技术综合研究。" />
+      
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>大规模储能系统现状及未来 |  帕拉丁的游鱼</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/favicon.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    <link rel="alternate" href="/atom.xml" title="帕拉丁的游鱼" type="application/atom+xml">
+</head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-大规模储能系统现状及未来"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  大规模储能系统现状及未来
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/05/29/%E5%A4%A7%E8%A7%84%E6%A8%A1%E5%82%A8%E8%83%BD%E7%B3%BB%E7%BB%9F%E7%8E%B0%E7%8A%B6%E5%8F%8A%E6%9C%AA%E6%9D%A5/" class="article-date">
+  <time datetime="2023-05-29T09:37:29.000Z" itemprop="datePublished">2023-05-29</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">2.7k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">9 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>作者：严同<br>链接：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/20530503/answer/41904894">https://www.zhihu.com/question/20530503/answer/41904894</a><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+<h1 id="现有的储能系统及其不足之处"><a href="#现有的储能系统及其不足之处" class="headerlink" title="现有的储能系统及其不足之处"></a>现有的储能系统及其不足之处</h1><p>现有的储能系统主要分为五类：机械储能、电气储能、电化学储能、热储能和化学储能。目前世界占比最高的是抽水蓄能，其总装机容量规模达到了127GW，占总储能容量的99%，其次是压缩空气储能，总装机容量为440MW，排名第三的是钠硫电池，总容量规模为316MW。</p>
+<h2 id="1）机械储能"><a href="#1）机械储能" class="headerlink" title="1）机械储能"></a>1）机械储能</h2><p>机械储能主要包括抽水蓄能、压缩空气储能和飞轮储能等。</p>
+<ul>
+<li>抽水蓄能</li>
+</ul>
+<p>将电网低谷时利用过剩电力作为液态能量媒体的水从地势低的水库抽到地势高的水库，电网峰荷时高地势水库中的水回流到下水库推动水轮机发电机发电，效率一般为75%左右，俗称进4出3，具有日调节能力，用于调峰和备用。</p>
+<p>不足之处：选址困难，及其依赖地势；投资周期较大，损耗较高，包括抽蓄损耗+线路损耗；现阶段也受中国电价政策的制约，去年中国80%以上的抽蓄都晒太阳，去年八月发改委出了个关于抽蓄电价的政策，以后可能会好些，但肯定不是储能的发展趋势。</p>
+<ul>
+<li>压缩空气储能（CAES）</li>
+</ul>
+<p>压缩空气蓄能是利用电力系统负荷低谷时的剩余电量，由电动机带动空气压缩机，将空气压入作为储气室的密闭大容量地下洞穴，当系统发电量不足时，将压缩空气经换热器与油或天然气混合燃烧，导入燃气轮机作功发电。国外研究较多，技术成熟，我国开始稍晚，好像卢强院士对这方面研究比较多，什么冷电联产之类的。</p>
+<p>压缩空气储也有调峰功能，适合用于大规模风场，因为风能产生的机械功可以直接驱动压缩机旋转，减少了中间转换成电的环节，从而提高效率。</p>
+<p>不足之处：一大缺陷在于效率较低。原因在于空气受到压缩时温度会升高，空气释放膨胀的过程中温度会降低。在压缩空气过程中一部分能量以热能的形式散失，在膨胀之前就必须要重新加热。通常以天然气作为加热空气的热源，这就导致蓄能效率降低。还有可以想到的不足就是需要大型储气装置、一定的地质条件和依赖燃烧化石燃料。</p>
+<ul>
+<li>飞轮储能</li>
+</ul>
+<p>是利用高速旋转的飞轮将能量以动能的形式储存起来。需要能量时，飞轮减速运行，将存储的能量释放出来。飞轮储能其中的单项技术国内基本都有了(但和国外差距在10年以上)，难点在于根据不同的用途开发不同功能的新产品，因此飞轮储能电源是一种高技术产品但原始创新性并不足，这使得它较难获得国家的科研经费支持。</p>
+<p>不足之处：能量密度不够高、自放电率高，如停止充电，能量在几到几十个小时内就会自行耗尽。只适合于一些细分市场，比如高品质不间断电源等。</p>
+<h2 id="2）电气储能"><a href="#2）电气储能" class="headerlink" title="2）电气储能"></a>2）电气储能</h2><ul>
+<li>超级电容器储能</li>
+</ul>
+<p>用活性炭多孔电极和电解质组成的双电层结构获得超大的电容量。与利用化学反应的蓄电池不同，超级电容器的充放电过程始终是物理过程。充电时间短、使用寿命长、温度特性好、节约能源和绿色环保。超级电容没有太复杂的东西，就是电容充电，其余就是材料的问题，目前研究的方向是能否做到面积很小，电容更大。超级电容器的发展还是很快的，目前石墨烯材料为基础的新型超级电容器，非常火。</p>
+<p>Tesla首席执行官Elon Musk 早在2011年就表示，传统电动汽车的电池已经过时，未来以超级电容器为动力系统的新型汽车将取而代之。</p>
+<p>不足之处：和电池相比，其能量密度导致同等重量下储能量相对较低，直接导致的就是续航能力差，依赖于新材料的诞生，比如石墨烯。</p>
+<ul>
+<li>超导储能（SMES）</li>
+</ul>
+<p>利用超导体的电阻为零特性制成的储存电能的装置。超导储能系统大致包括超导线圈、低温系统、功率调节系统和监控系统4大部分。超导材料技术开发是超导储能技术的重中之重。超导材料大致可分为低温超导材料、高温超导材料和室温超导材料。</p>
+<p>不足之处：超导储能的成本很高（材料和低温制冷系统），使得它的应用受到很大限制。可靠性和经济性的制约，商业化应用还比较远。</p>
+<h2 id="3）电化学储能"><a href="#3）电化学储能" class="headerlink" title="3）电化学储能"></a>3）电化学储能</h2><ul>
+<li>铅酸电池</li>
+</ul>
+<p>是一种电极主要由铅及其氧化物制成，电解液是硫酸溶液的蓄电池。目前在世界上应用广泛，循环寿命可达1000次左右，效率能达到80%-90%，性价比高，常用于电力系统的事故电源或备用电源。</p>
+<p>不足之处：如果深度、快速大功率放电时，可用容量会下降。其特点是能量密度低，寿命短。铅酸电池今年通过将具有超级活性的炭材料添加到铅酸电池的负极板上，将其循环寿命提高很多。</p>
+<ul>
+<li>锂离子电池</li>
+</ul>
+<p>是一类由锂金属或锂合金为负极材料、使用非水电解质溶液的电池。主要应用于便携式的移动设备中，其效率可达95%以上，放电时间可达数小时，循环次数可达5000次或更多，响应快速，是电池中能量最高的实用性电池，目前来说用的最多。近年来技术也在不断进行升级，正负极材料也有多种应用。</p>
+<p>市场上主流的动力锂电池分为三大类：钴酸锂电池、锰酸锂电池和磷酸铁锂电池。前者能量密度高，但是安全性稍差，后者相反，国内电动汽车比如比亚迪，目前大多采用磷酸铁锂电池。但是好像老外都在玩三元锂电池和磷酸铁锂电池？</p>
+<ul>
+<li>锂硫电池</li>
+</ul>
+<p>锂硫电池也很火，是以硫元素作为正极、金属锂作为负极的一种电池，其理论比能量密度可达2600wh/kg，实际能量密度可达450wh/kg。但如何大幅提高该电池的充放电循环寿命、使用安全性也是很大的问题。</p>
+<p>不足之处：存在价格高（4 元/wh）、过充导致发热、燃烧等安全性问题，需要进行充电保护。</p>
+<ul>
+<li>钠硫电池</li>
+</ul>
+<p>是一种以金属钠为负极、硫为正极、陶瓷管为电解质隔膜的二次电池。循环周期可达到4500次，放电时间6-7小时，周期往返效率75%，能量密度高，响应时间快。目前在日本、德国、法国、美国等地已建有200多处此类储能电站，主要用于负荷调平，移峰和改善电能质量。</p>
+<p>不足之处：因为使用液态钠，运行于高温下，容易燃烧。而且万一电网没电了，还需要柴油发电机帮助维持高温，或者帮助满足电池降温的条件。</p>
+<ul>
+<li>液流电池</li>
+</ul>
+<p>利用正负极电解液分开，各自循环的一种高性能蓄电池。电池的功率和能量是不相关的，储存的能量取决于储存罐的大小，因而可以储存长达数小时至数天的能量，容量可达MW级。这个电池有多个体系，如铁铬体系，锌溴体系、多硫化钠溴体系以及全钒体系，其中钒电池最火吧。</p>
+<p>不足之处：电池体积太大；电池对环境温度要求太高；价格贵（这个可能是短期现象吧）；系统复杂（又是泵又是管路什么的，这不像锂电等非液流电池那么简单）。</p>
+<p>电池储能都存在或多或少的环保问题。</p>
+<h2 id="4）热储能热储能："><a href="#4）热储能热储能：" class="headerlink" title="4）热储能热储能："></a>4）热储能热储能：</h2><p>热储能系统中，热能被储存在隔热容器的媒介中，需要的时候转化回电能，也可直接利用而不再转化回电能。热储能又分为显热储能和潜热储能。热储能储存的热量可以很大，所以可利用在可再生能源发电上。</p>
+<p>不足之处：热储能要各种高温化学热工质，用用场合比较受限。</p>
+<h2 id="5）化学类储能"><a href="#5）化学类储能" class="headerlink" title="5）化学类储能"></a>5）化学类储能</h2><p>化学类储能：利用氢或合成天然气作为二次能源的载体，利用多余的电制氢，可以直接用氢作为能量的载体，也可以将其与二氧化碳反应成为合成天然气（甲烷），氢或者合成天然气除了可用于发电外，还有其他利用方式如交通等。德国热衷于推动此技术，并有示范项目投入运行。</p>
+<p>不足之处：全周期效率较低，制氢效率仅 40%，合 成天然气的效率不到 35%。引用个前人的总结：</p>
+<p>总体来说，目前研究发展主要还是集中于超级电容和电池（锂电池、液流电池）上。材料领域的突破才是关键。</p>
+<h1 id="可靠储能后的电网会是什么样"><a href="#可靠储能后的电网会是什么样" class="headerlink" title="可靠储能后的电网会是什么样"></a>可靠储能后的电网会是什么样</h1><p>1）支撑实现能源互联网，智能电网。储能是智能电网实现能量双向互动的重要设备。没有储能，完整的智能电网无从谈起。</p>
+<p>2）利用储能技术面对新能源考验主要就是平抑、稳定风能、太阳能等间歇式可再生能源发电的输出功率，提高电网接纳间歇式可再生能源能力。</p>
+<p>3）减小峰谷差，提高设备利用率电网企业在调峰和供电压力得到缓解的同时，可获取更多的高峰负荷收益。</p>
+<p>4）提高电网安全可靠性和电能质量提供应急电源;减少因各种暂态电能质量问题造成的损失。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://paladin1893.github.io/2023/05/29/%E5%A4%A7%E8%A7%84%E6%A8%A1%E5%82%A8%E8%83%BD%E7%B3%BB%E7%BB%9F%E7%8E%B0%E7%8A%B6%E5%8F%8A%E6%9C%AA%E6%9D%A5/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%94%B5%E5%8A%9B/" rel="tag">电力</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2023/05/30/%E8%83%BD%E6%BA%90%E4%BA%92%E8%81%94%E7%BD%91/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            能源互联网
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2023/05/28/%E5%85%85%E7%94%B5%E7%AB%99%E8%A7%84%E5%88%92/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">充电站规划</div>
+      </a>
+    
+  </nav>
+
+  
+   
+    
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2022-2023
+        <i class="ri-heart-fill heart_icon"></i> paladin1893
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="帕拉丁的游鱼"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/friends">友链</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

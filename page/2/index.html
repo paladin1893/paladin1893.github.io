@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+       
+      <meta name="keywords" content="RS,GPS,GIS,QGIS,Opticks,QT,OpenCV,OSG" />
+       
+      <meta name="description" content="地理信息系统，遥感科学，卫星导航定位技术综合研究。" />
+      
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title> 帕拉丁的游鱼</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/favicon.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    <link rel="alternate" href="/atom.xml" title="帕拉丁的游鱼" type="application/atom+xml">
+</head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      
+<section class="cover">
+    
+  <div class="cover-frame">
+    <div class="bg-box">
+      <img src="/images/cover1.jpg" alt="image frame" />
+    </div>
+    <div class="cover-inner text-center text-white">
+      <h1><a href="/">帕拉丁的游鱼</a></h1>
+      <div id="subtitle-box">
+        
+        <span id="subtitle"></span>
+        
+      </div>
+      <div>
+        
+      </div>
+    </div>
+  </div>
+  <div class="cover-learn-more">
+    <a href="javascript:void(0)" class="anchor"><i class="ri-arrow-down-line"></i></a>
+  </div>
+</section>
+
+
+
+<script src="https://cdn.staticfile.org/typed.js/2.0.12/typed.min.js"></script>
+
+
+<!-- Subtitle -->
+
+  <script>
+    try {
+      var typed = new Typed("#subtitle", {
+        strings: ['面朝大海，春暖花开', '愿你一生努力，一生被爱', '想要的都拥有，得不到的都释怀'],
+        startDelay: 0,
+        typeSpeed: 200,
+        loop: true,
+        backSpeed: 100,
+        showCursor: true
+      });
+    } catch (err) {
+      console.log(err)
+    }
+  </script>
+  
+<div id="main">
+  <section class="outer">
+  
+  
+  
+
+<div class="notice" style="margin-top:50px">
+    <i class="ri-heart-fill"></i>
+    <div class="notice-content" id="broad"></div>
+</div>
+<script type="text/javascript">
+    fetch('https://v1.hitokoto.cn')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("broad").innerHTML = data.hitokoto;
+        })
+        .catch(console.error)
+</script>
+
+<style>
+    .notice {
+        padding: 20px;
+        border: 1px dashed #e6e6e6;
+        color: #969696;
+        position: relative;
+        display: inline-block;
+        width: 100%;
+        background: #fbfbfb50;
+        border-radius: 10px;
+    }
+
+    .notice i {
+        float: left;
+        color: #999;
+        font-size: 16px;
+        padding-right: 10px;
+        vertical-align: middle;
+        margin-top: -2px;
+    }
+
+    .notice-content {
+        display: initial;
+        vertical-align: middle;
+    }
+</style>
+  
+  <article class="articles">
+    
+    
+    
+    
+    <article
+  id="post-最新docker部署gitlab指南"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/07/28/%E6%9C%80%E6%96%B0docker%E9%83%A8%E7%BD%B2gitlab%E6%8C%87%E5%8D%97/"
+    >最新docker部署gitlab指南</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/07/28/%E6%9C%80%E6%96%B0docker%E9%83%A8%E7%BD%B2gitlab%E6%8C%87%E5%8D%97/" class="article-date">
+  <time datetime="2023-07-28T06:21:15.000Z" itemprop="datePublished">2023-07-28</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><p><a target="_blank" rel="noopener" href="https://docs.gitlab.cn/jh/install/docker.html">极狐GitLab Docker 镜像</a></p>
+<h1 id="拉取镜像"><a href="#拉取镜像" class="headerlink" title="拉取镜像"></a>拉取镜像</h1><pre><code>sudo docker pull gitlab/gitlab-ce:latest
+</code></pre>
+<h1 id="安装容器"><a href="#安装容器" class="headerlink" title="安装容器"></a>安装容器</h1><pre><code>sudo docker run --detach \
+  --hostname 192.168.10.33 \
+  --publish 9443:443 --publish 9980:80 --publish 9822:22 \
+  --name gitlab \
+  --restart always \
+  --volume /home/gitlab/config:/etc/gitlab \
+  --volume /home/gitlab/logs:/var/log/gitlab \
+  --volume /home/gitlab/data:/var/opt/gitlab \
+  gitlab/gitlab-ce:latest
+</code></pre>
+<h1 id="查看日志"><a href="#查看日志" class="headerlink" title="查看日志"></a>查看日志</h1><pre><code>，可以用容器名，也可以用容器id
+
+sudo docker logs -f gitlab
+</code></pre>
+<h1 id="进入容器"><a href="#进入容器" class="headerlink" title="进入容器"></a>进入容器</h1><pre><code>sudo docker exec -it gitlab /bin/bash
+</code></pre>
+<h1 id="修改root密码"><a href="#修改root密码" class="headerlink" title="修改root密码"></a>修改root密码</h1><ol>
+<li>切换到相应路径下: cd /opt/gitlab/bin/</li>
+<li>打开控制台: gitlab-rails console -e production</li>
+<li>查询用户账号信息并赋值给u: u=User.where(id:1).first</li>
+<li>设置该用户名的密码: u.password=’Demo9999’</li>
+<li>确认密码: u.password_confirmation=’Demo9999’</li>
+<li>保存信息： u.save </li>
+<li>退出: exit</li>
+</ol>
+<h1 id="修改外部访问地址"><a href="#修改外部访问地址" class="headerlink" title="修改外部访问地址"></a>修改外部访问地址</h1><pre><code>vi /etc/gitlab/gitlab.rb
+
+external_url &#39;http://192.168.10.33:9980&#39;
+gitlab_rails[&#39;gitlab_ssh_host&#39;]=&#39;192.168.10.33&#39;
+gitlab_rails[&#39;gitlab_shell_ssh_port&#39;]=&#39;9822&#39;
+gitlab_rails[&#39;time_zone&#39;] = &#39;Asia/Shanghai&#39;
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/" rel="tag">Docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GitLab/" rel="tag">GitLab</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-最新centos部署docker指南"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/07/27/%E6%9C%80%E6%96%B0centos%E9%83%A8%E7%BD%B2docker%E6%8C%87%E5%8D%97/"
+    >最新centos部署docker指南</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/07/27/%E6%9C%80%E6%96%B0centos%E9%83%A8%E7%BD%B2docker%E6%8C%87%E5%8D%97/" class="article-date">
+  <time datetime="2023-07-27T02:42:32.000Z" itemprop="datePublished">2023-07-27</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>2023年7月之后，Docker Compose V1不再更新，与后续新版Docker Destop也不再适配。<br>取而代之，当前支持的Docker Desktop均使用Docker Compose V2。</p>
+<h1 id="参考文档："><a href="#参考文档：" class="headerlink" title="参考文档："></a>参考文档：</h1><p><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/install/centos/">Install Docker Engine on CentOS</a><br><a target="_blank" rel="noopener" href="https://docs.docker.com/compose/install/">Overview of installing Docker Compose</a></p>
+<h1 id="安装命令"><a href="#安装命令" class="headerlink" title="安装命令"></a>安装命令</h1><p>整理如下：</p>
+<pre><code>sudo yum remove docker \
+                  docker-client \
+                  docker-client-latest \
+                  docker-common \
+                  docker-latest \
+                  docker-latest-logrotate \
+                  docker-logrotate \
+                  docker-engine
+
+sudo yum install -y yum-utils
+sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+sudo yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+
+sudo yum install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+</code></pre>
+<h1 id="查看版本："><a href="#查看版本：" class="headerlink" title="查看版本："></a>查看版本：</h1><pre><code>sudo docker -v
+sudo docker compose version
+</code></pre>
+<h1 id="启动docker"><a href="#启动docker" class="headerlink" title="启动docker"></a>启动docker</h1><pre><code>sudo systemctl start docker
+sudo systemctl enable docker
+</code></pre>
+<h1 id="测试docker"><a href="#测试docker" class="headerlink" title="测试docker"></a>测试docker</h1><pre><code>sudo docker run hello-world
+</code></pre>
+<h1 id="查看docker容器"><a href="#查看docker容器" class="headerlink" title="查看docker容器"></a>查看docker容器</h1><pre><code>sudo docker ps
+sudo docker ps | grep zentao
+</code></pre>
+<h1 id="查看docker容器日志，XXXXXX可以是容器名字，也可以是容器id"><a href="#查看docker容器日志，XXXXXX可以是容器名字，也可以是容器id" class="headerlink" title="查看docker容器日志，XXXXXX可以是容器名字，也可以是容器id"></a>查看docker容器日志，XXXXXX可以是容器名字，也可以是容器id</h1><pre><code>docker logs -f XXXXXX
+</code></pre>
+<h1 id="进入容器操作"><a href="#进入容器操作" class="headerlink" title="进入容器操作"></a>进入容器操作</h1><pre><code>sudo docker exec -it gitlab /bin/bash
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS7/" rel="tag">CentOS7</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/" rel="tag">Docker</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-oracle统计字符串包含字符个数"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/07/26/oracle%E7%BB%9F%E8%AE%A1%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%85%E5%90%AB%E5%AD%97%E7%AC%A6%E4%B8%AA%E6%95%B0/"
+    >oracle统计字符串包含字符个数</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/07/26/oracle%E7%BB%9F%E8%AE%A1%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%85%E5%90%AB%E5%AD%97%E7%AC%A6%E4%B8%AA%E6%95%B0/" class="article-date">
+  <time datetime="2023-07-26T12:32:26.000Z" itemprop="datePublished">2023-07-26</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>函数：REGEXP_COUNT();</p>
+<pre><code>select REGEXP_COUNT(&#39;1,2,6,8,7,9&#39;,&#39;,&#39;) from dual
+
+结果：5
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Jetbrains/" rel="tag">Jetbrains</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-Jetbrains软件下载地址"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/07/25/Jetbrains%E8%BD%AF%E4%BB%B6%E4%B8%8B%E8%BD%BD%E5%9C%B0%E5%9D%80/"
+    >Jetbrains软件下载地址</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/07/25/Jetbrains%E8%BD%AF%E4%BB%B6%E4%B8%8B%E8%BD%BD%E5%9C%B0%E5%9D%80/" class="article-date">
+  <time datetime="2023-07-25T13:23:12.000Z" itemprop="datePublished">2023-07-25</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>IDEA</p>
+<p><a target="_blank" rel="noopener" href="https://www.jetbrains.com/idea/download/other.html">https://www.jetbrains.com/idea/download/other.html</a></p>
+<p>WebStorm</p>
+<p><a target="_blank" rel="noopener" href="https://www.jetbrains.com/webstorm/download/other.html">https://www.jetbrains.com/webstorm/download/other.html</a></p>
+<p>Pycharm</p>
+<p><a target="_blank" rel="noopener" href="https://www.jetbrains.com/pycharm/download/other.html">https://www.jetbrains.com/pycharm/download/other.html</a></p>
+<p>Goland</p>
+<p><a target="_blank" rel="noopener" href="https://www.jetbrains.com/go/download/other.html">https://www.jetbrains.com/go/download/other.html</a></p>
+<p>Clion</p>
+<p><a target="_blank" rel="noopener" href="https://www.jetbrains.com/clion/download/other.html">https://www.jetbrains.com/clion/download/other.html</a></p>
+<p>其他软件，可访问官网【jetbrains.com】查找并下载<br>选择对应版本下载</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Jetbrains/" rel="tag">Jetbrains</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-CentOS7修改SSH默认端口22教程"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/07/24/CentOS7%E4%BF%AE%E6%94%B9SSH%E9%BB%98%E8%AE%A4%E7%AB%AF%E5%8F%A322%E6%95%99%E7%A8%8B/"
+    >CentOS7修改SSH默认端口22教程</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/07/24/CentOS7%E4%BF%AE%E6%94%B9SSH%E9%BB%98%E8%AE%A4%E7%AB%AF%E5%8F%A322%E6%95%99%E7%A8%8B/" class="article-date">
+  <time datetime="2023-07-24T04:28:48.000Z" itemprop="datePublished">2023-07-24</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>1.先查看防火墙状态</p>
+<pre><code>systemctl status firewalld    #查看防火墙状态
+</code></pre>
+<p>不建议关闭防火墙，测试服务器可以关闭省事</p>
+<pre><code>systemctl stop firewalld     #关闭防火墙
+systemctl disable firewalld #禁止开机启动
+</code></pre>
+<p>关闭封火墙存在很大的风险，生产环境强烈建议不要关闭。</p>
+<p>2、想好你要修改的端口，这里我以修改默认端口22为2222为例。</p>
+<p>可以通过以下命令授权开放端口：开放2222端口</p>
+<pre><code>firewall-cmd --permanent --add-port=2222/tcp
+</code></pre>
+<p>3、修改ssh端口</p>
+<pre><code>vi /etc/ssh/sshd_config
+Port 2222    //去掉前面的#号，然后把22改成你要的端口，最大别超过65535
+</code></pre>
+<p>wq保存退出。</p>
+<p>4、SELinux设置</p>
+<p>如果SELinux未开启可跳过直接重启防火墙和sshd服务即可。默认SELinux都是开启的。</p>
+<p>设置SELinux允许SSH监听新的自定义SSH端口</p>
+<pre><code>semanage port -a -t ssh_port_t -p tcp 2222
+</code></pre>
+<p>如果提示semanage没安装，可以执行下面的命令安装。</p>
+<pre><code>yum -y install policycoreutils-python             //安装后就可以使用semanage命令了。
+</code></pre>
+<p>接下来执行以下命令查看SELinux下SSH相关端口是不是成功修改为自定义SSH端口</p>
+<pre><code>semanage port -l|grep ssh
+ssh_port_t tcp 2222, 22              //这么显示说明端口已经修改了。
+</code></pre>
+<p>第⑤步：重启SSH服务和防火墙</p>
+<pre><code>systemctl restart sshd       //重启SSH
+systemctl restart firewalld.service     //重启防火墙
+</code></pre>
+<p>步骤全部完成，可以打开新的putty客户端通过新端口测试下。</p>
+<p>如果不行，可联系售后 进去检查配置。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS7/" rel="tag">CentOS7</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-WebGIS开源时空架构方案"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/07/23/WebGIS%E5%BC%80%E6%BA%90%E6%97%B6%E7%A9%BA%E6%9E%B6%E6%9E%84%E6%96%B9%E6%A1%88/"
+    >WebGIS开源时空架构方案</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/07/23/WebGIS%E5%BC%80%E6%BA%90%E6%97%B6%E7%A9%BA%E6%9E%B6%E6%9E%84%E6%96%B9%E6%A1%88/" class="article-date">
+  <time datetime="2023-07-23T05:10:12.000Z" itemprop="datePublished">2023-07-23</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h1><p>一套WebGIS架构方案包含以下几个基本要素：</p>
+<h2 id="1-前端框架"><a href="#1-前端框架" class="headerlink" title="1. 前端框架"></a>1. 前端框架</h2><p>前端框架选择主要考虑到易用性、维护性和功能性。目前比较流行的前端框架有Vue、React和Angular等，其中Vue最为轻量级、易上手和扩展性好，因此可以选择Vue作为前端框架。</p>
+<h2 id="2-后端框架"><a href="#2-后端框架" class="headerlink" title="2. 后端框架"></a>2. 后端框架</h2><p>后端框架主要负责处理数据接口请求和数据存储。根据项目规模和需求，可以选择Flask、Django、Express、Spring等框架。其中，Flask是一款轻量级、灵活的框架，易于搭建，因此可以选择Flask作为后端框架。</p>
+<h2 id="3-数据库选择"><a href="#3-数据库选择" class="headerlink" title="3. 数据库选择"></a>3. 数据库选择</h2><p>数据库主要用于存储和管理各种数据，包括地理空间数据、非地理空间数据等。目前较为常见的数据库有MySQL、PostgreSQL、MongoDB等，其中PostgreSQL是一款可扩展性和稳定性较好的数据库，支持地理空间数据的存储和查询，因此可以选择PostgreSQL作为数据库。</p>
+<h2 id="4-数据库管理工具"><a href="#4-数据库管理工具" class="headerlink" title="4. 数据库管理工具"></a>4. 数据库管理工具</h2><p>数据库管理工具可以方便地对数据库进行管理、维护和优化。目前比较优质的数据库管理工具有PgAdmin、Navicat等，其中PgAdmin是一款免费且开源的数据库管理工具，支持PostgreSQL的管理和维护。</p>
+<h2 id="5-地图渲染引擎"><a href="#5-地图渲染引擎" class="headerlink" title="5. 地图渲染引擎"></a>5. 地图渲染引擎</h2><p>地图渲染引擎负责将地理空间数据转换为可视化的地图，并提供丰富的地图交互功能。目前较为流行的地图渲染引擎有Mapbox、Leaflet、OpenLayers等，其中Leaflet是一款轻量级、易扩展的地图渲染引擎，提供丰富的地图渲染和交互功能，因此可以选择Leaflet作为地图渲染引擎。</p>
+<h2 id="6-地理编码服务"><a href="#6-地理编码服务" class="headerlink" title="6. 地理编码服务"></a>6. 地理编码服务</h2><p>地理编码服务主要用于将地址转换为经纬度坐标或者将经纬度坐标转换为地址。目前市面上比较好的地理编码服务有Google Maps API、ArcGIS Online等，其中Google Maps API是一款大众使用的地理编码服务，免费版可以提供较准确的地址解析和逆地址解析功能，因此可以选择Google Maps API作为地理编码服务。</p>
+<h2 id="7-部署环境"><a href="#7-部署环境" class="headerlink" title="7. 部署环境"></a>7. 部署环境</h2><p>部署环境在开源WebGIS方案中也是十分关键的，可以选择Linux操作系统、Nginx服务器和Docker容器。其中，Linux操作系统是开源、快速、安全和稳定的操作系统，适用于部署Web应用、网络服务器等；Nginx服务器是一款高性能的Web服务器和反向代理服务器，可以提高Web应用程序的性能和规模化适应能力；Docker容器是一款轻量级、移植性强的容器技术平台，可以确保应用程序在任何环境下都能够正常运行。</p>
+<p>以此为基本架构，可以根据实际情况进行灵活的定制和优化，以满足项目需求。</p>
+<p>目前国际上著名的地理空间信息生产商大都拥有了成熟的产品线， 基本涵盖了从数据采集、数据编辑、数据管理、空间数据互操作、空间分析到网络地理信息服务注册、发布、聚合等所有地理信息工程相关的功能模块 。有时候，在商业软件价格比较昂贵的情况下，使用开源WebGIS也是一个不错的选择。</p>
+<h1 id="二、开源WebGIS架构"><a href="#二、开源WebGIS架构" class="headerlink" title="二、开源WebGIS架构"></a>二、开源WebGIS架构</h1><p>一套开源WebGIS架构方案包含以下三个部分：</p>
+<h2 id="2-1-地理信息数据库和业务数据库"><a href="#2-1-地理信息数据库和业务数据库" class="headerlink" title="2.1 地理信息数据库和业务数据库"></a>2.1 地理信息数据库和业务数据库</h2><p>地理信息数据库用于存储地理信息数据（包含矢量、地名地址、专题及瓦片数据）；<br>业务数据库用于存储前端网站或者行业应用的关系型数据；</p>
+<h2 id="2-2-GIS服务器"><a href="#2-2-GIS服务器" class="headerlink" title="2.2 GIS服务器"></a>2.2 GIS服务器</h2><p>GIS服务器则用于提供WMS、WTMS、WFS和WCS等GIS服务；</p>
+<h2 id="2-3-Web应用服务器"><a href="#2-3-Web应用服务器" class="headerlink" title="2.3 Web应用服务器"></a>2.3 Web应用服务器</h2><p>Web应用服务器主要针对行业应用，用于调取GIS服务和后台的业务数据，并在前端展示。</p>
+<p>提供Web信息浏览服务，通常你看到的是一个网站。</p>
+<h2 id="2-4-开源WebGIS解决方案"><a href="#2-4-开源WebGIS解决方案" class="headerlink" title="2.4 开源WebGIS解决方案"></a>2.4 开源WebGIS解决方案</h2><p>针对WebGIS以上组成部分，一套开源WebGIS有着相应的解决方案，其架构方式如下 ：</p>
+<p>数据生产（桌面软件–uDig、QGIS等）<br>数据存储（关系型或非关系型数据库：postgreSQL、mySQL、mongodb）<br>GIS服务（GIS服务器：mapserver、Geoserver）<br>Web服务（Web服务器：tomcat、apache、nginx）<br>前端渲染（OpenLayers 、cesium、mapbox、leaflet）<br>当然还需要提供这一整套架构方式的外围软件环境：</p>
+<p>虚拟化或者云环境(VirtualBox、OpenStack、docker)<br>操作系统（linux：centos、ubuntu）<br>堡垒机( teleport )<br>运维系统( spug )<br>Nas服务器(TrueNas)</p>
+<ul>
+<li>2.4.1 地图数据生产</li>
+</ul>
+<p>使用uDig、QGIS、Grass等开源桌面GIS软件采集、加工地理信息数据<br>uDig：<a target="_blank" rel="noopener" href="http://udig.refractions.net/">http://udig.refractions.net/</a><br>QGIS：<a target="_blank" rel="noopener" href="https://www.qgis.org/">https://www.qgis.org/</a><br>Grass：<a target="_blank" rel="noopener" href="https://grass.osgeo.org/">https://grass.osgeo.org/</a><br>OpenEV：<a target="_blank" rel="noopener" href="http://openev.sourceforge.net/">http://openev.sourceforge.net/</a><br>gvSIG ：<a target="_blank" rel="noopener" href="http://www.gvsig.com/">http://www.gvsig.com/</a><br>OpenJUMP：<a target="_blank" rel="noopener" href="http://www.openjump.org/">http://www.openjump.org/</a><br>OSSIM：<a target="_blank" rel="noopener" href="http://trac.osgeo.org/ossim/">http://trac.osgeo.org/ossim/</a><br>InterImage：<a target="_blank" rel="noopener" href="http://www.lvc.ele.puc-rio.br/projects/interimage/%EF%BC%88%E4%B8%93%E6%B3%A8%E5%BD%B1%E5%83%8F%E8%A7%A3%E8%AF%91%EF%BC%89">http://www.lvc.ele.puc-rio.br/projects/interimage/（专注影像解译）</a><br>PolSARPro：<a target="_blank" rel="noopener" href="https://earth.esa.int/web/polsarpro%EF%BC%88%E6%9E%81%E5%8C%96%E9%9B%B7%E8%BE%BE%E5%A4%84%E7%90%86%EF%BC%89">https://earth.esa.int/web/polsarpro（极化雷达处理）</a><br>E-foto：<a target="_blank" rel="noopener" href="http://www.efoto.eng.uerj.br/en">http://www.efoto.eng.uerj.br/en</a> 航空摄影测量</p>
+<ul>
+<li>2.4.2 地理信息数据存储</li>
+</ul>
+<p>关系型数据使用PostGIS或者MySQL Spatial数据库存储地理信息数据和关系型业务数据，</p>
+<p>非关系型数据使用mongodb数据库（瓦片、图像）<br>PostGIS：<a target="_blank" rel="noopener" href="http://postgis.net/">http://postgis.net/</a><br>PostgreSQL：<a target="_blank" rel="noopener" href="https://www.postgresql.org/">https://www.postgresql.org/</a><br>MySQL：<a target="_blank" rel="noopener" href="https://www.mysql.com/">https://www.mysql.com</a><br>mongodb ：<a target="_blank" rel="noopener" href="https://www.mongodb.com/">https://www.mongodb.com/</a><br>rasdaman：<a target="_blank" rel="noopener" href="http://www.rasdaman.org/">http://www.rasdaman.org/</a> （栅格数据库）<br>SpatiaLite:<a target="_blank" rel="noopener" href="http://www.gaia-gis.it/gaia-sins/">http://www.gaia-gis.it/gaia-sins/</a> (轻量级数据库SQLite空间扩展)</p>
+<ul>
+<li>2.4.3 GIS服务器</li>
+</ul>
+<p>使用GeoServer、MapServer生产地图瓦片，注册、发布地理信息服务。</p>
+<p>GeoServer：<a target="_blank" rel="noopener" href="http://geoserver.org/">http://geoserver.org/</a><br>MapServer：<a target="_blank" rel="noopener" href="http://mapserver.org/">http://mapserver.org/</a><br>Mapnik：<a target="_blank" rel="noopener" href="http://mapnik.org/">http://mapnik.org/</a><br>TileCache：<a target="_blank" rel="noopener" href="http://tilecache.org/">http://tilecache.org/</a><br>MapTiler:<a target="_blank" rel="noopener" href="https://www.maptiler.com/">https://www.maptiler.com/</a></p>
+<ul>
+<li>2.4.4 Web服务器应用</li>
+</ul>
+<p>使用Geomajas、Tomcat或apache搭建网站，在网页中嵌入地图容器加载地图；使用niginx作为反向代理或者负载均衡。</p>
+<p>Tomcat：<a target="_blank" rel="noopener" href="http://tomcat.apache.org/">http://tomcat.apache.org/</a> （网站服务器）<br>apache:<a target="_blank" rel="noopener" href="https://www.apache.org/(apache%E5%8D%B3%E5%8F%AF%E5%81%9A%E7%BD%91%E7%AB%99%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8F%88%E5%8F%AF%E4%BD%9C%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E3%80%81%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1)">https://www.apache.org/(apache即可做网站服务器又可作反向代理、负载均衡)</a><br>nginx：<a target="_blank" rel="noopener" href="http://nginx.org/">http://nginx.org/</a> （负载均衡、反向代理）</p>
+<p>地图网站专用服务器<br>GeoMoose：<a target="_blank" rel="noopener" href="https://demo.geomoose.org/">https://demo.geomoose.org/</a><br>Geomajas：<a target="_blank" rel="noopener" href="http://www.geomajas.org/">http://www.geomajas.org/</a></p>
+<ul>
+<li>2.4.5 个人客户端或者web应用服务器的前端展示：</li>
+</ul>
+<p>地理信息服务使用OpenScales、支持Java的Openlayers或Leaflet地图容器前端展示。前端其他数据展示使用Java、vue等流行网页API。</p>
+<p>openlayers(Java): <a target="_blank" rel="noopener" href="http://openlayers.org/">http://openlayers.org/</a><br>openscales(Flex): <a target="_blank" rel="noopener" href="http://openscales.org/">http://openscales.org/</a><br>LeafLet：<a target="_blank" rel="noopener" href="https://leafletjs.com/">https://leafletjs.com</a><br>Cesium:<a target="_blank" rel="noopener" href="https://github.com/CesiumGS/cesium">https://github.com/CesiumGS/cesium</a><br>ol-cesium:<a target="_blank" rel="noopener" href="https://openlayers.org/ol-cesium/">https://openlayers.org/ol-cesium/</a><br>注：这里的web应用服务器相对于GIS服务器而言是客户端，相对于浏览者而言是服务器。</p>
+<p>以上给出使用开源软件实现WebGIS各个环节可采用的软件，在实际项目中，应根据项目需要做一下筛选。</p>
+<p>比如：uDig (QGIS)+ PostgreSQL/PostGIS （mongodb）+ GeoServer + Tomcat +Openlayers组合。</p>
+<p>倘若有高性能、高可用的需求，还应使用集群技术，搭建数据库集群、GIS服务器集群和web应用服务器集群生态，增加服务的冗余，提高服务性能，毕竟地图服务不是简单的网页服务，其消耗的资源是非常大的，即便是一个空间查询语句，对数据库的性能消耗也是非常可观的。</p>
+<h1 id="三、开源地理数据函数库"><a href="#三、开源地理数据函数库" class="headerlink" title="三、开源地理数据函数库"></a>三、开源地理数据函数库</h1><p>以下列出所有开源软地理信息软件或者商业地理信息软件都可能有到的开源地理信息函数库。其中，GDAL/ORG、PROJ.4、GEOS是地理信息软件或者系统开发的三架马车，它们搭建了地理信息软件的基础。</p>
+<p>GDAL/OGR:<a target="_blank" rel="noopener" href="https://gdal.org/">https://gdal.org/</a> 开源栅格/矢量空间数据转换库<br>PROJ.4:<a target="_blank" rel="noopener" href="https://proj.org/">https://proj.org/</a> 地图投影库<br>GEOS:<a target="_blank" rel="noopener" href="http://trac.osgeo.org/geos">http://trac.osgeo.org/geos</a> 开源地理空间数据引擎<br>pyshp:<a target="_blank" rel="noopener" href="https://pypi.org/project/pyshp/">https://pypi.org/project/pyshp/</a> 用于处理shapfile的简单函数库<br>Shapely:<a target="_blank" rel="noopener" href="https://pypi.org/project/Shapely/">https://pypi.org/project/Shapely/</a> 基于 GEOS，用于操作和分析平面几何对象的函数库<br>Fiona:<a target="_blank" rel="noopener" href="https://pypi.org/project/Fiona/">https://pypi.org/project/Fiona/</a> 基于GDAL,用于读取空间矢量数据的函数库<br>Rasterio:<a target="_blank" rel="noopener" href="https://pypi.org/project/rasterio/">https://pypi.org/project/rasterio/</a> 基于GDAL和Numpy，用于读取地理空间栅格数据的函数库<br>PIL:<a target="_blank" rel="noopener" href="https://pypi.org/project/PIL/">https://pypi.org/project/PIL/</a> 用于处理影像的python库<br>NumPy：<a target="_blank" rel="noopener" href="https://pypi.org/project/numpy/">https://pypi.org/project/numpy/</a> 用于矩阵科学计算的函数库<br>Scikit-image：基于scipy的一款图像处理python库<br>GeoPandas:<a target="_blank" rel="noopener" href="http://geopandas.org/">http://geopandas.org/</a> 用于空间分析的函数库<br>SPy:<a target="_blank" rel="noopener" href="http://www.spectralpython.net/">http://www.spectralpython.net/</a> 用于高光谱遥感影像处理的python库<br>GML4J：<a target="_blank" rel="noopener" href="http://gml4j.sourceforge.net/">http://gml4j.sourceforge.net/</a> 用于读取gml数据的函数库<br>GSLIB：<a target="_blank" rel="noopener" href="http://www.gslib.com/">http://www.gslib.com/</a> 用于空间统计的函数库<br>JTS：<a target="_blank" rel="noopener" href="https://sourceforge.net/projects/jts-topo-suite/">https://sourceforge.net/projects/jts-topo-suite/</a> （支持JAVA的空间分析包）<br>GeoTools：<a target="_blank" rel="noopener" href="https://www.geotools.org/">https://www.geotools.org/</a> （支持JAVA的地理处理工具箱）<br>GeoMesa：<a target="_blank" rel="noopener" href="https://www.geomesa.org/">https://www.geomesa.org/</a> 分布式时空大数据分析工具，配合hadoop使用</p>
+<h1 id="四、开放网络地图引擎"><a href="#四、开放网络地图引擎" class="headerlink" title="四、开放网络地图引擎"></a>四、开放网络地图引擎</h1><p>OSM:<a target="_blank" rel="noopener" href="https://www.openstreetmap.org/">https://www.openstreetmap.org/</a> 地图<br>Navit:<a target="_blank" rel="noopener" href="https://www.navit-project.org/">https://www.navit-project.org/</a> 导航</p>
+<h1 id="五、开放三维引擎"><a href="#五、开放三维引擎" class="headerlink" title="五、开放三维引擎"></a>五、开放三维引擎</h1><p>Cesium：<a target="_blank" rel="noopener" href="https://cesium.com/">https://cesium.com/</a><br>OSG earth:<a target="_blank" rel="noopener" href="http://www.openscenegraph.org/">http://www.openscenegraph.org/</a><br>ogre:<a target="_blank" rel="noopener" href="https://www.ogre3d.org/">https://www.ogre3d.org/</a><br>marble:<a target="_blank" rel="noopener" href="https://marble.kde.org/">https://marble.kde.org/</a></p>
+<h1 id="六、开放地理处理工具"><a href="#六、开放地理处理工具" class="headerlink" title="六、开放地理处理工具"></a>六、开放地理处理工具</h1><p>GeoTools：<a target="_blank" rel="noopener" href="https://www.geotools.org/">https://www.geotools.org/</a> 地理处理工具箱<br>GeoNetwork：<a target="_blank" rel="noopener" href="https://geonetwork-opensource.org/">https://geonetwork-opensource.org/</a> 网络地图查看和目录工具<br>Orfeo ToolBox：<a target="_blank" rel="noopener" href="https://www.orfeo-toolbox.org/">https://www.orfeo-toolbox.org/</a> 可以处理TB级的高分辨率光学，多光谱和雷达图像。 </p>
+<h1 id="七、时空大数据框架"><a href="#七、时空大数据框架" class="headerlink" title="七、时空大数据框架"></a>七、时空大数据框架</h1><p>随着全球化和信息化的发展，数据已经成为一种非常宝贵的资源。时空大数据处理技术也因其在军事、环境、气象、交通和金融等领域的广泛应用而备受关注。为了提高数据处理效率和准确度，许多企业和机构开始采用开源框架来构建他们的时空大数据应用。</p>
+<p>在本文中，我们介绍几个流行的时空大数据开源框架。</p>
+<ul>
+<li><ol>
+<li>Apache Hadoop</li>
+</ol>
+</li>
+</ul>
+<p>Apahce Hadoop是一款流行的分布式存储和分析平台，它可以处理大规模数据和时间序列数据。Hadoop是一种完全开源的框架，旨在处理大数据集并在集群中分发数据。它主要由HDFS（Hadoop 分布式文件系统）和MapReduce（一种计算框架）组成。Hadoop有着广泛的数据处理能力，因此可以在很多大型企业、政府机构和科研团队中得到应用。</p>
+<ul>
+<li><ol start="2">
+<li>Apache Spark</li>
+</ol>
+</li>
+</ul>
+<p>Apache Spark是一款快速的大数据计算系统，其可以在内存中快速处理大数据。它能够支持复杂的数据分析任务和像机器学习这样的数据科学工作负载。Spark比Hadoop处理速度更快，并且可以在不占用太多资源的情况下进行大数据处理。它也支持Python、Java和Scala等多种编程语言。Apache Spark常被用来对时空数据进行分析和可视化。</p>
+<ul>
+<li><ol start="3">
+<li>GeoMesa</li>
+</ol>
+</li>
+</ul>
+<p>GeoMesa是一个地理信息系统（GIS）库，可以用于管理和分析大规模时空数据集。它是一个开源库，形成了在云中处理海量时空数据的技术基础，并提供了一些用于时空数据管理和分析的工具。GeoMesa支持多种数据源，如Hadoop、Spark和Accumulo等。利用GeoMesa框架，可以实现时空数据的存储、查询、分析和可视化等操作。</p>
+<ul>
+<li><ol start="4">
+<li>GeoSpark</li>
+</ol>
+</li>
+</ul>
+<p>GeoSpark是基于Spark的时空数据处理、分析和可视化框架。与Apache Spark相似，GeoSpark使用内存计算技术，利于大规模数据的处理。该框架支持多种时空数据源，包括点、线、面、栅格等各种空间数据类型，并提供了丰富的时空数据分析算法。GeoSpark发挥了Spark和Hadoop的优点，使它成为一种非常强大的时空数据分析框架，被广泛应用于城市规划、交通管理和环境监测等领域。</p>
+<p>总之，这些时空大数据开源框架可以帮助企业和组织快速处理和分析时空数据，最大程度地实现数据价值。以上框架都是经过长期测试的，应用广泛的开源框架，因此用户可以根据项目需求和特点对其进行灵活的选择和定制。</p>
+<h1 id="八、开放协会或组织"><a href="#八、开放协会或组织" class="headerlink" title="八、开放协会或组织"></a>八、开放协会或组织</h1><p><a target="_blank" rel="noopener" href="https://www.osgeo.org/">https://www.osgeo.org/</a> 开源地理空间基金会<br><a target="_blank" rel="noopener" href="https://www.osgeo.cn/">https://www.osgeo.cn/</a> 中国开放地理空间实验室<br><a target="_blank" rel="noopener" href="https://www.opengeospatial.org/">https://www.opengeospatial.org/</a> OGC开放地理空间信息联盟</p>
+<p>加利福利亚大学荧光动力学实验室python 库:<br><a target="_blank" rel="noopener" href="https://www.lfd.uci.edu/~gohlke/pythonlibs/">https://www.lfd.uci.edu/~gohlke/pythonlibs/</a></p>
+<p>也可参见grss-ieee地球科学与遥感学会与遥感相关的开源函数库和软件列表：<br><a target="_blank" rel="noopener" href="http://www.grss-ieee.org/open-source-software-related-to-geoscience-and-remote-sensing/">http://www.grss-ieee.org/open-source-software-related-to-geoscience-and-remote-sensing/</a></p>
+<p>OSGeoLive 目录：<br><a target="_blank" rel="noopener" href="http://live.osgeo.org/en/overview/overview.html">http://live.osgeo.org/en/overview/overview.html</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OpenSource/" rel="tag">OpenSource</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebGIS/" rel="tag">WebGIS</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+  </article>
+  
+
+  
+  <nav class="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/">上一页</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/35/">35</a><a class="extend next" rel="next" href="/page/3/">下一页</a>
+  </nav>
+  
+</section>
+</div>
+
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2022-2023
+        <i class="ri-heart-fill heart_icon"></i> paladin1893
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="帕拉丁的游鱼"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/friends">友链</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

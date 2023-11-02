@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+       
+      <meta name="keywords" content="RS,GPS,GIS,QGIS,Opticks,QT,OpenCV,OSG" />
+       
+      <meta name="description" content="地理信息系统，遥感科学，卫星导航定位技术综合研究。" />
+      
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>新能源并网 |  帕拉丁的游鱼</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/favicon.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    <link rel="alternate" href="/atom.xml" title="帕拉丁的游鱼" type="application/atom+xml">
+</head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-新能源并网"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  新能源并网
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/06/02/%E6%96%B0%E8%83%BD%E6%BA%90%E5%B9%B6%E7%BD%91/" class="article-date">
+  <time datetime="2023-06-01T22:19:33.000Z" itemprop="datePublished">2023-06-02</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">4.2k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">14 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>转自<br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/19862668">https://zhuanlan.zhihu.com/p/19862668</a></p>
+<p>新能源并网，是一个比较敏感的问题，也是一个平时电力系统设计的时候经常遇到的问题，小到一个单体工程的接入系统，大到一个区域的新能源的电网消纳，都是有很多注意的地方。</p>
+<p>现在从事新能源的也越来越多了，这里只是总结和电力系统关联的并网部分，新能源本体部分涉及的比较少。</p>
+<p>一、新能源并网对电网的影响</p>
+<p>新能源其实是包含很多东西的，这里主要讨论风电、光伏和分布式电源，当然分布式电源可能有些包含小型光伏等，理解意思即可。</p>
+<p>涉及对电网的影响，其实主要分为两块，一是风电这种接入主网的新能源，二是分布式电源这种接入配网的新能源，两者的影响内容是不一样的。</p>
+<p>1）接入主网的新能源，以风电为例，主要有以下影响：</p>
+<p>增大调峰、调频难度：风电随机性强、间歇性明显。波动幅度大，波动频率无规律性。风电的反调峰特性增加了电网调峰的难度。 据东北、蒙西和吉林电网统计结果，风电反调峰概率分别为60%、57%和56%。吉林电网由于风电接入，一年期间峰谷差变大的时间达到210天。由于调峰容量不足，吉林、蒙西电网都出现了低负荷时段弃风的情况。 下图为风电出力与电网负荷表现出较强的反调节特性。（华北电网张家口地区）</p>
+<p>加大电网电压控制难度：风电场运行过度依赖系统无功补偿，限制了电网运行的灵活性。据统计，受风电影响： 蒙西电网锡盟灰腾梁风电基地沿线变电站220千伏母线电压全年维持在额定电压的1.1倍；蒙西塔拉地区500千伏无功补偿设备停运时，220千伏系统电压最高升至257千伏。</p>
+<p>局部电网接入能力不足 ：风电场大多处于电网末梢，大规模接入后，风电大发期大量上网，电网输送潮流加大，重载运行线路增多，热稳定问题逐渐突出。 甘肃酒泉地区2007年以来风电、小水电快速发展，送出矛盾加剧，尽管采用过负荷切机以及变电站分裂运行等措施来提高输送能力，但风场弃风问题仍然长期存在。<br>增加电网稳定风险：风电的间歇性，随机性增加了电网稳定运行的潜在风险。 一是风电引发的潮流多变，增加了有稳定限制的送电断面的运行控制难度； 二是风电发电成分增加，导致在相同的负荷水平下，系统的惯量下降，影响电网动态稳定； 三是风电机组在系统故障后可能无法重新建立机端电压，失去稳定，从而引起地区电网的电压稳定破坏。<br>2）接入配网的新能源，以分布式电源为例，主要有以下影响：</p>
+<p>保护问题：潮流的改变，一会导致本线路保护的灵敏度降低及拒动； 二会导致本线路保护误动； 三会导致相邻线路的瞬时速断保护误动并失去选择性； 四回导致重合闸不成功。<br>应对措施<br>：一是限制分布式电源的并网容量； 二是增加分布式电源隔离变压器阻抗； 三是分布式电源出口增设方向功率保护；其中最关键一点在于分布式电源并网之前，要在充分调查发电设备阻抗的基础上，计算分布式电源可能带来的短路电流的增加，以确定分布式电源的并网容量。</p>
+<p>电压问题：一是分布式电源启停的影响 ，二是分布式电源供电间歇性的影响。<br>应对措施：一是从电压支撑角度，分布式电源有明显积极作用。这取决合理选择接入地点、合理选取容量并适当调度； 二是正常情况下，分布式电源应多发有功少发无功，保持高功率因素运行；减少线路电压对分布式发电依赖； 三是在分布式电源接入地点，应安装适当无功电压支撑设备，在分布式电源退出运行时投运。</p>
+<p>电能质量问题：分布式发电通过电力电子逆变器并网，易产生谐波、三相电压/电流不平衡；输出功率随机性易造成电网电压波动、闪变； 分布式电源直接在用户侧接入电网，电能质量问题直接影响用户的电器设备安全。<br>应对措施：一是分布式电源与直流注入问题，并网模式下，通过分布式电源控制功能，较大容量的逆变型分布式电源机组出口处设置隔离变压器。二是电压不平衡问题，对于采用单相并网的分布式电源机组，可以将其接入到带负荷较多的一相，从而减少电压的不平衡度。</p>
+<p>接入配网的影响，其实还有很多：短路电流问题，通信计量问题，孤岛问题等，但根本在于：分布式电源接入配网，潮流分布改变，配电系统从放射状变为多电源结构。</p>
+<p>二、新能源并网的技术要求</p>
+<p>这块的东西比较规程化，对照最新的规程简单的总结一下，内容比较多，只列框架。</p>
+<p>1）风电</p>
+<p>《风电场接入电力系统技术规定》2012年版。</p>
+<p>主要是以下部分：</p>
+<p>2）光伏</p>
+<p>《光伏电站接入电网技术规定》2011年版</p>
+<p>3）分布式电源</p>
+<p>《国家电网分布式能源接入系统技术规定》2010年版</p>
+<p>其实，里面很多相似的东西，对照规程看几遍就可以了。</p>
+<p>三、新能源并网关键问题（摘自我做的PPT）</p>
+<p>1）风电</p>
+<p>风电接入规模问题</p>
+<p>基于大规模风电的电源规划问题</p>
+<p>系统友好型风电场</p>
+<p>风电与电网协调发展的运行管理策略</p>
+<p>2）光伏</p>
+<p>并网逆变器控制<br>——最大限度提取电能</p>
+<p>接入主网和接入配网<br>——接入电网的安全稳定问题</p>
+<p>逆功率问题<br>——自发自用，多余上网</p>
+<p>光伏并网检测技术<br>——并网标准和并网技术</p>
+<p>3）分布式电源</p>
+<p>这块在前面已经提过（接入配网带来的问题里面），都是需要解决的关键问题。</p>
+<p>四、大规模新能源消纳能力分析</p>
+<p>很多人都知道，新能源消纳能力是影响新能源开发的一个关键制约，所以这里并不想深入的举例分析这种现象，而是总结下消纳能力分析的一些要素，也是实际工程里面用得到的。</p>
+<ol>
+<li>以风电为例，首先是影响消纳能力的要素：</li>
+</ol>
+<p>系统调节能力：风能具有问歇性、波动性、随机性的特点。此外，从风电的年出力特性看，中国大部分地区的风电出力呈现春季、冬季较大，夏季、秋季较小的特点;而从日出力特性看，中国风电出力多数是在白天负荷高峰时段较小，后半夜负荷低谷时段较大，呈现明显的反调峰特性。风电的大规模接入给电力系统的调频调峰带来了严峻的挑战。<br>因此，良好的电源结构和充足的备用容量是风电消纳的基础，风电开发客观上需要一定规模的灵活调节电源与之相匹配。欧美等国家在大力发展风电的同时，注重配套抽水蓄能、燃油燃气等灵活调节电源的建设。美国、西班牙、德国灵活调节电源的比例分别达到了48.4%,36.4%以及22. 8%。充足的调节能力是这些国家风电开发和消纳的力保障。调峰能力不足己成为制约中国风电消纳的主要因素之一。</p>
+<p>电网输电能力：风电的随机性和问歇性特点使得大规模风电并网后，系统对备用容量的需求大幅增加。通过提高电网输电能力，可以扩大风电平衡区域范围，充分利用系统备用容量，并可根据不同地区负荷峰谷的时间差消除风电出力波动性对系统的影响，提高风电并网消纳规模。<br>中国风电富集的东北、华北、西北等地区，大部分省区系统规模较小，负荷水平较低，网架结构相对薄弱，限制了风电消纳范围。东北电网虽然区域内联系较强，但黑龙江、吉林、辽宁以及蒙东地区均为风能资源丰富地区，风电装机规模较高、电源结构相近、调峰能力不足、区域内相互调剂能力有限，需要进一步扩大消纳范围;处于华北的蒙西电网与相邻的京津唐电网之问仅有4 GW的电力交换能力，且河北北部也是国家规划的千万千瓦级风电基地，在现有通道上加大蒙西电网的风电送出规模会挤占河北风电的消纳空问;西北的甘肃酒泉、新疆哈密是规划的千万千瓦级风电基地，但由于本地负荷小，距离负荷中心较远，即使利用己建成的750 kV输电通道，仍然不能满足千万千瓦级风电基地电力电量消纳的需求。在电源结构、系统调峰能力短期内难以解决的情况下，跨省跨区的电网输电能力，己成为中国风电消纳的最主要制约因素。</p>
+<p>风电并网技术性能：能否保证风电大规模接入后不降低系统的安全稳定水平，是影响风电有效消纳的重要因素。为保证系统安全稳定运行，丹麦、德国、爱尔兰、英国等国家在2002年左右就己建立了完备的风电并网标准体系，对风电并网运行提出了详细的技术要求，如有功和无功运行范围、控制能力、低电压穿越能力、信息监控等。德国最新的并网标准更是提出了零电压穿越的要求，要求风电场、光伏电站在电网电压跌落到。的时候，仍能并网运行150 ms。在并网标准约束下，制造企业不断提高风电设备并网运行的技术水平，减少大规模风电对电网的冲击。<br>中国风电发展起步相对较晚，也没有强制性的风电并网技术标准。大部分设备制造企业依靠引进国外设计图纸生产组装风电机组，自主研发能力不足，己并网的风电机组有部分不具备有功、无功调节功能和低电压穿越能力（目前并网的都满足），风电场自动化水平较低，给电力系统安全稳定带来了隐患。甘肃千万千瓦级风电基地一期5GW风电场建成以来，由于不具备低电压穿越能力，多次发生风电大发期间风电场局部故障导致大规模风电机组脱网事故，给电力系统的安全稳定运行带来了严重影响。</p>
+<p>风电调度运行水平：做好风电的调度管理，合理安排系统中其他电源的运行模式，是实现风电电量最大化消纳的关键。而建立完善的风电运行监测体系和风电功率预测预报机制，是实现风电优化调度的前提条件。<br>从功率预测系统覆盖范围的角度而言，中国则与国外风电发达国家存在明显差距。一般地，电网调度部门和风电场端都应该安装满足精度要求的风电功率预测系统，中国风资源丰富的省级电网均安装了风电功率预测系统，可根据预测信息进行-定程度上的优化调度。但绝大多数风电场还没有配置风电功率预测系统，也不具备风电发电计划上报和执行功能（目前并网的已做要求），不利于系统的优化调度，也影响了风电的消纳。</p>
+<ol start="2">
+<li>其次是风电消纳能力的分析方法：</li>
+</ol>
+<p>在计算风电消纳能力时，需首进行调峰能力计算，得出考虑系统调峰能力约束的风电接纳能力范围；<br>然后计算地区风电场穿透功率极限用以表征风电送出问题；<br>最后对风电场并网后的电网进行稳定性分析。<br>综合以上三方面的分析，得出电网风电接纳能力的，这三点其实也是比较好理解。</p>
+<p>调峰能力计算：对于电网而言，风电的出力波动更像一个负的负荷扰动。因此，电网中常规电源不仅需要为负荷波动留出足够备用，当有大量风电注入电网后，还需要考虑为风电场留出一定备用以平衡风电场出力的变化。在风电场出力产生较大波动时，需调度电网内其他电厂改变出力水平以平衡风电出力的变化。特别是在负荷较低时，常规电厂机组已经调到较低出力，如果此时风电场出力大幅增加，那么常规机组能否进一步压出力让风电来带负荷决定了电网接纳风电的能力，也就是说常规机组在低谷负荷时的调峰能力是限制电网接纳风电能力的关键条件。这里面有公式计算，可以找论文细看，很多论文里面都有。</p>
+<p>风电场穿透功率极限：风电场穿透功率极限是表征一个给定规模的电网最大可以承受的风电功率。目前，多以风电场穿透功率极限来描述系统风电接入容量极限。关于风电场穿透功率极限的定义有多种形式，但考虑到我国的实际情况，将其定义为系统能够接受的最大风电场装机容量和系统最大负荷的比值。</p>
+<p>这个指标和系统的备用容量、风电场的并网性能、电网的短路容量和输送能力、电网调度方式都有关系，一般的计算方法有动态仿真法，数学优化法，频率约束法等。这块一般采用数学优化法比较多。</p>
+<p>接入后的稳定分析：风电场在短时间内完全切除是大规模风电接入给电网带来的最严重的扰动，在这种情况下极可能发生系统频率和电压的同时失稳；风速的大幅波动会造成风电场出力的大幅度波动，从而恶化系统的调峰调频性能；线路短路故障会影响风电机组的暂态调节性能，故障切除后风电场的恢复速度影响风电场的出力。为此，工程中多数考虑风电场切机、风电场阵风扰动和线路短路故障下相关母线和电站的暂态稳定性。下图为风场切机后相关电站的频率情况。</p>
+<p>总结大概就这么多吧，很多东西新能源专业的人员写可能会更好些。</p>
+<p>某些图片和数据来源于网络，若有侵权，请联系删除。带来不便请见谅。</p>
+<p>微信公众号：严同笔记 —- 定期写文，供交流讨论</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://paladin1893.github.io/2023/06/02/%E6%96%B0%E8%83%BD%E6%BA%90%E5%B9%B6%E7%BD%91/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%94%B5%E5%8A%9B/" rel="tag">电力</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2023/06/03/%E5%8D%83%E4%B8%87%E7%BA%A7%E7%9A%84%E5%A4%A7%E9%A3%8E%E7%94%B5%E5%B9%B6%E7%BD%91%E9%83%BD%E5%AD%98%E5%9C%A8%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            千万级的大风电并网都存在什么问题
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2023/06/01/%E5%88%86%E5%B8%83%E5%BC%8F%E8%83%BD%E6%BA%90%E4%B8%8E%E5%BE%AE%E7%94%B5%E7%BD%91%E3%80%81%E7%94%B5%E7%AB%99%E7%9A%84%E5%85%B3%E7%B3%BB/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">分布式能源与微电网、电站的关系</div>
+      </a>
+    
+  </nav>
+
+  
+   
+    
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2022-2023
+        <i class="ri-heart-fill heart_icon"></i> paladin1893
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="帕拉丁的游鱼"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/friends">友链</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

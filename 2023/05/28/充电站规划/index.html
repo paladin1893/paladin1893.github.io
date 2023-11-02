@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+       
+      <meta name="keywords" content="RS,GPS,GIS,QGIS,Opticks,QT,OpenCV,OSG" />
+       
+      <meta name="description" content="地理信息系统，遥感科学，卫星导航定位技术综合研究。" />
+      
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>充电站规划 |  帕拉丁的游鱼</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/favicon.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    <link rel="alternate" href="/atom.xml" title="帕拉丁的游鱼" type="application/atom+xml">
+</head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-充电站规划"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  充电站规划
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/05/28/%E5%85%85%E7%94%B5%E7%AB%99%E8%A7%84%E5%88%92/" class="article-date">
+  <time datetime="2023-05-28T09:25:06.000Z" itemprop="datePublished">2023-05-28</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">2.3k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">7 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>作者：严同<br>链接：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/27582791/answer/41934204">https://www.zhihu.com/question/27582791/answer/41934204</a><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+<p>从2014年6月开始，按照国务院的分工，国家能源局已经开始制定《电动汽车充电基础设施建设规划》，2014年年底前已经完成了第一稿，未来与《规划》同时出台还有《充电基础设施建设指导意见》。同时，全国多个城市陆续推出大规模建设充电设施的发展规划。</p>
+<h1 id="充电设施的布局规划"><a href="#充电设施的布局规划" class="headerlink" title="充电设施的布局规划"></a>充电设施的布局规划</h1><p>1）发展现状和规划思路</p>
+<p>美国充电站发展规划</p>
+<p>两年翻十倍，可以说，发展速度相当快，如果仅仅是数量多，也不足为奇。以ChargPoint为例，它不仅仅是一个简单的充电网络，它还可以向电动车车主、经销商及制造商提供大量云服务，比如电动汽车使用车可以通过手机下载充电服务公司的App，来寻找就近的空闲充电桩，并可直接导航至充电桩所在地。</p>
+<p>我国充电站发展规划</p>
+<p>2011年时，国家电网提出“换电为主、插充为辅、集中充电、统一配送”，这是基于当时情况的考虑。</p>
+<p>现在，特斯拉18650电池等等成功应用，使得快速充电成为可能，国内厂家的水平也不断提高，14年国网就变了，变成“主导快充、兼顾慢充、引导换电、经济实用”的思路，并引入社会资金和力量参与充电设施建设。</p>
+<p>截至目前，我国建成的电动汽车充电桩达到了2.6万个（国家电网数据），但从数量来看已经很多了，不过根据国内多家媒体的调查，充电桩投入使用的比例十分低。此外，我国各地的直流充电接口与通讯协议标准至今尚未统一，电动汽车地方目录（本质是地方保护主义）尽管被宣布取消，实际上却依然存在。</p>
+<p>好在不久前，能源局制定的《电动汽车充电基础设施建设觃划》草稿已经完成，乐观预计到2020年，新能源汽车累计产销量将超过500万辆。按照一辆车对应1个慢充、0.2个快充计算，预计至2020年将会催生500万个慢充和100万个快充的市场需。随着充电桩建设加速，充电设备未来投资额将会超过850亿元。</p>
+<p>北京：北京市将在中心城区打造服务半径平均为5公里的充电圈，逐步建成公用领域充电设施网络服务体系。与自用充电桩主要采取交流慢充不同，公用充电桩主要采用直流快充模式，半小时充电就能支撑普通新能源汽车续航100公里。</p>
+<p>下为2015年北京市电动车公用充电设施分布图。电动车车主可通过网站、手机APP、微信等方式查找附近的充电设施。</p>
+<p>上海：2015年充电桩布局将超6000个。此外，为了进一步保障新能源汽车的使用，上海将在中心城区和示范区优先建设公共快充网络，一辆车只需20分钟就可充80%的电。</p>
+<p>天津：2015年将建66个充换电站，6700个充电桩。其中，公交、出租、邮政、快递、环卫等领域将优先选择用户现有场地，不足部分由市统一规划供地。<br>等等，可见发展的趋势还是很快的。</p>
+<p>2）规划技术层面</p>
+<p>目前一般是能源局和电网公司来做规划。</p>
+<p>但，目前针对电动汽车应用的充电站建设规划布局理论尚未完整成熟，各地的充电站建设尚处于定点示范建设阶段，没有建立于车辆应用、电网规划、城市规划相结合的充电站布局选址理论。</p>
+<p>而且充电站建设的规划与布局面临着供电能力、服务能力与城市用地紧张的矛盾。</p>
+<p>就看到过的充电站规划方面的资料答几点技术层面的东西。</p>
+<h2 id="首先肯定是容量预测，统计电动汽车的数量及进行预测。"><a href="#首先肯定是容量预测，统计电动汽车的数量及进行预测。" class="headerlink" title="首先肯定是容量预测，统计电动汽车的数量及进行预测。"></a>首先肯定是容量预测，统计电动汽车的数量及进行预测。</h2><h2 id="其次就是充电站布局规划的技术思路。"><a href="#其次就是充电站布局规划的技术思路。" class="headerlink" title="其次就是充电站布局规划的技术思路。"></a>其次就是充电站布局规划的技术思路。</h2><p>电动汽车充电站布局包括“需求”和“可能性”两个因素。衡量充电站需求的主要指标是交通量与服务半径两个要素，决定可能性与否关键在于交通、环保及区域配电能力等外部环境条件与该地区的建设规划和路网规划。</p>
+<ul>
+<li><p>充电站分布与电动汽车交通密度和充电需求的分布尽可能一致</p>
+</li>
+<li><p>充电站的布局应符合充电站服务半径要求</p>
+</li>
+</ul>
+<p>电动汽车充电站的分布可以参考建设部《城市道路交通规划设计规范》(1995)中的加油站服务半径规定，结合电动汽车自身的运行特点以及各区域的计算服务半径按实际需要设定。</p>
+<p>动力电池的续驶能力是影响充电站服务半径的另一大因素。故充电站的服务半径应以电动汽车单次充电行驶里程100km(甚至更短)计算。只有这样才能有效保障电动汽车的持续行驶能力。</p>
+<ul>
+<li>充电站的设置应满足城市总体规划和路网规划要求</li>
+</ul>
+<p>充电站的选址定点应结合地区建设规划和路网规划,以网点总体布局规划为宏观控制依据，经过对布局网点及其周围地区规划选址方案的比较，确定网点设置用地。</p>
+<ul>
+<li>充电站的设置应充分考虑本区域的输配电网现状</li>
+</ul>
+<p>电动汽车充电站运营时需要高功率的电力供应支撑,在进行充电站布局规划时，应与电力供应部门协调，将充电站建设规划纳入城市电网规划中。</p>
+<ul>
+<li>充电规划应充分考虑电动汽车未来发展趋势</li>
+</ul>
+<h2 id="最后就是具体的选址和现场情况了。"><a href="#最后就是具体的选址和现场情况了。" class="headerlink" title="最后就是具体的选址和现场情况了。"></a>最后就是具体的选址和现场情况了。</h2><h1 id="充电设施的标准"><a href="#充电设施的标准" class="headerlink" title="充电设施的标准"></a>充电设施的标准</h1><p>在电动车实际使用的过程中，充电标准不统一问题非常明显。京沪高速公路充电站全线开通后，有企业派工作小组去做电动车运行试验，结果是在这个充电站这辆车能充电，那辆车不能充电。</p>
+<p>原因在于一方面标准还需完善，同时设施和汽车做的接口是否真正符合国标需认证，另一方面，原先国标还没有出来时，各地先行按照自己的想法制定了地方标准，也形成了现在的过渡阶段。</p>
+<p>目前，传统的充电方式全球有三个标准：最早出现的美国的SAE标准，日本、韩国也采用SAE标准;其次是欧洲标准;再是中国的标准，介于欧洲标准和美国标准之间。这就形成了三部完全不兼容的标准。</p>
+<p>今年国家已经把接口标准纳入新能源汽车购置税减免目录准入条件，下一步还将纳入新能源汽车准入条件，解决标准执行力不强的问题。</p>
+<h1 id="充电设施谁来建"><a href="#充电设施谁来建" class="headerlink" title="充电设施谁来建"></a>充电设施谁来建</h1><p>目前看来，统一充电标准先行，同时要解决的核心问题还有商业模式。这都属于充电站长远规划的问题。</p>
+<p>充电站的运营管理尚处于起步阶段，尚未对其服务范围进行清晰定义，尚未建立成熟的运营管理模式。建设运营主体不明确已经成为电动汽车商业化应用的瓶颈问题之一。</p>
+<p>反正就我所知，国网对这块越来越重视，2016年-2020年，国网建设充电站目标高达10000座，建成完整的“四纵四横”（四纵：沈海、京沪、京台、京港澳，四横：青银、连霍、沪蓉、沪昆）电动汽车充电网络。但是也没有好的盈利模式，都是赔本响应国家号召。</p>
+<p>就私有资本来说，也是一样，盈利模式单一，单靠服务费，难以实现长期稳定收益。在目前的情况下，其实有80%的车主都可以通过家庭充电的方式来满足需求，如果要外出充电，更多的也只是补电，收益显然会很低，而且还有特斯拉这种提供免费增值服务的新能源汽车厂家。</p>
+<p>商业模式不清晰，也没有国外的经验参考，个人感觉单纯从充电站单方面解决非常困难，因为这些主体的利益是相对的，结合新能源汽车和充电设施，由政府、新能源汽车厂家、充电设施业主一起形成一个商业模式，或许比较靠谱。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://paladin1893.github.io/2023/05/28/%E5%85%85%E7%94%B5%E7%AB%99%E8%A7%84%E5%88%92/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%94%B5%E5%8A%9B/" rel="tag">电力</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2023/05/29/%E5%A4%A7%E8%A7%84%E6%A8%A1%E5%82%A8%E8%83%BD%E7%B3%BB%E7%BB%9F%E7%8E%B0%E7%8A%B6%E5%8F%8A%E6%9C%AA%E6%9D%A5/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            大规模储能系统现状及未来
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2023/05/27/%E6%99%BA%E8%83%BD%E5%85%85%E7%94%B5%E6%A1%A9/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">智能充电桩</div>
+      </a>
+    
+  </nav>
+
+  
+   
+    
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2022-2023
+        <i class="ri-heart-fill heart_icon"></i> paladin1893
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="帕拉丁的游鱼"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/friends">友链</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>
