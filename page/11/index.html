@@ -154,6 +154,296 @@
     
     
     <article
+  id="post-REST模式：POST，GET，PUT，DELETE，PATCH的含义与区别"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/06/10/REST%E6%A8%A1%E5%BC%8F%EF%BC%9APOST%EF%BC%8CGET%EF%BC%8CPUT%EF%BC%8CDELETE%EF%BC%8CPATCH%E7%9A%84%E5%90%AB%E4%B9%89%E4%B8%8E%E5%8C%BA%E5%88%AB/"
+    >REST模式：POST，GET，PUT，DELETE，PATCH的含义与区别</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/06/10/REST%E6%A8%A1%E5%BC%8F%EF%BC%9APOST%EF%BC%8CGET%EF%BC%8CPUT%EF%BC%8CDELETE%EF%BC%8CPATCH%E7%9A%84%E5%90%AB%E4%B9%89%E4%B8%8E%E5%8C%BA%E5%88%AB/" class="article-date">
+  <time datetime="2023-06-10T02:15:20.000Z" itemprop="datePublished">2023-06-10</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>根据HTTP规范:</p>
+<ol>
+<li><p>GET 用于信息获取，而且是安全的和幂等的<br>GET请求是安全的。所谓安全是指不管进行多少次操作，资源的状态都不会改变。该请求就像数据库的select操作一样，只是用来查询一下数据，不会修改、增加数据，不会影响资源的内容，即该请求不会产生副作用。无论进行多少次操作，结果都是一样的。</p>
+</li>
+<li><p>POST 用于创建数据，不是安全和幂等的<br>POST请求既不是安全的，也不是幂等的，比如常见的POST重复加载问题：当我们多次发出同样的POST请求后，其结果是创建出了若干的资源。</p>
+</li>
+<li><p>PUT 用于创建或完整更新数据，而且是安全和幂等的<br>PUT请求是向服务器端发送数据的，从而改变信息，该请求就像数据库的update操作一样，用来修改完整的数据内容，但是不会增加数据的种类等，也就是说无论进行多少次PUT操作，其结果并没有不同。</p>
+</li>
+<li><p>DELETE 用于删除数据，而且是安全和幂等的<br>DELETE请求顾名思义，就是用来删除某一个资源的，该请求就像数据库的delete操作，无论进行多少次DELETE操作，其结果并没有不同。</p>
+</li>
+<li><p>PATCH 用于更新部分数据，不是安全和幂等的<br>PATCH请求是对PUT请求的补充，一般用来对已知资源部分更新，是后来新出的标准，GitHub Api也开始使用。</p>
+</li>
+</ol>
+<p>更多详细的介绍可以参考RESTful[<a target="_blank" rel="noopener" href="http://sofish.github.io/restcookbook/]%E6%89%8B%E5%86%8C">http://sofish.github.io/restcookbook/]手册</a></p>
+<p>————————————————<br>版权声明：本文为CSDN博主「Marsin_csdn」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/Marsin_csdn/article/details/123956033">https://blog.csdn.net/Marsin_csdn/article/details/123956033</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTTP/" rel="tag">HTTP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/REST/" rel="tag">REST</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-政策再加码，国办发文让充电更方便"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/06/09/%E6%94%BF%E7%AD%96%E5%86%8D%E5%8A%A0%E7%A0%81%EF%BC%8C%E5%9B%BD%E5%8A%9E%E5%8F%91%E6%96%87%E8%AE%A9%E5%85%85%E7%94%B5%E6%9B%B4%E6%96%B9%E4%BE%BF/"
+    >政策再加码，国办发文让充电更方便</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/06/09/%E6%94%BF%E7%AD%96%E5%86%8D%E5%8A%A0%E7%A0%81%EF%BC%8C%E5%9B%BD%E5%8A%9E%E5%8F%91%E6%96%87%E8%AE%A9%E5%85%85%E7%94%B5%E6%9B%B4%E6%96%B9%E4%BE%BF/" class="article-date">
+  <time datetime="2023-06-09T06:54:40.000Z" itemprop="datePublished">2023-06-09</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>充电桩是新能源汽车快速发展不可或缺的一环，对于新能源汽车车主及观望者来说，充电问题始终是最大的关注点之一。近日，国务院办公厅印发《关于进一步构建高质量充电基础设施体系的指导意见》（以下简称《指导意见》），对充电基础设施建设作出具体部署。</p>
+<p>截至2022年底，全国新能源汽车保有量达1310万辆，其中纯电动汽车保有量为1045万辆，而全国充电基础设施累计数量为521万台。全国新能源汽车保有量与全国累计建成充电桩数量的比例约为2.5:1。当前充电桩数量并不能完全满足新能源汽车的充电需求，如何让充电变得更方便，也是《指导意见》关注的重点。</p>
+<p>《指导意见》为新能源汽车充电基础设施建设指出发展目标——到2030年，基本建成覆盖广泛、规模适度、结构合理、功能完善的高质量充电基础设施体系，有力支撑新能源汽车产业发展，有效满足人民群众出行充电需求。</p>
+<p>西南大学经济管理学院教授、博士生导师刘自敏在接受人民网“强观察”栏目记者采访时表示，在“双碳”目标的大背景下，能源结构转型势在必行，而新能源汽车革命正是大势所趋。高质量的充电基础设施建立之后，新能源汽车的普及率会进一步提高，刺激消费市场的同时，也将更好地推动“双碳”目标的实现。</p>
+<p>在城市充电网络方面，《指导意见》指出，以“两区”（居住区、办公区）、“三中心”（商业中心、工业中心、休闲中心）为重点，推动城市充电网络从中心城区向城区边缘、从优先发展区域向其他区域有序延伸。</p>
+<p>“在一定程度上能够解决城市居民高峰期充电难的问题。”刘自敏表示，《指导意见》提出在居住区积极推广智能有序慢充为主、应急快充为辅的充电基础设施，在办公区和“三中心”等城市专用和公用区域因地制宜布局建设快慢结合的公共充电基础设施，主要是从空间上有效调节上班族人群充电难的问题。</p>
+<p>他还提到，充电高峰期也应与电价相关联。有些地市在凌晨时段电价降低，如果能从这方面引导消费者，让充电高峰期不仅仅局限于集中时段，而是更加均匀地分布，充电难的问题也能得到有效解决。</p>
+<p>此外，《指导意见》多项举措都涉及到农村充电设施的布局，提出要建设有效覆盖农村地区的充电网络。</p>
+<p>记者梳理发现，近期，国家频频出台政策促进农村地区充换电设施发展。</p>
+<p>5月5日，国常会部署加快建设充电基础设施，更好支持新能源汽车下乡和乡村振兴；5月17日，国家发展改革委、国家能源局印发《关于加快推进充电基础设施建设更好支持新能源汽车下乡和乡村振兴的实施意见》，支持农村地区购买使用新能源汽车。</p>
+<p>在刘自敏看来，自2020年国家开展新能源汽车下乡活动以来，新能源汽车在农村销量不断增加，但充电设施基础薄弱。“新能源汽车在乡村市场具有比城市更大的普及潜力，但只有基础设施得到较好保障的情况下，农村新能源汽车的潜在需求才会转化为更大的消费需求和真正的购买行为。”</p>
+<p>“《指导意见》提出的积极推动在县级城市城区建设公共直流快充站是个亮点。”刘自敏表示，农村地区的人口密度不同于城市，在物流或资金流相对密集的区域去布局充电基础设施，能够起到有效推动城镇化发展和经济聚集的作用。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%94%B5%E5%8A%9B/" rel="tag">电力</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-k8s监控指标及原因"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/06/08/k8s%E7%9B%91%E6%8E%A7%E6%8C%87%E6%A0%87%E5%8F%8A%E5%8E%9F%E5%9B%A0/"
+    >k8s监控指标及原因</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/06/08/k8s%E7%9B%91%E6%8E%A7%E6%8C%87%E6%A0%87%E5%8F%8A%E5%8E%9F%E5%9B%A0/" class="article-date">
+  <time datetime="2023-06-08T03:38:25.000Z" itemprop="datePublished">2023-06-08</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>Kubernetes 每天可以生成数百万个新指标。监控集群健康状况最具挑战性的方面之一是筛选哪些指标是重要的，需要收集和关注。</p>
+<p>在本文中，我将定义应该监控和创建警报的 16 个关键 Kubernetes 指标。公司组织的列表可能略有不同，但在制定组织的 Kubernetes 监控策略时，这 16 个是了解k8s集群监控状态最好的指标。</p>
+<p>原文链接：<a target="_blank" rel="noopener" href="https://www.circonus.com/2020/12/12-critical-kubernetes-health-conditions-you-need-to-monitor-and-why/">https://www.circonus.com/2020/12/12-critical-kubernetes-health-conditions-you-need-to-monitor-and-why/</a><br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/439374032">https://zhuanlan.zhihu.com/p/439374032</a></p>
+<h1 id="1、Crash-Loops"><a href="#1、Crash-Loops" class="headerlink" title="1、Crash Loops"></a>1、Crash Loops</h1><p>crash loops是指 pod 启动、崩溃，然后不断尝试重新启动但不能（它在循环中不断崩溃和重新启动）。当发生这种情况时，应用程序将无法运行。</p>
+<p>可能是由 pod 中的应用程序崩溃引起的<br>可能是由 pod 或部署过程中的错误配置引起的<br>当发生crash loops时，需要查看日志来解决问题。<br>可以使用开源组件kube-eventer来推送事件。</p>
+<h1 id="2、CPU-Utilization"><a href="#2、CPU-Utilization" class="headerlink" title="2、CPU Utilization"></a>2、CPU Utilization</h1><p>CPU 使用率就是节点正在使用的 CPU 的使用率。出于两个原因进行监控很重要：</p>
+<p>应用程序不能使用完应用程序分配的cpu。如果应用程序受 CPU 限制，则需要增加 CPU 分配或者增加pod数量。最终需要增加服务器来解决。<br>你不希望你的 CPU 坐在那里闲置。如果服务器 CPU 使用率一直很低，可能过度分配了资源并可能浪费金钱。</p>
+<h1 id="3、Disk-Pressure"><a href="#3、Disk-Pressure" class="headerlink" title="3、Disk Pressure"></a>3、Disk Pressure</h1><p>根据 Kubernetes 配置中设置的阈值，磁盘压力是指示节点使用过多磁盘空间或使用磁盘空间过快的条件。</p>
+<p>如果应用程序合法地需要更多空间，这可能意味着需要添加更多磁盘空间。<br>应用程序行为异常并以意外的方式过早地填满了磁盘。</p>
+<h1 id="4、Memory-Pressure"><a href="#4、Memory-Pressure" class="headerlink" title="4、Memory Pressure"></a>4、Memory Pressure</h1><p>Memory Pressure是另一种资源状况，表明节点内存不足。</p>
+<p>需要注意这种情况，因为这可能意味应用程序中存在内存泄漏。</p>
+<h1 id="5、PID-Pressure"><a href="#5、PID-Pressure" class="headerlink" title="5、PID Pressure"></a>5、PID Pressure</h1><p>PID 压力是一种罕见的情况，即 Pod 或容器产生过多进程并使节点缺乏可用进程 ID。</p>
+<p>每个节点都有有限数量的进程 ID 来分配给正在运行的进程；<br>如果 ID 用完，则无法启动其他进程。<br>Kubernetes 允许为 pod 设置 PID 阈值以限制它们执行失控进程生成的能力，而 PID 压力条件意味着一个或多个 pod 正在用完分配的 PID，需要进行检查。</p>
+<h1 id="6、Network-Unavailable"><a href="#6、Network-Unavailable" class="headerlink" title="6、Network Unavailable"></a>6、Network Unavailable</h1><p>所有节点都需要网络连接，Network Unavailable此状态表明节点的网络连接有问题。</p>
+<p>要么设置不正确（由于路由耗尽或配置错误），要么与硬件的网络连接存在物理问题。<br>可以使用开源组件KubeNurse进行集群网络监控</p>
+<h1 id="7、Job-Failures"><a href="#7、Job-Failures" class="headerlink" title="7、Job Failures"></a>7、Job Failures</h1><p>作业旨在在有限的时间内运行 Pod，并在完成预期功能后将其释放。</p>
+<p>如果作业因节点崩溃或重新启动或资源耗尽而未能成功完成，需要要知道作业失败。<br>通常并不意味着您的应用程序无法访问，但如果不加以修复，它可能会导致以后会出现问题。<br>可以使用开源组件kube-eventer来推送事件。</p>
+<h1 id="8、Persistent-Volume-Failures"><a href="#8、Persistent-Volume-Failures" class="headerlink" title="8、Persistent Volume Failures"></a>8、Persistent Volume Failures</h1><p>持久卷是在集群上指定的存储资源，可用作任何请求它的 Pod 的持久存储。在它们的生命周期中，它们被绑定到一个 Pod，然后在该 Pod 不再需要时回收。</p>
+<p>如果该回收因任何原因失败，需要知道的持久存储有问题。</p>
+<h1 id="9、Pod-Pending-Delays"><a href="#9、Pod-Pending-Delays" class="headerlink" title="9、Pod Pending Delays"></a>9、Pod Pending Delays</h1><p>在 pod 的生命周期中，如果它正在等待在节点上进行调度，则其状态为“pending”。如果它停留在“pending”状态，通常意味着没有足够的资源来安排和部署 pod。</p>
+<p>将需要更新 CPU 和内存分配、删除 Pod 或向集群添加更多节点。<br>可以使用开源组件kube-eventer来推送事件。</p>
+<h1 id="10、Deployment-Glitches"><a href="#10、Deployment-Glitches" class="headerlink" title="10、Deployment Glitches"></a>10、Deployment Glitches</h1><p>Deployment Glitches部署用于管理无状态应用程序——其中 Pod 是可互换的，不需要能够访问任何特定的单个 Pod，而只需访问特定类型的 Pod。</p>
+<p>需要密切关注部署以确保它们正确完成。最好的方法是确保观察到的部署数量与所需的部署数量相匹配。如果不匹配，则一个或多个部署失败。</p>
+<h1 id="11、StatefulSets-Not-Ready"><a href="#11、StatefulSets-Not-Ready" class="headerlink" title="11、StatefulSets Not Ready"></a>11、StatefulSets Not Ready</h1><p>StatefulSets 用于管理有状态的应用程序，其中 Pod 具有特定的角色，需要访问其他特定的 Pod；而不是像部署那样只需要特定类型的 pod。</p>
+<p>确保观察到的 StatefulSet 的数量与所需的 StatefulSet 的数量相匹配。如果不匹配，则一个或多个 StatefulSet 失败。<br>可以使用开源组件kube-eventer来推送事件。</p>
+<h1 id="12、DaemonSets-Not-Ready"><a href="#12、DaemonSets-Not-Ready" class="headerlink" title="12、DaemonSets Not Ready"></a>12、DaemonSets Not Ready</h1><p>DaemonSets 用于管理需要在集群中的所有节点上运行的服务或应用程序。每个节点上运行日志收集守护进程（filebeat）或监控服务，需要使用 DaemonSet。</p>
+<p>确保观察到的 DaemonSet 数量与所需的 DaemonSet 数量相匹配。如果不匹配，则一个或多个 DaemonSet 失败。<br>可以使用开源组件kube-eventer来推送事件。</p>
+<h1 id="13、etcd-Leaders"><a href="#13、etcd-Leaders" class="headerlink" title="13、etcd Leaders"></a>13、etcd Leaders</h1><p>etcd 集群应该总是有一个领导者（除了在改变领导者的过程中，这应该很少发生）。</p>
+<p>etcd_server_has_leader，etcd中是否有leader。<br>leader的改变次数etcd_server_leader_changes_seen_total，则可能表明 etcd 集群中存在连接或资源问题。</p>
+<h1 id="14、Scheduler-Problems"><a href="#14、Scheduler-Problems" class="headerlink" title="14、Scheduler Problems"></a>14、Scheduler Problems</h1><p>调度器有两个方面值得关注。</p>
+<p>应该进行监控，scheduler_schedule_attempts_total{result:unschedulable}因为不可调度 Pod 的增加可能意味着您的集群存在资源问题。<br>其次，应该使用上述延迟指标之一密切关注调度程序延迟。Pod 调度延迟的增加可能会导致其他问题，也可能表明集群中存在资源问题。</p>
+<h1 id="15、Events"><a href="#15、Events" class="headerlink" title="15、Events"></a>15、Events</h1><p>除了从 Kubernetes 集群收集数字指标之外，从集群收集和跟踪事件也很有用。集群事件能监控 pod 生命周期并观察重大的 pod 故障，并且观察从集群流出的事件速率可以是一个很好的早期预警指标。如果事件发生率突然或显着变化，则可能表明出现问题。</p>
+<p>可以使用开源组件kube-eventer来推送事件。</p>
+<h1 id="16、Application-Metrics"><a href="#16、Application-Metrics" class="headerlink" title="16、Application Metrics"></a>16、Application Metrics</h1><p>与我们上面检查的其他指标和事件不同，应用程序指标不是从 Kubernetes 本身发出的，而是从集群运行的工作负载发出的。从应用程序的角度来看，这种遥测可以是重要的任何内容：错误响应、请求延迟、处理时间等。关于如何收集应用程序指标有两种哲学。</p>
+<p>第一个（直到最近才被广泛采用）是指标应该从应用程序“推送”到收集端点。<br>第二个指标收集理念（越来越广泛采用）是指标应该由收集代理从应用程序中“拉取”。这使得应用程序更容易编写，因为他们所要做的就是适当地发布他们的指标，但应用程序不必担心如何提取或抓取这些指标。这就是 OpenMetrics 的工作方式，也是收集 Kubernetes 集群指标的方式。当此技术与收集代理的服务发现相结合时，它创建了一种强大的方法，可以从集群应用程序中收集您需要的任何类型的指标。</p>
+<h1 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h1><p>与 Kubernetes 的大多数方面一样，监控 Kubernetes 运行状况可能是一个复杂且具有挑战性的过程。很容易不知所措。通过了解最需要关注的高价值的指标，至少可以开始制定一项策略，能够过滤掉集群产生的大量数据噪音，并更有信心解决最重要的问题，以确保良好的体验。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%80%A7%E8%83%BD/" rel="tag">服务器性能</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%9B%91%E6%8E%A7%E6%8C%87%E6%A0%87/" rel="tag">监控指标</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-服务器性能监控及其指标介绍"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/06/07/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7%E5%8F%8A%E5%85%B6%E6%8C%87%E6%A0%87%E4%BB%8B%E7%BB%8D/"
+    >服务器性能监控及其指标介绍</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/06/07/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7%E5%8F%8A%E5%85%B6%E6%8C%87%E6%A0%87%E4%BB%8B%E7%BB%8D/" class="article-date">
+  <time datetime="2023-06-07T03:07:01.000Z" itemprop="datePublished">2023-06-07</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>服务器的性能监控，在历史的长河里，随时计算机的发展也在进行着变化。从最开始的手动登录服务器检查问题，包括有哪些人登录到服务器，打开日志，运行过哪些命令，慢慢地变为现在的专业监控软件，集成化的监测性能指标，智能关联分析，使服务器的性能监控更加全完更加完善。那么针对服务器的性能我们需要了解具体哪些性能点，才能更好的判断服务器的运行状态呢？ 以下介绍一些较重要的性能汇总要点和软件。</p>
+<h1 id="性能汇总要点"><a href="#性能汇总要点" class="headerlink" title="性能汇总要点"></a>性能汇总要点</h1><h2 id="CPU使用率"><a href="#CPU使用率" class="headerlink" title="CPU使用率"></a>CPU使用率</h2><p>检查CPU使用情况，查看正在处理器使用的百分比。根据具体需求，你可能需要了解CPU总体使用情况以及按流程或用户划分的细节，查看流程和用户的额外颗粒度，在问题出现时更容易进行故障排除。</p>
+<h2 id="内存使用情况"><a href="#内存使用情况" class="headerlink" title="内存使用情况"></a>内存使用情况</h2><p>总共用了多少内存以及单个进程和用户进和。根据需要，可以按百分比和/或GB/MB监控内存之使用情况。</p>
+<h2 id="磁盘使用情况"><a href="#磁盘使用情况" class="headerlink" title="磁盘使用情况"></a>磁盘使用情况</h2><p>使用了多少磁盘空间。与内存使用情况类似，可以按百分比或空间来监控磁盘使用情况。还应该跟踪inode的使用情况，Inode用于存储系统中文件系统对象的信息。耗尽inode不常见，但还是要检查一下，如果你碰巧知道服务器上运行的应用程序往往有很多小文件，就像一些CI/CD工具那样。</p>
+<h2 id="运行时间"><a href="#运行时间" class="headerlink" title="运行时间"></a>运行时间</h2><p>对于虚拟服务器，正常运行时间是服务器运行的时间。监控主要是为了查看服务器是否经历了意外重启。</p>
+<h2 id="网络活动"><a href="#网络活动" class="headerlink" title="网络活动"></a>网络活动</h2><p>监控网络流量需要哪些精确度，取决于服务器托管的内容。在通常情况下，即使运行静态站点但未主动访问的服务器也会看到运行在其上的其他进程的I/O，服务器网络不应该降到0。</p>
+<h2 id="Swap使用"><a href="#Swap使用" class="headerlink" title="Swap使用"></a>Swap使用</h2><p>Swap交换空间是保留的磁盘空间，是在可用内存不足时补充内存使用量。你的系统如何积极地使用交换空间取决于如何在1（低）到100（高）的范围内配置它的“swappiness”。如果要在系统内出现内存问题时允许进行一些交换而不完全禁用它（为0），使用10或更小的值是一个常态。当查看“交换空间使用情况”时，我们通常会看交换空间使用情况是否显著上升。如果真是如此，需要查内存和其他资源，看看自己是否可以挖掘到原因。</p>
+<h1 id="Linux下相关命令"><a href="#Linux下相关命令" class="headerlink" title="Linux下相关命令"></a>Linux下相关命令</h1><h2 id="top"><a href="#top" class="headerlink" title="top"></a>top</h2><p>一个很方便的工具，允许我们查看正常运行时间，内存使用情况，CPU使用情况以及交换空间等内容。我们还可以查看其它信息：包括其它正在运行的进程，用于运行该进程的命令等。通过按q键退出top命令行。</p>
+<h2 id="htop"><a href="#htop" class="headerlink" title="htop"></a>htop</h2><p>htop是Linux系统中的一个互动的进程查看器，一个文本模式的应用程序(在控制台或者X终端中)，需要ncurses。与传统的top相比，htop更加人性化。它可让用户交互式操作，支持颜色主题，可横向或纵向滚动浏览进程列表，并支持鼠标操作。与top相比，htop有如下的优点：</p>
+<p>可以横向或纵向滚动浏览进程列表，以便看到所有的进程和完整的命令行。</p>
+<p>在启动上，比top 更快。杀进程时不需要输入进程号。htop 支持鼠标操作。</p>
+<h2 id="tcpdump"><a href="#tcpdump" class="headerlink" title="tcpdump"></a>tcpdump</h2><p>这是一个监控网络数据包的强大工具。例如，我们可以使用它来侦听服务器实例上的所有网络流量，或限制为仅侦听来自特定源和/或目标端口的流量。可以使用ctrl + C退出。</p>
+<h2 id="netstat"><a href="#netstat" class="headerlink" title="netstat"></a>netstat</h2><p>允许我们查看服务器上的网络连接的内容和方式，包括将表信息路由为TCP/UDP连接及其进程。后者的常见组合是-tlnpu。如果你需要，还可以使用-c运行命令以进行连续监控。</p>
+<h2 id="nmon"><a href="#nmon" class="headerlink" title="nmon"></a>nmon</h2><p>a.k.a. Nigel的监控器，允许我们查看有关服务器的更详细的信息。与htop命令类似，nmon也是交互式的，因此需要通过一系列菜单来查看有关CPU处理器，磁盘等的信息。退出时，请使用q或ctrl + C。</p>
+<h2 id="uptime"><a href="#uptime" class="headerlink" title="uptime"></a>uptime</h2><p>查看服务器运行时间的简便方法。如果你希望查看持续时间的正常运行时间而不是服务器启动的时间戳，请使用 -pretty参数。</p>
+<h2 id="proc-meminfo"><a href="#proc-meminfo" class="headerlink" title="/proc/meminfo"></a>/proc/meminfo</h2><p>可以使用自己喜欢的编辑器来查看此文件，能够深入了解当前的活动/可用内存的使用情况。</p>
+<h2 id="free"><a href="#free" class="headerlink" title="free"></a>free</h2><p>要查看没有进程信息的空闲与已用内存，请使用free命令。默认情况下，这些值以字节为单位，如果你希望以兆字节或千兆字节的形式查看输出，建议附加-h 参数。</p>
+<h2 id="df"><a href="#df" class="headerlink" title="df"></a>df</h2><p>允许管理员查看系统上安装的所有卷的总磁盘使用情况。默认为1K块大小，建议附加-h以查看兆字节和/或千兆字节的输出结果 df -h。</p>
+<h2 id="du"><a href="#du" class="headerlink" title="du"></a>du</h2><p>以指定目录中的所有对象（文件，目录）递归打印文件系统对象的磁盘使用情况。要注意：如果没有指定目录，则使用root根目录（/），结果很快超过你的终端！如果只想查看目录中项目使用了多少磁盘，请使用-sh。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%80%A7%E8%83%BD/" rel="tag">服务器性能</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%9B%91%E6%8E%A7%E6%8C%87%E6%A0%87/" rel="tag">监控指标</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-2022年中国新能源汽车保有量达1310万辆，同比增长67-13"
   class="article article-type-post"
   itemscope
@@ -330,338 +620,13 @@
 </article>
 
     
-    <article
-  id="post-充电设施分类"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/06/04/%E5%85%85%E7%94%B5%E8%AE%BE%E6%96%BD%E5%88%86%E7%B1%BB/"
-    >充电设施分类</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/06/04/%E5%85%85%E7%94%B5%E8%AE%BE%E6%96%BD%E5%88%86%E7%B1%BB/" class="article-date">
-  <time datetime="2023-06-03T16:45:19.000Z" itemprop="datePublished">2023-06-04</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>1、以安装条件进行分类，主要分为立式充电桩和壁挂充电桩立式充电桩无需靠墙，适用于户外停车位或小区停车位，而壁挂式充电桩必须依靠墙体固定，适用于室内和地下停车位。</p>
-<p>2、以服务对象进行分类，主要分为公共充电桩、专用充电桩和自用充电桩。公共充电桩由政府机关等具有公共服务性质的机构置办，服务对象面向任何电动汽车车主，例如公共停车场。而专用充电桩多为企业建造，服务对象为客户和内部人员，例如商场停车场。自用充电桩为私人充电桩，安装于私人领域，不对外开放</p>
-<p>3、以安装地点防护等级进行分类,主要分为室内充电桩和室外充电桩</p>
-<p>4、以充电接口的数量进行分类，主要分为一桩一充和一桩多充。目前市场上充电桩以一桩一充式为主，在公交停车场这样大型停车场中，需要多充式充电桩,同步支持多台电动车充电,不但加快充电效率，也节省了人工。</p>
-<p>5、以充电类型进行分类，主要分为交流充电桩和直流充电桩。交流充电桩一般是小电流、桩体较小、安装灵活、充满电一般在6-8个小时，适用于小型乘用电动车，多应用于公共停车场、大型购物中心和社区车库中，家用充电桩也多为交流充电桩。而直流充电桩一般是大电流,短时间内充电量更大、桩体较大、占用面积大(散热)。直流充电桩适用于电动大巴、中巴、混合动力公交车、电动轿车、出租车、工程车等快速直流充电。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%94%B5%E5%8A%9B/" rel="tag">电力</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-千万级的大风电并网都存在什么问题"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/06/03/%E5%8D%83%E4%B8%87%E7%BA%A7%E7%9A%84%E5%A4%A7%E9%A3%8E%E7%94%B5%E5%B9%B6%E7%BD%91%E9%83%BD%E5%AD%98%E5%9C%A8%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98/"
-    >千万级的大风电并网都存在什么问题</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/06/03/%E5%8D%83%E4%B8%87%E7%BA%A7%E7%9A%84%E5%A4%A7%E9%A3%8E%E7%94%B5%E5%B9%B6%E7%BD%91%E9%83%BD%E5%AD%98%E5%9C%A8%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98/" class="article-date">
-  <time datetime="2023-06-02T22:27:26.000Z" itemprop="datePublished">2023-06-03</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>作者：严同<br>链接：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/21878327/answer/36981268">https://www.zhihu.com/question/21878327/answer/36981268</a><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
-<p>在回答这个问题之前，先扯点别的东西，学习下他国经验。</p>
-<p>提及风电，言必称丹麦，2013年丹麦电力有近4成来自于风力，这是个很夸张的数字。</p>
-<p>那丹麦乃至欧美的风电并网和我国的大规模风电并网有什么不同呢？</p>
-<p>数量级不同</p>
-<p>中国所谓‘大规模’指的是千万千瓦级风场，而欧美的‘大规模’指的是几十万千瓦级的风场；中国所说的‘远距离’指的是几百上千公里的输送，欧美的‘远距离’基本上在一百公里左右。以美国得克萨斯为例，在美国算是大型风场，其最大风电场仅为73万千瓦，风电集中输送也仅有上百公里。</p>
-<p>并网思路不同</p>
-<p>我国风电存在“大基地建设，大规模送出”的思路，欧美则是“”分散接入，就地消纳“的思路，这里先不提好坏，只说事实。德国2006年风电场装机容量小于50MW，接入110kV以下配电网规模约占总量的70%；丹麦风电机组主要接入30kV及以下网络，2006年底丹麦风电装机容量中，约88%接入低压网络和10～30kV配电网。</p>
-<p>能源结构不同</p>
-<p>欧洲燃气、燃油发电和水电比例大，调峰能力强。拿丹麦来说，丹麦的地理位置优越，北有水力发电站，南有火电发电厂。因此当风力不够的时候，可以从挪威引进环保的水电。电力的互送非常频繁，一年中，丹麦要进出口的电相当于该国总用电量的30%。而我国幅员辽阔，电源负荷分布不均，而且电源以火电为主，调节能力相对较差，具体的下面细说。</p>
-<p>对电网的要求</p>
-<p>不同欧洲风电基本是分散接入，对电网用户侧的智能化要求是比较高的，而欧洲电网也是围绕这个方向在发展；而我国的大规模送出则是另一个课题了，面对的困难也不一样。所以，欧洲有些风电并网的经验可以借鉴，但是很多困难却是特殊的。</p>
-<p>下面具体说说千万级风电并网的问题。</p>
-<p>能源结构</p>
-<p>上面已经提到了，这里详细的描述下。</p>
-<p>风电大家都知道是具有波动性的，从一年中风电场每天平均输出功率看，每天最大和最少发电量至少相差约40～50倍。从微观上分析一天内的输出功率变化，风电在24小时内仍处于非常不稳定状态，输出功率(兆瓦)在0～100之间随机波动。</p>
-<p>而且，夜晚用电负荷处于低谷时段风电发电出力往往较大，即使常规电源降出力，当风电规模达到一定程度（大于低谷用电负荷），也难免出现限电弃风。下图为风电出力曲线和负荷需求曲线对照。</p>
-<p>风电的波动性带来的是它需要对应合理的电源进行调峰，从而来满足负荷平衡。而我国以煤电为主的电网难以为风电做深度调峰的。2012年我国煤电发电量占总发电量的73.9%。而欧美国家的能源结构是以石油、天然气等为主，其中美国27%是天然气发电;英国燃气发电比例更高达60%;北欧国家水电占90%。</p>
-<p>所以，这些国家电网对风电并网容纳能力远高于我国，这是因为燃气、燃油发电和水电的调峰能力比煤电强，在一定范围内能有效减少风电波动对电网的危害。即便如此，美国、丹麦等西方国家也已遭遇大规模风电上网难的制约。</p>
-<p>这是比较本质的问题。</p>
-<p>电网问题</p>
-<p>这是中国大规模风电并网面对的特殊问题，当然，欧洲海上风电以后集中打捆送出也会需要到这个问题，但送出距离比我国近很多。</p>
-<p>首先这个大规模并网的可行性需要论证，上千万千瓦级超大型电源建设，涉及电力系统规划的问题十分复杂，仅三峡工程电力输出规划就论证了十多年，因此，千万千瓦级的风电项目大规模送出怎么可能不需要充分论证？</p>
-<p>对电网的影响，大概说来，试想下，有几千台甚至上万台风力发电机组在同一接入点接入电网，风电输送线路长度可能达到几百甚至上千公里。风电出力的随机波动导致线路无功的流向和规模频繁变化，只依靠电网进行无功调节是无法满足风电波动对电压的影响的。另外，当风电机组低电压穿越能力不足时，电网一个很小的故障，也可能使风电基地切除，可能造成重大电网事故。</p>
-<p>即使论证可行，一般来说，电网的建设是远远滞后于风电建设的，具体实施起来也有很多困难。</p>
-<p>抛开规模不谈，欧洲的风电并网的电网适应性还是比较好的。举个例子，在星期六凌晨4点前后风电大发时，丹麦风电出力占负荷需求的比重可达95%以上，此时丹麦向北欧电网输出电力，北欧电网通过跨国/跨区输电网为丹麦电网提供备用，以保证电网安全稳定运行。而在星期六18点前后风速超过25m/s时，风机退出运行，风电场出力急剧下降，此时北欧电网向丹麦输入大量电力，满足负荷需求。</p>
-<p>其他问题</p>
-<p>风电运行管理水平这块，欧洲水平是很高的，以西班牙和丹麦为代表。他们广泛开展了风电功率预测工作，都实现了风电输出功率的日前预测，西班牙规定风电出力预测误差超过20%时将被罚款，2006年，西班牙绝大多数风电场发电量都销售给了电网企业，只有不到5%的风电由于预测误差超过20%，发电企业不愿交罚金而采取了弃风措施。然后对风电场进行有效调控，如西班牙成立可再生能源电力控制中心(CECRE)，对风电场进行有效监控和有序调控，水平非常高。</p>
-<p>我国这方面就差强人意了。</p>
-<p>电价等管理政策</p>
-<p>这块不太好说，毕竟国家不同。就说德国吧，德国1991年颁布的《电力入网法》强制要求公用电力公司收购可再生能源电力，但1998年后德国电力行业市场化，销售电价整体下降，为了缓解压力，2000年4月德国出台了《可再生能源法》，核心政策调整为可再生能源强制入网，采用固定电价优先购买，并建立了可再生能源电力成本全网分摊制度。2009年1月，针对风电在电源结构中的比例不断提高、对电网安全稳定运行影响日渐突出，又颁布了可再生能源法修正案(EEG2009)，对部分情况下风电可不优先收购进行了规定。</p>
-<p>可以看出，非常灵活，我国任重道远。</p>
-<p>或许可以期待下储能？呵呵。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%94%B5%E5%8A%9B/" rel="tag">电力</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-新能源并网"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/06/02/%E6%96%B0%E8%83%BD%E6%BA%90%E5%B9%B6%E7%BD%91/"
-    >新能源并网</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/06/02/%E6%96%B0%E8%83%BD%E6%BA%90%E5%B9%B6%E7%BD%91/" class="article-date">
-  <time datetime="2023-06-01T22:19:33.000Z" itemprop="datePublished">2023-06-02</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>转自<br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/19862668">https://zhuanlan.zhihu.com/p/19862668</a></p>
-<p>新能源并网，是一个比较敏感的问题，也是一个平时电力系统设计的时候经常遇到的问题，小到一个单体工程的接入系统，大到一个区域的新能源的电网消纳，都是有很多注意的地方。</p>
-<p>现在从事新能源的也越来越多了，这里只是总结和电力系统关联的并网部分，新能源本体部分涉及的比较少。</p>
-<p>一、新能源并网对电网的影响</p>
-<p>新能源其实是包含很多东西的，这里主要讨论风电、光伏和分布式电源，当然分布式电源可能有些包含小型光伏等，理解意思即可。</p>
-<p>涉及对电网的影响，其实主要分为两块，一是风电这种接入主网的新能源，二是分布式电源这种接入配网的新能源，两者的影响内容是不一样的。</p>
-<p>1）接入主网的新能源，以风电为例，主要有以下影响：</p>
-<p>增大调峰、调频难度：风电随机性强、间歇性明显。波动幅度大，波动频率无规律性。风电的反调峰特性增加了电网调峰的难度。 据东北、蒙西和吉林电网统计结果，风电反调峰概率分别为60%、57%和56%。吉林电网由于风电接入，一年期间峰谷差变大的时间达到210天。由于调峰容量不足，吉林、蒙西电网都出现了低负荷时段弃风的情况。 下图为风电出力与电网负荷表现出较强的反调节特性。（华北电网张家口地区）</p>
-<p>加大电网电压控制难度：风电场运行过度依赖系统无功补偿，限制了电网运行的灵活性。据统计，受风电影响： 蒙西电网锡盟灰腾梁风电基地沿线变电站220千伏母线电压全年维持在额定电压的1.1倍；蒙西塔拉地区500千伏无功补偿设备停运时，220千伏系统电压最高升至257千伏。</p>
-<p>局部电网接入能力不足 ：风电场大多处于电网末梢，大规模接入后，风电大发期大量上网，电网输送潮流加大，重载运行线路增多，热稳定问题逐渐突出。 甘肃酒泉地区2007年以来风电、小水电快速发展，送出矛盾加剧，尽管采用过负荷切机以及变电站分裂运行等措施来提高输送能力，但风场弃风问题仍然长期存在。<br>增加电网稳定风险：风电的间歇性，随机性增加了电网稳定运行的潜在风险。 一是风电引发的潮流多变，增加了有稳定限制的送电断面的运行控制难度； 二是风电发电成分增加，导致在相同的负荷水平下，系统的惯量下降，影响电网动态稳定； 三是风电机组在系统故障后可能无法重新建立机端电压，失去稳定，从而引起地区电网的电压稳定破坏。<br>2）接入配网的新能源，以分布式电源为例，主要有以下影响：</p>
-<p>保护问题：潮流的改变，一会导致本线路保护的灵敏度降低及拒动； 二会导致本线路保护误动； 三会导致相邻线路的瞬时速断保护误动并失去选择性； 四回导致重合闸不成功。<br>应对措施<br>：一是限制分布式电源的并网容量； 二是增加分布式电源隔离变压器阻抗； 三是分布式电源出口增设方向功率保护；其中最关键一点在于分布式电源并网之前，要在充分调查发电设备阻抗的基础上，计算分布式电源可能带来的短路电流的增加，以确定分布式电源的并网容量。</p>
-<p>电压问题：一是分布式电源启停的影响 ，二是分布式电源供电间歇性的影响。<br>应对措施：一是从电压支撑角度，分布式电源有明显积极作用。这取决合理选择接入地点、合理选取容量并适当调度； 二是正常情况下，分布式电源应多发有功少发无功，保持高功率因素运行；减少线路电压对分布式发电依赖； 三是在分布式电源接入地点，应安装适当无功电压支撑设备，在分布式电源退出运行时投运。</p>
-<p>电能质量问题：分布式发电通过电力电子逆变器并网，易产生谐波、三相电压/电流不平衡；输出功率随机性易造成电网电压波动、闪变； 分布式电源直接在用户侧接入电网，电能质量问题直接影响用户的电器设备安全。<br>应对措施：一是分布式电源与直流注入问题，并网模式下，通过分布式电源控制功能，较大容量的逆变型分布式电源机组出口处设置隔离变压器。二是电压不平衡问题，对于采用单相并网的分布式电源机组，可以将其接入到带负荷较多的一相，从而减少电压的不平衡度。</p>
-<p>接入配网的影响，其实还有很多：短路电流问题，通信计量问题，孤岛问题等，但根本在于：分布式电源接入配网，潮流分布改变，配电系统从放射状变为多电源结构。</p>
-<p>二、新能源并网的技术要求</p>
-<p>这块的东西比较规程化，对照最新的规程简单的总结一下，内容比较多，只列框架。</p>
-<p>1）风电</p>
-<p>《风电场接入电力系统技术规定》2012年版。</p>
-<p>主要是以下部分：</p>
-<p>2）光伏</p>
-<p>《光伏电站接入电网技术规定》2011年版</p>
-<p>3）分布式电源</p>
-<p>《国家电网分布式能源接入系统技术规定》2010年版</p>
-<p>其实，里面很多相似的东西，对照规程看几遍就可以了。</p>
-<p>三、新能源并网关键问题（摘自我做的PPT）</p>
-<p>1）风电</p>
-<p>风电接入规模问题</p>
-<p>基于大规模风电的电源规划问题</p>
-<p>系统友好型风电场</p>
-<p>风电与电网协调发展的运行管理策略</p>
-<p>2）光伏</p>
-<p>并网逆变器控制<br>——最大限度提取电能</p>
-<p>接入主网和接入配网<br>——接入电网的安全稳定问题</p>
-<p>逆功率问题<br>——自发自用，多余上网</p>
-<p>光伏并网检测技术<br>——并网标准和并网技术</p>
-<p>3）分布式电源</p>
-<p>这块在前面已经提过（接入配网带来的问题里面），都是需要解决的关键问题。</p>
-<p>四、大规模新能源消纳能力分析</p>
-<p>很多人都知道，新能源消纳能力是影响新能源开发的一个关键制约，所以这里并不想深入的举例分析这种现象，而是总结下消纳能力分析的一些要素，也是实际工程里面用得到的。</p>
-<ol>
-<li>以风电为例，首先是影响消纳能力的要素：</li>
-</ol>
-<p>系统调节能力：风能具有问歇性、波动性、随机性的特点。此外，从风电的年出力特性看，中国大部分地区的风电出力呈现春季、冬季较大，夏季、秋季较小的特点;而从日出力特性看，中国风电出力多数是在白天负荷高峰时段较小，后半夜负荷低谷时段较大，呈现明显的反调峰特性。风电的大规模接入给电力系统的调频调峰带来了严峻的挑战。<br>因此，良好的电源结构和充足的备用容量是风电消纳的基础，风电开发客观上需要一定规模的灵活调节电源与之相匹配。欧美等国家在大力发展风电的同时，注重配套抽水蓄能、燃油燃气等灵活调节电源的建设。美国、西班牙、德国灵活调节电源的比例分别达到了48.4%,36.4%以及22. 8%。充足的调节能力是这些国家风电开发和消纳的力保障。调峰能力不足己成为制约中国风电消纳的主要因素之一。</p>
-<p>电网输电能力：风电的随机性和问歇性特点使得大规模风电并网后，系统对备用容量的需求大幅增加。通过提高电网输电能力，可以扩大风电平衡区域范围，充分利用系统备用容量，并可根据不同地区负荷峰谷的时间差消除风电出力波动性对系统的影响，提高风电并网消纳规模。<br>中国风电富集的东北、华北、西北等地区，大部分省区系统规模较小，负荷水平较低，网架结构相对薄弱，限制了风电消纳范围。东北电网虽然区域内联系较强，但黑龙江、吉林、辽宁以及蒙东地区均为风能资源丰富地区，风电装机规模较高、电源结构相近、调峰能力不足、区域内相互调剂能力有限，需要进一步扩大消纳范围;处于华北的蒙西电网与相邻的京津唐电网之问仅有4 GW的电力交换能力，且河北北部也是国家规划的千万千瓦级风电基地，在现有通道上加大蒙西电网的风电送出规模会挤占河北风电的消纳空问;西北的甘肃酒泉、新疆哈密是规划的千万千瓦级风电基地，但由于本地负荷小，距离负荷中心较远，即使利用己建成的750 kV输电通道，仍然不能满足千万千瓦级风电基地电力电量消纳的需求。在电源结构、系统调峰能力短期内难以解决的情况下，跨省跨区的电网输电能力，己成为中国风电消纳的最主要制约因素。</p>
-<p>风电并网技术性能：能否保证风电大规模接入后不降低系统的安全稳定水平，是影响风电有效消纳的重要因素。为保证系统安全稳定运行，丹麦、德国、爱尔兰、英国等国家在2002年左右就己建立了完备的风电并网标准体系，对风电并网运行提出了详细的技术要求，如有功和无功运行范围、控制能力、低电压穿越能力、信息监控等。德国最新的并网标准更是提出了零电压穿越的要求，要求风电场、光伏电站在电网电压跌落到。的时候，仍能并网运行150 ms。在并网标准约束下，制造企业不断提高风电设备并网运行的技术水平，减少大规模风电对电网的冲击。<br>中国风电发展起步相对较晚，也没有强制性的风电并网技术标准。大部分设备制造企业依靠引进国外设计图纸生产组装风电机组，自主研发能力不足，己并网的风电机组有部分不具备有功、无功调节功能和低电压穿越能力（目前并网的都满足），风电场自动化水平较低，给电力系统安全稳定带来了隐患。甘肃千万千瓦级风电基地一期5GW风电场建成以来，由于不具备低电压穿越能力，多次发生风电大发期间风电场局部故障导致大规模风电机组脱网事故，给电力系统的安全稳定运行带来了严重影响。</p>
-<p>风电调度运行水平：做好风电的调度管理，合理安排系统中其他电源的运行模式，是实现风电电量最大化消纳的关键。而建立完善的风电运行监测体系和风电功率预测预报机制，是实现风电优化调度的前提条件。<br>从功率预测系统覆盖范围的角度而言，中国则与国外风电发达国家存在明显差距。一般地，电网调度部门和风电场端都应该安装满足精度要求的风电功率预测系统，中国风资源丰富的省级电网均安装了风电功率预测系统，可根据预测信息进行-定程度上的优化调度。但绝大多数风电场还没有配置风电功率预测系统，也不具备风电发电计划上报和执行功能（目前并网的已做要求），不利于系统的优化调度，也影响了风电的消纳。</p>
-<ol start="2">
-<li>其次是风电消纳能力的分析方法：</li>
-</ol>
-<p>在计算风电消纳能力时，需首进行调峰能力计算，得出考虑系统调峰能力约束的风电接纳能力范围；<br>然后计算地区风电场穿透功率极限用以表征风电送出问题；<br>最后对风电场并网后的电网进行稳定性分析。<br>综合以上三方面的分析，得出电网风电接纳能力的，这三点其实也是比较好理解。</p>
-<p>调峰能力计算：对于电网而言，风电的出力波动更像一个负的负荷扰动。因此，电网中常规电源不仅需要为负荷波动留出足够备用，当有大量风电注入电网后，还需要考虑为风电场留出一定备用以平衡风电场出力的变化。在风电场出力产生较大波动时，需调度电网内其他电厂改变出力水平以平衡风电出力的变化。特别是在负荷较低时，常规电厂机组已经调到较低出力，如果此时风电场出力大幅增加，那么常规机组能否进一步压出力让风电来带负荷决定了电网接纳风电的能力，也就是说常规机组在低谷负荷时的调峰能力是限制电网接纳风电能力的关键条件。这里面有公式计算，可以找论文细看，很多论文里面都有。</p>
-<p>风电场穿透功率极限：风电场穿透功率极限是表征一个给定规模的电网最大可以承受的风电功率。目前，多以风电场穿透功率极限来描述系统风电接入容量极限。关于风电场穿透功率极限的定义有多种形式，但考虑到我国的实际情况，将其定义为系统能够接受的最大风电场装机容量和系统最大负荷的比值。</p>
-<p>这个指标和系统的备用容量、风电场的并网性能、电网的短路容量和输送能力、电网调度方式都有关系，一般的计算方法有动态仿真法，数学优化法，频率约束法等。这块一般采用数学优化法比较多。</p>
-<p>接入后的稳定分析：风电场在短时间内完全切除是大规模风电接入给电网带来的最严重的扰动，在这种情况下极可能发生系统频率和电压的同时失稳；风速的大幅波动会造成风电场出力的大幅度波动，从而恶化系统的调峰调频性能；线路短路故障会影响风电机组的暂态调节性能，故障切除后风电场的恢复速度影响风电场的出力。为此，工程中多数考虑风电场切机、风电场阵风扰动和线路短路故障下相关母线和电站的暂态稳定性。下图为风场切机后相关电站的频率情况。</p>
-<p>总结大概就这么多吧，很多东西新能源专业的人员写可能会更好些。</p>
-<p>某些图片和数据来源于网络，若有侵权，请联系删除。带来不便请见谅。</p>
-<p>微信公众号：严同笔记 —- 定期写文，供交流讨论</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%94%B5%E5%8A%9B/" rel="tag">电力</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-分布式能源与微电网、电站的关系"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/06/01/%E5%88%86%E5%B8%83%E5%BC%8F%E8%83%BD%E6%BA%90%E4%B8%8E%E5%BE%AE%E7%94%B5%E7%BD%91%E3%80%81%E7%94%B5%E7%AB%99%E7%9A%84%E5%85%B3%E7%B3%BB/"
-    >分布式能源与微电网、电站的关系</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/06/01/%E5%88%86%E5%B8%83%E5%BC%8F%E8%83%BD%E6%BA%90%E4%B8%8E%E5%BE%AE%E7%94%B5%E7%BD%91%E3%80%81%E7%94%B5%E7%AB%99%E7%9A%84%E5%85%B3%E7%B3%BB/" class="article-date">
-  <time datetime="2023-05-31T22:09:15.000Z" itemprop="datePublished">2023-06-01</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>电站没什么好说的，就说说分布式能源和微电网的区别吧。</p>
-<p>分布式能源（DER）：一般定义为包括分布式发电（DG）、储能装置（ES）和与公共电网相连的系统。其中DG是指满足终端用户的特殊需求，接在用户侧的小型发电系统，主要有内燃机，微型燃气轮机、燃料电池、太阳能、风能等发电系统。</p>
-<p>分布式能源有很多优点，比如可实现能源综合梯级利用，弥补大电网稳定性方面不足，环境友好等，但是它的最本质缺点在于不可控和随机波动性，从而造成高渗透率下对电网稳定的负面影响。</p>
-<p>所以，分布式能源和微电网的本质区别就在于前者不可控，后者可控。</p>
-<p>微电网把分布式发电、储能装置、负荷通过控制系统协调控制，形成单一可控单元，直接接在用户侧，优点是非常明显的。</p>
-<p>微电网的控制模式和策略是里面的关键部分，无论是系统级的主从、对等和综合性控制模式，还是逆变器级的P/Q、U/f、下垂控制，乃至和储能相结合的控制方式，都是微电网的核心部分。而这些，在分布式能源系统里面是不会涉及的。</p>
-<p>所以说，很多外面在搞的微网项目，特别是中国人在国外援建，都是在混淆概念，没有控制系统，其实只能叫做分布式发电（分布式能源系统都算不上）。</p>
-<p>作者：严同<br>链接：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/22515671/answer/35688123">https://www.zhihu.com/question/22515671/answer/35688123</a><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
-<p>作者：林石边<br>链接：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/22515671/answer/35666153">https://www.zhihu.com/question/22515671/answer/35666153</a><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
-<p>1、电站：</p>
-<p>传统电网分为发输变配用，或者说（电）源-（电）网-（负）荷。电能是单相流动的，大型的电站发电，长距离电网送电，到用户这里用电。</p>
-<p>2、分布式能源：</p>
-<p>电网里中一种利用可再生能源的方法，因为风能、太阳能的分布不会像煤矿、天然气那样集中，所以在西北之类风光资源充足的地方修建大型风电场、光伏电站的同时，可以在用户侧接入小型的风机、光伏、储能、燃气轮机等电源设备，省去了在电网中传输的损耗，提高可再生能源的比例。这里风机、官府、燃料电池、微型燃气轮机成为分布式发电（Distributed Generations，DGs），带上储能设备称为分布式电源（Distuibuted Energy Resource，DER）。</p>
-<p>3、分布式的问题：</p>
-<p>由于用户侧出现了电源，传统源-网-荷的单向能量流变成了双向，导致电网既定的调度、保护策略面临了新考验，加上风、光资源具有波动性和随机性，发电难以控制，分布式电源直接并网最终会导致整个电网络不稳定。随着2012年底国家开放分布式并网政策，2013年国电电网公司规定6MW以下分布式电源免费接入10kv线路，2014年又规定20MW以下光伏电站（实际是分布式电源，所以所分布式电源其实就是小型的电站）可以接入35KV线路售电，部分地区已经出现过因为光伏发电比例过大（渗透率高）导致系统崩溃的事故。于是，为了让分布式电源可控，大约06年开始提出了各种方案，最有前途的是两种，微电网（Mircogrid，MG）和虚拟电厂（Virtual power Plant，VPP）。</p>
-<p>4、微电网：</p>
-<p>微电网是把分布式电源和它所供能的负荷以及能量转换、保护、监控等装置作为一个系统，形成一个小型的完整电网，以储能设备或者微型燃气轮机这类可控的电源维持系统的稳定，使之可以消纳光伏、风电这些可再生能源，整个微电网与大电网有一个公共连接点（PCC），当微电网电源功能不足时可以通过大电网补充缺额，发电量大时可以将多余电网馈送回大电网。分布式电源以微电网方式并网和直接并网的却别主要是两点：a、微电网可以通过控制策略决定并网点的功率流向，比如发电多时用储能存储，负荷大时储能放电；b、标准意义上的微电网可以和大电网断开，从并网模式切换成孤岛运行模式，两种模式能否实现无缝切换是微电网成功的标志。从这个意义上说，目前全世界范围内文献可知的微电网不到500个，大部分不能实现真正的无缝切换，当然有些是无电地区纯孤岛运行的微电网，对大电网没影响。所以有分布式电源和负荷通过PCC点并网，但做不到孤岛的，还应该认为是分布式电源直接并网。</p>
-<p>5、虚拟电厂：</p>
-<p>微电网要求网内的设备在地理上是集中的，电源、负荷都相互靠近，网内设备都可控（比如最简单的孤岛控制策略：高频减载、低频减源），对于大电网来说化整为零，系统内会出现多个自治的小系统。和微电网的思路相反，虚拟电厂的思路是化零为整，把一定范围内所有分布式电源看做一个电厂来管理，可以通过中央控制器的方式集中控制每个电源，实现协调控制，也可以通过需求响应等手段，调控各个独立控制的分布式电源。</p>
-<p>6、主动配电网：</p>
-<p>由于国内之前把需求侧管理的能效电厂概念和虚拟电厂概念不加区分，所以国内的虚拟电厂会特指通过工商业用户的节能改造带来的能源节约，把省的电等效成一个虚拟的电厂多发了这些电，这一纯粹蒙事骗补贴的概念（以上文字三观不正确）。所以近年来又出现了主动配电网（Acvtie Distuibtion Network，ADN）的概念，这个概念也被翻译成有源配电网，因为电专业里active通常翻译成有源，比如有源元件、有源滤波器等，这甚至导致国内各门派为争论那种译法科学而水了不少文章。简单来说所有含分布式电源并网的配电网络都是ADN，以为配电网也有电源了，但是为了强调配电网由受转攻，额，我说的是由受电端变成供电端，所以称之为主动，好似翻身农奴做主人，从此配电不在受输电鄙视，从此站了起来。其本质还是虚拟电厂的思想，强调对整个配电网范围内的分布式电源实现协调控制。相比于微电网，它的优势是控制的分布式电源规模可以更大，范围更广。缺点是现在也就是个概念，用于各种水论文，申基金申项目。主要问题在于：a、想调动分布式电源或者你拥有控制权或者你可以利益驱动用户按你的期望调度，前者的通信控制问题目前配电网范围似乎还没谁真做出实际系统来，不是仿真算例就是控制规模只能算微电网，后者因为电价掌握在发改委手里，通过能源管理合同之类的激励方式获取控制权就把问题变成了前者。所以主动配电网也算是今后水文章的一大方向，短期内实践无望。</p>
-<p>转自<br><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/22515671/answer/35688123">https://www.zhihu.com/question/22515671/answer/35688123</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%94%B5%E5%8A%9B/" rel="tag">电力</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
   </article>
   
 
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/10/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/35/">35</a><a class="extend next" rel="next" href="/page/12/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/10/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/36/">36</a><a class="extend next" rel="next" href="/page/12/">下一页</a>
   </nav>
   
 </section>
