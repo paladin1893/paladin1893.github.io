@@ -154,6 +154,336 @@
     
     
     <article
+  id="post-PyCharm中的文件模版变量"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/02/17/PyCharm%E4%B8%AD%E7%9A%84%E6%96%87%E4%BB%B6%E6%A8%A1%E7%89%88%E5%8F%98%E9%87%8F/"
+    >PyCharm中的文件模版变量</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/02/17/PyCharm%E4%B8%AD%E7%9A%84%E6%96%87%E4%BB%B6%E6%A8%A1%E7%89%88%E5%8F%98%E9%87%8F/" class="article-date">
+  <time datetime="2023-02-17T01:47:27.000Z" itemprop="datePublished">2023-02-17</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <pre><code>$&#123;PROJECT_NAME&#125; - 当前的项目名
+$&#123;NAME&#125; - 在文件创建过程中，新文件对话框的命名
+$&#123;USER&#125; - 当前的登录用户
+$&#123;DATE&#125; - 现在的系统日期
+$&#123;TIME&#125; - 现在的系统时间
+$&#123;YEAR&#125; - 当前年份
+$&#123;MONTH&#125; - 当前月份
+$&#123;DAY&#125; - 当前月份中的第几日
+$&#123;HOUR&#125; - 现在的小时
+$&#123;MINUTE&#125; - 现在的分钟
+$&#123;PRODUCT_NAME&#125; - IDE创建文件的名称
+$&#123;MONTH_NAME_SHORT&#125; - 月份的前三个字母缩写
+$&#123;MONTH_NAME_FULL&#125; - 完整的月份名
+
+ 
+</code></pre>
+<p>示例：</p>
+<pre><code>#-*- coding = utf-8 -*-
+#@Time : $&#123;DATE&#125; $&#123;TIME&#125;
+#@Author : YourName
+#@File : $&#123;NAME&#125;.py
+#@Software : $&#123;PRODUCT_NAME&#125;
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PyCharm/" rel="tag">PyCharm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/" rel="tag">Python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-查看PostgreSQL序列最后值的方法"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/02/16/%E6%9F%A5%E7%9C%8BPostgreSQL%E5%BA%8F%E5%88%97%E6%9C%80%E5%90%8E%E5%80%BC%E7%9A%84%E6%96%B9%E6%B3%95/"
+    >查看PostgreSQL序列最后值的方法</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/02/16/%E6%9F%A5%E7%9C%8BPostgreSQL%E5%BA%8F%E5%88%97%E6%9C%80%E5%90%8E%E5%80%BC%E7%9A%84%E6%96%B9%E6%B3%95/" class="article-date">
+  <time datetime="2023-02-16T04:18:32.000Z" itemprop="datePublished">2023-02-16</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <pre><code>SELECT SCHEMANAME AS SCHEMA,SEQUENCENAME AS SEQUENCE,LAST_VALUE FROM PG_SEQUENCES
+
+SELECT * FROM ALL_BOU1_4L_GID_SEQ;
+
+SELECT CURRVAL(&#39;ALL_BOU1_4L_GID_SEQ&#39;);
+
+SELECT NEXTVAL(&#39;ALL_BOU1_4L_GID_SEQ&#39;);
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-PostgreSQL备份与恢复"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/02/16/PostgreSQL%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D/"
+    >PostgreSQL备份与恢复</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/02/16/PostgreSQL%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D/" class="article-date">
+  <time datetime="2023-02-16T04:17:09.000Z" itemprop="datePublished">2023-02-16</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>（一）备份数据库，步骤如下：<br>（1）开始-运行-cmd 弹出dos控制台；然后 在控制台里，进入PostgreSQL安装目录bin下：<br>    cd C:\Program Files\PostgreSQL\9.0\bin<br>    pg_dump -h localhost -U postgres databasename &gt; D:\databasename.bak</p>
+<p>（二）恢复数据库，步骤如下：<br>（1）预先建好数据库databasename，<br>（2）开始-运行-cmd 弹出dos控制台；然后 在控制台里，进入PostgreSQL安装目录bin下：<br>    cd C:\Program Files\PostgreSQL\9.0\bin<br>    psql -h localhost -U postgres -d databasename &lt; D:\databasename.bak</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-windows下注册和取消PostgreSQL服务的方法"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/02/16/windows%E4%B8%8B%E6%B3%A8%E5%86%8C%E5%92%8C%E5%8F%96%E6%B6%88PostgreSQL%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%96%B9%E6%B3%95/"
+    >windows下注册和取消PostgreSQL服务的方法</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/02/16/windows%E4%B8%8B%E6%B3%A8%E5%86%8C%E5%92%8C%E5%8F%96%E6%B6%88PostgreSQL%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%96%B9%E6%B3%95/" class="article-date">
+  <time datetime="2023-02-16T04:16:04.000Z" itemprop="datePublished">2023-02-16</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="（一）"><a href="#（一）" class="headerlink" title="（一）"></a>（一）</h1><p>pg_ctl register [-N servicename] [-U username] [-P password] [-D datadir] [-w][-t seconds] [-o options]<br>pg_ctl unregister [-N servicename]<br>参数说明如下：<br>-N servicename：要注册的系统服务的名字。这个名字将用于服务名和 显示名。<br>-P password：用于启动服务的密码<br>-U：用于启动服务的用户名。如果是域用户，需要使用“DOMAIN\username”的格式<br>使用举例如下：<br>删除一个服务：<br>pg_ctl unregister -N postgresql-9.2<br>增加一个服务：<br>pg_ctl register -D “C:\Program Files\Postgresql\9.2\data”</p>
+<h1 id="（二）"><a href="#（二）" class="headerlink" title="（二）"></a>（二）</h1><p>重新注册服务，其实比重新安装还简单了；执行命令就可以了，<br>第一步：进入到数据库的安装目录，cd D:\PostgreSQL\bin；<br>第二部：执行服务注册：pg_ctl register -N pg921 -D D:\PostgreSQL\data -S auto -w -t 10 -l D:/PostgreSQL/pg921.log -o “-p 5432”,<br>-N pg921 代表注册服务的名称 ，-D代表数据库文件目录 ，-S代表服务启动方式auto自动，demand手动，-o “-p 5432”指启动服务端口；（可以通过pg_ctl –help命令查看使用方法）<br>第三步：启动服务，net start pg921；<br>通过上面的的方法就成功的注册了服务器，以后每次开机都可以使用数据库了；<br>但是postgresql自带的一个管理工具pgAdmin3还是不能正常使用，需要我们配置，配置方法见下图：<br>注意：服务项不需要填写，主机填写localhost，如果填写真实的ip，必须在数据库配置文件中配置ip权限，否则不能连接；</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-Enabling-PostGIS"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/02/16/Enabling-PostGIS/"
+    >Enabling PostGIS</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/02/16/Enabling-PostGIS/" class="article-date">
+  <time datetime="2023-02-16T04:13:35.000Z" itemprop="datePublished">2023-02-16</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>PostGIS is an optional extension that must be enabled in EVERY database you want to use it in.</p>
+<pre><code>CREATE EXTENSION postgis;
+-- in PostGIS 3, postgis_raster is a separate extension from postgis
+-- so do this in addition if you are experimenting PostGIS 3+
+CREATE EXTENSION postgis_raster;
+ 
+CREATE EXTENSION postgis_sfcgal;
+CREATE EXTENSION address_standardizer;
+CREATE EXTENSION fuzzystrmatch;
+CREATE EXTENSION postgis_topology;
+CREATE EXTENSION postgis_tiger_geocoder;
+
+-- If you want to use pgrouting, download the respective one for your PostgreSQL
+CREATE EXTENSION pgrouting;
+</code></pre>
+<hr>
+<pre><code>-- Enable PostGIS (as of 3.0 contains just geometry/geography)
+CREATE EXTENSION postgis;
+-- enable raster support (for 3+)
+CREATE EXTENSION postgis_raster;
+-- Enable Topology
+CREATE EXTENSION postgis_topology;
+-- Enable PostGIS Advanced 3D
+-- and other geoprocessing algorithms
+-- sfcgal not available with all distributions
+CREATE EXTENSION postgis_sfcgal;
+-- fuzzy matching needed for Tiger
+CREATE EXTENSION fuzzystrmatch;
+-- rule based standardizer
+CREATE EXTENSION address_standardizer;
+-- example rule data set
+CREATE EXTENSION address_standardizer_data_us;
+-- Enable US Tiger Geocoder
+CREATE EXTENSION postgis_tiger_geocoder;
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostGIS/" rel="tag">PostGIS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-Ubuntu20-04安装Idea详细教程"
   class="article article-type-post"
   itemscope
@@ -210,327 +540,13 @@ cd idea-IU-202.7660.26/bin/
 </article>
 
     
-    <article
-  id="post-Geowebcache瓦片的自更新"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/02/15/Geowebcache%E7%93%A6%E7%89%87%E7%9A%84%E8%87%AA%E6%9B%B4%E6%96%B0/"
-    >Geowebcache瓦片的自更新</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/02/15/Geowebcache%E7%93%A6%E7%89%87%E7%9A%84%E8%87%AA%E6%9B%B4%E6%96%B0/" class="article-date">
-  <time datetime="2023-02-15T04:06:39.000Z" itemprop="datePublished">2023-02-15</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u013323965/article/details/71480810">https://blog.csdn.net/u013323965/article/details/71480810</a>  转载</p>
-<p>问题来源<br>如果有一种图层，它的支撑数据是不断变化的，但使用wms加载太慢（gwc/service/wms也一样），影响体验，那么有没有办法，加载事先切好的瓦片，再自更新更换的部分？<br>解决方式<br>geoserver官网上提供的两种方式(guava是自带的，而另一种则需要使用社区封装好的依赖包)，但两种都试过了，貌似都没有什么效果，也可能是我的方法不对，望大神指点</p>
-<p>利用gwc自带的配置进行瓦片时效的调整，用这种方式，本人确实在时长之外感受到了瓦片的变化。</p>
-<p>GWC瓦片配置步骤<br>以防有人不记得所配置的路径，特地介绍了如何找到配置路径，打开geoserver，进入主页，修改地址子路径为gwc(如localhost:8080/geoserver/gwc)。</p>
-<p>在xml中添加需要的图层，结构可自行百度geowebcache.xml，有详细的结构，这里不重复，在<layers>下添加所需的wmsLayer.</layers></p>
-<p>然后在第一步的网址里加子路径demo，选中Reload Configuration，进行配置的重新读取<br>继续下来，要注意的是，配置文件的图层很可能被原来配置的同名图层给顶替掉了，导致结果没有发生变化，这里要删除掉原有图层才能看到GWC图层，如图，图标可以区分，很明显框起来的就是通过配置生成的图层，这个图层可以自更新瓦片。</p>
-<p>注意<br>最大的注意事项就是注意有没有顶替现象</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Geowebcache/" rel="tag">Geowebcache</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%93%A6%E7%89%87%E8%87%AA%E6%9B%B4%E6%96%B0/" rel="tag">瓦片自更新</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-windows系统如何查看端口被占用、杀进程"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/02/14/windows%E7%B3%BB%E7%BB%9F%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E7%AB%AF%E5%8F%A3%E8%A2%AB%E5%8D%A0%E7%94%A8%E3%80%81%E6%9D%80%E8%BF%9B%E7%A8%8B/"
-    >windows系统如何查看端口被占用、杀进程</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/02/14/windows%E7%B3%BB%E7%BB%9F%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E7%AB%AF%E5%8F%A3%E8%A2%AB%E5%8D%A0%E7%94%A8%E3%80%81%E6%9D%80%E8%BF%9B%E7%A8%8B/" class="article-date">
-  <time datetime="2023-02-14T04:04:10.000Z" itemprop="datePublished">2023-02-14</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>1、首先是启动windows的命令窗口，按键盘上的windows+R，然后在输入框中输入cmd，既可以启动命令窗口</p>
-<p>2、进入windows命令窗口之后，输入命令，输入netstat -ano然后回车，就可以看到系统当前所有的端口使用情况。</p>
-<p>3、通过命令查找某一特定端口，在命令窗口中输入命令中输入netstat -ano |findstr “端口号”，然后回车就可以看到这个端口被哪个应用占用。</p>
-<p>4、查看到对应的进程id之后，就可以通过id查找对应的进程名称，使用命令tasklist |findstr “进程id号”</p>
-<p>5、通过命令杀掉进程，或者是直接根据进程的名称杀掉所有的进程，，在命令框中输入如下命令taskkill /f /t /im “进程id或者进程名称”</p>
-<p>6、杀掉对应的进程id或者是进程名称之后，然后再通过查找命令，查找对应的端口，现在就可以看到这个端口没有被其他应用所占用。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/windows/" rel="tag">windows</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-tomcat修改默认访问项目名称和项目发布路径"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/02/14/tomcat%E4%BF%AE%E6%94%B9%E9%BB%98%E8%AE%A4%E8%AE%BF%E9%97%AE%E9%A1%B9%E7%9B%AE%E5%90%8D%E7%A7%B0%E5%92%8C%E9%A1%B9%E7%9B%AE%E5%8F%91%E5%B8%83%E8%B7%AF%E5%BE%84/"
-    >tomcat修改默认访问项目名称和项目发布路径</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/02/14/tomcat%E4%BF%AE%E6%94%B9%E9%BB%98%E8%AE%A4%E8%AE%BF%E9%97%AE%E9%A1%B9%E7%9B%AE%E5%90%8D%E7%A7%B0%E5%92%8C%E9%A1%B9%E7%9B%AE%E5%8F%91%E5%B8%83%E8%B7%AF%E5%BE%84/" class="article-date">
-  <time datetime="2023-02-14T03:59:29.000Z" itemprop="datePublished">2023-02-14</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>Tomcat默认的而发布路径为 tomcat/webapps/目录，如果想修改发布路径，找到tomcat/conf/server.xml文件，有以下两种方式：</p>
-<h1 id="方式一：修改默认appBase"><a href="#方式一：修改默认appBase" class="headerlink" title="方式一：修改默认appBase"></a>方式一：修改默认appBase</h1><p>默认：</p>
-<pre><code>&lt;Host name=&quot;localhost&quot; appBase=&quot;webapps&quot; unpackWARs=&quot;true&quot; autoDeploy=&quot;true&quot;&gt;
-</code></pre>
-<p>webapps存放web应用，这个目录下有一些默认的项目，在tomcat启动的时候会跟着一起加载。<br>如果不想删除这些项目，可以把tomcat发布的路径修改到其他地方。<br>修改里面这一行的appBase为其他路径即可。</p>
-<pre><code>&lt;Host name=&quot;localhost&quot; appBase=&quot;/root/webfile/webapps&quot; unpackWARs=&quot;true&quot; autoDeploy=&quot;true&quot;&gt;
-</code></pre>
-<h1 id="方式二：保持appBase不变，增加其他发布路径"><a href="#方式二：保持appBase不变，增加其他发布路径" class="headerlink" title="方式二：保持appBase不变，增加其他发布路径"></a>方式二：保持appBase不变，增加其他发布路径</h1><p>在<Host>节点下增加<Context>节点,并设置path、docBase、reloadable属性，示例如下。</Context></Host></p>
-<pre><code>&lt;Context path=&quot;&quot; docBase=&quot;/root/webfile/web&quot; reloadable=&quot;true&quot;/&gt;
-&lt;Context docBase=&quot;/root/pismarket-api&quot; path=&quot;/api&quot; debug=&quot;0&quot; reloadable=&quot;true&quot; privileged=&quot;true&quot; /&gt;
-</code></pre>
-<p>各属性说明如下：</p>
-<ul>
-<li>docBase</li>
-</ul>
-<p>就是你部署项目的实际路径。可以指定web应用程序的文档根目录或者war文件的路径名，你可以指定目录或war文件的绝对路径名，也可以指定相对于Host元素的appBase目录的相对路径名。</p>
-<ul>
-<li>path</li>
-</ul>
-<p>就是你要访问的相对路径，或者叫web应用的上下文路径。</p>
-<ul>
-<li>reloadable</li>
-</ul>
-<p>热部署。如果设置为true，则tomcat服务器在运行时，会监视WEB-INF/classes和WEB-INF/lib目录下类的改变，如果发现有类被更新，tomcat服务器将自动重新加载该web应用程序。这个特性在应用程序的开发阶段非常有用，但是它需要额外的运行时开销，所以在产品发布时不建议使用。该属性的默认值是false</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tomcat/" rel="tag">tomcat</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-windows命令行查看文件的MD5、SHA1、SHA256"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/02/14/windows%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E7%9A%84MD5%E3%80%81SHA1%E3%80%81SHA256/"
-    >windows命令行查看文件的MD5、SHA1、SHA256</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/02/14/windows%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E7%9A%84MD5%E3%80%81SHA1%E3%80%81SHA256/" class="article-date">
-  <time datetime="2023-02-14T02:47:52.000Z" itemprop="datePublished">2023-02-14</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>win10打开Powershell，命令格式certutil -hashfile  &lt;文件名&gt;  &lt;hash类型&gt;</p>
-<p>样例：</p>
-<pre><code>certutil -hashfile D:\test.txt MD5
-certutil -hashfile D:\test.txt SHA1
-certutil -hashfile D:\test.txt SHA256
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MD5/" rel="tag">MD5</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SHA1/" rel="tag">SHA1</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SHA256/" rel="tag">SHA256</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/windows/" rel="tag">windows</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Linux下查看tomcat占用端口"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/02/13/Linux%E4%B8%8B%E6%9F%A5%E7%9C%8Btomcat%E5%8D%A0%E7%94%A8%E7%AB%AF%E5%8F%A3/"
-    >Linux下查看tomcat占用端口</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/02/13/Linux%E4%B8%8B%E6%9F%A5%E7%9C%8Btomcat%E5%8D%A0%E7%94%A8%E7%AB%AF%E5%8F%A3/" class="article-date">
-  <time datetime="2023-02-13T01:21:59.000Z" itemprop="datePublished">2023-02-13</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>1、先查看tomcat的进程号</p>
-<p>ps -ef | grep tomcat*</p>
-<p>后面带*号，是为了查看多个tomcat，例如tomcat6，tomcat7。</p>
-<p>2、根据进程号查看端口号</p>
-<p>netstat -anop | grep 15161</p>
-<p>可以看到8865、8866、8867端口号被占用</p>
-<p>3、此外，还可以通过端口号，查看其所属的进程号相关信息</p>
-<p>查找到两种方式：</p>
-<p>（1）lsof -i: 8866</p>
-<p>（2）netstat -tunlp|grep 端口号，用于查看指定端口号的进程情况，</p>
-<p>如查看22端口的情况，netstat -tunlp|grep 22</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tomcat/" rel="tag">tomcat</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
   </article>
   
 
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/30/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><a class="page-number" href="/page/30/">30</a><span class="page-number current">31</span><a class="page-number" href="/page/32/">32</a><a class="page-number" href="/page/33/">33</a><span class="space">&hellip;</span><a class="page-number" href="/page/36/">36</a><a class="extend next" rel="next" href="/page/32/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/30/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><a class="page-number" href="/page/30/">30</a><span class="page-number current">31</span><a class="page-number" href="/page/32/">32</a><a class="page-number" href="/page/33/">33</a><span class="space">&hellip;</span><a class="page-number" href="/page/37/">37</a><a class="extend next" rel="next" href="/page/32/">下一页</a>
   </nav>
   
 </section>

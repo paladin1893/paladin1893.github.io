@@ -154,6 +154,621 @@
     
     
     <article
+  id="post-GeographicLib 极简入门"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/05/04/GeographicLib%20%E6%9E%81%E7%AE%80%E5%85%A5%E9%97%A8/"
+    >geographiclib极简入门</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/05/04/GeographicLib%20%E6%9E%81%E7%AE%80%E5%85%A5%E9%97%A8/" class="article-date">
+  <time datetime="2023-05-04T02:37:01.000Z" itemprop="datePublished">2023-05-04</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="1-文档"><a href="#1-文档" class="headerlink" title="1. 文档"></a>1. 文档</h1><p>GeographicLib - 官方文档<br>GeographicLib::LocalCartesian - 官方文档</p>
+<h1 id="2-安装"><a href="#2-安装" class="headerlink" title="2. 安装"></a>2. 安装</h1><p>克隆源码并编译安装 GeographicLib 。 (码云镜像更快，已有较多人转储，不用自己导入，如需自己导入，参考gitee文档)。</p>
+<pre><code>git clone https://gitee.com/masonqin/geographiclib.git
+cd geographiclib
+mkdir build &amp;&amp; cd build
+cmake .. #无报错
+make #无报错
+sudo make install #无报错
+</code></pre>
+<h1 id="3-项目集成"><a href="#3-项目集成" class="headerlink" title="3. 项目集成"></a>3. 项目集成</h1><ul>
+<li><p>编写 CMakeLists.txt，非常简单的老三句。</p>
+<p>  find_package (GeographicLib REQUIRED)<br>  include_directories(${GeographicLib_INCLUDE_DIRS})<br>  target_link_libraries(&lt;可执行程序&gt; ${GeographicLib_LIBRARIES})</p>
+</li>
+<li><p>代码集成，最常用的功能，使用局部坐标系转换，从 经纬高 到 ENU 。</p>
+<p>  #include &lt;GeographicLib/LocalCartesian.hpp&gt; //包含头文件<br>  //经纬度原点初始化<br>  GeographicLib::LocalCartesian geo_converter;<br>  geo_converter.Reset(latitude, longitude, altitude);<br>  //经纬度转ENU<br>  geo_converter.Forward(latitude, longitude, altitude, local_E, local_N, local_U);</p>
+</li>
+</ul>
+<p>初始化原点用了 Reset 函数，Forward 用于将经纬高转换成米制坐标[E,N,U] 。俩函数都是调用 geo_converter 对象的成员函数，geo_converter 就是 GeographicLib::LocalCartesian 的实例。</p>
+<ul>
+<li>GeographicLib::LocalCartesian 简介，官方文档</li>
+</ul>
+<p>功能就是把椭球体下的地理坐标系坐标转为ENU局部系下的坐标。<br>Reset 函数的作用是重置原点，LocalCartesian构造函数是默认在(0,0,0)也就是地心。<br>Forward (lat, lon, alt, x, y, z)函数就是把经纬高转换为ENU，前三个传入，后三个传出。</p>
+<h1 id="4-极简的例子"><a href="#4-极简的例子" class="headerlink" title="4. 极简的例子"></a>4. 极简的例子</h1><ul>
+<li><p>新建 geographiclib_demo 文件夹，在里面新建 CMakeLists.txt 和 main.cpp。</p>
+</li>
+<li><p>main.cpp ，经纬度数据转ENU米制坐标，数据文件为lonlat.csv，格式为**[纬度，经度，高度]**。</p>
+<p>  #include <iostream><br>  #include <vector><br>  #include <string><br>  #include <fstream><br>  #include <sstream><br>  #include &lt;GeographicLib/LocalCartesian.hpp&gt; //header file</sstream></fstream></string></vector></iostream></p>
+<p>  typedef std::vector&lt;std::vector<double>&gt; dataMat_NxN;</double></p>
+<p>  void ReadCSV(std::string str_csv_file, dataMat_NxN &amp;data_NxN)<br>  {</p>
+<pre><code>  std::ifstream in_file(str_csv_file, std::ios::in);
+  std::string std_line;
+  while (getline(in_file, std_line))
+  &#123;
+      std::stringstream ss(std_line);
+      std::string data_each;
+      std::vector&lt;double&gt; data_array;
+      while (getline(ss, data_each, &#39;,&#39;))
+      &#123;
+          data_array.push_back(atof(data_each.c_str()));
+      &#125;
+      data_NxN.push_back(data_array);
+  &#125;
+</code></pre>
+<p>  }</p>
+<p>  void WriteDat(std::string str_dat_file, dataMat_NxN &amp;data_NxN)<br>  {</p>
+<pre><code>  std::ofstream out_file(str_dat_file, std::ios::out);
+  for (int i = 0; i &lt; data_NxN.size(); ++i)
+  &#123;
+      for (int j = 0; j &lt; data_NxN[i].size(); ++j)
+      &#123;
+          out_file &lt;&lt; data_NxN[i][j]&lt;&lt;&quot; &quot;;
+      &#125;
+      out_file &lt;&lt; &quot;\n&quot;;
+  &#125;
+</code></pre>
+<p>  }</p>
+<p>  int main()<br>  {</p>
+<pre><code>  std::cout &lt;&lt; &quot;Demo program of GeographicLib.&quot; &lt;&lt; std::endl;
+  // geo origin init
+  GeographicLib::LocalCartesian geo_converter;
+  // data structure define
+  dataMat_NxN geo_data;
+  dataMat_NxN ENU_data;
+  // read data from file
+  std::string str_geo_data = &quot;../lonlat.csv&quot;;//lat,lon,h
+  ReadCSV(str_geo_data, geo_data);
+  if (geo_data.size() &gt; 0)
+  &#123;
+      if (geo_data[0].size() == 3)
+      &#123;
+          geo_converter.Reset(geo_data[0][0], geo_data[0][1], geo_data[0][2]);
+          for (int i = 0; i &lt; geo_data.size(); ++i)
+          &#123;
+              double local_E, local_N, local_U;
+              // convert[lat,lon,hgt] to ENU
+              geo_converter.Forward(geo_data[i][0], geo_data[i][1], geo_data[i][2], local_E, local_N, local_U);
+              std::vector&lt;double&gt; data_each;
+              data_each.emplace_back(local_E);
+              data_each.emplace_back(local_N);
+              data_each.emplace_back(local_U);
+              ENU_data.emplace_back(data_each);
+              std::cout &lt;&lt; &quot;i=&quot; &lt;&lt; i &lt;&lt; std::endl;
+          &#125;
+      &#125;
+  &#125;
+  std::string str_ENU_data = &quot;../enu.dat&quot;;//e,n,u
+  WriteDat(str_ENU_data, ENU_data);
+  return 0;
+</code></pre>
+<p>  }</p>
+</li>
+</ul>
+<p>CMakeLists.txt 文件</p>
+<pre><code>cmake_minimum_required(VERSION 3.10)
+project(geographiclib_demo)
+
+set(CMAKE_CXX_STANDARD 14)
+
+find_package (GeographicLib REQUIRED)
+include_directories($&#123;GeographicLib_INCLUDE_DIRS&#125;)
+
+add_executable(geographiclib_demo main.cpp)
+target_link_libraries(geographiclib_demo $&#123;GeographicLib_LIBRARIES&#125;)
+</code></pre>
+<p>编译 &amp; 执行</p>
+<pre><code>git clone https://gitee.com/jqf64078/geographiclib_demo.git
+cd geographiclib_demo
+mkdir build &amp;&amp; cd build
+cmake ..
+make
+./geographiclib_demo
+</code></pre>
+<p>转换ENU米制坐标结果绘制，matlab 绘制。</p>
+<pre><code>enu_data = load(&#39;enu.dat&#39;);
+plot(enu_data(:,1),enu_data(:,2));grid on;xlabel(&#39;East&#39;),ylabel(&#39;North&#39;);
+</code></pre>
+<p>csv 文件格式，程序只是简单地定义 [纬度，经度，高度] 如下所示的格式进行读取。</p>
+<pre><code>lat, lon, h,
+lat, lon, h,
+lat, lon, h,
+…
+</code></pre>
+<p>————————————————<br>版权声明：本文为CSDN博主「银时大魔王」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/sinat_25923849/article/details/115625911">https://blog.csdn.net/sinat_25923849/article/details/115625911</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/geographiclib/" rel="tag">geographiclib</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-快速下载notepad"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/05/03/%E5%BF%AB%E9%80%9F%E4%B8%8B%E8%BD%BDnotepad/"
+    >快速下载notepad++</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/05/03/%E5%BF%AB%E9%80%9F%E4%B8%8B%E8%BD%BDnotepad/" class="article-date">
+  <time datetime="2023-05-03T10:24:27.000Z" itemprop="datePublished">2023-05-03</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>Notepad+官网难进入，下载速度慢。最新版简体中文的GitHub下载地址。<br>建议迅雷下载，其他下载貌似速度很慢。</p>
+<p>可以在<a target="_blank" rel="noopener" href="https://github.com中,检索notepad-plus-plus./">https://github.com中，检索notepad-plus-plus。</a></p>
+<p>也可以直接使用下面方法下载：</p>
+<p>以64位为例：</p>
+<p>64位：<a target="_blank" rel="noopener" href="https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.4.x/npp.8.4.x.Installer.x64.exe">https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.4.x/npp.8.4.x.Installer.x64.exe</a>  【将x换成版本号】</p>
+<p>可以参考如下信息修改下载地址：<br>全系列版本：<a target="_blank" rel="noopener" href="https://github.com/notepad-plus-plus/notepad-plus-plus/releases">https://github.com/notepad-plus-plus/notepad-plus-plus/releases</a><br>版本：Notepad++ 8.4.8<br>发布时间: 2022-12-25</p>
+<p>官方下载地址：<a target="_blank" rel="noopener" href="https://github.com/notepad-plus-plus/notepad-plus-plus">https://github.com/notepad-plus-plus/notepad-plus-plus</a><br>32位：<a target="_blank" rel="noopener" href="https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.4.8/npp.8.4.8.Installer.exe">https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.4.8/npp.8.4.8.Installer.exe</a><br>64位：<a target="_blank" rel="noopener" href="https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.4.8/npp.8.4.8.Installer.x64.exe">https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.4.8/npp.8.4.8.Installer.x64.exe</a><br>其他系列下载地址：<a target="_blank" rel="noopener" href="https://notepad-plus-plus.org/news/v848-released/">https://notepad-plus-plus.org/news/v848-released/</a></p>
+<p>————————————————<br>版权声明：本文为CSDN博主「笑春风oO」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qcmyqcmy/article/details/128899474">https://blog.csdn.net/qcmyqcmy/article/details/128899474</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gSOAP/" rel="tag">gSOAP</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-gSoap的工具用法说明"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/05/02/gSoap%E7%9A%84%E5%B7%A5%E5%85%B7%E7%94%A8%E6%B3%95%E8%AF%B4%E6%98%8E/"
+    >gSOAP的工具用法说明</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/05/02/gSoap%E7%9A%84%E5%B7%A5%E5%85%B7%E7%94%A8%E6%B3%95%E8%AF%B4%E6%98%8E/" class="article-date">
+  <time datetime="2023-05-02T06:31:46.000Z" itemprop="datePublished">2023-05-02</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>gSOAP是一个绑定SOAP/XML到C/C++语言的工具，使用它可以简单快速地开发出SOAP/XML的服务器端和客户端。由于 gSOAP具 有相当不错的兼容性，通过gSOAP，我们就可以调用由Java, .Net, Delhpi, PHP等语言开发的SOAP服务，或者向它们提供SOAP服务。</p>
+<p>gSOAP的主页是:</p>
+<p><a target="_blank" rel="noopener" href="http://sourceforge.net/projects/gsoap2">http://sourceforge.net/projects/gsoap2</a></p>
+<p>下载解压后，可以在gsoap\bin\win32里 找到wsdl2h.exe和soapcpp2.exe（另外还有linux和mac版本）。</p>
+<p>wsdl2h.exe的作用是根据WSDL生成C/C++风格的头文件<br>soapcpp2.exe的作用是根据头文件自动生成调用远程SOAP服务的客户端代码（称为存根:Stub）和提供SOAP服务的框架代码（称为框架：Skeleton），另外它也能从头文件生成WSDL文件。<br>gsoap\stdsoap2.cpp则是gSOAP的核心代码，要使用gSOAP只要在项目里包含这个文件以及由soapcpp2.exe生成的代码即可。另外还有个stdsoap2.c，内容与stdsoap2.cpp一模一样，用于纯C项目。</p>
+<p>gSOAP两大工具的用法</p>
+<p>从WSDL中产生头文件<br>用法：</p>
+<p>wsdl2h -o 头文件名 WSDL文件名或URL<br>wsdl2h常用选项</p>
+<p>-o 文件名，指定输出头文件<br>-n 名空间前缀 代替默认的ns<br>-c 产生纯C代码，否则是C++代码<br>-s 不要使用STL代码<br>-t 文件名，指定type map文件，默认为typemap.dat<br>-e 禁止为enum成员加上名空间前缀<br>type map文件用于指定SOAP/XML中的类型与C/C++之间的转换规则，比如在wsmap.dat里写</p>
+<p>xsd__string = | std::wstring | wchar_t*<br>那么SOAP/XML中的string将转换成std::wstring或wchar_t*，这样能更好地支持中文。</p>
+<p>例:</p>
+<p>wsdl2h -o ayandy.h <br> -n ay -t wsmap.dat <br> <a target="_blank" rel="noopener" href="http://www.ayandy.com/Service.asmx?WSDL">http://www.ayandy.com/Service.asmx?WSDL</a></p>
+<p>从<a target="_blank" rel="noopener" href="http://www.ayandy.com/Service.asmx?WSDL">http://www.ayandy.com/Service.asmx?WSDL</a> 生成ayandy.h文件，名空间为ay，使用wsmap.dat指定的转换规则。</p>
+<p>wsdl2h生成的头文件里的变量、类型等名称的前面都会加上名空间前缀，以两个下划线分隔。如上面的命令生成的头文件，有这样的定义：</p>
+<p>class ay1__ArrayOfString;<br>enum ay1__theDayFlagEnum<br>{<br> ay1__theDayFlagEnum__Today,<br> ay1__theDayFlagEnum__Tomorrow,<br> ay1__theDayFlagEnum__theDayafterTomorrow,<br>};<br>前面的ayandy1__的是名空间前缀，用以防止名称冲突。 wsdl2h的-n选项可以改变这个名空间前缀(默认为ns)。对于枚举ay1__theDayFlagEnum内的成员，如果嫌它太长的话，可以用-e命令选项禁止加入名空间前缀。</p>
+<p>从头文件生成存根(stub)和框架(Skeleton)源文件<br>编写SOAP程序除了头文件是不够的，还要有连接、通信、XML解析、序列/反序列化等工作。gSOAP提供的socapcpp2.exe就是用于从头文件中生成这些代码的，我们只要关心真正的业务逻辑就行了。</p>
+<p>用法</p>
+<p>soapcpp2 头文件<br>例:</p>
+<p>soapcpp2 ayandy.h<br>将生成下面这些文件</p>
+<p>soapStub.h    // soap的存根文件，定义了ayandy.h里对应的远程调用模型<br>soapC.c soapH.h  // soap的序列和反序列代码，它已经包含了soapStub.h，服务器端与客户端都要包含它<br>soapClient.c soapClientLib.c // 客户端代码，soapClientLib.c文件则只是简单地包含soapClient.c和soapC.c<br>soapServer.c soapServerLib.c // 服务器端代码,soapServerLib.c文件则只是简单地包含soapServer.c和soapC.c<br>ServiceSoap.nsmap ServiceSoap12.nsmap // 名空间定义，服务器端与客户端都要包含它<br>soapServiceSoapProxy.h soapServiceSoap12Proxy.h // 客户端的C++简单包装(如果头文件是纯C代码，这两个文件就不会生成)</p>
+<p>综上所述</p>
+<p>如果编写服务器端，项目里应该加入soapServerLib.c，代码里包含头文件soapH.h<br>如果编写客户端，项目里应该加入soapClientLib.c，代码里包含头文件SoapH.h（或xxxxProxy.h）<br>当然，还要加入gsoap库里的stdsoap2.cpp文件（如果是写C代码，则加入stdsoap2.c）<br>如果看到soapcpp2提示:”Critical error: #import: Cannot open file “stlvector.h” for reading.“， 那是因为我们的头文件使用了STL(wsdl2h 没用-s选项)，这时要使用-I选项指定gSOAP的 import文件路径，这个路径是”$gsoap\gsoap\import”:</p>
+<p>soapcpp2 ayandy.h -I D:\gsoap-2.7\gsoap\import<br>soapcpp2常用选项</p>
+<p>-C 仅生成客户端代码<br>-S 仅生成服务器端代码<br>-L 不要产生soapClientLib.c和soapServerLib.c文件<br>-c 产生纯C代码，否则是C++代码(与头文件有关)<br>-I 指定import路径（见上文）<br>-x 不要产生XML示例文件<br>-i 生成C++包装，客户端为xxxxProxy.h(.cpp)，服务器端为xxxxService.h(.cpp)。<br>转自：<a target="_blank" rel="noopener" href="https://www.oschina.net/question/10320_7573">https://www.oschina.net/question/10320_7573</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gSOAP/" rel="tag">gSOAP</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-vcpkg使用说明"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/05/01/vcpkg%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/"
+    >vcpkg使用说明</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/05/01/vcpkg%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/" class="article-date">
+  <time datetime="2023-05-01T08:58:50.000Z" itemprop="datePublished">2023-05-01</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="1-安装"><a href="#1-安装" class="headerlink" title="1. 安装"></a>1. 安装</h1><p>去GitHub上下载源码，然后点击安装脚本就可以了。</p>
+<ul>
+<li><p>先决条件：</p>
+<p>  Windows 7 或更高版本<br>  用于 Windows 的 Git</p>
+</li>
+<li><p>安装过程：</p>
+<p>  vcpkg的GitHub主页在这里：<a target="_blank" rel="noopener" href="https://github.com/microsoft/vcpkg">https://github.com/microsoft/vcpkg</a><br>  Visual Studio 2015 更新 3 或更高版本（带英文语言包）</p>
+</li>
+</ul>
+<p>在“命令提示符”窗口中，为 vcpkg 的克隆实例创建目录。 如果打算为不同的生成目标安装库，最好在目录名称中包含目标。 建议使用短路径名称（不含空格）（如 C:\src\win32\ 或 C:\dev\iot\），否则，某些端口生成系统可能会出现路径问题 。 在命令窗口中，切换到刚刚创建的目录。</p>
+<p>从 GitHub 克隆 vcpkg 存储库：<a target="_blank" rel="noopener" href="https://github.com/Microsoft/vcpkg%E3%80%82">https://github.com/Microsoft/vcpkg。</a></p>
+<pre><code>git clone https://github.com/microsoft/vcpkg
+</code></pre>
+<p>此命令在 vcpkg 子目录中创建存储库的本地副本。 此位置是此 vcpkg 克隆的 vcpkg 根目录。</p>
+<p>下载完成后，在“命令提示符”窗口切换到 vcpkg 目录。</p>
+<p>在 vcpkg 根目录下，运行 vcpkg 引导程序命令：</p>
+<pre><code>bootstrap-vcpkg.bat
+</code></pre>
+<p>引导程序将使用 Microsoft C/C++ 工具、库和 Windows SDK 的位置配置 vcpkg。</p>
+<ul>
+<li>更新 vcpkg</li>
+</ul>
+<p>vcpkg 包管理器在 GitHub 上定期更新。 若要将 vcpkg 的克隆更新到最新版本，请从 vcpkg 根目录运行 git pull。 此命令会将 vcpkg 的副本与 GitHub 上的版本同步。 下载完成后，再次运行引导程序。 引导程序会重新生成 vcpkg 程序，但保留已安装的库。</p>
+<ul>
+<li>卸载 vcpkg</li>
+</ul>
+<p>若要卸载 vcpkg，只需删除 vcpkg 目录。 删除此目录会卸载 vcpkg 分发以及 vcpkg 已安装的所有库。</p>
+<p>但是，如果已执行 vcpkg integrate install，则应执行 vcpkg integrate remove 来确保在删除文件夹之前已清理集成 。</p>
+<ol start="2">
+<li>使用</li>
+</ol>
+<ul>
+<li><p>命令</p>
+<p>  Command    描述<br>  vcpkg search [pat]    搜索可安装的包<br>  vcpkg install <pkg>…    安装包<br>  vcpkg remove <pkg>…    卸载包<br>  vcpkg remove –outdated    卸载所有过期包<br>  vcpkg list    列出已安装的包<br>  vcpkg update    显示用于更新的包列表<br>  vcpkg upgrade    重新生成所有过期包<br>  vcpkg hash <file> [alg]    通过特定算法对文件执行哈希操作，默认为 SHA512<br>  vcpkg integrate install    使已安装包在用户范围内可用。 首次使用时需要管理权限<br>  vcpkg integrate remove    删除用户范围的集成<br>  vcpkg integrate project    为使用单个 VS 项目生成引用 NuGet 包<br>  vcpkg export <pkg>… [opt]…    导出包<br>  vcpkg edit <pkg>    打开端口进行编辑（使用 %EDITOR%，默认为“code”）<br>  vcpkg create <pkg> <url> [archivename]    创建新程序包<br>  vcpkg cache    列出缓存的已编译包<br>  vcpkg version    显示版本信息<br>  vcpkg contact –survey    显示联系信息，以便发送反馈。</url></pkg></pkg></pkg></file></pkg></pkg></p>
+</li>
+<li><p>选项</p>
+</li>
+</ul>
+<p>选项    描述<br>–triplet <t>    指定目标体系结构三元组。 （默认：%VCPKG_DEFAULT_TRIPLET%，另请参阅 vcpkg help triplet）<br>–vcpkg-root <path></path>    指定 vcpkg 根目录（默认：%VCPKG_ROOT%）</t></p>
+<h1 id="3-集成vcpkg"><a href="#3-集成vcpkg" class="headerlink" title="3. 集成vcpkg"></a>3. 集成vcpkg</h1><ul>
+<li>Windows 上的 Visual Studio 集成</li>
+</ul>
+<p>从 vcpkg 根目录，运行 vcpkg integrate install来配置 Visual Studio，以便按用户找到所有 vcpkg 头文件和二进制文件。 无需在 Visual Studio 中编辑 VC + + 目录路径。 如果有多个 vcpkg 克隆，则你从中运行此命令的克隆将成为新的默认位置。<br>现在，只需键入文件夹/标头名称即可轻松加入标头，并且自动完成功能将帮助你完成这一切。 无需执行任何额外的步骤即可链接到库或添加项目引用。 下图演示了 Visual Studio 查找 azure-storage-cpp 标头的方法。 Vcpkg 将其标头置于 /installed 子文件夹中，由目标平台予以分区。 下图显示库的 /was 子文件夹中包含文件的列表：</p>
+<ul>
+<li>Linux 或 macOS 上的 Visual Studio Code 集成</li>
+</ul>
+<p>在 shell 或“终端”窗口中，将目录更改为 vcpkg 根目录。 然后运行./vcpkg integrate install，在 Linux 或 macOS 上配置 Visual Studio Code。 此命令将设置 vcpkg 工具和库的位置，并对源文件启用 IntelliSense。</p>
+<ul>
+<li><p>删除 vcpkg 集成<br>如果已使用 integrate 选项，则应在删除 vcpkg 实例之前删除该集成。 若要删除和清理该集成，请将目录更改为 vcpkg 根目录。</p>
+<p>  在 Windows 上，运行vcpkg integrate remove，确保清除该集成。<br>  在 Linux 或 macOS 上，运行./vcpkg integrate remove 命令。</p>
+</li>
+<li><p>使用举例<br>我现在的场景是我需要 libpng 来进行开发，输入命令：vcpkg install libpng来安装，可以看到他在开始自动下载。</p>
+</li>
+</ul>
+<p>注意我们可以使用.\vcpkg help triplet来看库支持的模式。</p>
+<h1 id="4-详细介绍"><a href="#4-详细介绍" class="headerlink" title="4. 详细介绍"></a>4. 详细介绍</h1><ul>
+<li>4.1 新增库</li>
+</ul>
+<p>使用指令：vcpkg help triplet可以看到都支持什么平台。</p>
+<p>下载某一个平台的包：.\vcpkg.exe install jsoncpp:x64-windows</p>
+<pre><code>(base) PS C:\Users\cds&gt; vcpkg help triplet
+Available architecture triplets
+VCPKG built-in triplets:
+  arm-uwp
+  arm64-windows
+  x64-linux
+  x64-osx
+  x64-uwp
+  x64-windows-static
+  x64-windows
+  x86-windows
+
+VCPKG community triplets:
+  arm-ios
+  arm-linux
+  arm-mingw-dynamic
+  arm-mingw-static
+  arm-windows
+  arm64-ios
+  arm64-linux
+  arm64-mingw-dynamic
+  arm64-mingw-static
+  arm64-osx
+  arm64-uwp
+  arm64-windows-static-md
+  arm64-windows-static
+  ppc64le-linux
+  s390x-linux
+  wasm32-emscripten
+  x64-ios
+  x64-mingw-dynamic
+  x64-mingw-static
+  x64-openbsd
+  x64-osx-dynamic
+  x64-windows-static-md
+  x86-freebsd
+  x86-ios
+  x86-mingw-dynamic
+  x86-mingw-static
+  x86-uwp
+  x86-windows-static-md
+  x86-windows-static
+  x86-windows-v120
+</code></pre>
+<ul>
+<li><p>4.2 删除库</p>
+<p>  .\vcpkg.exe remove jsoncpp</p>
+</li>
+</ul>
+<p>注意：</p>
+<p>这个时候只是移除了默认的x86-winodws版本的文件，如果有其他平台的版本需要移除，需要制定相应的triplet。<br>移除也只是移除了二进制程序库而已，源码包和解压缩的源码并没有删除。</p>
+<ul>
+<li><p>4.3 查看已经安装的列表</p>
+<p>  .\vcpkg.exe list</p>
+</li>
+<li><p>4.4 更新已经安装的开源库</p>
+</li>
+</ul>
+<p>一般有两种更新方式。一个是update指令，可以显示可以升级的开源库的列表。另一个是upgrade的指令，会重新编译所有需要更新的包。<br>————————————————<br>版权声明：本文为CSDN博主「早睡的叶子」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/sexyluna/article/details/115285405">https://blog.csdn.net/sexyluna/article/details/115285405</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vcpkg/" rel="tag">vcpkg</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-httpbin"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/04/30/httpbin/"
+    >httpbin</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/04/30/httpbin/" class="article-date">
+  <time datetime="2023-04-30T08:05:02.000Z" itemprop="datePublished">2023-04-30</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>httpbin 是一个使用 Python + Flask 编写的 HTTP HTTP Request &amp; Response Service。该服务主要用于测试 HTTP 库。<br>你可以向他发送请求，然后他会按照指定的规则将你的请求返回。这个类似于echo服务器，但是功能又比它要更强大一些。 httpbin支持HTTP/HTTPS，支持所有的HTTP动词，能模拟302跳转乃至302跳转的次数，还可以返回一个HTML文件或一个XML文件或一个图片文件（还支持指定返回图片的格式）。实在是请求调试中居家必备的良器！</p>
+<p><a target="_blank" rel="noopener" href="http://httpbin.org/">http://httpbin.org/</a></p>
+<h1 id="相同推荐"><a href="#相同推荐" class="headerlink" title="相同推荐"></a>相同推荐</h1><p>类似这种能够很方便调试接口的还有很多，但是无疑还是httpbin最好用。</p>
+<p>requestb<br>putsreq<br>ttpresponder<br>runscope</p>
+<h1 id="如何使用"><a href="#如何使用" class="headerlink" title="如何使用"></a>如何使用</h1><p>使用你擅长的语言，与它的接口互动。</p>
+<h1 id="接口列表"><a href="#接口列表" class="headerlink" title="接口列表"></a>接口列表</h1><pre><code>Endpoint***************Description
+
+/************************This page.
+
+/ip**********************Returns Origin IP.
+
+/user-agent*************Returns user-agent.
+
+/headers*****************Returns header dict.
+
+/get******************Returns GET data.
+
+/post*****************Returns POST data.
+
+/patch*************Returns PATCH data.
+
+/put*******************Returns PUT data.
+
+/delete****************Returns DELETE data
+
+/gzip********************Returns gzip-encoded data.
+
+/deflate*****************Returns deflate-encoded data.
+
+/status/:code****************Returns given HTTP Status code.
+
+/response-headers******************Returns given response headers.
+
+/redirect/:n***************************302 Redirects n times.
+
+/redirect-to?url=foo**********************302 Redirects to the foo URL.
+
+/relative-redirect/:n****************302 Relative redirects n times.
+
+/cookies*******************Returns cookie data.
+
+/cookies/set?name=value**********************Sets one or more simple cookies.
+
+/cookies/delete?name*********************Deletes one or more simple cookies.
+
+/basic-auth/:user/:passwd****************Challenges HTTPBasic Auth.
+
+/hidden-basic-auth/:user/:passwd*************404&#39;d BasicAuth.
+
+/digest-auth/:qop/:user/:passwd***********Challenges HTTP Digest Auth.
+
+/stream/:n***************Streams n – 100 lines.
+
+/delay/:n****************Delays responding for n – 10 seconds.
+
+/drip*************Drips data over a duration after an optional initial delay, then (optionally) returns with the given status code.
+
+/range/:n************************Streams n bytes, and allows specifying a Range header to select a subset of the data. Accepts a chunk_size and request durationparameter.
+
+/html****************Renders an HTML Page.
+
+/robots.txt******************Returns some robots.txt rules.
+
+/deny*******************Denied by robots.txt file.
+
+/cache********************Returns 200 unless an If-Modified-Since or If-None-Match header is provided, when it returns a 304.
+
+/cache/:n*********Sets a Cache-Control header for n seconds.
+
+/bytes/:n****************Generates n random bytes of binary data, accepts optional seedinteger parameter.
+
+/stream-bytes/:n*******************Streams n random bytes of binary data, accepts optional seed and chunk_size integer parameters.
+
+/links/:n*****************Returns page containing n HTML links.
+
+/forms/post*************HTML form that submits to /post
+
+/xml*******************Returns some XML
+
+/encoding/utf8**************Returns page containing UTF-8 data.
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/httpbin/" rel="tag">httpbin</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-微电网到底是什么，为什么早些年无法普及？"
   class="article article-type-post"
   itemscope
@@ -222,375 +837,13 @@
 </article>
 
     
-    <article
-  id="post-微电网用途"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/04/28/%E5%BE%AE%E7%94%B5%E7%BD%91%E7%94%A8%E9%80%94/"
-    >微电网用途</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/04/28/%E5%BE%AE%E7%94%B5%E7%BD%91%E7%94%A8%E9%80%94/" class="article-date">
-  <time datetime="2023-04-28T14:31:19.000Z" itemprop="datePublished">2023-04-28</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>作者：浙江电网信息<br>链接：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/558702432/answer/2711099433">https://www.zhihu.com/question/558702432/answer/2711099433</a><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
-<p>01.微电网的定义</p>
-<p>微电网(Micro-Grid)是由分布式电源、负荷、储能、变配电和控制系统构成的小型电力系统。<br>微电网是一个能够实现自我控制、保护和管理的自治电力系统，既可以与外部电网并网运行，也可以孤网运行。<br>微电网是相对传统大电网的一个概念，发展微电网能够充分促进分布式可再生能源的大规模接入。微电网与大电网是相辅相成的，尤其在大电网没有覆盖的地区可以发挥更大的作用，以弥补大电网的不足。</p>
-<p>02.微电网的划分</p>
-<p>按照运行方式划分：并网型、孤网型(独立型)<br>按照电网类型划分：交流微电网、直流微电网、混合型<br>按照电压等级划分：低压(400V-1kV)、中压(1-35kV)、高压(35kV以上)<br>按照规模划分：小型(电网容量&lt;500kVA)、中型(500kVA&lt;=电网容量&lt;6MVA)、大型(电网容量&gt;6MVA)</p>
-<p>03.微电网的应用</p>
-<p>独立型微电网</p>
-<p>独立型微电网：不依赖于外部电网，可以通过分布式电源、储能系统独立、稳定、长期地给负荷供电。<br>可分为直流型、交流型、交直流混合型三种。</p>
-<p>为什么要发展独立型微电网系统?<br>(1)在现阶段，在大电网覆盖的经济发达地区，微电网的供电成本远高于大电网，缺乏经济性;<br>(2)尤其是并网型微电网，易被大电网替代，缺乏竞争力;<br>(3)但在大电网没有覆盖的地方，例如岛屿、偏远地区、城市周边、旅游景点等，微电网反而具有优势，因此迫切需要发展独立型微电网。</p>
-<p>01.分布式电源</p>
-<p>(1)独立型微电网相关的分布式电源<br>光伏发电<br>风力发电<br>燃气发电(天然气、沼气)<br>生物质发电<br>海洋能发电<br>小水电<br>柴油发电</p>
-<p>(2)分布式发电的优缺点</p>
-<p>优点：可利用丰富的清洁和可再生能源。<br>缺点：一些可再生能源具有间歇性和随机性。</p>
-<p>(3)独立型微电网相关的分布式电源</p>
-<p>其中分布式光伏是最有潜力的可再生能源，适应面广，受限制少，技术进步快和成本下降迅速，最有应用前景。</p>
-<p>现阶段发展分布式光伏的困难与对策：<br>困难：地难找，电难接，补贴慢，用电需求不稳定;<br>对策：可以采用独立型微电网方式，不依赖于电网;寻求适合的用电需求，真正实现自发自用。</p>
-<p>02.储能系统<br>独立型微电网相关的储能系统：</p>
-<p>化学储能<br>铅酸电池、铅酸胶休电池、铅碳电池、铅品电池<br>锂电池：磷酸铁悝、锰酸锂、三元、钛酸悝，<br>液流电池：全钒液流、锌溴，镍氢电池、钠硫电池、锌空、锂空</p>
-<p>物理储能<br>抽水蓄能、压缩空气、飞轮、相变储能、超级电容器、超导储能、蓄热蓄冷</p>
-<p>储能系统是独立型微电网不可或缺的组成部分，也是造成微电网系统成本高的主要原因。<br>需要找到大幅降低储能成木的方式方法：<br>a. 技术进步<br>b. 商业模式创新<br>(结合电动汽车充放电、退役电池梯级利用)</p>
-<p>03.推广应用<br>典型推广应用方向：</p>
-<p>独立光伏电动汽车充换电站<br>独立光伏水泵灌溉系统<br>独立光伏制氢系统<br>独立风光储村庄供电系统<br>独立风光柴储岛屿供电系统<br>独立风电海水淡化系统</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%BE%AE%E5%9E%8B%E7%94%B5%E7%BD%91/" rel="tag">微型电网</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-嵌入式EMS：流水线生产微电网"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/04/27/%E5%B5%8C%E5%85%A5%E5%BC%8FEMS%EF%BC%9A%E6%B5%81%E6%B0%B4%E7%BA%BF%E7%94%9F%E4%BA%A7%E5%BE%AE%E7%94%B5%E7%BD%91/"
-    >嵌入式EMS：流水线生产微电网</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/04/27/%E5%B5%8C%E5%85%A5%E5%BC%8FEMS%EF%BC%9A%E6%B5%81%E6%B0%B4%E7%BA%BF%E7%94%9F%E4%BA%A7%E5%BE%AE%E7%94%B5%E7%BD%91/" class="article-date">
-  <time datetime="2023-04-27T14:23:55.000Z" itemprop="datePublished">2023-04-27</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>作者：极简物控<br>链接：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/372948858/answer/2990066810">https://www.zhihu.com/question/372948858/answer/2990066810</a><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
-<p>嵌入式EMS也已经有了实践答案。极简物控应用嵌入式EMS在杭州某区域打造了集化工、印染、轻加工等在内的8类用能企业、52家用户的智慧协同微网群示范。我们了解到，区域超90%能源依赖于外部输入，具有典型大受端城市工业园区特征，以化纤纺织业、化学原料和化学制品制造业、化学纤维制造业、金属制品业、通用设备制造业、汽车制造业六大行业为主，属于高负荷密度区域，未来区域也仍以工业负荷为主，负荷发展相对稳定。我们选择其中1个供电单元为微电网群示范建设区域，该供电单元由4个10kV标准单环网组成，因此我们划分为4个微电网群，示范区的电压等级在10千伏及以下，单个微电网群容量小于12兆瓦。微电网群区域已建光伏12户（6649kWp）、储能1户（300kW/600kWh）。未来拟新建光伏14户（15110kWp）、储能7户（3000kW/6000kWh）、可调节负荷21户（9950kW），在3个企业中拟新建一体化充电设施，每套设备可同时服务停车场内40辆新能源车。</p>
-<p>示范区微电网群拓扑示意图传统微电网群协同控制通常采用集中式架构，但是随着微电网数量不断增多，系统计算负担增大、处理效力降低，同时，由于集中式系统过于庞大，存在某一节点失灵可能影响全局的风险，系统可靠性较差，扩展灵活性不足。在这样的场景下，分布式控制架构或许是更优的选择！然而，哪怕采用分布式控制架构，每一层级的微电网分布式协同控制都需要服务器、控制器、物联网关等多个硬件支撑，结构笨重，而且需要针对不同应用场景逐一开发系统平台，通用性较差。嵌入式EMS让微电网的分层分区（分布式）协同控制更加简单！极简物控的嵌入式EMS是目前市面上核心的微电网能量管理产品化方案之一。嵌入式EMS软硬件高度集成，相当于１个嵌入式EMS＝数据网关＋微网控制器＋能量管理服务器，即１个用户仅需安装１个嵌入式EMS即可打造微网智能控制平台。</p>
-<p>嵌入式EMS软硬件高度集成分层分区协同控制可分为“微电网层”、“协同控制层”、“系统平台层”。</p>
-<p>基于嵌入式EMS的微电网分层协同控制架构在微电网层中，通过1个嵌入式EMS实现对1个微电网优化调控，包括内部源网荷的直接控制、微电网运行模式切换、微网稳定运行以及与外部电网的能量交互，满足微网自治优化运行需求。一方面，微电网层上送关键的基础数据，包括设备的状态、需求响应潜力评估和策略执行反馈等，共协同控制层决策参考。另一方面，微电网层接受上级下发的分解指令，包括调度策略、响应顺序和设备状态调节指令等，根据微电网自身状态，管理微电网内部源荷储资源，保障微网内部的功率平衡，有效保障系统的稳定性和经济性。在协同控制层中，由嵌入式EMS和可视化平台构成，是架构中的中间层，是上下层数据和指令交互媒介，具备边缘计算、边缘互联、云边协同能力。一方面，协同控制层接收系统平台层下发的调控指令和下层微网群上发数据信息，制定考虑多目标约束的微网群优化调控策略，并下发控制指令下发给微电网层，实现微网群互联互济、协同运行。另一方面，将微网群执行情况，响应能力等信息反馈至系统平台层，辅助电网调度策略制定。在系统平台层中，主要是电网调度中心与能源大数据中心，是区域的能源智能大脑。一方面，根据所辖区域内的能源消费特征以及微电网群的状态，制定区域调度策略，并下发至协同控制层。另一方面，接受系统控制层上报的执行情况、响应能力等数据，以此为重要的数据参考制定下阶段的调度策略。</p>
-<p>操作面板在这样的系统架构下，单个微电网能够实现“最大功率输出模式、可调度模式、孤岛运行模式”及其他控制模式之间的切换，并且根据用户计划调度以及故障场景可以在并网和离网状态之间进行无缝切换，在孤岛模式下实现微电网自供电，依靠分布式电源和储能为电网用户供电。同时，微电网与微电网群之间进行能源、信息的交互互动，微电网与大电网实现电能的灵活互济，实现“企业收益最大、电网稳定运行、碳排总量最小”等多方面平衡，满足政府、用户、电网多方利益诉求，实现共建共享共赢。在经济效益方面，微电网控制系统的建设成本下降超60%以上，系统运维由需要2个及以上专业编程人员降至1个兼职巡检人员。随着微电网数量地不断增多，系统建设边际成本将会进一步下降。在系统运营期间，光伏预期发电量（现有+新建）2700万度电/年，按照“80%自发自用，20%余量上网”的原则，预计可节约电费约2000万元／年，储能（现有+新建）通过“低充高放”等方式盈利约420万元／年，通过参与电网日前削峰响应获得补贴约380万元／年（按浙江省需求响应按照4元/千瓦时的上限标准进行补偿）。在安全运行方面，微电网具备自平衡、自管理、自调节能力，独立运行时能保障内部负荷连续供电不低于2小时，微电网群的电量交换率接近50%，外部电网输入功率峰谷差下降比例超过25%，帮助实现日前削峰填谷20MW/次，每次大约为1.8小时，帮助电网稳定运行，极端事故条件下，配合需求响应和储能，内部非可调负荷可短时孤岛运行。此外，采取分层分区协同控制架构后，有效提高了系统的运行可靠性，不仅降低电网调度中心的调节负担。在低碳发展方面，光伏发电占总用电比例高于100%的有9家，50%-100%之间7家，微电网群的光伏发电占总用电整体比例超过50%，新能源消纳率达100%，平均每年减少二氧化碳13500吨。</p>
-<p>屋顶光伏受益于嵌入式EMS是产品化的解决方案，微电网群的建设边际成本会进一步降低，并为微电网群提供了一个“交流沟通”的平台，邀请微电网们“加入群聊”，实现微电网群分层分区的协调控制。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%BE%AE%E5%9E%8B%E7%94%B5%E7%BD%91/" rel="tag">微型电网</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-智能微电网优点"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/04/26/%E6%99%BA%E8%83%BD%E5%BE%AE%E7%94%B5%E7%BD%91%E4%BC%98%E7%82%B9/"
-    >智能微电网优点</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/04/26/%E6%99%BA%E8%83%BD%E5%BE%AE%E7%94%B5%E7%BD%91%E4%BC%98%E7%82%B9/" class="article-date">
-  <time datetime="2023-04-26T14:20:12.000Z" itemprop="datePublished">2023-04-26</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>作者：汉碳云<br>链接：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/372948858/answer/3030184012">https://www.zhihu.com/question/372948858/answer/3030184012</a><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
-<p>随着环保意识日益增强，越来越多的国家和地区开始重视碳中和，加快绿色经济和可持续发展的步伐。而智能微电网作为一种新兴的电力供应方式，在实现碳中和方面有着重要的意义，本文将从以下几个方面进行探讨。</p>
-<ul>
-<li>促进清洁能源发展：</li>
-</ul>
-<p>智能微电网是一种小型、灵活、可靠的电力供应系统，它具备能源的自治管理和分配功能，可以灵活应对不同的需求，使清洁能源更容易被广泛使用。在智能微电网的支持下，太阳能、风能等新能源可以更加广泛的应用，而传统的化石燃料可以得到替代。这有助于实现碳中和的目标，减少二氧化碳的排放，推动清洁能源的发展。</p>
-<ul>
-<li>提高能源供应效率：</li>
-</ul>
-<p>智能微电网是一种灵活的能量供应方式，能够将化繁为简，优化能源管理，减少能源浪费，从而实现更高效的能源利用，降低能源成本。随着技术和管理能力的不断提升，智能微电网能够更好地分配和管理能源，使其更加合理、高效地使用，从而有助于减少碳排放，实现碳中和。</p>
-<ul>
-<li>提高电网稳定性：</li>
-</ul>
-<p>智能微电网是一种小型的分布式电力系统，分布式能源的优越性在于可以充分利用地方资源，降低长距离输电功率损耗和线路故障的风险。而且智能微电网可以对接到传统的电力系统，通过智能化的控制，调节电量、提高电网的稳定性和可靠性，减少电网对环境的影响，从而更加适合碳中和的发展需求。</p>
-<ul>
-<li>促进能源去中心化：</li>
-</ul>
-<p>智能微电网的自治化管理可以将较小的电力系统转化为具有独立运行能力的电力区域。这些电力区域可以充分利用当地的可再生能源资源，减轻对集中供电系统的依赖，降低对化石燃料的需求，从而实现碳中和的目标。此外，去中心化还可以加强能源系统的安全性和独立性，使其免受对中央能源控制的可能性和黑客攻击的威胁。</p>
-<p>综上所述，汉碳云智能微电网不仅有助于碳中和的实现，还可以提高能源利用效率，降低污染排放，促进能源去中心化等。它是一种前景广阔的电力供应方式，相信随着技术和经验的不断积累，将会在未来得到更广泛的应用。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%BE%AE%E5%9E%8B%E7%94%B5%E7%BD%91/" rel="tag">微型电网</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-新型电力系统下的微电网应用及市场有何变化？"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/04/25/%E6%96%B0%E5%9E%8B%E7%94%B5%E5%8A%9B%E7%B3%BB%E7%BB%9F%E4%B8%8B%E7%9A%84%E5%BE%AE%E7%94%B5%E7%BD%91%E5%BA%94%E7%94%A8%E5%8F%8A%E5%B8%82%E5%9C%BA%E6%9C%89%E4%BD%95%E5%8F%98%E5%8C%96%EF%BC%9F/"
-    >新型电力系统下的微电网应用及市场有何变化？</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/04/25/%E6%96%B0%E5%9E%8B%E7%94%B5%E5%8A%9B%E7%B3%BB%E7%BB%9F%E4%B8%8B%E7%9A%84%E5%BE%AE%E7%94%B5%E7%BD%91%E5%BA%94%E7%94%A8%E5%8F%8A%E5%B8%82%E5%9C%BA%E6%9C%89%E4%BD%95%E5%8F%98%E5%8C%96%EF%BC%9F/" class="article-date">
-  <time datetime="2023-04-25T14:08:44.000Z" itemprop="datePublished">2023-04-25</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>微电网能够实现自我运行控制、保护和管理，既可以与公网并网运行，也能以孤立电网形式独立运行。微电网可以与现有电力系统结合形成高效灵活的新系统。</p>
-<h1 id="什么是微电网？"><a href="#什么是微电网？" class="headerlink" title="什么是微电网？"></a>什么是微电网？</h1><p>微电网是指由分布式电源、储能装置、能量转换装置、配用电设施、负荷、监控和保护装置等组成的小型发配用电系统，也称微网。微电网既可以与公网并网运行，也可以独立运行，是能够实现自我运行控制、保护和管理的自治系统。微电网内部分布式电源以清洁能源为主，或采取以能源综合利用为目标的发电形式。</p>
-<p>微电网包括五类装置。其中，能量提供装置包括分布式光伏、风能、生物质、地热、波浪、燃油、燃气等发电微电源和电能转换并网装置，用能装置包括用电负荷、冷负荷、热负荷等，储能装置包括多种分布式储能本体、并网装置和电池管理系统等，控制保护装置包括中央控制器、控制主站、并网开关、断路器等，通信监测装置包括通信、传感和能量管理系统等。</p>
-<p>优点体现为：可减少大规模分布式电源接入对电网造成的冲击，可以为用户提供优质可靠的电力，能实现并网/离网模式的平滑切换，能够很好地协调大电网与分布式电源的技术矛盾。</p>
-<p>具有一定的局限性：微电网以分布式电源就地利用为主要控制目标，受到地理区域的限制，对多区域、大规模分布式电源的有效利用及在电力市场中的规模化效益具有一定的局限性。</p>
-<h1 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h1><p>我国按照微电网的运行应用场景，将微电网主要分为城市片区微电网、农村微电网、企业微电网、海岛微电网等。</p>
-<ul>
-<li>城市片区微电网。</li>
-</ul>
-<p>城市片区微电网将在我国经济较发达的城市首先发展，按居民小区、宾馆、医院、商场、办公楼等进行建设。</p>
-<ul>
-<li>农村微电网。</li>
-</ul>
-<p>尽可能利用农村、边远地区的资源禀赋，通过不同形式的微电源、储能满足负荷要求，可独立运行解决边远地区供电的问题，也可与公网并网运行。该类微电网一般接在400伏低压配电网中，容量在数千瓦至数百千瓦。</p>
-<ul>
-<li>企业微电网。</li>
-</ul>
-<p>一般接在10千伏中压配电网甚至更高电压等级的配电网中，容量在数百千瓦至10兆瓦，多利用传统电源满足企业内部的用电需求，常见于石化、钢铁等大型企业，为企业降低成本、提高效益。</p>
-<ul>
-<li>海岛微电网。</li>
-</ul>
-<p>清洁能源在海岛上的综合应用拥有广阔前景。国内海岛微电网的建设集中在东南沿海地区，微电源的主要形式以风、光、柴、储为主。</p>
-<h1 id="运行模式"><a href="#运行模式" class="headerlink" title="运行模式"></a>运行模式</h1><p>微电网有两种典型运行模式，并网运行模式和孤网运行（独立运行）模式。并网运行模式为正常情况下微电网与公网相连，微电网与公网进行电能交换，微电网内的新能源系统可在并网运行时发电，储能系统也可在并网运行时进行充电和放电。</p>
-<p>微电网独立运行时，应能满足其内部负荷的有功功率和无功功率需求，必要时可采取投入备用分布式电源、切负荷等措施，以保证内部重要负荷的供电可靠性。微电网应具备黑启动能力。</p>
-<ul>
-<li>浙江宁波慈溪微电网示范工程</li>
-</ul>
-<p>2022年12月，浙江宁波慈溪氢电耦合直流微电网示范工程正式完工。该工程是2020年国家重点研发计划专项“可离网型风/光/氢燃料电池直流互联与稳定控制技术”的配套示范工程，也是浙江省“十四五”新型电力系统建设试点示范工程。</p>
-<p>示范工程建设规模包含4兆瓦光伏、0.2兆瓦风电、3兆瓦/6兆瓦时电化学储能、240千瓦燃料电池，支撑400千瓦制氢机、10台60千瓦直流充电机、示范工程楼宇用电运行。示范工程以综合能量管理系统总体监测、调度控制各系统运行，以智能直流变流器核心控制设备调节各子系统运行参数，构建风光储氢充一体化可离网微电网系统。</p>
-<p>示范工程自主研发了高效电解制氢系统、燃料电池热电联供系统、氢能与电池混合储能、多端口直流换流器等核心装备，实现氢电耦合核心设备100%国产化。每年可产氢超过60万标准立方米，消纳新能源超400万千瓦时。通过可再生能源“绿电”制“绿氢”，能有效减低氢能制备成本，助力氢能终端应用，加速消费侧脱碳，为实现碳达峰碳中和目标提供宁波经验。</p>
-<ul>
-<li>福建台区组共享储能型微电网</li>
-</ul>
-<p>4月12日14时，福建泉州供电公司电力调度控制中心的大屏幕上显示，位于翔云镇的福建省首个台区组共享储能型微电网的光伏发电出力达到当天的出力峰值1120千瓦，光伏发电就地完成消纳。</p>
-<p>台区组共享储能型微电网是国网福建省电力有限公司探索新型电力系统建设的示范工程之一。翔云镇是典型的高比例分布式光伏电源接入乡镇，截至2022年年底，该镇超过三分之二的公用变压器台区接入了分布式光伏电源。分布式光伏发电并网容量持续增长，对电网安全稳定运行的影响有所增加。</p>
-<p>针对这一问题，2022年6月，国网福建电力在翔云镇翔云村、金安村试点建设台区组共享储能型微电网，为翔云台区5号、6号配电变压器和金安台区2号、4号配电变压器配置了一套储能供电系统和电池管理系统装置。</p>
-<p>台区组共享储能型微电网运行以来，试点区域的分布式光伏发电实现100%就地消纳。台区组共享储能型微电网解决了山区乡村的分布式光伏发电就地消纳难问题，为分布式光伏发电高效、灵活消纳提供了样板。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%BE%AE%E5%9E%8B%E7%94%B5%E7%BD%91/" rel="tag">微型电网</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-微电网是什么"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/04/24/%E5%BE%AE%E7%94%B5%E7%BD%91%E6%98%AF%E4%BB%80%E4%B9%88/"
-    >微电网是什么</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/04/24/%E5%BE%AE%E7%94%B5%E7%BD%91%E6%98%AF%E4%BB%80%E4%B9%88/" class="article-date">
-  <time datetime="2023-04-24T03:06:07.000Z" itemprop="datePublished">2023-04-24</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>微电网是什么</p>
-<p>微电网（Micro-Grid）也译为微网，是指由分布式电源、储能装置、能量转换装置、负荷、监控和保护装置等组成的小型发配电系统。</p>
-<p>微电网的提出旨在实现分布式电源的灵活、高效应用，解决数量庞大、形式多样的分布式电源并网问题。 开发和延伸微电网能够充分促进分布式电源与可再生能源的大规模接入，实现对负荷多种能源形式的高可靠供给，是实现主动式配电网的一种有效方式，使传统电网向智能电网过渡。</p>
-<p>微电网是指由多个可分割的分布式电源、电池储能、能量管理系统和智能电网控制设备等构成的一种小型的、自治的电力供应系统。微电网可以独立运行，也可与主电网进行联网运行，其在电能供应、能源管理和电网稳定等方面都具有一定的优势。</p>
-<p>微电网在一定范围内可以平衡供需，降低能源供应和传输的代价，提高电力供应的可靠性和安全性，并实现了低碳环保和节约能源的目的。微电网可以应用于城镇社区、商业区、工业园区、农村偏远地区、战略设施等多种场合，为能源需求提供一个高度自主的解决方案，同时也为主电网的网络优化、调峰和配电等方面带来了积极的作用。</p>
-<p>微电网主要由以下几个组成部分构成：</p>
-<ol>
-<li><p>可再生能源发电设备：包括太阳能、风力发电、生物质发电等，可实现对区域内能源的自产自用和清洁生产。</p>
-</li>
-<li><p>储能设备：包括超级电容、电池、储热系统等，用于应对天气变化和停电期间保障可靠能源供应。</p>
-</li>
-<li><p>智能电网管理设备：包括负荷预测、控制器、能量管理等系统，可以实现微电网内的能量平衡和优化控制。</p>
-</li>
-<li><p>接口设备：实现微电网与主电网之间的互动和动态平衡。</p>
-</li>
-</ol>
-<p>微电网的运行模式一般有独立运行和联网运行两种方式，独立运行即指在无法接入主电网的场合下独立运行，联网运行则指在宏观控制下接入主电网，建立起一种分布式的、灵活的低压直流微电网。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%BE%AE%E5%9E%8B%E7%94%B5%E7%BD%91/" rel="tag">微型电网</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
   </article>
   
 
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/17/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="page-number" href="/page/17/">17</a><span class="page-number current">18</span><a class="page-number" href="/page/19/">19</a><a class="page-number" href="/page/20/">20</a><span class="space">&hellip;</span><a class="page-number" href="/page/36/">36</a><a class="extend next" rel="next" href="/page/19/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/17/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="page-number" href="/page/17/">17</a><span class="page-number current">18</span><a class="page-number" href="/page/19/">19</a><a class="page-number" href="/page/20/">20</a><span class="space">&hellip;</span><a class="page-number" href="/page/37/">37</a><a class="extend next" rel="next" href="/page/19/">下一页</a>
   </nav>
   
 </section>
