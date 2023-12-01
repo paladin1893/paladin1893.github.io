@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+       
+      <meta name="keywords" content="RS,GPS,GIS,QGIS,Opticks,QT,OpenCV,OSG" />
+       
+      <meta name="description" content="地理信息系统，遥感科学，卫星导航定位技术综合研究。" />
+      
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>Pandas实用入门案例04 |  帕拉丁的游鱼</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/favicon.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    <link rel="alternate" href="/atom.xml" title="帕拉丁的游鱼" type="application/atom+xml">
+</head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-Pandas实用入门案例04"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  Pandas实用入门案例04
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/08/31/Pandas%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B04/" class="article-date">
+  <time datetime="2023-08-31T14:00:48.000Z" itemprop="datePublished">2023-08-31</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">2.8k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">15 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>首先先介绍一下什么是Pandas ？</p>
+<p>Pandas 是基于NumPy 的一种工具，该工具是为了解决数据分析任务而创建的。<br>Pandas 纳入了大量库和一些标准的数据模型，提供了高效地操作大型数据集所需的工具。<br>pandas提供了大量能使我们快速便捷地处理数据的函数和方法。你很快就会发现，它是使Python成为强大而高效的数据分析环境的重要因素之一。</p>
+<p>首先引入相关模块：</p>
+<pre><code>import numpy as np
+import pandas as pd
+</code></pre>
+<h1 id="DataFrame"><a href="#DataFrame" class="headerlink" title="DataFrame"></a>DataFrame</h1><h2 id="第一章-DataFrame"><a href="#第一章-DataFrame" class="headerlink" title="第一章 DataFrame"></a>第一章 DataFrame</h2><h3 id="1-1-创建Series"><a href="#1-1-创建Series" class="headerlink" title="1.1 创建Series"></a>1.1 创建Series</h3><p>index不指定则从0开始编号</p>
+<pre><code>s = pd.Series([1, 2, 3, np.nan], index=[&#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;D&#39;])
+print s
+</code></pre>
+<p>输出</p>
+<pre><code>A 1.0
+B 2.0
+C 3.0
+D NaN
+dtype: float64
+</code></pre>
+<h3 id="1-2-创建时间序列"><a href="#1-2-创建时间序列" class="headerlink" title="1.2 创建时间序列"></a>1.2 创建时间序列</h3><p>必须指定start、end、periods中的两个参数值</p>
+<pre><code>dates = pd.date_range(&#39;20180101&#39;, periods=5)
+print dates
+</code></pre>
+<p>输出</p>
+<pre><code>DatetimeIndex([‘2018-01-01’, ‘2018-01-02’, 
+‘2018-01-03’, ‘2018-01-04’,‘2018-01-05’],
+dtype=’datetime64[ns]’, freq=’D’)
+</code></pre>
+<h3 id="1-3-创建DataFrame"><a href="#1-3-创建DataFrame" class="headerlink" title="1.3 创建DataFrame"></a>1.3 创建DataFrame</h3><p>必须指定start、end、periods中的两个参数值</p>
+<pre><code>df = pd.DataFrame(np.random.rand(3,4),columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
+print df
+</code></pre>
+<p>输出</p>
+<pre><code>a b c d
+0 0.233310 0.170256 0.036988 0.697916
+1 0.159580 0.287814 0.528123 0.956051
+2 0.815038 0.438103 0.143477 0.769143
+</code></pre>
+<p>通过字典创建（key为列名）：</p>
+<pre><code>df = pd.DataFrame(&#123;&#39;A&#39;: 1,
+                   &#39;B&#39;: pd.Timestamp(&#39;20171208&#39;),
+                   &#39;C&#39;: pd.Series(np.arange(4)),
+                   &#39;D&#39;: pd.Categorical([&#39;test&#39;, &#39;train&#39;, &#39;test&#39;, &#39;train&#39;])&#125;)
+print df
+</code></pre>
+<p>输出</p>
+<pre><code>A B C D
+0 1 2017-12-08 0 test
+1 1 2017-12-08 1 train
+2 1 2017-12-08 2 test
+3 1 2017-12-08 3 train
+</code></pre>
+<h3 id="1-4-DataFrame属性"><a href="#1-4-DataFrame属性" class="headerlink" title="1.4 DataFrame属性"></a>1.4 DataFrame属性</h3><pre><code>df = pd.DataFrame(&#123;&#39;A&#39;: 1,
+                   &#39;B&#39;: pd.Timestamp(&#39;20171208&#39;),
+                   &#39;C&#39;: pd.Series(np.arange(4)),
+                   &#39;D&#39;: pd.Categorical([&#39;test&#39;, &#39;train&#39;, &#39;test&#39;, &#39;train&#39;])&#125;)
+</code></pre>
+<p>查看每列数据类型</p>
+<pre><code>print df.dtypes
+</code></pre>
+<p>输出</p>
+<pre><code>A int64
+B datetime64[ns]
+C int32
+D category
+dtype: object
+</code></pre>
+<p>查看索引</p>
+<pre><code>print df.index  
+</code></pre>
+<p>输出</p>
+<pre><code>RangeIndex(start=0, stop=4, step=1)
+</code></pre>
+<p>查看列名</p>
+<pre><code>print df.columns
+</code></pre>
+<p>输出</p>
+<pre><code>Index([u’A’, u’B’, u’C’, u’D’], dtype=’object’)
+</code></pre>
+<p>查看数据</p>
+<pre><code>print df.values  
+</code></pre>
+<p>输出</p>
+<pre><code>[[1L Timestamp(‘2017-12-08 00:00:00’) 0 ‘test’]
+[1L Timestamp(‘2017-12-08 00:00:00’) 1 ‘train’]
+[1L Timestamp(‘2017-12-08 00:00:00’) 2 ‘test’]
+[1L Timestamp(‘2017-12-08 00:00:00’) 3 ‘train’]]
+</code></pre>
+<p>DataFrame统计信息</p>
+<pre><code>print df.describe()
+</code></pre>
+<p>输出</p>
+<pre><code>A C
+count 4.0 4.000000
+mean 1.0 1.500000
+std 0.0 1.290994
+min 1.0 0.000000
+25% 1.0 0.750000
+50% 1.0 1.500000
+75% 1.0 2.250000
+max 1.0 3.000000
+</code></pre>
+<h3 id="1-5-DataFrame常用操作"><a href="#1-5-DataFrame常用操作" class="headerlink" title="1.5 DataFrame常用操作"></a>1.5 DataFrame常用操作</h3><p>转置</p>
+<pre><code>df = pd.DataFrame(np.arange(12).reshape((3,4)),columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
+print df.T
+</code></pre>
+<p>输出</p>
+<pre><code>0 1 2
+a 0 4 8
+b 1 5 9
+c 2 6 10
+d 3 7 11
+</code></pre>
+<p>按index排序</p>
+<pre><code>df = pd.DataFrame(np.arange(12).reshape((3, 4)), columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
+print df.sort_index(axis=1, ascending=False)
+</code></pre>
+<p>输出</p>
+<pre><code>d c b a
+0 3 2 1 0
+1 7 6 5 4
+2 11 10 9 8
+</code></pre>
+<p>按值排序</p>
+<pre><code>df = pd.DataFrame(np.arange(12).reshape((3, 4)), columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
+print df.sort_values(by=&#39;b&#39;, ascending=False)
+</code></pre>
+<p>输出</p>
+<pre><code>a b c d
+2 8 9 10 11
+1 4 5 6 7
+0 0 1 2 3
+</code></pre>
+<p>数据选择</p>
+<p>创建如下dataframe：</p>
+<pre><code>dates = pd.date_range(&#39;20180101&#39;, periods=3)
+df = pd.DataFrame(np.arange(12).reshape((3, 4)),
+                  index=dates, columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
+print df
+</code></pre>
+<p>输出</p>
+<pre><code>a b c d
+2018-01-01 0 1 2 3
+2018-01-02 4 5 6 7
+2018-01-03 8 9 10 11
+</code></pre>
+<h2 id="第二章-数据选择"><a href="#第二章-数据选择" class="headerlink" title="第二章 数据选择"></a>第二章 数据选择</h2><h3 id="2-1-选择列"><a href="#2-1-选择列" class="headerlink" title="2.1 选择列"></a>2.1 选择列</h3><pre><code>print df[&#39;a&#39;]  # print df.a
+</code></pre>
+<p>输出</p>
+<pre><code>2018-01-01 0
+2018-01-02 4
+2018-01-03 8
+</code></pre>
+<h3 id="2-2-选择行"><a href="#2-2-选择行" class="headerlink" title="2.2 选择行"></a>2.2 选择行</h3><pre><code>print df[0:2]  # print df[&#39;20180101&#39;:&#39;20180102&#39;]
+</code></pre>
+<p>输出</p>
+<pre><code>a b c d
+2018-01-01 0 1 2 3
+2018-01-02 4 5 6 7
+</code></pre>
+<h3 id="2-3-标签选择：loc"><a href="#2-3-标签选择：loc" class="headerlink" title="2.3 标签选择：loc"></a>2.3 标签选择：loc</h3><p>1</p>
+<pre><code>print df.loc[:,[&#39;a&#39;, &#39;b&#39;]] 
+</code></pre>
+<p>输出</p>
+<pre><code>a b
+2018-01-01 0 1
+2018-01-02 4 5
+2018-01-03 8 9
+</code></pre>
+<p>2</p>
+<pre><code>print df.loc[&#39;20180102&#39;]
+</code></pre>
+<p>输出</p>
+<pre><code>a 4
+b 5
+c 6
+d 7
+Name: 2018-01-02 00:00:00, dtype: int32
+</code></pre>
+<h3 id="2-4-位置选择：iloc"><a href="#2-4-位置选择：iloc" class="headerlink" title="2.4 位置选择：iloc"></a>2.4 位置选择：iloc</h3><pre><code>print df.iloc[[0, 2], 2:4]
+</code></pre>
+<p>输出</p>
+<pre><code>c d
+2018-01-01 2 3
+2018-01-03 10 11
+</code></pre>
+<h3 id="2-5-混合标签与位置：ix"><a href="#2-5-混合标签与位置：ix" class="headerlink" title="2.5 混合标签与位置：ix"></a>2.5 混合标签与位置：ix</h3><pre><code>print df.ix[:2, [&#39;c&#39;, &#39;d&#39;]]
+</code></pre>
+<p>输出</p>
+<pre><code>c d
+2018-01-01 2 3
+2018-01-02 6 7
+</code></pre>
+<h3 id="2-6-Boolean选择"><a href="#2-6-Boolean选择" class="headerlink" title="2.6 Boolean选择"></a>2.6 Boolean选择</h3><pre><code>print df[df.a &lt; 5]
+</code></pre>
+<p>输出</p>
+<pre><code>a b c d
+2018-01-01 0 1 2 3
+2018-01-02 4 5 6 7
+</code></pre>
+<p>处理NaN数据</p>
+<p>首先创建包含NaN的dataframe：</p>
+<pre><code>dates = pd.date_range(&#39;20180101&#39;, periods=3)
+df = pd.DataFrame(np.arange(12).reshape((3, 4)),
+                  index=dates, columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
+df.iloc[1, 1], df.iloc[2, 2] = np.nan, np.nan
+print df
+</code></pre>
+<p>输出</p>
+<pre><code>a b c d
+2018-01-01 0 1.0 2.0 3
+2018-01-02 4 NaN 6.0 7
+2018-01-03 8 9.0 NaN 11
+</code></pre>
+<h2 id="第三章-处理NaN数据"><a href="#第三章-处理NaN数据" class="headerlink" title="第三章 处理NaN数据"></a>第三章 处理NaN数据</h2><h3 id="3-1-删除NaN数据"><a href="#3-1-删除NaN数据" class="headerlink" title="3.1 删除NaN数据"></a>3.1 删除NaN数据</h3><pre><code>print df.dropna(axis=1)  # how = [&#39;any&#39;, &#39;all&#39;]
+</code></pre>
+<p>输出</p>
+<pre><code>a d
+2018-01-01 0 3
+2018-01-02 4 7
+2018-01-03 8 11
+</code></pre>
+<h3 id="3-2-填充NaN数据"><a href="#3-2-填充NaN数据" class="headerlink" title="3.2 填充NaN数据"></a>3.2 填充NaN数据</h3><pre><code>print df.fillna(value=&#39;*&#39;)
+</code></pre>
+<p>输出</p>
+<pre><code>a b c d
+2018-01-01 0 1 2 3
+2018-01-02 4 * 6 7
+2018-01-03 8 9 * 11
+</code></pre>
+<h3 id="3-3-检查是否存在NaN数据"><a href="#3-3-检查是否存在NaN数据" class="headerlink" title="3.3 检查是否存在NaN数据"></a>3.3 检查是否存在NaN数据</h3><pre><code>print df.isnull()
+</code></pre>
+<p>输出</p>
+<pre><code>a b c d
+2018-01-01 False False False False
+2018-01-02 False True False False
+2018-01-03 False False True False
+</code></pre>
+<h2 id="第四章-导入与导出"><a href="#第四章-导入与导出" class="headerlink" title="第四章 导入与导出"></a>第四章 导入与导出</h2><pre><code>导入函数    导出函数功能
+read_csv    to_csv
+read_excel    to_excel
+read_sql    to_sql
+read_json    to_json
+read_msgpack    to_msgpack
+read_html    to_html
+read_gbq    to_gbq
+read_stata    to_stata
+read_sas    to_sas
+read_clipboard    to_clipboard
+read_pickle    to_pickle
+</code></pre>
+<p>以下面这个test.txt为例：</p>
+<pre><code>A B
+Tom 21
+Joe 26
+Sam 55
+Kerry 27
+</code></pre>
+<p>忽略第一行，并设置列名分别为‘name’和‘age’</p>
+<pre><code>data = pd.read_csv(&#39;test.txt&#39;, sep=&#39; &#39;, skiprows=1, names=[&#39;name&#39;,&#39;age&#39;])
+print data
+</code></pre>
+<p>输出</p>
+<pre><code>name age
+0 Tom 21
+1 Joe 26
+2 Sam 55
+3 Kerry 27
+</code></pre>
+<h2 id="第五章-合并DataFrame"><a href="#第五章-合并DataFrame" class="headerlink" title="第五章 合并DataFrame"></a>第五章 合并DataFrame</h2><h3 id="5-1-concat函数"><a href="#5-1-concat函数" class="headerlink" title="5.1 concat函数"></a>5.1 concat函数</h3><pre><code>df1 = pd.DataFrame(np.ones((3, 4))*0, columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
+df2 = pd.DataFrame(np.ones((3, 4))*1, columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
+df3 = pd.DataFrame(np.ones((3, 4))*2, columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
+# ignore_index=True将重新对index排序
+print pd.concat([df1, df2, df3], axis=0, ignore_index=True)
+</code></pre>
+<p>输出</p>
+<pre><code>a b c d
+0 0.0 0.0 0.0 0.0
+1 0.0 0.0 0.0 0.0
+2 0.0 0.0 0.0 0.0
+3 1.0 1.0 1.0 1.0
+4 1.0 1.0 1.0 1.0
+5 1.0 1.0 1.0 1.0
+6 2.0 2.0 2.0 2.0
+7 2.0 2.0 2.0 2.0
+8 2.0 2.0 2.0 2.0
+</code></pre>
+<p>join参数用法</p>
+<pre><code>df1 = pd.DataFrame(np.ones((3, 4))*0, columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;], index=[1,2,3])
+df2 = pd.DataFrame(np.ones((3, 4))*1, columns=[&#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;], index=[2,3,4])
+# join默认为&#39;outer&#39;，不共有的列用NaN填充
+print pd.concat([df1, df2], join=&#39;outer&#39;) 
+# join=&#39;inner&#39;只合并共有的列
+print pd.concat([df1, df2], join=&#39;inner&#39;)
+</code></pre>
+<p>输出 1</p>
+<pre><code>a b c d e
+1 0.0 0.0 0.0 0.0 NaN
+2 0.0 0.0 0.0 0.0 NaN
+3 0.0 0.0 0.0 0.0 NaN
+2 NaN 1.0 1.0 1.0 1.0
+3 NaN 1.0 1.0 1.0 1.0
+4 NaN 1.0 1.0 1.0 1.0
+</code></pre>
+<p>输出 2</p>
+<pre><code>b c d
+1 0.0 0.0 0.0
+2 0.0 0.0 0.0
+3 0.0 0.0 0.0
+2 1.0 1.0 1.0
+3 1.0 1.0 1.0
+4 1.0 1.0 1.0
+</code></pre>
+<p>join_axes参数用法</p>
+<pre><code>df1 = pd.DataFrame(np.ones((3, 4))*0, columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;], index=[1, 2, 3])
+df2 = pd.DataFrame(np.ones((3, 4))*1, columns=[&#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;], index=[2, 3, 4])
+# 按照df1的index进行合并
+print pd.concat([df1, df2], axis=1, join_axes=[df1.index])
+</code></pre>
+<p>输出</p>
+<pre><code>a b c d b c d e
+1 0.0 0.0 0.0 0.0 NaN NaN NaN NaN
+2 0.0 0.0 0.0 0.0 1.0 1.0 1.0 1.0
+3 0.0 0.0 0.0 0.0 1.0 1.0 1.0 1.0
+</code></pre>
+<h3 id="5-2-append函数"><a href="#5-2-append函数" class="headerlink" title="5.2 append函数"></a>5.2 append函数</h3><p>append多个DataFrame</p>
+<pre><code>df1 = pd.DataFrame(np.ones((3, 4))*0, columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
+df2 = pd.DataFrame(np.ones((3, 4))*1, columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
+
+print df1.append(df2, ignore_index=True)
+</code></pre>
+<p>输出</p>
+<pre><code>a b c d
+0 0.0 0.0 0.0 0.0
+1 0.0 0.0 0.0 0.0
+2 0.0 0.0 0.0 0.0
+3 1.0 1.0 1.0 1.0
+4 1.0 1.0 1.0 1.0
+5 1.0 1.0 1.0 1.0
+</code></pre>
+<p>append一组数据</p>
+<pre><code>df1 = pd.DataFrame(np.ones((3, 4))*0, columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
+s = pd.Series([4, 4, 4, 4], index=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
+
+print df1.append(s, ignore_index=True)
+</code></pre>
+<p>输出</p>
+<pre><code>a b c d
+0 0.0 0.0 0.0 0.0
+1 0.0 0.0 0.0 0.0
+2 0.0 0.0 0.0 0.0
+3 4.0 4.0 4.0 4.0
+</code></pre>
+<h3 id="5-3-merge函数"><a href="#5-3-merge函数" class="headerlink" title="5.3 merge函数"></a>5.3 merge函数</h3><p>基于某一列进行合并</p>
+<pre><code>df1 = pd.DataFrame(&#123;&#39;A&#39;: [&#39;A1&#39;, &#39;A2&#39;, &#39;A3&#39;],
+                    &#39;B&#39;: [&#39;B1&#39;, &#39;B2&#39;, &#39;B3&#39;],
+                   &#39;KEY&#39;: [&#39;K1&#39;, &#39;K2&#39;, &#39;K3&#39;]&#125;)
+df2 = pd.DataFrame(&#123;&#39;C&#39;: [&#39;C1&#39;, &#39;C2&#39;, &#39;C3&#39;],
+                    &#39;D&#39;: [&#39;D1&#39;, &#39;D2&#39;, &#39;D3&#39;],
+                   &#39;KEY&#39;: [&#39;K1&#39;, &#39;K2&#39;, &#39;K3&#39;]&#125;)
+
+print pd.merge(df1, df2, on=&#39;KEY&#39;)
+</code></pre>
+<p>输出</p>
+<pre><code>A B KEY C D
+0 A1 B1 K1 C1 D1
+1 A2 B2 K2 C2 D2
+2 A3 B3 K3 C3 D3
+</code></pre>
+<p>基于某两列进行合并</p>
+<pre><code>df1 = pd.DataFrame(&#123;&#39;A&#39;: [&#39;A1&#39;, &#39;A2&#39;, &#39;A3&#39;],
+                    &#39;B&#39;: [&#39;B1&#39;, &#39;B2&#39;, &#39;B3&#39;],
+                    &#39;KEY1&#39;: [&#39;K1&#39;, &#39;K2&#39;, &#39;K0&#39;],
+                    &#39;KEY2&#39;: [&#39;K0&#39;, &#39;K1&#39;, &#39;K3&#39;]&#125;)
+df2 = pd.DataFrame(&#123;&#39;C&#39;: [&#39;C1&#39;, &#39;C2&#39;, &#39;C3&#39;],
+                    &#39;D&#39;: [&#39;D1&#39;, &#39;D2&#39;, &#39;D3&#39;],
+                    &#39;KEY1&#39;: [&#39;K0&#39;, &#39;K2&#39;, &#39;K1&#39;],
+                    &#39;KEY2&#39;: [&#39;K1&#39;, &#39;K1&#39;, &#39;K0&#39;]&#125;)
+# how:[&#39;left&#39;,&#39;right&#39;,&#39;outer&#39;,&#39;inner&#39;]
+print pd.merge(df1, df2, on=[&#39;KEY1&#39;, &#39;KEY2&#39;], how=&#39;inner&#39;)
+</code></pre>
+<p>输出</p>
+<pre><code>A B KEY1 KEY2 C D
+0 A1 B1 K1 K0 C3 D3
+1 A2 B2 K2 K1 C2 D2
+</code></pre>
+<p>按index合并</p>
+<pre><code>df1 = pd.DataFrame(&#123;&#39;A&#39;: [&#39;A1&#39;, &#39;A2&#39;, &#39;A3&#39;],
+                    &#39;B&#39;: [&#39;B1&#39;, &#39;B2&#39;, &#39;B3&#39;]&#125;,
+                   index=[&#39;K0&#39;, &#39;K1&#39;, &#39;K2&#39;])
+df2 = pd.DataFrame(&#123;&#39;C&#39;: [&#39;C1&#39;, &#39;C2&#39;, &#39;C3&#39;],
+                    &#39;D&#39;: [&#39;D1&#39;, &#39;D2&#39;, &#39;D3&#39;]&#125;,
+                   index=[&#39;K0&#39;, &#39;K1&#39;, &#39;K3&#39;])
+
+print pd.merge(df1, df2, left_index=True, right_index=True, how=&#39;outer&#39;)
+</code></pre>
+<p>输出</p>
+<pre><code>A B C D
+K0 A1 B1 C1 D1
+K1 A2 B2 C2 D2
+K2 A3 B3 NaN NaN
+K3 NaN NaN C3 D3
+</code></pre>
+<p>为列加后缀</p>
+<pre><code>df_boys = pd.DataFrame(&#123;&#39;id&#39;: [&#39;1&#39;, &#39;2&#39;, &#39;3&#39;],
+                        &#39;age&#39;: [&#39;23&#39;, &#39;25&#39;, &#39;18&#39;]&#125;)
+df_girls = pd.DataFrame(&#123;&#39;id&#39;: [&#39;1&#39;, &#39;2&#39;, &#39;3&#39;],
+                        &#39;age&#39;: [&#39;18&#39;, &#39;18&#39;, &#39;18&#39;]&#125;)
+
+print pd.merge(df_boys, df_girls, on=&#39;id&#39;, suffixes=[&#39;_boys&#39;, &#39;_girls&#39;])
+</code></pre>
+<p>输出</p>
+<pre><code>age_boys id age_girls
+0 23 1 18
+1 25 2 18
+2 18 3 18
+</code></pre>
+<h1 id="绘图"><a href="#绘图" class="headerlink" title="绘图"></a>绘图</h1><p>引入相应模块</p>
+<pre><code>import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+</code></pre>
+<p>绘制Series</p>
+<pre><code>data = pd.Series(np.random.randn(1000))
+data = data.cumsum()
+
+data.plot()
+plt.show()
+</code></pre>
+<h2 id="–本文完–"><a href="#–本文完–" class="headerlink" title="–本文完–"></a>–本文完–</h2><p>©著作权归作者所有：来自51CTO博客作者程序员小猿的原创作品，请联系作者获取转载授权，否则将追究法律责任<br>全网最全的Pandas入门教程（精简版）<br><a target="_blank" rel="noopener" href="https://blog.51cto.com/u_13294304/3386462">https://blog.51cto.com/u_13294304/3386462</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://paladin1893.github.io/2023/08/31/Pandas%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B04/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pandas/" rel="tag">pandas</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+    
+      <a href="/2023/08/30/vue%E5%BE%AA%E7%8E%AF%E9%81%8D%E5%8E%86%E5%AF%B9%E8%B1%A1%E3%80%81%E6%95%B0%E7%BB%84%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">vue循环遍历对象、数组和字符串</div>
+      </a>
+    
+  </nav>
+
+  
+   
+    
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2022-2023
+        <i class="ri-heart-fill heart_icon"></i> paladin1893
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="帕拉丁的游鱼"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/friends">友链</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

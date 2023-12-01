@@ -154,7 +154,7 @@
     
     
     <article
-  id="post-GO入门08：写文件"
+  id="post-微型电网"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -165,8 +165,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/04/04/GO%E5%85%A5%E9%97%A808%EF%BC%9A%E5%86%99%E6%96%87%E4%BB%B6/"
-    >GO入门08：写文件</a> 
+  <a class="article-title" href="/2023/04/23/%E5%BE%AE%E5%9E%8B%E7%94%B5%E7%BD%91/"
+    >微型电网</a> 
 </h2>
  
 
@@ -174,183 +174,47 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2023/04/04/GO%E5%85%A5%E9%97%A808%EF%BC%9A%E5%86%99%E6%96%87%E4%BB%B6/" class="article-date">
-  <time datetime="2023-04-04T15:22:29.000Z" itemprop="datePublished">2023-04-04</time>
+      <a href="/2023/04/23/%E5%BE%AE%E5%9E%8B%E7%94%B5%E7%BD%91/" class="article-date">
+  <time datetime="2023-04-23T04:01:07.000Z" itemprop="datePublished">2023-04-23</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
   </div>
    
     </div>
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>Go语言的 os 包下有一个 OpenFile 函数，其原型如下所示：<br>func OpenFile(name string, flag int, perm FileMode) (file *File, err error)</p>
-<p>其中 name 是文件的文件名，如果不是在当前路径下运行需要加上具体路径；flag 是文件的处理参数，为 int 类型，根据系统的不同具体值可能有所不同，但是作用是相同的。</p>
-<p>下面列举了一些常用的 flag 文件处理参数：<br>    O_RDONLY：只读模式打开文件；<br>    O_WRONLY：只写模式打开文件；<br>    O_RDWR：读写模式打开文件；<br>    O_APPEND：写操作时将数据附加到文件尾部（追加）；<br>    O_CREATE：如果不存在将创建一个新文件；<br>    O_EXCL：和 O_CREATE 配合使用，文件必须不存在，否则返回一个错误；<br>    O_SYNC：当进行一系列写操作时，每次都要等待上次的 I/O 操作完成再进行；<br>    O_TRUNC：如果可能，在打开时清空文件。</p>
-<h1 id="创建一个新文件，写入内容-5-句-“hello-Golang”"><a href="#创建一个新文件，写入内容-5-句-“hello-Golang”" class="headerlink" title="创建一个新文件，写入内容 5 句 “hello, Golang”"></a>创建一个新文件，写入内容 5 句 “hello, Golang”</h1><pre><code>package main
-import (
-    &quot;fmt&quot;
-    &quot;bufio&quot;
-    &quot;os&quot;
-)
-func main() &#123;
-    //创建一个新文件，写入内容 5句 &quot;hello, Golang&quot;
-    //1 .打开文件 d:/abc.txt
-    filePath := &quot;d:/abc.txt&quot;
-    file, err := os.OpenFile(filePath, os.O_WRONLY | os.O_CREATE, 0666)
-    if err != nil &#123;
-        fmt.Printf(&quot;open file err=%v\n&quot;, err)
-        return
-    &#125;
-    //及时关闭file句柄
-    defer file.Close()
-    //准备写入5句 &quot;hello, Golang&quot;
-    str := &quot;hello,Golang\r\n&quot; // \r\n 表示换行
-    //写入时，使用带缓存的 *Writer
-    writer := bufio.NewWriter(file)
-    for i := 0; i &lt; 5; i++ &#123;
-        writer.WriteString(str)
-    &#125;
-    //因为writer是带缓存，因此在调用WriterString方法时，其实
-    //内容是先写入到缓存的,所以需要调用Flush方法，将缓冲的数据
-    //真正写入到文件中， 否则文件中会没有数据!!!
-    writer.Flush()
-&#125;
-</code></pre>
-<h1 id="打开一个存在的文件中，将原来的内容覆盖成新的内容-10-句-“你好，Golang-”"><a href="#打开一个存在的文件中，将原来的内容覆盖成新的内容-10-句-“你好，Golang-”" class="headerlink" title="打开一个存在的文件中，将原来的内容覆盖成新的内容 10 句 “你好，Golang!”"></a>打开一个存在的文件中，将原来的内容覆盖成新的内容 10 句 “你好，Golang!”</h1><pre><code>package main
-import (
-    &quot;fmt&quot;
-    &quot;bufio&quot;
-    &quot;os&quot;
-)
-
-func main() &#123;
-    //打开一个存在的文件中，将原来的内容覆盖成新的内容10句 &quot;你好，Golang!&quot;
-
-    //创建一个新文件，写入内容 5句 &quot;hello, Golang&quot;
-    //1 .打开文件已经存在文件, d:/abc.txt
-    filePath := &quot;d:/abc.txt&quot;
-    file, err := os.OpenFile(filePath, os.O_WRONLY | os.O_TRUNC, 0666)
-    if err != nil &#123;
-        fmt.Printf(&quot;open file err=%v\n&quot;, err)
-        return
-    &#125;
-    //及时关闭file句柄
-    defer file.Close()
-    //准备写入5句 &quot;你好,Golang!&quot;
-    str := &quot;你好,Golang!\r\n&quot; // \r\n 表示换行
-    //写入时，使用带缓存的 *Writer
-    writer := bufio.NewWriter(file)
-    for i := 0; i &lt; 10; i++ &#123;
-        writer.WriteString(str)
-    &#125;
-    //因为writer是带缓存，因此在调用WriterString方法时，其实
-    //内容是先写入到缓存的,所以需要调用Flush方法，将缓冲的数据
-    //真正写入到文件中， 否则文件中会没有数据!!!
-    writer.Flush()
-
-&#125;
-</code></pre>
-<h1 id="打开一个存在的文件，在原来的内容追加内容-‘ABC-ENGLISH-’"><a href="#打开一个存在的文件，在原来的内容追加内容-‘ABC-ENGLISH-’" class="headerlink" title="打开一个存在的文件，在原来的内容追加内容 ‘ABC! ENGLISH!’"></a>打开一个存在的文件，在原来的内容追加内容 ‘ABC! ENGLISH!’</h1><pre><code>package main
-import (
-    &quot;fmt&quot;
-    &quot;bufio&quot;
-    &quot;os&quot;
-)
-
-func main() &#123;
-    //打开一个存在的文件，在原来的内容追加内容 &#39;ABC! ENGLISH!&#39;
-    //1 .打开文件已经存在文件, d:/abc.txt
-    filePath := &quot;d:/abc.txt&quot;
-    file, err := os.OpenFile(filePath, os.O_WRONLY | os.O_APPEND, 0666)
-    if err != nil &#123;
-        fmt.Printf(&quot;open file err=%v\n&quot;, err)
-        return
-    &#125;
-    //及时关闭file句柄
-    defer file.Close()
-    //准备写入5句 &quot;你好,Golang!&quot;
-    str := &quot;ABC,ENGLISH!\r\n&quot; // \r\n 表示换行
-    //写入时，使用带缓存的 *Writer
-    writer := bufio.NewWriter(file)
-    for i := 0; i &lt; 10; i++ &#123;
-        writer.WriteString(str)
-    &#125;
-    //因为writer是带缓存，因此在调用WriterString方法时，其实
-    //内容是先写入到缓存的,所以需要调用Flush方法，将缓冲的数据
-    //真正写入到文件中， 否则文件中会没有数据!!!
-    writer.Flush()
-&#125;
-</code></pre>
-<h1 id="打开一个存在的文件，将原来的内容读出显示在终端，并且追加-5-句”hello-Golang-”"><a href="#打开一个存在的文件，将原来的内容读出显示在终端，并且追加-5-句”hello-Golang-”" class="headerlink" title="打开一个存在的文件，将原来的内容读出显示在终端，并且追加 5 句”hello,Golang!”"></a>打开一个存在的文件，将原来的内容读出显示在终端，并且追加 5 句”hello,Golang!”</h1><pre><code>package main
-import (
-    &quot;fmt&quot;
-    &quot;bufio&quot;
-    &quot;os&quot;
-    &quot;io&quot;
-)
-
-func main() &#123;  
-    //打开一个存在的文件，将原来的内容读出显示在终端，并且追加5句&quot;hello,Golang!&quot;
-    //1 .打开文件已经存在文件, d:/abc.txt
-    filePath := &quot;d:/abc.txt&quot;
-    file, err := os.OpenFile(filePath, os.O_RDWR | os.O_APPEND, 0666)
-    if err != nil &#123;
-        fmt.Printf(&quot;open file err=%v\n&quot;, err)
-        return
-    &#125;
-    //及时关闭file句柄
-    defer file.Close()
-
-    //先读取原来文件的内容，并显示在终端.
-    reader := bufio.NewReader(file)
-    for &#123;
-        str, err := reader.ReadString(&#39;\n&#39;)
-        if err == io.EOF &#123; //如果读取到文件的末尾
-            break
-        &#125;
-        //显示到终端
-        fmt.Print(str)
-    &#125;
-
-    //准备写入5句 &quot;你好,Golang!&quot;
-    str := &quot;hello,Golang!\r\n&quot; // \r\n 表示换行
-    //写入时，使用带缓存的 *Writer
-    writer := bufio.NewWriter(file)
-    for i := 0; i &lt; 5; i++ &#123;
-        writer.WriteString(str)
-    &#125;
-    //因为writer是带缓存，因此在调用WriterString方法时，其实
-    //内容是先写入到缓存的,所以需要调用Flush方法，将缓冲的数据
-    //真正写入到文件中， 否则文件中会没有数据!!!
-    writer.Flush()
-&#125;
-</code></pre>
-<h1 id="将一个文件的内容，写入到另外一个文件。注：这两个文件已经存在了"><a href="#将一个文件的内容，写入到另外一个文件。注：这两个文件已经存在了" class="headerlink" title="将一个文件的内容，写入到另外一个文件。注：这两个文件已经存在了"></a>将一个文件的内容，写入到另外一个文件。注：这两个文件已经存在了</h1><p>说明：使用 ioutil.ReadFile / ioutil.WriteFile 完成写文件的任务.</p>
-<pre><code>package main
-import (
-    &quot;fmt&quot;
-    &quot;io/ioutil&quot;
-)
-func main() &#123;
-    //将d:/abc.txt 文件内容导入到  e:/kkk.txt
-    //1. 首先将  d:/abc.txt 内容读取到内存
-    //2. 将读取到的内容写入 e:/kkk.txt
-    file1Path := &quot;d:/abc.txt&quot;
-    file2Path := &quot;e:/kkk.txt&quot;
-    data, err := ioutil.ReadFile(file1Path)
-    if err != nil &#123;
-        //说明读取文件有错误
-        fmt.Printf(&quot;read file err=%v\n&quot;, err)
-        return
-    &#125;
-    err = ioutil.WriteFile(file2Path, data, 0666)
-    if err != nil &#123;
-        fmt.Printf(&quot;write file error=%v\n&quot;, err)
-    &#125;
-&#125;
-</code></pre>
+  <h1 id="微网"><a href="#微网" class="headerlink" title="微网"></a>微网</h1><p>微型电网(微电网)有时简称微网:是相对传统大电网的一个概念，是指多个分布式电源及其相关负载按照一定的拓扑结构组成的网络，并通过静态开关关联至常规电网。</p>
+<p>微电网(micro-grid，microgrid)，是指由分布式电源、储能装置、能量转换装置、相关负荷和监控、保护装置汇集而成的小型发配电系统，是一个能够实现自我控制、保护和管理的自治系统，既可以与外部电网并网运行，也可以孤立运行。是智能电网的重要组成部分。</p>
+<h1 id="基本信息"><a href="#基本信息" class="headerlink" title="基本信息"></a>基本信息</h1><ul>
+<li><p>中文名称<br>微网(微型电网、微电网)</p>
+</li>
+<li><p>外文名称<br>micro-grid，microgrid</p>
+</li>
+<li><p>结构<br>拓扑结构组成的网络</p>
+</li>
+<li><p>连接方式<br>通过静态开关关联至常规电网</p>
+</li>
+<li><p>别名<br>微电网</p>
+</li>
+<li><p>组成部分<br>分布式电源、储能装置等</p>
+</li>
+<li><p>含义<br>近距离网络接触的代名词</p>
+</li>
+</ul>
+<h1 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h1><p>美国电气可靠性技术解决方案联合会( CERTS-Consortium for Electric Reliability Technology Solutions)给出的定义为:微电网是一种由负荷和微型电源共同组成系统，它可同时提供电能和热量;微电网内部的电源主要由电力电子器件负责能量的转换，并提供必需的控制;微电网相对于外部大电网表现为单一的受控单元，并可同时满足用户对电能质量和供电安全等的要求。</p>
+<p>欧盟微电网项目(European Commission Project Micro-grids)给出的定义是:利用一次能源;使用微型电源，分为不可控、部分可控和全控三种，并可冷、热、电三联供;配有储能装置;使用电力电子装置进行能量的调节。</p>
+<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在过去的几十年，电网规模不断扩大，已逐步发展成集中发电、远距离输电的超大互联网络系统。但远距离输电的不断增大、使得受端电网对外来电力的依赖程度不断提高，电网运行的稳定性和安全性趋于下降，而且难于满足多样化供电需求。另一方面，对全球常规能源的逐渐枯竭、环境污染等问题的担忧却日益突显。鉴于此，环保、高效和灵活的分布式发电广受青睐。</p>
+<p>分布式发电一般是指将相对小型的发电装置(一般50 MW以下)分散布置在用户/负荷现场、或邻近地点，从而实现发电供能的方式。分布式发电具有位置灵活、分散的特点，极好地适应了分散电力需求和资源分布，延缓了输配电网升级换代所需的巨额投资;与大电网互为备用，也使供电可靠性得以改善;一般还具有污染少、能源利用效率高的优势。</p>
+<p>尽管优点突出，但分布式发电也存在诸多问题:分布式电源单机接入成本高，控制困难等;分布式电源相对大电网来说是一个不可控源，大系统往往采取限制、隔离的方式来处置分布式电源，以减小其对大电网的冲击。当电力系统发生故障时，分布式电源往往都须在第一时间退出运行，这就大大限制了分布式发电效能的充分发挥。为协调大电网与分布式电源间的矛盾，充分挖掘分布式电源为电网和用户带来的价值和效益，提出并不断发展了微电网(Microgrid)的概念。</p>
+<p>根据Navigant Research第九版微电网部署报告显示，全球已经公布的微电网项目累计达到1437个，装机容量超过13吉瓦，其中超半数属于远程微电网。</p>
+<p>报告中指出，微电网已经成为全球现象。已经超过100个国家都在部署微电网项目，累计装机容量超过13吉瓦，其中，俄罗斯北极圈附近的微电网项目累计约816兆瓦。</p>
+<p>从国家来看，无论是微电网装机容量还是项目数量，美国都位居第一，其中，纽约州就有83个微电网项目。</p>
+<p>从区域来看，亚太地区和北美地区是微电网最大的两个区域市场，市场占有率均为42%。</p>
+<h1 id="优势"><a href="#优势" class="headerlink" title="优势:"></a>优势:</h1><p>微电网，也被称为分布式能源孤岛系统，将发电机、负荷、储能装置及控制装置等系统地结合在一起，形成一个单一可控的单元，同时向用户供给电能和热能。微电网中的电源多为微电源，亦即含有电力电子界面的小型机组(小于100kW)，包括微型燃气轮机，燃料电池、光伏电池以及超级电容、飞轮、蓄电池等储能装置。微电网接在用户侧，具有低成本、低电压、低污染等特点。微电网既可与大电网联网运行，也可在电网故障或需要时与主网断开单独运行。</p>
+<p>微网具有双重角色。对于电网，微电网作为一个大小可以改变的智能负载，为本地电力系统提供了可调度负荷，可以在数秒内做出响应以满足系统需要，适时向大电网提供有力支撑;可以在维修系统同时不影响客户的负荷;可以减轻(延长)配电网更新换代，采用IEEE1547.4标准，指导分布式电源孤岛运行，能够消除某些特殊操作要求产生的技术阻碍。对于用户，微电网作为一个可定制的电源，可以满足用户多样化的需求，例如，增强局部供电可靠性，降低馈电损耗，支持当地电压，通过利用废热提高效率，提供电压下陷的校正，或作为不可中断电源服务等。</p>
+<p>此外，紧紧围绕全系统能量需求的设计理念和向用户提供多样化电能质量的供电理念，是微电网的2个重要特征。在接入问题上，微电网的并网标准只针对微电网与大电网的公共连接点(PCC)，而不针对各个具体的微电源。微电网不仅解决了分布式电源的大规模接入问题，充分发挥了分布式电源的各项优势，还为用户带来了其他多方面的效益。微网将从根本上改变传统的应对负荷增长的方式，在降低能耗、提高电力系统可靠性和灵活性等方面具有巨大潜力。</p>
  
       <!-- reward -->
       
@@ -361,7 +225,7 @@ func main() &#123;
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GO/" rel="tag">GO</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%BE%AE%E5%9E%8B%E7%94%B5%E7%BD%91/" rel="tag">微型电网</a></li></ul>
 
     </footer>
   </div>
@@ -372,7 +236,7 @@ func main() &#123;
 
     
     <article
-  id="post-GO入门07：读文件"
+  id="post-新能源消纳能力要跟上"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -383,8 +247,8 @@ func main() &#123;
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/04/03/GO%E5%85%A5%E9%97%A807%EF%BC%9A%E8%AF%BB%E6%96%87%E4%BB%B6/"
-    >GO入门07：读文件</a> 
+  <a class="article-title" href="/2023/04/22/%E6%96%B0%E8%83%BD%E6%BA%90%E6%B6%88%E7%BA%B3%E8%83%BD%E5%8A%9B%E8%A6%81%E8%B7%9F%E4%B8%8A/"
+    >新能源消纳能力要跟上</a> 
 </h2>
  
 
@@ -392,116 +256,26 @@ func main() &#123;
     </header>
      
     <div class="article-meta">
-      <a href="/2023/04/03/GO%E5%85%A5%E9%97%A807%EF%BC%9A%E8%AF%BB%E6%96%87%E4%BB%B6/" class="article-date">
-  <time datetime="2023-04-03T15:14:38.000Z" itemprop="datePublished">2023-04-03</time>
+      <a href="/2023/04/22/%E6%96%B0%E8%83%BD%E6%BA%90%E6%B6%88%E7%BA%B3%E8%83%BD%E5%8A%9B%E8%A6%81%E8%B7%9F%E4%B8%8A/" class="article-date">
+  <time datetime="2023-04-22T05:13:30.000Z" itemprop="datePublished">2023-04-22</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
   </div>
    
     </div>
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>当文件过大，不适合一次性载入内存，且文件每行都包含特定信息时，我们就需要逐行读取文件来保证程序的性能；</p>
-<p>Go 语言有三种逐行读取文件的方法，依次是：</p>
-<pre><code>* ReadString
-* ReadLine
-* Scanner
-</code></pre>
-<p>下面分别介绍它们的用法</p>
-<h1 id="1、ReadString"><a href="#1、ReadString" class="headerlink" title="1、ReadString"></a>1、ReadString</h1><p>ReadString 是一个位于 bufio 包的方法</p>
-<p>func (b *Reader) ReadString(delim byte) (string, error)<br>ReadString 从输入中读取数据，直到分隔符出现，返回包括分割符在内的字符串。如果 ReadString 在找到一个分割符之前就遇到了错误，它会返回已读取的数据和错误本身。注意，这里需要裁切掉末尾的换行符</p>
-<pre><code>import (
-    &quot;bufio&quot;
-    &quot;fmt&quot;
-    &quot;os&quot;
-    &quot;strings&quot;
-)
-
-func main() &#123;
-    fileObj, _ := os.Open(&quot;file.txt&quot;)
-    defer fileObj.Close()
-    reader := bufio.NewReader(fileObj)
-
-    for &#123;
-        if str, ok := readline(reader); ok &#123;
-            fmt.Println(str)
-            continue
-        &#125;
-        break
-    &#125;
-&#125;
-
-func readline(fi *bufio.Reader) (string, bool) &#123;
-    s, err := fi.ReadString(&#39;\n&#39;)
-    if err != nil &#123;
-        return &quot;&quot;, false
-    &#125;
-    return strings.Trim(s, &quot;\r\n&quot;), true
-&#125;
-</code></pre>
-<p>更多示例参考 Golang Reader.ReadString Examples</p>
-<h1 id="2、ReadLine"><a href="#2、ReadLine" class="headerlink" title="2、ReadLine"></a>2、ReadLine</h1><p> 不介绍，这个是 bufio 实现 ReadString 的方法，但是注释上已经写了不建议使用</p>
-<h1 id="3、Scanner"><a href="#3、Scanner" class="headerlink" title="3、Scanner"></a>3、Scanner</h1><p>下面就是这次的主角 Scanner 工具，它也是 bufio 包下的一个工具，从字面意思来看是一个扫描器、扫描仪。</p>
-<p>所用是不停的从一个 reader 中读取数据兵缓存在内存中，还提供了一个注入函数用来自定义分割符。库中还提供了4个预定义分割方法。</p>
-<pre><code>* ScanLines：以换行符分割（&#39;n&#39;）
-* ScanWords：返回通过“空格”分词的单词
-* ScanRunes：返回单个 UTF-8 编码的 rune 作为一个 token
-* ScanBytes：返回单个字节作为一个 token
-</code></pre>
-<p>使用例：</p>
-<pre><code>package main
- 
-import (
-    &quot;fmt&quot;
-    &quot;os&quot;
-    &quot;bufio&quot;
-)
-
-func main() &#123;
-    fp,err := os.Open(&quot;file.txt&quot;)
-    if err!=nil&#123;
-        fmt.Println(err) //打开文件错误
-        return 
-    &#125;
-
-    buf := bufio.NewScanner(fp)
-    for &#123;
-        if !buf.Scan() &#123;
-            break //文件读完了,退出for
-        &#125;
-        line := buf.Text() //获取每一行
-        fmt.Println(line)   
-    &#125;
-&#125;
-</code></pre>
-<h2 id="从指定行号开始读取"><a href="#从指定行号开始读取" class="headerlink" title="从指定行号开始读取"></a>从指定行号开始读取</h2><p>bufio.Scanner 默认不保存行号，所以这里需要简单拓展一下，这里使用 Seeker 接口来用做读取的偏移量</p>
-<p>这里不使用默认的切割函数自定义一个 bufio.SplitFunc，这个函数签名为：</p>
-<pre><code>type SplitFunc func(data []byte, atEOF bool) (advance int, token []byte, err error)
-</code></pre>
-<p>它返回的 advance 表示前进了多少位，token 表示本次切割从起点到终点所包含的内容，所以这里直接利用原本的 ScanLines 进行拓展。</p>
-<pre><code>func withScanner(input io.ReadSeeker, start int64) error &#123;
-    fmt.Println(&quot;--SCANNER, start:&quot;, start)
-    if _, err := input.Seek(start, 0); err != nil &#123;
-        return err
-    &#125;
-    scanner := bufio.NewScanner(input)
-
-    pos := start
-    scanLines := func(data []byte, atEOF bool) (advance int, token []byte, err error) &#123;
-        advance, token, err = bufio.ScanLines(data, atEOF)
-        pos += int64(advance)
-        return
-    &#125;
-    scanner.Split(scanLines)
-
-    for scanner.Scan() &#123;
-        fmt.Printf(&quot;Pos: %d, Scanned: %s\n&quot;, pos, scanner.Text())
-    &#125;
-    return scanner.Err()
-&#125;
-</code></pre>
+  <p>发布时间：2022-06-10 来源：经济日报 大中小</p>
+<p>　　今年以来，我国新能源装机出现大幅增长，但是在局部地区也同时出现了弃风弃光率提升的现象。</p>
+<p>　　弃风弃光现象曾是制约我国新能源产业高质量发展的重要因素。有人形象地比喻，风电光电就像地头的农特产品，随着种植规模扩大，当地老百姓吃不完，深加工能力跟不上，外送物流渠道又不畅通，只能将一部分白白扔掉。由此可见，弃风弃光的根源，是一定区域内的新能源电源建设速度超出消纳能力，从而造成能源的规模化发展和高效消纳利用之间的矛盾。</p>
+<p>　　近年来，我国以风电、光伏发电为代表的新能源装机规模稳居全球首位，发电量占比稳步提升，成本快速下降，已基本进入平价无补贴发展的新阶段。在“双碳”目标下，我国已明确到2030年，风电和太阳能发电总装机容量达到12亿千瓦以上。从国家规划、能源消费的低碳化趋势和新能源装备技术等各个层面，都释放出了新能源进一步大规模开发利用的利好信号。</p>
+<p>　　但要引起警惕的是，如果忽视电力系统对大规模高比例新能源接网和消纳的适应性不足等制约因素，那么新能源的开发利用还有可能重演大规模弃风弃电的困境。因此，我国新能源发展面临着既要大规模开发、又要高水平消纳、更要保障电力安全可靠供应等多重挑战。</p>
+<p>　　日前公布的《“十四五”可再生能源发展规划》中指出，我国可再生能源将进入高质量跃升发展新阶段。在这一判断中，“高质量”不难理解，所谓“跃升”，既是装机规模的跨越式发展，也是可再生能源在电力消费中的占比快速提升，更是发展模式由政策驱动向市场驱动的新转变。以风电、光电为代表的新能源作为可再生能源的主力军，将在未来清洁低碳、安全高效的能源体系中起到“挑大梁”的作用。因此，必须坚持先立后破、通盘谋划和系统观念，有效化解新能源发展面临的各种挑战。当务之急是要统筹解决好新能源大规模开发和高水平消纳，以及保障电力安全可靠供应之间的关系，协同推进新能源的规模、效益和安全。</p>
+<p>　　一方面，要挖掘新能源就地消纳的潜力。从利用方式看，新能源就地消纳是最经济的方式。提高新能源就地消纳水平，需要进一步挖掘潜力空间，鼓励引导全社会消费新能源等绿色电力，推动绿色电力在交易组织、电网调度、价格形成机制等方面体现优先地位，为市场主体提供功能健全、友好易用的绿色电力交易服务。同时，在具备条件的工业企业、工业园区，加快发展分布式光伏、分散式风电等新能源项目，提高终端用能的新能源电力比重。</p>
+<p>　　另一方面，要加快外送通道建设。特高压输电线路就像电力“高速公路”，在新能源就地消纳能力有限的情况下，通过外送通道将新能源电力输送至用电负荷较高的发达地区，既能满足产业聚集地区用电需求，也能实现新能源电力的有效利用。从长远看，提高新能源消纳水平，需要加快构建新型电力系统，突破省际壁垒，从电网技术、交易机制、基础设施等多方面发力，实现新能源电力在全国范围内的合理配置。</p>
+<p>　　此外，还需要探索多渠道储能路径。近年来，不少新能源富集地区实施了抽水蓄能、绿电制氢等储能项目，一定程度上提高了新能源的利用水平。通过将暂时富余的风电、光电转化成其他形式的能源，在用电高峰时再次转化成电能输出，可以有效实现新能源电力的“错峰上市”。（陈发明）</p>
  
       <!-- reward -->
       
@@ -512,7 +286,7 @@ func main() &#123;
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GO/" rel="tag">GO</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%96%B0%E8%83%BD%E6%BA%90/" rel="tag">新能源</a></li></ul>
 
     </footer>
   </div>
@@ -523,7 +297,7 @@ func main() &#123;
 
     
     <article
-  id="post-GO入门06：解析JSON"
+  id="post-下载《算法秘籍》和《刷题笔记》"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -534,8 +308,8 @@ func main() &#123;
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/04/02/GO%E5%85%A5%E9%97%A806%EF%BC%9A%E8%A7%A3%E6%9E%90JSON/"
-    >GO入门05：解析JSON</a> 
+  <a class="article-title" href="/2023/04/21/%E4%B8%8B%E8%BD%BD%E3%80%8A%E7%AE%97%E6%B3%95%E7%A7%98%E7%B1%8D%E3%80%8B%E5%92%8C%E3%80%8A%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0%E3%80%8B/"
+    >下载《算法秘籍》和《刷题笔记》</a> 
 </h2>
  
 
@@ -543,93 +317,22 @@ func main() &#123;
     </header>
      
     <div class="article-meta">
-      <a href="/2023/04/02/GO%E5%85%A5%E9%97%A806%EF%BC%9A%E8%A7%A3%E6%9E%90JSON/" class="article-date">
-  <time datetime="2023-04-02T15:00:01.000Z" itemprop="datePublished">2023-04-02</time>
+      <a href="/2023/04/21/%E4%B8%8B%E8%BD%BD%E3%80%8A%E7%AE%97%E6%B3%95%E7%A7%98%E7%B1%8D%E3%80%8B%E5%92%8C%E3%80%8A%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0%E3%80%8B/" class="article-date">
+  <time datetime="2023-04-21T09:32:43.000Z" itemprop="datePublished">2023-04-21</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
   </div>
    
     </div>
       
     <div class="article-entry" itemprop="articleBody">
        
-  <h1 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h1><pre><code>JSON解析三种方法：
-* 直接解析成 map[string]interface&#123;&#125;
-* 解析成对象
-* 读取单个key
-</code></pre>
-<h1 id="示例代码1："><a href="#示例代码1：" class="headerlink" title="示例代码1："></a>示例代码1：</h1><pre><code>package main
-
-import (
-    &quot;encoding/json&quot;
-    &quot;log&quot;
-    &quot;github.com/tidwall/gjson&quot;
-)
-
-// 嵌套一个对象
-type Info struct &#123;
-    Age int `json:&quot;age&quot;`
-&#125;
-
-var info = Info&#123;Age: 12&#125;
-
-// 嵌套一个对象数组
-type Extra struct &#123;
-    Address string `json:&quot;address&quot;`
-&#125;
-
-// 定义需要反序列化的结构体
-type UserRequest struct &#123;
-    Name     string  `json:&quot;userName&quot;`  // 通过tag里面的json，来指定json字符串中该字段的值从那里解析，不需要和字段名一样
-    NickName string  `json:&quot;nick_name&quot;` // 如果没对应上，解析不了
-    info     Info    `json:&quot;info&quot;`      // 小写私有的，故反序列化失效，该字段永远为空
-    Extra    []Extra `json:&quot;extra&quot;`
-&#125;
-
-func main() &#123;
-    jsonStr := `
-    &#123;
-        &quot;userName&quot;:&quot;admin&quot;,
-        &quot;nick_name&quot;:&quot;管理员&quot;,
-        &quot;info&quot;:&#123;
-           &quot;age&quot;:18
-        &#125;,
-        &quot;extra&quot;:[
-           &#123;
-              &quot;address&quot;:&quot;上海市&quot;
-           &#125;,
-           &#123;
-              &quot;address&quot;:&quot;北京市&quot;
-           &#125;
-        ]
-     &#125;`
-
-    // 方式一：序列化成map，经常使用
-    anyMap := make(map[string]interface&#123;&#125;, 0)
-    if err := json.Unmarshal([]byte(jsonStr), &amp;anyMap); err != nil &#123;
-        panic(err)
-    &#125;
-    log.Println(&quot;Unmarshal to map result:&quot;, anyMap)
-
-    // 方式二：反序列化成对象，经常使用
-    req := UserRequest&#123;&#125;
-    if err := json.Unmarshal([]byte(jsonStr), &amp;req); err != nil &#123;
-        panic(err)
-    &#125;
-    log.Println(&quot;Unmarshal to struct:&quot;, req)
-
-    // 方式三：不反序列化，只读取单个key，经常使用。适合特别复杂的json字符串，或者有多种if else结构的场景
-    userName := gjson.Get(jsonStr, &quot;userName&quot;)
-    nickName := gjson.Get(jsonStr, &quot;nick_name&quot;)
-    age := gjson.Get(jsonStr, &quot;info.age&quot;).Int()
-
-    // 取得extra数组0位置的对象
-    address1 := gjson.Get(jsonStr, &quot;extra&quot;).Array()[1]
-    log.Println(&quot;get raw value by key:&quot;, userName, nickName, age, address1.Get(&quot;address&quot;))
-&#125;
-</code></pre>
-<p>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/xmcy001122/article/details/126835290">https://blog.csdn.net/xmcy001122/article/details/126835290</a></p>
+  <p>此链接可下载《算法秘籍》和《刷题笔记》两本 PDF 以及 Chrome 插件的离线安装程序：</p>
+<p>链接：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1PoG0Zxy7H64aXUM-Gj0UuA?pwd=541i">https://pan.baidu.com/s/1PoG0Zxy7H64aXUM-Gj0UuA?pwd=541i</a> 提取码：541i</p>
+<p>另外，该链接会持续更新本链接中的插件和 PDF 的版本，你从上面链接中下载到的都将是最新版本。请直接下载，不要转存，因为转存后不会同步更新最新内容。</p>
+<p>刷题全家桶的安装使用手册点这里：<br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/M5Ud_RCzIe9pNl1cLSDPRQ">https://mp.weixin.qq.com/s/M5Ud_RCzIe9pNl1cLSDPRQ</a></p>
+<p>或长按识别对应的二维码查看（如果二维码过多无法识别，可以放大图片再长按识别对应的二维码）。</p>
  
       <!-- reward -->
       
@@ -640,7 +343,7 @@ func main() &#123;
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GO/" rel="tag">GO</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0/" rel="tag">刷题笔记</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95%E7%A7%98%E7%B1%8D/" rel="tag">算法秘籍</a></li></ul>
 
     </footer>
   </div>
@@ -651,7 +354,7 @@ func main() &#123;
 
     
     <article
-  id="post-GO入门05：MAP集合"
+  id="post-Accept-Encoding"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -662,8 +365,8 @@ func main() &#123;
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/04/01/GO%E5%85%A5%E9%97%A805%EF%BC%9AMAP%E9%9B%86%E5%90%88/"
-    >GO入门06：MAP集合</a> 
+  <a class="article-title" href="/2023/04/20/Accept-Encoding/"
+    >Accept-Encoding</a> 
 </h2>
  
 
@@ -671,8 +374,8 @@ func main() &#123;
     </header>
      
     <div class="article-meta">
-      <a href="/2023/04/01/GO%E5%85%A5%E9%97%A805%EF%BC%9AMAP%E9%9B%86%E5%90%88/" class="article-date">
-  <time datetime="2023-04-01T15:05:20.000Z" itemprop="datePublished">2023-04-01</time>
+      <a href="/2023/04/20/Accept-Encoding/" class="article-date">
+  <time datetime="2023-04-20T09:01:58.000Z" itemprop="datePublished">2023-04-20</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -682,42 +385,87 @@ func main() &#123;
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>Map 是一种无序的键值对的集合。<br>Map 最重要的一点是通过 key 来快速检索数据，key 类似于索引，指向数据的值。<br>Map 是无序的，遍历 Map 时返回的键值对的顺序是不确定的。<br>在获取 Map 的值时，如果键不存在，返回该类型的零值，例如 int 类型的零值是 0，string 类型的零值是 “”。<br>Map 是引用类型，如果将一个 Map 传递给一个函数或赋值给另一个变量，它们都指向同一个底层数据结构，因此对 Map 的修改会影响到所有引用它的变量。</p>
-<h1 id="定义-Map"><a href="#定义-Map" class="headerlink" title="定义 Map"></a>定义 Map</h1><p>可以使用内建函数 make 或使用 map 关键字来定义 Map:</p>
-<pre><code>/* 使用 make 函数 */
-map_variable := make(map[KeyType]ValueType, initialCapacity)
+  <h1 id="一、项目经历"><a href="#一、项目经历" class="headerlink" title="一、项目经历"></a>一、项目经历</h1><p>碰到个奇葩的服务，请求头加了Accept-Encoding，但凡结果不为空的，就报异常，结果为空的就给放行说成功。</p>
+<h1 id="二、同行遭遇"><a href="#二、同行遭遇" class="headerlink" title="二、同行遭遇"></a>二、同行遭遇</h1><h2 id="1、请求头设置-Accept-Encoding"><a href="#1、请求头设置-Accept-Encoding" class="headerlink" title="1、请求头设置 Accept-Encoding"></a>1、请求头设置 Accept-Encoding</h2><pre><code>&quot;Accept-Encoding&quot;: &quot;gzip, deflate, br&quot;
 </code></pre>
-<p>其中 KeyType 是键的类型，ValueType 是值的类型，initialCapacity 是可选的参数，用于指定 Map 的初始容量。Map 的容量是指 Map 中可以保存的键值对的数量，当 Map 中的键值对数量达到容量时，Map 会自动扩容。如果不指定 initialCapacity，Go 语言会根据实际情况选择一个合适的值。</p>
-<h1 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h1><pre><code>package main
+<p>返回的数据是乱码，无论设置utf-8、gbk、gb2312都无法解码</p>
+<p>一个奇怪的现象是本地测试可以正常解码，代码在服务器上运行就无法解码，最终将该请求头去除就正常了。</p>
+<p>在使用okhttp请求服务器数据的时候，发现返回的数据一直都是乱码，但是使用fiddler抓包，decode后，可以正常显示。刚开始一直怀疑是编码的问题，后来对比了hex的数据和程序中乱码的二进制，发现不一样。fiddler可以自动处理，说明不是密钥加密。经过不断的尝试发现时Accept-Encoding设置的问题，下面就一一详细介绍一下</p>
+<h2 id="2、设置Accept-Encoding为gzip-deflate，返回的网页是乱码"><a href="#2、设置Accept-Encoding为gzip-deflate，返回的网页是乱码" class="headerlink" title="2、设置Accept-Encoding为gzip,deflate，返回的网页是乱码"></a>2、设置Accept-Encoding为gzip,deflate，返回的网页是乱码</h2><ul>
+<li>HTTP 内容协商</li>
+</ul>
+<p>要了解 Vary 的作用，先得了解 HTTP 的内容协商机制。有时候，同一个 URL 可以提供多份不同的文档，这就要求服务端和客户端之间有一个选择最合适版本的机制，这就是内容协商。</p>
+<ul>
+<li>协商方式有两种</li>
+</ul>
+<p>一种是服务端把文档可用版本列表发给客户端让用户选，这可以使用 300 Multiple Choices 状态码来实现。这种方案有不少问题，首先多一次网络往返；其次服务端同一文档的某些版本可能是为拥有某些技术特征的客户端准备的，而普通用户不一定了解这些细节。举个例子，服务端通常可以将静态资源输出为压缩和未压缩两个版本，压缩版显然是为支持压缩的客户端而准备的，但如果让普通用户选，很可能选择错误的版本。</p>
+<p>另外一种方案：服务端根据客户端发送的请求头中某些字段自动发送最合适的版本。可以用于这个机制的请求头字段又分两种：内容协商专用字段（Accept 字段）、其他字段。HTTP 的内容协商通常使用这个方案</p>
+<pre><code>请求头字段    说明    响应头字段
+Accept    告知服务器发送何种媒体类型    Content-Type
+Accept-Language    告知服务器发送何种语言    Content-Language
+Accept-Charset    告知服务器发送何种字符集    Content-Type
+Accept-Encoding    告知服务器采用何种压缩方式    Content-Encoding
+</code></pre>
+<p>例如客户端发送以下请求头：</p>
+<pre><code>Accept:*/*
+Accept-Encoding:gzip,deflate,sdch
+Accept-Language:zh-CN,en-US;q=0.8,en;q=0.6
+</code></pre>
+<p>表示它可以接受任何 MIME 类型的资源；支持采用 gzip、deflate 或 sdch 压缩过的资源；可以接受 zh-CN、en-US 和 en 三种语言，并且 zh-CN 的权重最高（q 取值 0 - 1，最高为 1，最低为 0，默认为 1），服务端应该优先返回语言等于 zh-CN 的版本。</p>
+<p>浏览器的响应头可能是这样的：</p>
+<pre><code>Content-Type: text/javascript
+Content-Encoding: gzip
+</code></pre>
+<p>表示这个文档确切的 MIME 类型是 text/javascript；文档内容进行了 gzip 压缩；响应头没有 Content-Language 字段，通常说明返回版本的语言正好是请求头 Accept-Language 中权重最高的那个。</p>
+<p>有时候，上面四个 Accept 字段并不够用，例如要针对特定浏览器如 IE6 输出不一样的内容，就需要用到请求头中的 User-Agent 字段。类似的，请求头中的 Cookie 也可能被服务端用做输出差异化内容的依据。</p>
+<p>由于客户端和服务端之间可能存在一个或多个中间实体（如缓存服务器），而缓存服务最基本的要求是给用户返回正确的文档。如果服务端根据不同 User-Agent 返回不同内容，而缓存服务器把 IE6 用户的响应缓存下来，并返回给使用其他浏览器的用户，肯定会出问题 。</p>
+<p>所以 HTTP 协议规定，如果服务端提供的内容取决于 User-Agent 这样「常规 Accept 协商字段之外」的请求头字段，那么响应头中必须包含 Vary 字段，且 Vary 的内容必须包含 User-Agent。同理，如果服务端同时使用请求头中 User-Agent 和 Cookie 这两个字段来生成内容，那么响应中的 Vary 字段看上去应该是这样的：</p>
+<pre><code>Vary: User-Agent, Cookie
+</code></pre>
+<p>也就是说 Vary 字段用于列出一个响应字段列表，告诉缓存服务器遇到同一个 URL 对应着不同版本文档的情况时，如何缓存和筛选合适的版本。</p>
+<ul>
+<li><p>在Okhttp中的解决方法<br>上面返回乱码的原因就是没有正确解压Gzip的数据，</p>
+</li>
+<li><p>分析：<br>在 Okhttp 中，如果在请求头添加addHeader(“Accept-Encoding”, “gzip, deflate”)，Okhttp 不会帮你处理Gzip的解压，需要你自己去处理。</p>
+</li>
+</ul>
+<p>部分源码如下：</p>
+<pre><code>boolean transparentGzip = false;
+if (userRequest.header(&quot;Accept-Encoding&quot;) == null)
+&#123;
+  transparentGzip = true;
+  requestBuilder.header(&quot;Accept-Encoding&quot;, &quot;gzip&quot;);
+&#125;
 
-import &quot;fmt&quot;
-
-func main() &#123;
-    var siteMap map[string]string /*创建集合 */
-    siteMap = make(map[string]string)
-
-    /* map 插入 key - value 对,各个国家对应的首都 */
-    siteMap [ &quot;Google&quot; ] = &quot;谷歌&quot;
-    siteMap [ &quot;Runoob&quot; ] = &quot;菜鸟教程&quot;
-    siteMap [ &quot;Baidu&quot; ] = &quot;百度&quot;
-    siteMap [ &quot;Wiki&quot; ] = &quot;维基百科&quot;
-
-    /*使用键输出地图值 */
-    for site := range siteMap &#123;
-        fmt.Println(site, &quot;首都是&quot;, siteMap [site])
+if (transparentGzip &amp;&amp;
+ &quot;gzip&quot;.equalsIgnoreCase(networkResponse.header(&quot;Content-Encoding&quot;))
+    &amp;&amp; HttpHeaders.hasBody(networkResponse))
+&#123;
+  GzipSource responseBody = new GzipSource(networkResponse.body().source());
+  Headers strippedHeaders = networkResponse.headers().newBuilder()
+      .removeAll(&quot;Content-Encoding&quot;)
+      .removeAll(&quot;Content-Length&quot;)
+      .build();
+  responseBuilder.headers(strippedHeaders);
+  responseBuilder.body(new RealResponseBody(strippedHeaders, Okio.buffer(responseBody)));
+&#125;
+</code></pre>
+<ul>
+<li>解决方法：<br>把Request的header中去掉header(“Accept-Encoding”)就行了</li>
+</ul>
+<p>通过Request.Builder.tag(“url”)来打tag，然后通过下述代码即可做到cancel某一个Request的功能，你需要做的只是返回url就行了。</p>
+<pre><code>public static void cancelCallWithTag(String tag) &#123;
+    for (Call call : RequestApi2.getInstance().getOkHttpClient().dispatcher().queuedCalls()) &#123;
+        if (call.request().tag().equals(tag))
+            call.cancel();
     &#125;
-
-    /*查看元素在集合中是否存在 */
-    name, ok := siteMap [ &quot;Facebook&quot; ] /*如果确定是真实的,则存在,否则不存在 */
-    /*fmt.Println(capital) */
-    /*fmt.Println(ok) */
-    if (ok) &#123;
-        fmt.Println(&quot;Facebook 的 站点是&quot;, name)
-    &#125; else &#123;
-        fmt.Println(&quot;Facebook 站点不存在&quot;)
+    for (Call call : RequestApi2.getInstance().getOkHttpClient().dispatcher().runningCalls()) &#123;
+        if (call.request().tag().equals(tag))
+            call.cancel();
     &#125;
 &#125;
 </code></pre>
+<p>有朋友可能想到，如果在header添加”Accept-Encoding”, “gzip, deflate”，返回的是gzip压缩的数据，自己解压可不可以？<br>使用其他的http库，可以拿到最原始的http数据，是可以的。但使用okhttp，返回的字符串是经过编码的，此时已经不是gzip数据格式了，所以没法解压。</p>
  
       <!-- reward -->
       
@@ -728,7 +476,7 @@ func main() &#123;
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GO/" rel="tag">GO</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li></ul>
 
     </footer>
   </div>
@@ -739,7 +487,7 @@ func main() &#123;
 
     
     <article
-  id="post-GO入门04：结构体"
+  id="post-Axure下载及汉化"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -750,8 +498,8 @@ func main() &#123;
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/03/31/GO%E5%85%A5%E9%97%A804%EF%BC%9A%E7%BB%93%E6%9E%84%E4%BD%93/"
-    >GO入门04：结构体</a> 
+  <a class="article-title" href="/2023/04/19/Axure%E4%B8%8B%E8%BD%BD%E5%8F%8A%E6%B1%89%E5%8C%96/"
+    >Axure RP下载及汉化</a> 
 </h2>
  
 
@@ -759,234 +507,30 @@ func main() &#123;
     </header>
      
     <div class="article-meta">
-      <a href="/2023/03/31/GO%E5%85%A5%E9%97%A804%EF%BC%9A%E7%BB%93%E6%9E%84%E4%BD%93/" class="article-date">
-  <time datetime="2023-03-31T15:09:29.000Z" itemprop="datePublished">2023-03-31</time>
+      <a href="/2023/04/19/Axure%E4%B8%8B%E8%BD%BD%E5%8F%8A%E6%B1%89%E5%8C%96/" class="article-date">
+  <time datetime="2023-04-19T02:48:47.000Z" itemprop="datePublished">2023-04-19</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
   </div>
    
     </div>
       
     <div class="article-entry" itemprop="articleBody">
        
-  <h1 id="Go-语言结构体"><a href="#Go-语言结构体" class="headerlink" title="Go 语言结构体"></a>Go 语言结构体</h1><p>Go 语言中数组可以存储同一类型的数据，但在结构体中我们可以为不同项定义不同的数据类型。</p>
-<p>结构体是由一系列具有相同类型或不同类型的数据构成的数据集合。</p>
-<p>结构体表示一项记录，比如保存图书馆的书籍记录，每本书有以下属性：</p>
-<pre><code>Title ：标题
-Author ： 作者
-Subject：学科
-ID：书籍ID
-</code></pre>
-<h1 id="定义结构体"><a href="#定义结构体" class="headerlink" title="定义结构体"></a>定义结构体</h1><p>结构体定义需要使用 type 和 struct 语句。struct 语句定义一个新的数据类型，结构体中有一个或多个成员。type 语句设定了结构体的名称。结构体的格式如下：</p>
-<pre><code>type struct_variable_type struct &#123;
-   member definition
-   member definition
-   ...
-   member definition
-&#125;
-</code></pre>
-<p>一旦定义了结构体类型，它就能用于变量的声明，语法格式如下：</p>
-<pre><code>variable_name := structure_variable_type &#123;value1, value2...valuen&#125;
-或
-variable_name := structure_variable_type &#123; key1: value1, key2: value2..., keyn: valuen&#125;
-</code></pre>
-<p>实例如下：</p>
-<pre><code>package main
-
-import &quot;fmt&quot;
-
-type Books struct &#123;
-   title string
-   author string
-   subject string
-   book_id int
-&#125;
-
-
-func main() &#123;
-
-    // 创建一个新的结构体
-    fmt.Println(Books&#123;&quot;Go 语言&quot;, &quot;www.runoob.com&quot;, &quot;Go 语言教程&quot;, 6495407&#125;)
-
-    // 也可以使用 key =&gt; value 格式
-    fmt.Println(Books&#123;title: &quot;Go 语言&quot;, author: &quot;www.runoob.com&quot;, subject: &quot;Go 语言教程&quot;, book_id: 6495407&#125;)
-
-    // 忽略的字段为 0 或 空
-   fmt.Println(Books&#123;title: &quot;Go 语言&quot;, author: &quot;www.runoob.com&quot;&#125;)
-&#125;
-</code></pre>
-<p>输出结果为：</p>
-<pre><code>&#123;Go 语言 www.runoob.com Go 语言教程 6495407&#125;
-&#123;Go 语言 www.runoob.com Go 语言教程 6495407&#125;
-&#123;Go 语言 www.runoob.com  0&#125;
-</code></pre>
-<h1 id="访问结构体成员"><a href="#访问结构体成员" class="headerlink" title="访问结构体成员"></a>访问结构体成员</h1><p>如果要访问结构体成员，需要使用点号 . 操作符，格式为：</p>
-<pre><code>结构体.成员名
-</code></pre>
-<p>结构体类型变量使用 struct 关键字定义，实例如下：</p>
-<pre><code>package main
-
-import &quot;fmt&quot;
-
-type Books struct &#123;
-   title string
-   author string
-   subject string
-   book_id int
-&#125;
-
-func main() &#123;
-   var Book1 Books        /* 声明 Book1 为 Books 类型 */
-   var Book2 Books        /* 声明 Book2 为 Books 类型 */
-
-   /* book 1 描述 */
-   Book1.title = &quot;Go 语言&quot;
-   Book1.author = &quot;www.runoob.com&quot;
-   Book1.subject = &quot;Go 语言教程&quot;
-   Book1.book_id = 6495407
-
-   /* book 2 描述 */
-   Book2.title = &quot;Python 教程&quot;
-   Book2.author = &quot;www.runoob.com&quot;
-   Book2.subject = &quot;Python 语言教程&quot;
-   Book2.book_id = 6495700
-
-   /* 打印 Book1 信息 */
-   fmt.Printf( &quot;Book 1 title : %s\n&quot;, Book1.title)
-   fmt.Printf( &quot;Book 1 author : %s\n&quot;, Book1.author)
-   fmt.Printf( &quot;Book 1 subject : %s\n&quot;, Book1.subject)
-   fmt.Printf( &quot;Book 1 book_id : %d\n&quot;, Book1.book_id)
-
-   /* 打印 Book2 信息 */
-   fmt.Printf( &quot;Book 2 title : %s\n&quot;, Book2.title)
-   fmt.Printf( &quot;Book 2 author : %s\n&quot;, Book2.author)
-   fmt.Printf( &quot;Book 2 subject : %s\n&quot;, Book2.subject)
-   fmt.Printf( &quot;Book 2 book_id : %d\n&quot;, Book2.book_id)
-&#125;
-</code></pre>
-<p>以上实例执行运行结果为：</p>
-<pre><code>Book 1 title : Go 语言
-Book 1 author : www.runoob.com
-Book 1 subject : Go 语言教程
-Book 1 book_id : 6495407
-Book 2 title : Python 教程
-Book 2 author : www.runoob.com
-Book 2 subject : Python 语言教程
-Book 2 book_id : 6495700
-</code></pre>
-<h1 id="结构体作为函数参数"><a href="#结构体作为函数参数" class="headerlink" title="结构体作为函数参数"></a>结构体作为函数参数</h1><p>你可以像其他数据类型一样将结构体类型作为参数传递给函数。并以以上实例的方式访问结构体变量：</p>
-<pre><code>package main
-
-import &quot;fmt&quot;
-
-type Books struct &#123;
-   title string
-   author string
-   subject string
-   book_id int
-&#125;
-
-func main() &#123;
-   var Book1 Books        /* 声明 Book1 为 Books 类型 */
-   var Book2 Books        /* 声明 Book2 为 Books 类型 */
-
-   /* book 1 描述 */
-   Book1.title = &quot;Go 语言&quot;
-   Book1.author = &quot;www.runoob.com&quot;
-   Book1.subject = &quot;Go 语言教程&quot;
-   Book1.book_id = 6495407
-
-   /* book 2 描述 */
-   Book2.title = &quot;Python 教程&quot;
-   Book2.author = &quot;www.runoob.com&quot;
-   Book2.subject = &quot;Python 语言教程&quot;
-   Book2.book_id = 6495700
-
-   /* 打印 Book1 信息 */
-   printBook(Book1)
-
-   /* 打印 Book2 信息 */
-   printBook(Book2)
-&#125;
-
-func printBook( book Books ) &#123;
-   fmt.Printf( &quot;Book title : %s\n&quot;, book.title)
-   fmt.Printf( &quot;Book author : %s\n&quot;, book.author)
-   fmt.Printf( &quot;Book subject : %s\n&quot;, book.subject)
-   fmt.Printf( &quot;Book book_id : %d\n&quot;, book.book_id)
-&#125;
-</code></pre>
-<p>以上实例执行运行结果为：</p>
-<pre><code>Book title : Go 语言
-Book author : www.runoob.com
-Book subject : Go 语言教程
-Book book_id : 6495407
-Book title : Python 教程
-Book author : www.runoob.com
-Book subject : Python 语言教程
-Book book_id : 6495700
-</code></pre>
-<h1 id="结构体指针"><a href="#结构体指针" class="headerlink" title="结构体指针"></a>结构体指针</h1><p>你可以定义指向结构体的指针类似于其他指针变量，格式如下：</p>
-<pre><code>var struct_pointer *Books
-</code></pre>
-<p>以上定义的指针变量可以存储结构体变量的地址。查看结构体变量地址，可以将 &amp; 符号放置于结构体变量前：</p>
-<pre><code>struct_pointer = &amp;Book1
-</code></pre>
-<p>使用结构体指针访问结构体成员，使用 “.” 操作符：</p>
-<pre><code>struct_pointer.title
-</code></pre>
-<p>接下来让我们使用结构体指针重写以上实例，代码如下：</p>
-<pre><code>package main
-
-import &quot;fmt&quot;
-
-type Books struct &#123;
-   title string
-   author string
-   subject string
-   book_id int
-&#125;
-
-func main() &#123;
-   var Book1 Books        /* 声明 Book1 为 Books 类型 */
-   var Book2 Books        /* 声明 Book2 为 Books 类型 */
-
-   /* book 1 描述 */
-   Book1.title = &quot;Go 语言&quot;
-   Book1.author = &quot;www.runoob.com&quot;
-   Book1.subject = &quot;Go 语言教程&quot;
-   Book1.book_id = 6495407
-
-   /* book 2 描述 */
-   Book2.title = &quot;Python 教程&quot;
-   Book2.author = &quot;www.runoob.com&quot;
-   Book2.subject = &quot;Python 语言教程&quot;
-   Book2.book_id = 6495700
-
-   /* 打印 Book1 信息 */
-   printBook(&amp;Book1)
-
-   /* 打印 Book2 信息 */
-   printBook(&amp;Book2)
-&#125;
-func printBook( book *Books ) &#123;
-   fmt.Printf( &quot;Book title : %s\n&quot;, book.title)
-   fmt.Printf( &quot;Book author : %s\n&quot;, book.author)
-   fmt.Printf( &quot;Book subject : %s\n&quot;, book.subject)
-   fmt.Printf( &quot;Book book_id : %d\n&quot;, book.book_id)
-&#125;
-</code></pre>
-<p>以上实例执行运行结果为：</p>
-<pre><code>Book title : Go 语言
-Book author : www.runoob.com
-Book subject : Go 语言教程
-Book book_id : 6495407
-Book title : Python 教程
-Book author : www.runoob.com
-Book subject : Python 语言教程
-Book book_id : 6495700
-</code></pre>
+  <h1 id="Axure-RP"><a href="#Axure-RP" class="headerlink" title="Axure RP"></a>Axure RP</h1><p>Axure RP 是一款专业的快速原型设计工具。Axure（发音：Ack-sure），代表美国Axure公司；RP则是Rapid Prototyping（快速原型）的缩写。<br>Axure RP 是美国Axure Software Solution 公司旗舰产品，是一个专业的快速原型设计工具，让负责定义需求和规格、设计功能和界面的专家能够快速创建应用软件或Web网站的线框图、流程图、原型和规格说明文档。</p>
+<p>作为专业的原型设计工具，它能快速、高效的创建原型，同时支持多人协作设计和版本控制管理。<br>Axure RP 的使用者主要包括商业分析师、信息架构师、产品经理、IT咨询师、用户体验设计师、交互设计师、UI设计师等，另外，架构师、程序员也在使用Axure。</p>
+<h1 id="软件下载"><a href="#软件下载" class="headerlink" title="软件下载"></a>软件下载</h1><p><a target="_blank" rel="noopener" href="https://www.axure.com/release-history">https://www.axure.com/release-history</a><br><a target="_blank" rel="noopener" href="https://www.axure.com/release-history/rp8">https://www.axure.com/release-history/rp8</a><br><a target="_blank" rel="noopener" href="https://www.axure.com/release-history/rp9">https://www.axure.com/release-history/rp9</a><br><a target="_blank" rel="noopener" href="https://www.axure.com/release-history/rp7">https://www.axure.com/release-history/rp7</a></p>
+<h1 id="汉化资源"><a href="#汉化资源" class="headerlink" title="汉化资源"></a>汉化资源</h1><p>Axure中文网<br><a target="_blank" rel="noopener" href="https://www.axure.com.cn/78629">https://www.axure.com.cn/78629</a><br><a target="_blank" rel="noopener" href="https://www.axure.com.cn/84384">https://www.axure.com.cn/84384</a></p>
+<p>汉化资源使用方法，以 Axure RP 9 为例：</p>
+<ul>
+<li><p>【使用方法】<br>1、将汉化压缩包解压缩。<br>2、将解压缩后的【lang文件夹】复制粘贴到软件安装根目录下。</p>
+</li>
+<li><p>【Windows系统汉化路径】<br>以Win7-64位系统为例：C:\Program Files (x86)\Axure\Axure RP 9</p>
+</li>
+<li><p>【Mac系统汉化路径】<br>以中文版为例：前往–应用程序–右键点击程序图标–显示包内容，依次打开文件夹：Contents&gt;Resources&gt;</p>
+</li>
+</ul>
  
       <!-- reward -->
       
@@ -997,7 +541,7 @@ Book book_id : 6495700
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GO/" rel="tag">GO</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Axure-RP/" rel="tag">Axure RP</a></li></ul>
 
     </footer>
   </div>
@@ -1008,7 +552,7 @@ Book book_id : 6495700
 
     
     <article
-  id="post-GO入门03：关系运算符"
+  id="post-数据结构浅谈（一）"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -1019,8 +563,8 @@ Book book_id : 6495700
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/03/30/GO%E5%85%A5%E9%97%A803%EF%BC%9A%E5%85%B3%E7%B3%BB%E8%BF%90%E7%AE%97%E7%AC%A6/"
-    >GO入门03：关系运算符</a> 
+  <a class="article-title" href="/2023/04/18/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%B5%85%E8%B0%88%EF%BC%88%E4%B8%80%EF%BC%89/"
+    >数据结构浅谈（一）</a> 
 </h2>
  
 
@@ -1028,8 +572,8 @@ Book book_id : 6495700
     </header>
      
     <div class="article-meta">
-      <a href="/2023/03/30/GO%E5%85%A5%E9%97%A803%EF%BC%9A%E5%85%B3%E7%B3%BB%E8%BF%90%E7%AE%97%E7%AC%A6/" class="article-date">
-  <time datetime="2023-03-30T14:54:23.000Z" itemprop="datePublished">2023-03-30</time>
+      <a href="/2023/04/18/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%B5%85%E8%B0%88%EF%BC%88%E4%B8%80%EF%BC%89/" class="article-date">
+  <time datetime="2023-04-18T04:16:47.000Z" itemprop="datePublished">2023-04-18</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -1039,43 +583,11 @@ Book book_id : 6495700
       
     <div class="article-entry" itemprop="articleBody">
        
-  <h1 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h1><pre><code>关系运算符
-</code></pre>
-<h1 id="示例代码："><a href="#示例代码：" class="headerlink" title="示例代码："></a>示例代码：</h1><pre><code>package main
-
-import &quot;fmt&quot;
-
-func main() &#123;
-   var a int = 21
-   var b int = 10
-
-   if( a == b ) &#123;
-      fmt.Printf(&quot;第一行 - a 等于 b\n&quot; )
-   &#125; else &#123;
-      fmt.Printf(&quot;第一行 - a 不等于 b\n&quot; )
-   &#125;
-   if ( a &lt; b ) &#123;
-      fmt.Printf(&quot;第二行 - a 小于 b\n&quot; )
-   &#125; else &#123;
-      fmt.Printf(&quot;第二行 - a 不小于 b\n&quot; )
-   &#125;
-   
-   if ( a &gt; b ) &#123;
-      fmt.Printf(&quot;第三行 - a 大于 b\n&quot; )
-   &#125; else &#123;
-      fmt.Printf(&quot;第三行 - a 不大于 b\n&quot; )
-   &#125;
-   /* Lets change value of a and b */
-   a = 5
-   b = 20
-   if ( a &lt;= b ) &#123;
-      fmt.Printf(&quot;第四行 - a 小于等于 b\n&quot; )
-   &#125;
-   if ( b &gt;= a ) &#123;
-      fmt.Printf(&quot;第五行 - b 大于等于 a\n&quot; )
-   &#125;
-&#125;
-</code></pre>
+  <p>数据结构主要描述数据之间的关系，每一个数据可以称之为数据元素，一般以结构体或类来描述。</p>
+<p>数据元素的内部组成，一般基础数据类型或复合数据类型。<br>基础数据类型大体可以分为：数值型,字符串型和日期时间型。复合数据类型又分为结构体、联合体。</p>
+<p>数据元素之间的关系，从表现形式来看，可以分为四种：离散结构、线性结构、树形结构、图形结构。从组织方式来看，可以分为两种：数组和链表。</p>
+<p>一般研究讨论的都是线性结构、树形结构、图形结构。<br>1、线性结构：元素之间是“一对一”的关系，典型有：队列、栈。<br>2、树形结构：元素之间是“一对多”的关系，典型有：树，堆。<br>3、图形结构：元素之间是“多对多”的关系。</p>
+<p>数组是申请连续的数据块，查找快捷。链表则是离散数据块，元素之间要记录相互关系，增删方便，</p>
  
       <!-- reward -->
       
@@ -1086,7 +598,7 @@ func main() &#123;
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GO/" rel="tag">GO</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li></ul>
 
     </footer>
   </div>
@@ -1102,7 +614,7 @@ func main() &#123;
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/22/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="page-number" href="/page/22/">22</a><span class="page-number current">23</span><a class="page-number" href="/page/24/">24</a><a class="page-number" href="/page/25/">25</a><span class="space">&hellip;</span><a class="page-number" href="/page/37/">37</a><a class="extend next" rel="next" href="/page/24/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/22/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="page-number" href="/page/22/">22</a><span class="page-number current">23</span><a class="page-number" href="/page/24/">24</a><a class="page-number" href="/page/25/">25</a><span class="space">&hellip;</span><a class="page-number" href="/page/40/">40</a><a class="extend next" rel="next" href="/page/24/">下一页</a>
   </nav>
   
 </section>

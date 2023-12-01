@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+       
+      <meta name="keywords" content="RS,GPS,GIS,QGIS,Opticks,QT,OpenCV,OSG" />
+       
+      <meta name="description" content="地理信息系统，遥感科学，卫星导航定位技术综合研究。" />
+      
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>vue循环遍历对象、数组和字符串 |  帕拉丁的游鱼</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/favicon.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    <link rel="alternate" href="/atom.xml" title="帕拉丁的游鱼" type="application/atom+xml">
+</head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-vue循环遍历对象、数组和字符串"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  vue循环遍历对象、数组和字符串
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/08/30/vue%E5%BE%AA%E7%8E%AF%E9%81%8D%E5%8E%86%E5%AF%B9%E8%B1%A1%E3%80%81%E6%95%B0%E7%BB%84%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2/" class="article-date">
+  <time datetime="2023-08-30T09:00:11.000Z" itemprop="datePublished">2023-08-30</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">1.6k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">7 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="1-循环遍历对象"><a href="#1-循环遍历对象" class="headerlink" title="1.循环遍历对象"></a>1.循环遍历对象</h1><h2 id="1-1vue-在html里面循环遍历对象"><a href="#1-1vue-在html里面循环遍历对象" class="headerlink" title="1.1vue 在html里面循环遍历对象"></a>1.1vue 在html里面循环遍历对象</h2><pre><code>v-for=&quot; (val, key , i) in dimItemMap&quot; :key=&quot;key&quot;
+
+val-每一项
+key -key值
+i-第几个
+
+&lt;el-table-column prop=&quot;score&quot; label=&quot;评分&quot; :show-overflow-tooltip=&quot;true&quot; align=&quot;center&quot;&gt;
+    &lt;template slot-scope=&quot;scope&quot;&gt;
+    &lt;span&gt;
+        &lt;span v-for=&quot; (val, key , i) in scope.row.dimItemMap&quot; :key=&quot;key&quot;&gt;
+        &#123;&#123;val.score&#125;&#125;//score为键，val.score为值
+        &lt;/span&gt;
+    &lt;/span&gt;
+    &lt;/template&gt;
+&lt;/el-table-column&gt;
+</code></pre>
+<h2 id="1-2-在js里面forin遍历对象"><a href="#1-2-在js里面forin遍历对象" class="headerlink" title="1.2 在js里面forin遍历对象"></a>1.2 在js里面forin遍历对象</h2><p>for…in 循环主要是为了遍历对象而生，不适用于遍历数组</p>
+<pre><code>let data = [&#123; wiun2dvi: 232, wiun3dvi: 55, wiu4ndvi: 33, wiun1dvi: 24432 &#125;];
+    data.forEach((item,index)=&gt;&#123;
+      for (const key in item) &#123;
+        console.log(&quot;item[key]&quot;,item[key]);//值
+        console.log(&quot;key&quot;,key);//键
+      &#125;
+    &#125;)
+</code></pre>
+<h1 id="2-循环遍历数组"><a href="#2-循环遍历数组" class="headerlink" title="2.循环遍历数组"></a>2.循环遍历数组</h1><h2 id="2-1-vue-在html里面循环遍历数组"><a href="#2-1-vue-在html里面循环遍历数组" class="headerlink" title="2.1 vue 在html里面循环遍历数组"></a>2.1 vue 在html里面循环遍历数组</h2><pre><code>&lt;el-table-column v-for=&quot;item in tableCol&quot; :key=&quot;item.id&quot; :prop=&quot;item.id&quot; :label=&quot;item.name&quot; :show-overflow-tooltip=&quot;true&quot; align=&quot;center&quot;&gt;
+    &lt;template slot-scope=&quot;scope&quot;&gt;
+        &lt;span&gt;&#123;&#123;scope.row.dimItemMap?scope.row.dimItemMap[item.id].name:""&#125;&#125;&lt;/span&gt;
+    &lt;/template&gt;
+&lt;/el-table-column&gt;
+
+&lt;el-table-column prop=&quot;score&quot; label=&quot;评分&quot; :show-overflow-tooltip=&quot;true&quot; align=&quot;center&quot;&gt;
+    &lt;template slot-scope=&quot;scope&quot;&gt;
+        &lt;span&gt;
+            &lt;span v-for=&quot; (item, index) in scope.row.dimItemMap&quot; :key=&quot;index&quot;&gt;
+                &#123;&#123;item.score&#125;&#125;
+            &lt;/span&gt;
+        &lt;/span&gt;
+    &lt;/template&gt;
+&lt;/el-table-column&gt;
+</code></pre>
+<h2 id="2-2-在js里面for遍历数组"><a href="#2-2-在js里面for遍历数组" class="headerlink" title="2.2 在js里面for遍历数组"></a>2.2 在js里面for遍历数组</h2><pre><code>let id = 1524466
+for (let i = 0; i &lt; list.length; i++) &#123;
+    let a = list[i];
+    if (a.id === id) &#123;
+        return a.name;
+    &#125; 
+&#125;
+</code></pre>
+<h2 id="2-3-在js里面forof遍历数组"><a href="#2-3-在js里面forof遍历数组" class="headerlink" title="2.3 在js里面forof遍历数组"></a>2.3 在js里面forof遍历数组</h2><p>   let arr = [{<br>        name: 12,<br>        hello: “wsdfnioq”,<br>    }, {<br>        name: 12,<br>        hello: “wsdfnioq”,<br>    }, {<br>        name: 12,<br>        hello: “wsdfnioq”,<br>    }]</p>
+<pre><code>for (const i of arr) &#123;
+    console.log(&quot;i&quot;, i);
+&#125;
+        
+//i &#123;name: 12, hello: &#39;wsdfnioq&#39;&#125;
+//i &#123;name: 12, hello: &#39;wsdfnioq&#39;&#125;
+//i &#123;name: 12, hello: &#39;wsdfnioq&#39;&#125;
+
+let arr = [
+    [&#39;name&#39;, &quot;张三&quot;],
+    [&#39;地址&#39;, &#39;北京&#39;],
+    [&#39;手机&#39;, &#39;123&#39;]
+]
+for (const [value0, value1] of arr) &#123;
+    console.log(&#39;k&#39;, value0, value1);
+&#125;
+// k name 张三
+// k 地址 北京
+// k 手机 123
+</code></pre>
+<h2 id="2-4-for-in，不推荐对数组进行遍历"><a href="#2-4-for-in，不推荐对数组进行遍历" class="headerlink" title="2.4 for in，不推荐对数组进行遍历"></a>2.4 for in，不推荐对数组进行遍历</h2><pre><code>let arr = [&quot;lsadnkol&quot;, &quot;klsmvaod&quot;, &quot;lpsaojfoas&quot;]
+for (const key in arr) &#123;
+    console.log(&quot;arr&quot;, key, typeof key, arr[key]);
+&#125;
+// 0 string lsadnkol
+// 1 string klsmvaod
+// 2 string lpsaojfoas
+</code></pre>
+<h2 id="2-5-forEach-函数遍历数组"><a href="#2-5-forEach-函数遍历数组" class="headerlink" title="2.5 forEach() 函数遍历数组"></a>2.5 forEach() 函数遍历数组</h2><p>①无任何返回，可改变原来数组中的内容</p>
+<p>②循环次数：数组的长度</p>
+<p>③不支持return，不需要return语句</p>
+<p>如下案例：给每个对象中添加age属性</p>
+<pre><code>let forArr = [&#123;name:&#39;tom&#39;,sex:&#39;man&#39;&#125;,&#123;name:&#39;linda&#39;,sex:&#39;woman&#39;&#125;,]
+ forArr.forEach((item,index) =&gt; &#123;
+    console.log(&quot;forEach循环==index==&quot;,index,item);
+     item.age = 27
+&#125;)
+console.log(&quot;forArr==遍历后===&quot;,forArr)
+// forArr ----&gt;[&#123;name:&#39;tom&#39;,sex:&#39;man&#39;,age:27&#125;,&#123;name:&#39;linda&#39;,sex:&#39;woman&#39;,age:27&#125;]
+</code></pre>
+<h1 id="vue循环遍历-指令v-for"><a href="#vue循环遍历-指令v-for" class="headerlink" title="vue循环遍历,指令v-for"></a>vue循环遍历,指令v-for</h1><h2 id="1-循环遍历"><a href="#1-循环遍历" class="headerlink" title="1.循环遍历"></a>1.循环遍历</h2><p>vue的循环遍历用v-for，语法类似于js中的for循环</p>
+<p>当我们有一组数据需要进行渲染时，我们就可以使用v-for来完成。</p>
+<p>v-for使用格式：</p>
+<p>格式为：v-for = item in items</p>
+<p> (遍历items中的数据)</p>
+<h2 id="2-v-for遍历数组"><a href="#2-v-for遍历数组" class="headerlink" title="2.v-for遍历数组"></a>2.v-for遍历数组</h2><p>用v-for指令基于一个数组来渲染一个列表。</p>
+<p>v-for 指令使用item in items形式的语法，其中items是源数据数组， 而item则是被迭代的数组元素。</p>
+<ul>
+<li>如果v-for遍历数组中的数组值</li>
+</ul>
+<p>语法格式：v-for=”movie in movies”<br>依次从movies中取出movie，并且在元素的内容中，我们可以使用Mustache语法，来使用movie</p>
+<pre><code>&lt;li v-for=&quot;movie in movies&quot;&gt; &#123;&#123;movie&#125;&#125; &lt;/li&gt;
+ 
+</code></pre>
+<ul>
+<li>如果v-for遍历数组中的数组值、索引值</li>
+</ul>
+<p>语法格式：v-for=(item, index) in items<br>v-for中使用二个参数，即当前项和当前项的索引</p>
+<pre><code>&lt;li v-for=&quot;(item, index) in items&quot;&gt;&#123;&#123;index&#125;&#125;. &#123;&#123;item&#125;&#125;&lt;/li&gt;
+</code></pre>
+<p>样例：</p>
+<pre><code>&lt;div id=&quot;app&quot;&gt;
+  &lt;ul&gt;
+    &lt;li v-for=&quot;name in names&quot;&gt;&#123;&#123;name&#125;&#125;&lt;/li&gt;
+  &lt;/ul&gt;
+   //v-for遍历过程中，遍历数组中值,并显示
+  &lt;ul&gt;
+    &lt;li v-for=&quot;(name,index) in names&quot;&gt;&#123;&#123;index&#125;&#125;. &#123;&#123;name&#125;&#125;&lt;/li&gt;
+  &lt;/ul&gt;
+   //遍历过程中，遍历数组中值、索引值，并显示
+&lt;/div&gt;
+
+&lt;script&gt;
+  const app = new Vue(&#123;
+    el:&quot;#app&quot;,
+    data:&#123;
+      names:[&quot;刘富楠&quot;,&quot;科比&quot;,&quot;詹姆斯&quot;,&quot;库里&quot;]
+    &#125;
+  &#125;)
+&lt;/script&gt;
+</code></pre>
+<h2 id="3-v-for遍历对象"><a href="#3-v-for遍历对象" class="headerlink" title="3.v-for遍历对象"></a>3.v-for遍历对象</h2><p>1.遍历对象属性 用value值<br>2.遍历对象属性和属性值 用value值和key<br>3.遍历对象属性和属性值和索引 用value值、key和index</p>
+<pre><code>&lt;div id=&quot;app&quot;&gt;
+    //展示出所有信息
+    &lt;ul&gt;
+        &lt;li &gt;&#123;&#123;info.name&#125;&#125;&lt;/li&gt;
+        &lt;li &gt;&#123;&#123;info.age&#125;&#125;&lt;/li&gt;
+        &lt;li &gt;&#123;&#123;info.height&#125;&#125;&lt;/li&gt;
+    &lt;/ul&gt;
+    //方法1.一个个写出来
+    &lt;ul&gt;
+        &lt;li v-for=&quot;item in info&quot;&gt;&#123;&#123;item&#125;&#125;&lt;/li&gt;
+    &lt;/ul&gt;
+    //方法2.用v-for遍历对象的value值。(属性)
+    &lt;ul&gt;
+        &lt;li v-for=&quot;(value,key) in info&quot;&gt;&#123;&#123;value&#125;&#125;--&#123;&#123;key&#125;&#125;&lt;/li&gt;
+    &lt;/ul&gt;
+    //方法3.用v-for遍历对象的value值和key，value在前面。(属性和属性值)
+    &lt;ul&gt;
+        &lt;li v-for=&quot;(value,key,index) in info&quot;&gt;&#123;&#123;value&#125;&#125;--&#123;&#123;key&#125;&#125;--&#123;&#123;index&#125;&#125;&lt;/li&gt;
+    &lt;/ul&gt;
+    //方法4.用v-for遍历对象的value值、key和index。(属性和属性值和索引)
+&lt;/div&gt;
+
+&lt;script&gt;
+    const app = new Vue(&#123;
+        el:&quot;#app&quot;,
+        data:&#123;
+            info:&#123;
+                name:&quot;lfn&quot;,
+                age :18,
+                height:180
+            &#125;
+        &#125;
+    &#125;)
+&lt;/script&gt;    
+</code></pre>
+<h2 id="4-v-for使用中添加key"><a href="#4-v-for使用中添加key" class="headerlink" title="4.v-for使用中添加key"></a>4.v-for使用中添加key</h2><p>在遍历数组时可以在元素中绑定一个key，key=数组值</p>
+<p>绑定key的作用 ：主要是为了高效的更新虚拟DOM。(vue内部；让性能高一点)</p>
+<ul>
+<li><p>当某一层有很多相同的节点时，也就是列表节点时，我们希望插入一个新的节点，</p>
+<p> 则Diff算法默认执行起来是比较复杂的。(一个个重新替换)</p>
+</li>
+<li><p>但绑定key后，可以使用key来给每个节点做一个唯一标识</p>
+<p> Diff算法就可以正确的识别此节点，找到正确的位置区插入新的节点。</p>
+  <div id="app">
+    <ul>
+      <li v-for="item in letters" :key="item"></li>
+    </ul>
+  </div>
+
+  <script>
+    const app = new Vue({
+      el:"#app",
+      data:{
+        letters:["A","B","C","D","E"]
+      }
+    })
+  </script></li>
+</ul>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://paladin1893.github.io/2023/08/30/vue%E5%BE%AA%E7%8E%AF%E9%81%8D%E5%8E%86%E5%AF%B9%E8%B1%A1%E3%80%81%E6%95%B0%E7%BB%84%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2023/08/31/Pandas%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B04/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            Pandas实用入门案例04
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2023/08/29/vue%E9%81%8D%E5%8E%86%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">vue遍历对象的几种方式</div>
+      </a>
+    
+  </nav>
+
+  
+   
+    
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2022-2023
+        <i class="ri-heart-fill heart_icon"></i> paladin1893
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="帕拉丁的游鱼"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/friends">友链</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

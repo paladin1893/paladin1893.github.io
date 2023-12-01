@@ -154,7 +154,7 @@
     
     
     <article
-  id="post-Linux查看Redis安装目录"
+  id="post-Linux下修改tomcat端口号"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -165,8 +165,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/02/06/Linux%E6%9F%A5%E7%9C%8BRedis%E5%AE%89%E8%A3%85%E7%9B%AE%E5%BD%95/"
-    >Linux查看Redis安装目录</a> 
+  <a class="article-title" href="/2023/02/13/Linux%E4%B8%8B%E4%BF%AE%E6%94%B9tomcat%E7%AB%AF%E5%8F%A3%E5%8F%B7/"
+    >Linux下修改tomcat端口号</a> 
 </h2>
  
 
@@ -174,8 +174,8 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2023/02/06/Linux%E6%9F%A5%E7%9C%8BRedis%E5%AE%89%E8%A3%85%E7%9B%AE%E5%BD%95/" class="article-date">
-  <time datetime="2023-02-06T13:11:30.000Z" itemprop="datePublished">2023-02-06</time>
+      <a href="/2023/02/13/Linux%E4%B8%8B%E4%BF%AE%E6%94%B9tomcat%E7%AB%AF%E5%8F%A3%E5%8F%B7/" class="article-date">
+  <time datetime="2023-02-13T01:20:14.000Z" itemprop="datePublished">2023-02-13</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
@@ -185,12 +185,33 @@
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>如果命令 which 和whereis 都找不到安装目录，可使用以下办法</p>
-<pre><code>ps -ef|grep redis
+  <p>1、首先cd进tomcat目录里的conf文件夹，vi打开server.xml配置文件</p>
+<pre><code>[root@localhost soft]# ls
+download redis solrhome tomcat-sina-8081 tomcat-souhu-8082
+jdk redis-3.0.0.gem tomcat tomcat-solr zookeeper-3.4.6
+[root@localhost soft]# cd tomcat-solr/
+[root@localhost tomcat-solr]# cd conf/
+[root@localhost conf]# ls
+Catalina catalina.properties logging.properties tomcat-users.xml
+catalina.policy context.xml server.xml web.xml
+[root@localhost conf]# vim server.xml
 </code></pre>
-<p>得到了进程号 xxxx，然后</p>
-<pre><code>ls -l /proc/xxxx/cwd
+<p>2、改动之一<br>8005改成了8885</p>
+<pre><code>&lt;Server port=”8885″ shutdown=”SHUTDOWN”&gt;
+&lt;!– Security listener. Documentation at /docs/config/listeners.html
+&lt;Listener className=”org.apache.catalina.security.SecurityListener” /&gt;
 </code></pre>
+<p>3、改动之二<br>8080改成了8888</p>
+<pre><code>&lt;Connector port=”8888″ protocol=”HTTP/1.1″
+connectionTimeout=”20000″
+redirectPort=”8443″ /&gt;
+</code></pre>
+<p>4、改动之三<br>8009改成了8889</p>
+<pre><code>&lt;!– Define an AJP 1.3 Connector on port 8009 –&gt;
+&lt;Connector port=”8889″ protocol=”AJP/1.3″ redirectPort=”8443″ /&gt;
+</code></pre>
+<p>5、wq保存退出</p>
+<p>6、最后在tomcat的bin目录./startup.sh启动一下试试：OK</p>
  
       <!-- reward -->
       
@@ -201,7 +222,7 @@
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" rel="tag">服务器</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tomcat/" rel="tag">tomcat</a></li></ul>
 
     </footer>
   </div>
@@ -212,7 +233,7 @@
 
     
     <article
-  id="post-腾讯云服务器安装jdk"
+  id="post-Linux下启动tomcat服务"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -223,8 +244,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/02/06/%E8%85%BE%E8%AE%AF%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%89%E8%A3%85jdk/"
-    >腾讯云服务器安装jdk</a> 
+  <a class="article-title" href="/2023/02/13/Linux%E4%B8%8B%E5%90%AF%E5%8A%A8tomcat%E6%9C%8D%E5%8A%A1/"
+    >Linux下启动tomcat服务</a> 
 </h2>
  
 
@@ -232,8 +253,8 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2023/02/06/%E8%85%BE%E8%AE%AF%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%89%E8%A3%85jdk/" class="article-date">
-  <time datetime="2023-02-06T13:07:09.000Z" itemprop="datePublished">2023-02-06</time>
+      <a href="/2023/02/13/Linux%E4%B8%8B%E5%90%AF%E5%8A%A8tomcat%E6%9C%8D%E5%8A%A1/" class="article-date">
+  <time datetime="2023-02-13T01:18:37.000Z" itemprop="datePublished">2023-02-13</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
@@ -243,46 +264,7 @@
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>官方地址，可下载JDK历史版本及当前最新版本。</p>
-<p><a target="_blank" rel="noopener" href="https://www.oracle.com/java/technologies/oracle-java-archive-downloads.html">https://www.oracle.com/java/technologies/oracle-java-archive-downloads.html</a></p>
-<hr>
-<p>1、先查询是否安装了Java</p>
-<pre><code>[root@VM_0_16_centos ~]# java
--bash: java: command not found
-</code></pre>
-<p>2、假如有，就删除</p>
-<pre><code>[root@VM_0_16_centos ~]# yum remove *openjdk*
-</code></pre>
-<p>3、下载JDK，官方下载是很慢的，可以通过国内云镜像进行下载，比如华为、网易的镜像。</p>
-<p>创建下载目录，并通过华为云镜像下载</p>
-<pre><code>[root@VM_0_16_centos ~]# mkdir /usr/lib/java
-[root@VM_0_16_centos ~]# cd /usr/lib/java
-[root@VM_0_16_centos ~]# wget https://repo.huaweicloud.com/java/jdk/8u202-b08/jdk-8u202-linux-x64.tar.gz
-</code></pre>
-<p>4、然后解压</p>
-<pre><code>[root@VM_0_16_centos java]# tar -zxvf jdk-8u202-linux-x64.tar.gz
-</code></pre>
-<p>5、创建软链接，方便管理</p>
-<pre><code>[root@VM_0_16_centos java]# ln -s /usr/lib/java/jdk1.8.0_202/ /usr/jdk
-</code></pre>
-<p>6、配置java环境变量，并加入下面的内容，更新配置信息</p>
-<pre><code>[root@VM_0_16_centos java]# vi /etc/profile
-
-JAVA_HOME=/usr/jdk
-CLASSPATH=$JAVA_HOME/lib/
-PATH=$PATH:$JAVA_HOME/bin
-export PATH JAVA_HOME CLASSPATH
-
-[root@VM_0_16_centos java]# source /etc/profile
-</code></pre>
-<p>7、检查java是否安装正常</p>
-<pre><code>[root@VM_0_16_centos java]# java -version
-java version “1.8.0_202”
-Java(TM) SE Runtime Environment (build 1.8.0_202-b08)
-Java HotSpot(TM) 64-Bit Server VM (build 25.202-b08, mixed mode)
-[root@VM_0_16_centos java]# javac -version
-javac 1.8.0_202
-</code></pre>
+  <p>Linux下tomcat服务的启动、关闭与错误跟踪，使用PuTTy远程连接到服务器以后，通常通过以下几种方式启动关闭tomcat服务：<br>1、切换到tomcat主目录下的bin目录（cd usr/local/tomcat/bin）<br>2，启动tomcat服务<br>方式一：直接启动 ./startup.sh<br>方式二：作为服务启动 nohup ./startup.sh &amp;<br>方式三：控制台动态输出方式启动 ./catalina.sh run 动态地显示tomcat后台的控制台输出信息,Ctrl+C后退出并关闭服务<br>解释：<br>通过方式一、方式三启动的tomcat有个弊端，当客户端连接断开的时候，tomcat服务也会立即停止，通过方式二可以作为linux服务一直运行<br>通过方式一、方式二方式启动的tomcat，其日志会写到相应的日志文件中，而不能动态地查看tomcat控制台的输出信息与错误情况，通过方式三可以以控制台模式启动tomcat服务，<br>直接看到程序运行时后台的控制台输出信息，不必每次都要很麻烦的打开catalina.out日志文件进行查看，这样便于跟踪查阅后台输出信息。tomcat控制台信息包括log4j和System.out.println()等输出的信息。<br>3、关闭tomcat服务<br>./shutdown.sh</p>
  
       <!-- reward -->
       
@@ -293,7 +275,7 @@ javac 1.8.0_202
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JDK/" rel="tag">JDK</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%85%BE%E8%AE%AF%E4%BA%91/" rel="tag">腾讯云</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tomcat/" rel="tag">tomcat</a></li></ul>
 
     </footer>
   </div>
@@ -304,7 +286,7 @@ javac 1.8.0_202
 
     
     <article
-  id="post-QGIS二次开发：QGIS3-28-0编译"
+  id="post-dell笔记本重装系统后耳机插入无声音解决办法"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -315,8 +297,8 @@ javac 1.8.0_202
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/02/05/QGIS%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91%EF%BC%9AQGIS3-28-0%E7%BC%96%E8%AF%91/"
-    >QGIS二次开发：QGIS3.28.0编译</a> 
+  <a class="article-title" href="/2023/02/13/dell%E7%AC%94%E8%AE%B0%E6%9C%AC%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E5%90%8E%E8%80%B3%E6%9C%BA%E6%8F%92%E5%85%A5%E6%97%A0%E5%A3%B0%E9%9F%B3%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/"
+    >dell笔记本重装系统后耳机插入无声音解决办法</a> 
 </h2>
  
 
@@ -324,34 +306,20 @@ javac 1.8.0_202
     </header>
      
     <div class="article-meta">
-      <a href="/2023/02/05/QGIS%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91%EF%BC%9AQGIS3-28-0%E7%BC%96%E8%AF%91/" class="article-date">
-  <time datetime="2023-02-05T08:02:08.000Z" itemprop="datePublished">2023-02-05</time>
+      <a href="/2023/02/13/dell%E7%AC%94%E8%AE%B0%E6%9C%AC%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E5%90%8E%E8%80%B3%E6%9C%BA%E6%8F%92%E5%85%A5%E6%97%A0%E5%A3%B0%E9%9F%B3%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" class="article-date">
+  <time datetime="2023-02-13T01:07:12.000Z" itemprop="datePublished">2023-02-13</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
   </div>
    
     </div>
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>qgis二次编译的方式越来越简单，下面是最新的编译配置步骤：</p>
-<p>环境要求：</p>
-<ul>
-<li>Visual Studio 2022</li>
-<li>cmake-3.22.6-windows-x86_64</li>
-<li>cygwin</li>
-</ul>
-<p>1、新建一个批处理文件OSGeo4W-dev-2022.bat，内容如下，qgis路径请调整为本机真实路径。</p>
-<pre><code>@echo off
-call E:\QGIS\3.28.0\qgis-3.28.0\qgis\ms-windows\osgeo4w\msvc-env-2022.bat x86_64
-@cmd
-</code></pre>
-<p>2、复制一份ms-windows\osgeo4w\msvc-env.bat，重命名为msvc-env-2022.bat。对其修改如下：</p>
-<p><img src="https://c2.im5i.com/2023/02/05/nfV95.png" alt="msvc-env-2022.bat修改内容"></p>
-<p>3、运行OSGeo4W-dev-2022.bat，命令行调用cmake-gui.exe，配置如下：</p>
-<p><img src="https://c2.im5i.com/2023/02/05/nfK1G.png" alt="cmake依赖配置"></p>
-<p>4、configure，generate，得到vs的工程文件。即可开始编译。</p>
+  <p>dell笔记本重装系统后回自动安装驱动，但是声卡是不完全匹配的，会导致耳机插入无声音，解决办法如下：</p>
+<p>从dell官网找到适配笔记本的驱动，再下载声卡驱动Realtek-High-Definition-Audio-Driver-xxxxxxxxxxxxx.exe。<br>手动点击安装，按要求重启电脑。完成安装后，看见Waves MaxxAudioPro即可。</p>
+<p>此时插入耳机一般会有弹框要求选择插入设备类型，选择耳机或耳麦即可。<br>如果没有，则到Waves MaxxAudioPro“回放-高级”，勾选“连接设备弹出选择框”</p>
  
       <!-- reward -->
       
@@ -362,7 +330,7 @@ call E:\QGIS\3.28.0\qgis-3.28.0\qgis\ms-windows\osgeo4w\msvc-env-2022.bat x86_64
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CMAKE/" rel="tag">CMAKE</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/QGIS/" rel="tag">QGIS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BE%9D%E8%B5%96%E9%85%8D%E7%BD%AE/" rel="tag">依赖配置</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/DELL/" rel="tag">DELL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/windows/" rel="tag">windows</a></li></ul>
 
     </footer>
   </div>
@@ -373,7 +341,7 @@ call E:\QGIS\3.28.0\qgis-3.28.0\qgis\ms-windows\osgeo4w\msvc-env-2022.bat x86_64
 
     
     <article
-  id="post-QGIS二次开发：打开POSTGIS图层"
+  id="post-笔记本安装FME"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -384,8 +352,8 @@ call E:\QGIS\3.28.0\qgis-3.28.0\qgis\ms-windows\osgeo4w\msvc-env-2022.bat x86_64
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/02/04/QGIS%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91%EF%BC%9A%E6%89%93%E5%BC%80POSTGIS%E5%9B%BE%E5%B1%82/"
-    >QGIS二次开发：打开POSTGIS图层</a> 
+  <a class="article-title" href="/2023/02/12/%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%AE%89%E8%A3%85FME/"
+    >笔记本安装FME</a> 
 </h2>
  
 
@@ -393,51 +361,18 @@ call E:\QGIS\3.28.0\qgis-3.28.0\qgis\ms-windows\osgeo4w\msvc-env-2022.bat x86_64
     </header>
      
     <div class="article-meta">
-      <a href="/2023/02/04/QGIS%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91%EF%BC%9A%E6%89%93%E5%BC%80POSTGIS%E5%9B%BE%E5%B1%82/" class="article-date">
-  <time datetime="2023-02-04T13:51:13.000Z" itemprop="datePublished">2023-02-04</time>
+      <a href="/2023/02/12/%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%AE%89%E8%A3%85FME/" class="article-date">
+  <time datetime="2023-02-12T06:46:10.000Z" itemprop="datePublished">2023-02-12</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
   </div>
    
     </div>
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>核心代码如下：</p>
-<pre><code>QString service = QStringLiteral(&quot;&quot;);
-QString host = QStringLiteral(&quot;localhost&quot;);
-QString port = QStringLiteral(&quot;5432&quot;);
-QString database = QStringLiteral(&quot;postgis_25_sample&quot;);
-
-bool useEstimatedMetadata = false;
-QgsDataSourceUri::SslMode sslmode = QgsDataSourceUri::SslMode::SslDisable;
-
-QString username = QStringLiteral(&quot;postgres&quot;);
-QString password = QStringLiteral(&quot;geostar&quot;);
-QString authcfg = QStringLiteral(&quot;&quot;);
-
-QgsDataSourceUri uri;
-uri.setConnection(host, port, database, username, password, sslmode, authcfg);
-
-QString schema = QStringLiteral(&quot;china&quot;);
-QString tablename = QStringLiteral(&quot;bou2_4p&quot;);
-QString geometrycol = QStringLiteral(&quot;geom&quot;);
-
-uri.setDataSource(schema, tablename, geometrycol);
-
-QgsVectorLayer::LayerOptions options;
-options.loadDefaultStyle = false;
-
-QgsVectorLayer *vectorLayer = new QgsVectorLayer(uri.uri(false), uri.table(), &quot;postgres&quot;, options);
-QgsProject::instance()-&gt;addMapLayer(vectorLayer);
-m_layers.append(vectorLayer);
-
-m_mapCanvas-&gt;setLayers(m_layers);
-m_mapCanvas-&gt;setVisible(true);
-m_mapCanvas-&gt;zoomToFullExtent();
-m_mapCanvas-&gt;freeze(false);
-</code></pre>
+  <p>首先，笔记本都会出现两个Ethernet Address，然后用引号括起来，用其中一个就好，不需要引号<br>地址后面还要跟端口（27001~27009）<br>详细步骤如下：<br>1、安装软件本体（fme-desktop-b16492-win-x64.msi）及license管理器（fme-flexnet-win-x64.msi）；<br>2、在FlexServer安装目录下打开lmtools.exe打开System Settings选项卡查看信息，安装包文件夹dummy.txt 第一行 SERVER 后面填写计算机名+空格+网卡MAC（如有引号将几个MAC括起来，填写其中一个即可，不要引号）+空格+端口号（27001-27009）；<br>3、完成后运行makekey.bat 生成safe.lic 大小2.几K，如超过5k则信息错误；<br>4、复制safe.lic 至FlexServer安装目录下 ，打开lmtools.exe，Strat/Stop/Reread选项卡，先Stop Server，再Start Server，再ReRead License File；<br>5、打开软件后选Float方式，然后填入计算机名，激活即可</p>
  
       <!-- reward -->
       
@@ -448,7 +383,7 @@ m_mapCanvas-&gt;freeze(false);
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/POSTGIS/" rel="tag">POSTGIS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/QGIS/" rel="tag">QGIS</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/FME/" rel="tag">FME</a></li></ul>
 
     </footer>
   </div>
@@ -459,7 +394,7 @@ m_mapCanvas-&gt;freeze(false);
 
     
     <article
-  id="post-QGIS二次开发：依赖下载配置"
+  id="post-Oracle-RAC建表空间"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -470,8 +405,8 @@ m_mapCanvas-&gt;freeze(false);
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/02/03/QGIS%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91%EF%BC%9A%E4%BE%9D%E8%B5%96%E4%B8%8B%E8%BD%BD%E9%85%8D%E7%BD%AE/"
-    >QGIS二次开发：依赖下载配置</a> 
+  <a class="article-title" href="/2023/02/12/Oracle-RAC%E5%BB%BA%E8%A1%A8%E7%A9%BA%E9%97%B4/"
+    >Oracle RAC建表空间</a> 
 </h2>
  
 
@@ -479,25 +414,40 @@ m_mapCanvas-&gt;freeze(false);
     </header>
      
     <div class="article-meta">
-      <a href="/2023/02/03/QGIS%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91%EF%BC%9A%E4%BE%9D%E8%B5%96%E4%B8%8B%E8%BD%BD%E9%85%8D%E7%BD%AE/" class="article-date">
-  <time datetime="2023-02-03T13:40:35.000Z" itemprop="datePublished">2023-02-03</time>
+      <a href="/2023/02/12/Oracle-RAC%E5%BB%BA%E8%A1%A8%E7%A9%BA%E9%97%B4/" class="article-date">
+  <time datetime="2023-02-12T06:45:15.000Z" itemprop="datePublished">2023-02-12</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
   </div>
    
     </div>
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>QGIS已经升级到3.6了，每次从源码编译开始做起，生成自己的二次开发包，是件很痛苦的事情。有没有其他更便捷的方式呢？</p>
-<p>其实是有的，那就是用osgeo4w-setup-x86_64.exe这样的工具直接下载QGIS项目团队提供好的二次开发包。</p>
-<p>根据个人实践，推荐使用该种方案：qgis+gdal+grass。</p>
-<h1 id="1、qgis"><a href="#1、qgis" class="headerlink" title="1、qgis"></a>1、qgis</h1><p><img src="https://c2.im5i.com/2023/02/03/nqaQ8.png" alt="qgis"></p>
-<h1 id="2、gdal"><a href="#2、gdal" class="headerlink" title="2、gdal"></a>2、gdal</h1><p><img src="https://c2.im5i.com/2023/02/03/nq4BU.png" alt="gdal-part-1"></p>
-<p><img src="https://c2.im5i.com/2023/02/03/nqzb5.png" alt="gdal-part-2"></p>
-<h1 id="3、grass"><a href="#3、grass" class="headerlink" title="3、grass"></a>3、grass</h1><p><img src="https://c2.im5i.com/2023/02/03/nq0m6.png" alt="grass"></p>
-<p>下载后，也可以基于此方案对QGIS进行编译，形成自己的二次开发包，或对QGIS进行深入的学习研究。</p>
+  <p>一、建表空间</p>
+<p>1、RAC</p>
+<pre><code>create tablespace TS_YYYY datafile size 500M autoextend on next 50M maxsize unlimited;
+</code></pre>
+<p>2、单实例</p>
+<pre><code>create tablespace TS_YYYY datafile ‘/u01/app/oracle/oradata/pmsgeo/yxyk.dbf’ size 500M autoextend on next 50M maxsize unlimited;
+</code></pre>
+<p>二、建用户</p>
+<pre><code>create user yxyk identified by yyyy default tablespace TS_YYYY;
+</code></pre>
+<p>三、赋权限</p>
+<pre><code>grant connect,resource to yyyy;
+grant debug connect session to yyyy;
+grant create any sequence to yyyy;
+grant create any table to yyyy;
+grant delete any table to yyyy;
+grant insert any table to yyyy;
+grant select any table to yyyy;
+grant unlimited tablespace to yyyy;
+grant execute any procedure to yyyy;
+grant update any table to yyyy;
+grant create any view to yyyy;
+</code></pre>
  
       <!-- reward -->
       
@@ -508,7 +458,7 @@ m_mapCanvas-&gt;freeze(false);
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/QGIS/" rel="tag">QGIS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BE%9D%E8%B5%96%E9%85%8D%E7%BD%AE/" rel="tag">依赖配置</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Oracle/" rel="tag">Oracle</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
 
     </footer>
   </div>
@@ -519,7 +469,7 @@ m_mapCanvas-&gt;freeze(false);
 
     
     <article
-  id="post-QGIS二次开发：QGIS3-0-2编译"
+  id="post-MySql改密码"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -530,8 +480,8 @@ m_mapCanvas-&gt;freeze(false);
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/02/02/QGIS%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91%EF%BC%9AQGIS3-0-2%E7%BC%96%E8%AF%91/"
-    >QGIS二次开发：QGIS3.0.2编译</a> 
+  <a class="article-title" href="/2023/02/12/MySql%E6%94%B9%E5%AF%86%E7%A0%81/"
+    >MySql改密码</a> 
 </h2>
  
 
@@ -539,66 +489,42 @@ m_mapCanvas-&gt;freeze(false);
     </header>
      
     <div class="article-meta">
-      <a href="/2023/02/02/QGIS%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91%EF%BC%9AQGIS3-0-2%E7%BC%96%E8%AF%91/" class="article-date">
-  <time datetime="2023-02-02T14:26:48.000Z" itemprop="datePublished">2023-02-02</time>
+      <a href="/2023/02/12/MySql%E6%94%B9%E5%AF%86%E7%A0%81/" class="article-date">
+  <time datetime="2023-02-12T06:39:56.000Z" itemprop="datePublished">2023-02-12</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
   </div>
    
     </div>
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>这也是很久以前整理的一个技术资料，在这里翻出来，作为存档。</p>
-<h1 id="1、下载源码"><a href="#1、下载源码" class="headerlink" title="1、下载源码"></a>1、下载源码</h1><p><a target="_blank" rel="noopener" href="https://qgis.org/downloads/qgis-3.2.2.tar.bz2">https://qgis.org/downloads/qgis-3.2.2.tar.bz2</a></p>
-<h1 id="2、开发环境和依赖库"><a href="#2、开发环境和依赖库" class="headerlink" title="2、开发环境和依赖库"></a>2、开发环境和依赖库</h1><p>解压代码，查看INSTALL，根据4.1. Building with Microsoft Visual Studio中的说明准备开发环境和依赖库。</p>
-<h2 id="2-1开发环境"><a href="#2-1开发环境" class="headerlink" title="2.1开发环境"></a>2.1开发环境</h2><p>安装如下软件</p>
-<pre><code>VS2015：社区版、专业版、旗舰版都可以
-QT：选择msvc2015 32bit
-http://download.qt.io/official_releases/qt/5.11/5.11.2/qt-opensource-windows-x86-5.9.2.exe
-qt-vsaddin：http://download.qt.io/official_releases/vsaddin/qt-vsaddin-msvc2015-2.2.1.vsix
-CMake ：https://cmake.org/files/v3.7/cmake-3.7.2-win64-x64.msi
-win_flex_bison-latest.zip ：https://sourceforge.net/projects/winflexbison/files/win_flex_bison-2.4.12.zip/download
-OSGeo4W：http://download.osgeo.org/osgeo4w/osgeo4w-setup-x86.exe
-Ninja：https://github.com/ninja-build/ninja/releases/download/v1.7.2/ninja-win.zip
-Python：https://www.python.org/ftp/python/3.6.0/python-3.6.0.exe
+  <h1 id="root密码测试只能一句一句的改。"><a href="#root密码测试只能一句一句的改。" class="headerlink" title="root密码测试只能一句一句的改。"></a>root密码测试只能一句一句的改。</h1><pre><code>alter user ‘root’@’localhost’ identified by ‘MySql@123’;
+alter user ‘root’@’127.0.01’ identified by ‘MySql@123’;
+alter user ‘root’@’::1′ identified by ‘MySql@123’;
 </code></pre>
-<h2 id="2-2依赖库"><a href="#2-2依赖库" class="headerlink" title="2.2依赖库"></a>2.2依赖库</h2><p>点击osgeo4w，选择下载qgis-rel-deps。假定安装目录是E:\OpenSource\QGIS\qgis-rel-deps</p>
-<h2 id="2-3调整配置"><a href="#2-3调整配置" class="headerlink" title="2.3调整配置"></a>2.3调整配置</h2><p>（1）VS2015→qt vs tool→Qt Options→Qt versions，配置msvc2015.<br>（2）安装pyqt5，打开cmd<br>pip install PyQt5==5.9.2<br>（3）环境变量增加E:\QGIS\qgis-3.0.2-deps\apps\Python36，或者安装Python时选择设置环境变量。</p>
-<h1 id="3、CMAKE"><a href="#3、CMAKE" class="headerlink" title="3、CMAKE"></a>3、CMAKE</h1><h2 id="3-1批处理文件"><a href="#3-1批处理文件" class="headerlink" title="3.1批处理文件"></a>3.1批处理文件</h2><p>创建一个bat批处理文件，下述内容根据实际情况修改，</p>
-<pre><code>@echo off
-set OSGEO4W_ROOT=E:\OpenSource\QGIS\qgis-rel-deps
-call “%OSGEO4W_ROOT%\bin\o4w_env.bat”
-call “%OSGEO4W_ROOT%\bin\py3_env.bat”
-call “%OSGEO4W_ROOT%\bin\qt5_env.bat”
-
-set O4W_ROOT=%OSGEO4W_ROOT:\=/%
-set LIB_DIR=%O4W_ROOT%
-
-call “C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat” x86
-path %path%;C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin
-
-path %PATH%;E:\BaseTools\cmake-3.7.2-win32-x86\bin;
-
-@set GRASS_PREFIX=E:/QGIS/qgis-3.0.2-deps/apps/grass/grass-7.4.0
-@set INCLUDE=%INCLUDE%;%OSGEO4W_ROOT%\include
-@set LIB=%LIB%;%OSGEO4W_ROOT%\lib;%OSGEO4W_ROOT%\lib
-
-set LIB=%LIB%;%OSGEO4W_ROOT%\apps\Qt5\lib;%OSGEO4W_ROOT%\lib
-set INCLUDE=%INCLUDE%;%OSGEO4W_ROOT%\apps\Qt5\include;%OSGEO4W_ROOT%\include
-
-@cmd
+<h1 id="Reset-the-MySQL-MariaDB-Root-Password"><a href="#Reset-the-MySQL-MariaDB-Root-Password" class="headerlink" title="Reset the MySQL/MariaDB Root Password"></a>Reset the MySQL/MariaDB Root Password</h1><p>By default, the MySQL/MariaDB installation that ships with XAMPP has an empty root password. This is a serious security risk, especially if you plan to use XAMPP in production scenarios.</p>
+<p>To change the MySQL/MariaDB root password, follow these steps:</p>
+<p>Ensure that the MySQL/MariaDB server is running.<br>Open your Windows command prompt by clicking the “Shell” button in the XAMPP control panel.</p>
+<p><img src="https://c2.im5i.com/2023/02/12/nxDoU.png" alt="nxDoU.png"></p>
+<p>Use the mysqladmin command-line utility to alter the MySQL/MariaDB password, using the following syntax:</p>
+<pre><code>mysqladmin --user=root password &quot;newpassword&quot;
 </code></pre>
-<h2 id="3-2运行cmake-gui"><a href="#3-2运行cmake-gui" class="headerlink" title="3.2运行cmake-gui"></a>3.2运行cmake-gui</h2><p>启动VS2015的x86命令行工具，运行cmake-gui，点configure，根据提示修改依赖库的路径。注意：建议不要勾选下图中蓝色方框标志项目，涉及测试程序的代码覆盖率的工具，配置较繁琐。<br>多次configure后，generate得到工程文件。</p>
-<p><img src="https://c2.im5i.com/2023/02/03/nqni3.png" alt="QGIS编译配置" title="QGIS编译配置"></p>
-<h1 id="4、编译"><a href="#4、编译" class="headerlink" title="4、编译"></a>4、编译</h1><p>编译的时候，会出现很多该类错误<br>warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失<br>解决办法：</p>
-<ul>
-<li>4.1点击错误提示，打开报错的文件。</li>
-<li>4.2用鼠标左键单击一下该报错文件位于编辑区的文件标签卡：</li>
-<li>4.3点“文件”–&gt;“高级保存”</li>
-<li>4.4根据错误提示，选择正确的格式保存。</li>
-</ul>
+<p>For example, to change the MySQL/MariaDB root password from its default empty value to the password gue55me, you would execute:</p>
+<pre><code>mysqladmin --user=root password &quot;gue55me&quot;
+</code></pre>
+<p><img src="https://c2.im5i.com/2023/02/12/nxaOw.png" alt="nxaOw.png"></p>
+<p>Or, if a password has already been previously set and you’d like to change it to a new one, you can use the following syntax:</p>
+<pre><code>mysqladmin --user=root --password=oldpassword password &quot;newpassword&quot;
+</code></pre>
+<p>For example, to change the root password from 12345 to gue55me, you would execute:</p>
+<pre><code>mysqladmin --user=root --password=12345 password &quot;gue55me&quot;
+</code></pre>
+<p>Test that your password change has been accepted, by attempting to connect to the MySQL/MariaDB server using the mysql command-line client in the same directory. For example, you could use the command below to connect to the server and return the results of a calculation:</p>
+<pre><code>mysql --user=root --password=gue55me -e &quot;SELECT 1+1&quot;
+</code></pre>
+<p><img src="https://c2.im5i.com/2023/02/12/nx0J8.png" alt="nx0J8.png"></p>
  
       <!-- reward -->
       
@@ -609,7 +535,7 @@ set INCLUDE=%INCLUDE%;%OSGEO4W_ROOT%\apps\Qt5\include;%OSGEO4W_ROOT%\include
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CMAKE/" rel="tag">CMAKE</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/QGIS/" rel="tag">QGIS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BE%9D%E8%B5%96%E9%85%8D%E7%BD%AE/" rel="tag">依赖配置</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
 
     </footer>
   </div>
@@ -625,7 +551,7 @@ set INCLUDE=%INCLUDE%;%OSGEO4W_ROOT%\apps\Qt5\include;%OSGEO4W_ROOT%\include
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/35/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><a class="page-number" href="/page/35/">35</a><span class="page-number current">36</span><a class="page-number" href="/page/37/">37</a><a class="extend next" rel="next" href="/page/37/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/35/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><a class="page-number" href="/page/35/">35</a><span class="page-number current">36</span><a class="page-number" href="/page/37/">37</a><a class="page-number" href="/page/38/">38</a><span class="space">&hellip;</span><a class="page-number" href="/page/40/">40</a><a class="extend next" rel="next" href="/page/37/">下一页</a>
   </nav>
   
 </section>

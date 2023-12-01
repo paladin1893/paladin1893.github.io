@@ -154,7 +154,7 @@
     
     
     <article
-  id="post-正反向隔离装置"
+  id="post-Pandas实用入门案例03"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -165,8 +165,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/07/31/%E6%AD%A3%E5%8F%8D%E5%90%91%E9%9A%94%E7%A6%BB%E8%A3%85%E7%BD%AE/"
-    >正反向隔离装置</a> 
+  <a class="article-title" href="/2023/08/19/Pandas%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B03/"
+    >Pandas实用入门案例03</a> 
 </h2>
  
 
@@ -174,185 +174,246 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2023/07/31/%E6%AD%A3%E5%8F%8D%E5%90%91%E9%9A%94%E7%A6%BB%E8%A3%85%E7%BD%AE/" class="article-date">
-  <time datetime="2023-07-31T07:32:41.000Z" itemprop="datePublished">2023-07-31</time>
+      <a href="/2023/08/19/Pandas%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B03/" class="article-date">
+  <time datetime="2023-08-19T11:56:48.000Z" itemprop="datePublished">2023-08-19</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
   </div>
    
     </div>
       
     <div class="article-entry" itemprop="articleBody">
        
-  <h1 id="一、安全区定义"><a href="#一、安全区定义" class="headerlink" title="一、安全区定义"></a>一、安全区定义</h1><p>根据电力二次系统的特点，划分为生产控制大区和管理信息大区。生产控制大区分为控制区（安全区Ⅰ）和非控制区（安全区Ⅱ）。信息管理大区分为生产管理区（安全区Ⅲ）和管理信息区（安全区Ⅳ）。不同安全区确定不同安全防护要求，其中安全区Ⅰ安全等级最高，安全区Ⅱ次之，其余依次类推。</p>
-<p>安全区Ⅰ典型系统:调度自动化系统、变电站自动化系统、继电保护、安全自动控制系统等。<br>安全区Ⅱ典型系统:水库调度自动化系统、电能量计量系统、继保及故障录波信息管理系统等。<br>安全区Ⅲ典型系统:调度生产管理系统（DMIS）、雷电监测系统、统计报表系统等。<br>安全区Ⅳ典型系统:管理信息系统（MIS）、办公自动化系统（OA）、客户服务系统等。</p>
-<h1 id="二、物理隔离"><a href="#二、物理隔离" class="headerlink" title="二、物理隔离"></a>二、物理隔离</h1><p>物理隔离指内部网不直接或间接地连接公共网。物理隔离的目的是保护网络设备及计算机等硬件实体和通信链路免受自然灾害、人为破坏和搭线窃听攻击。只有使内部网和公共网物理隔离，才能真正保证内部信息网络不受来自互联网的黑客攻击。同时，物理隔离也为内部网划定了明确的安全边界，使得网络的可控性增强，便于内部管理。</p>
-<p>在物理隔离技术出现之前，对网络的信息安全采取了许多措施，如在网络中增加防火墙、防病毒系统，对网络进行入侵检测、漏洞扫描等。由于这些技术的极端复杂性，安全控制十分有限性，这些在线分析技术无法提供涉密机构提出的高度数据安全要求。而且，此类软件的保护是一种逻辑机制，对于逻辑实体而言极易被操纵。因此，必须有一道绝对安全的大门，保证涉密网的信息不被泄露和破坏，这就是物理隔离所起的作用。</p>
-<h1 id="三、正反向隔离"><a href="#三、正反向隔离" class="headerlink" title="三、正反向隔离"></a>三、正反向隔离</h1><p>电力系统按照安全等级的要求把计算机系统分为了I、II、III等。I和II之间要有防火墙，I/II区与III区之间则要在物理上做隔离。即I/II发到III区的数据要经过正向隔离装置，III区发到I/II区的数据要经过反向隔离装置。</p>
-<p>正向隔离装置不接受III区的数据(最多只能过一个字节的数据)，反向隔离装置只能容许III区的文件穿透到I区。</p>
-<ul>
-<li>A.正向安全隔离装置</li>
-</ul>
-<p>1.两个安全区之间的非网络方式的安全的数据交换，并且保证安全隔离装置内外两个处理系统不同时连通;<br>2.表示层与应用层数据完全单向传输，即从安全区III到安全区I/II的TCP应答禁止携带应用数据;<br>3.透明工作方式:虚拟主机IP地址、隐藏MAC地址<br>4.基于MAC、IP、传输协议、传输端口以及通信方向的综合报文过滤与访问控制;<br>5.支持NAT;<br>6.防止穿透性TCP联接:禁止两个应用网关之间直接建立TCP联接，将内外两个应用网关之间的TCP联接分解成内外两个应用网关分别到隔离装置内外两个网卡的两个TCP虚拟联接。隔离装置内外两个网卡在装置内部是非网络连接，且只允许数据单向传输;<br>7.具有可定制的应用层解析功能，支持应用层特殊标记识别;<br>8.安全、方便的维护管理方式:基于证书的管理人员认证，使用图形化的管理界面。</p>
-<ul>
-<li>B.反向隔离装置</li>
-</ul>
-<p>反向隔离装置用于从安全区III到安全区I/II传递数据，是安全区III到安全区I/II的唯一一个数据传递途径。反向隔离装置集中接收安全区III发向安全区I/II的数据，进行签名验证、内容过滤、有效性检查等处理后，转发给安全区I/II内部的接收程序具体过程如下：<br>1.全区III内的数据发送端首先对需要发送的数据签名，然后发给反向隔离装置；<br>2.反向隔离装置接收数据后，进行签名验证，并对数据进行内容过滤、有效性检查等处理。</p>
-<ul>
-<li>C.安全区I/II内部接收程序  </li>
-</ul>
-<p>将处理过的数据转发给安全区I/II内部的接收程序，其功能如下:<br>1.有应用网关功能，实现应用数据的接收与转发;<br>2.具有应用数据内容有效性检查功能;<br>3.具有基于数字证书的数据签名/解签名功能;<br>4.实现两个安全区之间的非网络方式的安全的数据传递;<br>5.支持透明工作方式：虚拟主机IP地址、隐藏MAC地址;<br>6.支持NAT;<br>7.基于MAC、IP、传输协议、传输端口以及通信方向的综合报文过滤与访问控制;<br>8.防止穿透性TCP联接。</p>
-<ul>
-<li>D.装置安全保障要点</li>
-</ul>
-<p>隔离装置本身应该具有较高的安全防护能力，其安全性要求主要包括：<br>1.用非INTEL指令系统的(及兼容)微处理器；<br>2.安全、固化的操作系统；<br>3.不存在设计与实现上的安全漏洞，抵御除Dos以外的已知的网络攻击。</p>
-<h1 id="四-网络隔离装置要点"><a href="#四-网络隔离装置要点" class="headerlink" title="四.网络隔离装置要点"></a>四.网络隔离装置要点</h1><p>1.一个网络隔离装置(作为阻塞点、控制点)能极大地提高一个监控系统的安全性，并通过过滤不安全的服务而降低风险。由于只有经过精心选择的应用协议才能通过网络隔离装置，所以网络环境变得更安全。如网络隔离装置可以禁止不安全的NFS协议进出保护网络，这样外部的攻击者就不可能利用这些脆弱的协议来攻击监控系统。网络隔离装置同时可以保护网络免受基于路由的攻击，如IP选项中的源路由攻击和ICMP重定向中的重定向路径。网络隔离装置应该可以拒绝所有以上类型攻击的报文并通知网络隔离装置管理员。</p>
-<p>2.通过以网络隔离装置为中心的安全方案配置，能将所有安全策略配置在网络隔离装置上。与将网络安全问题分散到各个主机上相比，网络隔离装置的集中安全管理更方便可靠。例如在网络访问时，监控系统通过加密口令/身份认证方式与其它信息系统通信，在电力监控系统基本上不可行，它意味监控系统要重新测试，因此用网络隔离装置集中控制，无需修改双端应用程序是最佳的选择。</p>
-<p>3.如果所有的访问都经过网络隔离装置，那么，网络隔离装置就能记录下这些访问并作出日志记录，同时也能提供网络使用情况的统计数据。当发生可疑动作时，网络隔离装置能进行适当的报警，并提供网络是否受到监测和攻击的详细信息。</p>
-<p>4.通过网络隔离装置对监控系统及其它信息系统的划分，实现监控系统重点网段的隔离，一个监控系统中不引人注意的细节可能包含了有关安全的线索而引起外部攻击者的兴趣，甚至因此而暴露了监控系统的某些安全漏洞。使用网络隔离装置就可以隐蔽那些透漏内部细节，例如网络隔离装置可以进行网络地址转换(NAT)，这样一台主机IP地址就不会被外界所了解, 不会为外部攻击创造条件</p>
-<hr>
-<p>作者：三氯甲烷<br>来源：CSDN<br>原文：<a target="_blank" rel="noopener" href="https://blog.csdn.net/stillfantasy1988/article/details/78805859">https://blog.csdn.net/stillfantasy1988/article/details/78805859</a><br>版权声明：本文为博主原创文章，转载请附上博文链接！<br>————————————————<br>版权声明：本文为CSDN博主「金士顿」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/wojiuguowei/article/details/86542299">https://blog.csdn.net/wojiuguowei/article/details/86542299</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9A%94%E7%A6%BB%E8%A3%85%E7%BD%AE/" rel="tag">隔离装置</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-最新docker部署禅道指南"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/07/30/%E6%9C%80%E6%96%B0docker%E9%83%A8%E7%BD%B2%E7%A6%85%E9%81%93%E6%8C%87%E5%8D%97/"
-    >最新docker部署禅道指南</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/07/30/%E6%9C%80%E6%96%B0docker%E9%83%A8%E7%BD%B2%E7%A6%85%E9%81%93%E6%8C%87%E5%8D%97/" class="article-date">
-  <time datetime="2023-07-30T07:32:41.000Z" itemprop="datePublished">2023-07-30</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><p><a target="_blank" rel="noopener" href="https://www.zentao.net/book/zentaopms/38.html">Docker方式部署禅道</a></p>
-<h1 id="拉取镜像"><a href="#拉取镜像" class="headerlink" title="拉取镜像"></a>拉取镜像</h1><pre><code>docker pull hub.zentao.net/app/zentao:latest
+  <p>Python之Pandas的常用技能【索引的增、删、改、查】</p>
+<p>1、索引简介<br>索引（index）是数据处理中非常重要的工具。索引主要用来：</p>
+<p>1）标记数据；2）快速检索数据；</p>
+<p>Pandas中的索引，有两种：1）index（行索引）；2）columns（列索引）；</p>
+<p>数据准备</p>
+<pre><code>import pandas as pd
+#读取数据
+df = pd.read_excel(r&#39;C:\Users\XXXXXX\Desktop\pandas练习文档.xlsx&#39;,sheet_name=3)
+print(df)
 </code></pre>
-<h1 id="安装镜像"><a href="#安装镜像" class="headerlink" title="安装镜像"></a>安装镜像</h1><pre><code>sudo docker run -d \
-    --name zentao \
-    --restart always \
-    -p 9880:80 \
-    -p 9806:3306 \
-    -v /home/zentao/zentaopms:/www/zentaopms \
-    -v /home/zentao/mysqldata:/var/lib/mysql \
-    hub.zentao.net/app/zentao:latest
+<p>2、设置索引的常用方法<br>2.1 读取数据时设置索引</p>
+<pre><code>import pandas as pd
+#读取数据，同时，使用index_col选取第一列作为索引列。
+df = pd.read_excel(r&#39;C:\Users\XXXXXX\Desktop\pandas练习文档.xlsx&#39;,sheet_name=3,index_col=0)
+print(df)
 </code></pre>
-<p>访问ip:9880，安装禅道，mysql默认密码：123456</p>
-<p>如果需要修改镜像安装参数，先停止禅道容器，再删除容器，然后重新安装镜像</p>
-<h1 id="停止禅道容器"><a href="#停止禅道容器" class="headerlink" title="停止禅道容器"></a>停止禅道容器</h1><pre><code>sudo docker stop zentao
+<p>2.2 查看索引相关信息<br>2.2.1 df.index</p>
+<pre><code>import pandas as pd
+#读取数据时，设置了index
+df = pd.read_excel(r&#39;C:\Users\XXXXXX\Desktop\pandas练习文档.xlsx&#39;,sheet_name=3,index_col=1)
+print(df)
+print(&#39;\n&#39;)
+print(df.index)
 </code></pre>
-<h1 id="删除容器"><a href="#删除容器" class="headerlink" title="删除容器"></a>删除容器</h1><pre><code>sudo docker rm zentao 
+<p>2.3 设置索引列的名称<br>2.3.1 df.rename_axis()</p>
+<pre><code>import pandas as pd
+#读取数据
+df = pd.read_excel(r&#39;C:\Users\XXXXXX\Desktop\pandas练习文档.xlsx&#39;,sheet_name=3)
+print(df)
+print(&#39;\n&#39;)
+df = df.rename_axis(&#39;index_col&#39;)
+print(df)
 </code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/" rel="tag">Docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%A6%85%E9%81%93/" rel="tag">禅道</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-最新docker部署ownCloud指南"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/07/29/%E6%9C%80%E6%96%B0docker%E9%83%A8%E7%BD%B2ownCloud%E6%8C%87%E5%8D%97/"
-    >最新docker部署ownCloud指南</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/07/29/%E6%9C%80%E6%96%B0docker%E9%83%A8%E7%BD%B2ownCloud%E6%8C%87%E5%8D%97/" class="article-date">
-  <time datetime="2023-07-29T06:21:51.000Z" itemprop="datePublished">2023-07-29</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><p><a target="_blank" rel="noopener" href="https://doc.owncloud.com/server/10.12/admin_manual/installation/docker/">Installing with Docker</a></p>
-<h1 id="安装命令"><a href="#安装命令" class="headerlink" title="安装命令"></a>安装命令</h1><pre><code>docker pull owncloud
-docker pull mariadb
-
-docker run --name mariadb -e MYSQL_ROOT_PASSWORD=owncloud -v /home/owncloud/mariadb:/var/lib/mysql --restart=always -d mariadb
-docker run --name owncloud -p 10080:80 -v /home/owncloud/owncloud:/var/www/html/data --link mariadb:mysql --restart=always -d owncloud
+<p>2.3.2 df.index.name</p>
+<pre><code>import pandas as pd
+#读取数据
+df = pd.read_excel(r&#39;C:\Users\XXXXXX\Desktop\pandas练习文档.xlsx&#39;,sheet_name=3)
+print(df)
+print(&#39;\n&#39;)
+df.index.name = &#39;index_col&#39;
+print(df)
 </code></pre>
-<h1 id="信任域问题"><a href="#信任域问题" class="headerlink" title="信任域问题"></a>信任域问题</h1><p> find / -name config.php<br>编辑 …/config/config.php文件</p>
-<pre><code>A typical configuration may look like this:
+<p>2.3.3 df.index.names = []</p>
+<pre><code>import pandas as pd
+#读取数据
+df = pd.read_excel(r&#39;C:\Users\XXXXXX\Desktop\pandas练习文档.xlsx&#39;,sheet_name=3)
+#set_index()是设置索引列，reset_index()可以将索引列变成数据列。
+df = df.set_index(keys=[&#39;id&#39;,&#39;name&#39;],drop=True,append=True)
+df_new = df.reset_index(level=1,drop=False)
+print(df_new)
+print(&#39;\n&#39;)
+df_new.index.names = [&#39;x&#39;,&#39;y&#39;]
+print(df_new)
+</code></pre>
+<p>2.3.4 df.columns=values</p>
+<pre><code>import pandas as pd
+#先设置多级别index
+index = pd.MultiIndex.from_tuples([(&#39;girl&#39;,&#39;Lucy&#39;),
+                                    (&#39;girl&#39;,&#39;Rose&#39;),
+                                    (&#39;boy&#39;,&#39;Tom&#39;),
+                                   (&#39;boy&#39;,&#39;Jack&#39;),
 
-&#39;trusted_domains&#39; =&gt; [
-   0 =&gt; &#39;localhost&#39;,
-   1 =&gt; &#39;server1.example.com&#39;,
-   2 =&gt; &#39;192.168.1.50&#39;,
+                                   ],
+                                  names=[&#39;gender&#39;,&#39;name&#39;])
+#设置columns，一列一个元组，如果是多级别，在一个元组内。
+columns = pd.MultiIndex.from_tuples([(&#39;math&#39;,),
+                                     (&#39;english&#39;,)])
+#构造数据。
+df = pd.DataFrame([
+    (99,78),
+    (87,32),
+    (23,89),
+    (28,81)
 ],
+index=index,
+columns=columns)
+print(df)
+df.columns=[&#39;数学&#39;,&#39;英语&#39;]
+print(&#39;\n&#39;)
+print(df)
 </code></pre>
-<p>仿照格式添加信任域，然后重新访问 http://公网IP:端口，问题解决了</p>
-<h1 id="数据库连接"><a href="#数据库连接" class="headerlink" title="数据库连接"></a>数据库连接</h1><p>登录<a href="http://ip:9780，第一次登录需要配置，配置信息如下：">http://ip:9780，第一次登录需要配置，配置信息如下：</a><br>管理员账号密码<br>数据目录（默认值，不改）<br>数据库：选择mysql/mariadb。数据库用户root，数据库密码ownCloud，数据库名owncloud，localhost设为mariadb</p>
+<p>2.4 重置索引：df.index=values<br>使用赋值的方法。</p>
+<p>【注：重置索引后，不会将原来的索引列作为新的一列保留。】</p>
+<pre><code>import pandas as pd
+#读取数据,同时，使用index_col选取第一列作为索引列。
+df = pd.read_excel(r&#39;C:\Users\XXXXXX\Desktop\pandas练习文档.xlsx&#39;,sheet_name=3,index_col=0)
+df.index = range(len(df))
+print(df)
+</code></pre>
+<p>2.5 重置索引：df.reset_index()<br>2.5.1 df.reset_index()参数详情</p>
+<pre><code>df.reset_index(
+level=None, #如果索引有多个层级，仅从索引中删除level指定的列。默认为删除所有的列。
+drop=False, #重置索引后，是否将原来的索引列作为新的一列保留。默认为False，即保留。
+col_level=0, #如果列有多个级别，确定将这一索引列插入到哪一个级别。默认情况为0，即插入到第一级别。
+col_fill=&#39;&#39; ,#确定如何命名其他级别。
+inplace=False#是否要用新的DataFrame替换原来的DataFrame，一般默认为False。
+)
+</code></pre>
+<p>2.5.2 修改索引，并保留原来的索引列为新的一列</p>
+<pre><code>import pandas as pd
+#读取数据
+df = pd.read_excel(r&#39;C:\Users\XXXXXX\Desktop\pandas练习文档.xlsx&#39;,sheet_name=3,index_col=0)
+#重置索引,会将原来的索引列，变成新的一列。
+df_new = df.reset_index()
+print(df,df_new,sep=&#39;\n&#39;)
+</code></pre>
+<p>2.5.3 删除索引：将索引的列的第二列，变成数据列的第二列</p>
+<pre><code>import pandas as pd
+#读取数据
+df = pd.read_excel(r&#39;C:\Users\XXXXXX\Desktop\pandas练习文档.xlsx&#39;,sheet_name=3)
+#先用set_index()增加几个索引
+df = df.set_index(keys=[&#39;id&#39;,&#39;name&#39;],drop=True,append=True)
+print(df)
+</code></pre>
+<p>使用df.reset_index（）将id列变成数据列</p>
+<pre><code>import pandas as pd
+#读取数据
+df = pd.read_excel(r&#39;C:\Users\XXXXXX\Desktop\pandas练习文档.xlsx&#39;,sheet_name=3)
+#set_index()是设置索引列，reset_index()可以将索引列变成数据列。
+df = df.set_index(keys=[&#39;id&#39;,&#39;name&#39;],drop=True,append=True)
+df_new = df.reset_index(level=1,drop=False)
+print(df,df_new,sep=&#39;\n&#39;)
+</code></pre>
+<p>2.5.4 多级别索引的处理</p>
+<p>1）使用MultiIndex构造多级别索引</p>
+<pre><code>import pandas as pd
+#先设置多级别index
+index = pd.MultiIndex.from_tuples([(&#39;girl&#39;,&#39;Lucy&#39;),
+                                    (&#39;girl&#39;,&#39;Rose&#39;),
+                                    (&#39;boy&#39;,&#39;Tom&#39;),
+                                   (&#39;boy&#39;,&#39;Jack&#39;),
+
+                                   ],
+                                  names=[&#39;gender&#39;,&#39;name&#39;])
+#设置columns，一列一个元组，如果是多级别，在一个元组内。
+columns = pd.MultiIndex.from_tuples([(&#39;math&#39;,),
+                                     (&#39;english&#39;,)])
+#构造数据。
+df = pd.DataFrame([
+    (99,78),
+    (87,32),
+    (23,89),
+    (28,81)
+],
+index=index,
+columns=columns)
+print(df)
+</code></pre>
+<p>将索引”gender”当成数据列。</p>
+<pre><code>df = df.reset_index(level=&#39;gender&#39;)
+print(df)
+</code></pre>
+<p>2.6 重置索引：df.set_index()<br>2.6.1 df.set_index()参数详解</p>
+<pre><code>df.set_index(
+keys, #要设置索引的列名。
+drop=True, #将设置索引的列删除，默认为True，即不保留。
+append=False, #是否保留原索引。默认为False。
+inplace=False, #是否在替换原来的DataFrame。默认为False。
+verify_integrity=False#是否检查索引有无重复，默认为False。
+)
+
+
+import pandas as pd
+#读取数据
+df = pd.read_excel(r&#39;C:\Users\XXXXXX\Desktop\pandas练习文档.xlsx&#39;,sheet_name=3)
+#先用set_index()增加几个索引
+df = df.set_index(keys=[&#39;id&#39;,&#39;name&#39;],drop=False,append=True)
+print(df)
+</code></pre>
+<p>2.7 重置索引：df.reindex()<br>2.7.1 df.reindex()参数详解</p>
+<p>【注：这个参数对其中某些值如method，即使按照官网上的操作，还是报错。我也没弄特别清楚】</p>
+<pre><code>pandas.DataFrame.reindex &amp;#8212; pandas 1.5.2 documentation
+
+df.reindex(
+keywords for axes, #列标签，行标签。即index=,columns等。
+method=None, #默认为None。针对填入的数据是向前，向后，向左，还是向右。&#123;None， &#39;backfill&#39;/&#39;bfill&#39;， &#39;pad&#39;/&#39;ffill&#39;， &#39;nearest&#39;&#125;
+copy=True, 
+level=None, #多级别索引时使用。
+fill_value=nan, #一般默认填入NaN。可以设置。
+limit=None, #向前或向后填入的最大连续数。
+tolerance=None
+</code></pre>
+<p>2.7.2 基本用法</p>
+<pre><code>import pandas as pd
+df = pd.DataFrame([
+    (99,78),
+    (87,32),
+    (23,89),
+    (28,81)
+])
+print(df)
+
+print(&#39;\n&#39;)
+#使用df.reindex()重新赋值索引。
+df = df.reindex([0,&#39;B&#39;,3,&#39;D&#39;])
+print(df)
+
+fill_value的使用
+
+import pandas as pd
+df = pd.DataFrame([
+    (99,78),
+    (87,32),
+    (23,89),
+    (28,81)
+])
+print(df)
+
+print(&#39;\n&#39;)
+#使用df.reindex()重新赋值索引。
+df = df.reindex([0,&#39;B&#39;,3,&#39;D&#39;],fill_value=&#39;--&#39;)
+print(df)
+</code></pre>
+<p>修改columns</p>
+<pre><code>import pandas as pd
+df = pd.DataFrame([
+    (99,78),
+    (87,32),
+    (23,89),
+    (28,81)
+],columns=[&#39;math&#39;,&#39;english&#39;])
+print(df)
+
+print(&#39;\n&#39;)
+#使用df.reindex()重新赋值索引。
+df = df.reindex(columns=[&#39;math&#39;,&#39;english&#39;,&#39;music&#39;],fill_value=&#39;100&#39;)
+#或者使用
+print(df)
+</code></pre>
  
       <!-- reward -->
       
@@ -363,7 +424,7 @@ docker run --name owncloud -p 10080:80 -v /home/owncloud/owncloud:/var/www/html/
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/" rel="tag">Docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ownCloud/" rel="tag">ownCloud</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pandas/" rel="tag">pandas</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
 
     </footer>
   </div>
@@ -374,7 +435,7 @@ docker run --name owncloud -p 10080:80 -v /home/owncloud/owncloud:/var/www/html/
 
     
     <article
-  id="post-最新docker部署gitlab指南"
+  id="post-Pandas实用入门案例02"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -385,8 +446,8 @@ docker run --name owncloud -p 10080:80 -v /home/owncloud/owncloud:/var/www/html/
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/07/28/%E6%9C%80%E6%96%B0docker%E9%83%A8%E7%BD%B2gitlab%E6%8C%87%E5%8D%97/"
-    >最新docker部署gitlab指南</a> 
+  <a class="article-title" href="/2023/08/18/Pandas%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B02/"
+    >Pandas实用入门案例02</a> 
 </h2>
  
 
@@ -394,52 +455,60 @@ docker run --name owncloud -p 10080:80 -v /home/owncloud/owncloud:/var/www/html/
     </header>
      
     <div class="article-meta">
-      <a href="/2023/07/28/%E6%9C%80%E6%96%B0docker%E9%83%A8%E7%BD%B2gitlab%E6%8C%87%E5%8D%97/" class="article-date">
-  <time datetime="2023-07-28T06:21:15.000Z" itemprop="datePublished">2023-07-28</time>
+      <a href="/2023/08/18/Pandas%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B02/" class="article-date">
+  <time datetime="2023-08-18T11:56:48.000Z" itemprop="datePublished">2023-08-18</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
   </div>
    
     </div>
       
     <div class="article-entry" itemprop="articleBody">
        
-  <h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><p><a target="_blank" rel="noopener" href="https://docs.gitlab.cn/jh/install/docker.html">极狐GitLab Docker 镜像</a></p>
-<h1 id="拉取镜像"><a href="#拉取镜像" class="headerlink" title="拉取镜像"></a>拉取镜像</h1><pre><code>sudo docker pull gitlab/gitlab-ce:latest
+  <p>在Pandas中，DataFrame是一个非常重要的数据结构，在对DataFrame进行遍历的同时修改其单元格内容是常见的需求。本文介绍几种在Pandas中遍历DataFrame并修改单元格的方法。</p>
+<p>.loc按标签选择<br>可以使用<code>.loc</code>按行标签和列标签选择单元格，然后赋值:</p>
+<pre><code>for row in df.index:
+    for col in df.columns:
+        df.loc[row， col] = new_value
 </code></pre>
-<h1 id="安装容器"><a href="#安装容器" class="headerlink" title="安装容器"></a>安装容器</h1><pre><code>sudo docker run --detach \
-  --hostname 192.168.10.33 \
-  --publish 9443:443 --publish 9980:80 --publish 9822:22 \
-  --name gitlab \
-  --restart always \
-  --volume /home/gitlab/config:/etc/gitlab \
-  --volume /home/gitlab/logs:/var/log/gitlab \
-  --volume /home/gitlab/data:/var/opt/gitlab \
-  gitlab/gitlab-ce:latest
+<p>.iloc按位置选择<br>使用<code>.iloc</code>按整数位置选择单元格，然后赋值: </p>
+<pre><code>for row in range(df.shape[0]):
+    for col in range(df.shape[1]):
+        df.iloc[row， col] = new_value
 </code></pre>
-<h1 id="查看日志"><a href="#查看日志" class="headerlink" title="查看日志"></a>查看日志</h1><pre><code>，可以用容器名，也可以用容器id
-
-sudo docker logs -f gitlab
+<p>.itertuples()遍历行<br>通过<code>.itertuples()</code>遍历行，然后修改指定列:</p>
+<pre><code>for row in df.itertuples():
+    df.at[row.Index， &#39;col1&#39;] = new_value
 </code></pre>
-<h1 id="进入容器"><a href="#进入容器" class="headerlink" title="进入容器"></a>进入容器</h1><pre><code>sudo docker exec -it gitlab /bin/bash
+<p>.apply()批量修改<br>通过<code>.apply()</code>在轴上应用函数进行批量修改:   </p>
+<pre><code>df[[&#39;col1&#39;，&#39;col2&#39;]] = df[[&#39;col1&#39;，&#39;col2&#39;]].apply(lambda x: new_value， axis=1)
 </code></pre>
-<h1 id="修改root密码"><a href="#修改root密码" class="headerlink" title="修改root密码"></a>修改root密码</h1><ol>
-<li>切换到相应路径下: cd /opt/gitlab/bin/</li>
-<li>打开控制台: gitlab-rails console -e production</li>
-<li>查询用户账号信息并赋值给u: u=User.where(id:1).first</li>
-<li>设置该用户名的密码: u.password=’Demo9999’</li>
-<li>确认密码: u.password_confirmation=’Demo9999’</li>
-<li>保存信息： u.save </li>
-<li>退出: exit</li>
-</ol>
-<h1 id="修改外部访问地址"><a href="#修改外部访问地址" class="headerlink" title="修改外部访问地址"></a>修改外部访问地址</h1><pre><code>vi /etc/gitlab/gitlab.rb
-
-external_url &#39;http://192.168.10.33:9980&#39;
-gitlab_rails[&#39;gitlab_ssh_host&#39;]=&#39;192.168.10.33&#39;
-gitlab_rails[&#39;gitlab_shell_ssh_port&#39;]=&#39;9822&#39;
-gitlab_rails[&#39;time_zone&#39;] = &#39;Asia/Shanghai&#39;
+<p>.iterrows()遍历行<br>通过<code>.iterrows()</code>同时遍历行标签和行值，然后修改:</p>
+<pre><code>for label， row in df.iterrows():
+    df.at[label， &#39;col1&#39;] = new_value
 </code></pre>
+<p>举个例子，有这样一个DataFrame:</p>
+<pre><code>   |   col1 |  col2 | 
+:--|:--|:-- 
+0 |   1    |   4
+1 |   2    |   5 
+2 |   3    |   6
+</code></pre>
+<p>可以这样同时遍历和修改:</p>
+<pre><code>for row in df.index:
+    for col in df.columns:
+        if col == &#39;col1&#39; and row == 2:
+            df.loc[row， col] = 10  
+</code></pre>
+<p>结果为:</p>
+<pre><code>   |  col1 |  col2 | 
+:--|:--|:--
+0 |   1   |   4
+1 |   2   |   5
+2 |  10   |   6
+</code></pre>
+<p>————————————————<br>版权声明：本文为CSDN博主「devid008」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/devid008/article/details/131060034">https://blog.csdn.net/devid008/article/details/131060034</a></p>
  
       <!-- reward -->
       
@@ -450,7 +519,7 @@ gitlab_rails[&#39;time_zone&#39;] = &#39;Asia/Shanghai&#39;
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/" rel="tag">Docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GitLab/" rel="tag">GitLab</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pandas/" rel="tag">pandas</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
 
     </footer>
   </div>
@@ -461,7 +530,7 @@ gitlab_rails[&#39;time_zone&#39;] = &#39;Asia/Shanghai&#39;
 
     
     <article
-  id="post-最新centos部署docker指南"
+  id="post-Pandas实用入门案例01"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -472,8 +541,8 @@ gitlab_rails[&#39;time_zone&#39;] = &#39;Asia/Shanghai&#39;
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/07/27/%E6%9C%80%E6%96%B0centos%E9%83%A8%E7%BD%B2docker%E6%8C%87%E5%8D%97/"
-    >最新centos部署docker指南</a> 
+  <a class="article-title" href="/2023/08/17/Pandas%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B01/"
+    >Pandas实用入门案例01</a> 
 </h2>
  
 
@@ -481,49 +550,63 @@ gitlab_rails[&#39;time_zone&#39;] = &#39;Asia/Shanghai&#39;
     </header>
      
     <div class="article-meta">
-      <a href="/2023/07/27/%E6%9C%80%E6%96%B0centos%E9%83%A8%E7%BD%B2docker%E6%8C%87%E5%8D%97/" class="article-date">
-  <time datetime="2023-07-27T02:42:32.000Z" itemprop="datePublished">2023-07-27</time>
+      <a href="/2023/08/17/Pandas%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B01/" class="article-date">
+  <time datetime="2023-08-17T06:24:38.000Z" itemprop="datePublished">2023-08-17</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
   </div>
    
     </div>
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>2023年7月之后，Docker Compose V1不再更新，与后续新版Docker Destop也不再适配。<br>取而代之，当前支持的Docker Desktop均使用Docker Compose V2。</p>
-<h1 id="参考文档："><a href="#参考文档：" class="headerlink" title="参考文档："></a>参考文档：</h1><p><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/install/centos/">Install Docker Engine on CentOS</a><br><a target="_blank" rel="noopener" href="https://docs.docker.com/compose/install/">Overview of installing Docker Compose</a></p>
-<h1 id="安装命令"><a href="#安装命令" class="headerlink" title="安装命令"></a>安装命令</h1><p>整理如下：</p>
-<pre><code>sudo yum remove docker \
-                  docker-client \
-                  docker-client-latest \
-                  docker-common \
-                  docker-latest \
-                  docker-latest-logrotate \
-                  docker-logrotate \
-                  docker-engine
-
-sudo yum install -y yum-utils
-sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-sudo yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
-
-sudo yum install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+  <h1 id="遍历DataFrame的三种方法"><a href="#遍历DataFrame的三种方法" class="headerlink" title="遍历DataFrame的三种方法"></a>遍历DataFrame的三种方法</h1><p>iteritem()方法返回一个&lt;class ‘method’&gt;数据,可利用for循环获得输出<br>iterrow()方法返回一个&lt;class ‘generator’&gt;数据,可利用for循环获得输出<br>itertuple()方法返回一个&lt;class ‘pandas.core.frame.Pandas’&gt;数据,可利用getattr(row,‘列索引’)方法获得对应数据</p>
+<h1 id="演示数据准备"><a href="#演示数据准备" class="headerlink" title="演示数据准备"></a>演示数据准备</h1><pre><code>data = &#123;&#39;state&#39;:[&#39;Ohio&#39;,&#39;Ohio&#39;,&#39;Ohio&#39;,&#39;Nevada&#39;,&#39;Nevada&#39;,&#39;Nevada&#39;],
+&#39;year&#39;:[2000,2001,2002,2003,2004,2005],
+&#39;pop&#39;:[1.5,1.7,3.6,2.4,2.9,3.2]&#125;
+frame = pd.DataFrame(data)
 </code></pre>
-<h1 id="查看版本："><a href="#查看版本：" class="headerlink" title="查看版本："></a>查看版本：</h1><pre><code>sudo docker -v
-sudo docker compose version
+<h1 id="1、遍历方法"><a href="#1、遍历方法" class="headerlink" title="1、遍历方法"></a>1、遍历方法</h1><h2 id="按列遍历"><a href="#按列遍历" class="headerlink" title="按列遍历"></a>按列遍历</h2><pre><code>column_indexs = []
+for column_index, row_data in frame.iteritems():
+    column_indexs.append(column_index)
+    print(row_data)
+print(column_indexs)
 </code></pre>
-<h1 id="启动docker"><a href="#启动docker" class="headerlink" title="启动docker"></a>启动docker</h1><pre><code>sudo systemctl start docker
-sudo systemctl enable docker
+<h2 id="按行遍历"><a href="#按行遍历" class="headerlink" title="按行遍历"></a>按行遍历</h2><h3 id="第一种方法"><a href="#第一种方法" class="headerlink" title="第一种方法"></a>第一种方法</h3><pre><code>row_indexs = []
+for index, row in frame.iterrows():
+    row_indexs.append(index)
+    print(row)
+print(row_indexs)
 </code></pre>
-<h1 id="测试docker"><a href="#测试docker" class="headerlink" title="测试docker"></a>测试docker</h1><pre><code>sudo docker run hello-world
+<h3 id="第二种方法"><a href="#第二种方法" class="headerlink" title="第二种方法"></a>第二种方法</h3><pre><code>for row in frame.itertuples():
+    print(getattr(row, &#39;state&#39;), getattr(row, &#39;year&#39;), getattr(row, &#39;pop&#39;))
+    print(type(row))
+    
 </code></pre>
-<h1 id="查看docker容器"><a href="#查看docker容器" class="headerlink" title="查看docker容器"></a>查看docker容器</h1><pre><code>sudo docker ps
-sudo docker ps | grep zentao
+<h1 id="2、遍历DataFrame某一列-行-数据"><a href="#2、遍历DataFrame某一列-行-数据" class="headerlink" title="2、遍历DataFrame某一列(行)数据"></a>2、遍历DataFrame某一列(行)数据</h1><h2 id="获取frame的index属性-然后使用frame-列索引-get-行索引-获得对应的值"><a href="#获取frame的index属性-然后使用frame-列索引-get-行索引-获得对应的值" class="headerlink" title="获取frame的index属性,然后使用frame[列索引].get(行索引)获得对应的值"></a>获取frame的index属性,然后使用frame[列索引].get(行索引)获得对应的值</h2><pre><code>print(frame.columns)
+for index in frame.index:
+    print(frame[&#39;state&#39;].get(index))
+for index in frame.index:
+    print(frame[&#39;state&#39;][index])
+for index in frame.index:
+    print(frame.get(&#39;state&#39;).get(index))
 </code></pre>
-<h1 id="查看docker容器日志，XXXXXX可以是容器名字，也可以是容器id"><a href="#查看docker容器日志，XXXXXX可以是容器名字，也可以是容器id" class="headerlink" title="查看docker容器日志，XXXXXX可以是容器名字，也可以是容器id"></a>查看docker容器日志，XXXXXX可以是容器名字，也可以是容器id</h1><pre><code>docker logs -f XXXXXX
+<h2 id="获取frame的column属性-然后使用frame-列索引-get-行索引-获得对应的值"><a href="#获取frame的column属性-然后使用frame-列索引-get-行索引-获得对应的值" class="headerlink" title="获取frame的column属性,然后使用frame[列索引].get(行索引)获得对应的值"></a>获取frame的column属性,然后使用frame[列索引].get(行索引)获得对应的值</h2><pre><code>print(frame.index)
+for column in frame.columns:
+    print(frame[column].get(0))
+    
 </code></pre>
-<h1 id="进入容器操作"><a href="#进入容器操作" class="headerlink" title="进入容器操作"></a>进入容器操作</h1><pre><code>sudo docker exec -it gitlab /bin/bash
+<h1 id="3、获取某一个值"><a href="#3、获取某一个值" class="headerlink" title="3、获取某一个值"></a>3、获取某一个值</h1><h2 id="DataFrame-at-行索引-列索引-获取某一个值"><a href="#DataFrame-at-行索引-列索引-获取某一个值" class="headerlink" title="DataFrame.at[行索引,列索引]获取某一个值"></a>DataFrame.at[行索引,列索引]获取某一个值</h2><pre><code>print(frame.at[1,&#39;pop&#39;])
+</code></pre>
+<h2 id="DataFrame-iat-默认行索引-默认列索引-获取某一个值"><a href="#DataFrame-iat-默认行索引-默认列索引-获取某一个值" class="headerlink" title="DataFrame.iat[默认行索引,默认列索引]获取某一个值"></a>DataFrame.iat[默认行索引,默认列索引]获取某一个值</h2><pre><code>print(frame.iat[1,1])
+</code></pre>
+<h2 id="DataFrame-loc-行索引-列索引-获取某个值-与at不同的是-只输入某一参数-获得某一行或某一列"><a href="#DataFrame-loc-行索引-列索引-获取某个值-与at不同的是-只输入某一参数-获得某一行或某一列" class="headerlink" title="DataFrame.loc[行索引,列索引]获取某个值,与at不同的是,只输入某一参数,获得某一行或某一列"></a>DataFrame.loc[行索引,列索引]获取某个值,与at不同的是,只输入某一参数,获得某一行或某一列</h2><pre><code>print(frame.loc[1,&#39;pop&#39;])
+print(frame.loc[:,&#39;pop&#39;])
+print(frame.loc[[1,2]])
+print(frame.loc[:,[&#39;state&#39;,&#39;pop&#39;]])
+</code></pre>
+<h2 id="DataFrame-iloc-默认行索引-默认列索引-获取某个值-与iat不同的是-只输入某一参数-获得某一行或某一列"><a href="#DataFrame-iloc-默认行索引-默认列索引-获取某个值-与iat不同的是-只输入某一参数-获得某一行或某一列" class="headerlink" title="DataFrame.iloc[默认行索引,默认列索引]获取某个值,与iat不同的是,只输入某一参数,获得某一行或某一列:"></a>DataFrame.iloc[默认行索引,默认列索引]获取某个值,与iat不同的是,只输入某一参数,获得某一行或某一列:</h2><pre><code>print(frame.loc[0:2,:])
 </code></pre>
  
       <!-- reward -->
@@ -535,7 +618,7 @@ sudo docker ps | grep zentao
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS7/" rel="tag">CentOS7</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/" rel="tag">Docker</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pandas/" rel="tag">pandas</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
 
     </footer>
   </div>
@@ -546,7 +629,7 @@ sudo docker ps | grep zentao
 
     
     <article
-  id="post-oracle统计字符串包含字符个数"
+  id="post-flask实用入门案例06"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -557,8 +640,8 @@ sudo docker ps | grep zentao
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/07/26/oracle%E7%BB%9F%E8%AE%A1%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%85%E5%90%AB%E5%AD%97%E7%AC%A6%E4%B8%AA%E6%95%B0/"
-    >oracle统计字符串包含字符个数</a> 
+  <a class="article-title" href="/2023/08/16/flask%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B06/"
+    >flask实用入门案例06--跨域</a> 
 </h2>
  
 
@@ -566,21 +649,33 @@ sudo docker ps | grep zentao
     </header>
      
     <div class="article-meta">
-      <a href="/2023/07/26/oracle%E7%BB%9F%E8%AE%A1%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%85%E5%90%AB%E5%AD%97%E7%AC%A6%E4%B8%AA%E6%95%B0/" class="article-date">
-  <time datetime="2023-07-26T12:32:26.000Z" itemprop="datePublished">2023-07-26</time>
+      <a href="/2023/08/16/flask%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B06/" class="article-date">
+  <time datetime="2023-08-16T04:32:49.000Z" itemprop="datePublished">2023-08-16</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
   </div>
    
     </div>
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>函数：REGEXP_COUNT();</p>
-<pre><code>select REGEXP_COUNT(&#39;1,2,6,8,7,9&#39;,&#39;,&#39;) from dual
+  <p>#场景：<br>问题：跨域问题<br>原因分析：由于前后端分离，服务的端口号不同导致的</p>
+<p>#解决方案<br>引入flask_cors，并配置<br>CORS(app, resources=r’/*’)<br>即可解决跨域问题</p>
+<pre><code>from flask import Flask
+from flask_cors import CORS
 
-结果：5
+app = Flask(__name__)
+CORS(app, resources=r&#39;/*&#39;)
+
+
+@app.route(&#39;/&#39;)
+def hello_world():  # put application&#39;s code here
+    return &#39;Hello World!&#39;
+
+
+if __name__ == &#39;__main__&#39;:
+    app.run()
 </code></pre>
  
       <!-- reward -->
@@ -592,7 +687,303 @@ sudo docker ps | grep zentao
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Jetbrains/" rel="tag">Jetbrains</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flask/" rel="tag">flask</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-flask实用入门案例05"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/08/15/flask%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B05/"
+    >flask实用入门案例05--参数解析</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/08/15/flask%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B05/" class="article-date">
+  <time datetime="2023-08-15T14:00:00.000Z" itemprop="datePublished">2023-08-15</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>官方文档：<br>（1）尽管 Flask 能够简单地访问请求数据(比如查询字符串或者 POST 表单编码的数据)，验证表单数据仍然很痛苦。Flask-RESTful 内置了支持验证请求数据，它使用了一个类似 argparse 的库。<br>（2）需要注意地是与 argparse 模块不同，reqparse.RequestParser.parse_args() 返回一个 Python 字典而不是一个自定义的数据结构。</p>
+<pre><code>from flask import Flask
+from flask_restful import reqparse, abort, Api, Resource
+ 
+app = Flask(__name__)
+api = Api(app)
+ 
+parser = reqparse.RequestParser()
+parser.add_argument(&#39;task&#39;, type=str)
+parser.add_argument(&#39;name&#39;, type=str)
+ 
+ 
+# 获取 &amp; 更新
+class Get_Modify(Resource):
+ def post(self):
+  args = parser.parse_args()
+  print(args)
+  return args, 201
+ 
+ 
+api.add_resource(Get_Modify, &#39;/get_modify&#39;)
+ 
+if __name__ == &#39;__main__&#39;:
+ app.run(debug=True)
+ 
+</code></pre>
+<p>上例中，即使传递其他参数，最终也只会读取定义的2个参数的值<br>通过如上代码说明：reqparse.RequestParser.parse_args()，即如上的args可以获取到request的form表单的参数，最终是一个字典。</p>
+<pre><code>from flask import Flask
+from flask_restful import reqparse, abort, Api, Resource
+
+app = Flask(__name__)
+api = Api(app)
+
+Tasks = &#123;
+ &#39;t1&#39;: &#123;&#39;task&#39;: &#39;eat an app&#39;&#125;,
+ &#39;t2&#39;: &#123;&#39;task&#39;: &#39;play football&#39;&#125;,
+ &#39;t3&#39;: &#123;&#39;task&#39;: &#39;watching TV&#39;&#125;,
+&#125;
+
+def abort_if_todo_doesnt_exist(t_id):
+ if t_id not in Tasks:
+  abort(404, message=&quot;Todo &#123;&#125; doesn&#39;t exist&quot;.format(t_id))
+
+
+parser = reqparse.RequestParser()
+parser.add_argument(&#39;task&#39;, type=str)
+
+
+# 获取 &amp; 更新
+class Get_Modify(Resource):
+ def get(self):
+  return Tasks
+
+ def post(self):
+  args = parser.parse_args()
+  t_id = int(max(Tasks.keys()).lstrip(&#39;t&#39;)) + 1
+  t_id = &#39;t%i&#39; % t_id
+  Tasks[t_id] = &#123;&#39;task&#39;: args[&#39;task&#39;]&#125;
+  return Tasks[t_id], 201
+
+
+# 设置每个视图函数的访问格式
+api.add_resource(Get_Modify, &#39;/get_modify&#39;)
+
+if __name__ == &#39;__main__&#39;:
+ app.run(debug=True)
+</code></pre>
+<p>解释：<br>（1）如上的函数，get是获取总的列表Tasks<br>（2）post是添加最新的一个key的值，且key的值是以“t”开头，数字自增的一种形式<br>（3）max(Tasks.keys())这个可以获取到Tasks列表里面，索引最大的key值，在没添加的时候，索引最大为t3<br>（4）x_string.lstrip（‘t’）,这个可以截取x_string字符串里面以’t’开始的剩余字符串。例如t3最终得到3，最终int(max(Tasks.keys()).lstrip(‘t’)) + 1这一行的意思是，得到列表最大的一个key的索引，然后自增到下一个。<br>（5）在希望在form表单里面传递参数，需要在函数里面，使用args = parser.parse_args()接收传递的参数，具体key值通过add_argument函数设置 </p>
+<pre><code>from flask import Flask
+from flask_restful import reqparse, abort, Api, Resource
+
+app = Flask(__name__)
+api = Api(app)
+
+Tasks = &#123;
+ &#39;t1&#39;: &#123;&#39;task&#39;: &#39;eat an app&#39;&#125;,
+ &#39;t2&#39;: &#123;&#39;task&#39;: &#39;play football&#39;&#125;,
+ &#39;t3&#39;: &#123;&#39;task&#39;: &#39;watching TV&#39;&#125;,
+&#125;
+
+
+def abort_if_todo_doesnt_exist(t_id):
+ if t_id not in Tasks:
+  abort(404, message=&quot;Todo &#123;&#125; doesn&#39;t exist&quot;.format(t_id))
+
+
+parser = reqparse.RequestParser()
+parser.add_argument(&#39;task&#39;, type=str)
+
+
+# 更新 &amp; 删除 任务
+class Updata_Delete(Resource):
+ def get(self, t_id):    # 根据t_id获取对应的value
+  abort_if_todo_doesnt_exist(t_id)
+  return Tasks[t_id]
+
+ def delete(self, t_id):   # 根据t_id删除对应的value
+  abort_if_todo_doesnt_exist(t_id)
+  del Tasks[t_id]
+  return &#39;delete success&#39;, 204
+
+ def post(self, t_id):   # 判断t_id是否存在，并返回Tasks整个列表
+  abort_if_todo_doesnt_exist(t_id)
+  return Tasks,201
+
+ def put(self, t_id):   # 根据t_id添加对应的value，并返回所有值
+  args = parser.parse_args()
+  task = &#123;&#39;task&#39;: args[&#39;task&#39;]&#125;
+  Tasks[t_id] = task
+  return Tasks, 201
+
+
+api.add_resource(Updata_Delete, &#39;/update_delete/&lt;t_id&gt;&#39;)
+
+if __name__ == &#39;__main__&#39;:
+ app.run(debug=True)
+ 
+</code></pre>
+<p>解释：<br>（1）通过url传递参数，给视图函数，这种方式一般用在get请求，post请求通过form表单形式比较实用<br>（2）通过url传递参数，需要定义函数时候，使用形参t_id,且在使用add_resource（）函数的使用，url参数形式最后添加<t_id>变量，例如’/update_delete/<t_id>‘这个形式。<br>（3）delete这个函数，最终执行删除是成功的，但是最终并没有返回return的字符串”delete success”，具体原因不详，可能是用法不对，后续再更新中说明.<br>(return ‘delete success’, 204 将 204去掉即可)</t_id></t_id></p>
+<p><a target="_blank" rel="noopener" href="https://www.jb51.net/article/176172.htm">https://www.jb51.net/article/176172.htm</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flask/" rel="tag">flask</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-flask实用入门案例04"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/08/14/flask%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B04/"
+    >flask实用入门案例04--endpoint</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/08/14/flask%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B04/" class="article-date">
+  <time datetime="2023-08-14T12:43:15.000Z" itemprop="datePublished">2023-08-14</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>在flask框架中，我们经常会遇到endpoint这个东西，最开始也没法理解这个到底是做什么的。最近正好在研究Flask的源码，也就顺带了解了一下这个endpoint<br>首先，我们看一个例子：</p>
+<pre><code>@app.route(&#39;/user/&lt;name&gt;&#39;)
+def user(name):
+  return &#39;Hello, %s&#39; % name
+</code></pre>
+<p>这个是我们在用flask框架写网站中最常用的。<br>通过看源码，我们可以发现：<br>函数等效于</p>
+<pre><code>def user(name)
+  return &#39;Hello, %s&#39; % name
+</code></pre>
+<p>app.add_url_rule(‘/user/<name>‘, ‘user’, user)</name></p>
+<p>这个add_url_rule函数在文档中是这样解释的：</p>
+<pre><code>add_url_rule(*args, **kwargs)
+ Connects a URL rule. Works exactly like the route() decorator. If a view_func is provided it will be registered with the endpoint.
+</code></pre>
+<p>add_url_rule有如下参数：</p>
+<pre><code>rule – the URL rule as string
+
+endpoint – the endpoint for the registered URL rule. Flask itself assumes the name of the view function as endpoint
+
+view_func – the function to call when serving a request to the provided endpoint
+options – the options to be forwarded to the underlying Rule object. A change to Werkzeug is handling of method options. methods is a list of methods this rule should be limited to (GET, POST etc.). By default a rule just listens for GET (and implicitly HEAD). Starting with Flask 0.6, OPTIONS is implicitly added and handled by the standard request handling.
+</code></pre>
+<p>抛开options这个参数不谈，我们看看前三个参数。</p>
+<p>rule：这个参数很简单，就是匹配的路由地址<br>view_func：这个参数就是我们写的视图函数<br>endpoint：这个参数就是我今天重点要讲的，endpoint</p>
+<p>很多人认为：假设用户访问<a target="_blank" rel="noopener" href="http://www.example.com/user/eric">http://www.example.com/user/eric</a><br>flask会找到该函数，并传递name=’eric’，执行这个函数并返回值。<br>但是实际中，Flask真的是直接根据路由查询视图函数么？<br>在源码中我们可以发现：</p>
+<p>每个应用程序app都有一个view_functions，这是一个字典，存储endpoint-view_func键值对。add_url_rule的第一个作用就是向view_functions中添加键值对(这件事在应用程序run之前就做好了)<br>每个应用程序app都有一个url_map，它是一个Map类(具体实现在werkzeug/routing.py中)，里面包含了一个列表，列表元素是Role的实例(werkzeug/routing.py中)。add_url_rule的第二个作用就是向url_map中添加Role的实例(它也是在应用程序run之前就做好了)</p>
+<p>我们可以通过一个例子来看：</p>
+<pre><code>app = Flask(__name__)
+ 
+@app.route(&#39;/test&#39;, endpoint=&#39;Test&#39;)
+def test():
+  pass
+ 
+ 
+@app.route(&#39;/&#39;, endpoint=&#39;index&#39;)
+def hello_world():
+  return &#39;Hello World!&#39;
+ 
+if __name__ == &#39;__main__&#39;:
+  print(app.view_functions)
+  print(app.url_map)
+  app.run()
+</code></pre>
+<p>运行这个程序，结果是：</p>
+<pre><code>&#123;&#39;static&#39;: &lt;bound method Flask.send_static_file of &lt;Flask &#39;flask-code&#39;&gt;&gt;, &#39;Test&#39;: &lt;function test at 0x10065e488&gt;, &#39;index&#39;: &lt;function hello_world at 0x10323d488&gt;&#125;
+Map([&lt;Rule &#39;/test&#39; (HEAD, OPTIONS, GET) -&gt; Test&gt;,
+ &lt;Rule &#39;/&#39; (HEAD, OPTIONS, GET) -&gt; index&gt;,
+ &lt;Rule &#39;/static/&lt;filename&gt;&#39; (HEAD, OPTIONS, GET) -&gt; static&gt;])
+ * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+</code></pre>
+<p>所以我们可以看出：这个url_map存储的是url与endpoint的映射!<br>回到flask接受用户请求地址并查询函数的问题。实际上，当请求传来一个url的时候，会先通过rule找到endpoint(url_map)，然后再根据endpoint再找到对应的view_func(view_functions)。通常，endpoint的名字都和视图函数名一样。</p>
+<p>这时候，这个endpoint也就好理解了：<br>实际上这个endpoint就是一个Identifier，每个视图函数都有一个endpoint，<br>当有请求来到的时候，用它来知道到底使用哪一个视图函数</p>
+<p>在实际应用中，当我们需要在一个视图中跳转到另一个视图中的时候，我们经常会使用url_for(endpoint)去查询视图，而不是把地址硬编码到函数中。<br>这个时候，我们就不能使用视图函数名当endpoint去查询了<br>我们举个例子来说明。比如：</p>
+<pre><code>app = Flask(__name__)
+app.register_blueprint(user, url_prefix=&#39;user&#39;)
+app.register_blueprint(file, url_prefix=&#39;file&#39;)
+</code></pre>
+<p>我们注册了2个蓝图。<br>在user中(省略初始化过程)：</p>
+<pre><code>@user.route(&#39;/article&#39;)
+def article():
+  pass
+</code></pre>
+<p>在file中(省略初始化过程)：</p>
+<pre><code>@file.route(&#39;/article&#39;)
+def article():
+  pass
+</code></pre>
+<p>这时候，我们发现，/article这个路由对应了两个函数名一样的函数，分别在两个蓝图中。当我们使用url_for(article)调用的时候(注意，url_for是通过endpoint查询url地址，然后找视图函数)，flask无法知道到底使用哪个蓝图下的endpoint，所以我们需要这样:</p>
+<pre><code>url_for(&#39;user.article&#39;)
+</code></pre>
+<p>以上就是本文的全部内容，希望对大家的学习有所帮助。</p>
+<p>来源：<a target="_blank" rel="noopener" href="https://www.jb51.net/article/176173.htm">https://www.jb51.net/article/176173.htm</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flask/" rel="tag">flask</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
 
     </footer>
   </div>
@@ -608,7 +999,7 @@ sudo docker ps | grep zentao
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/2/">上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/37/">37</a><a class="extend next" rel="next" href="/page/4/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/2/">上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/40/">40</a><a class="extend next" rel="next" href="/page/4/">下一页</a>
   </nav>
   
 </section>

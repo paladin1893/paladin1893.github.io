@@ -154,7 +154,7 @@
     
     
     <article
-  id="post-黑果小兵github"
+  id="post-GO入门14：Windows下环境配置"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -165,8 +165,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/03/23/%E9%BB%91%E6%9E%9C%E5%B0%8F%E5%85%B5github/"
-    >黑果小兵github</a> 
+  <a class="article-title" href="/2023/04/11/GO%E5%85%A5%E9%97%A814%EF%BC%9AWindows%E4%B8%8B%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/"
+    >GO入门14：Windows下环境配置</a> 
 </h2>
  
 
@@ -174,61 +174,8 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2023/03/23/%E9%BB%91%E6%9E%9C%E5%B0%8F%E5%85%B5github/" class="article-date">
-  <time datetime="2023-03-23T08:07:01.000Z" itemprop="datePublished">2023-03-23</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://github.com/daliansky">https://github.com/daliansky</a><br><a target="_blank" rel="noopener" href="https://blog.daliansky.net/">https://blog.daliansky.net</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/macOS/" rel="tag">macOS</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-nacos2-2-1版本及以后开启了默认鉴权"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/03/22/nacos2-2-1%E7%89%88%E6%9C%AC%E5%8F%8A%E4%BB%A5%E5%90%8E%E5%BC%80%E5%90%AF%E4%BA%86%E9%BB%98%E8%AE%A4%E9%89%B4%E6%9D%83/"
-    >nacos2.2.1版本及以后开启了默认鉴权</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/03/22/nacos2-2-1%E7%89%88%E6%9C%AC%E5%8F%8A%E4%BB%A5%E5%90%8E%E5%BC%80%E5%90%AF%E4%BA%86%E9%BB%98%E8%AE%A4%E9%89%B4%E6%9D%83/" class="article-date">
-  <time datetime="2023-03-22T02:26:25.000Z" itemprop="datePublished">2023-03-22</time>
+      <a href="/2023/04/11/GO%E5%85%A5%E9%97%A814%EF%BC%9AWindows%E4%B8%8B%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" class="article-date">
+  <time datetime="2023-04-11T03:40:26.000Z" itemprop="datePublished">2023-04-11</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -238,12 +185,62 @@
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>nacos 2.2.1版本及以后开启了默认鉴权，需要填写jwt key，不填写key后果，启动报错</p>
-<pre><code>org.springframework.context.ApplicationContextException: Unable to start web server; nested exception is org.springframework.boot.web.server.WebServerException: Unable to start embedded Tomcat
+  <h1 id="下载地址"><a href="#下载地址" class="headerlink" title="下载地址"></a>下载地址</h1><p>安装包下载地址为：<a target="_blank" rel="noopener" href="https://go.dev/dl/%E3%80%82">https://go.dev/dl/。</a></p>
+<p>如果打不开可以使用这个地址：<a target="_blank" rel="noopener" href="https://golang.google.cn/dl/%E3%80%82">https://golang.google.cn/dl/。</a></p>
+<h1 id="Windows-系统下安装"><a href="#Windows-系统下安装" class="headerlink" title="Windows 系统下安装"></a>Windows 系统下安装</h1><p>Windows 下可以使用 .msi 后缀(在下载列表中可以找到该文件，如go1.4.2.windows-amd64.msi)的安装包来安装。</p>
+<p>默认情况下 .msi 文件会安装在 c:\Go 目录下。你可以将 c:\Go\bin 目录添加到 Path 环境变量中。添加后你需要重启命令窗口才能生效。</p>
+<p>环境变量设置好后，可以通过 go env 命令来进行测试。</p>
+<pre><code>C:\Users\Administrator&gt;go env
+set GO111MODULE=
+set GOARCH=amd64
+set GOBIN=
+set GOCACHE=C:\Users\Administrator\AppData\Local\go-build
+set GOENV=C:\Users\Administrator\AppData\Roaming\go\env
+set GOEXE=.exe
+set GOFLAGS=
+set GOHOSTARCH=amd64
+set GOHOSTOS=windows
+set GONOPROXY=
+set GONOSUMDB=
+set GOOS=windows
+set GOPATH=C:\Users\Administrator\go
+set GOPRIVATE=
+set GOPROXY=https://proxy.golang.org,direct
+set GOROOT=c:\go
+. . .
 </code></pre>
-<p>参照 <a target="_blank" rel="noopener" href="https://nacos.io/zh-cn/docs/v2/guide/user/auth.html">nacos鉴权文档</a> 说明，修改application.properties中secret.key配置，即可本地单机正常启动。</p>
-<pre><code>### 2.1.0 版本后
-nacos.core.auth.plugin.nacos.token.secret.key=VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=
+<p>上面只显示了部分结果，如果执行go env 命令后，出现类似上面的结果，说明我们的Go开发包已经安装成功了。</p>
+<h2 id="配置GOPROXY"><a href="#配置GOPROXY" class="headerlink" title="配置GOPROXY"></a>配置GOPROXY</h2><p>Go1.12版本之后，开始使用go mod模式来管理依赖环境了</p>
+<p>由于国内访问不到默认的GOPROXY配置链接，所以我们需要换一个PROXY，这里推荐使用 <a target="_blank" rel="noopener" href="https://goproxy.io/">https://goproxy.io</a> 或 <a target="_blank" rel="noopener" href="https://goproxy.cn/">https://goproxy.cn</a> 。</p>
+<p>可以执行下面的命令修改GOPROXY：</p>
+<pre><code>go env -w GOPROXY=https://goproxy.cn,direct
+</code></pre>
+<h2 id="GO-MOD设置"><a href="#GO-MOD设置" class="headerlink" title="GO MOD设置"></a>GO MOD设置</h2><p>要启用go module支持首先要设置环境变量GO111MODULE，通过它可以开启或关闭模块支持，它有三个可选值：off、on、auto，默认值是auto。</p>
+<pre><code>GO111MODULE=off禁用模块支持，编译时会从GOPATH和vendor文件夹中查找包。
+GO111MODULE=on启用模块支持，编译时会忽略GOPATH和vendor文件夹，只根据 go.mod下载依赖。
+GO111MODULE=auto，当项目在$GOPATH/src外且项目根目录有go.mod文件时，开启模块支持。
+</code></pre>
+<p>通过以下命令修改</p>
+<pre><code>go env -w GO111MODULE=on
+</code></pre>
+<p>使用go module模式新建项目时，我们需要通过go mod init 项目名命令对项目进行初始化，该命令会在项目根目录下生成go.mod文件。例如，我们使用hello作为我们第一个Go项目的名称，执行如下命令。</p>
+<pre><code>go mod init hello
+</code></pre>
+<p>运行之前可以使用​go mod tidy​命令将所需依赖添加到go.mod文件中，并且能去掉项目中不需要的依赖。</p>
+<h1 id="安装测试"><a href="#安装测试" class="headerlink" title="安装测试"></a>安装测试</h1><p>创建工作目录 C:&gt;Go_WorkSpace。</p>
+<p>文件名: test.go，代码如下：</p>
+<pre><code>package main
+
+import &quot;fmt&quot;
+
+func main() &#123;
+   fmt.Println(&quot;Hello, World!&quot;)
+&#125;
+</code></pre>
+<p>使用 go 命令执行以上代码输出结果如下：</p>
+<pre><code>C:\Go_WorkSpace&gt;go run test.go
+
+Hello, World!
 </code></pre>
  
       <!-- reward -->
@@ -255,7 +252,7 @@ nacos.core.auth.plugin.nacos.token.secret.key=VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMT
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nacos/" rel="tag">nacos</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GO/" rel="tag">GO</a></li></ul>
 
     </footer>
   </div>
@@ -266,7 +263,7 @@ nacos.core.auth.plugin.nacos.token.secret.key=VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMT
 
     
     <article
-  id="post-cargo基础命令"
+  id="post-GO入门13：结构体、数组、切片"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -277,8 +274,8 @@ nacos.core.auth.plugin.nacos.token.secret.key=VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMT
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/03/21/cargo%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/"
-    >cargo基础命令</a> 
+  <a class="article-title" href="/2023/04/10/GO%E5%85%A5%E9%97%A813%EF%BC%9A%E7%BB%93%E6%9E%84%E4%BD%93%E3%80%81%E6%95%B0%E7%BB%84%E3%80%81%E5%88%87%E7%89%87/"
+    >GO入门13：结构体、数组、切片</a> 
 </h2>
  
 
@@ -286,8 +283,8 @@ nacos.core.auth.plugin.nacos.token.secret.key=VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMT
     </header>
      
     <div class="article-meta">
-      <a href="/2023/03/21/cargo%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/" class="article-date">
-  <time datetime="2023-03-21T14:48:38.000Z" itemprop="datePublished">2023-03-21</time>
+      <a href="/2023/04/10/GO%E5%85%A5%E9%97%A813%EF%BC%9A%E7%BB%93%E6%9E%84%E4%BD%93%E3%80%81%E6%95%B0%E7%BB%84%E3%80%81%E5%88%87%E7%89%87/" class="article-date">
+  <time datetime="2023-04-10T13:30:05.000Z" itemprop="datePublished">2023-04-10</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -297,23 +294,69 @@ nacos.core.auth.plugin.nacos.token.secret.key=VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMT
       
     <div class="article-entry" itemprop="articleBody">
        
-  <pre><code># 查看cargo版本
-cargo --version
+  <p>数组如作为函数参数，需要转为切片。<br>GO语言的切片等价于其他语言的vector。</p>
+<pre><code>package main
 
-# 新建项目
-cargo new &lt;project_name&gt;
+import &quot;fmt&quot;
 
-# 构建项目
-cargo build
+type Books struct &#123;
+    title   string
+    author  string
+    subject string
+    book_id int
+&#125;
 
-# 运行项目
-cargo run
+func main() &#123;
+    var Book1 Books /* 声明 Book1 为 Books 类型 */
+    var Book2 Books /* 声明 Book2 为 Books 类型 */
 
-# 检查项目
-cargo check
+    /* book 1 描述 */
+    Book1.title = &quot;Go 语言&quot;
+    Book1.author = &quot;www.runoob.com&quot;
+    Book1.subject = &quot;Go 语言教程&quot;
+    Book1.book_id = 6495407
 
-# 查看帮助
-cargo -h
+    /* book 2 描述 */
+    Book2.title = &quot;Python 教程&quot;
+    Book2.author = &quot;www.runoob.com&quot;
+    Book2.subject = &quot;Python 语言教程&quot;
+    Book2.book_id = 6495700
+
+    var BookArr [2]Books
+    BookArr[0] = Book1
+    BookArr[1] = Book2
+
+    var BookSlice []Books
+    BookSlice = append(BookSlice, Book1, Book2)
+    BookSlice = append(BookSlice, Books&#123;&quot;Go++ 语言&quot;, &quot;www.runoob.com&quot;, &quot;Go 语言教程&quot;, 6495407&#125;)
+
+    /* 打印 Book1 信息 */
+    printBook(&amp;Book1)
+    printBook(&amp;Book2)
+    printBooks(BookArr[:])
+    printBooks(BookSlice)
+&#125;
+
+func printBook(book *Books) &#123;
+    fmt.Println(&quot;printBook----&quot;)
+    fmt.Printf(&quot;Book title : %s\n&quot;, book.title)
+    fmt.Printf(&quot;Book author : %s\n&quot;, book.author)
+    fmt.Printf(&quot;Book subject : %s\n&quot;, book.subject)
+    fmt.Printf(&quot;Book book_id : %d\n&quot;, book.book_id)
+    fmt.Println()
+&#125;
+
+func printBooks(arr []Books) &#123;
+    fmt.Println(&quot;printBooks----&quot;)
+    for i := 0; i &lt; len(arr); i++ &#123;
+        book := arr[i]
+        fmt.Printf(&quot;Book title : %s\n&quot;, book.title)
+        fmt.Printf(&quot;Book author : %s\n&quot;, book.author)
+        fmt.Printf(&quot;Book subject : %s\n&quot;, book.subject)
+        fmt.Printf(&quot;Book book_id : %d\n&quot;, book.book_id)
+    &#125;
+    fmt.Println()
+&#125;
 </code></pre>
  
       <!-- reward -->
@@ -325,7 +368,7 @@ cargo -h
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rust/" rel="tag">rust</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GO/" rel="tag">GO</a></li></ul>
 
     </footer>
   </div>
@@ -336,7 +379,7 @@ cargo -h
 
     
     <article
-  id="post-rust配置cargo国内镜像"
+  id="post-GO入门12：字符串替换"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -347,8 +390,8 @@ cargo -h
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/03/20/rust%E9%85%8D%E7%BD%AEcargo%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F/"
-    >rust配置cargo国内镜像</a> 
+  <a class="article-title" href="/2023/04/09/GO%E5%85%A5%E9%97%A812%EF%BC%9A%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%9B%BF%E6%8D%A2/"
+    >GO入门12：字符串替换</a> 
 </h2>
  
 
@@ -356,8 +399,8 @@ cargo -h
     </header>
      
     <div class="article-meta">
-      <a href="/2023/03/20/rust%E9%85%8D%E7%BD%AEcargo%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F/" class="article-date">
-  <time datetime="2023-03-20T14:45:41.000Z" itemprop="datePublished">2023-03-20</time>
+      <a href="/2023/04/09/GO%E5%85%A5%E9%97%A812%EF%BC%9A%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%9B%BF%E6%8D%A2/" class="article-date">
+  <time datetime="2023-04-09T09:10:57.000Z" itemprop="datePublished">2023-04-09</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -367,21 +410,21 @@ cargo -h
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>在用户主目录的 .cargo 目录下新建一个文件，命名为 config（没有扩展名），并输入以下内容：</p>
-<pre><code>[source.crates-io]
-registry = &quot;https://github.com/rust-lang/crates.io-index&quot;
-replace-with = &#39;ustc&#39;
+  <p>1、引入strings包</p>
+<pre><code>import &quot;strings&quot;
+</code></pre>
+<p>2、func Replace</p>
+<pre><code>func Replace(s, old, new string, n int) string
+</code></pre>
+<p>在s字符串中，把old字符串替换为new字符串，n表示替换的次数，小于0表示全部替换</p>
+<pre><code>//替换两次
+fmt.Println(strings.Replace(&quot;oink oink oink&quot;, &quot;k&quot;, &quot;ky&quot;, 2)) 
+//全部替换
+fmt.Println(strings.Replace(&quot;oink oink oink&quot;, &quot;oink&quot;, &quot;moo&quot;, -1))
 
-## 二选择一
-## replace-with = &#39;XXX&#39; 选择配置
-
-# 中国科学技术大学
-[source.ustc]
-registry = &quot;git://mirrors.ustc.edu.cn/crates.io-index&quot;
-
-# 清华大学
-[source.tuna]
-registry = &quot;https://mirrors.tuna.tsinghua.edu.cn/git/crates.io-index.git&quot;
+//输出结果
+oinky oinky oink
+moo moo moo
 </code></pre>
  
       <!-- reward -->
@@ -393,7 +436,7 @@ registry = &quot;https://mirrors.tuna.tsinghua.edu.cn/git/crates.io-index.git&qu
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rust/" rel="tag">rust</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GO/" rel="tag">GO</a></li></ul>
 
     </footer>
   </div>
@@ -404,7 +447,7 @@ registry = &quot;https://mirrors.tuna.tsinghua.edu.cn/git/crates.io-index.git&qu
 
     
     <article
-  id="post-rustup常用命令"
+  id="post-Oracle判断字段中是否包含中文及取出中文的方法"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -415,8 +458,8 @@ registry = &quot;https://mirrors.tuna.tsinghua.edu.cn/git/crates.io-index.git&qu
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/03/19/rustup%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"
-    >rustup常用命令</a> 
+  <a class="article-title" href="/2023/04/08/Oracle%E5%88%A4%E6%96%AD%E5%AD%97%E6%AE%B5%E4%B8%AD%E6%98%AF%E5%90%A6%E5%8C%85%E5%90%AB%E4%B8%AD%E6%96%87%E5%8F%8A%E5%8F%96%E5%87%BA%E4%B8%AD%E6%96%87%E7%9A%84%E6%96%B9%E6%B3%95/"
+    >Oracle判断字段中是否包含中文及取出中文的方法</a> 
 </h2>
  
 
@@ -424,8 +467,8 @@ registry = &quot;https://mirrors.tuna.tsinghua.edu.cn/git/crates.io-index.git&qu
     </header>
      
     <div class="article-meta">
-      <a href="/2023/03/19/rustup%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" class="article-date">
-  <time datetime="2023-03-19T14:44:11.000Z" itemprop="datePublished">2023-03-19</time>
+      <a href="/2023/04/08/Oracle%E5%88%A4%E6%96%AD%E5%AD%97%E6%AE%B5%E4%B8%AD%E6%98%AF%E5%90%A6%E5%8C%85%E5%90%AB%E4%B8%AD%E6%96%87%E5%8F%8A%E5%8F%96%E5%87%BA%E4%B8%AD%E6%96%87%E7%9A%84%E6%96%B9%E6%B3%95/" class="article-date">
+  <time datetime="2023-04-08T03:31:53.000Z" itemprop="datePublished">2023-04-08</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -435,55 +478,137 @@ registry = &quot;https://mirrors.tuna.tsinghua.edu.cn/git/crates.io-index.git&qu
       
     <div class="article-entry" itemprop="articleBody">
        
-  <pre><code># 查看rustc版本
-rustc --version
+  <h1 id="一、问题说明"><a href="#一、问题说明" class="headerlink" title="一、问题说明"></a>一、问题说明</h1><p>在处理数据的时候，需要判断某个字段字符串中是否有中文，若有则取出中文。</p>
+<h1 id="二、解决办法"><a href="#二、解决办法" class="headerlink" title="二、解决办法"></a>二、解决办法</h1><p>首先如何判断某个字段字符串中是否有中文。这里介绍三种方法：</p>
+<h2 id="1、采用ASCIISTR函数"><a href="#1、采用ASCIISTR函数" class="headerlink" title="1、采用ASCIISTR函数"></a>1、采用ASCIISTR函数</h2><pre><code>--查询字段中含有中文
+SELECT jldw FROM t_tz_sjclgx WHERE ASCIISTR(jldw) LIKE &#39;%\%&#39;
+</code></pre>
+<p>说明：ASCIISTR函数用于返回字符的ASCII形式的字符串；非ASCII的字符被转化为\xxxx的形式。换句话说：如果字符中包含中文，则必定会有\xxxx的字符。</p>
+<p>所以，我们直接利用ASCIISTR函数匹配’&#39;即可判断。</p>
+<h2 id="2、采用length和lengthb的原理"><a href="#2、采用length和lengthb的原理" class="headerlink" title="2、采用length和lengthb的原理"></a>2、采用length和lengthb的原理</h2><pre><code>--查询字段中含有中文
+SELECT jldw FROM t_tz_sjclgx WHERE LENGTHB(jldw)&lt;&gt;LENGTH(jldw)
+</code></pre>
+<p>说明：中文下length返回的是字符个数，中文占1字符，lengthb返回的是字节个数，中文占2字节，根据中文的特性即可解决。</p>
+<h2 id="3、使用CONVERT函数判别"><a href="#3、使用CONVERT函数判别" class="headerlink" title="3、使用CONVERT函数判别"></a>3、使用CONVERT函数判别</h2><pre><code>--查询字段中含有中文
+SELECT jldw FROM t_tz_sjclgx WHERE jldw &lt;&gt; CONVERT(jldw,&#39;ZHS16GBK&#39;,&#39;UTF8&#39;);
+</code></pre>
+<p>说明：CONVERT(要转换的字符串,目标字符集,原字符集)，CONVERT函数用于转换字符串的字符集；所以我们可以利用中文的字符集是utf-8来判断。</p>
+<h1 id="三、提取中文"><a href="#三、提取中文" class="headerlink" title="三、提取中文"></a>三、提取中文</h1><p>上面介绍了如何判断某个字段字符串中是否有中文，在成功判断字段中是否有中文之后；那么该如何取出字段中的中文呢？</p>
+<p>这里介绍一种快速准确的办法：</p>
+<pre><code>create or replace function getCustText(custName varchar2)
+  return varchar2 is
+  Result       varchar2(100); --返回的结果字符串
+  tmp_custName varchar2(100); --临时变量
+  count_str    number; --字符串中字符的个数
+  i            number := 1; --循环变量
+  str_ascii    number; --当前等待判断字符的ascii码
+  current_char varchar2(10); --当前等待判断的字符
+begin
+  select length(custName) into count_str from dual; --取出待处理字符串的长度
+  while i &lt; count_str loop
+    ---根据待处理字符串长度（counts）?，逐个字符判断处理
+    current_char := substr(custName, i, 1);
+    select ASCII(current_char) into str_ascii from dual;
+    if str_ascii &gt; 45216 then
+      tmp_custName := tmp_custName || current_char;
+    end if;
+    i := i + 1;
+  end loop;
+  Result := tmp_custName;
+  return(Result);
+end getCustText;
+</code></pre>
+<p>函数创建成功后，直接传jldw调用就可获取该字符的中文了。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
 
-# 显示当前安装的工具链信息
-rustup show
-# 检查安装更新
-rustup update
-# 卸载
-rustup self uninstall
-# 设置当前默认工具链
-rustup default stable-x86_64-pc-windows-gnu
-# 查看帮助
-rustup -h
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Oracle/" rel="tag">Oracle</a></li></ul>
 
-# --------------------------&gt;配置工具链
-# 查看工具链
-rustup toolchain list
-# 安装工具链
-rustup toolchain install stable-x86_64-pc-windows-gnu
-# 卸载工具链
-rustup toolchain uninstall stable-x86_64-pc-windows-gnu
-# 设置自定义工具链
-rustup toolchain link &lt;toolchain-name&gt; &quot;&lt;toolchain-path&gt;&quot;
+    </footer>
+  </div>
 
-# --------------------------&gt;配置一个目录以及其子目录的默认工具链
-# 查看已设置的默认工具链
-rustup override list
-# 设置该目录以及其子目录的默认工具链
-rustup override set &lt;toolchain&gt; --path &lt;path&gt;
-# 取消目录以及其子目录的默认工具链
-rustup override unset --path &lt;path&gt;
+   
+    
+</article>
 
-# --------------------------&gt;配置工具链的可用目标
-# 查看目标列表
-rustup target list
-# 安装目标
-rustup target add &lt;target&gt;
-# 卸载目标
-rustup target remove &lt;target&gt;
-# 为特定工具链安装目标
-rustup target add --toolchain &lt;toolchain&gt; &lt;target&gt;
+    
+    <article
+  id="post-GO入门11：字符串拼接"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/04/07/GO%E5%85%A5%E9%97%A811%EF%BC%9A%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8B%BC%E6%8E%A5/"
+    >GO入门10：字符串拼接</a> 
+</h2>
+ 
 
-# --------------------------&gt;配置 rustup 安装的组件
-# 查看可用组件
-rustup component list
-# 安装组件
-rustup component add &lt;component&gt;
-# 卸载组件
-rustup component remove &lt;component&gt;
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/04/07/GO%E5%85%A5%E9%97%A811%EF%BC%9A%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8B%BC%E6%8E%A5/" class="article-date">
+  <time datetime="2023-04-07T08:04:50.000Z" itemprop="datePublished">2023-04-07</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>拼接</p>
+<pre><code>func main() &#123;
+    s1 := &quot;hello&quot;
+    s2 := &quot;word&quot;
+    s3 := s1 + s2
+    fmt.Print(s3) //s3 = &quot;helloword&quot;
+&#125;
+</code></pre>
+<p>Sprintf函数</p>
+<pre><code>s1 := &quot;hello&quot;
+s2 := &quot;word&quot;
+s3 := fmt.Sprintf(&quot;%s%s&quot;, s1, s2) //s3 = &quot;helloword&quot;
+</code></pre>
+<p>Join函数</p>
+<p>使用Join函数我们需要先引入strings包才能调用Join函数。Join函数会先根据字符串数组的内容，计算出一个拼接之后的长度，然后申请对应大小的内存，一个一个字符串填入，在已有一个数组的情况下，这种效率会很高，如果没有的话效率也不高。我一般用来切片转字符串使用。</p>
+<pre><code>s1 := &quot;hello&quot;
+s2 := &quot;word&quot;
+var str []string = []string&#123;s1, s2&#125;
+s3 := strings.Join(str, &quot;&quot;)
+fmt.Print(s3)
+</code></pre>
+<p>buffer.Buildbuffer.WriteString函数</p>
+<pre><code>s1 := &quot;hello&quot;
+s2 := &quot;word&quot;
+var bt bytes.Buffer
+bt.WriteString(s1)
+bt.WriteString(s2)
+s3 := bt.String()
+fmt.Println(s3)
+</code></pre>
+<p>buffer.Builder函数</p>
+<pre><code>s1 := &quot;hello&quot;
+s2 := &quot;word&quot;
+var build strings.Builder
+build.WriteString(s1)
+build.WriteString(s2)
+s3 := build.String()
+fmt.Println(s3)
 </code></pre>
  
       <!-- reward -->
@@ -495,7 +620,7 @@ rustup component remove &lt;component&gt;
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rust/" rel="tag">rust</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GO/" rel="tag">GO</a></li></ul>
 
     </footer>
   </div>
@@ -506,7 +631,7 @@ rustup component remove &lt;component&gt;
 
     
     <article
-  id="post-rust国内镜像地址"
+  id="post-GO入门10：移除所有空格"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -517,8 +642,8 @@ rustup component remove &lt;component&gt;
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/03/18/rust%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F%E5%9C%B0%E5%9D%80/"
-    >rust国内镜像地址</a> 
+  <a class="article-title" href="/2023/04/06/GO%E5%85%A5%E9%97%A810%EF%BC%9A%E7%A7%BB%E9%99%A4%E6%89%80%E6%9C%89%E7%A9%BA%E6%A0%BC/"
+    >GO入门10：移除所有空格</a> 
 </h2>
  
 
@@ -526,8 +651,8 @@ rustup component remove &lt;component&gt;
     </header>
      
     <div class="article-meta">
-      <a href="/2023/03/18/rust%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F%E5%9C%B0%E5%9D%80/" class="article-date">
-  <time datetime="2023-03-18T13:55:27.000Z" itemprop="datePublished">2023-03-18</time>
+      <a href="/2023/04/06/GO%E5%85%A5%E9%97%A810%EF%BC%9A%E7%A7%BB%E9%99%A4%E6%89%80%E6%9C%89%E7%A9%BA%E6%A0%BC/" class="article-date">
+  <time datetime="2023-04-06T07:40:48.000Z" itemprop="datePublished">2023-04-06</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -537,10 +662,98 @@ rustup component remove &lt;component&gt;
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>ustup-init 为在线安装工具，默认的安装源为国外的站点，网速较慢，可设置环境变量，使其从国内镜像中下载。</p>
-<p>在系统环境变量中添加如下变量（二选一即可）：</p>
-<h3 id="下面的配置-二选一即可"><a href="#下面的配置-二选一即可" class="headerlink" title="下面的配置 二选一即可"></a>下面的配置 二选一即可</h3><h1 id="中国科学技术大学"><a href="#中国科学技术大学" class="headerlink" title="中国科学技术大学"></a>中国科学技术大学</h1><p>RUSTUP_DIST_SERVER=<a target="_blank" rel="noopener" href="https://mirrors.ustc.edu.cn/rust-static">https://mirrors.ustc.edu.cn/rust-static</a><br>RUSTUP_UPDATE_ROOT=<a target="_blank" rel="noopener" href="https://mirrors.ustc.edu.cn/rust-static/rustup">https://mirrors.ustc.edu.cn/rust-static/rustup</a></p>
-<h1 id="清华大学"><a href="#清华大学" class="headerlink" title="清华大学"></a>清华大学</h1><p>RUSTUP_DIST_SERVER=<a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/rustup">https://mirrors.tuna.tsinghua.edu.cn/rustup</a><br>RUSTUP_UPDATE_ROOT=<a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/rustup/rustup">https://mirrors.tuna.tsinghua.edu.cn/rustup/rustup</a></p>
+  <p>Golang unicode.IsSpace() Function with Examples<br>Golang | unicode.IsSpace() Function: Here, we are going to learn about the IsSpace() function of the unicode package with its usages, syntax, and examples.<br>Submitted by IncludeHelp, on September 17, 2021<br>unicode.IsSpace()<br>The IsSpace() function is an inbuilt function of the unicode package which is used to check whether the given rune r is a space character as defined by Unicode’s White Space property.</p>
+<p>It accepts one parameter (r rune) and returns true if rune r is a space character; false, otherwise.</p>
+<p>Syntax:</p>
+<pre><code>func IsSpace(r rune) bool
+</code></pre>
+<p>Parameter(s):</p>
+<pre><code>r : Rune type value to be checked whether it is a space character or not.
+</code></pre>
+<p>Return Value:</p>
+<p>The return type of the unicode.IsSpace() function is a bool, it returns true if rune r is a space character; false, otherwise.</p>
+<p>Example 1:</p>
+<pre><code>// Golang program to demonstrate the
+// example of unicode.IsSpace() Function
+
+package main
+
+import (
+    &quot;fmt&quot;
+    &quot;unicode&quot;
+)
+
+func main() &#123;
+    fmt.Println(&quot;unicode.IsSpace(&#39; &#39;):&quot;,
+        unicode.IsSpace(&#39; &#39;))
+    fmt.Println(&quot;unicode.IsSpace(&#39;\\t&#39;):&quot;,
+        unicode.IsSpace(&#39;\t&#39;))
+    fmt.Println(&quot;unicode.IsSpace(&#39;\\v&#39;):&quot;,
+        unicode.IsSpace(&#39;\v&#39;))
+    fmt.Println(&quot;unicode.IsSpace(&#39;\\f&#39;):&quot;,
+        unicode.IsSpace(&#39;\f&#39;))
+    fmt.Println(&quot;unicode.IsSpace(&#39;\\r&#39;)&quot;,
+        unicode.IsSpace(&#39;\r&#39;))
+    fmt.Println(&quot;unicode.IsSpace(&#39;G&#39;):&quot;,
+        unicode.IsSpace(&#39;G&#39;))
+    fmt.Println(&quot;unicode.IsSpace(&#39;\\a&#39;):&quot;,
+        unicode.IsSpace(&#39;\a&#39;))
+&#125;
+</code></pre>
+<p>Output:</p>
+<pre><code>unicode.IsSpace(&#39; &#39;): true
+unicode.IsSpace(&#39;\t&#39;): true
+unicode.IsSpace(&#39;\v&#39;): true
+unicode.IsSpace(&#39;\f&#39;): true
+unicode.IsSpace(&#39;\r&#39;) true
+unicode.IsSpace(&#39;G&#39;): false
+unicode.IsSpace(&#39;\a&#39;): false
+</code></pre>
+<p>Example 2:</p>
+<pre><code>// Golang program to demonstrate the
+// example of unicode.IsSpace() Function
+
+package main
+
+import (
+    &quot;fmt&quot;
+    &quot;unicode&quot;
+)
+
+func main() &#123;
+    var r rune
+    var result bool
+
+    r = &#39; &#39;
+    result = unicode.IsSpace(r)
+    if result == true &#123;
+        fmt.Printf(&quot;%c (%x) is a space character.\n&quot;, r, r)
+    &#125; else &#123;
+        fmt.Printf(&quot;%c (%x) is not a space character.\n&quot;, r, r)
+    &#125;
+
+    r = &#39;A&#39;
+    result = unicode.IsSpace(r)
+    if result == true &#123;
+        fmt.Printf(&quot;%c (%x) is a space character.\n&quot;, r, r)
+    &#125; else &#123;
+        fmt.Printf(&quot;%c (%x) is not a space character.\n&quot;, r, r)
+    &#125;
+
+    r = &#39;\t&#39;
+    result = unicode.IsSpace(r)
+    if result == true &#123;
+        fmt.Printf(&quot;%c (%x) is a space character.\n&quot;, r, r)
+    &#125; else &#123;
+        fmt.Printf(&quot;%c (%x) is not a space character.\n&quot;, r, r)
+    &#125;
+&#125;
+</code></pre>
+<p>Output:</p>
+<pre><code>  (20) is a space character.
+A (41) is not a space character.
+     (9) is a space character.
+</code></pre>
  
       <!-- reward -->
       
@@ -551,7 +764,7 @@ rustup component remove &lt;component&gt;
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rust/" rel="tag">rust</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GO/" rel="tag">GO</a></li></ul>
 
     </footer>
   </div>
@@ -567,7 +780,7 @@ rustup component remove &lt;component&gt;
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/24/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><a class="page-number" href="/page/24/">24</a><span class="page-number current">25</span><a class="page-number" href="/page/26/">26</a><a class="page-number" href="/page/27/">27</a><span class="space">&hellip;</span><a class="page-number" href="/page/37/">37</a><a class="extend next" rel="next" href="/page/26/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/24/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><a class="page-number" href="/page/24/">24</a><span class="page-number current">25</span><a class="page-number" href="/page/26/">26</a><a class="page-number" href="/page/27/">27</a><span class="space">&hellip;</span><a class="page-number" href="/page/40/">40</a><a class="extend next" rel="next" href="/page/26/">下一页</a>
   </nav>
   
 </section>

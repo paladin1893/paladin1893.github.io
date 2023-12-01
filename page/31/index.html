@@ -154,7 +154,7 @@
     
     
     <article
-  id="post-PyCharm中的文件模版变量"
+  id="post-关于数据库模式切换问题"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -165,8 +165,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/02/17/PyCharm%E4%B8%AD%E7%9A%84%E6%96%87%E4%BB%B6%E6%A8%A1%E7%89%88%E5%8F%98%E9%87%8F/"
-    >PyCharm中的文件模版变量</a> 
+  <a class="article-title" href="/2023/03/06/%E5%85%B3%E4%BA%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A8%A1%E5%BC%8F%E5%88%87%E6%8D%A2%E9%97%AE%E9%A2%98/"
+    >关于数据库模式切换问题</a> 
 </h2>
  
 
@@ -174,8 +174,72 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2023/02/17/PyCharm%E4%B8%AD%E7%9A%84%E6%96%87%E4%BB%B6%E6%A8%A1%E7%89%88%E5%8F%98%E9%87%8F/" class="article-date">
-  <time datetime="2023-02-17T01:47:27.000Z" itemprop="datePublished">2023-02-17</time>
+      <a href="/2023/03/06/%E5%85%B3%E4%BA%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A8%A1%E5%BC%8F%E5%88%87%E6%8D%A2%E9%97%AE%E9%A2%98/" class="article-date">
+  <time datetime="2023-03-06T06:27:10.000Z" itemprop="datePublished">2023-03-06</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>现在流行的数据库都有 Schema 的概念，一般作为数据库对象(表，函数，存储过程等)的命名空间。所以在数据库端往往存在实例/数据库/Schema 这样层级划分。对于DB2 和 Oracle 用客户端创建一个新的数据库并非易事，灵活的在数据库中较轻量的划分隔离空间的办法因数据库类型而异。</p>
+<p>MySQL： Mysql 的体系架构是单实例多库，一个用户可以访问多个数据库，然后指定当前数据库写 SQL 的时候就不用带上数据库名，MySQL 中 database 和 schema是一个概念，它靠 database 来隔离数据库对象。创建数据库(create database)，create schema 是 create database 的别名。</p>
+<p>PostgreSQL： create database 创建新的数据库，或在当前数据库下用 create schema 创建 schema。PostgreSQL 的函数或存储过程中对未指定 schema 的数据库对象的访问的规则是在调用时动态绑定到当前会话中的 schema。</p>
+<p>达梦 8： 达梦的体系架构是单库多实例的，也就是没有多个数据库的概念，从 Mysql转到达梦，就需要建多个用户+表空间来对应 Mysql的多个数据库。每个用户有一个默认的同名的模式，访问自己模式下的表、视图等不需要加模式名，访问其他模式下的对象需要加上模式名。</p>
+<p>Oracle： create schema 较麻烦，涉及到 authorization。但可以通过 create user 创建新用户后就有了对应的新 schema。Oracle 中采取用户来隔离数据库对象。</p>
+<p>实际应用过程中研发交付团队可能使用模式来进行租户间的数据隔离或根据业务功能划分不同的模式，这里就涉及一个服务需要同时连接并查询多种模式的问题，<br>一种方案是直接在 sql 中的表名前添加模式名前缀，这种适合一句 sql 需要跨多个模式进行联合查询的场景，属于定制型 sql。<br>一种方案是在会话层面指定模式，这样 sql中的表名不需要指定默认的前缀，对于不在当前模式下的表才需要添加模式前缀，这种适合多模式下相同表名存储数据的切换。</p>
+<p>MySQL 的连接串直接指定具体数据库，其实已经是会话层面的模式切换</p>
+<p>PostgreSQL 的连接串在没有指定当前模式下，例如<br>jdbc:postgresql://localhost:5432/postgresql 默认使用的是 postgresql 数据库的 public模式。</p>
+<p>PostgreSQL 从 9.4 版本开始通过关键字 currentSchema 指定模式<br>jdbc:postgresql://localhost:5432/postgresql?currentSchema=myschema</p>
+<p>旧版本通过 searchpath 指定<br>jdbc:postgresql://localhost:5432/postgresql?searchpath=myschema</p>
+<p>达梦 8 的连接串在没有指定当前模式时，使用的是与用户同名的模式，可通过scheme 指定当前模式，例如：<br>jdbc:dm://localhost:5236?schema=myschema</p>
+<p>————————————————<br>版权声明：本文为CSDN博主「雪影风痕」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_48805880/article/details/128385835">https://blog.csdn.net/m0_48805880/article/details/128385835</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-SpringBoot连接PostgreSQL"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/03/05/SpringBoot%E8%BF%9E%E6%8E%A5PostgreSQL/"
+    >SpringBoot连接PostgreSQL</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/03/05/SpringBoot%E8%BF%9E%E6%8E%A5PostgreSQL/" class="article-date">
+  <time datetime="2023-03-05T09:28:50.000Z" itemprop="datePublished">2023-03-05</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -185,29 +249,50 @@
       
     <div class="article-entry" itemprop="articleBody">
        
-  <pre><code>$&#123;PROJECT_NAME&#125; - 当前的项目名
-$&#123;NAME&#125; - 在文件创建过程中，新文件对话框的命名
-$&#123;USER&#125; - 当前的登录用户
-$&#123;DATE&#125; - 现在的系统日期
-$&#123;TIME&#125; - 现在的系统时间
-$&#123;YEAR&#125; - 当前年份
-$&#123;MONTH&#125; - 当前月份
-$&#123;DAY&#125; - 当前月份中的第几日
-$&#123;HOUR&#125; - 现在的小时
-$&#123;MINUTE&#125; - 现在的分钟
-$&#123;PRODUCT_NAME&#125; - IDE创建文件的名称
-$&#123;MONTH_NAME_SHORT&#125; - 月份的前三个字母缩写
-$&#123;MONTH_NAME_FULL&#125; - 完整的月份名
-
+  <ul>
+<li><p>1 yml配置</p>
+</li>
+<li><ul>
+<li><p>1.1 不指定schema的情况下，使用公共的schema</p>
+<pre><code> spring:
+   datasource:
+     driver-class-name: org.postgresql.Driver
+     url: jdbc:postgresql://localhost:5432/database
+     username: xxx
+     password: xxx
  
 </code></pre>
-<p>示例：</p>
-<pre><code>#-*- coding = utf-8 -*-
-#@Time : $&#123;DATE&#125; $&#123;TIME&#125;
-#@Author : YourName
-#@File : $&#123;NAME&#125;.py
-#@Software : $&#123;PRODUCT_NAME&#125;
+</li>
+</ul>
+</li>
+<li><ul>
+<li><p>1.2 指定schema的情况下</p>
+<pre><code> spring:
+   datasource:
+     driver-class-name: org.postgresql.Driver
+     url: jdbc:postgresql://localhost:5432/database?currentSchema=schema
+     username: xxx
+     password: xxx
+ 
 </code></pre>
+</li>
+</ul>
+</li>
+<li><p>2 版本影响 </p>
+</li>
+<li><ul>
+<li><p>postgresql 9.3 及以前的版本指定方式</p>
+<p> spring.datasource.url=jdbc:postgresql://localhost:5432/postgresql?searchpath=newschema</p>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><p>postgresql 9.4 及以后的版本指定方式</p>
+<p> spring.datasource.url=jdbc:postgresql://localhost:5432/postgresql?currentSchema=newschema </p>
+</li>
+</ul>
+</li>
+</ul>
  
       <!-- reward -->
       
@@ -218,7 +303,7 @@ $&#123;MONTH_NAME_FULL&#125; - 完整的月份名
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PyCharm/" rel="tag">PyCharm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/" rel="tag">Python</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SpringBoot/" rel="tag">SpringBoot</a></li></ul>
 
     </footer>
   </div>
@@ -229,7 +314,7 @@ $&#123;MONTH_NAME_FULL&#125; - 完整的月份名
 
     
     <article
-  id="post-查看PostgreSQL序列最后值的方法"
+  id="post-QGIS-Environment-variables"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -240,8 +325,8 @@ $&#123;MONTH_NAME_FULL&#125; - 完整的月份名
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/02/16/%E6%9F%A5%E7%9C%8BPostgreSQL%E5%BA%8F%E5%88%97%E6%9C%80%E5%90%8E%E5%80%BC%E7%9A%84%E6%96%B9%E6%B3%95/"
-    >查看PostgreSQL序列最后值的方法</a> 
+  <a class="article-title" href="/2023/03/04/QGIS-Environment-variables/"
+    >QGIS Environment variables</a> 
 </h2>
  
 
@@ -249,8 +334,8 @@ $&#123;MONTH_NAME_FULL&#125; - 完整的月份名
     </header>
      
     <div class="article-meta">
-      <a href="/2023/02/16/%E6%9F%A5%E7%9C%8BPostgreSQL%E5%BA%8F%E5%88%97%E6%9C%80%E5%90%8E%E5%80%BC%E7%9A%84%E6%96%B9%E6%B3%95/" class="article-date">
-  <time datetime="2023-02-16T04:18:32.000Z" itemprop="datePublished">2023-02-16</time>
+      <a href="/2023/03/04/QGIS-Environment-variables/" class="article-date">
+  <time datetime="2023-03-04T06:10:15.000Z" itemprop="datePublished">2023-03-04</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
@@ -260,14 +345,375 @@ $&#123;MONTH_NAME_FULL&#125; - 完整的月份名
       
     <div class="article-entry" itemprop="articleBody">
        
-  <pre><code>SELECT SCHEMANAME AS SCHEMA,SEQUENCENAME AS SEQUENCE,LAST_VALUE FROM PG_SEQUENCES
+  <p>You can configure some aspects of QGIS Server by setting environment variables.</p>
+<p>According to the HTTP server and how you run QGIS Server, there are several ways to define these variables. This is fully described in Apache HTTP Server.</p>
+<p>名称</p>
+<p>Description</p>
+<p>Default</p>
+<p>Services</p>
+<p>QGIS_OPTIONS_PATH</p>
+<p>Specifies the path to the directory with settings. It works the same way as QGIS application –optionspath option. It is looking for settings file in <QGIS_OPTIONS_PATH>/QGIS/QGIS3.ini.</QGIS_OPTIONS_PATH></p>
+<p>‘’</p>
+<p>All</p>
+<p>QGIS_PLUGINPATH</p>
+<p>Useful if you are using Python plugins for the server, this sets the folder that is searched for Python plugins.</p>
+<p>‘’</p>
+<p>All</p>
+<p>QGIS_PROJECT_FILE</p>
+<p>The .qgs or .qgz project file, normally passed as a parameter in the query string (with MAP), you can also set it as an environment variable (for example by using mod_rewrite Apache module).</p>
+<p>Note that you may also indicate a project stored in PostgreSQL, e.g. postgresql://localhost:5432?sslmode=disable&amp;dbname=mydb&amp;schema=myschema&amp;project=myproject.</p>
+<p>‘’</p>
+<p>All</p>
+<p>QGIS_SERVER_API_RESOURCES_DIRECTORY</p>
+<p>Base directory for all OGC API (such as OAPIF/WFS3) static resources (HTML templates, CSS, JS, …)</p>
+<p>depends on packaging</p>
+<p>WFS</p>
+<p>QGIS_SERVER_API_WFS3_MAX_LIMIT</p>
+<p>Maximum value for limit in a features request.</p>
+<p>10000</p>
+<p>WFS</p>
+<p>QGIS_SERVER_CACHE_DIRECTORY</p>
+<p>Specifies the network cache directory on the filesystem.</p>
+<p>cache in profile directory</p>
+<p>All</p>
+<p>QGIS_SERVER_CACHE_SIZE</p>
+<p>Sets the network cache size in MB.</p>
+<p>50 MB</p>
+<p>All</p>
+<p>QGIS_SERVER_DISABLE_GETPRINT</p>
+<p>This is an option at the project level to improve project read time by disabling loading of layouts.</p>
+<p>Activating this option disables the QGIS WMS GetPrint request. Set this QGIS project flag to not load layouts.</p>
+<p>false</p>
+<p>WMS</p>
+<p>QGIS_SERVER_IGNORE_BAD_LAYERS</p>
+<p>“Bad” layers are layers that cannot be loaded. The default behavior of QGIS Server is to consider the project as not available if it contains a bad layer.</p>
+<p>The default behavior can be overridden by setting this variable to 1 or true. In this case, “bad” layers will just be ignored, and the project will be considered valid and available.</p>
+<p>false</p>
+<p>All</p>
+<p>QGIS_SERVER_LANDING_PAGE_PREFIX</p>
+<p>Prefix of the path component of the landing page base URL</p>
+<p>“”</p>
+<p>All</p>
+<p>QGIS_SERVER_LANDING_PAGE_PROJECTS_DIRECTORIES</p>
+<p>Directories used by the landing page service to find .qgs and .qgz projects</p>
+<p>“”</p>
+<p>All</p>
+<p>QGIS_SERVER_LANDING_PAGE_PROJECTS_PG_CONNECTIONS</p>
+<p>PostgreSQL connection strings used by the landing page service to find projects</p>
+<p>“”</p>
+<p>All</p>
+<p>QGIS_SERVER_LOG_FILE</p>
+<p>Specify path and filename. Make sure that server has proper permissions for writing to file. File should be created automatically, just send some requests to server. If it’s not there, check permissions.</p>
+<p>警告</p>
+<p>QGIS_SERVER_LOG_FILE is deprecated since QGIS 3.4, use QGIS_SERVER_LOG_STDERR instead. File logging support will be removed in QGIS 4.0.</p>
+<p>‘’</p>
+<p>All</p>
+<p>QGIS_SERVER_LOG_LEVEL</p>
+<p>Specify desired log level. Available values are:</p>
+<p>0 or INFO (log all requests)</p>
+<p>1 or WARNING</p>
+<p>2 or CRITICAL (log just critical errors, suitable for production purposes)</p>
+<p>0</p>
+<p>All</p>
+<p>QGIS_SERVER_LOG_PROFILE</p>
+<p>Add detailed profile information to the logs, only effective when QGIS_SERVER_LOG_LEVEL=0</p>
+<p>false</p>
+<p>All</p>
+<p>QGIS_SERVER_LOG_STDERR</p>
+<p>Activate logging to stderr. This variable has no effect when QGIS_SERVER_LOG_FILE is set.</p>
+<p>0 or false (case insensitive)</p>
+<p>1 or true (case insensitive)</p>
+<p>false</p>
+<p>All</p>
+<p>QGIS_SERVER_MAX_THREADS</p>
+<p>Number of threads to use when parallel rendering is activated. If value is -1 it uses the number of processor cores.</p>
+<p>-1</p>
+<p>All</p>
+<p>QGIS_SERVER_OVERRIDE_SYSTEM_LOCALE</p>
+<p>Sets LOCALE to be used by QGIS server. The default value is empty (no override).</p>
+<p>Example: de_CH.utf8</p>
+<p>‘’</p>
+<p>All</p>
+<p>QGIS_SERVER_PARALLEL_RENDERING</p>
+<p>Activates parallel rendering for WMS GetMap requests. It’s disabled (false) by default. Available values are:</p>
+<p>0 or false (case insensitive)</p>
+<p>1 or true (case insensitive)</p>
+<p>false</p>
+<p>WMS</p>
+<p>QGIS_SERVER_SHOW_GROUP_SEPARATOR</p>
+<p>Defines whether a group separator (e.g. thousand separator) should be used for numeric values (e.g. in GetFeatureInfo responses). The default value is 0.</p>
+<p>0 or false (case insensitive)</p>
+<p>1 or true (case insensitive)</p>
+<p>false</p>
+<p>WMS</p>
+<p>QGIS_SERVER_TRUST_LAYER_METADATA</p>
+<p>This is an option at the project level to improve project read time by using the vector layer extents defined in the project metadata and disabling the check for PostgreSQL/PostGIS layer primary key uniqueness.</p>
+<p>Trusting layer metadata can be forced by setting this variable to 1 or true. The vector layer’s extent will then be the one defined in the project, and the PostgreSQL/PostGIS layer’s primary key defined in the data source is considered as unique without a check.</p>
+<p>Do not use it if layers’ extent is not fixed during the project’s use.</p>
+<p>false</p>
+<p>All</p>
+<p>QGIS_SERVER_WMS_MAX_HEIGHT / QGIS_SERVER_WMS_MAX_WIDTH</p>
+<p>Maximum height/width for a WMS request. The most conservative between this and the project one is used. If the value is -1, it means that there is no maximum set.</p>
+<p>-1</p>
+<p>WMS</p>
+<p>QUERY_STRING</p>
+<p>The query string, normally passed by the web server. This variable can be useful while testing QGIS server binary from the command line.</p>
+<p>For example for testing a GetCapabilities request on the command line to a project that also requires a PostgreSQL connection defined in a pg_service.conf file:</p>
+<p>PGSERVICEFILE=/etc/pg_service.conf <br>QUERY_STRING=”MAP=/home/projects/world.qgs&amp;SERVICE=WMS&amp;REQUEST=GetCapabilities” <br>/usr/lib/cgi-bin/qgis_mapserv.fcgi<br>The result should be either the content of the GetCapabilities response or, if something is wrong, an error message.</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
 
-SELECT * FROM ALL_BOU1_4L_GID_SEQ;
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/QGIS/" rel="tag">QGIS</a></li></ul>
 
-SELECT CURRVAL(&#39;ALL_BOU1_4L_GID_SEQ&#39;);
+    </footer>
+  </div>
 
-SELECT NEXTVAL(&#39;ALL_BOU1_4L_GID_SEQ&#39;);
+   
+    
+</article>
+
+    
+    <article
+  id="post-How-QGIS-Serve-a-project"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/03/03/How-QGIS-Serve-a-project/"
+    >How QGIS Serve a project</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/03/03/How-QGIS-Serve-a-project/" class="article-date">
+  <time datetime="2023-03-03T06:07:30.000Z" itemprop="datePublished">2023-03-03</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>Now that QGIS Server is installed and running, we just have to use it.</p>
+<p>Obviously, we need a QGIS project to work on. Of course, you can fully customize your project by defining contact information, precise some restrictions on CRS or even exclude some layers. Everything you need to know about that is described later in Configure your project.</p>
+<p>But for now, we are going to use a simple project already configured and previously downloaded in /home/qgis/projects/world.qgs, as described above.</p>
+<p>By opening the project and taking a quick look on layers, we know that 4 layers are currently available:</p>
+<p>airports<br>places<br>countries<br>countries_shapeburst</p>
+<p>You don’t have to understand the full request for now but you may retrieve a map with some of the previous layers thanks to QGIS Server by doing something like this in your web browser to retrieve the countries layer:</p>
+<pre><code>http://qgis.demo/qgisserver?
+  MAP=/home/qgis/projects/world.qgs&amp;
+  LAYERS=countries&amp;
+  SERVICE=WMS&amp;
+  VERSION=1.3.0&amp;
+  REQUEST=GetMap&amp;
+  CRS=EPSG:4326&amp;
+  WIDTH=400&amp;
+  HEIGHT=200&amp;
+  BBOX=-90,-180,90,180
 </code></pre>
+<p>If you obtain the next image, then QGIS Server is running correctly:</p>
+<p>Note that you may define QGIS_PROJECT_FILE environment variable to use a project by default instead of giving a MAP parameter (see Environment variables).</p>
+<p>For example with spawn-fcgi:</p>
+<p>export QGIS_PROJECT_FILE=/home/qgis/projects/world.qgs<br>spawn-fcgi -f /usr/lib/bin/cgi-bin/qgis_mapserv.fcgi <br>           -s /var/run/qgisserver.socket <br>           -U www-data -G www-data -n</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/QGIS/" rel="tag">QGIS</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-QGIS-Server-Installation-on-Windows"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/03/02/QGIS-Server-Installation-on-Windows/"
+    >QGIS Server Installation on Windows</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/03/02/QGIS-Server-Installation-on-Windows/" class="article-date">
+  <time datetime="2023-03-02T15:40:52.000Z" itemprop="datePublished">2023-03-02</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>QGIS Server can also be installed on Windows systems using the 64 bit version of the OSGeo4W network installer (<a target="_blank" rel="noopener" href="https://qgis.org/en/site/forusers/download.html">https://qgis.org/en/site/forusers/download.html</a>).</p>
+<h1 id="A-simple-procedure-is-the-following"><a href="#A-simple-procedure-is-the-following" class="headerlink" title="A simple procedure is the following:"></a>A simple procedure is the following:</h1><ul>
+<li><p>Download and run the OSGeo4W installer</p>
+</li>
+<li><p>Follow the “Advanced Install” and install the QGIS Desktop, QGIS Server apache and mod_fcgid packages.</p>
+</li>
+<li><p>Apache is not directly installed as a service on Windows. You need to:</p>
+</li>
+</ul>
+<p>** Right-click the OSGeo4W.bat file at the root of the C:\OSGeo4W64\ folder (if the default installation paths have been used) and select Run as administrator</p>
+<p>** In the console, run apache-install.bat, which will output</p>
+<pre><code>&gt; apache-install.bat
+Installing the &#39;Apache OSGeo4W Web Server&#39; service
+The &#39;Apache OSGeo4W Web Server&#39; service is successfully installed.
+Testing httpd.conf....
+Errors reported here must be corrected before the service can be started.
+...
+</code></pre>
+<p>The service is started as you can notice in the report. But the server may fail to run due to missing custom configuration.</p>
+<ul>
+<li>Edit the C:\OSGeo4w64\apps\apache\conf\httpd.conf file with the following changes (various other combinations are possible):</li>
+</ul>
+<p>** (Optional) Customize the address to listen to using an IP and/or port, You can and add as many entries as you wish.</p>
+<p>*** Existing config<br>    Listen ${SRVPORT}</p>
+<p>*** Replacement<br>    Listen localhost:8080</p>
+<p>** Indicate where to find the script files<br>*** Existing config<br>    ScriptAlias /cgi-bin/ “${SRVROOT}/cgi-bin/“</p>
+<p>*** Replacement<br>    ScriptAlias /cgi-bin/ “C:/OSGeo4W64/apps/qgis/bin/“</p>
+<p>** Provide permissions on the script folder<br>*** Existing config<br>&lt;Directory “${SRVROOT}/cgi-bin”&gt;<br>    AllowOverride None<br>    Options None<br>    Require all granted<br></p>
+<p>*** Replacement<br>&lt;Directory “C:/OSGeo4W64/apps/qgis/bin”&gt;<br>    SetHandler cgi-script<br>    AllowOverride None<br>    Options ExecCGI<br>    Require all granted<br></p>
+<p>** Enable file extensions to use for script files. Uncomment and complete<br>*** Existing config<br>    #AddHandler cgi-script .cgi<br>*** Replacement<br>    AddHandler cgi-script .cgi .exe</p>
+<p>** Add more OSGeo4W custom configuration variables</p>
+<p>*** Existing config<br>    # parse OSGeo4W apache conf files<br>    IncludeOptional “C:/OSGeo4W64/httpd.d/httpd_*.conf”<br>*** Replacement<br>    # parse OSGeo4W apache conf files<br>    IncludeOptional “C:/OSGeo4W64/httpd.d/httpd_*.conf”<br>    SetEnv GDAL_DATA “C:/OSGeo4W64/share/gdal”<br>    SetEnv QGIS_AUTH_DB_DIR_PATH “C:/OSGeo4W64/apps/qgis/resources”</p>
+<p>** Restart the Apache web server</p>
+<pre><code>&gt; apache-restart.bat
+</code></pre>
+<ul>
+<li>Open browser window to testing a GetCapabilities request to QGIS Server. Replace localhost:8080 with the IP and port you set to listen.</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="http://localhost:8080/cgi-bin/qgis_mapserv.fcgi.exe?SERVICE=WMS&amp;VERSION=1.3.0&amp;REQUEST=GetCapabilities">http://localhost:8080/cgi-bin/qgis_mapserv.fcgi.exe?SERVICE=WMS&amp;VERSION=1.3.0&amp;REQUEST=GetCapabilities</a></p>
+<p>A XML file with the capabilities should be returned. Your server is ready to use.</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/QGIS/" rel="tag">QGIS</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-PostgreSQL-Connection-URIs"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/03/01/PostgreSQL-Connection-URIs/"
+    >PostgreSQL Connection URIs</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/03/01/PostgreSQL-Connection-URIs/" class="article-date">
+  <time datetime="2023-03-01T15:13:43.000Z" itemprop="datePublished">2023-03-01</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>The general form for a connection URI is:</p>
+<pre><code>postgresql://[userspec@][hostspec][/dbname][?paramspec]
+</code></pre>
+<p>where userspec is:</p>
+<pre><code>user[:password]
+</code></pre>
+<p>and hostspec is:</p>
+<pre><code>[host][:port][,...]
+</code></pre>
+<p>and paramspec is:</p>
+<pre><code>name=value[&amp;...]
+</code></pre>
+<p>The URI scheme designator can be either postgresql:// or postgres://. Each of the remaining URI parts is optional. The following examples illustrate valid URI syntax:</p>
+<pre><code>postgresql://
+postgresql://localhost
+postgresql://localhost:5433
+postgresql://localhost/mydb
+postgresql://user@localhost
+postgresql://user:secret@localhost
+postgresql://other@localhost/otherdb?connect_timeout=10&amp;application_name=myapp
+postgresql://host1:123,host2:456/somedb?target_session_attrs=any&amp;application_name=myapp
+</code></pre>
+<p>Values that would normally appear in the hierarchical part of the URI can alternatively be given as named parameters. For example:</p>
+<pre><code>postgresql:///mydb?host=localhost&amp;port=5433
+</code></pre>
+<p>All named parameters must match key words listed in Section 34.1.2, except that for compatibility with JDBC connection URIs, instances of ssl=true are translated into sslmode=require.</p>
+<p>The connection URI needs to be encoded with percent-encoding if it includes symbols with special meaning in any of its parts. Here is an example where the equal sign (=) is replaced with %3D and the space character with %20:</p>
+<pre><code>postgresql://user@localhost:5433/mydb?options=-c%20synchronous_commit%3Doff
+</code></pre>
+<p>The host part may be either a host name or an IP address. To specify an IPv6 address, enclose it in square brackets:</p>
+<pre><code>postgresql://[2001:db8::1234]/database
+</code></pre>
+<p>The host part is interpreted as described for the parameter host. In particular, a Unix-domain socket connection is chosen if the host part is either empty or looks like an absolute path name, otherwise a TCP/IP connection is initiated. Note, however, that the slash is a reserved character in the hierarchical part of the URI. So, to specify a non-standard Unix-domain socket directory, either omit the host part of the URI and specify the host as a named parameter, or percent-encode the path in the host part of the URI:</p>
+<pre><code>postgresql:///dbname?host=/var/lib/postgresql
+postgresql://%2Fvar%2Flib%2Fpostgresql/dbname
+</code></pre>
+<p>It is possible to specify multiple host components, each with an optional port component, in a single URI. A URI of the form postgresql://host1:port1,host2:port2,host3:port3/ is equivalent to a connection string of the form host=host1,host2,host3 port=port1,port2,port3. As further described below, each host will be tried in turn until a connection is successfully established.</p>
  
       <!-- reward -->
       
@@ -279,258 +725,6 @@ SELECT NEXTVAL(&#39;ALL_BOU1_4L_GID_SEQ&#39;);
     <footer class="article-footer">
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-PostgreSQL备份与恢复"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/02/16/PostgreSQL%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D/"
-    >PostgreSQL备份与恢复</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/02/16/PostgreSQL%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D/" class="article-date">
-  <time datetime="2023-02-16T04:17:09.000Z" itemprop="datePublished">2023-02-16</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>（一）备份数据库，步骤如下：<br>（1）开始-运行-cmd 弹出dos控制台；然后 在控制台里，进入PostgreSQL安装目录bin下：<br>    cd C:\Program Files\PostgreSQL\9.0\bin<br>    pg_dump -h localhost -U postgres databasename &gt; D:\databasename.bak</p>
-<p>（二）恢复数据库，步骤如下：<br>（1）预先建好数据库databasename，<br>（2）开始-运行-cmd 弹出dos控制台；然后 在控制台里，进入PostgreSQL安装目录bin下：<br>    cd C:\Program Files\PostgreSQL\9.0\bin<br>    psql -h localhost -U postgres -d databasename &lt; D:\databasename.bak</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-windows下注册和取消PostgreSQL服务的方法"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/02/16/windows%E4%B8%8B%E6%B3%A8%E5%86%8C%E5%92%8C%E5%8F%96%E6%B6%88PostgreSQL%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%96%B9%E6%B3%95/"
-    >windows下注册和取消PostgreSQL服务的方法</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/02/16/windows%E4%B8%8B%E6%B3%A8%E5%86%8C%E5%92%8C%E5%8F%96%E6%B6%88PostgreSQL%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%96%B9%E6%B3%95/" class="article-date">
-  <time datetime="2023-02-16T04:16:04.000Z" itemprop="datePublished">2023-02-16</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="（一）"><a href="#（一）" class="headerlink" title="（一）"></a>（一）</h1><p>pg_ctl register [-N servicename] [-U username] [-P password] [-D datadir] [-w][-t seconds] [-o options]<br>pg_ctl unregister [-N servicename]<br>参数说明如下：<br>-N servicename：要注册的系统服务的名字。这个名字将用于服务名和 显示名。<br>-P password：用于启动服务的密码<br>-U：用于启动服务的用户名。如果是域用户，需要使用“DOMAIN\username”的格式<br>使用举例如下：<br>删除一个服务：<br>pg_ctl unregister -N postgresql-9.2<br>增加一个服务：<br>pg_ctl register -D “C:\Program Files\Postgresql\9.2\data”</p>
-<h1 id="（二）"><a href="#（二）" class="headerlink" title="（二）"></a>（二）</h1><p>重新注册服务，其实比重新安装还简单了；执行命令就可以了，<br>第一步：进入到数据库的安装目录，cd D:\PostgreSQL\bin；<br>第二部：执行服务注册：pg_ctl register -N pg921 -D D:\PostgreSQL\data -S auto -w -t 10 -l D:/PostgreSQL/pg921.log -o “-p 5432”,<br>-N pg921 代表注册服务的名称 ，-D代表数据库文件目录 ，-S代表服务启动方式auto自动，demand手动，-o “-p 5432”指启动服务端口；（可以通过pg_ctl –help命令查看使用方法）<br>第三步：启动服务，net start pg921；<br>通过上面的的方法就成功的注册了服务器，以后每次开机都可以使用数据库了；<br>但是postgresql自带的一个管理工具pgAdmin3还是不能正常使用，需要我们配置，配置方法见下图：<br>注意：服务项不需要填写，主机填写localhost，如果填写真实的ip，必须在数据库配置文件中配置ip权限，否则不能连接；</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Enabling-PostGIS"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/02/16/Enabling-PostGIS/"
-    >Enabling PostGIS</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/02/16/Enabling-PostGIS/" class="article-date">
-  <time datetime="2023-02-16T04:13:35.000Z" itemprop="datePublished">2023-02-16</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>PostGIS is an optional extension that must be enabled in EVERY database you want to use it in.</p>
-<pre><code>CREATE EXTENSION postgis;
--- in PostGIS 3, postgis_raster is a separate extension from postgis
--- so do this in addition if you are experimenting PostGIS 3+
-CREATE EXTENSION postgis_raster;
- 
-CREATE EXTENSION postgis_sfcgal;
-CREATE EXTENSION address_standardizer;
-CREATE EXTENSION fuzzystrmatch;
-CREATE EXTENSION postgis_topology;
-CREATE EXTENSION postgis_tiger_geocoder;
-
--- If you want to use pgrouting, download the respective one for your PostgreSQL
-CREATE EXTENSION pgrouting;
-</code></pre>
-<hr>
-<pre><code>-- Enable PostGIS (as of 3.0 contains just geometry/geography)
-CREATE EXTENSION postgis;
--- enable raster support (for 3+)
-CREATE EXTENSION postgis_raster;
--- Enable Topology
-CREATE EXTENSION postgis_topology;
--- Enable PostGIS Advanced 3D
--- and other geoprocessing algorithms
--- sfcgal not available with all distributions
-CREATE EXTENSION postgis_sfcgal;
--- fuzzy matching needed for Tiger
-CREATE EXTENSION fuzzystrmatch;
--- rule based standardizer
-CREATE EXTENSION address_standardizer;
--- example rule data set
-CREATE EXTENSION address_standardizer_data_us;
--- Enable US Tiger Geocoder
-CREATE EXTENSION postgis_tiger_geocoder;
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostGIS/" rel="tag">PostGIS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Ubuntu20-04安装Idea详细教程"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/02/15/Ubuntu20-04%E5%AE%89%E8%A3%85Idea%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/"
-    >Ubuntu20.04安装Idea详细教程</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/02/15/Ubuntu20-04%E5%AE%89%E8%A3%85Idea%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/" class="article-date">
-  <time datetime="2023-02-15T04:09:34.000Z" itemprop="datePublished">2023-02-15</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="官网下载压缩包"><a href="#官网下载压缩包" class="headerlink" title="官网下载压缩包"></a>官网下载压缩包</h1><p><a target="_blank" rel="noopener" href="https://www.jetbrains.com/idea/">https://www.jetbrains.com/idea/</a> </p>
-<h1 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h1><pre><code>sudo tar -zxvf ideaIU-2020.2.3.tar.gz -C /opt 
-cd idea-IU-202.7660.26/bin/
-./idea.sh 
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Idea/" rel="tag">Idea</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a></li></ul>
 
     </footer>
   </div>
@@ -546,7 +740,7 @@ cd idea-IU-202.7660.26/bin/
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/30/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><a class="page-number" href="/page/30/">30</a><span class="page-number current">31</span><a class="page-number" href="/page/32/">32</a><a class="page-number" href="/page/33/">33</a><span class="space">&hellip;</span><a class="page-number" href="/page/37/">37</a><a class="extend next" rel="next" href="/page/32/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/30/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><a class="page-number" href="/page/30/">30</a><span class="page-number current">31</span><a class="page-number" href="/page/32/">32</a><a class="page-number" href="/page/33/">33</a><span class="space">&hellip;</span><a class="page-number" href="/page/40/">40</a><a class="extend next" rel="next" href="/page/32/">下一页</a>
   </nav>
   
 </section>

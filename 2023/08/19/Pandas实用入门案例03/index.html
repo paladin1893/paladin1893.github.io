@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+       
+      <meta name="keywords" content="RS,GPS,GIS,QGIS,Opticks,QT,OpenCV,OSG" />
+       
+      <meta name="description" content="地理信息系统，遥感科学，卫星导航定位技术综合研究。" />
+      
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>Pandas实用入门案例03 |  帕拉丁的游鱼</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/favicon.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    <link rel="alternate" href="/atom.xml" title="帕拉丁的游鱼" type="application/atom+xml">
+</head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-Pandas实用入门案例03"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  Pandas实用入门案例03
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/08/19/Pandas%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B03/" class="article-date">
+  <time datetime="2023-08-19T11:56:48.000Z" itemprop="datePublished">2023-08-19</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">1.6k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">7 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>Python之Pandas的常用技能【索引的增、删、改、查】</p>
+<p>1、索引简介<br>索引（index）是数据处理中非常重要的工具。索引主要用来：</p>
+<p>1）标记数据；2）快速检索数据；</p>
+<p>Pandas中的索引，有两种：1）index（行索引）；2）columns（列索引）；</p>
+<p>数据准备</p>
+<pre><code>import pandas as pd
+#读取数据
+df = pd.read_excel(r&#39;C:\Users\XXXXXX\Desktop\pandas练习文档.xlsx&#39;,sheet_name=3)
+print(df)
+</code></pre>
+<p>2、设置索引的常用方法<br>2.1 读取数据时设置索引</p>
+<pre><code>import pandas as pd
+#读取数据，同时，使用index_col选取第一列作为索引列。
+df = pd.read_excel(r&#39;C:\Users\XXXXXX\Desktop\pandas练习文档.xlsx&#39;,sheet_name=3,index_col=0)
+print(df)
+</code></pre>
+<p>2.2 查看索引相关信息<br>2.2.1 df.index</p>
+<pre><code>import pandas as pd
+#读取数据时，设置了index
+df = pd.read_excel(r&#39;C:\Users\XXXXXX\Desktop\pandas练习文档.xlsx&#39;,sheet_name=3,index_col=1)
+print(df)
+print(&#39;\n&#39;)
+print(df.index)
+</code></pre>
+<p>2.3 设置索引列的名称<br>2.3.1 df.rename_axis()</p>
+<pre><code>import pandas as pd
+#读取数据
+df = pd.read_excel(r&#39;C:\Users\XXXXXX\Desktop\pandas练习文档.xlsx&#39;,sheet_name=3)
+print(df)
+print(&#39;\n&#39;)
+df = df.rename_axis(&#39;index_col&#39;)
+print(df)
+</code></pre>
+<p>2.3.2 df.index.name</p>
+<pre><code>import pandas as pd
+#读取数据
+df = pd.read_excel(r&#39;C:\Users\XXXXXX\Desktop\pandas练习文档.xlsx&#39;,sheet_name=3)
+print(df)
+print(&#39;\n&#39;)
+df.index.name = &#39;index_col&#39;
+print(df)
+</code></pre>
+<p>2.3.3 df.index.names = []</p>
+<pre><code>import pandas as pd
+#读取数据
+df = pd.read_excel(r&#39;C:\Users\XXXXXX\Desktop\pandas练习文档.xlsx&#39;,sheet_name=3)
+#set_index()是设置索引列，reset_index()可以将索引列变成数据列。
+df = df.set_index(keys=[&#39;id&#39;,&#39;name&#39;],drop=True,append=True)
+df_new = df.reset_index(level=1,drop=False)
+print(df_new)
+print(&#39;\n&#39;)
+df_new.index.names = [&#39;x&#39;,&#39;y&#39;]
+print(df_new)
+</code></pre>
+<p>2.3.4 df.columns=values</p>
+<pre><code>import pandas as pd
+#先设置多级别index
+index = pd.MultiIndex.from_tuples([(&#39;girl&#39;,&#39;Lucy&#39;),
+                                    (&#39;girl&#39;,&#39;Rose&#39;),
+                                    (&#39;boy&#39;,&#39;Tom&#39;),
+                                   (&#39;boy&#39;,&#39;Jack&#39;),
+
+                                   ],
+                                  names=[&#39;gender&#39;,&#39;name&#39;])
+#设置columns，一列一个元组，如果是多级别，在一个元组内。
+columns = pd.MultiIndex.from_tuples([(&#39;math&#39;,),
+                                     (&#39;english&#39;,)])
+#构造数据。
+df = pd.DataFrame([
+    (99,78),
+    (87,32),
+    (23,89),
+    (28,81)
+],
+index=index,
+columns=columns)
+print(df)
+df.columns=[&#39;数学&#39;,&#39;英语&#39;]
+print(&#39;\n&#39;)
+print(df)
+</code></pre>
+<p>2.4 重置索引：df.index=values<br>使用赋值的方法。</p>
+<p>【注：重置索引后，不会将原来的索引列作为新的一列保留。】</p>
+<pre><code>import pandas as pd
+#读取数据,同时，使用index_col选取第一列作为索引列。
+df = pd.read_excel(r&#39;C:\Users\XXXXXX\Desktop\pandas练习文档.xlsx&#39;,sheet_name=3,index_col=0)
+df.index = range(len(df))
+print(df)
+</code></pre>
+<p>2.5 重置索引：df.reset_index()<br>2.5.1 df.reset_index()参数详情</p>
+<pre><code>df.reset_index(
+level=None, #如果索引有多个层级，仅从索引中删除level指定的列。默认为删除所有的列。
+drop=False, #重置索引后，是否将原来的索引列作为新的一列保留。默认为False，即保留。
+col_level=0, #如果列有多个级别，确定将这一索引列插入到哪一个级别。默认情况为0，即插入到第一级别。
+col_fill=&#39;&#39; ,#确定如何命名其他级别。
+inplace=False#是否要用新的DataFrame替换原来的DataFrame，一般默认为False。
+)
+</code></pre>
+<p>2.5.2 修改索引，并保留原来的索引列为新的一列</p>
+<pre><code>import pandas as pd
+#读取数据
+df = pd.read_excel(r&#39;C:\Users\XXXXXX\Desktop\pandas练习文档.xlsx&#39;,sheet_name=3,index_col=0)
+#重置索引,会将原来的索引列，变成新的一列。
+df_new = df.reset_index()
+print(df,df_new,sep=&#39;\n&#39;)
+</code></pre>
+<p>2.5.3 删除索引：将索引的列的第二列，变成数据列的第二列</p>
+<pre><code>import pandas as pd
+#读取数据
+df = pd.read_excel(r&#39;C:\Users\XXXXXX\Desktop\pandas练习文档.xlsx&#39;,sheet_name=3)
+#先用set_index()增加几个索引
+df = df.set_index(keys=[&#39;id&#39;,&#39;name&#39;],drop=True,append=True)
+print(df)
+</code></pre>
+<p>使用df.reset_index（）将id列变成数据列</p>
+<pre><code>import pandas as pd
+#读取数据
+df = pd.read_excel(r&#39;C:\Users\XXXXXX\Desktop\pandas练习文档.xlsx&#39;,sheet_name=3)
+#set_index()是设置索引列，reset_index()可以将索引列变成数据列。
+df = df.set_index(keys=[&#39;id&#39;,&#39;name&#39;],drop=True,append=True)
+df_new = df.reset_index(level=1,drop=False)
+print(df,df_new,sep=&#39;\n&#39;)
+</code></pre>
+<p>2.5.4 多级别索引的处理</p>
+<p>1）使用MultiIndex构造多级别索引</p>
+<pre><code>import pandas as pd
+#先设置多级别index
+index = pd.MultiIndex.from_tuples([(&#39;girl&#39;,&#39;Lucy&#39;),
+                                    (&#39;girl&#39;,&#39;Rose&#39;),
+                                    (&#39;boy&#39;,&#39;Tom&#39;),
+                                   (&#39;boy&#39;,&#39;Jack&#39;),
+
+                                   ],
+                                  names=[&#39;gender&#39;,&#39;name&#39;])
+#设置columns，一列一个元组，如果是多级别，在一个元组内。
+columns = pd.MultiIndex.from_tuples([(&#39;math&#39;,),
+                                     (&#39;english&#39;,)])
+#构造数据。
+df = pd.DataFrame([
+    (99,78),
+    (87,32),
+    (23,89),
+    (28,81)
+],
+index=index,
+columns=columns)
+print(df)
+</code></pre>
+<p>将索引”gender”当成数据列。</p>
+<pre><code>df = df.reset_index(level=&#39;gender&#39;)
+print(df)
+</code></pre>
+<p>2.6 重置索引：df.set_index()<br>2.6.1 df.set_index()参数详解</p>
+<pre><code>df.set_index(
+keys, #要设置索引的列名。
+drop=True, #将设置索引的列删除，默认为True，即不保留。
+append=False, #是否保留原索引。默认为False。
+inplace=False, #是否在替换原来的DataFrame。默认为False。
+verify_integrity=False#是否检查索引有无重复，默认为False。
+)
+
+
+import pandas as pd
+#读取数据
+df = pd.read_excel(r&#39;C:\Users\XXXXXX\Desktop\pandas练习文档.xlsx&#39;,sheet_name=3)
+#先用set_index()增加几个索引
+df = df.set_index(keys=[&#39;id&#39;,&#39;name&#39;],drop=False,append=True)
+print(df)
+</code></pre>
+<p>2.7 重置索引：df.reindex()<br>2.7.1 df.reindex()参数详解</p>
+<p>【注：这个参数对其中某些值如method，即使按照官网上的操作，还是报错。我也没弄特别清楚】</p>
+<pre><code>pandas.DataFrame.reindex &amp;#8212; pandas 1.5.2 documentation
+
+df.reindex(
+keywords for axes, #列标签，行标签。即index=,columns等。
+method=None, #默认为None。针对填入的数据是向前，向后，向左，还是向右。&#123;None， &#39;backfill&#39;/&#39;bfill&#39;， &#39;pad&#39;/&#39;ffill&#39;， &#39;nearest&#39;&#125;
+copy=True, 
+level=None, #多级别索引时使用。
+fill_value=nan, #一般默认填入NaN。可以设置。
+limit=None, #向前或向后填入的最大连续数。
+tolerance=None
+</code></pre>
+<p>2.7.2 基本用法</p>
+<pre><code>import pandas as pd
+df = pd.DataFrame([
+    (99,78),
+    (87,32),
+    (23,89),
+    (28,81)
+])
+print(df)
+
+print(&#39;\n&#39;)
+#使用df.reindex()重新赋值索引。
+df = df.reindex([0,&#39;B&#39;,3,&#39;D&#39;])
+print(df)
+
+fill_value的使用
+
+import pandas as pd
+df = pd.DataFrame([
+    (99,78),
+    (87,32),
+    (23,89),
+    (28,81)
+])
+print(df)
+
+print(&#39;\n&#39;)
+#使用df.reindex()重新赋值索引。
+df = df.reindex([0,&#39;B&#39;,3,&#39;D&#39;],fill_value=&#39;--&#39;)
+print(df)
+</code></pre>
+<p>修改columns</p>
+<pre><code>import pandas as pd
+df = pd.DataFrame([
+    (99,78),
+    (87,32),
+    (23,89),
+    (28,81)
+],columns=[&#39;math&#39;,&#39;english&#39;])
+print(df)
+
+print(&#39;\n&#39;)
+#使用df.reindex()重新赋值索引。
+df = df.reindex(columns=[&#39;math&#39;,&#39;english&#39;,&#39;music&#39;],fill_value=&#39;100&#39;)
+#或者使用
+print(df)
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://paladin1893.github.io/2023/08/19/Pandas%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B03/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pandas/" rel="tag">pandas</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2023/08/20/Vue%E6%8C%89%E9%92%AE%E5%B1%85%E4%B8%AD%E5%B1%85%E5%B7%A6%E5%B1%85%E5%8F%B3/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            Vue按钮居中居左居右
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2023/08/18/Pandas%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B02/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">Pandas实用入门案例02</div>
+      </a>
+    
+  </nav>
+
+  
+   
+    
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2022-2023
+        <i class="ri-heart-fill heart_icon"></i> paladin1893
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="帕拉丁的游鱼"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/friends">友链</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>
