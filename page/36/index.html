@@ -154,7 +154,7 @@
     
     
     <article
-  id="post-Linux下修改tomcat端口号"
+  id="post-PostgreSQL数据库免密登录配置"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -165,8 +165,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/02/13/Linux%E4%B8%8B%E4%BF%AE%E6%94%B9tomcat%E7%AB%AF%E5%8F%A3%E5%8F%B7/"
-    >Linux下修改tomcat端口号</a> 
+  <a class="article-title" href="/2023/02/19/PostgreSQL%E6%95%B0%E6%8D%AE%E5%BA%93%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95%E9%85%8D%E7%BD%AE/"
+    >PostgreSQL数据库免密登录配置</a> 
 </h2>
  
 
@@ -174,8 +174,8 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2023/02/13/Linux%E4%B8%8B%E4%BF%AE%E6%94%B9tomcat%E7%AB%AF%E5%8F%A3%E5%8F%B7/" class="article-date">
-  <time datetime="2023-02-13T01:20:14.000Z" itemprop="datePublished">2023-02-13</time>
+      <a href="/2023/02/19/PostgreSQL%E6%95%B0%E6%8D%AE%E5%BA%93%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95%E9%85%8D%E7%BD%AE/" class="article-date">
+  <time datetime="2023-02-19T03:45:56.000Z" itemprop="datePublished">2023-02-19</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
@@ -185,33 +185,122 @@
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>1、首先cd进tomcat目录里的conf文件夹，vi打开server.xml配置文件</p>
-<pre><code>[root@localhost soft]# ls
-download redis solrhome tomcat-sina-8081 tomcat-souhu-8082
-jdk redis-3.0.0.gem tomcat tomcat-solr zookeeper-3.4.6
-[root@localhost soft]# cd tomcat-solr/
-[root@localhost tomcat-solr]# cd conf/
-[root@localhost conf]# ls
-Catalina catalina.properties logging.properties tomcat-users.xml
-catalina.policy context.xml server.xml web.xml
-[root@localhost conf]# vim server.xml
+  <p>PG数据库在登录的时候，需要显示输入密码，因此在很多维护操作中都不方便，比如：定时的VACUUM脚本、定时备份脚本等。PG不能像MySQL那样可以在命令中直接输入密码。</p>
+<p>本文梳理了以下几种PG配置免密的方法。</p>
+<h1 id="具体方法"><a href="#具体方法" class="headerlink" title="具体方法"></a>具体方法</h1><ul>
+<li>方法一：设置pg_hab.conf 认证方式为trust</li>
+</ul>
+<p>示例：</p>
+<pre><code>#Type database user address method
+host all postgres 127.0.0.1/32 trust
 </code></pre>
-<p>2、改动之一<br>8005改成了8885</p>
-<pre><code>&lt;Server port=”8885″ shutdown=”SHUTDOWN”&gt;
-&lt;!– Security listener. Documentation at /docs/config/listeners.html
-&lt;Listener className=”org.apache.catalina.security.SecurityListener” /&gt;
+<p>该方式最不安全，导致通过指定IP连接数据库的连接都可以任意登录数据，毫无安全保障。禁止在生产环境使用。</p>
+<ul>
+<li>方法二：设置PG环境变量PGPASSWORD</li>
+</ul>
+<p>PGPASSWORD是PostgreSQL系统环境变量，在客户端设置后再远程连接数据库时，将优先使用这个密码。</p>
+<p>示例：</p>
+<pre><code>[postgres@PG-1 ~]$ export PGPASSWORD=root
+[postgres@PG-1 ~]$ psql -U postgres -h 127.0.0.1 -p 5432
+Timing is on.
+Border style is 2.
+Null display is &quot;NULL&quot;.
+psql (13.2)
+Type &quot;help&quot; for help.
 </code></pre>
-<p>3、改动之二<br>8080改成了8888</p>
-<pre><code>&lt;Connector port=”8888″ protocol=”HTTP/1.1″
-connectionTimeout=”20000″
-redirectPort=”8443″ /&gt;
+<p>此时数据库登录时，不在提示输入用户密码</p>
+<ul>
+<li>方法三：设置环境变量PGSERVICE</li>
+</ul>
+<p>pg_service.conf 通过定义服务文件的方式，可以对多个数据库进行免密登录。</p>
+<p>示例：</p>
+<pre><code>vi /home/postgres/.pg_service.conf
+[backup]
+hostaddr=127.0.0.1
+port=5432
+user=postgres
+dbname=postgres
+password=root
+connect_timeout=10
+[postgres@PG-1 ~]$ export PGSERVICE=backup
+[postgres@PG-1 ~]$ psql -h 127.0.0.1 -p 5432 -U postgres
+Timing is on.
+Border style is 2.
+Null display is &quot;NULL&quot;.
+psql (13.2)
+Type &quot;help&quot; for help.
 </code></pre>
-<p>4、改动之三<br>8009改成了8889</p>
-<pre><code>&lt;!– Define an AJP 1.3 Connector on port 8009 –&gt;
-&lt;Connector port=”8889″ protocol=”AJP/1.3″ redirectPort=”8443″ /&gt;
+<p>定义pg_service.conf文件，该文件可以包含多个模块，每个模块代表一个连接。</p>
+<ul>
+<li>方法四：设置.pgpass文件</li>
+</ul>
+<p>该文件默认在/home/postgres/，且该文件的权限要为600，如果文件权限不对，则在登录会有相应的告警输出，并要求输入用户密码。</p>
+<pre><code>WARNING: password file &quot;/home/postgres/.pgpass&quot; has group or world access; permissions should be u=rw (0600) or less
+Password for user postgres:
 </code></pre>
-<p>5、wq保存退出</p>
-<p>6、最后在tomcat的bin目录./startup.sh启动一下试试：OK</p>
+<p>内容格式：</p>
+<pre><code>host:port:dbname:username:password
+</code></pre>
+<p>示例：</p>
+<pre><code>[postgres@PG-1 ~]$ cat .pgpass
+127.0.0.1:5432:postgres:postgres:root
+localhost:5432:postgres:postgres:root
+</code></pre>
+<p>文件权限：</p>
+<pre><code>[postgres@PG-1 ~]$ ll -h .pgpass
+-rw------- 1 postgres postgres 76 2月 24 19:26 .pgpass
+</code></pre>
+<p>登录：</p>
+<pre><code>[postgres@PG-1 ~]$ psql -U postgres -h 127.0.0.1 -p 5432
+Timing is on.
+Border style is 2.
+Null display is &quot;NULL&quot;.
+psql (13.2)
+Type &quot;help&quot; for help.
+</code></pre>
+<p>以上的几种免密方式，在使用pg_basebackup进行备份时都可适用。以下是相关验证：</p>
+<h1 id="相关验证"><a href="#相关验证" class="headerlink" title="相关验证"></a>相关验证</h1><ul>
+<li><ol>
+<li>使用PGSERVICE环境变量</li>
+</ol>
+</li>
+</ul>
+<p>示例：</p>
+<pre><code>export PGSERVICE=backup
+pg_basebackup -D /data/aa -Fp -X stream -R -P -c fast
+</code></pre>
+<ul>
+<li><ol start="2">
+<li>使用PGPASSWORD环境变量</li>
+</ol>
+</li>
+</ul>
+<p>示例：</p>
+<pre><code>export PGPASSWORD=password
+pg_basebackup -D /data/bb -Fp -X stream -R -P -c fast -h 127.0.0.1 -p 5432 -U postgres
+</code></pre>
+<ul>
+<li><ol start="3">
+<li>使用.pgpass方式</li>
+</ol>
+</li>
+</ul>
+<p>示例：</p>
+<pre><code>vi /home/postgres/.pgpass
+127.0.0.1:5432:postgres:postgres:root
+chmod 600 .pgpass
+pg_basebackup -D /data/bb -Fp -X stream -R -P -c fast -h 127.0.0.1 -p 5432 -U postgres
+</code></pre>
+<ul>
+<li><ol start="4">
+<li>pg_basebackup备份使用-d参数，在连接字符串中配置连接信息</li>
+</ol>
+</li>
+</ul>
+<p>示例：</p>
+<pre><code>pg_basebackup   -D /data/pgdata/ -F p -R -X stream -c fast  -U replic -d host=192.168.28.169 port=5432 password=replic dbname=postgres
+</code></pre>
+<p>转载自<a target="_blank" rel="noopener" href="https://www.ucloud.cn/yun/129860.html">https://www.ucloud.cn/yun/129860.html</a></p>
  
       <!-- reward -->
       
@@ -222,7 +311,7 @@ redirectPort=”8443″ /&gt;
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tomcat/" rel="tag">tomcat</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li></ul>
 
     </footer>
   </div>
@@ -233,7 +322,7 @@ redirectPort=”8443″ /&gt;
 
     
     <article
-  id="post-Linux下启动tomcat服务"
+  id="post-Notepad-正则表达式"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -244,8 +333,8 @@ redirectPort=”8443″ /&gt;
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/02/13/Linux%E4%B8%8B%E5%90%AF%E5%8A%A8tomcat%E6%9C%8D%E5%8A%A1/"
-    >Linux下启动tomcat服务</a> 
+  <a class="article-title" href="/2023/02/18/Notepad-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"
+    >Notepad++正则表达式</a> 
 </h2>
  
 
@@ -253,18 +342,91 @@ redirectPort=”8443″ /&gt;
     </header>
      
     <div class="article-meta">
-      <a href="/2023/02/13/Linux%E4%B8%8B%E5%90%AF%E5%8A%A8tomcat%E6%9C%8D%E5%8A%A1/" class="article-date">
-  <time datetime="2023-02-13T01:18:37.000Z" itemprop="datePublished">2023-02-13</time>
+      <a href="/2023/02/18/Notepad-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="article-date">
+  <time datetime="2023-02-18T01:59:10.000Z" itemprop="datePublished">2023-02-18</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
   </div>
    
     </div>
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>Linux下tomcat服务的启动、关闭与错误跟踪，使用PuTTy远程连接到服务器以后，通常通过以下几种方式启动关闭tomcat服务：<br>1、切换到tomcat主目录下的bin目录（cd usr/local/tomcat/bin）<br>2，启动tomcat服务<br>方式一：直接启动 ./startup.sh<br>方式二：作为服务启动 nohup ./startup.sh &amp;<br>方式三：控制台动态输出方式启动 ./catalina.sh run 动态地显示tomcat后台的控制台输出信息,Ctrl+C后退出并关闭服务<br>解释：<br>通过方式一、方式三启动的tomcat有个弊端，当客户端连接断开的时候，tomcat服务也会立即停止，通过方式二可以作为linux服务一直运行<br>通过方式一、方式二方式启动的tomcat，其日志会写到相应的日志文件中，而不能动态地查看tomcat控制台的输出信息与错误情况，通过方式三可以以控制台模式启动tomcat服务，<br>直接看到程序运行时后台的控制台输出信息，不必每次都要很麻烦的打开catalina.out日志文件进行查看，这样便于跟踪查阅后台输出信息。tomcat控制台信息包括log4j和System.out.println()等输出的信息。<br>3、关闭tomcat服务<br>./shutdown.sh</p>
+  <p>则表达式是一个查询的字符串，它包含一般的字符和一些特殊的字符，特殊字符可以扩展查找字符串的能力，正则表达式在查找和替换字符串的作用不可忽视，它 能很好提高工作效率。</p>
+<p>EditPlus的查找，替换，文件中查找支持以下的正则表达式：</p>
+<p>表达式 说明<br>/t 制表符.<br>/n 新行.<br>. 匹配任意字符.<br>| 匹配表达式左边和右边的字符. 例如, “ab|bc” 匹配 “ab” 或者 “bc”.<br>[] 匹配列表之中的任何单个字符. 例如, “[ab]” 匹配 “a” 或者 “b”. “[0-9]” 匹配任意数字.<br>[^] 匹配列表之外的任何单个字符. 例如, “[^ab]” 匹配 “a” 和 “b” 以外的字符. “[^0-9]” 匹配任意非数字字符.</p>
+<ul>
+<li>其左边的字符被匹配任意次(0次，或者多次). 例如 “be*” 匹配 “b”, “be” 或者 “bee”.</li>
+</ul>
+<ul>
+<li>其左边的字符被匹配至少一次(1次，或者多次). 例如 “be+” 匹配 “be” 或者 “bee” 但是不匹配 “b”.<br>? 其左边的字符被匹配0次或者1次. 例如 “be?” 匹配 “b” 或者 “be” 但是不匹配 “bee”.<br>^ 其右边的表达式被匹配在一行的开始. 例如 “^A” 仅仅匹配以 “A” 开头的行.<br>$ 其左边的表达式被匹配在一行的结尾. 例如 “e$” 仅仅匹配以 “e” 结尾的行.<br>() 影响表达式匹配的顺序，并且用作表达式的分组标记.<br>/ 转义字符. 如果你要使用 “/“ 本身, 则应该使用 “//“.</li>
+</ul>
+<p>例子：</p>
+<p>原始串<br>str[1]abc[991];<br>str[2]abc[992];<br>str[11]abc[993];<br>str[22]abc[994];<br>str[111]abc[995];<br>str[222]abc[996];<br>str[1111]abc[997];<br>str[2222]abc[999];</p>
+<p>目标串：<br>abc[1];<br>abc[2];<br>abc[11];<br>abc[22];<br>abc[111];<br>abc[222];<br>abc[1111];<br>abc[2222];</p>
+<p>处理：<br>查找串：str/[([0-9]+)/]abc/[[0-9]+/]<br>替换串：abc[/1]</p>
+<p>一、包含“hello word”的行</p>
+<p>^.<em>hello word.</em>$</p>
+<p>二、以“hello word”开始的行</p>
+<p>^hello word.*$</p>
+<p>三、以“hello word”结尾的行</p>
+<p>.*hello word$</p>
+<p>查找目标\n([a-zA-Z0-9])</p>
+<p>或者\r([a-zA-Z0-9])</p>
+<p>替换目标$1(http前面的换行变成 ‘,’ ,然后再加其他的)</p>
+<p>【1】正则表达式应用——替换指定内容到行尾<br>原始文本如下面两行<br>abc aaaaa<br>123 abc 444</p>
+<p>希望每次遇到“abc”，则替换“abc”以及其后到行尾的内容为“abc efg”<br>即上面的文本最终替换为：<br>abc efg<br>123 abc efg</p>
+<p>解决：<br>① 在替换对话框，查找内容里输入“abc.<em>”<br>② 同时勾选“正则表达式”复选框，然后点击“全部替换”按钮<br>其中，符号的含义如下：<br>“.” ＝匹配任意字符<br>“</em>” ＝匹配0次或更多</p>
+<p>注意：其实就是正则表达式替换，这里只是把一些曾经提出的问题加以整理，单纯从正则表达式本身来说，就可以引申出成千上万种特例。</p>
+<p>【2】正则表达式应用——数字替换<br>希望把<br>asdadas123asdasdas456asdasdasd789asdasd<br>替换为:<br>asdadas[123]asdasdas[456]asdasdasd[789]asdasd</p>
+<p>在替换对话框里面，勾选“正则表达式”复选框；<br>在查找内容里面输入“[0-9][0-9][0-9]”，不含引号<br>“替换为:”里面输入“[/0/1/2]”，不含引号<br>范围为你所操作的范围，然后选择替换即可。</p>
+<p>实际上这也是正则表达式的使用特例，“[0-9]”表示匹配0～9之间的任何特例，同样“[a-z]”就表示匹配a～z之间的任何特例<br>上面重复使用了“[0-9]”，表示连续出现的三个数字<br>“/0”代表第一个“[0-9]”对应的原型，“/1”代表第二个“[0-9]”对应的原型，依此类推<br>“[”、“]”为单纯的字符，表示添加“[”或“]”，如果输入“其它/0/1/2其它”，则替换结果为：</p>
+<p>asdadas其它123其它asdasdas其它456其它asdasdasd其它789其它asdasd</p>
+<p>功能增强（by jiuk2k）：<br>如果将查找内容“[0-9][0-9][0-9]”改为“[0-9]*[0-9]”，对应1 或 123 或 12345 或 …<br>大家根据需要定制</p>
+<p>相关内容还有很多，可以自己参考正则表达式的语法仔细研究一下</p>
+<p>【3】正则表达式应用——删除每一行行尾的指定字符<br>因为这几个字符在行中也是出现的,所以肯定不能用简单的替换实现<br>比如<br>12345 1265345<br>2345<br>需要删除每行末尾的“345”<br>这个也算正则表达式的用法，其实仔细看正则表达式应该比较简单，不过既然有这个问题提出，说明对正则表达式还得有个认识过程，解决方法如下<br>解决：<br>在替换对话框中，启用“正则表达式”复选框<br>在查找内容里面输入“345$”<br>这里“$”表示从行尾匹配</p>
+<p>如果从行首匹配，可以用“^”来实现，不过 EditPlus 有另一个功能可以很简单的删除行首的字符串<br>a. 选择要操作的行<br>b. 编辑－格式－删除行注释<br>c. 在弹出对话框里面输入要清除的行首字符，确定</p>
+<p>【4】正则表达式应用——替换带有半角括号的多行<br>几百个网页中都有下面一段代码：<br>/n<br>在替换对话框启用“正则表达式”选项，这时就可以完成替换了</p>
+<p>【5】正则表达式应用——删除空行<br>启动EditPlus，打开待处理的文本类型文件。<br>①、选择“查找”菜单的“替换”命令，弹出文本替换对话框。选中“正则表达式”复选框，表明我们要在查找、替换中使用正则表达式。然后，选中“替换范围” 中的“当前文件”，表明对当前文件操作。<br>②、单击“查找内容”组合框右侧的按钮，出现下拉菜单。<br>③、下面的操作添加正则表达式，该表达式代表待查找的空行。（技巧提示：空行仅包括空格符、制表符、回车符，且必须以这三个符号之一作为一行的开头，并且 以回车符结尾，查找空行的关键是构造代表空行的正则表达式）。<br>直接在”查找”中输入正则表达式“^[ /t]<em>/n”，注意/t前有空格符。<br>（1）选择“从行首开始匹配”，“查找内容”组合框中出现字符“^”，表示待查找字符串必须出现在文本中一行的行首。<br>（2）选择“字符在范围中”，那么在“^”后会增加一对括号“[]”，当前插入点在括号中。括号在正则表达式中表示，文本中的字符匹配括号中任意一个字符 即符合查找条件。<br>（3）按一下空格键，添加空格符。空格符是空行的一个组成成分。<br>（4）选择“制表符”，添加代表制表符的“/t”。<br>（5）移动光标，将当前插入点移到“]”之后，然后选择“匹配 0 次或更多”，该操作会添加星号字符“</em>”。星号表示，其前面的括号“[]”内的空格符或制表符，在一行中出现0个或多个。<br>（6）选择“换行符”，插入“/n”，表示回车符。<br>④、“替换为”组合框保持空，表示删除查找到的内容。单击“替换”按钮逐个行删除空行，或单击“全部替换”按钮删除全部空行（注意：EditPlus有时 存在“全部替换”不能一次性完全删除空行的问题，可能是程序BUG，需要多按几次按钮）。</p>
+<p>1.在汉化的时候，是否经常碰到这样的语句需要翻译：</p>
+<p>Code:<br>“Error adding the post!”;<br>“Error adding the comment!”;<br>“Error adding the user!”;</p>
+<p>如果有很多类似的文件一个一个翻译显然很累而且感觉很无聊。</p>
+<p>其实可以这样处理，在Editplus里面用 替换 功能，在替换对话框选中“正则表达式”复选框：<br>查找原文件：</p>
+<p>Code:<br>“Error adding ([^!|”|;]*)</p>
+<p>替换成：</p>
+<p>Code:<br>“在增加/1时发生错误</p>
+<p>这样替换之后发生了什么？结果是：</p>
+<p>Code:<br>“在增加the post时发生错误!”;<br>“在增加the comment时发生错误!”;<br>“在增加the user时发生错误!”;</p>
+<p>ok，接下来你会怎么做？当然再替换一次把the post、the comment、the user替换成你要翻译的词。得到最后的结果：</p>
+<p>Code:<br>“在增加帖子时发生错误!”;<br>“在增加评论时发生错误!”;<br>“在增加用户时发生错误!”;</p>
+<p>2.要提取的单词在中间，比如：</p>
+<p>Code:<br>can not be deleted because<br>can not be added because<br>can not be updating because</p>
+<p>可以用这种方式：<br>在Editplus里面用 替换 功能，在替换对话框选中“正则表达式”复选框：<br>查找原文件：</p>
+<p>Code:<br>can not be ([^ ]*) because</p>
+<p>替换成：</p>
+<p>Code:<br>无法被/1因为</p>
+<p>这样替换之后发生了什么？结果是：</p>
+<p>Code:<br>无法被deleted因为<br>无法被added因为<br>无法被updating因为</p>
+<p>其余步骤如上。</p>
+<p>在汉化量很大而且句式比较单调的情况下对效率的提高很明显！</p>
+<p>解释一下：([^!|”|;]*) 的意思是 不等于 ! 和 ” 和 ; 中的任何一个，意思就是这3个字符之外的所有字符将被选中（替换区域）；<br>/1 即被选中的替换区域所在的新位置（复制到这个新位置）。</p>
+<p>3.经常手工清理一行一行地删除文本文件里面的空白行，其实可以交给Editplus更好的完成，在Editplus里面用替换功能，在替换对话框选中 “正则表达式”复选框：<br>查找原文件：</p>
+<p>Code:<br>^[ /t]*/n</p>
+<p>替换部分为空就可以删除空白行了，执行一下看看：）</p>
+<p>abandon[2’’b9nd2n]v.抛弃，放弃<br>abandonment[2’’b9nd2nm2nt]n.放弃<br>abbreviation[2bri:vi’’ei62n]n.缩写<br>abeyance[2’’bei2ns]n.缓办，中止<br>abide[2’’baid]v.遵守<br>ability[2’’biliti]n.能力<br>able[‘’eibl]adj.有能力的，能干的<br>abnormal[9b’’n0:m2l]adj.反常的，变态的<br>aboard[2’’b0:d]adv.船(车)上</p>
+<p>1.<br>查找: (^[a-zA-Z0-0/-]+)(/[<em>.</em>/]+)(.*)<br>替换: @@@@@”/1″,”/2″,”/3″,<br>效果:<br>@@@@@”abandon”,”[2’’b9nd2n]“,”v.抛弃，放弃”,<br>@@@@@”abandonment”,”[2’’b9nd2nm2nt]“,”n.放弃”,<br>@@@@@”abbreviation”,”[2bri:vi’’ei62n]“,”n.缩写”,<br>@@@@@”abeyance”,”[2’’bei2ns]“,”n.缓办，中止”,<br>@@@@@”abide”,”[2’’baid]“,”v.遵守”,<br>@@@@@”ability”,”[2’’biliti]“,”n.能力”,<br>@@@@@”able”,”[‘’eibl]“,”adj.有能力的，能干的”,<br>@@@@@”abnormal”,”[9b’’n0:m2l]“,”adj.反常的，变态的”,<br>@@@@@”aboard”,”[2’’b0:d]“,”adv.船(车)上”,</p>
+<p>2.<br>查找: /n<br>替换:<br>注: 要次替换内容为空<br>效果:<br>@@@@@”abandon”,”[2’’b9nd2n]“,”v.抛弃，放弃 ”,@@@@@”abandonment”,”[2’’b9nd2nm2nt]“,”n.放弃 ”,@@@@@”abbreviation”,”[2bri:vi’’ei62n]“,”n.缩写 ”,@@@@@”abeyance”,”[2’’bei2ns]“,”n.缓办，中止”,@@@@@”abide”,”[2’’baid]“,”v.遵守 ”,@@@@@”ability”,”[2’’biliti]“,”n.能力”,@@@@@”able”,”[‘’eibl]“,”adj.有能力的，能 干的 ”,@@@@@”abnormal”,”[9b’’n0:m2l]“,”adj.反常的，变态的 ”,@@@@@”aboard”,”[2’’b0:d]“,”adv.船(车)上”,@@@@@”abolish”,”[2’’b0li6]“,”v.废 除，取消”,@@@@@”abolition”,”[9b2’’li62n]“,”n.废除，取消”</p>
+<p>3.<br>查找: @@@@@<br>替换: /n<br>效果:<br>“abandon”,”[2’’b9nd2n]“,”v.抛弃，放弃”,<br>“abandonment”,”[2’’b9nd2nm2nt]“,”n.放弃”,<br>“abbreviation”,”[2bri:vi’’ei62n]“,”n.缩写”,<br>“abeyance”,”[2’’bei2ns]“,”n.缓办，中止”,<br>“abide”,”[2’’baid]“,”v.遵守”,<br>“ability”,”[2’’biliti]“,”n.能力”,<br>“able”,”[‘’eibl]“,”adj.有能力的，能干的”,<br>“abnormal”,”[9b’’n0:m2l]“,”adj.反常的，变态的”,<br>“aboard”,”[2’’b0:d]“,”adv.船(车)上”,<br>“abolish”,”[2’’b0li6]“,”v.废除，取消”,</p>
+<ol start="4">
+<li>任务完成</li>
+</ol>
+<p>一、删除空行（不包括有空格类符号的空行）<br>1、\r\n转义符替换<br>按ctrl+h，跳出搜索替换框，把查找模式定义为扩展（\n，\r…）<br>查找目标：\r\n\r\n<br>替换为：\r\n</p>
+<p>有编程基础的读者应该知道是什么意思了。</p>
+<p>2、Textfx插件<br>先选中要删部分文本内容，如果是整个文件那就全选Ctrl+A，然后使用Notepad++自带的Textfx插件，在长长的列表中找到Delete Blank Lines，点击即可。</p>
+<p>注意Notepad++的正则表达式与转义符等之间不兼容，所以局限性较大，不可以直接用正则表达式替换。</p>
+<p>二、删除有空格的空行<br>1、先删除空格，后删除空行<br>如何删除只有空格行的空格？<br>在菜单编辑中找到Blank Operations（行编辑），点击移除行尾空白，再用上面的方法删除空行。</p>
+<p>2、使用正则表达式删除空格行空格<br>替换中查找模式选择正则表达式^ +$，替换为空（就是什么都不填），再用上面的方法删除空行。</p>
  
       <!-- reward -->
       
@@ -275,7 +437,7 @@ redirectPort=”8443″ /&gt;
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tomcat/" rel="tag">tomcat</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li></ul>
 
     </footer>
   </div>
@@ -286,7 +448,7 @@ redirectPort=”8443″ /&gt;
 
     
     <article
-  id="post-dell笔记本重装系统后耳机插入无声音解决办法"
+  id="post-如何查看雷电模拟器里的sqilte数据"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -297,8 +459,8 @@ redirectPort=”8443″ /&gt;
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/02/13/dell%E7%AC%94%E8%AE%B0%E6%9C%AC%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E5%90%8E%E8%80%B3%E6%9C%BA%E6%8F%92%E5%85%A5%E6%97%A0%E5%A3%B0%E9%9F%B3%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/"
-    >dell笔记本重装系统后耳机插入无声音解决办法</a> 
+  <a class="article-title" href="/2023/02/18/%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E9%9B%B7%E7%94%B5%E6%A8%A1%E6%8B%9F%E5%99%A8%E9%87%8C%E7%9A%84sqilte%E6%95%B0%E6%8D%AE/"
+    >如何查看雷电模拟器里的sqilte数据</a> 
 </h2>
  
 
@@ -306,20 +468,38 @@ redirectPort=”8443″ /&gt;
     </header>
      
     <div class="article-meta">
-      <a href="/2023/02/13/dell%E7%AC%94%E8%AE%B0%E6%9C%AC%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E5%90%8E%E8%80%B3%E6%9C%BA%E6%8F%92%E5%85%A5%E6%97%A0%E5%A3%B0%E9%9F%B3%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" class="article-date">
-  <time datetime="2023-02-13T01:07:12.000Z" itemprop="datePublished">2023-02-13</time>
+      <a href="/2023/02/18/%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E9%9B%B7%E7%94%B5%E6%A8%A1%E6%8B%9F%E5%99%A8%E9%87%8C%E7%9A%84sqilte%E6%95%B0%E6%8D%AE/" class="article-date">
+  <time datetime="2023-02-18T01:54:10.000Z" itemprop="datePublished">2023-02-18</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
   </div>
    
     </div>
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>dell笔记本重装系统后回自动安装驱动，但是声卡是不完全匹配的，会导致耳机插入无声音，解决办法如下：</p>
-<p>从dell官网找到适配笔记本的驱动，再下载声卡驱动Realtek-High-Definition-Audio-Driver-xxxxxxxxxxxxx.exe。<br>手动点击安装，按要求重启电脑。完成安装后，看见Waves MaxxAudioPro即可。</p>
-<p>此时插入耳机一般会有弹框要求选择插入设备类型，选择耳机或耳麦即可。<br>如果没有，则到Waves MaxxAudioPro“回放-高级”，勾选“连接设备弹出选择框”</p>
+  <pre><code>C:\Users\zhang&gt;
+
+d:
+D:\&gt;
+
+cd D:\DevTools\LeiDian\LDPlayer64
+D:\DevTools\LeiDian\LDPlayer64&gt;
+
+adb shell
+
+aosp:/ # cd /data/media/0/Android/data/io.dcloud.HBuilder/apps/HBuilder/doc
+cd /data/media/0/Android/data/io.dcloud.HBuilder/apps/HBuilder/doc
+
+aosp:/data/media/0/Android/data/io.dcloud.HBuilder/apps/HBuilder/doc #
+sqlite3 test.db
+
+sqlite3 test.db
+SQLite version 3.9.2 2017-07-21 07:45:23
+Enter &quot;.help&quot; for usage hints.
+sqlite&gt;
+</code></pre>
  
       <!-- reward -->
       
@@ -330,7 +510,7 @@ redirectPort=”8443″ /&gt;
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/DELL/" rel="tag">DELL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/windows/" rel="tag">windows</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/APP/" rel="tag">APP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sqilte/" rel="tag">sqilte</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9B%B7%E7%94%B5%E6%A8%A1%E6%8B%9F%E5%99%A8/" rel="tag">雷电模拟器</a></li></ul>
 
     </footer>
   </div>
@@ -341,7 +521,7 @@ redirectPort=”8443″ /&gt;
 
     
     <article
-  id="post-笔记本安装FME"
+  id="post-maven镜像库最佳配置"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -352,8 +532,8 @@ redirectPort=”8443″ /&gt;
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/02/12/%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%AE%89%E8%A3%85FME/"
-    >笔记本安装FME</a> 
+  <a class="article-title" href="/2023/02/17/maven%E9%95%9C%E5%83%8F%E5%BA%93%E6%9C%80%E4%BD%B3%E9%85%8D%E7%BD%AE/"
+    >maven镜像库最佳配置</a> 
 </h2>
  
 
@@ -361,18 +541,24 @@ redirectPort=”8443″ /&gt;
     </header>
      
     <div class="article-meta">
-      <a href="/2023/02/12/%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%AE%89%E8%A3%85FME/" class="article-date">
-  <time datetime="2023-02-12T06:46:10.000Z" itemprop="datePublished">2023-02-12</time>
+      <a href="/2023/02/17/maven%E9%95%9C%E5%83%8F%E5%BA%93%E6%9C%80%E4%BD%B3%E9%85%8D%E7%BD%AE/" class="article-date">
+  <time datetime="2023-02-17T01:50:59.000Z" itemprop="datePublished">2023-02-17</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
   </div>
    
     </div>
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>首先，笔记本都会出现两个Ethernet Address，然后用引号括起来，用其中一个就好，不需要引号<br>地址后面还要跟端口（27001~27009）<br>详细步骤如下：<br>1、安装软件本体（fme-desktop-b16492-win-x64.msi）及license管理器（fme-flexnet-win-x64.msi）；<br>2、在FlexServer安装目录下打开lmtools.exe打开System Settings选项卡查看信息，安装包文件夹dummy.txt 第一行 SERVER 后面填写计算机名+空格+网卡MAC（如有引号将几个MAC括起来，填写其中一个即可，不要引号）+空格+端口号（27001-27009）；<br>3、完成后运行makekey.bat 生成safe.lic 大小2.几K，如超过5k则信息错误；<br>4、复制safe.lic 至FlexServer安装目录下 ，打开lmtools.exe，Strat/Stop/Reread选项卡，先Stop Server，再Start Server，再ReRead License File；<br>5、打开软件后选Float方式，然后填入计算机名，激活即可</p>
+  <pre><code>&lt;mirror&gt;
+    &lt;id&gt;aliyunmaven&lt;/id&gt;
+    &lt;mirrorOf&gt;central&lt;/mirrorOf&gt;
+    &lt;name&gt;阿里云公共仓库&lt;/name&gt;
+    &lt;url&gt;https://maven.aliyun.com/repository/public&lt;/url&gt;
+&lt;/mirror&gt;
+</code></pre>
  
       <!-- reward -->
       
@@ -383,7 +569,7 @@ redirectPort=”8443″ /&gt;
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/FME/" rel="tag">FME</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MAVEN/" rel="tag">MAVEN</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OJDBC/" rel="tag">OJDBC</a></li></ul>
 
     </footer>
   </div>
@@ -394,7 +580,7 @@ redirectPort=”8443″ /&gt;
 
     
     <article
-  id="post-Oracle-RAC建表空间"
+  id="post-PyCharm中的文件模版变量"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -405,8 +591,8 @@ redirectPort=”8443″ /&gt;
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/02/12/Oracle-RAC%E5%BB%BA%E8%A1%A8%E7%A9%BA%E9%97%B4/"
-    >Oracle RAC建表空间</a> 
+  <a class="article-title" href="/2023/02/17/PyCharm%E4%B8%AD%E7%9A%84%E6%96%87%E4%BB%B6%E6%A8%A1%E7%89%88%E5%8F%98%E9%87%8F/"
+    >PyCharm中的文件模版变量</a> 
 </h2>
  
 
@@ -414,39 +600,39 @@ redirectPort=”8443″ /&gt;
     </header>
      
     <div class="article-meta">
-      <a href="/2023/02/12/Oracle-RAC%E5%BB%BA%E8%A1%A8%E7%A9%BA%E9%97%B4/" class="article-date">
-  <time datetime="2023-02-12T06:45:15.000Z" itemprop="datePublished">2023-02-12</time>
+      <a href="/2023/02/17/PyCharm%E4%B8%AD%E7%9A%84%E6%96%87%E4%BB%B6%E6%A8%A1%E7%89%88%E5%8F%98%E9%87%8F/" class="article-date">
+  <time datetime="2023-02-17T01:47:27.000Z" itemprop="datePublished">2023-02-17</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
   </div>
    
     </div>
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>一、建表空间</p>
-<p>1、RAC</p>
-<pre><code>create tablespace TS_YYYY datafile size 500M autoextend on next 50M maxsize unlimited;
+  <pre><code>$&#123;PROJECT_NAME&#125; - 当前的项目名
+$&#123;NAME&#125; - 在文件创建过程中，新文件对话框的命名
+$&#123;USER&#125; - 当前的登录用户
+$&#123;DATE&#125; - 现在的系统日期
+$&#123;TIME&#125; - 现在的系统时间
+$&#123;YEAR&#125; - 当前年份
+$&#123;MONTH&#125; - 当前月份
+$&#123;DAY&#125; - 当前月份中的第几日
+$&#123;HOUR&#125; - 现在的小时
+$&#123;MINUTE&#125; - 现在的分钟
+$&#123;PRODUCT_NAME&#125; - IDE创建文件的名称
+$&#123;MONTH_NAME_SHORT&#125; - 月份的前三个字母缩写
+$&#123;MONTH_NAME_FULL&#125; - 完整的月份名
+
+ 
 </code></pre>
-<p>2、单实例</p>
-<pre><code>create tablespace TS_YYYY datafile ‘/u01/app/oracle/oradata/pmsgeo/yxyk.dbf’ size 500M autoextend on next 50M maxsize unlimited;
-</code></pre>
-<p>二、建用户</p>
-<pre><code>create user yxyk identified by yyyy default tablespace TS_YYYY;
-</code></pre>
-<p>三、赋权限</p>
-<pre><code>grant connect,resource to yyyy;
-grant debug connect session to yyyy;
-grant create any sequence to yyyy;
-grant create any table to yyyy;
-grant delete any table to yyyy;
-grant insert any table to yyyy;
-grant select any table to yyyy;
-grant unlimited tablespace to yyyy;
-grant execute any procedure to yyyy;
-grant update any table to yyyy;
-grant create any view to yyyy;
+<p>示例：</p>
+<pre><code>#-*- coding = utf-8 -*-
+#@Time : $&#123;DATE&#125; $&#123;TIME&#125;
+#@Author : YourName
+#@File : $&#123;NAME&#125;.py
+#@Software : $&#123;PRODUCT_NAME&#125;
 </code></pre>
  
       <!-- reward -->
@@ -458,7 +644,7 @@ grant create any view to yyyy;
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Oracle/" rel="tag">Oracle</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PyCharm/" rel="tag">PyCharm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/" rel="tag">Python</a></li></ul>
 
     </footer>
   </div>
@@ -469,7 +655,7 @@ grant create any view to yyyy;
 
     
     <article
-  id="post-MySql改密码"
+  id="post-查看PostgreSQL序列最后值的方法"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -480,8 +666,8 @@ grant create any view to yyyy;
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/02/12/MySql%E6%94%B9%E5%AF%86%E7%A0%81/"
-    >MySql改密码</a> 
+  <a class="article-title" href="/2023/02/16/%E6%9F%A5%E7%9C%8BPostgreSQL%E5%BA%8F%E5%88%97%E6%9C%80%E5%90%8E%E5%80%BC%E7%9A%84%E6%96%B9%E6%B3%95/"
+    >查看PostgreSQL序列最后值的方法</a> 
 </h2>
  
 
@@ -489,8 +675,8 @@ grant create any view to yyyy;
     </header>
      
     <div class="article-meta">
-      <a href="/2023/02/12/MySql%E6%94%B9%E5%AF%86%E7%A0%81/" class="article-date">
-  <time datetime="2023-02-12T06:39:56.000Z" itemprop="datePublished">2023-02-12</time>
+      <a href="/2023/02/16/%E6%9F%A5%E7%9C%8BPostgreSQL%E5%BA%8F%E5%88%97%E6%9C%80%E5%90%8E%E5%80%BC%E7%9A%84%E6%96%B9%E6%B3%95/" class="article-date">
+  <time datetime="2023-02-16T04:18:32.000Z" itemprop="datePublished">2023-02-16</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
@@ -500,31 +686,14 @@ grant create any view to yyyy;
       
     <div class="article-entry" itemprop="articleBody">
        
-  <h1 id="root密码测试只能一句一句的改。"><a href="#root密码测试只能一句一句的改。" class="headerlink" title="root密码测试只能一句一句的改。"></a>root密码测试只能一句一句的改。</h1><pre><code>alter user ‘root’@’localhost’ identified by ‘MySql@123’;
-alter user ‘root’@’127.0.01’ identified by ‘MySql@123’;
-alter user ‘root’@’::1′ identified by ‘MySql@123’;
+  <pre><code>SELECT SCHEMANAME AS SCHEMA,SEQUENCENAME AS SEQUENCE,LAST_VALUE FROM PG_SEQUENCES
+
+SELECT * FROM ALL_BOU1_4L_GID_SEQ;
+
+SELECT CURRVAL(&#39;ALL_BOU1_4L_GID_SEQ&#39;);
+
+SELECT NEXTVAL(&#39;ALL_BOU1_4L_GID_SEQ&#39;);
 </code></pre>
-<h1 id="Reset-the-MySQL-MariaDB-Root-Password"><a href="#Reset-the-MySQL-MariaDB-Root-Password" class="headerlink" title="Reset the MySQL/MariaDB Root Password"></a>Reset the MySQL/MariaDB Root Password</h1><p>By default, the MySQL/MariaDB installation that ships with XAMPP has an empty root password. This is a serious security risk, especially if you plan to use XAMPP in production scenarios.</p>
-<p>To change the MySQL/MariaDB root password, follow these steps:</p>
-<p>Ensure that the MySQL/MariaDB server is running.<br>Open your Windows command prompt by clicking the “Shell” button in the XAMPP control panel.</p>
-<p><img src="https://c2.im5i.com/2023/02/12/nxDoU.png" alt="nxDoU.png"></p>
-<p>Use the mysqladmin command-line utility to alter the MySQL/MariaDB password, using the following syntax:</p>
-<pre><code>mysqladmin --user=root password &quot;newpassword&quot;
-</code></pre>
-<p>For example, to change the MySQL/MariaDB root password from its default empty value to the password gue55me, you would execute:</p>
-<pre><code>mysqladmin --user=root password &quot;gue55me&quot;
-</code></pre>
-<p><img src="https://c2.im5i.com/2023/02/12/nxaOw.png" alt="nxaOw.png"></p>
-<p>Or, if a password has already been previously set and you’d like to change it to a new one, you can use the following syntax:</p>
-<pre><code>mysqladmin --user=root --password=oldpassword password &quot;newpassword&quot;
-</code></pre>
-<p>For example, to change the root password from 12345 to gue55me, you would execute:</p>
-<pre><code>mysqladmin --user=root --password=12345 password &quot;gue55me&quot;
-</code></pre>
-<p>Test that your password change has been accepted, by attempting to connect to the MySQL/MariaDB server using the mysql command-line client in the same directory. For example, you could use the command below to connect to the server and return the results of a calculation:</p>
-<pre><code>mysql --user=root --password=gue55me -e &quot;SELECT 1+1&quot;
-</code></pre>
-<p><img src="https://c2.im5i.com/2023/02/12/nx0J8.png" alt="nx0J8.png"></p>
  
       <!-- reward -->
       
@@ -535,7 +704,7 @@ alter user ‘root’@’::1′ identified by ‘MySql@123’;
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li></ul>
 
     </footer>
   </div>
@@ -551,7 +720,7 @@ alter user ‘root’@’::1′ identified by ‘MySql@123’;
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/35/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><a class="page-number" href="/page/35/">35</a><span class="page-number current">36</span><a class="page-number" href="/page/37/">37</a><a class="page-number" href="/page/38/">38</a><span class="space">&hellip;</span><a class="page-number" href="/page/40/">40</a><a class="extend next" rel="next" href="/page/37/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/35/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><a class="page-number" href="/page/35/">35</a><span class="page-number current">36</span><a class="page-number" href="/page/37/">37</a><a class="page-number" href="/page/38/">38</a><span class="space">&hellip;</span><a class="page-number" href="/page/42/">42</a><a class="extend next" rel="next" href="/page/37/">下一页</a>
   </nav>
   
 </section>

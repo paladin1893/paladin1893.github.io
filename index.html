@@ -154,7 +154,7 @@
     
     
     <article
-  id="post-Pandas实用入门案例04"
+  id="post-Vue父组件子组件的通信方式20种（全网最全总结）"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -165,8 +165,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/08/31/Pandas%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B04/"
-    >Pandas实用入门案例04</a> 
+  <a class="article-title" href="/2023/09/15/Vue%E7%88%B6%E7%BB%84%E4%BB%B6%E5%AD%90%E7%BB%84%E4%BB%B6%E7%9A%84%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F20%E7%A7%8D%EF%BC%88%E5%85%A8%E7%BD%91%E6%9C%80%E5%85%A8%E6%80%BB%E7%BB%93%EF%BC%89/"
+    >Vue父组件子组件的通信方式20种（全网最全总结）</a> 
 </h2>
  
 
@@ -174,8 +174,8 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2023/08/31/Pandas%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B04/" class="article-date">
-  <time datetime="2023-08-31T14:00:48.000Z" itemprop="datePublished">2023-08-31</time>
+      <a href="/2023/09/15/Vue%E7%88%B6%E7%BB%84%E4%BB%B6%E5%AD%90%E7%BB%84%E4%BB%B6%E7%9A%84%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F20%E7%A7%8D%EF%BC%88%E5%85%A8%E7%BD%91%E6%9C%80%E5%85%A8%E6%80%BB%E7%BB%93%EF%BC%89/" class="article-date">
+  <time datetime="2023-09-15T07:30:45.000Z" itemprop="datePublished">2023-09-15</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -185,794 +185,1797 @@
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>首先先介绍一下什么是Pandas ？</p>
-<p>Pandas 是基于NumPy 的一种工具，该工具是为了解决数据分析任务而创建的。<br>Pandas 纳入了大量库和一些标准的数据模型，提供了高效地操作大型数据集所需的工具。<br>pandas提供了大量能使我们快速便捷地处理数据的函数和方法。你很快就会发现，它是使Python成为强大而高效的数据分析环境的重要因素之一。</p>
-<p>首先引入相关模块：</p>
-<pre><code>import numpy as np
-import pandas as pd
-</code></pre>
-<h1 id="DataFrame"><a href="#DataFrame" class="headerlink" title="DataFrame"></a>DataFrame</h1><h2 id="第一章-DataFrame"><a href="#第一章-DataFrame" class="headerlink" title="第一章 DataFrame"></a>第一章 DataFrame</h2><h3 id="1-1-创建Series"><a href="#1-1-创建Series" class="headerlink" title="1.1 创建Series"></a>1.1 创建Series</h3><p>index不指定则从0开始编号</p>
-<pre><code>s = pd.Series([1, 2, 3, np.nan], index=[&#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;D&#39;])
-print s
-</code></pre>
-<p>输出</p>
-<pre><code>A 1.0
-B 2.0
-C 3.0
-D NaN
-dtype: float64
-</code></pre>
-<h3 id="1-2-创建时间序列"><a href="#1-2-创建时间序列" class="headerlink" title="1.2 创建时间序列"></a>1.2 创建时间序列</h3><p>必须指定start、end、periods中的两个参数值</p>
-<pre><code>dates = pd.date_range(&#39;20180101&#39;, periods=5)
-print dates
-</code></pre>
-<p>输出</p>
-<pre><code>DatetimeIndex([‘2018-01-01’, ‘2018-01-02’, 
-‘2018-01-03’, ‘2018-01-04’,‘2018-01-05’],
-dtype=’datetime64[ns]’, freq=’D’)
-</code></pre>
-<h3 id="1-3-创建DataFrame"><a href="#1-3-创建DataFrame" class="headerlink" title="1.3 创建DataFrame"></a>1.3 创建DataFrame</h3><p>必须指定start、end、periods中的两个参数值</p>
-<pre><code>df = pd.DataFrame(np.random.rand(3,4),columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
-print df
-</code></pre>
-<p>输出</p>
-<pre><code>a b c d
-0 0.233310 0.170256 0.036988 0.697916
-1 0.159580 0.287814 0.528123 0.956051
-2 0.815038 0.438103 0.143477 0.769143
-</code></pre>
-<p>通过字典创建（key为列名）：</p>
-<pre><code>df = pd.DataFrame(&#123;&#39;A&#39;: 1,
-                   &#39;B&#39;: pd.Timestamp(&#39;20171208&#39;),
-                   &#39;C&#39;: pd.Series(np.arange(4)),
-                   &#39;D&#39;: pd.Categorical([&#39;test&#39;, &#39;train&#39;, &#39;test&#39;, &#39;train&#39;])&#125;)
-print df
-</code></pre>
-<p>输出</p>
-<pre><code>A B C D
-0 1 2017-12-08 0 test
-1 1 2017-12-08 1 train
-2 1 2017-12-08 2 test
-3 1 2017-12-08 3 train
-</code></pre>
-<h3 id="1-4-DataFrame属性"><a href="#1-4-DataFrame属性" class="headerlink" title="1.4 DataFrame属性"></a>1.4 DataFrame属性</h3><pre><code>df = pd.DataFrame(&#123;&#39;A&#39;: 1,
-                   &#39;B&#39;: pd.Timestamp(&#39;20171208&#39;),
-                   &#39;C&#39;: pd.Series(np.arange(4)),
-                   &#39;D&#39;: pd.Categorical([&#39;test&#39;, &#39;train&#39;, &#39;test&#39;, &#39;train&#39;])&#125;)
-</code></pre>
-<p>查看每列数据类型</p>
-<pre><code>print df.dtypes
-</code></pre>
-<p>输出</p>
-<pre><code>A int64
-B datetime64[ns]
-C int32
-D category
-dtype: object
-</code></pre>
-<p>查看索引</p>
-<pre><code>print df.index  
-</code></pre>
-<p>输出</p>
-<pre><code>RangeIndex(start=0, stop=4, step=1)
-</code></pre>
-<p>查看列名</p>
-<pre><code>print df.columns
-</code></pre>
-<p>输出</p>
-<pre><code>Index([u’A’, u’B’, u’C’, u’D’], dtype=’object’)
-</code></pre>
-<p>查看数据</p>
-<pre><code>print df.values  
-</code></pre>
-<p>输出</p>
-<pre><code>[[1L Timestamp(‘2017-12-08 00:00:00’) 0 ‘test’]
-[1L Timestamp(‘2017-12-08 00:00:00’) 1 ‘train’]
-[1L Timestamp(‘2017-12-08 00:00:00’) 2 ‘test’]
-[1L Timestamp(‘2017-12-08 00:00:00’) 3 ‘train’]]
-</code></pre>
-<p>DataFrame统计信息</p>
-<pre><code>print df.describe()
-</code></pre>
-<p>输出</p>
-<pre><code>A C
-count 4.0 4.000000
-mean 1.0 1.500000
-std 0.0 1.290994
-min 1.0 0.000000
-25% 1.0 0.750000
-50% 1.0 1.500000
-75% 1.0 2.250000
-max 1.0 3.000000
-</code></pre>
-<h3 id="1-5-DataFrame常用操作"><a href="#1-5-DataFrame常用操作" class="headerlink" title="1.5 DataFrame常用操作"></a>1.5 DataFrame常用操作</h3><p>转置</p>
-<pre><code>df = pd.DataFrame(np.arange(12).reshape((3,4)),columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
-print df.T
-</code></pre>
-<p>输出</p>
-<pre><code>0 1 2
-a 0 4 8
-b 1 5 9
-c 2 6 10
-d 3 7 11
-</code></pre>
-<p>按index排序</p>
-<pre><code>df = pd.DataFrame(np.arange(12).reshape((3, 4)), columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
-print df.sort_index(axis=1, ascending=False)
-</code></pre>
-<p>输出</p>
-<pre><code>d c b a
-0 3 2 1 0
-1 7 6 5 4
-2 11 10 9 8
-</code></pre>
-<p>按值排序</p>
-<pre><code>df = pd.DataFrame(np.arange(12).reshape((3, 4)), columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
-print df.sort_values(by=&#39;b&#39;, ascending=False)
-</code></pre>
-<p>输出</p>
-<pre><code>a b c d
-2 8 9 10 11
-1 4 5 6 7
-0 0 1 2 3
-</code></pre>
-<p>数据选择</p>
-<p>创建如下dataframe：</p>
-<pre><code>dates = pd.date_range(&#39;20180101&#39;, periods=3)
-df = pd.DataFrame(np.arange(12).reshape((3, 4)),
-                  index=dates, columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
-print df
-</code></pre>
-<p>输出</p>
-<pre><code>a b c d
-2018-01-01 0 1 2 3
-2018-01-02 4 5 6 7
-2018-01-03 8 9 10 11
-</code></pre>
-<h2 id="第二章-数据选择"><a href="#第二章-数据选择" class="headerlink" title="第二章 数据选择"></a>第二章 数据选择</h2><h3 id="2-1-选择列"><a href="#2-1-选择列" class="headerlink" title="2.1 选择列"></a>2.1 选择列</h3><pre><code>print df[&#39;a&#39;]  # print df.a
-</code></pre>
-<p>输出</p>
-<pre><code>2018-01-01 0
-2018-01-02 4
-2018-01-03 8
-</code></pre>
-<h3 id="2-2-选择行"><a href="#2-2-选择行" class="headerlink" title="2.2 选择行"></a>2.2 选择行</h3><pre><code>print df[0:2]  # print df[&#39;20180101&#39;:&#39;20180102&#39;]
-</code></pre>
-<p>输出</p>
-<pre><code>a b c d
-2018-01-01 0 1 2 3
-2018-01-02 4 5 6 7
-</code></pre>
-<h3 id="2-3-标签选择：loc"><a href="#2-3-标签选择：loc" class="headerlink" title="2.3 标签选择：loc"></a>2.3 标签选择：loc</h3><p>1</p>
-<pre><code>print df.loc[:,[&#39;a&#39;, &#39;b&#39;]] 
-</code></pre>
-<p>输出</p>
-<pre><code>a b
-2018-01-01 0 1
-2018-01-02 4 5
-2018-01-03 8 9
-</code></pre>
-<p>2</p>
-<pre><code>print df.loc[&#39;20180102&#39;]
-</code></pre>
-<p>输出</p>
-<pre><code>a 4
-b 5
-c 6
-d 7
-Name: 2018-01-02 00:00:00, dtype: int32
-</code></pre>
-<h3 id="2-4-位置选择：iloc"><a href="#2-4-位置选择：iloc" class="headerlink" title="2.4 位置选择：iloc"></a>2.4 位置选择：iloc</h3><pre><code>print df.iloc[[0, 2], 2:4]
-</code></pre>
-<p>输出</p>
-<pre><code>c d
-2018-01-01 2 3
-2018-01-03 10 11
-</code></pre>
-<h3 id="2-5-混合标签与位置：ix"><a href="#2-5-混合标签与位置：ix" class="headerlink" title="2.5 混合标签与位置：ix"></a>2.5 混合标签与位置：ix</h3><pre><code>print df.ix[:2, [&#39;c&#39;, &#39;d&#39;]]
-</code></pre>
-<p>输出</p>
-<pre><code>c d
-2018-01-01 2 3
-2018-01-02 6 7
-</code></pre>
-<h3 id="2-6-Boolean选择"><a href="#2-6-Boolean选择" class="headerlink" title="2.6 Boolean选择"></a>2.6 Boolean选择</h3><pre><code>print df[df.a &lt; 5]
-</code></pre>
-<p>输出</p>
-<pre><code>a b c d
-2018-01-01 0 1 2 3
-2018-01-02 4 5 6 7
-</code></pre>
-<p>处理NaN数据</p>
-<p>首先创建包含NaN的dataframe：</p>
-<pre><code>dates = pd.date_range(&#39;20180101&#39;, periods=3)
-df = pd.DataFrame(np.arange(12).reshape((3, 4)),
-                  index=dates, columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
-df.iloc[1, 1], df.iloc[2, 2] = np.nan, np.nan
-print df
-</code></pre>
-<p>输出</p>
-<pre><code>a b c d
-2018-01-01 0 1.0 2.0 3
-2018-01-02 4 NaN 6.0 7
-2018-01-03 8 9.0 NaN 11
-</code></pre>
-<h2 id="第三章-处理NaN数据"><a href="#第三章-处理NaN数据" class="headerlink" title="第三章 处理NaN数据"></a>第三章 处理NaN数据</h2><h3 id="3-1-删除NaN数据"><a href="#3-1-删除NaN数据" class="headerlink" title="3.1 删除NaN数据"></a>3.1 删除NaN数据</h3><pre><code>print df.dropna(axis=1)  # how = [&#39;any&#39;, &#39;all&#39;]
-</code></pre>
-<p>输出</p>
-<pre><code>a d
-2018-01-01 0 3
-2018-01-02 4 7
-2018-01-03 8 11
-</code></pre>
-<h3 id="3-2-填充NaN数据"><a href="#3-2-填充NaN数据" class="headerlink" title="3.2 填充NaN数据"></a>3.2 填充NaN数据</h3><pre><code>print df.fillna(value=&#39;*&#39;)
-</code></pre>
-<p>输出</p>
-<pre><code>a b c d
-2018-01-01 0 1 2 3
-2018-01-02 4 * 6 7
-2018-01-03 8 9 * 11
-</code></pre>
-<h3 id="3-3-检查是否存在NaN数据"><a href="#3-3-检查是否存在NaN数据" class="headerlink" title="3.3 检查是否存在NaN数据"></a>3.3 检查是否存在NaN数据</h3><pre><code>print df.isnull()
-</code></pre>
-<p>输出</p>
-<pre><code>a b c d
-2018-01-01 False False False False
-2018-01-02 False True False False
-2018-01-03 False False True False
-</code></pre>
-<h2 id="第四章-导入与导出"><a href="#第四章-导入与导出" class="headerlink" title="第四章 导入与导出"></a>第四章 导入与导出</h2><pre><code>导入函数    导出函数功能
-read_csv    to_csv
-read_excel    to_excel
-read_sql    to_sql
-read_json    to_json
-read_msgpack    to_msgpack
-read_html    to_html
-read_gbq    to_gbq
-read_stata    to_stata
-read_sas    to_sas
-read_clipboard    to_clipboard
-read_pickle    to_pickle
-</code></pre>
-<p>以下面这个test.txt为例：</p>
-<pre><code>A B
-Tom 21
-Joe 26
-Sam 55
-Kerry 27
-</code></pre>
-<p>忽略第一行，并设置列名分别为‘name’和‘age’</p>
-<pre><code>data = pd.read_csv(&#39;test.txt&#39;, sep=&#39; &#39;, skiprows=1, names=[&#39;name&#39;,&#39;age&#39;])
-print data
-</code></pre>
-<p>输出</p>
-<pre><code>name age
-0 Tom 21
-1 Joe 26
-2 Sam 55
-3 Kerry 27
-</code></pre>
-<h2 id="第五章-合并DataFrame"><a href="#第五章-合并DataFrame" class="headerlink" title="第五章 合并DataFrame"></a>第五章 合并DataFrame</h2><h3 id="5-1-concat函数"><a href="#5-1-concat函数" class="headerlink" title="5.1 concat函数"></a>5.1 concat函数</h3><pre><code>df1 = pd.DataFrame(np.ones((3, 4))*0, columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
-df2 = pd.DataFrame(np.ones((3, 4))*1, columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
-df3 = pd.DataFrame(np.ones((3, 4))*2, columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
-# ignore_index=True将重新对index排序
-print pd.concat([df1, df2, df3], axis=0, ignore_index=True)
-</code></pre>
-<p>输出</p>
-<pre><code>a b c d
-0 0.0 0.0 0.0 0.0
-1 0.0 0.0 0.0 0.0
-2 0.0 0.0 0.0 0.0
-3 1.0 1.0 1.0 1.0
-4 1.0 1.0 1.0 1.0
-5 1.0 1.0 1.0 1.0
-6 2.0 2.0 2.0 2.0
-7 2.0 2.0 2.0 2.0
-8 2.0 2.0 2.0 2.0
-</code></pre>
-<p>join参数用法</p>
-<pre><code>df1 = pd.DataFrame(np.ones((3, 4))*0, columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;], index=[1,2,3])
-df2 = pd.DataFrame(np.ones((3, 4))*1, columns=[&#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;], index=[2,3,4])
-# join默认为&#39;outer&#39;，不共有的列用NaN填充
-print pd.concat([df1, df2], join=&#39;outer&#39;) 
-# join=&#39;inner&#39;只合并共有的列
-print pd.concat([df1, df2], join=&#39;inner&#39;)
-</code></pre>
-<p>输出 1</p>
-<pre><code>a b c d e
-1 0.0 0.0 0.0 0.0 NaN
-2 0.0 0.0 0.0 0.0 NaN
-3 0.0 0.0 0.0 0.0 NaN
-2 NaN 1.0 1.0 1.0 1.0
-3 NaN 1.0 1.0 1.0 1.0
-4 NaN 1.0 1.0 1.0 1.0
-</code></pre>
-<p>输出 2</p>
-<pre><code>b c d
-1 0.0 0.0 0.0
-2 0.0 0.0 0.0
-3 0.0 0.0 0.0
-2 1.0 1.0 1.0
-3 1.0 1.0 1.0
-4 1.0 1.0 1.0
-</code></pre>
-<p>join_axes参数用法</p>
-<pre><code>df1 = pd.DataFrame(np.ones((3, 4))*0, columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;], index=[1, 2, 3])
-df2 = pd.DataFrame(np.ones((3, 4))*1, columns=[&#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;], index=[2, 3, 4])
-# 按照df1的index进行合并
-print pd.concat([df1, df2], axis=1, join_axes=[df1.index])
-</code></pre>
-<p>输出</p>
-<pre><code>a b c d b c d e
-1 0.0 0.0 0.0 0.0 NaN NaN NaN NaN
-2 0.0 0.0 0.0 0.0 1.0 1.0 1.0 1.0
-3 0.0 0.0 0.0 0.0 1.0 1.0 1.0 1.0
-</code></pre>
-<h3 id="5-2-append函数"><a href="#5-2-append函数" class="headerlink" title="5.2 append函数"></a>5.2 append函数</h3><p>append多个DataFrame</p>
-<pre><code>df1 = pd.DataFrame(np.ones((3, 4))*0, columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
-df2 = pd.DataFrame(np.ones((3, 4))*1, columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
-
-print df1.append(df2, ignore_index=True)
-</code></pre>
-<p>输出</p>
-<pre><code>a b c d
-0 0.0 0.0 0.0 0.0
-1 0.0 0.0 0.0 0.0
-2 0.0 0.0 0.0 0.0
-3 1.0 1.0 1.0 1.0
-4 1.0 1.0 1.0 1.0
-5 1.0 1.0 1.0 1.0
-</code></pre>
-<p>append一组数据</p>
-<pre><code>df1 = pd.DataFrame(np.ones((3, 4))*0, columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
-s = pd.Series([4, 4, 4, 4], index=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
-
-print df1.append(s, ignore_index=True)
-</code></pre>
-<p>输出</p>
-<pre><code>a b c d
-0 0.0 0.0 0.0 0.0
-1 0.0 0.0 0.0 0.0
-2 0.0 0.0 0.0 0.0
-3 4.0 4.0 4.0 4.0
-</code></pre>
-<h3 id="5-3-merge函数"><a href="#5-3-merge函数" class="headerlink" title="5.3 merge函数"></a>5.3 merge函数</h3><p>基于某一列进行合并</p>
-<pre><code>df1 = pd.DataFrame(&#123;&#39;A&#39;: [&#39;A1&#39;, &#39;A2&#39;, &#39;A3&#39;],
-                    &#39;B&#39;: [&#39;B1&#39;, &#39;B2&#39;, &#39;B3&#39;],
-                   &#39;KEY&#39;: [&#39;K1&#39;, &#39;K2&#39;, &#39;K3&#39;]&#125;)
-df2 = pd.DataFrame(&#123;&#39;C&#39;: [&#39;C1&#39;, &#39;C2&#39;, &#39;C3&#39;],
-                    &#39;D&#39;: [&#39;D1&#39;, &#39;D2&#39;, &#39;D3&#39;],
-                   &#39;KEY&#39;: [&#39;K1&#39;, &#39;K2&#39;, &#39;K3&#39;]&#125;)
-
-print pd.merge(df1, df2, on=&#39;KEY&#39;)
-</code></pre>
-<p>输出</p>
-<pre><code>A B KEY C D
-0 A1 B1 K1 C1 D1
-1 A2 B2 K2 C2 D2
-2 A3 B3 K3 C3 D3
-</code></pre>
-<p>基于某两列进行合并</p>
-<pre><code>df1 = pd.DataFrame(&#123;&#39;A&#39;: [&#39;A1&#39;, &#39;A2&#39;, &#39;A3&#39;],
-                    &#39;B&#39;: [&#39;B1&#39;, &#39;B2&#39;, &#39;B3&#39;],
-                    &#39;KEY1&#39;: [&#39;K1&#39;, &#39;K2&#39;, &#39;K0&#39;],
-                    &#39;KEY2&#39;: [&#39;K0&#39;, &#39;K1&#39;, &#39;K3&#39;]&#125;)
-df2 = pd.DataFrame(&#123;&#39;C&#39;: [&#39;C1&#39;, &#39;C2&#39;, &#39;C3&#39;],
-                    &#39;D&#39;: [&#39;D1&#39;, &#39;D2&#39;, &#39;D3&#39;],
-                    &#39;KEY1&#39;: [&#39;K0&#39;, &#39;K2&#39;, &#39;K1&#39;],
-                    &#39;KEY2&#39;: [&#39;K1&#39;, &#39;K1&#39;, &#39;K0&#39;]&#125;)
-# how:[&#39;left&#39;,&#39;right&#39;,&#39;outer&#39;,&#39;inner&#39;]
-print pd.merge(df1, df2, on=[&#39;KEY1&#39;, &#39;KEY2&#39;], how=&#39;inner&#39;)
-</code></pre>
-<p>输出</p>
-<pre><code>A B KEY1 KEY2 C D
-0 A1 B1 K1 K0 C3 D3
-1 A2 B2 K2 K1 C2 D2
-</code></pre>
-<p>按index合并</p>
-<pre><code>df1 = pd.DataFrame(&#123;&#39;A&#39;: [&#39;A1&#39;, &#39;A2&#39;, &#39;A3&#39;],
-                    &#39;B&#39;: [&#39;B1&#39;, &#39;B2&#39;, &#39;B3&#39;]&#125;,
-                   index=[&#39;K0&#39;, &#39;K1&#39;, &#39;K2&#39;])
-df2 = pd.DataFrame(&#123;&#39;C&#39;: [&#39;C1&#39;, &#39;C2&#39;, &#39;C3&#39;],
-                    &#39;D&#39;: [&#39;D1&#39;, &#39;D2&#39;, &#39;D3&#39;]&#125;,
-                   index=[&#39;K0&#39;, &#39;K1&#39;, &#39;K3&#39;])
-
-print pd.merge(df1, df2, left_index=True, right_index=True, how=&#39;outer&#39;)
-</code></pre>
-<p>输出</p>
-<pre><code>A B C D
-K0 A1 B1 C1 D1
-K1 A2 B2 C2 D2
-K2 A3 B3 NaN NaN
-K3 NaN NaN C3 D3
-</code></pre>
-<p>为列加后缀</p>
-<pre><code>df_boys = pd.DataFrame(&#123;&#39;id&#39;: [&#39;1&#39;, &#39;2&#39;, &#39;3&#39;],
-                        &#39;age&#39;: [&#39;23&#39;, &#39;25&#39;, &#39;18&#39;]&#125;)
-df_girls = pd.DataFrame(&#123;&#39;id&#39;: [&#39;1&#39;, &#39;2&#39;, &#39;3&#39;],
-                        &#39;age&#39;: [&#39;18&#39;, &#39;18&#39;, &#39;18&#39;]&#125;)
-
-print pd.merge(df_boys, df_girls, on=&#39;id&#39;, suffixes=[&#39;_boys&#39;, &#39;_girls&#39;])
-</code></pre>
-<p>输出</p>
-<pre><code>age_boys id age_girls
-0 23 1 18
-1 25 2 18
-2 18 3 18
-</code></pre>
-<h1 id="绘图"><a href="#绘图" class="headerlink" title="绘图"></a>绘图</h1><p>引入相应模块</p>
-<pre><code>import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
-</code></pre>
-<p>绘制Series</p>
-<pre><code>data = pd.Series(np.random.randn(1000))
-data = data.cumsum()
-
-data.plot()
-plt.show()
-</code></pre>
-<h2 id="–本文完–"><a href="#–本文完–" class="headerlink" title="–本文完–"></a>–本文完–</h2><p>©著作权归作者所有：来自51CTO博客作者程序员小猿的原创作品，请联系作者获取转载授权，否则将追究法律责任<br>全网最全的Pandas入门教程（精简版）<br><a target="_blank" rel="noopener" href="https://blog.51cto.com/u_13294304/3386462">https://blog.51cto.com/u_13294304/3386462</a></p>
+  <h1 id="一、常用"><a href="#一、常用" class="headerlink" title="一、常用"></a>一、常用</h1><p>最近一直在封装各种组件, 提高组员开发效率,<br>遇到了各种情况下的父子组件, 兄弟组件之间各种传值,<br>这里做下总结和一些探索, 欢迎补充~</p>
+<h2 id="Props"><a href="#Props" class="headerlink" title="Props"></a>Props</h2><p>父组件向子组件传递数据，子组件通过props属性接收数据</p>
+<p>父组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;child-component :parentData=&quot;data&quot;&gt;&lt;/child-component&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
  
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pandas/" rel="tag">pandas</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-vue循环遍历对象、数组和字符串"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/08/30/vue%E5%BE%AA%E7%8E%AF%E9%81%8D%E5%8E%86%E5%AF%B9%E8%B1%A1%E3%80%81%E6%95%B0%E7%BB%84%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2/"
-    >vue循环遍历对象、数组和字符串</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/08/30/vue%E5%BE%AA%E7%8E%AF%E9%81%8D%E5%8E%86%E5%AF%B9%E8%B1%A1%E3%80%81%E6%95%B0%E7%BB%84%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2/" class="article-date">
-  <time datetime="2023-08-30T09:00:11.000Z" itemprop="datePublished">2023-08-30</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="1-循环遍历对象"><a href="#1-循环遍历对象" class="headerlink" title="1.循环遍历对象"></a>1.循环遍历对象</h1><h2 id="1-1vue-在html里面循环遍历对象"><a href="#1-1vue-在html里面循环遍历对象" class="headerlink" title="1.1vue 在html里面循环遍历对象"></a>1.1vue 在html里面循环遍历对象</h2><pre><code>v-for=&quot; (val, key , i) in dimItemMap&quot; :key=&quot;key&quot;
-
-val-每一项
-key -key值
-i-第几个
-
-&lt;el-table-column prop=&quot;score&quot; label=&quot;评分&quot; :show-overflow-tooltip=&quot;true&quot; align=&quot;center&quot;&gt;
-    &lt;template slot-scope=&quot;scope&quot;&gt;
-    &lt;span&gt;
-        &lt;span v-for=&quot; (val, key , i) in scope.row.dimItemMap&quot; :key=&quot;key&quot;&gt;
-        &#123;&#123;val.score&#125;&#125;//score为键，val.score为值
-        &lt;/span&gt;
-    &lt;/span&gt;
-    &lt;/template&gt;
-&lt;/el-table-column&gt;
-</code></pre>
-<h2 id="1-2-在js里面forin遍历对象"><a href="#1-2-在js里面forin遍历对象" class="headerlink" title="1.2 在js里面forin遍历对象"></a>1.2 在js里面forin遍历对象</h2><p>for…in 循环主要是为了遍历对象而生，不适用于遍历数组</p>
-<pre><code>let data = [&#123; wiun2dvi: 232, wiun3dvi: 55, wiu4ndvi: 33, wiun1dvi: 24432 &#125;];
-    data.forEach((item,index)=&gt;&#123;
-      for (const key in item) &#123;
-        console.log(&quot;item[key]&quot;,item[key]);//值
-        console.log(&quot;key&quot;,key);//键
-      &#125;
-    &#125;)
-</code></pre>
-<h1 id="2-循环遍历数组"><a href="#2-循环遍历数组" class="headerlink" title="2.循环遍历数组"></a>2.循环遍历数组</h1><h2 id="2-1-vue-在html里面循环遍历数组"><a href="#2-1-vue-在html里面循环遍历数组" class="headerlink" title="2.1 vue 在html里面循环遍历数组"></a>2.1 vue 在html里面循环遍历数组</h2><pre><code>&lt;el-table-column v-for=&quot;item in tableCol&quot; :key=&quot;item.id&quot; :prop=&quot;item.id&quot; :label=&quot;item.name&quot; :show-overflow-tooltip=&quot;true&quot; align=&quot;center&quot;&gt;
-    &lt;template slot-scope=&quot;scope&quot;&gt;
-        &lt;span&gt;&#123;&#123;scope.row.dimItemMap?scope.row.dimItemMap[item.id].name:""&#125;&#125;&lt;/span&gt;
-    &lt;/template&gt;
-&lt;/el-table-column&gt;
-
-&lt;el-table-column prop=&quot;score&quot; label=&quot;评分&quot; :show-overflow-tooltip=&quot;true&quot; align=&quot;center&quot;&gt;
-    &lt;template slot-scope=&quot;scope&quot;&gt;
-        &lt;span&gt;
-            &lt;span v-for=&quot; (item, index) in scope.row.dimItemMap&quot; :key=&quot;index&quot;&gt;
-                &#123;&#123;item.score&#125;&#125;
-            &lt;/span&gt;
-        &lt;/span&gt;
-    &lt;/template&gt;
-&lt;/el-table-column&gt;
-</code></pre>
-<h2 id="2-2-在js里面for遍历数组"><a href="#2-2-在js里面for遍历数组" class="headerlink" title="2.2 在js里面for遍历数组"></a>2.2 在js里面for遍历数组</h2><pre><code>let id = 1524466
-for (let i = 0; i &lt; list.length; i++) &#123;
-    let a = list[i];
-    if (a.id === id) &#123;
-        return a.name;
-    &#125; 
-&#125;
-</code></pre>
-<h2 id="2-3-在js里面forof遍历数组"><a href="#2-3-在js里面forof遍历数组" class="headerlink" title="2.3 在js里面forof遍历数组"></a>2.3 在js里面forof遍历数组</h2><p>   let arr = [{<br>        name: 12,<br>        hello: “wsdfnioq”,<br>    }, {<br>        name: 12,<br>        hello: “wsdfnioq”,<br>    }, {<br>        name: 12,<br>        hello: “wsdfnioq”,<br>    }]</p>
-<pre><code>for (const i of arr) &#123;
-    console.log(&quot;i&quot;, i);
-&#125;
-        
-//i &#123;name: 12, hello: &#39;wsdfnioq&#39;&#125;
-//i &#123;name: 12, hello: &#39;wsdfnioq&#39;&#125;
-//i &#123;name: 12, hello: &#39;wsdfnioq&#39;&#125;
-
-let arr = [
-    [&#39;name&#39;, &quot;张三&quot;],
-    [&#39;地址&#39;, &#39;北京&#39;],
-    [&#39;手机&#39;, &#39;123&#39;]
-]
-for (const [value0, value1] of arr) &#123;
-    console.log(&#39;k&#39;, value0, value1);
-&#125;
-// k name 张三
-// k 地址 北京
-// k 手机 123
-</code></pre>
-<h2 id="2-4-for-in，不推荐对数组进行遍历"><a href="#2-4-for-in，不推荐对数组进行遍历" class="headerlink" title="2.4 for in，不推荐对数组进行遍历"></a>2.4 for in，不推荐对数组进行遍历</h2><pre><code>let arr = [&quot;lsadnkol&quot;, &quot;klsmvaod&quot;, &quot;lpsaojfoas&quot;]
-for (const key in arr) &#123;
-    console.log(&quot;arr&quot;, key, typeof key, arr[key]);
-&#125;
-// 0 string lsadnkol
-// 1 string klsmvaod
-// 2 string lpsaojfoas
-</code></pre>
-<h2 id="2-5-forEach-函数遍历数组"><a href="#2-5-forEach-函数遍历数组" class="headerlink" title="2.5 forEach() 函数遍历数组"></a>2.5 forEach() 函数遍历数组</h2><p>①无任何返回，可改变原来数组中的内容</p>
-<p>②循环次数：数组的长度</p>
-<p>③不支持return，不需要return语句</p>
-<p>如下案例：给每个对象中添加age属性</p>
-<pre><code>let forArr = [&#123;name:&#39;tom&#39;,sex:&#39;man&#39;&#125;,&#123;name:&#39;linda&#39;,sex:&#39;woman&#39;&#125;,]
- forArr.forEach((item,index) =&gt; &#123;
-    console.log(&quot;forEach循环==index==&quot;,index,item);
-     item.age = 27
-&#125;)
-console.log(&quot;forArr==遍历后===&quot;,forArr)
-// forArr ----&gt;[&#123;name:&#39;tom&#39;,sex:&#39;man&#39;,age:27&#125;,&#123;name:&#39;linda&#39;,sex:&#39;woman&#39;,age:27&#125;]
-</code></pre>
-<h1 id="vue循环遍历-指令v-for"><a href="#vue循环遍历-指令v-for" class="headerlink" title="vue循环遍历,指令v-for"></a>vue循环遍历,指令v-for</h1><h2 id="1-循环遍历"><a href="#1-循环遍历" class="headerlink" title="1.循环遍历"></a>1.循环遍历</h2><p>vue的循环遍历用v-for，语法类似于js中的for循环</p>
-<p>当我们有一组数据需要进行渲染时，我们就可以使用v-for来完成。</p>
-<p>v-for使用格式：</p>
-<p>格式为：v-for = item in items</p>
-<p> (遍历items中的数据)</p>
-<h2 id="2-v-for遍历数组"><a href="#2-v-for遍历数组" class="headerlink" title="2.v-for遍历数组"></a>2.v-for遍历数组</h2><p>用v-for指令基于一个数组来渲染一个列表。</p>
-<p>v-for 指令使用item in items形式的语法，其中items是源数据数组， 而item则是被迭代的数组元素。</p>
-<ul>
-<li>如果v-for遍历数组中的数组值</li>
-</ul>
-<p>语法格式：v-for=”movie in movies”<br>依次从movies中取出movie，并且在元素的内容中，我们可以使用Mustache语法，来使用movie</p>
-<pre><code>&lt;li v-for=&quot;movie in movies&quot;&gt; &#123;&#123;movie&#125;&#125; &lt;/li&gt;
- 
-</code></pre>
-<ul>
-<li>如果v-for遍历数组中的数组值、索引值</li>
-</ul>
-<p>语法格式：v-for=(item, index) in items<br>v-for中使用二个参数，即当前项和当前项的索引</p>
-<pre><code>&lt;li v-for=&quot;(item, index) in items&quot;&gt;&#123;&#123;index&#125;&#125;. &#123;&#123;item&#125;&#125;&lt;/li&gt;
-</code></pre>
-<p>样例：</p>
-<pre><code>&lt;div id=&quot;app&quot;&gt;
-  &lt;ul&gt;
-    &lt;li v-for=&quot;name in names&quot;&gt;&#123;&#123;name&#125;&#125;&lt;/li&gt;
-  &lt;/ul&gt;
-   //v-for遍历过程中，遍历数组中值,并显示
-  &lt;ul&gt;
-    &lt;li v-for=&quot;(name,index) in names&quot;&gt;&#123;&#123;index&#125;&#125;. &#123;&#123;name&#125;&#125;&lt;/li&gt;
-  &lt;/ul&gt;
-   //遍历过程中，遍历数组中值、索引值，并显示
-&lt;/div&gt;
-
 &lt;script&gt;
-  const app = new Vue(&#123;
-    el:&quot;#app&quot;,
-    data:&#123;
-      names:[&quot;刘富楠&quot;,&quot;科比&quot;,&quot;詹姆斯&quot;,&quot;库里&quot;]
+import ChildComponent from &#39;./ChildComponent.vue&#39;
+ 
+export default &#123;
+  components: &#123;
+    ChildComponent
+  &#125;,
+  data () &#123;
+    return &#123;
+      data: &#39;父组件传递的数据&#39;
     &#125;
-  &#125;)
+  &#125;
+&#125;
 &lt;/script&gt;
 </code></pre>
-<h2 id="3-v-for遍历对象"><a href="#3-v-for遍历对象" class="headerlink" title="3.v-for遍历对象"></a>3.v-for遍历对象</h2><p>1.遍历对象属性 用value值<br>2.遍历对象属性和属性值 用value值和key<br>3.遍历对象属性和属性值和索引 用value值、key和index</p>
+<p>子组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    子组件接收到的数据：&#123;&#123; parentData &#125;&#125;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+export default &#123;
+  props: &#123;
+    parentData: String
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>Vue props默认值类型有哪些</p>
+<h2 id="emit和-on"><a href="#emit和-on" class="headerlink" title="$emit和$on"></a>$emit和$on</h2><p>子组件向父组件传递数据，子组件通过$emit触发事件，父组件通过$on监听事件并接收数据。</p>
+<p>父组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;child-component @childEvent=&quot;handleChild&quot;&gt;&lt;/child-component&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+import ChildComponent from &#39;./ChildComponent.vue&#39;
+ 
+export default &#123;
+  components: &#123;
+    ChildComponent
+  &#125;,
+  methods: &#123;
+    handleChild (data) &#123;
+      console.log(&#39;父组件接收到的数据：&#39; + data)
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>子组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;button @click=&quot;handleClick&quot;&gt;点击触发事件&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+export default &#123;
+  methods: &#123;
+    handleClick () &#123;
+      this.$emit(&#39;childEvent&#39;, &#39;子组件传递的数据&#39;)
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<h2 id="parent和-children"><a href="#parent和-children" class="headerlink" title="$parent和$children"></a>$parent和$children</h2><p>父组件向子组件传递数据，父组件通过$children获取子组件实例并调用子组件方法传递数据。</p>
+<p>父组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;button @click=&quot;handleClick&quot;&gt;向子组件传递数据&lt;/button&gt;
+    &lt;child-component ref=&quot;child&quot;&gt;&lt;/child-component&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+import ChildComponent from &#39;./ChildComponent.vue&#39;
+ 
+export default &#123;
+  components: &#123;
+    ChildComponent
+  &#125;,
+  methods: &#123;
+    handleClick () &#123;
+      this.$refs.child.handleData(&#39;父组件传递的数据&#39;)
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>子组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    子组件
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+export default &#123;
+  methods: &#123;
+    handleData (data) &#123;
+      console.log(&#39;子组件接收到的数据：&#39; + data)
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<h2 id="attrs和-listeners"><a href="#attrs和-listeners" class="headerlink" title="$attrs和$listeners"></a>$attrs和$listeners</h2><p>父组件向子组件传递属性和事件，子组件通过$attrs获取属性，通过$listeners获取事件并绑定在子组件上。</p>
+<p>父组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;child-component attr1=&quot;属性1&quot; attr2=&quot;属性2&quot; @event1=&quot;handleEvent&quot;&gt;&lt;/child-component&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+import ChildComponent from &#39;./ChildComponent.vue&#39;
+ 
+export default &#123;
+  components: &#123;
+    ChildComponent
+  &#125;,
+  methods: &#123;
+    handleEvent (data) &#123;
+      console.log(&#39;父组件接收到的数据：&#39; + data)
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>子组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    子组件
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+export default &#123;
+  mounted () &#123;
+    this.$emit(&#39;event1&#39;, &#39;子组件传递的数据&#39;)
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<h2 id="provide和inject"><a href="#provide和inject" class="headerlink" title="provide和inject"></a>provide和inject</h2><p>父组件向子组件传递数据，父组件通过provide提供数据，子组件通过inject注入数据。</p>
+<p>父组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;child-component&gt;&lt;/child-component&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+import ChildComponent from &#39;./ChildComponent.vue&#39;
+ 
+export default &#123;
+  components: &#123;
+    ChildComponent
+  &#125;,
+  provide () &#123;
+    return &#123;
+      parentData: &#39;父组件提供的数据&#39;
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>子组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    子组件接收到的数据：&#123;&#123; childData &#125;&#125;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+export default &#123;
+  inject: [&#39;parentData&#39;],
+  computed: &#123;
+    childData () &#123;
+      return this.parentData + &#39;，子组件加工处理后的数据&#39;
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<h1 id="二、其他探索"><a href="#二、其他探索" class="headerlink" title="二、其他探索"></a>二、其他探索</h1><h2 id="EventBus"><a href="#EventBus" class="headerlink" title="EventBus"></a>EventBus</h2><p>父组件和子组件之间通过中央事件总线(EventBus)进行通信。</p>
+<p>EventBus.js：</p>
+<pre><code>import Vue from &#39;vue&#39;
+export const EventBus = new Vue()
+</code></pre>
+<p>父组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;button @click=&quot;handleParent&quot;&gt;向子组件传递数据&lt;/button&gt;
+    &lt;child-component&gt;&lt;/child-component&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+import ChildComponent from &#39;./ChildComponent.vue&#39;
+import &#123; EventBus &#125; from &#39;./EventBus&#39;
+ 
+export default &#123;
+  components: &#123;
+    ChildComponent
+  &#125;,
+  methods: &#123;
+    handleParent () &#123;
+      EventBus.$emit(&#39;parent-event&#39;, &#39;父组件传递的数据&#39;)
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>子组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    子组件接收到的数据：&#123;&#123; childData &#125;&#125;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+import &#123; EventBus &#125; from &#39;./EventBus&#39;
+ 
+export default &#123;
+  data () &#123;
+    return &#123;
+      childData: &#39;&#39;
+    &#125;
+  &#125;,
+  mounted () &#123;
+    EventBus.$on(&#39;parent-event&#39;, data =&gt; &#123;
+      this.childData = data
+    &#125;)
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<h2 id="Vuex"><a href="#Vuex" class="headerlink" title="Vuex"></a>Vuex</h2><p>父组件和子组件之间通过Vuex进行通信，共享同一状态树。</p>
+<p>store.js：</p>
+<pre><code>import Vue from &#39;vue&#39;
+import Vuex from &#39;vuex&#39;
+ 
+Vue.use(Vuex)
+ 
+export default new Vuex.Store(&#123;
+  state: &#123;
+    data: &#39;共享的数据&#39;
+  &#125;,
+  mutations: &#123;
+    setData (state, data) &#123;
+      state.data = data
+    &#125;
+  &#125;
+&#125;)
+</code></pre>
+<p>父组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;button @click=&quot;handleParent&quot;&gt;向子组件传递数据&lt;/button&gt;
+    &lt;child-component&gt;&lt;/child-component&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+import ChildComponent from &#39;./ChildComponent.vue&#39;
+import store from &#39;./store&#39;
+ 
+export default &#123;
+  components: &#123;
+    ChildComponent
+  &#125;,
+  methods: &#123;
+    handleParent () &#123;
+      store.commit(&#39;setData&#39;, &#39;父组件传递的数据&#39;)
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>子组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    子组件接收到的数据：&#123;&#123; childData &#125;&#125;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+import &#123; mapState &#125; from &#39;vuex&#39;
+ 
+export default &#123;
+  computed: &#123;
+    ...mapState([&#39;data&#39;]),
+    childData () &#123;
+      return this.data + &#39;，子组件加工处理后的数据&#39;
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<h2 id="refs属性"><a href="#refs属性" class="headerlink" title="$refs属性"></a>$refs属性</h2><p>父组件可以通过$refs获取子组件的实例，进而访问子组件的属性和方法。</p>
+<p>父组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;button @click=&quot;handleParent&quot;&gt;向子组件传递数据&lt;/button&gt;
+    &lt;child-component ref=&quot;child&quot;&gt;&lt;/child-component&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+import ChildComponent from &#39;./ChildComponent.vue&#39;
+ 
+export default &#123;
+  components: &#123;
+    ChildComponent
+  &#125;,
+  methods: &#123;
+    handleParent () &#123;
+      this.$refs.child.childData = &#39;父组件修改的数据&#39;
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>子组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    子组件接收到的数据：&#123;&#123; childData &#125;&#125;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+export default &#123;
+  data () &#123;
+    return &#123;
+      childData: &#39;子组件原始数据&#39;
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<h2 id="parent属性"><a href="#parent属性" class="headerlink" title="$parent属性"></a>$parent属性</h2><p>子组件可以通过$parent获取父组件的实例，进而访问父组件的属性和方法。</p>
+<p>父组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;child-component&gt;&lt;/child-component&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+import ChildComponent from &#39;./ChildComponent.vue&#39;
+ 
+export default &#123;
+  components: &#123;
+    ChildComponent
+  &#125;,
+  data () &#123;
+    return &#123;
+      parentData: &#39;父组件数据&#39;
+    &#125;
+  &#125;,
+  methods: &#123;
+    handleParent () &#123;
+      console.log(&#39;父组件的方法&#39;)
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>子组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;button @click=&quot;handleChild&quot;&gt;调用父组件方法&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+export default &#123;
+  methods: &#123;
+    handleChild () &#123;
+      console.log(this.$parent.parentData)
+      this.$parent.handleParent()
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<h2 id="root属性"><a href="#root属性" class="headerlink" title="$root属性"></a>$root属性</h2><p>子组件可以通过$root获取根组件的实例，进而访问根组件的属性和方法。</p>
+<p>根组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;child-component&gt;&lt;/child-component&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+import ChildComponent from &#39;./ChildComponent.vue&#39;
+ 
+export default &#123;
+  components: &#123;
+    ChildComponent
+  &#125;,
+  mounted () &#123;
+    console.log(&#39;根组件的数据：&#39; + this.rootData)
+    this.rootMethod()
+  &#125;,
+  data () &#123;
+    return &#123;
+      rootData: &#39;根组件的数据&#39;
+    &#125;
+  &#125;,
+  methods: &#123;
+    rootMethod () &#123;
+      console.log(&#39;根组件的方法&#39;)
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>子组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    子组件
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+export default &#123;
+  mounted () &#123;
+    console.log(&#39;根组件的数据：&#39; + this.$root.rootData)
+    this.$root.rootMethod()
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<h2 id="provide-inject-高级"><a href="#provide-inject-高级" class="headerlink" title="provide / inject (高级)"></a>provide / inject (高级)</h2><p>provide / inject 可以让祖先组件向所有后代组件注入一个依赖，让这些组件使用相同的依赖注入。</p>
+<p>祖先组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;child-component&gt;&lt;/child-component&gt;
+    &lt;grand-child&gt;&lt;/grand-child&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+import ChildComponent from &#39;./ChildComponent.vue&#39;
+import GrandChild from &#39;./GrandChild.vue&#39;
+ 
+export default &#123;
+  components: &#123;
+    ChildComponent,
+    GrandChild
+  &#125;,
+  provide: &#123;
+    sharedObj: &#123;
+      message: &#39;这是祖先组件注入的对象&#39;
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>直接子组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    子组件
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+export default &#123;
+  inject: [&#39;sharedObj&#39;]
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>间接子组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    子组件接收到的数据：&#123;&#123; childData &#125;&#125;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+export default &#123;
+  inject: [&#39;sharedObj&#39;],
+  computed: &#123;
+    childData () &#123;
+      return this.sharedObj.message + &#39;，子组件加工处理后的数据&#39;
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<h2 id="provide-inject-Vuex-高级"><a href="#provide-inject-Vuex-高级" class="headerlink" title="provide / inject + Vuex (高级)"></a>provide / inject + Vuex (高级)</h2><p>使用provide / inject注入Vuex的实例，使所有组件使用相同的Vuex实例。</p>
+<p>store.js：</p>
+<pre><code>import Vue from &#39;vue&#39;
+import Vuex from &#39;vuex&#39;
+ 
+Vue.use(Vuex)
+ 
+export default new Vuex.Store(&#123;
+  state: &#123;
+    data: &#39;共享的数据&#39;
+  &#125;,
+  mutations: &#123;
+    setData (state, data) &#123;
+      state.data = data
+    &#125;
+  &#125;
+&#125;)
+</code></pre>
+<p>根组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;child-component&gt;&lt;/child-component&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+import ChildComponent from &#39;./ChildComponent.vue&#39;
+import store from &#39;./store&#39;
+ 
+export default &#123;
+  components: &#123;
+    ChildComponent
+  &#125;,
+  provide () &#123;
+    return &#123;
+      store
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>子组件和孙组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    组件接收到的数据：&#123;&#123; componentData &#125;&#125;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+export default &#123;
+  inject: &#123;
+    store: &#123;
+      default: null
+    &#125;
+  &#125;,
+  computed: &#123;
+    componentData () &#123;
+      return this.store.state.data + &#39;，组件加工处理后的数据&#39;
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<h2 id="自定义事件"><a href="#自定义事件" class="headerlink" title="自定义事件"></a>自定义事件</h2><p>使用vm.$on(eventName, callback)事件监听，使用vm.$emit(eventName, …args)触发事件。</p>
+<p>父组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;child-component @custom-event=&quot;handleCustomEvent&quot;&gt;&lt;/child-component&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+import ChildComponent from &#39;./ChildComponent.vue&#39;
+ 
+export default &#123;
+  components: &#123;
+    ChildComponent
+  &#125;,
+  methods: &#123;
+    handleCustomEvent (data) &#123;
+      console.log(&#39;父组件接收到的数据：&#39; + data)
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>子组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;button @click=&quot;handleClick&quot;&gt;点击触发事件&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+export default &#123;
+  methods: &#123;
+    handleClick () &#123;
+      this.$emit(&#39;custom-event&#39;, &#39;子组件传递的数据&#39;)
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<h2 id="兄弟组件之间的通信"><a href="#兄弟组件之间的通信" class="headerlink" title="兄弟组件之间的通信"></a>兄弟组件之间的通信</h2><p>使用一个空的Vue实例作为事件总线，一边向事件总线发出事件，另一边监听事件。</p>
+<p>EventBus.js：</p>
+<pre><code>import Vue from &#39;vue&#39;
+export const EventBus = new Vue()
+</code></pre>
+<p>组件A：<br>    <template><br>      <div><br>        &lt;button @click=”handleClick”&gt;向组件B传递数据<br>      </div><br>    </template></p>
+<pre><code>&lt;script&gt;
+import &#123; EventBus &#125; from &#39;./EventBus&#39;
+ 
+export default &#123;
+  methods: &#123;
+    handleClick () &#123;
+      EventBus.$emit(&#39;event&#39;, &#39;组件A传递的数据&#39;)
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>组件B：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    组件B接收到的数据：&#123;&#123; data &#125;&#125;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+import &#123; EventBus &#125; from &#39;./EventBus&#39;
+ 
+export default &#123;
+  data () &#123;
+    return &#123;
+      data: &#39;&#39;
+    &#125;
+  &#125;,
+  mounted () &#123;
+    EventBus.$on(&#39;event&#39;, data =&gt; &#123;
+      this.data = data
+    &#125;)
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<h2 id="localStorage（浏览器缓存）"><a href="#localStorage（浏览器缓存）" class="headerlink" title="localStorage（浏览器缓存）"></a>localStorage（浏览器缓存）</h2><p>使用浏览器缓存来存储数据，在需要通信的组件中存储并监听缓存中的数据。</p>
+<p>组件A：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;button @click=&quot;handleClick&quot;&gt;向组件B传递数据&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+export default &#123;
+  methods: &#123;
+    handleClick () &#123;
+      localStorage.setItem(&#39;data&#39;, &#39;组件A传递的数据&#39;)
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>组件B：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    组件B接收到的数据：&#123;&#123; data &#125;&#125;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+export default &#123;
+  data () &#123;
+    return &#123;
+      data: &#39;&#39;
+    &#125;
+  &#125;,
+  mounted () &#123;
+    window.addEventListener(&#39;storage&#39;, this.handleStorageUpdate)
+    this.updateData()
+  &#125;,
+  beforeDestroy () &#123;
+    window.removeEventListener(&#39;storage&#39;, this.handleStorageUpdate)
+  &#125;,
+  methods: &#123;
+    handleStorageUpdate (event) &#123;
+      if (event.key === &#39;data&#39;) &#123;
+        this.updateData()
+      &#125;
+    &#125;,
+    updateData () &#123;
+      this.data = localStorage.getItem(&#39;data&#39;) || &#39;&#39;
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<h2 id="发布订阅（Pub-Sub）模式"><a href="#发布订阅（Pub-Sub）模式" class="headerlink" title="发布订阅（Pub/Sub）模式"></a>发布订阅（Pub/Sub）模式</h2><p>使用一个消息中心，订阅者向消息中心订阅消息，发布者向消息中心发布消息，消息中心将消息通知给所有订阅者。</p>
+<p>消息中心：</p>
+<pre><code>// PubSub.js
+export const PubSub = &#123;
+  events: &#123;&#125;,
+  subscribe (event, callback) &#123;
+    if (!this.events[event]) &#123;
+      this.events[event] = []
+    &#125;
+    this.events[event].push(callback)
+  &#125;,
+  publish (event, data) &#123;
+    if (!this.events[event]) &#123;
+      this.events[event] = []
+    &#125;
+    this.events[event].forEach(callback =&gt; callback(data))
+  &#125;
+&#125;
+</code></pre>
+<p>组件A：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;button @click=&quot;handleClick&quot;&gt;向组件B传递数据&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+import &#123; PubSub &#125; from &#39;./PubSub&#39;
+ 
+export default &#123;
+  methods: &#123;
+    handleClick () &#123;
+      PubSub.publish(&#39;event&#39;, &#39;组件A传递的数据&#39;)
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>组件B：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    组件B接收到的数据：&#123;&#123; data &#125;&#125;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+import &#123; PubSub &#125; from &#39;./PubSub&#39;
+ 
+export default &#123;
+  data () &#123;
+    return &#123;
+      data: &#39;&#39;
+    &#125;
+  &#125;,
+  mounted () &#123;
+    PubSub.subscribe(&#39;event&#39;, data =&gt; &#123;
+      this.data = data
+    &#125;)
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<h2 id="WebSocket-高级"><a href="#WebSocket-高级" class="headerlink" title="WebSocket (高级)"></a>WebSocket (高级)</h2><p>使用WebSocket协议实现实时通信，将所有组件连接到同一个WebSocket服务器，通过推送消息实现通信。</p>
+<p>连接WebSocket服务器：</p>
+<pre><code>const ws = new WebSocket(&#39;ws://localhost:3000&#39;)
+ 
+ws.onopen = function () &#123;
+  console.log(&#39;WebSocket已连接&#39;)
+&#125;
+ 
+ws.onclose = function () &#123;
+  console.log(&#39;WebSocket已关闭&#39;)
+&#125;
+ 
+ws.onerror = function () &#123;
+  console.log(&#39;WebSocket出错&#39;)
+&#125;
+</code></pre>
+<p>组件A：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;button @click=&quot;handleClick&quot;&gt;向组件B传递数据&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+const ws = new WebSocket(&#39;ws://localhost:3000&#39;)
+ 
+export default &#123;
+  methods: &#123;
+    handleClick () &#123;
+      ws.send(&#39;组件A传递的数据&#39;)
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>组件B：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    组件B接收到的数据：&#123;&#123; data &#125;&#125;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+const ws = new WebSocket(&#39;ws://localhost:3000&#39;)
+ 
+export default &#123;
+  data () &#123;
+    return &#123;
+      data: &#39;&#39;
+    &#125;
+  &#125;,
+  mounted () &#123;
+    ws.onmessage = event =&gt; &#123;
+      this.data = event.data
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<h2 id="路由参数（高级）"><a href="#路由参数（高级）" class="headerlink" title="路由参数（高级）"></a>路由参数（高级）</h2><p>使用路由参数来传递数据，通常适用于父子组件之间或兄弟组件之间的通信。</p>
+<p>父组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    点击以下链接可以传递数据：&lt;br&gt;
+    &lt;router-link :to=&quot;&#123; name: &#39;child&#39;, params: &#123; data: &#39;父组件传递的数据&#39; &#125; &#125;&quot;&gt;传递数据到子组件&lt;/router-link&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+</code></pre>
+<p>子组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    子组件接收到的数据：&#123;&#123; $route.params.data &#125;&#125;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+export default &#123;
+  mounted () &#123;
+    console.log(&#39;子组件接收到的数据：&#39; + this.$route.params.data)
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>兄弟组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    兄弟组件接收到的数据：&#123;&#123; $route.params.data &#125;&#125;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+export default &#123;
+  mounted () &#123;
+    console.log(&#39;兄弟组件接收到的数据：&#39; + this.$route.params.data)
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<h2 id="Vuex状态管理（高级）"><a href="#Vuex状态管理（高级）" class="headerlink" title="Vuex状态管理（高级）"></a>Vuex状态管理（高级）</h2><p>使用Vuex管理公共状态，组件通过Vuex进行通信。</p>
+<p>store.js：</p>
+<pre><code>import Vue from &#39;vue&#39;
+import Vuex from &#39;vuex&#39;
+ 
+Vue.use(Vuex)
+ 
+export default new Vuex.Store(&#123;
+  state: &#123;
+    data: &#39;共享的数据&#39;
+  &#125;,
+  mutations: &#123;
+    setData (state, data) &#123;
+      state.data = data
+    &#125;
+  &#125;
+&#125;)
+</code></pre>
+<p>组件A：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;button @click=&quot;handleClick&quot;&gt;向组件B传递数据&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+import store from &#39;./store&#39;
+ 
+export default &#123;
+  methods: &#123;
+    handleClick () &#123;
+      store.commit(&#39;setData&#39;, &#39;组件A传递的数据&#39;)
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>组件B：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    组件B接收到的数据：&#123;&#123; data &#125;&#125;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+import &#123; mapState &#125; from &#39;vuex&#39;
+ 
+export default &#123;
+  computed: &#123;
+    ...mapState([&#39;data&#39;])
+  &#125;,
+  mounted () &#123;
+    console.log(&#39;组件B接收到的数据：&#39; + this.data)
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<h2 id="事件总线（高级）"><a href="#事件总线（高级）" class="headerlink" title="事件总线（高级）"></a>事件总线（高级）</h2><p>使用一个空的Vue实例作为事件总线，组件A通过事件总线向组件B传递数据。</p>
+<p>事件总线：</p>
+<pre><code>// EventBus.js
+import Vue from &#39;vue&#39;
+export const EventBus = new Vue()
+</code></pre>
+<p>组件A：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;button @click=&quot;handleClick&quot;&gt;向组件B传递数据&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+import &#123; EventBus &#125; from &#39;./EventBus&#39;
+ 
+export default &#123;
+  methods: &#123;
+    handleClick () &#123;
+      EventBus.$emit(&#39;event&#39;, &#39;组件A传递的数据&#39;)
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>组件B：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    组件B接收到的数据：&#123;&#123; data &#125;&#125;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+import &#123; EventBus &#125; from &#39;./EventBus&#39;
+ 
+export default &#123;
+  data () &#123;
+    return &#123;
+      data: &#39;&#39;
+    &#125;
+  &#125;,
+  mounted () &#123;
+    EventBus.$on(&#39;event&#39;, data =&gt; &#123;
+      this.data = data
+    &#125;)
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>————————————————<br>版权声明：本文为CSDN博主「慕白Lee」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/libusi001/article/details/131668644">https://blog.csdn.net/libusi001/article/details/131668644</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-Vue组件间数据同步刷新解决方案--全局事件总线"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/09/14/Vue%E7%BB%84%E4%BB%B6%E9%97%B4%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5%E5%88%B7%E6%96%B0%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88--%E5%85%A8%E5%B1%80%E4%BA%8B%E4%BB%B6%E6%80%BB%E7%BA%BF/"
+    >Vue组件间数据同步刷新解决方案--全局事件总线</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/09/14/Vue%E7%BB%84%E4%BB%B6%E9%97%B4%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5%E5%88%B7%E6%96%B0%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88--%E5%85%A8%E5%B1%80%E4%BA%8B%E4%BB%B6%E6%80%BB%E7%BA%BF/" class="article-date">
+  <time datetime="2023-09-14T06:28:42.000Z" itemprop="datePublished">2023-09-14</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>Vue工程很多时候需要我们保持数据的一致性。举个例子，我在一个组件A的事件中请求后端接口修改了某个数据，并且后端接口响应我修改成功了。这时候界面上另外一个组件B也在展示该数据，这时候就需要使得这个B组件也进行显示数据的刷新，否则A组件与B组件的数据就不同步，很容易被测试提bug。</p>
+<p>如果A组件与B组件是父子关系的话，那么只需要利用父子组件之间的通讯即可完成数据的同步。但是如果这两个组件之间没有任何关系，那么如何进行跨组件之间的数据同步呢？</p>
+<h1 id="方法一：Vuex状态管理，配合组件计算属性使用"><a href="#方法一：Vuex状态管理，配合组件计算属性使用" class="headerlink" title="方法一：Vuex状态管理，配合组件计算属性使用"></a>方法一：Vuex状态管理，配合组件计算属性使用</h1><p>简要介绍一下步骤思路：</p>
+<p>1、将项目中很多地方都需要用到的数据提取到Vuex的state中；并用getters方法返回该值； </p>
+<p>2、在组件中使用计算属性返回Vuex的getters获取数据；</p>
+<p>3、组件中通过watch监听计算属性值的变化，一旦有变化，则重新赋值；</p>
+<p>4、通过Vuex中的mutations方法修改state中数据值；</p>
+<p>上诉步骤即可实现在任一组件中修改数据触发其他组件实时刷新的效果。但是实现过程较为繁琐。</p>
+<h1 id="方法二：全局事件总线"><a href="#方法二：全局事件总线" class="headerlink" title="方法二：全局事件总线"></a>方法二：全局事件总线</h1><p>全局事件总线是解决前端数据同步问题的一种架构思维，或者说是一种重要的编程“模式”，因为他不局限于任何一种前端框架，无论是Vue，React还是Flutter，甚至游戏编程。它都经常出现并应用。只需要学会这一套路，并通过语法变通举一反三，那么你就能轻松在各种框架上使用并解决一些列问题。而我们这里就只以Vue为例说明一下具体实现。</p>
+<p>全局事件总线运用编程中两大模式：单例模式，观察者模式。</p>
+<p>1、首先在任一位置新建总线类，并且该类为单例，有且只能有一个实例；以下是简单实现</p>
+<pre><code>class eventbus&#123;
+    constructor() &#123;
+        if (!eventbus.Instance) &#123;
+            //内存中存储所有事件的处理函数
+            this.eventMap = &#123;&#125;;
+            eventbus.Instance = this;
+        &#125;
+        return eventbus.Instance
+    &#125;
+    /**
+     * 注册事件      
+     * key         事件名
+     * page        组件(页面)名
+     * callback    注册的事件
+     */
+    on(key,page,callback)&#123;
+        //将函数通过事件名key，页面(组件)名的形式进行注册
+        this.eventMap[key] = this.eventMap[key] || &#123;&#125;;
+        this.eventMap[key][page] = callback;
+    &#125;
+    /**
+     * 事件通知      
+     * key         事件名
+     * data        通知的数据
+     * page        组件(页面)名
+     */
+    emit(key,data,page=null)&#123;
+        if(key &amp;&amp; this.eventMap[key])&#123;
+            if(page)&#123;
+                //如果参数中有页面名(组件名)，则将data通知单个页面(组件)注册的函数进行处理
+                this.eventMap[key][page] &amp;&amp; this.eventMap[key][page](data);
+            &#125;else&#123;
+                //通知该事件名下的所有页面(组件)注册的函数进行处理
+                for(let sub in this.eventMap[key]) &#123; 
+                    this.eventMap[key][sub](data);
+                &#125;
+            &#125;
+        &#125;else&#123;
+            //该事件名下没有注册任何函数
+        &#125;
+    &#125;,
+    /**
+     * 事件销毁，一般在页面(组件销毁时同步销毁)      
+     * key         事件名
+     * page        组件(页面)名
+     */
+    destroy(key,page)&#123;
+        if(this.eventMap[key] &amp;&amp; this.eventMap[key][page])&#123;
+            //删除单个页面事件
+            delete this.eventMap[key][page];
+        &#125;
+        if(this.eventMap[key] == &#123;&#125;)&#123;
+            delete this.eventMap[key];
+        &#125;
+    &#125;,
+    /**
+     * 事件销毁，销毁全部     
+     * key         事件名
+     * page        组件(页面)名
+     */
+    destroyAll(key)&#123;
+        if(this.eventMap[key] == &#123;&#125;)&#123;
+            //删除所有
+            delete this.eventMap[key];
+        &#125;
+    &#125;
+&#125;
+export default new eventbus()
+</code></pre>
+<p>2、在A组件中注册监听事件</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;&#123;&#123;user&#125;&#125;&lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+//引入全局总线类
+import event from &quot;@/Eventbus.js&quot;;
+export default &#123;
+   name: &quot;ComA&quot;,
+   data () &#123;
+      return &#123;
+        user:&quot;我是A&quot;
+      &#125;;
+    &#125;,
+    created() &#123;
+        //注册监听事件,事件名：changeUser,组件名:ComA
+        event.on(&quot;changeUser&quot;,&quot;ComA&quot;,(data)=&gt;&#123;
+            if(data)&#123;
+                this.user = data;
+            &#125;
+        &#125;)
+    &#125;,
+    destroyed() &#123;
+        //销毁事件
+        event.destroyed(&quot;changeUser&quot;,&quot;ComA&quot;);
+    &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>3、B组件发送监听，使A组件变量一起刷新</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;&#123;&#123;user&#125;&#125;&lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+//引入全局总线类
+import event from &quot;@/Eventbus.js&quot;;
+export default &#123;
+   name: &quot;ComB&quot;,
+   data () &#123;
+      return &#123;
+        user:&quot;我是B&quot;
+      &#125;;
+    &#125;,
+    methods: &#123;
+        updateUser()&#123;
+            let data = &quot;改成C&quot;;
+            this.user = data;
+            //通知所有组件(页面)刷新
+            event.emit(&quot;changeUser&quot;,data);
+            //只通知组件A刷新
+            event.emit(&quot;changeUser&quot;,data,&quot;ComA&quot;)
+        &#125;
+    &#125; 
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>————————————————<br>版权声明：本文为CSDN博主「Ajucy」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/Ajucy/article/details/130194549">https://blog.csdn.net/Ajucy/article/details/130194549</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-Vue数据更新页面却没有更新的几种情况以及解决方法"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/09/13/Vue%E6%95%B0%E6%8D%AE%E6%9B%B4%E6%96%B0%E9%A1%B5%E9%9D%A2%E5%8D%B4%E6%B2%A1%E6%9C%89%E6%9B%B4%E6%96%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%83%85%E5%86%B5%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/"
+    >Vue数据更新页面却没有更新的几种情况以及解决方法</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/09/13/Vue%E6%95%B0%E6%8D%AE%E6%9B%B4%E6%96%B0%E9%A1%B5%E9%9D%A2%E5%8D%B4%E6%B2%A1%E6%9C%89%E6%9B%B4%E6%96%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%83%85%E5%86%B5%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" class="article-date">
+  <time datetime="2023-09-13T03:33:44.000Z" itemprop="datePublished">2023-09-13</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="情况一：Vue无法检测实例被创建时不存在于data中的变量"><a href="#情况一：Vue无法检测实例被创建时不存在于data中的变量" class="headerlink" title="情况一：Vue无法检测实例被创建时不存在于data中的变量"></a>情况一：Vue无法检测实例被创建时不存在于data中的变量</h1><p>原因：由于 Vue 会在初始化实例时对 data中的数据执行 getter/setter 转化，所以 变量必须在 data 对象上存在才能让 Vue 将它转换为响应式的。</p>
+<p>例如： </p>
+<pre><code>new Vue(&#123;
+  data:&#123;&#125;,
+  template: &#39;&lt;div&gt;&#123;&#123;message&#125;&#125;&lt;/div&gt;&#39;
+&#125;)
+this.message = &#39;Hello world!&#39; // `message` 不是响应式的页面不会发生变化
+</code></pre>
+<p>解决方法：</p>
+<pre><code>new Vue(&#123;
+  data: &#123;
+    message: &#39;&#39;,
+  &#125;,
+  template: &#39;&lt;div&gt;&#123;&#123; message &#125;&#125;&lt;/div&gt;&#39;
+&#125;)
+this.message = &#39;Hello world!&#39;
+</code></pre>
+<h1 id="情况二：vue也不能检测到data中对象的动态添加和删除"><a href="#情况二：vue也不能检测到data中对象的动态添加和删除" class="headerlink" title="情况二：vue也不能检测到data中对象的动态添加和删除"></a>情况二：vue也不能检测到data中对象的动态添加和删除</h1><p>例如：</p>
+<pre><code>new Vue(&#123;
+  data:&#123;
+    obj: &#123;
+      id: 1
+    &#125;
+  &#125;,
+  template: &#39;&lt;div&gt;&#123;&#123; obj.message &#125;&#125;&lt;/div&gt;&#39;
+&#125;)
+this.obj.message = &#39;hello&#39; // 不是响应式的
+delete this.obj.id       // 不是响应式的
+</code></pre>
+<p>解决方法：</p>
+<pre><code>// 动态添加 - Vue.set
+Vue.set(this.obj, &#39;id&#39;, 002)
+  
+// 动态添加 - this.$set
+this.$set(this.obj, &#39;id&#39;, 002)
+  
+// 动态添加多个
+// 代替 Object.assign(this.obj, &#123; a: 1, b: 2 &#125;)
+this.obj = Object.assign(&#123;&#125;, this.obj, &#123; a: 1, b: 2 &#125;)
+  
+// 动态移除 - Vue.delete
+Vue.delete(this.obj, &#39;name&#39;)
+  
+// 动态移除 - this.$delete
+this.$delete(this.obj, &#39;name&#39;)
+</code></pre>
+<h1 id="情况三：变量为数组时"><a href="#情况三：变量为数组时" class="headerlink" title="情况三：变量为数组时"></a>情况三：变量为数组时</h1><p>不能通过索引直接修改或者赋值，也不能修改数组的长度</p>
+<p>例如：</p>
+<pre><code>new Vue(&#123;
+  data: &#123;
+    items: [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]
+  &#125;
+&#125;)
+this.items[1] = &#39;x&#39; // 不是响应性的
+this.items[3] = &#39;d&#39; // 不是响应性的
+this.items.length = 2 // 不是响应性的
+</code></pre>
+<p>解决方法：</p>
+<pre><code>// Vue.set
+Vue.set(this.items, 4, &#39;d&#39;)
+  
+// this.$set
+this.$set(this.items, 4, &#39;d)
+  
+// Array.prototype.splice
+this.items.splice(indexOfItem, 4, &#39;d&#39;)
+//修改长度
+this.items.splice(3)
+</code></pre>
+<h1 id="情况四：异步获取接口数据，DOM数据不发现变化"><a href="#情况四：异步获取接口数据，DOM数据不发现变化" class="headerlink" title="情况四：异步获取接口数据，DOM数据不发现变化"></a>情况四：异步获取接口数据，DOM数据不发现变化</h1><p>原因：Vue 在更新 DOM 时是异步执行的。只要侦听到数据变化，Vue 将开启一个队列，并缓冲在同一事件循环中发生的所有数据变更。如果同一个 watcher 被多次触发，只会被推入到队列中一次。这种在缓冲时去除重复数据对于避免不必要的计算和 DOM 操作是非常重要的。然后，在下一个的事件循环“tick”中，Vue 刷新队列并执行实际 (已去重的) 工作。Vue 在内部对异步队列尝试使用原生的 Promise.then、MutationObserver 和 setImmediate，如果执行环境不支持，则会采用 setTimeout(funcation, 0) 代替。</p>
+<p>例如：</p>
+<pre><code>&lt;div id=&quot;example&quot;&gt;&#123;&#123;message&#125;&#125;&lt;/div&gt;
+var vm = new Vue(&#123;
+  el: &#39;#example&#39;,
+  data: &#123;
+    message: &#39;123&#39;
+  &#125;
+&#125;)
+vm.message = &#39;new message&#39; // 更改数据
+vm.$el.textContent === &#39;new message&#39; // false
+vm.$el.style.color = &#39;red&#39; // 页面没有变化
+</code></pre>
+<p>解决方法：</p>
+<pre><code>var vm = new Vue(&#123;
+  el: &#39;#example&#39;,
+  data: &#123;
+    message: &#39;123&#39;
+  &#125;
+&#125;)
+vm.message = &#39;new message&#39; // 更改数据
+//使用 Vue.nextTick(callback) callback 将在 DOM 更新完成后被调用
+Vue.nextTick(function () &#123;
+  vm.$el.textContent === &#39;new message&#39; // true
+  vm.$el.style.color = &#39;red&#39; // 文字颜色变成红色
+&#125;)
+</code></pre>
+<h1 id="情况五：循环嵌套层级太深，视图不更新"><a href="#情况五：循环嵌套层级太深，视图不更新" class="headerlink" title="情况五：循环嵌套层级太深，视图不更新"></a>情况五：循环嵌套层级太深，视图不更新</h1><p>当嵌套太深时，页面也可能不更新，此时可以让页面强制刷新</p>
+<p>this.$forceUpdate()迫使vue实例重新（rander）渲染虚拟DOM，注意并不是重新加载组件。<br>结合vue的生命周期，调用$forceUpdate后只会触发beforeUpdate和updated这两个钩子函数，不会触发其他的钩子函数。<br>它仅仅影响实例本身和插入插槽内容的子组件，而不是所有子组件。</p>
+<pre><code>//官方说如果你现在的场景需要用forceUpdate方法 ,那么99%是你的操作有问题
+this.$forceUpdate();
+</code></pre>
+<h1 id="情况六：路由参数变化时，页面不更新-数据不更新"><a href="#情况六：路由参数变化时，页面不更新-数据不更新" class="headerlink" title="情况六：路由参数变化时，页面不更新(数据不更新)"></a>情况六：路由参数变化时，页面不更新(数据不更新)</h1><p>例如：</p>
 <pre><code>&lt;div id=&quot;app&quot;&gt;
-    //展示出所有信息
-    &lt;ul&gt;
-        &lt;li &gt;&#123;&#123;info.name&#125;&#125;&lt;/li&gt;
-        &lt;li &gt;&#123;&#123;info.age&#125;&#125;&lt;/li&gt;
-        &lt;li &gt;&#123;&#123;info.height&#125;&#125;&lt;/li&gt;
-    &lt;/ul&gt;
-    //方法1.一个个写出来
-    &lt;ul&gt;
-        &lt;li v-for=&quot;item in info&quot;&gt;&#123;&#123;item&#125;&#125;&lt;/li&gt;
-    &lt;/ul&gt;
-    //方法2.用v-for遍历对象的value值。(属性)
-    &lt;ul&gt;
-        &lt;li v-for=&quot;(value,key) in info&quot;&gt;&#123;&#123;value&#125;&#125;--&#123;&#123;key&#125;&#125;&lt;/li&gt;
-    &lt;/ul&gt;
-    //方法3.用v-for遍历对象的value值和key，value在前面。(属性和属性值)
-    &lt;ul&gt;
-        &lt;li v-for=&quot;(value,key,index) in info&quot;&gt;&#123;&#123;value&#125;&#125;--&#123;&#123;key&#125;&#125;--&#123;&#123;index&#125;&#125;&lt;/li&gt;
-    &lt;/ul&gt;
-    //方法4.用v-for遍历对象的value值、key和index。(属性和属性值和索引)
+  &lt;ul&gt;
+    &lt;li&gt;&lt;router-link to=&quot;/home/foo&quot;&gt;To Foo&lt;/router-link&gt;&lt;/li&gt;    
+    &lt;li&gt;&lt;router-link to=&quot;/home/baz&quot;&gt;To Baz&lt;/router-link&gt;&lt;/li&gt;    
+    &lt;li&gt;&lt;router-link to=&quot;/home/bar&quot;&gt;To Bar&lt;/router-link&gt;&lt;/li&gt;    
+  &lt;/ul&gt;    
+  &lt;router-view&gt;&lt;/router-view&gt;
 &lt;/div&gt;
+
+const Home = &#123;
+  template: `&lt;div&gt;&#123;&#123;message&#125;&#125;&lt;/div&gt;`,
+  data() &#123;
+    return &#123;
+      message: this.$route.params.name
+    &#125;
+  &#125;
+&#125;
+  
+const router = new VueRouter(&#123;
+  mode:&#39;history&#39;,
+    routes: [
+    &#123;path: &#39;/home&#39;, component: Home &#125;,
+    &#123;path: &#39;/home/:name&#39;, component: Home &#125;
+  ]
+&#125;)
+  
+new Vue(&#123;
+  el: &#39;#app&#39;,
+  router
+&#125;)
+</code></pre>
+<p>上段代码中，我们在路由构建选项 routes 中配置了一个动态路由 ‘/home/:name’，它们共用一个路由组件 Home，这代表他们复用 RouterView 。</p>
+<p>当进行路由切换时，页面只会渲染第一次路由匹配到的参数，之后再进行路由切换时，message 是没有变化的。</p>
+<p>解决方法：</p>
+<ul>
+<li><p>1.通过 watch 监听 $route 的变化。</p>
+<p>  const Home = {</p>
+<pre><code>template: `&lt;div&gt;&#123;&#123;message&#125;&#125;&lt;/div&gt;`,
+data() &#123;
+  return &#123;
+    message: this.$route.params.name
+  &#125;
+&#125;,
+watch:&#123;
+   &#39;$route&#39;:function()&#123;
+      this.message = this.$route.params.name
+   &#125;
+&#125;
+</code></pre>
+<p>  }<br>  …<br>  new Vue({</p>
+<pre><code>el: &#39;#app&#39;,
+router
+</code></pre>
+<p>  })</p>
+</li>
+<li><p>2.给<router-view> 绑定key属性，这样 Vue 就会认为这是不同的 <router-view>。</router-view></router-view></p>
+</li>
+</ul>
+<p>弊端：如果从 /home 跳转到 /user 等其他路由下，我们是不用担心组件更新问题的，所以这个时候 key 属性是多余的。</p>
+<pre><code>&lt;div id=&quot;app&quot;&gt;
+   &lt;router-view :key=&quot;key&quot;&gt;&lt;/router-view&gt;
+&lt;/div&gt;
+</code></pre>
+<h1 id="情况七：变量通过赋值来定义的"><a href="#情况七：变量通过赋值来定义的" class="headerlink" title="情况七：变量通过赋值来定义的"></a>情况七：变量通过赋值来定义的</h1><p>在 Vue 中有两种类型的变量：响应式变量和非响应式变量。</p>
+<p>从后端获取的变量通常是响应式变量，也就是说它们会被 Vue 监测到变化并同步到页面上，如果你修改了这些响应式变量，页面会随之改变。</p>
+<p>而通过赋值来定义的变量通常是非响应式变量，如果你修改了这些非响应式变量，Vue 并不会监测到它们的变化，所以页面不会改变。</p>
+<p>如果你需要使一个非响应式变量变成响应式变量，可以使用 Vue.set 方法或者数组的变异方法（例如 push、splice 等）。</p>
+<p>例1：Vue.set(对象,添加的key,属性值”)</p>
+<pre><code>Vue.set
+//这个是直接用在Vue身上的。例如: Vue.set(对象,添加的key,属性值”)
+//常见于: xx.js文件中
+//注意: js文件中，需要引入vue，比如: import Vue from vue
+</code></pre>
+<p>例2：this.$set(对象,添加的key’,属性值)</p>
+<pre><code>this.$set
+//这个是用在vm或者vc实例身上的，比如vue文件中，this.$set(对象,添加的key&#39;,属性值)
+//常见于: xx.vue文件中
+强制更新数据：this.$forceUpdate();
+</code></pre>
+<p><a target="_blank" rel="noopener" href="https://www.jb51.net/javascript/286151v3n.htm">https://www.jb51.net/javascript/286151v3n.htm</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-Vue2 组件通信、组件间传值的几种方式"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/09/12/Vue2%20%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E3%80%81%E7%BB%84%E4%BB%B6%E9%97%B4%E4%BC%A0%E5%80%BC%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/"
+    >Vue2 组件通信、组件间传值的几种方式</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/09/12/Vue2%20%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E3%80%81%E7%BB%84%E4%BB%B6%E9%97%B4%E4%BC%A0%E5%80%BC%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/" class="article-date">
+  <time datetime="2023-09-12T03:22:33.000Z" itemprop="datePublished">2023-09-12</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="1-文件间的关系"><a href="#1-文件间的关系" class="headerlink" title="1. 文件间的关系"></a>1. 文件间的关系</h1><p>App 为根组件<br>Father 与 Brother 为兄弟组件，也同为 App 的子组件<br>Child 是 Father 的子组件，也是 App 的孙组件</p>
+<h1 id="2-父子之间传值"><a href="#2-父子之间传值" class="headerlink" title="2. 父子之间传值"></a>2. 父子之间传值</h1><h2 id="2-1-props，父传子"><a href="#2-1-props，父传子" class="headerlink" title="2.1 props，父传子"></a>2.1 props，父传子</h2><p>Father.vue 文件</p>
+<pre><code>// Father.vue 文件
+&lt;template&gt;
+  &lt;div id=&quot;father&quot;&gt;
+    &lt;Child :cMsg=&quot;msg&quot; /&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
 
 &lt;script&gt;
-    const app = new Vue(&#123;
-        el:&quot;#app&quot;,
-        data:&#123;
-            info:&#123;
-                name:&quot;lfn&quot;,
-                age :18,
-                height:180
-            &#125;
-        &#125;
-    &#125;)
-&lt;/script&gt;    
+import Child from &quot;./Child.vue&quot;;
+
+export default &#123;
+  name: &quot;Father&quot;,
+  components: &#123;
+    Child,
+  &#125;,
+  data() &#123;
+    return &#123;
+      msg: &quot;我是 Father 组件中的数据&quot;,
+    &#125;;
+  &#125;,
+&#125;;
+&lt;/script&gt;
 </code></pre>
-<h2 id="4-v-for使用中添加key"><a href="#4-v-for使用中添加key" class="headerlink" title="4.v-for使用中添加key"></a>4.v-for使用中添加key</h2><p>在遍历数组时可以在元素中绑定一个key，key=数组值</p>
-<p>绑定key的作用 ：主要是为了高效的更新虚拟DOM。(vue内部；让性能高一点)</p>
-<ul>
-<li><p>当某一层有很多相同的节点时，也就是列表节点时，我们希望插入一个新的节点，</p>
-<p> 则Diff算法默认执行起来是比较复杂的。(一个个重新替换)</p>
-</li>
-<li><p>但绑定key后，可以使用key来给每个节点做一个唯一标识</p>
-<p> Diff算法就可以正确的识别此节点，找到正确的位置区插入新的节点。</p>
-  <div id="app">
-    <ul>
-      <li v-for="item in letters" :key="item"></li>
-    </ul>
-  </div>
+<p>Child.vue 文件</p>
+<pre><code>// Child.vue 文件
+&lt;template&gt;
+  &lt;div id=&quot;child&quot;&gt;
+    &lt;span&gt; 我是 Child 组件，接收到的数据为：&#123;&#123; cMsg &#125;&#125; &lt;/span&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
 
-  <script>
-    const app = new Vue({
-      el:"#app",
-      data:{
-        letters:["A","B","C","D","E"]
-      }
-    })
-  </script></li>
-</ul>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-vue遍历对象的几种方式"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/08/29/vue%E9%81%8D%E5%8E%86%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/"
-    >vue遍历对象的几种方式</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/08/29/vue%E9%81%8D%E5%8E%86%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/" class="article-date">
-  <time datetime="2023-08-29T08:33:22.000Z" itemprop="datePublished">2023-08-29</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>在vue项目开发中，我们需要对对象进行处理等问题，这里简单记录遍历对象的几种方法</p>
-<p>一、for in 这是遍历对象的基本方法，其中key代表键，值可以通过Object[key]进行获取，</p>
-<pre><code>let obj1 = &#123;
-    name: &#39;张三&#39;,
-    age: &#39;18&#39;,
-    height: &#39;180&#39;
-&#125;
-for (let key in obj2) &#123;
-    console.log(&#39;key&#39;, key)
-    console.log(&#39;value&#39;, obj1[key])
-&#125;
-        
+&lt;script&gt;
+export default &#123;
+  name: &quot;Child&quot;,
+  props: &#123;
+    cMsg: String,
+  &#125;,
+&#125;;
+&lt;/script&gt;
 </code></pre>
-<p>衍生：obj2中部分key与obj1相同，这是需要将obj1与obj2中key相同的进行赋值，代码如下</p>
-<pre><code>let obj2 = &#123;
-    name: &#39;&#39;,
-    age: &#39;&#39;,
-&#125;
-let obj1 = &#123;
-    name: &#39;张三&#39;,
-    age: &#39;18&#39;,
-    height: &#39;180&#39;
-&#125;
-for (let key in obj2) &#123;
-    obj2[key] = obj1[key]
-&#125;
-console.log(obj2)
-        
+<h2 id="2-2-props，子传父"><a href="#2-2-props，子传父" class="headerlink" title="2.2 props，子传父"></a>2.2 props，子传父</h2><p>Father.vue 文件</p>
+<pre><code>// Father.vue 文件
+&lt;template&gt;
+  &lt;div id=&quot;father&quot;&gt;
+    &lt;Child :cHander=&quot;fHander&quot; /&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import Child from &quot;./Child.vue&quot;;
+
+export default &#123;
+  name: &quot;Father&quot;,
+  components: &#123;
+    Child,
+  &#125;,
+  methods: &#123;
+    fHander(msg) &#123;
+      console.log(msg);
+    &#125;,
+  &#125;,
+&#125;;
+&lt;/script&gt;
 </code></pre>
-<p>二、Object.keys(),ES5新增的对象方法，该方法会返回自身属性名组成的数组</p>
-<pre><code>let obj1 = &#123;
-    name: &#39;张三&#39;,
-    age: &#39;18&#39;,
-    height: &#39;180&#39;
-&#125;
-let a = Object.keys(obj1)
-console.log(a) //输出[&#39;name&#39;, &#39;age&#39;, &#39;height&#39;]
-        
+<p>Child.vue 文件</p>
+<pre><code>// Child.vue 文件
+&lt;template&gt;
+  &lt;div id=&quot;child&quot;&gt;
+    &lt;button @click=&quot;btn&quot;&gt;点击我向 Father 组件传入数据&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default &#123;
+  name: &quot;Child&quot;,
+  props: &#123;
+    cHander: Function,
+  &#125;,
+  methods: &#123;
+    btn() &#123;
+      this.cHander(&quot;666666&quot;);
+    &#125;,
+  &#125;,
+&#125;;
+&lt;/script&gt;
 </code></pre>
-<p>衍生：obj2中部分key与obj1相同，这是需要将obj1与obj2中key相同的进行赋值，代码如下</p>
-<pre><code>let obj2 = &#123;
-    name: &#39;&#39;,
-    age: &#39;&#39;,
-&#125;
-let obj1 = &#123;
-    name: &#39;张三&#39;,
-    age: &#39;18&#39;,
-    height: &#39;180&#39;
-&#125;
-Object.keys(obj2).forEach(item =&gt; &#123;
-    obj2[item] = obj1[item]
+<h2 id="2-3-自定义事件，子传父"><a href="#2-3-自定义事件，子传父" class="headerlink" title="2.3 自定义事件，子传父"></a>2.3 自定义事件，子传父</h2><p>Father.vue 文件</p>
+<pre><code>// Father.vue 文件
+&lt;template&gt;
+  &lt;div id=&quot;father&quot;&gt;
+    &lt;Child ref=&quot;child&quot; /&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import Child from &quot;./Child.vue&quot;;
+
+export default &#123;
+  name: &quot;Father&quot;,
+  components: &#123;
+    Child,
+  &#125;,
+  mounted() &#123;
+    this.$refs.child.$on(&quot;change&quot;, (msg) =&gt; &#123;
+      console.log(msg);
+    &#125;);
+  &#125;,
+&#125;;
+&lt;/script&gt;
+</code></pre>
+<p>Child.vue 文件</p>
+<pre><code>// Child.vue 文件
+&lt;template&gt;
+  &lt;div id=&quot;child&quot;&gt;
+    &lt;button @click=&quot;btn&quot;&gt;点击我向 Father 组件传入数据&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default &#123;
+  name: &quot;Child&quot;,
+  methods: &#123;
+    btn() &#123;
+      this.$emit(&quot;change&quot;, 666666);
+    &#125;,
+  &#125;,
+&#125;;
+&lt;/script&gt;
+</code></pre>
+<h1 id="3-兄弟之间传值"><a href="#3-兄弟之间传值" class="headerlink" title="3. 兄弟之间传值"></a>3. 兄弟之间传值</h1><h2 id="3-1-事件总线"><a href="#3-1-事件总线" class="headerlink" title="3.1 事件总线"></a>3.1 事件总线</h2><p>main.js 文件</p>
+<pre><code>// main.js 文件
+import Vue from &#39;vue&#39;
+import App from &#39;./App.vue&#39;
+
+Vue.config.productionTip = false
+
+new Vue(&#123;
+  render: h =&gt; h(App),
+  beforeCreate() &#123;
+    // 需要在全局添加一个属性
+    Vue.prototype.$bus = this
+  &#125;
+&#125;).$mount(&#39;#app&#39;)
+</code></pre>
+<p>Father.vue 文件</p>
+<pre><code>// Father.vue 文件
+&lt;template&gt;
+  &lt;div id=&quot;father&quot;&gt;
+    &lt;button @click=&quot;btn&quot;&gt;我要给 Brother 组件传数据&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default &#123;
+  name: &quot;Father&quot;,
+  methods: &#123;
+    btn() &#123;
+      this.$bus.$emit(&quot;change&quot;, 66666);
+    &#125;,
+  &#125;,
+&#125;;
+&lt;/script&gt;
+</code></pre>
+<p>Brother.vue 文件</p>
+<pre><code>// Brother.vue 文件
+&lt;template&gt;
+  &lt;div id=&quot;brother&quot;&gt;&lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default &#123;
+  name: &quot;Brother&quot;,
+  mounted() &#123;
+    this.$bus.$on(&quot;change&quot;, (msg) =&gt; &#123;
+      console.log(msg);
+    &#125;);
+  &#125;,
+&#125;;
+&lt;/script&gt;
+</code></pre>
+<h2 id="3-2-Vuex"><a href="#3-2-Vuex" class="headerlink" title="3.2 Vuex"></a>3.2 Vuex</h2><p>store/index.js 文件</p>
+<pre><code>// store/index.js 文件
+import Vue from &quot;vue&quot;
+import Vuex from &quot;vuex&quot;
+Vue.use(Vuex)
+
+export default new Vuex.Store(&#123;
+  state: &#123;
+    count: 1
+  &#125;,
+  mutations: &#123;
+    change(state, value) &#123;
+      state.count += value
+    &#125;
+  &#125;
 &#125;)
-console.log(obj2) //输出&#123;name: &#39;张三&#39;, age: &#39;18&#39;&#125;
-        
 </code></pre>
-<p>三、Object.getOwnPropertyNames()，该方法也是ES5新增的，返回一个自身属性名的数组，包括不可枚举的属性</p>
-<pre><code>let obj1 = &#123;
-    name: &#39;张三&#39;,
-    age: &#39;18&#39;,
-    height: &#39;180&#39;
-&#125;
-let a = Object.getOwnPropertyNames(obj1)
-console.log(a) //[&#39;name&#39;, &#39;age&#39;, &#39;height&#39;]
-        
+<p>main.js 文件</p>
+<pre><code>// main.js 文件
+import Vue from &#39;vue&#39;
+import App from &#39;./App.vue&#39;
+import store from &quot;./store/index&quot;
+
+Vue.config.productionTip = false
+
+new Vue(&#123;
+  render: h =&gt; h(App),
+  // 需要挂载 store
+  store
+&#125;).$mount(&#39;#app&#39;)
+
+// Father.vue 文件
+&lt;template&gt;
+  &lt;div id=&quot;father&quot;&gt;
+    &lt;button @click=&quot;btn&quot;&gt;我要给 VueX 中的数据加一&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default &#123;
+  name: &quot;Father&quot;,
+  methods: &#123;
+    btn() &#123;
+      this.$store.commit(&quot;change&quot;, 1);
+    &#125;,
+  &#125;,
+&#125;;
+&lt;/script&gt;
 </code></pre>
-<p>————————————————<br>版权声明：本文为CSDN博主「Maidangchen」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/A1123352950/article/details/132687113">https://blog.csdn.net/A1123352950/article/details/132687113</a></p>
+<p>Brother.vue 文件</p>
+<pre><code>// Brother.vue 文件
+&lt;template&gt;
+  &lt;div id=&quot;brother&quot;&gt;
+    &#123;&#123; $store.state.count &#125;&#125;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default &#123;
+  name: &quot;Brother&quot;,
+&#125;;
+&lt;/script&gt;
+</code></pre>
+<h2 id="3-3-发布订阅"><a href="#3-3-发布订阅" class="headerlink" title="3.3 发布订阅"></a>3.3 发布订阅</h2><p>需要安装 pubsub：npm i pubsub-js</p>
+<p>Father.vue</p>
+<pre><code>// Father.vue 文件
+&lt;template&gt;
+  &lt;div id=&quot;father&quot;&gt;
+    &lt;button @click=&quot;btn&quot;&gt;我要向 Brother 组件传递数据&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import pubsub from &quot;pubsub-js&quot;;
+
+export default &#123;
+  name: &quot;Father&quot;,
+  methods: &#123;
+    btn() &#123;
+      pubsub.publish(&quot;change&quot;, 666);
+    &#125;,
+  &#125;,
+&#125;;
+&lt;/script&gt;
+</code></pre>
+<p>Brother.vue 文件</p>
+<pre><code>// Brother.vue 文件
+&lt;template&gt;
+  &lt;div id=&quot;brother&quot;&gt;&lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import pubsub from &quot;pubsub-js&quot;;
+
+export default &#123;
+  name: &quot;Brother&quot;,
+  mounted() &#123;
+    pubsub.subscribe(&quot;change&quot;, (msgName, msg) =&gt; &#123;
+      console.log(msgName, msg);
+    &#125;);
+  &#125;,
+&#125;;
+&lt;/script&gt;
+</code></pre>
+<h1 id="4-祖孙之间传值"><a href="#4-祖孙之间传值" class="headerlink" title="4. 祖孙之间传值"></a>4. 祖孙之间传值</h1><h2 id="4-1-provide与inject"><a href="#4-1-provide与inject" class="headerlink" title="4.1 provide与inject"></a>4.1 provide与inject</h2><p>App.vue 文件</p>
+<pre><code>// App.vue 文件
+&lt;template&gt;
+  &lt;div id=&quot;app&quot;&gt;
+    &lt;Father /&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import Father from &quot;./components/Father.vue&quot;;
+
+export default &#123;
+  name: &quot;App&quot;,
+  components: &#123;
+    Father,
+  &#125;,
+  provide: &#123;
+    msg: &quot;要给 Child 传数据&quot;,
+  &#125;,
+&#125;;
+&lt;/script&gt;
+</code></pre>
+<p>Father.vue 文件</p>
+<pre><code>// Father.vue 文件
+&lt;template&gt;
+  &lt;div id=&quot;father&quot;&gt;
+    &lt;Child /&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import Child from &quot;./Child.vue&quot;;
+
+export default &#123;
+  name: &quot;Father&quot;,
+  components: &#123;
+    Child,
+  &#125;,
+&#125;;
+&lt;/script&gt;
+</code></pre>
+<p>Child.vue 文件</p>
+<pre><code>// Child.vue 文件
+&lt;template&gt;
+  &lt;div id=&quot;child&quot;&gt;
+    &#123;&#123; msg &#125;&#125;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default &#123;
+  name: &quot;Child&quot;,
+  inject: [&quot;msg&quot;],
+&#125;;
+&lt;/script&gt;
+</code></pre>
+<p>————————————————<br>版权声明：本文为CSDN博主「codeCat!」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_60547084/article/details/124408513">https://blog.csdn.net/weixin_60547084/article/details/124408513</a></p>
  
       <!-- reward -->
       
@@ -994,7 +1997,7 @@ console.log(a) //[&#39;name&#39;, &#39;age&#39;, &#39;height&#39;]
 
     
     <article
-  id="post-Vue使用RegExp"
+  id="post-Vue2传值方式详解11"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -1005,8 +2008,8 @@ console.log(a) //[&#39;name&#39;, &#39;age&#39;, &#39;height&#39;]
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/08/28/Vue%E4%BD%BF%E7%94%A8RegExp/"
-    >Vue使用RegExp</a> 
+  <a class="article-title" href="/2023/09/11/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A311/"
+    >Vue2传值方式详解11-promise传参</a> 
 </h2>
  
 
@@ -1014,8 +2017,8 @@ console.log(a) //[&#39;name&#39;, &#39;age&#39;, &#39;height&#39;]
     </header>
      
     <div class="article-meta">
-      <a href="/2023/08/28/Vue%E4%BD%BF%E7%94%A8RegExp/" class="article-date">
-  <time datetime="2023-08-28T07:44:55.000Z" itemprop="datePublished">2023-08-28</time>
+      <a href="/2023/09/11/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A311/" class="article-date">
+  <time datetime="2023-09-11T06:28:42.000Z" itemprop="datePublished">2023-09-11</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -1025,12 +2028,36 @@ console.log(a) //[&#39;name&#39;, &#39;age&#39;, &#39;height&#39;]
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>vue 把字符串的所有=替换成&amp;&amp;&amp;的方法</p>
-<pre><code>//把字符串中所有=换成&amp;&amp;&amp;
-let reg=new RegExp(&#39;=&#39;,&#39;g&#39;)//g代表全部
-let newMsg=JSON.stringify(msg).replace(reg,&#39;&amp;&amp;&amp;&#39;);
-console.log(newMsg)
+  <p>promise 中 resolve 如何传递多个参数</p>
+<pre><code>//类似与这样使用，但实际上后面两个参数无法获取
+promise = new Promise((resolve,reject)=&gt;&#123;
+    let a = 1
+    let b = 2
+    let c = 3
+    resolve(a,b,c) 
+&#125;)
+promise.then((a,b,c)=&gt;&#123;
+    console.log(a,b,c)
+&#125;)
 </code></pre>
+<p>resolve() 只能接受并处理一个参数，多余的参数会被忽略掉。<br>如果想多个用数组，或者对象方式。。</p>
+<p>数组</p>
+<pre><code>promise = new Promise((resolve,reject)=&gt;&#123;
+    resolve([1,2,3]) 
+&#125;)
+promise.then((arr)=&gt;&#123;
+    console.log(arr[0],arr[1],arr[2])
+&#125;)
+</code></pre>
+<p>对象</p>
+<pre><code>promise = new Promise((resolve,reject)=&gt;&#123;
+    resolve(&#123;a:1,b:2,c:3&#125;) 
+&#125;)
+promise.then(obj=&gt;&#123;
+    console.log(obj.a,obj.b,obj.c)
+&#125;)
+</code></pre>
+<p>————————————————<br>版权声明：本文为CSDN博主「小毕学习代码」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_70703397/article/details/132201160">https://blog.csdn.net/qq_70703397/article/details/132201160</a></p>
  
       <!-- reward -->
       
@@ -1052,7 +2079,7 @@ console.log(newMsg)
 
     
     <article
-  id="post-CSS样式的书写顺序及规范"
+  id="post-Vue2传值方式详解10"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -1063,8 +2090,8 @@ console.log(newMsg)
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/08/27/CSS%E6%A0%B7%E5%BC%8F%E7%9A%84%E4%B9%A6%E5%86%99%E9%A1%BA%E5%BA%8F%E5%8F%8A%E8%A7%84%E8%8C%83/"
-    >CSS样式的书写顺序及规范</a> 
+  <a class="article-title" href="/2023/09/10/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A310/"
+    >Vue2传值方式详解10-孙传祖使用$listeners</a> 
 </h2>
  
 
@@ -1072,8 +2099,8 @@ console.log(newMsg)
     </header>
      
     <div class="article-meta">
-      <a href="/2023/08/27/CSS%E6%A0%B7%E5%BC%8F%E7%9A%84%E4%B9%A6%E5%86%99%E9%A1%BA%E5%BA%8F%E5%8F%8A%E8%A7%84%E8%8C%83/" class="article-date">
-  <time datetime="2023-08-27T06:09:36.000Z" itemprop="datePublished">2023-08-27</time>
+      <a href="/2023/09/10/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A310/" class="article-date">
+  <time datetime="2023-09-10T05:26:39.000Z" itemprop="datePublished">2023-09-10</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -1083,54 +2110,71 @@ console.log(newMsg)
       
     <div class="article-entry" itemprop="articleBody">
        
-  <h1 id="CSS样式的书写顺序及规范"><a href="#CSS样式的书写顺序及规范" class="headerlink" title="CSS样式的书写顺序及规范"></a>CSS样式的书写顺序及规范</h1><p>CSS样式属性有很多，开发过程中书写顺序对于浏览器渲染其实至关重要。规范化编码有利于程序的后期维护，并且别人也容易理解其中意思。</p>
-<h1 id="书写顺序"><a href="#书写顺序" class="headerlink" title="书写顺序"></a>书写顺序</h1><h2 id="布局定位属性"><a href="#布局定位属性" class="headerlink" title="布局定位属性"></a>布局定位属性</h2><p>display    置元素是否被视为块或者内联元素以及用于子元素的布局，例如流式布局、网格布局或弹性布局。<br>visibility    指定一个元素是否是可见的。<br>list-style    在一个声明中设置所有的列表属性。<br>list-style-type    设置列表项标记的类型。<br>list-style-position    指示如何相对于对象的内容绘制列表项标记。<br>list-style-image    使用图像来替换列表项的标记。<br>position    指定一个元素（静态的，相对的，绝对或固定）的定位方法的类型。<br>top    定义了一个定位元素的上外边距边界与其包含块上边界之间的偏移。<br>right    定义了定位元素右外边距边界与其包含块右边界之间的偏移。<br>bottom    定义了定位元素下外边距边界与其包含块下边界之间的偏移。<br>left    定义了定位元素左外边距边界与其包含块左边界之间的偏移。<br>z-index    指定一个元素的堆叠顺序。<br>clear    指定段落的左侧或右侧不允许浮动的元素。<br>float    指定一个盒子（元素）是否应该浮动。</p>
-<h2 id="自身属性"><a href="#自身属性" class="headerlink" title="自身属性"></a>自身属性</h2><p>width    设置元素的宽度。<br>max-width    设置元素的最大宽度。<br>min-width    设置元素的最小宽度。<br>height    设置元素的高度。<br>max-height    设置元素的最大高度。<br>min-height    设置元素的最低高度。<br>overflow    指定如果内容溢出一个元素的框，会发生什么。<br>clip    定义及使用说明如果图像大于包含它的元素,会发生什么?<br>margin    一个声明中设置所有外边距属性。<br>margin-top    设置元素的上部边距。<br>margin-right    设置元素的右边距。<br>margin-bottom    设置元素的下边距。<br>margin-left    设置元素的左边距。<br>padding    在一个声明中设置所有填充属性。<br>padding-top    设置一个元素的顶部填充（空格）。<br>padding-right    设置一个元素的右填充（空格）。<br>padding-bottom    设置一个元素的底部填充（空格）。<br>padding-left    设置一个元素的左填充（空格）。<br>outline    在一个声明中设置所有的轮廓属性。<br>outline-color    指定轮廓颜色。<br>outline-style    指定outline的样式。<br>outline-width    指定轮廓的宽度。<br>border    用于指定元素边框的样式、宽度和颜色。<br>background    在一个声明中设置所有的背景属性。<br>background-color    指定要使用的背景颜色。<br>background-image    指定要使用的一个或多个背景图像。<br>background-repeat    指定如何重复背景图像。<br>background-attachment    设置背景图像是否固定或者随着页面的其余部分滚动。<br>background-position    指定背景图像的位置。</p>
-<h2 id="文本属性"><a href="#文本属性" class="headerlink" title="文本属性"></a>文本属性</h2><p>color    指定文本的颜色。<br>font    在一个声明中设置所有字体属性。<br>font-style    规定字体样式<br>font-variant    规定字体异体。<br>font-weight    规定字体粗细。<br>font-size    规定字体尺寸。<br>line-height    规定字体行高。<br>font-family    规定字体系列。<br>caption    定义被标题控件（比如按钮、下拉列表等）使用的字体。<br>icon    定义被图标标记使用的字体。<br>menu    定义被下拉列表使用的字体。<br>message-box    定义被对话框使用的字体。<br>small-caption    caption 字体的小型版本。<br>status-bar    定义被窗口状态栏使用的字体。<br>text-overflow    指定当文本溢出包含它的元素时，应该如何显示。<br>text-align    指定元素文本的水平对齐方式。<br>text-indent    规定文本块中首行文本的缩进。<br>white-space    指定元素内的空白怎样处理。<br>vertical-align    设置一个元素的垂直对齐方式。</p>
-<h2 id="其他属性"><a href="#其他属性" class="headerlink" title="其他属性"></a>其他属性</h2><p>cursor    设置鼠标指针(光标)在元素上面时的显示样式<br>animation    通过关键帧@keyframes来实现更为复杂的动画效果。<br>transition    设置元素当过渡效果，</p>
-<h1 id="CSS3浏览器私有前缀写法"><a href="#CSS3浏览器私有前缀写法" class="headerlink" title="CSS3浏览器私有前缀写法"></a>CSS3浏览器私有前缀写法</h1><p>CSS3 浏览器私有前缀在前，标准前缀在后</p>
-<pre><code>-webkit-border-radius: 10px;
--moz-border-radius: 10px;
--o-border-radius: 10px;
--ms-border-radius: 10px;
-border-radius: 10px;
+  <p>孙传祖使用$listeners<br>文字内容同第九个</p>
+<p>祖组件</p>
+<pre><code>&lt;template&gt;
+  &lt;div id=&quot;app&quot;&gt;
+    &lt;children-one @eventOne=&quot;eventOne&quot;&gt;&lt;/children-one&gt;
+    &#123;&#123; msg &#125;&#125;
+  &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import ChildrenOne from &#39;../src/components/children.vue&#39;
+export default &#123;
+  name: &#39;App&#39;,
+  components: &#123;
+    ChildrenOne,
+  &#125;,
+  data() &#123;
+    return &#123;
+      msg: &#39;&#39;
+    &#125;
+  &#125;,
+  methods: &#123;
+    eventOne(value) &#123;
+      this.msg = value
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
 </code></pre>
-<h1 id="浏览器的渲染流程"><a href="#浏览器的渲染流程" class="headerlink" title="浏览器的渲染流程"></a>浏览器的渲染流程</h1><p>1、解析html构建dom树，解析css构建css树：将html解析成树形的数据结构，将css解析成树形的数据结构布局<br>2、构建render树：DOM树和CSS树合并以后造成的render树。<br>3、布局render树：有了render树，浏览器已经知道那些网页中有哪些节点，各个节点的css定义和以及它们的从属关系，从而计算出每一个节点在屏幕中的位置。<br>4、绘制render树：按照计算出来的规则，经过显卡把内容画在屏幕上。</p>
-<p>css样式解析到显示至浏览器屏幕上就发生在②③④步骤，可见浏览器并非一获取到css样式就立马开始解析而是根据css样式的书写顺序将之按照dom树的结构分布render样式，完成第②步，而后开始遍历每一个树结点的css样式进行解析，此时的css样式的遍历顺序彻底是按照以前的书写顺序。在解析过程当中，一旦浏览器发现某个元素的定位变化影响布局，则须要倒回去从新渲染.</p>
-<ul>
-<li><p>例如<br>按照这样的书写书序：</p>
-<p> width: 100px;<br> height: 100px;<br> background-color: red;<br> position: absolute;</p>
-</li>
-</ul>
-<p>当浏览器解析到position的时候忽然发现该元素是绝对定位元素须要脱离文档流，而以前倒是按照普通元素进行解析的，因此不得不从新渲染，解除该元素在文档中所占位置，然而因为该元素的占位发生变化，其余元素也可能会受到它回流的影响而从新排位。最终致使③步骤花费的时间过久而影响到④步骤的显示，影响了用户体验。</p>
-<p>因此规范的的css书写顺序对于文档渲染来讲必定是事半功倍的！</p>
-<h1 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h1><p>回流必将引起重绘, 重绘不一定引起回流。</p>
-<ul>
-<li>reflow（回流）:<br>会引起元素位置变化的就会reflow(回流),窗口大小改变、字体大小改变、以及元素位置改变，都会引起周围的元素改变他们以前的位置。</li>
-</ul>
-<p>*repaint（重绘）：<br>改变某个元素的背景色、文字颜色、边框颜色等等不影响它周围或内部布局的属性时，屏幕的一部分要重画，可是元素的几何尺寸没有变。</p>
-<h1 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h1><p>a.render树的结构不等同于DOM树的结构，一些设置display:none的节点不会被放在render树中，但会在dom树中。</p>
-<p>b.有些状况，好比修改了元素的样式，浏览器并不会理科reflow或repaint，而是把这些操做积攒一批，而后作一次reflow，这也叫作异步reflow.但在有些状况下，好比改变窗口，改变页面默认的字体等，对于这些状况，浏览器会立刻进行reflow.</p>
-<p>c.为了更好的用户体验，渲染引擎将会尽量早的将内容呈现到屏幕上，并不会等到全部的html都解析完成以后再去构建和布局render树。它是解析完一部份内容就显示一部份内容，同时，可能还在经过网络下载其他内容。</p>
-<h1 id="布局流程"><a href="#布局流程" class="headerlink" title="布局流程"></a>布局流程</h1><p>必须确定页面的版心(可视区),我们测量可知<br>分析页面中的行模块,以及每个行模块中的列模块,其实页面布局就是一行行罗列而成<br>制作html结构,我们还是遵循,现有结构后有样式的原则,结构永远最重要<br>然后开始运用盒子模型的原理,通过div+css布局来控制网页的各个模块</p>
-<h1 id="顺序书写的优点"><a href="#顺序书写的优点" class="headerlink" title="顺序书写的优点"></a>顺序书写的优点</h1><p>正确的样式顺序有利于查看维护。<br>减小浏览器reflow（回流）与repaint（重绘），提高浏览器渲染dom的性能<br>利于网页加载代码，加快代码加载顺序。<br>正确的样式顺序也是css样式优化的一种方式。</p>
-<h1 id="命名规范"><a href="#命名规范" class="headerlink" title="命名规范"></a>命名规范</h1><h2 id="css文件命名规范"><a href="#css文件命名规范" class="headerlink" title="css文件命名规范"></a>css文件命名规范</h2><p>文件名    说明<br>reset.css    重置样式，重置元素默认样式<br>global.css    全局样式，全站公用，定义页面基础样式<br>themes.css    主题样式，用于实现换肤功能<br>module.css    模块样式，用于模块的样式<br>print.css    打印样式，用于打印的样式<br>master.css    主要样式<br>themes.css    主体样式<br>font.css    文字样式<br>layout.css    布局样式<br>columns.css    专栏<br>forms.css    表单<br>mend.css    补丁样式</p>
-<h2 id="id和class命名"><a href="#id和class命名" class="headerlink" title="id和class命名"></a>id和class命名</h2><p>骆驼峰命名法，例如topMain、 subLeftMenu。<br>中划线命名法，例如top-main、sub-left-menu。<br>下划线命名法，例如top_ main、sub_ Jeft_ menu。</p>
-<h2 id="id和class命名规范"><a href="#id和class命名规范" class="headerlink" title="id和class命名规范"></a>id和class命名规范</h2><p>网页部分    命名<br>最外层    wrapper<br>头部    header<br>容器    container<br>内容    content<br>导航条    nav<br>主导航    mainnav<br>子导航    subnav<br>顶导航    topnav<br>边导航、侧栏    sidebar<br>左导航    leftsidebar<br>右导航    rightsidebar<br>主体    main<br>左侧    main-left<br>右侧    main-right<br>底部    footer<br>左    left<br>中    right<br>右    center<br>栏目    column<br>菜单    menu<br>子菜单    submenu<br>登录条    loginbar<br>登录    login<br>注册    register<br>标志    logo<br>功能区    shop<br>按钮    btn<br>当前的    current<br>图标    icon<br>注释    note<br>搜索    search<br>滚动    scroll<br>标签    tags<br>标籤页    tab<br>状态    status<br>提示信息    msg<br>小技巧    tips<br>栏目标题    title<br>摘要    summary<br>下载    download<br>链接    link<br>友情链接    friendlink<br>加入我们    joinus<br>版权    copyright<br>服务    service<br>新闻    news<br>文章列表    list<br>广告    banner<br>热点    hot<br>加入    joinus<br>指南    guide<br>投票    vote<br>合作伙伴    partner</p>
-<h2 id="规范命名的优点"><a href="#规范命名的优点" class="headerlink" title="规范命名的优点"></a>规范命名的优点</h2><p>把样式文件划分为多个文件，按照功能模块划分CSS文件，是为了方便在开发阶段进行开发和修改。<br>好的元素id和class的命名，方便阅读、方便维护。</p>
-<h2 id="CSS书写规范"><a href="#CSS书写规范" class="headerlink" title="CSS书写规范"></a>CSS书写规范</h2><p>*使用CSS缩写属性</p>
-<p>CSS有些属性是可以缩写的，比如padding,margin,font等等，这样精简代码同时又能提高用户的阅读体验。</p>
-<p>*不要随意使用id</p>
-<p>id在JS是唯一的，不能多次使用，而使用class类选择器却可以重复使用，另外id的优先级优先与class，所以id应该按需使用，而不能滥用。</p>
-<p>*为选择器添加状态前缀</p>
-<p>有时候可以给选择器添加一个表示状态的前缀，让语义更明了。<br>为了避免class命名的重复，命名时- -般取父元素的class名作为前缀，例如:</p>
-<pre><code>&lt;div class=&quot;column&quot;&gt;
-  &lt;h3 class=&quot;column-title&quot;&gt;&lt;/h3&gt;
-  &lt;div class=&quot;column-content&quot;&gt;&lt;/div&gt;.
-&lt;/div&gt;
+<p>父组件</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;children-two v-on=&quot;$listeners&quot;&gt;&lt;/children-two&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+import ChildrenTwo from &#39;./childrenTwo.vue&#39;
+ 
+export default &#123;
+  name: &#39;childrenOne&#39;,
+  components: &#123;
+    ChildrenTwo
+  &#125;
+&#125;
+&lt;/script&gt;
 </code></pre>
-<h2 id="id和class命名统一规范"><a href="#id和class命名统一规范" class="headerlink" title="id和class命名统一规范"></a>id和class命名统一规范</h2><p>id和class命名一律小写，尽量用英文，尽量不缩写，除非一看就明白的单词。<br>尽量不要出现一个用中划线命名，而另外一个用下划线命名的情况。虽然下划线和中划线都可以，但是建议使用中划线，可参见各大型网站。</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>为了长远发展考虑，建议大家应该重视这些编码习惯。当然，本文所述内容并不完全是绝对正确的指导，但学会了这些内容，你就学会了最基本的CSS编码规范。可参考本文内容，结合您自己的部分编码习惯，编写适合您的优秀、规范代码。<br>————————————————<br>版权声明：本文为CSDN博主「song-yl」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_42367460/article/details/131042969">https://blog.csdn.net/weixin_42367460/article/details/131042969</a></p>
+<p>子组件</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;button @click=&quot;setMsg&quot;&gt;点击传给祖父&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+export default &#123;
+  name: &#39;children&#39;,
+  methods: &#123;
+    setMsg() &#123;
+      this.$emit(&#39;eventOne&#39;, &#39;123&#39;)
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>————————————————<br>版权声明：本文为CSDN博主「小毕学习代码」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_70703397/article/details/132201160">https://blog.csdn.net/qq_70703397/article/details/132201160</a></p>
  
       <!-- reward -->
       
@@ -1141,262 +2185,7 @@ border-radius: 10px;
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/css/" rel="tag">css</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-一份 CSS 书写顺序、命名规则的指南"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/08/26/%E4%B8%80%E4%BB%BD%20CSS%20%E4%B9%A6%E5%86%99%E9%A1%BA%E5%BA%8F%E3%80%81%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99%E7%9A%84%E6%8C%87%E5%8D%97/"
-    >一份 CSS 书写顺序、命名规则的指南</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/08/26/%E4%B8%80%E4%BB%BD%20CSS%20%E4%B9%A6%E5%86%99%E9%A1%BA%E5%BA%8F%E3%80%81%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99%E7%9A%84%E6%8C%87%E5%8D%97/" class="article-date">
-  <time datetime="2023-08-26T11:50:47.000Z" itemprop="datePublished">2023-08-26</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>这里总结了一些国外一些文章以及我的个人经验总结出来，我想对写CSS的前端用户来说是值得学习的。</p>
-<h1 id="CSS-书写顺序"><a href="#CSS-书写顺序" class="headerlink" title="CSS 书写顺序"></a>CSS 书写顺序</h1><p>位置属性 position、top、right、z-index、display、float 等<br>大小 width、height、padding、margin)<br>文字系列 font、line-height、letter-spacing、color-text-align 等<br>背景 background、border 等<br>其他 animation、transition 等</p>
-<p>不推荐</p>
-<pre><code>.example &#123;
-    color: red;
-    z-index: -1;
-    background-color: #9e0;
-    display: inline-block;
-    font-size: 1.5em;
-&#125;
-</code></pre>
-<p>推荐</p>
-<pre><code>.example &#123;
-    z-index: -1;
-    display: inline-block;
-    font-size: 1.5em;
-    color: red;
-    background-color: #9e0;
-&#125;
-</code></pre>
-<h1 id="CSS-书写规范"><a href="#CSS-书写规范" class="headerlink" title="CSS 书写规范"></a>CSS 书写规范</h1><h2 id="使用-CSS-缩写属性"><a href="#使用-CSS-缩写属性" class="headerlink" title="使用 CSS 缩写属性"></a>使用 CSS 缩写属性</h2><p>CSS 有些属性是可以缩写的，比如 padding、margin、font 等等，这样精简代码同时又能提高用户的阅读体验。</p>
-<p>不推荐</p>
-<pre><code>.list-box &#123;
-    border-top-style: none;
-    font-family: serif;
-    font-size: 100%;
-    line-height: 1.6;
-    padding-bottom: 2em;
-    padding-left: lem;
-    padding-right: lem;
-    padding-top: 0;
-&#125;
-</code></pre>
-<p>推荐</p>
-<pre><code>.list-box &#123;
-    border-top: 0;
-    font: 100%/1.6 serif;
-    padding: 0 lem 2em;
-&#125;
-</code></pre>
-<h2 id="去掉小数点前的-0"><a href="#去掉小数点前的-0" class="headerlink" title="去掉小数点前的 0"></a>去掉小数点前的 0</h2><p>不推荐</p>
-<pre><code>font-size: 0.8em;
-</code></pre>
-<p>推荐</p>
-<pre><code>font-size: .8em;
-</code></pre>
-<h2 id="简写命名"><a href="#简写命名" class="headerlink" title="简写命名"></a>简写命名</h2><p>很多用户都喜欢简写类名，但前提是要让人看懂你的命名才能简写哦！</p>
-<p>不推荐</p>
-<pre><code>#navigation &#123;
-    margin: 0 0 lem 2em;
-&#125;
-.atr &#123;
-    color: #93c;
-&#125;
-</code></pre>
-<p>推荐</p>
-<pre><code>#nav &#123;
-    margin: 0 0 lem 2em;
-&#125;
-.author &#123;
-    color: #93c;
-&#125;
-</code></pre>
-<h2 id="16-进制颜色代码缩写"><a href="#16-进制颜色代码缩写" class="headerlink" title="16 进制颜色代码缩写"></a>16 进制颜色代码缩写</h2><p>有些颜色代码是可以缩写的，我们就尽量缩写吧，提高用户体验为主。</p>
-<p>不推荐</p>
-<pre><code>color: #eebbcc;
-</code></pre>
-<p>推荐</p>
-<pre><code>color: #ebc;
-</code></pre>
-<h2 id="连字符-CSS-选择器命名规范"><a href="#连字符-CSS-选择器命名规范" class="headerlink" title="连字符 CSS 选择器命名规范"></a>连字符 CSS 选择器命名规范</h2><p>长名称或词组可以使用中横线来为选择器命名。<br>不建议使用 _ 下划线来命名 CSS 选择器，为什么呢？<br>*输入的时候少按一个 shift 键；<br>*浏览器兼容问题 （比如使用 _tips 的选择器命名，在 IE6 是无效的）<br>*能良好区分 JavaScript 变量命名（JS 变量命名是用 _）</p>
-<p>这里有一篇破折号与下划线的详细讨论，<br>英文：点击查看<br>中文：点击查看</p>
-<h2 id="不要随意使用-Id"><a href="#不要随意使用-Id" class="headerlink" title="不要随意使用 Id"></a>不要随意使用 Id</h2><p>id 在 JS 是唯一的，不能多次使用，而使用 class 类选择器却可以重复使用，另外 id 的优先级优先与 class，所以 id 应该按需使用，而不能滥用。</p>
-<p>不推荐</p>
-<pre><code>#info-title &#123;
-    font-size: 8em;
-&#125;
-</code></pre>
-<p>推荐</p>
-<pre><code>.info-title &#123;
-    font-size: 8em;
-&#125;
-</code></pre>
-<h2 id="为选择器添加状态前缀"><a href="#为选择器添加状态前缀" class="headerlink" title="为选择器添加状态前缀"></a>为选择器添加状态前缀</h2><p>有时候可以给选择器添加一个表示状态的前缀，让语义更明了，比如下图是添加了 .is- 前缀。</p>
-<p>不推荐</p>
-<pre><code>#withdrawal &#123;
-    background-color: #ccc;
-&#125;
-</code></pre>
-<p>推荐</p>
-<pre><code>.is-withdrawal &#123;
-    background-color: #ccc;
-&#125;
-</code></pre>
-<h1 id="CSS-命名规范（规则）"><a href="#CSS-命名规范（规则）" class="headerlink" title="CSS 命名规范（规则）"></a>CSS 命名规范（规则）</h1><h2 id="常用的-CSS-命名规则"><a href="#常用的-CSS-命名规则" class="headerlink" title="常用的 CSS 命名规则"></a>常用的 CSS 命名规则</h2><pre><code>头：header
-内容：content/container
-尾：footer
-导航：nav
-侧栏：sidebar
-栏目：column
-页面外围控制整体佈局宽度：wrapper
-左右中：left right center
-登录条：loginbar
-标志：logo
-广告：banner
-页面主体：main
-热点：hot
-新闻：news
-下载：download
-子导航：subnav
-菜单：menu
-子菜单：submenu
-搜索：search
-友情链接：friendlink
-页脚：footer
-版权：copyright
-滚动：scroll
-内容：content
-标签：tags
-文章列表：list
-提示信息：msg
-小技巧：tips
-栏目标题：title
-加入：joinus
-指南：guide
-服务：service
-注册：regsiter
-状态：status
-投票：vote
-合作伙伴：partner
-</code></pre>
-<h2 id="注释的写法"><a href="#注释的写法" class="headerlink" title="注释的写法"></a>注释的写法</h2><pre><code>/* Header */
-内容区
-/* End Header */
-</code></pre>
-<h2 id="Id-的命名"><a href="#Id-的命名" class="headerlink" title="Id 的命名"></a>Id 的命名</h2><h3 id="1-页面结构"><a href="#1-页面结构" class="headerlink" title="(1)页面结构"></a>(1)页面结构</h3><pre><code>容器: container
-页头：header
-内容：content/container
-页面主体：main
-页尾：footer
-导航：nav
-侧栏：sidebar
-栏目：column
-页面外围控制整体佈局宽度：wrapper
-左右中：left right center
-</code></pre>
-<h3 id="2-导航"><a href="#2-导航" class="headerlink" title="(2)导航"></a>(2)导航</h3><pre><code>导航：nav
-主导航：mainnav
-子导航：subnav
-顶导航：topnav
-边导航：sidebar
-左导航：leftsidebar
-右导航：rightsidebar
-菜单：menu
-子菜单：submenu
-标题: title
-摘要: summary
-</code></pre>
-<h3 id="3-功能"><a href="#3-功能" class="headerlink" title="(3)功能"></a>(3)功能</h3><pre><code>标志：logo
-广告：banner
-登陆：login
-登录条：loginbar
-注册：register
-搜索：search
-功能区：shop
-标题：title
-加入：joinus
-状态：status
-按钮：btn
-滚动：scroll
-标籤页：tab
-文章列表：list
-提示信息：msg
-当前的: current
-小技巧：tips
-图标: icon
-注释：note
-指南：guild
-服务：service
-热点：hot
-新闻：news
-下载：download
-投票：vote
-合作伙伴：partner
-友情链接：link
-版权：copyright
-</code></pre>
-<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><pre><code>1.一律小写
-2.尽量用英文
-3.不加中槓和下划线
-4.尽量不缩写，除非一看就明白的单词
-</code></pre>
-<h3 id="CSS-样式表文件命名"><a href="#CSS-样式表文件命名" class="headerlink" title="CSS 样式表文件命名"></a>CSS 样式表文件命名</h3><pre><code>主要的 master.css
-模块 module.css
-基本共用 base.css
-布局、版面 layout.css
-主题 themes.css
-专栏 columns.css
-文字 font.css
-表单 forms.css
-补丁 mend.css
-打印 print.css
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/css/" rel="tag">css</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
 
     </footer>
   </div>
@@ -1412,7 +2201,7 @@ border-radius: 10px;
   
   <nav class="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/40/">40</a><a class="extend next" rel="next" href="/page/2/">下一页</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/42/">42</a><a class="extend next" rel="next" href="/page/2/">下一页</a>
   </nav>
   
 </section>

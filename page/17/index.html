@@ -154,7 +154,7 @@
     
     
     <article
-  id="post-大规模储能系统现状及未来"
+  id="post-Oracle的SGA、PGA是什么？有什么用？"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -165,8 +165,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/05/29/%E5%A4%A7%E8%A7%84%E6%A8%A1%E5%82%A8%E8%83%BD%E7%B3%BB%E7%BB%9F%E7%8E%B0%E7%8A%B6%E5%8F%8A%E6%9C%AA%E6%9D%A5/"
-    >大规模储能系统现状及未来</a> 
+  <a class="article-title" href="/2023/06/13/Oracle%E7%9A%84SGA%E3%80%81PGA%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F%E6%9C%89%E4%BB%80%E4%B9%88%E7%94%A8%EF%BC%9F/"
+    >Oracle的SGA、PGA是什么？有什么用？</a> 
 </h2>
  
 
@@ -174,82 +174,20 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2023/05/29/%E5%A4%A7%E8%A7%84%E6%A8%A1%E5%82%A8%E8%83%BD%E7%B3%BB%E7%BB%9F%E7%8E%B0%E7%8A%B6%E5%8F%8A%E6%9C%AA%E6%9D%A5/" class="article-date">
-  <time datetime="2023-05-29T09:37:29.000Z" itemprop="datePublished">2023-05-29</time>
+      <a href="/2023/06/13/Oracle%E7%9A%84SGA%E3%80%81PGA%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F%E6%9C%89%E4%BB%80%E4%B9%88%E7%94%A8%EF%BC%9F/" class="article-date">
+  <time datetime="2023-06-13T03:31:44.000Z" itemprop="datePublished">2023-06-13</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
   </div>
    
     </div>
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>作者：严同<br>链接：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/20530503/answer/41904894">https://www.zhihu.com/question/20530503/answer/41904894</a><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
-<h1 id="现有的储能系统及其不足之处"><a href="#现有的储能系统及其不足之处" class="headerlink" title="现有的储能系统及其不足之处"></a>现有的储能系统及其不足之处</h1><p>现有的储能系统主要分为五类：机械储能、电气储能、电化学储能、热储能和化学储能。目前世界占比最高的是抽水蓄能，其总装机容量规模达到了127GW，占总储能容量的99%，其次是压缩空气储能，总装机容量为440MW，排名第三的是钠硫电池，总容量规模为316MW。</p>
-<h2 id="1）机械储能"><a href="#1）机械储能" class="headerlink" title="1）机械储能"></a>1）机械储能</h2><p>机械储能主要包括抽水蓄能、压缩空气储能和飞轮储能等。</p>
-<ul>
-<li>抽水蓄能</li>
-</ul>
-<p>将电网低谷时利用过剩电力作为液态能量媒体的水从地势低的水库抽到地势高的水库，电网峰荷时高地势水库中的水回流到下水库推动水轮机发电机发电，效率一般为75%左右，俗称进4出3，具有日调节能力，用于调峰和备用。</p>
-<p>不足之处：选址困难，及其依赖地势；投资周期较大，损耗较高，包括抽蓄损耗+线路损耗；现阶段也受中国电价政策的制约，去年中国80%以上的抽蓄都晒太阳，去年八月发改委出了个关于抽蓄电价的政策，以后可能会好些，但肯定不是储能的发展趋势。</p>
-<ul>
-<li>压缩空气储能（CAES）</li>
-</ul>
-<p>压缩空气蓄能是利用电力系统负荷低谷时的剩余电量，由电动机带动空气压缩机，将空气压入作为储气室的密闭大容量地下洞穴，当系统发电量不足时，将压缩空气经换热器与油或天然气混合燃烧，导入燃气轮机作功发电。国外研究较多，技术成熟，我国开始稍晚，好像卢强院士对这方面研究比较多，什么冷电联产之类的。</p>
-<p>压缩空气储也有调峰功能，适合用于大规模风场，因为风能产生的机械功可以直接驱动压缩机旋转，减少了中间转换成电的环节，从而提高效率。</p>
-<p>不足之处：一大缺陷在于效率较低。原因在于空气受到压缩时温度会升高，空气释放膨胀的过程中温度会降低。在压缩空气过程中一部分能量以热能的形式散失，在膨胀之前就必须要重新加热。通常以天然气作为加热空气的热源，这就导致蓄能效率降低。还有可以想到的不足就是需要大型储气装置、一定的地质条件和依赖燃烧化石燃料。</p>
-<ul>
-<li>飞轮储能</li>
-</ul>
-<p>是利用高速旋转的飞轮将能量以动能的形式储存起来。需要能量时，飞轮减速运行，将存储的能量释放出来。飞轮储能其中的单项技术国内基本都有了(但和国外差距在10年以上)，难点在于根据不同的用途开发不同功能的新产品，因此飞轮储能电源是一种高技术产品但原始创新性并不足，这使得它较难获得国家的科研经费支持。</p>
-<p>不足之处：能量密度不够高、自放电率高，如停止充电，能量在几到几十个小时内就会自行耗尽。只适合于一些细分市场，比如高品质不间断电源等。</p>
-<h2 id="2）电气储能"><a href="#2）电气储能" class="headerlink" title="2）电气储能"></a>2）电气储能</h2><ul>
-<li>超级电容器储能</li>
-</ul>
-<p>用活性炭多孔电极和电解质组成的双电层结构获得超大的电容量。与利用化学反应的蓄电池不同，超级电容器的充放电过程始终是物理过程。充电时间短、使用寿命长、温度特性好、节约能源和绿色环保。超级电容没有太复杂的东西，就是电容充电，其余就是材料的问题，目前研究的方向是能否做到面积很小，电容更大。超级电容器的发展还是很快的，目前石墨烯材料为基础的新型超级电容器，非常火。</p>
-<p>Tesla首席执行官Elon Musk 早在2011年就表示，传统电动汽车的电池已经过时，未来以超级电容器为动力系统的新型汽车将取而代之。</p>
-<p>不足之处：和电池相比，其能量密度导致同等重量下储能量相对较低，直接导致的就是续航能力差，依赖于新材料的诞生，比如石墨烯。</p>
-<ul>
-<li>超导储能（SMES）</li>
-</ul>
-<p>利用超导体的电阻为零特性制成的储存电能的装置。超导储能系统大致包括超导线圈、低温系统、功率调节系统和监控系统4大部分。超导材料技术开发是超导储能技术的重中之重。超导材料大致可分为低温超导材料、高温超导材料和室温超导材料。</p>
-<p>不足之处：超导储能的成本很高（材料和低温制冷系统），使得它的应用受到很大限制。可靠性和经济性的制约，商业化应用还比较远。</p>
-<h2 id="3）电化学储能"><a href="#3）电化学储能" class="headerlink" title="3）电化学储能"></a>3）电化学储能</h2><ul>
-<li>铅酸电池</li>
-</ul>
-<p>是一种电极主要由铅及其氧化物制成，电解液是硫酸溶液的蓄电池。目前在世界上应用广泛，循环寿命可达1000次左右，效率能达到80%-90%，性价比高，常用于电力系统的事故电源或备用电源。</p>
-<p>不足之处：如果深度、快速大功率放电时，可用容量会下降。其特点是能量密度低，寿命短。铅酸电池今年通过将具有超级活性的炭材料添加到铅酸电池的负极板上，将其循环寿命提高很多。</p>
-<ul>
-<li>锂离子电池</li>
-</ul>
-<p>是一类由锂金属或锂合金为负极材料、使用非水电解质溶液的电池。主要应用于便携式的移动设备中，其效率可达95%以上，放电时间可达数小时，循环次数可达5000次或更多，响应快速，是电池中能量最高的实用性电池，目前来说用的最多。近年来技术也在不断进行升级，正负极材料也有多种应用。</p>
-<p>市场上主流的动力锂电池分为三大类：钴酸锂电池、锰酸锂电池和磷酸铁锂电池。前者能量密度高，但是安全性稍差，后者相反，国内电动汽车比如比亚迪，目前大多采用磷酸铁锂电池。但是好像老外都在玩三元锂电池和磷酸铁锂电池？</p>
-<ul>
-<li>锂硫电池</li>
-</ul>
-<p>锂硫电池也很火，是以硫元素作为正极、金属锂作为负极的一种电池，其理论比能量密度可达2600wh/kg，实际能量密度可达450wh/kg。但如何大幅提高该电池的充放电循环寿命、使用安全性也是很大的问题。</p>
-<p>不足之处：存在价格高（4 元/wh）、过充导致发热、燃烧等安全性问题，需要进行充电保护。</p>
-<ul>
-<li>钠硫电池</li>
-</ul>
-<p>是一种以金属钠为负极、硫为正极、陶瓷管为电解质隔膜的二次电池。循环周期可达到4500次，放电时间6-7小时，周期往返效率75%，能量密度高，响应时间快。目前在日本、德国、法国、美国等地已建有200多处此类储能电站，主要用于负荷调平，移峰和改善电能质量。</p>
-<p>不足之处：因为使用液态钠，运行于高温下，容易燃烧。而且万一电网没电了，还需要柴油发电机帮助维持高温，或者帮助满足电池降温的条件。</p>
-<ul>
-<li>液流电池</li>
-</ul>
-<p>利用正负极电解液分开，各自循环的一种高性能蓄电池。电池的功率和能量是不相关的，储存的能量取决于储存罐的大小，因而可以储存长达数小时至数天的能量，容量可达MW级。这个电池有多个体系，如铁铬体系，锌溴体系、多硫化钠溴体系以及全钒体系，其中钒电池最火吧。</p>
-<p>不足之处：电池体积太大；电池对环境温度要求太高；价格贵（这个可能是短期现象吧）；系统复杂（又是泵又是管路什么的，这不像锂电等非液流电池那么简单）。</p>
-<p>电池储能都存在或多或少的环保问题。</p>
-<h2 id="4）热储能热储能："><a href="#4）热储能热储能：" class="headerlink" title="4）热储能热储能："></a>4）热储能热储能：</h2><p>热储能系统中，热能被储存在隔热容器的媒介中，需要的时候转化回电能，也可直接利用而不再转化回电能。热储能又分为显热储能和潜热储能。热储能储存的热量可以很大，所以可利用在可再生能源发电上。</p>
-<p>不足之处：热储能要各种高温化学热工质，用用场合比较受限。</p>
-<h2 id="5）化学类储能"><a href="#5）化学类储能" class="headerlink" title="5）化学类储能"></a>5）化学类储能</h2><p>化学类储能：利用氢或合成天然气作为二次能源的载体，利用多余的电制氢，可以直接用氢作为能量的载体，也可以将其与二氧化碳反应成为合成天然气（甲烷），氢或者合成天然气除了可用于发电外，还有其他利用方式如交通等。德国热衷于推动此技术，并有示范项目投入运行。</p>
-<p>不足之处：全周期效率较低，制氢效率仅 40%，合 成天然气的效率不到 35%。引用个前人的总结：</p>
-<p>总体来说，目前研究发展主要还是集中于超级电容和电池（锂电池、液流电池）上。材料领域的突破才是关键。</p>
-<h1 id="可靠储能后的电网会是什么样"><a href="#可靠储能后的电网会是什么样" class="headerlink" title="可靠储能后的电网会是什么样"></a>可靠储能后的电网会是什么样</h1><p>1）支撑实现能源互联网，智能电网。储能是智能电网实现能量双向互动的重要设备。没有储能，完整的智能电网无从谈起。</p>
-<p>2）利用储能技术面对新能源考验主要就是平抑、稳定风能、太阳能等间歇式可再生能源发电的输出功率，提高电网接纳间歇式可再生能源能力。</p>
-<p>3）减小峰谷差，提高设备利用率电网企业在调峰和供电压力得到缓解的同时，可获取更多的高峰负荷收益。</p>
-<p>4）提高电网安全可靠性和电能质量提供应急电源;减少因各种暂态电能质量问题造成的损失。</p>
+  <p>PGA(程序缓存区)与SGA(系统全局区)类似，都是Oracle数据库系统为会话在服务器内存中分配的区域。不过两者的作用不同，共享程度也不同。</p>
+<p>SGA系统全局区顾名思义，是对系统内的所有进程都是共享的。当多个用户同时连接到一个例程时，所有的用户进程、服务进程都可以共享使用这个SGA区。为此这个SGA的主要用途就是为不同用户之间的进程与服务进程提供一个交流的平台。除了这个作用，另外有一个重要的作用就是各种数据库的操作主要就是在这个SGA区内完成。</p>
+<p>而PGA程序缓冲区则主要是为了某个用户进程所服务的。这个内存区不是共享的，只有这个用户的服务进程本身才能够访问它自己的PGA区。做个形象的比喻，SGA就好像是操作系统上的一个共享文件夹，不同用户可以以此为平台进行数据方面的交流。而PGA就好像是操作系统上的一个私有文件夹，只有这个文件夹的所有者才能够进行访问，其他用户都不能够访问。虽然程序缓存区不像其他用户的进程开放，但是这个内存区仍然肩负着一些重要的使命，如数据排序、权限控制等等都离不开这个内存区。</p>
  
       <!-- reward -->
       
@@ -260,7 +198,7 @@
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%94%B5%E5%8A%9B/" rel="tag">电力</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Oracle/" rel="tag">Oracle</a></li></ul>
 
     </footer>
   </div>
@@ -271,7 +209,7 @@
 
     
     <article
-  id="post-充电站规划"
+  id="post-Oracle查看表空间使用情况"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -282,8 +220,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/05/28/%E5%85%85%E7%94%B5%E7%AB%99%E8%A7%84%E5%88%92/"
-    >充电站规划</a> 
+  <a class="article-title" href="/2023/06/12/Oracle%E6%9F%A5%E7%9C%8B%E8%A1%A8%E7%A9%BA%E9%97%B4%E4%BD%BF%E7%94%A8%E6%83%85%E5%86%B5/"
+    >Oracle查看表空间使用情况</a> 
 </h2>
  
 
@@ -291,195 +229,437 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2023/05/28/%E5%85%85%E7%94%B5%E7%AB%99%E8%A7%84%E5%88%92/" class="article-date">
-  <time datetime="2023-05-28T09:25:06.000Z" itemprop="datePublished">2023-05-28</time>
+      <a href="/2023/06/12/Oracle%E6%9F%A5%E7%9C%8B%E8%A1%A8%E7%A9%BA%E9%97%B4%E4%BD%BF%E7%94%A8%E6%83%85%E5%86%B5/" class="article-date">
+  <time datetime="2023-06-12T12:47:21.000Z" itemprop="datePublished">2023-06-12</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
   </div>
    
     </div>
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>作者：严同<br>链接：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/27582791/answer/41934204">https://www.zhihu.com/question/27582791/answer/41934204</a><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
-<p>从2014年6月开始，按照国务院的分工，国家能源局已经开始制定《电动汽车充电基础设施建设规划》，2014年年底前已经完成了第一稿，未来与《规划》同时出台还有《充电基础设施建设指导意见》。同时，全国多个城市陆续推出大规模建设充电设施的发展规划。</p>
-<h1 id="充电设施的布局规划"><a href="#充电设施的布局规划" class="headerlink" title="充电设施的布局规划"></a>充电设施的布局规划</h1><p>1）发展现状和规划思路</p>
-<p>美国充电站发展规划</p>
-<p>两年翻十倍，可以说，发展速度相当快，如果仅仅是数量多，也不足为奇。以ChargPoint为例，它不仅仅是一个简单的充电网络，它还可以向电动车车主、经销商及制造商提供大量云服务，比如电动汽车使用车可以通过手机下载充电服务公司的App，来寻找就近的空闲充电桩，并可直接导航至充电桩所在地。</p>
-<p>我国充电站发展规划</p>
-<p>2011年时，国家电网提出“换电为主、插充为辅、集中充电、统一配送”，这是基于当时情况的考虑。</p>
-<p>现在，特斯拉18650电池等等成功应用，使得快速充电成为可能，国内厂家的水平也不断提高，14年国网就变了，变成“主导快充、兼顾慢充、引导换电、经济实用”的思路，并引入社会资金和力量参与充电设施建设。</p>
-<p>截至目前，我国建成的电动汽车充电桩达到了2.6万个（国家电网数据），但从数量来看已经很多了，不过根据国内多家媒体的调查，充电桩投入使用的比例十分低。此外，我国各地的直流充电接口与通讯协议标准至今尚未统一，电动汽车地方目录（本质是地方保护主义）尽管被宣布取消，实际上却依然存在。</p>
-<p>好在不久前，能源局制定的《电动汽车充电基础设施建设觃划》草稿已经完成，乐观预计到2020年，新能源汽车累计产销量将超过500万辆。按照一辆车对应1个慢充、0.2个快充计算，预计至2020年将会催生500万个慢充和100万个快充的市场需。随着充电桩建设加速，充电设备未来投资额将会超过850亿元。</p>
-<p>北京：北京市将在中心城区打造服务半径平均为5公里的充电圈，逐步建成公用领域充电设施网络服务体系。与自用充电桩主要采取交流慢充不同，公用充电桩主要采用直流快充模式，半小时充电就能支撑普通新能源汽车续航100公里。</p>
-<p>下为2015年北京市电动车公用充电设施分布图。电动车车主可通过网站、手机APP、微信等方式查找附近的充电设施。</p>
-<p>上海：2015年充电桩布局将超6000个。此外，为了进一步保障新能源汽车的使用，上海将在中心城区和示范区优先建设公共快充网络，一辆车只需20分钟就可充80%的电。</p>
-<p>天津：2015年将建66个充换电站，6700个充电桩。其中，公交、出租、邮政、快递、环卫等领域将优先选择用户现有场地，不足部分由市统一规划供地。<br>等等，可见发展的趋势还是很快的。</p>
-<p>2）规划技术层面</p>
-<p>目前一般是能源局和电网公司来做规划。</p>
-<p>但，目前针对电动汽车应用的充电站建设规划布局理论尚未完整成熟，各地的充电站建设尚处于定点示范建设阶段，没有建立于车辆应用、电网规划、城市规划相结合的充电站布局选址理论。</p>
-<p>而且充电站建设的规划与布局面临着供电能力、服务能力与城市用地紧张的矛盾。</p>
-<p>就看到过的充电站规划方面的资料答几点技术层面的东西。</p>
-<h2 id="首先肯定是容量预测，统计电动汽车的数量及进行预测。"><a href="#首先肯定是容量预测，统计电动汽车的数量及进行预测。" class="headerlink" title="首先肯定是容量预测，统计电动汽车的数量及进行预测。"></a>首先肯定是容量预测，统计电动汽车的数量及进行预测。</h2><h2 id="其次就是充电站布局规划的技术思路。"><a href="#其次就是充电站布局规划的技术思路。" class="headerlink" title="其次就是充电站布局规划的技术思路。"></a>其次就是充电站布局规划的技术思路。</h2><p>电动汽车充电站布局包括“需求”和“可能性”两个因素。衡量充电站需求的主要指标是交通量与服务半径两个要素，决定可能性与否关键在于交通、环保及区域配电能力等外部环境条件与该地区的建设规划和路网规划。</p>
-<ul>
-<li><p>充电站分布与电动汽车交通密度和充电需求的分布尽可能一致</p>
+  <h1 id="Part1"><a href="#Part1" class="headerlink" title="Part1"></a>Part1</h1><p>1、查看所有表空间大小</p>
+<pre><code>select tablespace_name,sum(bytes)/1024/1024 from dba_data_files group by tablespace_name;
+</code></pre>
+<p>2、未使用的表空间大小</p>
+<pre><code>select tablespace_name,sum(bytes)/1024/1024 from dba_free_space   
+group by tablespace_name;   
+</code></pre>
+<p>3、所以使用空间可以这样计算</p>
+<pre><code>select a.tablespace_name,total,free,total-free used from   
+( select tablespace_name,sum(bytes)/1024/1024 total from dba_data_files   
+group by tablespace_name) a,   
+( select tablespace_name,sum(bytes)/1024/1024 free from dba_free_space   
+group by tablespace_name) b   
+where a.tablespace_name=b.tablespace_name;   
+</code></pre>
+<p>4、还有在命令行情况下如何将结果放到一个文件里。</p>
+<pre><code>SQL&gt; spool out.txt   
+SQL&gt; select * from v$database;   
+SQL&gt; spool off
+</code></pre>
+<p>5、查询所有的表空间</p>
+<pre><code>select tablespace_name from dba_tablespaces  
+</code></pre>
+<p>6、查看表空间中分布的用户信息</p>
+<pre><code>select tablespace_name, owner,sum(bytes) from dba_segments   
+group by tablespace_name, owner   
+</code></pre>
+<h1 id="Part2"><a href="#Part2" class="headerlink" title="Part2"></a>Part2</h1><p>查看Oracle数据库表空间大小，是否需要增加表空间的数据文件<br>在数据库管理中，磁盘空间不足是DBA都会遇到的问题，问题比较常见。</p>
+<p>1、查看表空间已经使用的百分比</p>
+<pre><code>select a.tablespace_name,a.bytes/1024/1024 &quot;Sum MB&quot;,(a.bytes-b.bytes)/1024/1024 &quot;used MB&quot;,b.bytes/1024/1024 &quot;free MB&quot;,round(((a.bytes-b.bytes)/a.bytes)*100,2) &quot;percent_used&quot;  
+from  
+(select tablespace_name,sum(bytes) bytes from dba_data_files group by tablespace_name) a,   
+(select tablespace_name,sum(bytes) bytes,max(bytes) largest from dba_free_space group by tablespace_name) b   
+where a.tablespace_name=b.tablespace_name   
+order by ((a.bytes-b.bytes)/a.bytes) desc  
+</code></pre>
+<p>“Sum MB”表示表空间所有的数据文件总共在操作系统占用磁盘空间的大小<br>比如：test表空间有2个数据文件，datafile1为300MB，datafile2为400MB，那么test表空间的“Sum MB”就是700MB<br>“userd MB”表示表空间已经使用了多少<br>“free MB”表示表空间剩余多少<br>“percent_user”表示已经使用的百分比</p>
+<p>2、比如从1中查看到MLOG_NORM_SPACE表空间已使用百分比达到90%以上，可以查看该表空间总共有几个数</p>
+<p>据文件，每个数据文件是否自动扩展，可以自动扩展的最大值。</p>
+<pre><code>select file_name,tablespace_name,bytes/1024/1024 &quot;bytes MB&quot;,maxbytes/1024/1024 &quot;maxbytes MB&quot; from dba_data_files  
+  where tablespace_name=&#39;MLOG_NORM_SPACE&#39;;   
+</code></pre>
+<p>2.1、查看 xxx 表空间是否为自动扩展</p>
+<pre><code>select file_id,file_name,tablespace_name,autoextensible,increment_by from dba_data_files order by file_id desc;  
+select file_id,file_name,tablespace_name,autoextensible,increment_by from dba_data_files order by file_id desc;
+</code></pre>
+<p>3、比如MLOG_NORM_SPACE表空间目前的大小为19GB，但最大每个数据文件只能为20GB，数据文件快要写满，可以增加表空间的数据文件<br>用操作系统UNIX、Linux中的df -g命令(查看下可以使用的磁盘空间大小)<br>获取创建表空间的语句：</p>
+<pre><code>select    dbms_metadata.get_ddl(&#39;TABLESPACE&#39;,&#39;MLOG_NORM_SPACE&#39;)   from    dual;  
+select dbms_metadata.get_ddl(&#39;TABLESPACE&#39;,&#39;MLOG_NORM_SPACE&#39;) from dual;
+</code></pre>
+<p>4、确认磁盘空间足够，增加一个数据文件</p>
+<pre><code>alter    tablespace    MLOG_NORM_SPACE   
+add    datafile   &#39;/oracle/oms/oradata/mlog/Mlog_Norm_data001.dbf&#39;  
+size    10M    autoextend   on    maxsize    20G 
+</code></pre>
+<p>5、验证已经增加的数据文件</p>
+<pre><code>select    file_name,file_id,tablespace_name   from    dba_data_files   
+where    tablespace_name=&#39;MLOG_NORM_SPACE&#39; 
+</code></pre>
+<p>6、如果删除表空间数据文件，如下：</p>
+<pre><code>alter    tablespace    MLOG_NORM_SPACE   
+drop     datafile &#39;/oracle/oms/oradata/mlog/Mlog_Norm_data001.dbf&#39;  
+</code></pre>
+<p>转自<a target="_blank" rel="noopener" href="http://space.itpub.net/12778571/viewspace-582695">http://space.itpub.net/12778571/viewspace-582695</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Oracle/" rel="tag">Oracle</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-Oracle监控的关键指标"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/06/11/Oracle%E7%9B%91%E6%8E%A7%E7%9A%84%E5%85%B3%E9%94%AE%E6%8C%87%E6%A0%87/"
+    >Oracle监控的关键指标</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/06/11/Oracle%E7%9B%91%E6%8E%A7%E7%9A%84%E5%85%B3%E9%94%AE%E6%8C%87%E6%A0%87/" class="article-date">
+  <time datetime="2023-06-11T12:27:38.000Z" itemprop="datePublished">2023-06-11</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>1、监控事例的等待</p>
+<pre><code>select event,
+       sum(decode(wait_Time, 0, 0, 1)) &quot;Prev&quot;,
+       sum(decode(wait_Time, 0, 1, 0)) &quot;Curr&quot;,
+       count(*) &quot;Tot&quot;
+  from v$session_Wait
+ group by event
+ order by 4;
+</code></pre>
+<p>2、回滚段的争用情况</p>
+<pre><code>select name, waits, gets, waits / gets &quot;Ratio&quot;
+  from v$rollstat a, v$rollname b
+ where a.usn = b.usn;
+</code></pre>
+<p>3、监控表空间的 I/O 比例</p>
+<pre><code>select df.tablespace_name name,
+       df.file_name       &quot;file&quot;,
+       f.phyrds           pyr,
+       f.phyblkrd         pbr,
+       f.phywrts          pyw,
+       f.phyblkwrt        pbw
+  from v$filestat f, dba_data_files df
+ where f.file# = df.file_id
+ order by df.tablespace_name;
+</code></pre>
+<p>4、监控文件系统的 I/O 比例</p>
+<pre><code>select substr(a.file#, 1, 2) &quot;#&quot;,
+       substr(a.name, 1, 30) &quot;Name&quot;,
+       a.status,
+       a.bytes,
+       b.phyrds,
+       b.phywrts
+  from v$datafile a, v$filestat b
+ where a.file# = b.file#;
+</code></pre>
+<p>5、在某个用户下找所有的索引</p>
+<pre><code>select user_indexes.table_name,
+       user_indexes.index_name,
+       uniqueness,
+       column_name
+  from user_ind_columns, user_indexes
+ where user_ind_columns.index_name = user_indexes.index_name
+   and user_ind_columns.table_name = user_indexes.table_name
+ order by user_indexes.table_type,
+          user_indexes.table_name,
+          user_indexes.index_name,
+          column_position;
+</code></pre>
+<p>6、监控 SGA 的命中率</p>
+<pre><code>select a.value + b.value &quot;logical_reads&quot;,
+       c.value &quot;phys_reads&quot;,
+       round(100 * ((a.value + b.value) - c.value) / (a.value + b.value)) &quot;BUFFER HIT RATIO&quot;
+  from v$sysstat a, v$sysstat b, v$sysstat c
+ where a.statistic# = 38
+   and b.statistic# = 39
+   and c.statistic# = 40;
+</code></pre>
+<p>7、监控 SGA 中字典缓冲区的命中率</p>
+<pre><code>select parameter,
+       gets,
+       Getmisses,
+       getmisses / (gets + getmisses) * 100 &quot;miss ratio&quot;,
+       (1 - (sum(getmisses) / (sum(gets) + sum(getmisses)))) * 100 &quot;Hit ratio&quot;
+  from v$rowcache
+ where gets + getmisses &lt;&gt; 0
+ group by parameter, gets, getmisses;
+</code></pre>
+<p>8、监控 SGA 中共享缓存区的命中率，应该小于1%</p>
+<pre><code>select sum(pins) &quot;Total Pins&quot;,
+       sum(reloads) &quot;Total Reloads&quot;,
+       sum(reloads) / sum(pins) * 100 libcache
+  from v$librarycache;
+
+select sum(pinhits - reloads) / sum(pins) &quot;hit radio&quot;,
+       sum(reloads) / sum(pins) &quot;reload percent&quot;
+  from v$librarycache;
+</code></pre>
+<p>9、显示所有数据库对象的类别和大小</p>
+<pre><code>select count(name) num_instances,
+       type,
+       sum(source_size) source_size,
+       sum(parsed_size) parsed_size,
+       sum(code_size) code_size,
+       sum(error_size) error_size,
+       sum(source_size) + sum(parsed_size) + sum(code_size) +
+       sum(error_size) size_required
+  from dba_object_size
+ group by type
+ order by 2;
+</code></pre>
+<p>10、监控 SGA 中重做日志缓存区的命中率，应该小于1%</p>
+<pre><code>SELECT name,
+       gets,
+       misses,
+       immediate_gets,
+       immediate_misses,
+       Decode(gets, 0, 0, misses / gets * 100) ratio1,
+       Decode(immediate_gets + immediate_misses,
+              0,
+              0,
+              immediate_misses / (immediate_gets + immediate_misses) * 100) ratio2
+  FROM v$latch
+ WHERE name IN (&#39;redo allocation&#39;, &#39;redo copy&#39;);
+</code></pre>
+<p>11、监控内存和硬盘的排序比率<br>最好使它小于 .10，增加 sort_area_size</p>
+<pre><code>SELECT name, value FROM v$sysstat WHERE name IN (&#39;sorts (memory)&#39;, &#39;sorts (disk)&#39;);    
+</code></pre>
+<p>12、监控当前数据库谁在运行什么SQL语句</p>
+<pre><code>SELECT osuser, username, sql_text
+  from v$session a, v$sqltext b
+ where a.sql_address = b.address
+ order by address, piece;
+</code></pre>
+<p>13、监控字典缓冲区</p>
+<pre><code>SELECT (SUM(PINS - RELOADS)) / SUM(PINS) &quot;LIB CACHE&quot; FROM V$LIBRARYCACHE;
+SELECT (SUM(GETS - GETMISSES - USAGE - FIXED)) / SUM(GETS) &quot;ROW CACHE&quot;
+  FROM V$ROWCACHE;
+SELECT SUM(PINS) &quot;EXECUTIONS&quot;, SUM(RELOADS) &quot;CACHE MISSES WHILE EXECUTING&quot;
+  FROM V$LIBRARYCACHE;
+</code></pre>
+<p>后者除以前者，此比率小于1%，接近0%为好。</p>
+<pre><code>  SELECT SUM(GETS) &quot;DICTIONARY GETS&quot;,
+         SUM(GETMISSES) &quot;DICTIONARY CACHE GET MISSES&quot;
+    FROM V$ROWCACHE
+</code></pre>
+<p>14、找ORACLE字符集</p>
+<pre><code>select * from sys.props$ where name=&#39;NLS_CHARACTERSET&#39;;   
+</code></pre>
+<p>15、监控 MTS</p>
+<pre><code>select busy / (busy + idle) &quot;shared servers busy&quot; from v$dispatcher;
+</code></pre>
+<p>此值大于0.5时，参数需加大</p>
+<pre><code>  select sum(wait) / sum(totalq) &quot;dispatcher waits&quot;
+    from v$queue
+   where type = &#39;dispatcher&#39;;
+select count(*) from v$dispatcher;
+select servers_highwater from v$mts;
+</code></pre>
+<p>servers_highwater接近mts_max_servers时，参数需加大</p>
+<p>16、碎片程度</p>
+<pre><code>select tablespace_name,count(tablespace_name) from dba_free_space group by tablespace_name      
+having count(tablespace_name)&gt;10;     
+ 
+alter tablespace name coalesce;     
+alter table name deallocate unused;     
+ 
+create or replace view ts_blocks_v as     
+select tablespace_name,block_id,bytes,blocks,&#39;free space&#39; segment_name from dba_free_space     
+union all     
+select tablespace_name,block_id,bytes,blocks,segment_name from dba_extents;     
+ 
+select * from ts_blocks_v;     
+ 
+select tablespace_name,sum(bytes),max(bytes),count(block_id) from dba_free_space      
+group by tablespace_name;     
+</code></pre>
+<p>查看碎片程度高的表     </p>
+<pre><code>SELECT segment_name table_name , COUNT(*) extents     
+FROM dba_segments WHERE owner NOT IN (&#39;SYS&#39;, &#39;SYSTEM&#39;) GROUP BY segment_name     
+HAVING COUNT(*) = (SELECT MAX( COUNT(*) ) FROM dba_segments GROUP BY segment_name);  
+</code></pre>
+<p>17、表、索引的存储情况检查</p>
+<pre><code>select segment_name,sum(bytes),count(*) ext_quan from dba_extents where      
+tablespace_name=&#39;&amp;tablespace_name&#39; and segment_type=&#39;TABLE&#39; group by tablespace_name,segment_name;     
+
+select segment_name,count(*) from dba_extents where segment_type=&#39;INDEX&#39; and owner=&#39;&amp;owner&#39;     
+group by segment_name;
+</code></pre>
+<p>18、找使用CPU多的用户session</p>
+<pre><code>select a.sid,spid,status,substr(a.program,1,10) prog,a.terminal,osuser,value/60/100 value     
+from v$session a,v$process b,v$sesstat c     
+where c.statistic#=12 and c.sid=a.sid and a.paddr=b.addr order by value desc
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Oracle/" rel="tag">Oracle</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-REST模式：POST，GET，PUT，DELETE，PATCH的含义与区别"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/06/10/REST%E6%A8%A1%E5%BC%8F%EF%BC%9APOST%EF%BC%8CGET%EF%BC%8CPUT%EF%BC%8CDELETE%EF%BC%8CPATCH%E7%9A%84%E5%90%AB%E4%B9%89%E4%B8%8E%E5%8C%BA%E5%88%AB/"
+    >REST模式：POST，GET，PUT，DELETE，PATCH的含义与区别</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/06/10/REST%E6%A8%A1%E5%BC%8F%EF%BC%9APOST%EF%BC%8CGET%EF%BC%8CPUT%EF%BC%8CDELETE%EF%BC%8CPATCH%E7%9A%84%E5%90%AB%E4%B9%89%E4%B8%8E%E5%8C%BA%E5%88%AB/" class="article-date">
+  <time datetime="2023-06-10T02:15:20.000Z" itemprop="datePublished">2023-06-10</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>根据HTTP规范:</p>
+<ol>
+<li><p>GET 用于信息获取，而且是安全的和幂等的<br>GET请求是安全的。所谓安全是指不管进行多少次操作，资源的状态都不会改变。该请求就像数据库的select操作一样，只是用来查询一下数据，不会修改、增加数据，不会影响资源的内容，即该请求不会产生副作用。无论进行多少次操作，结果都是一样的。</p>
 </li>
-<li><p>充电站的布局应符合充电站服务半径要求</p>
+<li><p>POST 用于创建数据，不是安全和幂等的<br>POST请求既不是安全的，也不是幂等的，比如常见的POST重复加载问题：当我们多次发出同样的POST请求后，其结果是创建出了若干的资源。</p>
 </li>
-</ul>
-<p>电动汽车充电站的分布可以参考建设部《城市道路交通规划设计规范》(1995)中的加油站服务半径规定，结合电动汽车自身的运行特点以及各区域的计算服务半径按实际需要设定。</p>
-<p>动力电池的续驶能力是影响充电站服务半径的另一大因素。故充电站的服务半径应以电动汽车单次充电行驶里程100km(甚至更短)计算。只有这样才能有效保障电动汽车的持续行驶能力。</p>
-<ul>
-<li>充电站的设置应满足城市总体规划和路网规划要求</li>
-</ul>
-<p>充电站的选址定点应结合地区建设规划和路网规划,以网点总体布局规划为宏观控制依据，经过对布局网点及其周围地区规划选址方案的比较，确定网点设置用地。</p>
-<ul>
-<li>充电站的设置应充分考虑本区域的输配电网现状</li>
-</ul>
-<p>电动汽车充电站运营时需要高功率的电力供应支撑,在进行充电站布局规划时，应与电力供应部门协调，将充电站建设规划纳入城市电网规划中。</p>
-<ul>
-<li>充电规划应充分考虑电动汽车未来发展趋势</li>
-</ul>
-<h2 id="最后就是具体的选址和现场情况了。"><a href="#最后就是具体的选址和现场情况了。" class="headerlink" title="最后就是具体的选址和现场情况了。"></a>最后就是具体的选址和现场情况了。</h2><h1 id="充电设施的标准"><a href="#充电设施的标准" class="headerlink" title="充电设施的标准"></a>充电设施的标准</h1><p>在电动车实际使用的过程中，充电标准不统一问题非常明显。京沪高速公路充电站全线开通后，有企业派工作小组去做电动车运行试验，结果是在这个充电站这辆车能充电，那辆车不能充电。</p>
-<p>原因在于一方面标准还需完善，同时设施和汽车做的接口是否真正符合国标需认证，另一方面，原先国标还没有出来时，各地先行按照自己的想法制定了地方标准，也形成了现在的过渡阶段。</p>
-<p>目前，传统的充电方式全球有三个标准：最早出现的美国的SAE标准，日本、韩国也采用SAE标准;其次是欧洲标准;再是中国的标准，介于欧洲标准和美国标准之间。这就形成了三部完全不兼容的标准。</p>
-<p>今年国家已经把接口标准纳入新能源汽车购置税减免目录准入条件，下一步还将纳入新能源汽车准入条件，解决标准执行力不强的问题。</p>
-<h1 id="充电设施谁来建"><a href="#充电设施谁来建" class="headerlink" title="充电设施谁来建"></a>充电设施谁来建</h1><p>目前看来，统一充电标准先行，同时要解决的核心问题还有商业模式。这都属于充电站长远规划的问题。</p>
-<p>充电站的运营管理尚处于起步阶段，尚未对其服务范围进行清晰定义，尚未建立成熟的运营管理模式。建设运营主体不明确已经成为电动汽车商业化应用的瓶颈问题之一。</p>
-<p>反正就我所知，国网对这块越来越重视，2016年-2020年，国网建设充电站目标高达10000座，建成完整的“四纵四横”（四纵：沈海、京沪、京台、京港澳，四横：青银、连霍、沪蓉、沪昆）电动汽车充电网络。但是也没有好的盈利模式，都是赔本响应国家号召。</p>
-<p>就私有资本来说，也是一样，盈利模式单一，单靠服务费，难以实现长期稳定收益。在目前的情况下，其实有80%的车主都可以通过家庭充电的方式来满足需求，如果要外出充电，更多的也只是补电，收益显然会很低，而且还有特斯拉这种提供免费增值服务的新能源汽车厂家。</p>
-<p>商业模式不清晰，也没有国外的经验参考，个人感觉单纯从充电站单方面解决非常困难，因为这些主体的利益是相对的，结合新能源汽车和充电设施，由政府、新能源汽车厂家、充电设施业主一起形成一个商业模式，或许比较靠谱。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%94%B5%E5%8A%9B/" rel="tag">电力</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-智能充电桩"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/05/27/%E6%99%BA%E8%83%BD%E5%85%85%E7%94%B5%E6%A1%A9/"
-    >智能充电桩</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/05/27/%E6%99%BA%E8%83%BD%E5%85%85%E7%94%B5%E6%A1%A9/" class="article-date">
-  <time datetime="2023-05-27T09:16:47.000Z" itemprop="datePublished">2023-05-27</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>作者：严同<br>链接：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/28697268/answer/42167808">https://www.zhihu.com/question/28697268/answer/42167808</a><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
-<p>什么叫智能充电桩？</p>
-<p>依我看，简单来说，就是必须满足和智能电网的所有互动，属于目前比较火的V2G的范畴，具体一点，至少要像通用的“Watt Station”说的那样，满足两个功能。</p>
-<p>第一，获取电力部门实时电价的信息，并根据这一信息帮助电动汽车用户决定在何时以最经济的价格对车辆进行充电。</p>
-<p>你只需要在下班回家的时候将电动汽车与充电桩进行连接，这个时候你不必担心电价的高低，因为如果电价高于你的预期，充电桩不会连接电网给电动汽车进行充电。当你已经熟睡后，电价下降到较低水平，充电桩内的智能芯片通过获取信息后便触发充电开关，电动汽车开始充电。</p>
-<p>这一点感觉比较容易做到。</p>
-<p>第二就比较难了，就是未来，当电力部门出现电力供应紧张时，智能充电桩可以把电动汽车电池内的电反向传输给电网，从而缓解供电压力。用户的输电量则被电网记录，下次可以免费为用户提供数额相等的供电。</p>
-<p>当然，还有很多和未来智能电网的互动，非常多。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%94%B5%E5%8A%9B/" rel="tag">电力</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-电动汽车入网技术（V2G）"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/05/26/%E7%94%B5%E5%8A%A8%E6%B1%BD%E8%BD%A6%E5%85%A5%E7%BD%91%E6%8A%80%E6%9C%AF%EF%BC%88V2G%EF%BC%89/"
-    >电动汽车入网技术（V2G）</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/05/26/%E7%94%B5%E5%8A%A8%E6%B1%BD%E8%BD%A6%E5%85%A5%E7%BD%91%E6%8A%80%E6%9C%AF%EF%BC%88V2G%EF%BC%89/" class="article-date">
-  <time datetime="2023-05-26T09:04:48.000Z" itemprop="datePublished">2023-05-26</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>作者：严同<br>链接：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/28866374/answer/42464699">https://www.zhihu.com/question/28866374/answer/42464699</a><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
-<p>V2G 是Vehicle-to-grid的简称，它的核心思想在于：电动汽车和电网的互动，利用大量电动汽车的储能源作为电网和可再生能源的的缓冲。</p>
-<p>当电网负荷过高时，由电动汽车储能源向电网馈电;而当电网负荷低时，用来存储电网过剩的发电量，避免造成浪费。通过这种方式，电动汽车用户可以在电价低时，从电网买电，电网电价高时向电网售电，从而获得一定的收益。</p>
-<h1 id="国内外研究现状"><a href="#国内外研究现状" class="headerlink" title="国内外研究现状"></a>国内外研究现状</h1><p>这块国内外，目前只有少数机构涉足此领域，相关研究与示范大多都在美国，具有代表性的就是美国特拉华大学的Willlett Kempton教授领导的团队，以及日产汽车公司与美国通用电气的联合研究团队。</p>
-<p>国内就是国网和学校有一些研究，都还比较皮毛吧。</p>
-<p>总的来说，国内外都只是一些初步研究，研究框架是明确的，但离实际应用还很远。</p>
-<h1 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h1><p>原理挺简单，就是双向互动，难点还是在电池、电动汽车V侧的控制、以及电网G侧的调度控制。</p>
-<h1 id="互动效果"><a href="#互动效果" class="headerlink" title="互动效果"></a>互动效果</h1><ul>
-<li><p>用户方面：<br>（1）节省费用：单位电能比单位汽油便宜，行驶相同距离，电动汽车花费少。<br>（2）获得收益：给电网供电时，可获得电价补偿。</p>
+<li><p>PUT 用于创建或完整更新数据，而且是安全和幂等的<br>PUT请求是向服务器端发送数据的，从而改变信息，该请求就像数据库的update操作一样，用来修改完整的数据内容，但是不会增加数据的种类等，也就是说无论进行多少次PUT操作，其结果并没有不同。</p>
 </li>
-<li><p>电网方面<br>移峰填谷：谷荷充电，峰荷放电。<br>旋转备用：作为分布式储能单元（风电、太阳能发电等)。<br>电压支持：高负荷时放电抑制电压的下降等</p>
+<li><p>DELETE 用于删除数据，而且是安全和幂等的<br>DELETE请求顾名思义，就是用来删除某一个资源的，该请求就像数据库的delete操作，无论进行多少次DELETE操作，其结果并没有不同。</p>
 </li>
-</ul>
-<h1 id="目前的研究方向"><a href="#目前的研究方向" class="headerlink" title="目前的研究方向"></a>目前的研究方向</h1><h2 id="充电负荷计算"><a href="#充电负荷计算" class="headerlink" title="充电负荷计算"></a>充电负荷计算</h2><p>充电负荷是研究电动汽车充电问题的基础。</p>
-<h2 id="电动汽车规模接入对电网产生的影响"><a href="#电动汽车规模接入对电网产生的影响" class="headerlink" title="电动汽车规模接入对电网产生的影响"></a>电动汽车规模接入对电网产生的影响</h2><p>电动汽车大规模接入配电网，由于其充电时间地点的高度随机性，会对配电网网损，电能质量，可靠性，稳定性等方面产生影响。<br>国内外专家学者在该方面做了大量的研究工作，迄今为止，大部分研究集中在网损和电能质量两方面。</p>
-<h2 id="电动汽车有序充电控制"><a href="#电动汽车有序充电控制" class="headerlink" title="电动汽车有序充电控制"></a>电动汽车有序充电控制</h2><p>这个方向比较热门些，大多数此方向的人都在研究这个。电动汽车有序充电控制，可以有效缓解大规模电动汽车接入电网所带来的负面影响。</p>
-<h2 id="基于V2G的电网规划调度"><a href="#基于V2G的电网规划调度" class="headerlink" title="基于V2G的电网规划调度"></a>基于V2G的电网规划调度</h2><p>新能源与电动汽车均有高度的随机性特点，研究其联合调度不仅可以降低新能源的随机性对电网的影响，增加新能源消纳，更可以实现电动汽车的清洁化低碳化。</p>
-<p>这部分个人感觉挺难的，数量级上去了，对平台和调度策略的要求非常高。其他的还有，比如电池双向传输对电池的要求，电价政策什么的。</p>
+<li><p>PATCH 用于更新部分数据，不是安全和幂等的<br>PATCH请求是对PUT请求的补充，一般用来对已知资源部分更新，是后来新出的标准，GitHub Api也开始使用。</p>
+</li>
+</ol>
+<p>更多详细的介绍可以参考RESTful[<a target="_blank" rel="noopener" href="http://sofish.github.io/restcookbook/]%E6%89%8B%E5%86%8C">http://sofish.github.io/restcookbook/]手册</a></p>
+<p>————————————————<br>版权声明：本文为CSDN博主「Marsin_csdn」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/Marsin_csdn/article/details/123956033">https://blog.csdn.net/Marsin_csdn/article/details/123956033</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTTP/" rel="tag">HTTP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/REST/" rel="tag">REST</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-政策再加码，国办发文让充电更方便"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/06/09/%E6%94%BF%E7%AD%96%E5%86%8D%E5%8A%A0%E7%A0%81%EF%BC%8C%E5%9B%BD%E5%8A%9E%E5%8F%91%E6%96%87%E8%AE%A9%E5%85%85%E7%94%B5%E6%9B%B4%E6%96%B9%E4%BE%BF/"
+    >政策再加码，国办发文让充电更方便</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/06/09/%E6%94%BF%E7%AD%96%E5%86%8D%E5%8A%A0%E7%A0%81%EF%BC%8C%E5%9B%BD%E5%8A%9E%E5%8F%91%E6%96%87%E8%AE%A9%E5%85%85%E7%94%B5%E6%9B%B4%E6%96%B9%E4%BE%BF/" class="article-date">
+  <time datetime="2023-06-09T06:54:40.000Z" itemprop="datePublished">2023-06-09</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>充电桩是新能源汽车快速发展不可或缺的一环，对于新能源汽车车主及观望者来说，充电问题始终是最大的关注点之一。近日，国务院办公厅印发《关于进一步构建高质量充电基础设施体系的指导意见》（以下简称《指导意见》），对充电基础设施建设作出具体部署。</p>
+<p>截至2022年底，全国新能源汽车保有量达1310万辆，其中纯电动汽车保有量为1045万辆，而全国充电基础设施累计数量为521万台。全国新能源汽车保有量与全国累计建成充电桩数量的比例约为2.5:1。当前充电桩数量并不能完全满足新能源汽车的充电需求，如何让充电变得更方便，也是《指导意见》关注的重点。</p>
+<p>《指导意见》为新能源汽车充电基础设施建设指出发展目标——到2030年，基本建成覆盖广泛、规模适度、结构合理、功能完善的高质量充电基础设施体系，有力支撑新能源汽车产业发展，有效满足人民群众出行充电需求。</p>
+<p>西南大学经济管理学院教授、博士生导师刘自敏在接受人民网“强观察”栏目记者采访时表示，在“双碳”目标的大背景下，能源结构转型势在必行，而新能源汽车革命正是大势所趋。高质量的充电基础设施建立之后，新能源汽车的普及率会进一步提高，刺激消费市场的同时，也将更好地推动“双碳”目标的实现。</p>
+<p>在城市充电网络方面，《指导意见》指出，以“两区”（居住区、办公区）、“三中心”（商业中心、工业中心、休闲中心）为重点，推动城市充电网络从中心城区向城区边缘、从优先发展区域向其他区域有序延伸。</p>
+<p>“在一定程度上能够解决城市居民高峰期充电难的问题。”刘自敏表示，《指导意见》提出在居住区积极推广智能有序慢充为主、应急快充为辅的充电基础设施，在办公区和“三中心”等城市专用和公用区域因地制宜布局建设快慢结合的公共充电基础设施，主要是从空间上有效调节上班族人群充电难的问题。</p>
+<p>他还提到，充电高峰期也应与电价相关联。有些地市在凌晨时段电价降低，如果能从这方面引导消费者，让充电高峰期不仅仅局限于集中时段，而是更加均匀地分布，充电难的问题也能得到有效解决。</p>
+<p>此外，《指导意见》多项举措都涉及到农村充电设施的布局，提出要建设有效覆盖农村地区的充电网络。</p>
+<p>记者梳理发现，近期，国家频频出台政策促进农村地区充换电设施发展。</p>
+<p>5月5日，国常会部署加快建设充电基础设施，更好支持新能源汽车下乡和乡村振兴；5月17日，国家发展改革委、国家能源局印发《关于加快推进充电基础设施建设更好支持新能源汽车下乡和乡村振兴的实施意见》，支持农村地区购买使用新能源汽车。</p>
+<p>在刘自敏看来，自2020年国家开展新能源汽车下乡活动以来，新能源汽车在农村销量不断增加，但充电设施基础薄弱。“新能源汽车在乡村市场具有比城市更大的普及潜力，但只有基础设施得到较好保障的情况下，农村新能源汽车的潜在需求才会转化为更大的消费需求和真正的购买行为。”</p>
+<p>“《指导意见》提出的积极推动在县级城市城区建设公共直流快充站是个亮点。”刘自敏表示，农村地区的人口密度不同于城市，在物流或资金流相对密集的区域去布局充电基础设施，能够起到有效推动城镇化发展和经济聚集的作用。</p>
  
       <!-- reward -->
       
@@ -501,7 +681,7 @@
 
     
     <article
-  id="post-新能源并网"
+  id="post-k8s监控指标及原因"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -512,8 +692,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/05/25/%E6%96%B0%E8%83%BD%E6%BA%90%E5%B9%B6%E7%BD%91/"
-    >新能源并网</a> 
+  <a class="article-title" href="/2023/06/08/k8s%E7%9B%91%E6%8E%A7%E6%8C%87%E6%A0%87%E5%8F%8A%E5%8E%9F%E5%9B%A0/"
+    >k8s监控指标及原因</a> 
 </h2>
  
 
@@ -521,56 +701,53 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2023/05/25/%E6%96%B0%E8%83%BD%E6%BA%90%E5%B9%B6%E7%BD%91/" class="article-date">
-  <time datetime="2023-05-25T08:10:41.000Z" itemprop="datePublished">2023-05-25</time>
+      <a href="/2023/06/08/k8s%E7%9B%91%E6%8E%A7%E6%8C%87%E6%A0%87%E5%8F%8A%E5%8E%9F%E5%9B%A0/" class="article-date">
+  <time datetime="2023-06-08T03:38:25.000Z" itemprop="datePublished">2023-06-08</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
   </div>
    
     </div>
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>作者：严同<br>链接：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/28984074/answer/44625800">https://www.zhihu.com/question/28984074/answer/44625800</a><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
-<p>新能源并网可分为两类：1）大规模集中式并网  2）分布式并网</p>
-<p>大规模集中式并网和分布式并网，在接入电网电压等级，输送容量，对电网的影响等方面，显然是显著不同的，有点类似大超市和小门店的感觉，所以分开来说。</p>
-<p>大规模集中式并网存在哪些问题？对此问题的答复，再次厚颜无耻的引用我的这个回答：千万级的大风电并网都存在什么问题？</p>
-<p>严同的回答主要是调峰和调度的问题，上述答案里有详情，不表。本答复对大规模并网不感兴趣，主要针对分布式并网的问题。</p>
-<p>分布式并网存在哪些问题？我国目前的分布式能源发展非常缓慢，导致很多高渗透率并网才发生的问题一点都没有凸显。当然，和大规模集中式并网类似，调峰和调度问题依然是分布式并网的最主要问题，分布式电源量更多，更细微，更复杂，平台需求更高，对储能的依赖会很高。除此之外，还有以下问题。</p>
-<p>1）双向潮流引起的问题</p>
-<p>传统配电网是单向电流流动，配电网只接收负荷。大量接入分布式光伏发电后，传统辐射状的无源配电网络将变成一个充满中小型电源的有源网络，潮流开始双向流动，这是最根本的问题。</p>
-<p>潮流的变化，对配电网的规划设计、信息采集、运行方式、保护控制等影响很大。就拿保护来说，潮流的改变，一会导致本线路保护的灵敏度降低及拒动(下图2)； 二会导致本线路保护误动； 三会导致相邻线路的保护误动并失去选择性（下图1）； 四会导致重合闸不成功。</p>
-<p>再比如说，分布式新能源故障时贡献的短路电流，现在的配电网没有考虑到，相关的规划设计都没有考虑过，现在并网方案一般也不会算这个，但是这个对配电网的设计是有影响的。</p>
-<p>当然这里也存在一些争论，国际上很多人认为：拿光伏电源逆变器来说，对短路电流贡献不大。</p>
-<p>1999年，IEA-PVPS-Task-5(国际能源署中的光伏技术工作组)在日本曾用4个不同厂家控制电流注入的逆变器连接到一个配电网上的柱式变压器，然后在变压器另一侧进行短路试验。试验表明，短路电流上升不超过故障前的2倍，1-2个周波就隔离了故障。</p>
-<p>2003年，美国的NERL(美国可再生能源国家实验室)曾做过关于分布式发电与配电网络之间的交互影响的研究。采用以逆变器方式接入的分布式电源，仿真原型建立在13.2kV的中压配电网络上，分布式电源的容量是5MW，研究重点是熔断保护特性。结果表明，当发生单相和三相故障时，以逆变器方式接入的分布式电源对短路电流的贡献很小，短路电流主要来自主网。</p>
-<p>但是这是个规模问题，以后如果分布式新能源的渗透率搞了，这些问题应该会很大，网络的构架上就存在问题。</p>
-<p>还有运行控制方面，针对双向潮流引起的复杂的线路保护、有功无功控制，通信等等。</p>
-<p>2）无功和电压问题</p>
-<p>集中供电的配电网一般呈辐射状。稳态运行状态下，电压沿馈线潮流方向逐渐降低。</p>
-<p>接入光伏电源后，由于馈线上的传输功率减少，使沿馈线各负荷节点处的电压被抬高，可能导致一些负荷节点电压偏移超标，其电压被抬高多少与接入光伏电源的位置及总容量大小密切相关。</p>
-<p>对于配电网的电压调整，可以想到的，一是在中低压配电网络中设置有载调压变压器和电压调节器等调压设备，将负荷节点的电压偏移控制在符合规定的范围内；二是合理设置光伏电源的运行方式。</p>
-<p>试想一下，在午间阳光充足时，光伏电源出力通常较大，若线路轻载，光伏电源将明显抬高接入点的电压。如果接入点是在馈电线路的末端，接入点的电压很可能会越过上限，这时就必须合理设置光伏电源的运行方式。</p>
-<p>又比如，由于光伏电源的出力随入射的太阳辐照度而变，可能会造成局部配电线路的电压波动和闪变，若跟负荷改变叠加在一起，将会引起更大的电压波动和闪变。</p>
-<p>还是一句话，目前问题没有凸显，但当大量分布式能源并网后，需要通盘考虑这些系统性问题。</p>
-<p>3）谐波问题</p>
-<p>分布式发电通过电力电子逆变器并网，易产生谐波、三相电压/电流不平衡；输出功率随机性易造成电网电压波动、闪变；分布式电源直接在用户侧接入电网，电能质量问题直接影响用户的电器设备安全。</p>
-<p>这里讨论最主要的谐波问题。</p>
-<p>谐波问题，目前确实是个比较大的问题，它和诸多因素有关，比如分布式光伏逆变器出厂质量、并网点的短路容量和同一中压升压变下并网的分布式电源总量等等。</p>
-<p>但正因为这些因素，都是可以优化完善的，所以在我看来，谐波今后倒不是个十分严重的问题。</p>
-<p>有例为证：</p>
-<p>1998年，IEA-PVPS-Task-5曾经对丹麦的一个80%家庭都安装有光伏电源的住宅区进行测试，发现光伏电源对当地的谐波贡献有限，还不如家用电器造成的谐波多。</p>
-<p>1999年，IEA-PVPS-Task-5曾在日本对多光伏电源接入到同一配电变压器(住宅区柱式变压器)中的谐波进行测试，使用了多个厂家和多个型号的逆变器。测试结果表明，同类型的逆变器(内在电路和控制策略一致)会造成特定次数的谐波叠加，不同类型的逆变器会相互抵消谐波的注入。</p>
-<p>英国也在1999年做过类似的测试，测试结果表明：高次谐波衰减很快，低次谐波的变化情况比较复杂。在强网中谐波畸变一般是个常值，而弱网中的谐波畸变一般随接入的光伏电源逆变器个数增加而加重。当馈电线路阻抗值较大时，可使谐波衰减明显。</p>
-<p>所以，在今后的实际运行中，谐波问题是相对可控的。</p>
-<p>4）孤岛问题</p>
-<p>由于线路故障等原因，断路器QF2或QF3跳开，此时分布式电源DG和负载L就构成了一个孤岛系统。在孤岛系统中，DG脱离电网后继续运行，独立地给负载L供电，称为孤岛运行。由于故障跳闸等偶然原因形成的孤岛运行，称为 非计划孤岛运行。</p>
-<p>非计划的孤岛运行具有偶然性和不确定性，会对系统、用户和DG本身带来不利影响。目前的做法一般比如，英国电力联合会颁布的G59/1（3）对于容量小于5MW、接入电压等级低于20kV的分布式电源接入电网做了技术规定：对于长期并网运行的分布式电源，大于150kVA的都需要配置反孤岛保护。</p>
-<p>这显然是比较简单粗暴的。</p>
-<p>对用户来说，供电的中断却给用户带来不便；对发电商来说，利益受到损害；对电网来说，如果分布式电源在孤岛状态下退出，当电网重合成功或故障消除后恢复供电，原来由DG提供电能的用户全部由电网供电，加重了电网的负担，在某些情况下可能造成电网的不稳定。</p>
-<p>所以必须发展合理的孤岛运行，以及更为合理的并网、离网协调控制机制。</p>
-<p>还有很多其他的次要问题，比如接地、谐振等等，就不多说了。</p>
+  <p>Kubernetes 每天可以生成数百万个新指标。监控集群健康状况最具挑战性的方面之一是筛选哪些指标是重要的，需要收集和关注。</p>
+<p>在本文中，我将定义应该监控和创建警报的 16 个关键 Kubernetes 指标。公司组织的列表可能略有不同，但在制定组织的 Kubernetes 监控策略时，这 16 个是了解k8s集群监控状态最好的指标。</p>
+<p>原文链接：<a target="_blank" rel="noopener" href="https://www.circonus.com/2020/12/12-critical-kubernetes-health-conditions-you-need-to-monitor-and-why/">https://www.circonus.com/2020/12/12-critical-kubernetes-health-conditions-you-need-to-monitor-and-why/</a><br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/439374032">https://zhuanlan.zhihu.com/p/439374032</a></p>
+<h1 id="1、Crash-Loops"><a href="#1、Crash-Loops" class="headerlink" title="1、Crash Loops"></a>1、Crash Loops</h1><p>crash loops是指 pod 启动、崩溃，然后不断尝试重新启动但不能（它在循环中不断崩溃和重新启动）。当发生这种情况时，应用程序将无法运行。</p>
+<p>可能是由 pod 中的应用程序崩溃引起的<br>可能是由 pod 或部署过程中的错误配置引起的<br>当发生crash loops时，需要查看日志来解决问题。<br>可以使用开源组件kube-eventer来推送事件。</p>
+<h1 id="2、CPU-Utilization"><a href="#2、CPU-Utilization" class="headerlink" title="2、CPU Utilization"></a>2、CPU Utilization</h1><p>CPU 使用率就是节点正在使用的 CPU 的使用率。出于两个原因进行监控很重要：</p>
+<p>应用程序不能使用完应用程序分配的cpu。如果应用程序受 CPU 限制，则需要增加 CPU 分配或者增加pod数量。最终需要增加服务器来解决。<br>你不希望你的 CPU 坐在那里闲置。如果服务器 CPU 使用率一直很低，可能过度分配了资源并可能浪费金钱。</p>
+<h1 id="3、Disk-Pressure"><a href="#3、Disk-Pressure" class="headerlink" title="3、Disk Pressure"></a>3、Disk Pressure</h1><p>根据 Kubernetes 配置中设置的阈值，磁盘压力是指示节点使用过多磁盘空间或使用磁盘空间过快的条件。</p>
+<p>如果应用程序合法地需要更多空间，这可能意味着需要添加更多磁盘空间。<br>应用程序行为异常并以意外的方式过早地填满了磁盘。</p>
+<h1 id="4、Memory-Pressure"><a href="#4、Memory-Pressure" class="headerlink" title="4、Memory Pressure"></a>4、Memory Pressure</h1><p>Memory Pressure是另一种资源状况，表明节点内存不足。</p>
+<p>需要注意这种情况，因为这可能意味应用程序中存在内存泄漏。</p>
+<h1 id="5、PID-Pressure"><a href="#5、PID-Pressure" class="headerlink" title="5、PID Pressure"></a>5、PID Pressure</h1><p>PID 压力是一种罕见的情况，即 Pod 或容器产生过多进程并使节点缺乏可用进程 ID。</p>
+<p>每个节点都有有限数量的进程 ID 来分配给正在运行的进程；<br>如果 ID 用完，则无法启动其他进程。<br>Kubernetes 允许为 pod 设置 PID 阈值以限制它们执行失控进程生成的能力，而 PID 压力条件意味着一个或多个 pod 正在用完分配的 PID，需要进行检查。</p>
+<h1 id="6、Network-Unavailable"><a href="#6、Network-Unavailable" class="headerlink" title="6、Network Unavailable"></a>6、Network Unavailable</h1><p>所有节点都需要网络连接，Network Unavailable此状态表明节点的网络连接有问题。</p>
+<p>要么设置不正确（由于路由耗尽或配置错误），要么与硬件的网络连接存在物理问题。<br>可以使用开源组件KubeNurse进行集群网络监控</p>
+<h1 id="7、Job-Failures"><a href="#7、Job-Failures" class="headerlink" title="7、Job Failures"></a>7、Job Failures</h1><p>作业旨在在有限的时间内运行 Pod，并在完成预期功能后将其释放。</p>
+<p>如果作业因节点崩溃或重新启动或资源耗尽而未能成功完成，需要要知道作业失败。<br>通常并不意味着您的应用程序无法访问，但如果不加以修复，它可能会导致以后会出现问题。<br>可以使用开源组件kube-eventer来推送事件。</p>
+<h1 id="8、Persistent-Volume-Failures"><a href="#8、Persistent-Volume-Failures" class="headerlink" title="8、Persistent Volume Failures"></a>8、Persistent Volume Failures</h1><p>持久卷是在集群上指定的存储资源，可用作任何请求它的 Pod 的持久存储。在它们的生命周期中，它们被绑定到一个 Pod，然后在该 Pod 不再需要时回收。</p>
+<p>如果该回收因任何原因失败，需要知道的持久存储有问题。</p>
+<h1 id="9、Pod-Pending-Delays"><a href="#9、Pod-Pending-Delays" class="headerlink" title="9、Pod Pending Delays"></a>9、Pod Pending Delays</h1><p>在 pod 的生命周期中，如果它正在等待在节点上进行调度，则其状态为“pending”。如果它停留在“pending”状态，通常意味着没有足够的资源来安排和部署 pod。</p>
+<p>将需要更新 CPU 和内存分配、删除 Pod 或向集群添加更多节点。<br>可以使用开源组件kube-eventer来推送事件。</p>
+<h1 id="10、Deployment-Glitches"><a href="#10、Deployment-Glitches" class="headerlink" title="10、Deployment Glitches"></a>10、Deployment Glitches</h1><p>Deployment Glitches部署用于管理无状态应用程序——其中 Pod 是可互换的，不需要能够访问任何特定的单个 Pod，而只需访问特定类型的 Pod。</p>
+<p>需要密切关注部署以确保它们正确完成。最好的方法是确保观察到的部署数量与所需的部署数量相匹配。如果不匹配，则一个或多个部署失败。</p>
+<h1 id="11、StatefulSets-Not-Ready"><a href="#11、StatefulSets-Not-Ready" class="headerlink" title="11、StatefulSets Not Ready"></a>11、StatefulSets Not Ready</h1><p>StatefulSets 用于管理有状态的应用程序，其中 Pod 具有特定的角色，需要访问其他特定的 Pod；而不是像部署那样只需要特定类型的 pod。</p>
+<p>确保观察到的 StatefulSet 的数量与所需的 StatefulSet 的数量相匹配。如果不匹配，则一个或多个 StatefulSet 失败。<br>可以使用开源组件kube-eventer来推送事件。</p>
+<h1 id="12、DaemonSets-Not-Ready"><a href="#12、DaemonSets-Not-Ready" class="headerlink" title="12、DaemonSets Not Ready"></a>12、DaemonSets Not Ready</h1><p>DaemonSets 用于管理需要在集群中的所有节点上运行的服务或应用程序。每个节点上运行日志收集守护进程（filebeat）或监控服务，需要使用 DaemonSet。</p>
+<p>确保观察到的 DaemonSet 数量与所需的 DaemonSet 数量相匹配。如果不匹配，则一个或多个 DaemonSet 失败。<br>可以使用开源组件kube-eventer来推送事件。</p>
+<h1 id="13、etcd-Leaders"><a href="#13、etcd-Leaders" class="headerlink" title="13、etcd Leaders"></a>13、etcd Leaders</h1><p>etcd 集群应该总是有一个领导者（除了在改变领导者的过程中，这应该很少发生）。</p>
+<p>etcd_server_has_leader，etcd中是否有leader。<br>leader的改变次数etcd_server_leader_changes_seen_total，则可能表明 etcd 集群中存在连接或资源问题。</p>
+<h1 id="14、Scheduler-Problems"><a href="#14、Scheduler-Problems" class="headerlink" title="14、Scheduler Problems"></a>14、Scheduler Problems</h1><p>调度器有两个方面值得关注。</p>
+<p>应该进行监控，scheduler_schedule_attempts_total{result:unschedulable}因为不可调度 Pod 的增加可能意味着您的集群存在资源问题。<br>其次，应该使用上述延迟指标之一密切关注调度程序延迟。Pod 调度延迟的增加可能会导致其他问题，也可能表明集群中存在资源问题。</p>
+<h1 id="15、Events"><a href="#15、Events" class="headerlink" title="15、Events"></a>15、Events</h1><p>除了从 Kubernetes 集群收集数字指标之外，从集群收集和跟踪事件也很有用。集群事件能监控 pod 生命周期并观察重大的 pod 故障，并且观察从集群流出的事件速率可以是一个很好的早期预警指标。如果事件发生率突然或显着变化，则可能表明出现问题。</p>
+<p>可以使用开源组件kube-eventer来推送事件。</p>
+<h1 id="16、Application-Metrics"><a href="#16、Application-Metrics" class="headerlink" title="16、Application Metrics"></a>16、Application Metrics</h1><p>与我们上面检查的其他指标和事件不同，应用程序指标不是从 Kubernetes 本身发出的，而是从集群运行的工作负载发出的。从应用程序的角度来看，这种遥测可以是重要的任何内容：错误响应、请求延迟、处理时间等。关于如何收集应用程序指标有两种哲学。</p>
+<p>第一个（直到最近才被广泛采用）是指标应该从应用程序“推送”到收集端点。<br>第二个指标收集理念（越来越广泛采用）是指标应该由收集代理从应用程序中“拉取”。这使得应用程序更容易编写，因为他们所要做的就是适当地发布他们的指标，但应用程序不必担心如何提取或抓取这些指标。这就是 OpenMetrics 的工作方式，也是收集 Kubernetes 集群指标的方式。当此技术与收集代理的服务发现相结合时，它创建了一种强大的方法，可以从集群应用程序中收集您需要的任何类型的指标。</p>
+<h1 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h1><p>与 Kubernetes 的大多数方面一样，监控 Kubernetes 运行状况可能是一个复杂且具有挑战性的过程。很容易不知所措。通过了解最需要关注的高价值的指标，至少可以开始制定一项策略，能够过滤掉集群产生的大量数据噪音，并更有信心解决最重要的问题，以确保良好的体验。</p>
  
       <!-- reward -->
       
@@ -581,84 +758,7 @@
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%94%B5%E5%8A%9B/" rel="tag">电力</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-发生了人员爬到电塔的情况下，高压电塔能否紧急断电？"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/05/24/%E5%8F%91%E7%94%9F%E4%BA%86%E4%BA%BA%E5%91%98%E7%88%AC%E5%88%B0%E7%94%B5%E5%A1%94%E7%9A%84%E6%83%85%E5%86%B5%E4%B8%8B%EF%BC%8C%E9%AB%98%E5%8E%8B%E7%94%B5%E5%A1%94%E8%83%BD%E5%90%A6%E7%B4%A7%E6%80%A5%E6%96%AD%E7%94%B5%EF%BC%9F/"
-    >发生了人员爬到电塔的情况下，高压电塔能否紧急断电？</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/05/24/%E5%8F%91%E7%94%9F%E4%BA%86%E4%BA%BA%E5%91%98%E7%88%AC%E5%88%B0%E7%94%B5%E5%A1%94%E7%9A%84%E6%83%85%E5%86%B5%E4%B8%8B%EF%BC%8C%E9%AB%98%E5%8E%8B%E7%94%B5%E5%A1%94%E8%83%BD%E5%90%A6%E7%B4%A7%E6%80%A5%E6%96%AD%E7%94%B5%EF%BC%9F/" class="article-date">
-  <time datetime="2023-05-24T07:43:28.000Z" itemprop="datePublished">2023-05-24</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>作者：彭师<br>链接：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/27403155/answer/37453506">https://www.zhihu.com/question/27403155/answer/37453506</a><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
-<p>好激动，知乎首次上百答案，终于有机会划横线了</p>
-<hr>
-<p>答案不补充了，看很多评论对供电可靠性感兴趣的，就在这里简单介绍下了</p>
-<p>电力系统里面有个专业，是搞供电可靠性的，诸如停电范围，停电时间，都是有很多标准和要求的，回到这个问题，停电会不会造成医院抢救的病人没电手术呢？</p>
-<p>答案是基本不会。</p>
-<p>一般的综合性大型医院，在用电电源上，都是按一级或特级用户供电的，基本要求就是由供电局供电的电源是从两个不同的变电站（不同地理位置）来给的，同时，要求医院内部有自备的发电机及UPS。所以，当有人跳塔时，调度首先时评估，这条线路所供的线路有没有重要用户，如医院/电台/钢铁厂等，如果有，有没有按要求配置双电源，如果有，另一回线路能否保证不间断供电，可以了才能停这一回电的，同时，停电的时候，就要通知医院内部电工，后备电源进行启动切换。对于手术的医生来说，这些都是不知道的，因为所有的切换都是在不停电的前提下进行的。</p>
-<p>当然了，什么都有意外，要是这条自杀的线路上重要用户没有按要求进行双电源或者内部的UPS无法切换，调度在下令拉闸停电时，实际上就处在“电车悖论”里，是用一个大概率的可能性停电去救一个小概率不值得救的人，还是用一个小概率的停电导致大概率的大范围停电呢？所以说，调度此刻的心理压力很大的，他下令停电时，甚至都没看到现场。</p>
-<hr>
-<p>看了新闻，说一下感想：</p>
-<p>不作不会死。</p>
-<p>当从技术方面分析下，如果不是自杀，而是一个10岁小孩，爬到了铁塔上，他的风险有多大？</p>
-<p>1、新闻里是110kV的铁塔，同塔双回，也就是说，塔上有6条线路是带110kV高压电的，而110kV的安全距离是1.5m，也就是说在线路1.5m范围内，都是可能放电的，所以，要穿过那么多的线路不被放电，是非常难和小概率的一件事。</p>
-<p>2、保护动作的前提是有短路情况，也就是说，除非已经发生放电、短路，而且要达到一定的限值，才能跳闸的，所以，等保护跳的时候，一般是很惨的接地了，金属都会融化的。</p>
-<p>3、作为电力企业，其实首先是保证人的生命安全，不论是电力人员还是非电力的，所以，请不要误解供电企业不停电是怕停电造成的影响，在任何影响前提下，人的生命都是最重要的。</p>
-<p>4、一般的110kV线路，在使用中大部分是配网输电用的，也有用于大型企业供电，但大型企业供电的110kV线路，一般都是双回线供电，停一条线路是没问题的，另外一条有充足的余量，如果是重要线路设计时就没考虑停电因素，没考虑备供，那不止要怕人自杀了，还要防止老天打雷不劈这条线。</p>
-<p>5、之所以没有现场停电，原因其实很简单，围观和警察都没办法准确描述需要停电的线路，如果现场有一名从事线路运行的电力员工，一个电话给调度，调度是可以准确评估停电影响范围和造成的后果，并在允许的情况下通知停电的，但是，这个时间最快，也要3-5分钟。</p>
-<p>电工甲：调度啊，110kV作四线3号铁塔上有人爬上去了，申请紧急停电避险。<br>调度乙：我看看，这条线供城区啊，负荷不重，还有不作线供电，可以停电。<br>调度丙：小丁，有事故，紧急停电作四线。<br>电站戊：老己，调度通知停电，准备操作。<br>电站己：操作完成，可以汇报调度。</p>
-<p>至少5个人，时间么，你可以想象。</p>
-<p>6、但最关键的还有一点，由于城市空间和建设的原因，上述说的那个保证供电安全的双回线路，很多情况下其实就是同一个铁塔架设的，那么，问题来了，停哪回？</p>
-<p>假设新闻中的就是一个电源的两回线：</p>
-<p>电工甲：调度啊，110kV作四线3号铁塔上有人爬上去了，申请紧急停电避险。<br>调度乙：不行啊，作四线和不作线都在这个铁塔上，停一回没问题，要是停下来，他一个不小心跑到不作线上，那就全站失压事故了，好几万户居民停电啊，老甲啊，能不能确定停哪回啊？<br>电工甲：刚才在不作这边，现在在作四那边。。。</p>
-<p>7、就算停下来了，感应电还是会发生触电的，就算触电没死，但是从高处坠落还是不可避免的，其实铁塔作业，最大的风险还是高度，那么高的地方，铁塔是有晃动的，就算是那个地方来个静电，一样会自由落体，所以，只能说电力员工就算尽力，也不一定能挽救一个爬那么高没安全措施的人。</p>
-<p>最后还是做个广告，发现这样的情况，请报警，并打95598给供电部门，告诉你能观察到的情况，最好是有铁塔底座上的编号标识，专业部门会评估电网风险的。不要以为别人作死就觉得是应得的。</p>
-<p>希望还是要有的，万一实现了呢，万家灯火。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%B4%A7%E6%80%A5%E6%96%AD%E7%94%B5/" rel="tag">紧急断电</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%80%A7%E8%83%BD/" rel="tag">服务器性能</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%9B%91%E6%8E%A7%E6%8C%87%E6%A0%87/" rel="tag">监控指标</a></li></ul>
 
     </footer>
   </div>
@@ -674,7 +774,7 @@
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/16/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="page-number" href="/page/16/">16</a><span class="page-number current">17</span><a class="page-number" href="/page/18/">18</a><a class="page-number" href="/page/19/">19</a><span class="space">&hellip;</span><a class="page-number" href="/page/40/">40</a><a class="extend next" rel="next" href="/page/18/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/16/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="page-number" href="/page/16/">16</a><span class="page-number current">17</span><a class="page-number" href="/page/18/">18</a><a class="page-number" href="/page/19/">19</a><span class="space">&hellip;</span><a class="page-number" href="/page/42/">42</a><a class="extend next" rel="next" href="/page/18/">下一页</a>
   </nav>
   
 </section>

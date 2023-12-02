@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+       
+      <meta name="keywords" content="RS,GPS,GIS,QGIS,Opticks,QT,OpenCV,OSG" />
+       
+      <meta name="description" content="地理信息系统，遥感科学，卫星导航定位技术综合研究。" />
+      
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title> 帕拉丁的游鱼</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/favicon.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    <link rel="alternate" href="/atom.xml" title="帕拉丁的游鱼" type="application/atom+xml">
+</head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      
+<section class="cover">
+    
+  <div class="cover-frame">
+    <div class="bg-box">
+      <img src="/images/cover1.jpg" alt="image frame" />
+    </div>
+    <div class="cover-inner text-center text-white">
+      <h1><a href="/">帕拉丁的游鱼</a></h1>
+      <div id="subtitle-box">
+        
+        <span id="subtitle"></span>
+        
+      </div>
+      <div>
+        
+      </div>
+    </div>
+  </div>
+  <div class="cover-learn-more">
+    <a href="javascript:void(0)" class="anchor"><i class="ri-arrow-down-line"></i></a>
+  </div>
+</section>
+
+
+
+<script src="https://cdn.staticfile.org/typed.js/2.0.12/typed.min.js"></script>
+
+
+<!-- Subtitle -->
+
+  <script>
+    try {
+      var typed = new Typed("#subtitle", {
+        strings: ['面朝大海，春暖花开', '愿你一生努力，一生被爱', '想要的都拥有，得不到的都释怀'],
+        startDelay: 0,
+        typeSpeed: 200,
+        loop: true,
+        backSpeed: 100,
+        showCursor: true
+      });
+    } catch (err) {
+      console.log(err)
+    }
+  </script>
+  
+<div id="main">
+  <section class="outer">
+  
+  
+  
+
+<div class="notice" style="margin-top:50px">
+    <i class="ri-heart-fill"></i>
+    <div class="notice-content" id="broad"></div>
+</div>
+<script type="text/javascript">
+    fetch('https://v1.hitokoto.cn')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("broad").innerHTML = data.hitokoto;
+        })
+        .catch(console.error)
+</script>
+
+<style>
+    .notice {
+        padding: 20px;
+        border: 1px dashed #e6e6e6;
+        color: #969696;
+        position: relative;
+        display: inline-block;
+        width: 100%;
+        background: #fbfbfb50;
+        border-radius: 10px;
+    }
+
+    .notice i {
+        float: left;
+        color: #999;
+        font-size: 16px;
+        padding-right: 10px;
+        vertical-align: middle;
+        margin-top: -2px;
+    }
+
+    .notice-content {
+        display: initial;
+        vertical-align: middle;
+    }
+</style>
+  
+  <article class="articles">
+    
+    
+    
+    
+    <article
+  id="post-QGIS二次开发：QGIS3-28-0编译"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/02/05/QGIS%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91%EF%BC%9AQGIS3-28-0%E7%BC%96%E8%AF%91/"
+    >QGIS二次开发：QGIS3.28.0编译</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/02/05/QGIS%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91%EF%BC%9AQGIS3-28-0%E7%BC%96%E8%AF%91/" class="article-date">
+  <time datetime="2023-02-05T08:02:08.000Z" itemprop="datePublished">2023-02-05</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>qgis二次编译的方式越来越简单，下面是最新的编译配置步骤：</p>
+<p>环境要求：</p>
+<ul>
+<li>Visual Studio 2022</li>
+<li>cmake-3.22.6-windows-x86_64</li>
+<li>cygwin</li>
+</ul>
+<p>1、新建一个批处理文件OSGeo4W-dev-2022.bat，内容如下，qgis路径请调整为本机真实路径。</p>
+<pre><code>@echo off
+call E:\QGIS\3.28.0\qgis-3.28.0\qgis\ms-windows\osgeo4w\msvc-env-2022.bat x86_64
+@cmd
+</code></pre>
+<p>2、复制一份ms-windows\osgeo4w\msvc-env.bat，重命名为msvc-env-2022.bat。对其修改如下：</p>
+<p><img src="https://c2.im5i.com/2023/02/05/nfV95.png" alt="msvc-env-2022.bat修改内容"></p>
+<p>3、运行OSGeo4W-dev-2022.bat，命令行调用cmake-gui.exe，配置如下：</p>
+<p><img src="https://c2.im5i.com/2023/02/05/nfK1G.png" alt="cmake依赖配置"></p>
+<p>4、configure，generate，得到vs的工程文件。即可开始编译。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CMAKE/" rel="tag">CMAKE</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/QGIS/" rel="tag">QGIS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BE%9D%E8%B5%96%E9%85%8D%E7%BD%AE/" rel="tag">依赖配置</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-QGIS二次开发：打开POSTGIS图层"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/02/04/QGIS%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91%EF%BC%9A%E6%89%93%E5%BC%80POSTGIS%E5%9B%BE%E5%B1%82/"
+    >QGIS二次开发：打开POSTGIS图层</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/02/04/QGIS%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91%EF%BC%9A%E6%89%93%E5%BC%80POSTGIS%E5%9B%BE%E5%B1%82/" class="article-date">
+  <time datetime="2023-02-04T13:51:13.000Z" itemprop="datePublished">2023-02-04</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>核心代码如下：</p>
+<pre><code>QString service = QStringLiteral(&quot;&quot;);
+QString host = QStringLiteral(&quot;localhost&quot;);
+QString port = QStringLiteral(&quot;5432&quot;);
+QString database = QStringLiteral(&quot;postgis_25_sample&quot;);
+
+bool useEstimatedMetadata = false;
+QgsDataSourceUri::SslMode sslmode = QgsDataSourceUri::SslMode::SslDisable;
+
+QString username = QStringLiteral(&quot;postgres&quot;);
+QString password = QStringLiteral(&quot;geostar&quot;);
+QString authcfg = QStringLiteral(&quot;&quot;);
+
+QgsDataSourceUri uri;
+uri.setConnection(host, port, database, username, password, sslmode, authcfg);
+
+QString schema = QStringLiteral(&quot;china&quot;);
+QString tablename = QStringLiteral(&quot;bou2_4p&quot;);
+QString geometrycol = QStringLiteral(&quot;geom&quot;);
+
+uri.setDataSource(schema, tablename, geometrycol);
+
+QgsVectorLayer::LayerOptions options;
+options.loadDefaultStyle = false;
+
+QgsVectorLayer *vectorLayer = new QgsVectorLayer(uri.uri(false), uri.table(), &quot;postgres&quot;, options);
+QgsProject::instance()-&gt;addMapLayer(vectorLayer);
+m_layers.append(vectorLayer);
+
+m_mapCanvas-&gt;setLayers(m_layers);
+m_mapCanvas-&gt;setVisible(true);
+m_mapCanvas-&gt;zoomToFullExtent();
+m_mapCanvas-&gt;freeze(false);
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/POSTGIS/" rel="tag">POSTGIS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/QGIS/" rel="tag">QGIS</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-QGIS二次开发：依赖下载配置"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/02/03/QGIS%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91%EF%BC%9A%E4%BE%9D%E8%B5%96%E4%B8%8B%E8%BD%BD%E9%85%8D%E7%BD%AE/"
+    >QGIS二次开发：依赖下载配置</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/02/03/QGIS%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91%EF%BC%9A%E4%BE%9D%E8%B5%96%E4%B8%8B%E8%BD%BD%E9%85%8D%E7%BD%AE/" class="article-date">
+  <time datetime="2023-02-03T13:40:35.000Z" itemprop="datePublished">2023-02-03</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>QGIS已经升级到3.6了，每次从源码编译开始做起，生成自己的二次开发包，是件很痛苦的事情。有没有其他更便捷的方式呢？</p>
+<p>其实是有的，那就是用osgeo4w-setup-x86_64.exe这样的工具直接下载QGIS项目团队提供好的二次开发包。</p>
+<p>根据个人实践，推荐使用该种方案：qgis+gdal+grass。</p>
+<h1 id="1、qgis"><a href="#1、qgis" class="headerlink" title="1、qgis"></a>1、qgis</h1><p><img src="https://c2.im5i.com/2023/02/03/nqaQ8.png" alt="qgis"></p>
+<h1 id="2、gdal"><a href="#2、gdal" class="headerlink" title="2、gdal"></a>2、gdal</h1><p><img src="https://c2.im5i.com/2023/02/03/nq4BU.png" alt="gdal-part-1"></p>
+<p><img src="https://c2.im5i.com/2023/02/03/nqzb5.png" alt="gdal-part-2"></p>
+<h1 id="3、grass"><a href="#3、grass" class="headerlink" title="3、grass"></a>3、grass</h1><p><img src="https://c2.im5i.com/2023/02/03/nq0m6.png" alt="grass"></p>
+<p>下载后，也可以基于此方案对QGIS进行编译，形成自己的二次开发包，或对QGIS进行深入的学习研究。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/QGIS/" rel="tag">QGIS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BE%9D%E8%B5%96%E9%85%8D%E7%BD%AE/" rel="tag">依赖配置</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-QGIS二次开发：QGIS3-0-2编译"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/02/02/QGIS%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91%EF%BC%9AQGIS3-0-2%E7%BC%96%E8%AF%91/"
+    >QGIS二次开发：QGIS3.0.2编译</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/02/02/QGIS%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91%EF%BC%9AQGIS3-0-2%E7%BC%96%E8%AF%91/" class="article-date">
+  <time datetime="2023-02-02T14:26:48.000Z" itemprop="datePublished">2023-02-02</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>这也是很久以前整理的一个技术资料，在这里翻出来，作为存档。</p>
+<h1 id="1、下载源码"><a href="#1、下载源码" class="headerlink" title="1、下载源码"></a>1、下载源码</h1><p><a target="_blank" rel="noopener" href="https://qgis.org/downloads/qgis-3.2.2.tar.bz2">https://qgis.org/downloads/qgis-3.2.2.tar.bz2</a></p>
+<h1 id="2、开发环境和依赖库"><a href="#2、开发环境和依赖库" class="headerlink" title="2、开发环境和依赖库"></a>2、开发环境和依赖库</h1><p>解压代码，查看INSTALL，根据4.1. Building with Microsoft Visual Studio中的说明准备开发环境和依赖库。</p>
+<h2 id="2-1开发环境"><a href="#2-1开发环境" class="headerlink" title="2.1开发环境"></a>2.1开发环境</h2><p>安装如下软件</p>
+<pre><code>VS2015：社区版、专业版、旗舰版都可以
+QT：选择msvc2015 32bit
+http://download.qt.io/official_releases/qt/5.11/5.11.2/qt-opensource-windows-x86-5.9.2.exe
+qt-vsaddin：http://download.qt.io/official_releases/vsaddin/qt-vsaddin-msvc2015-2.2.1.vsix
+CMake ：https://cmake.org/files/v3.7/cmake-3.7.2-win64-x64.msi
+win_flex_bison-latest.zip ：https://sourceforge.net/projects/winflexbison/files/win_flex_bison-2.4.12.zip/download
+OSGeo4W：http://download.osgeo.org/osgeo4w/osgeo4w-setup-x86.exe
+Ninja：https://github.com/ninja-build/ninja/releases/download/v1.7.2/ninja-win.zip
+Python：https://www.python.org/ftp/python/3.6.0/python-3.6.0.exe
+</code></pre>
+<h2 id="2-2依赖库"><a href="#2-2依赖库" class="headerlink" title="2.2依赖库"></a>2.2依赖库</h2><p>点击osgeo4w，选择下载qgis-rel-deps。假定安装目录是E:\OpenSource\QGIS\qgis-rel-deps</p>
+<h2 id="2-3调整配置"><a href="#2-3调整配置" class="headerlink" title="2.3调整配置"></a>2.3调整配置</h2><p>（1）VS2015→qt vs tool→Qt Options→Qt versions，配置msvc2015.<br>（2）安装pyqt5，打开cmd<br>pip install PyQt5==5.9.2<br>（3）环境变量增加E:\QGIS\qgis-3.0.2-deps\apps\Python36，或者安装Python时选择设置环境变量。</p>
+<h1 id="3、CMAKE"><a href="#3、CMAKE" class="headerlink" title="3、CMAKE"></a>3、CMAKE</h1><h2 id="3-1批处理文件"><a href="#3-1批处理文件" class="headerlink" title="3.1批处理文件"></a>3.1批处理文件</h2><p>创建一个bat批处理文件，下述内容根据实际情况修改，</p>
+<pre><code>@echo off
+set OSGEO4W_ROOT=E:\OpenSource\QGIS\qgis-rel-deps
+call “%OSGEO4W_ROOT%\bin\o4w_env.bat”
+call “%OSGEO4W_ROOT%\bin\py3_env.bat”
+call “%OSGEO4W_ROOT%\bin\qt5_env.bat”
+
+set O4W_ROOT=%OSGEO4W_ROOT:\=/%
+set LIB_DIR=%O4W_ROOT%
+
+call “C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat” x86
+path %path%;C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin
+
+path %PATH%;E:\BaseTools\cmake-3.7.2-win32-x86\bin;
+
+@set GRASS_PREFIX=E:/QGIS/qgis-3.0.2-deps/apps/grass/grass-7.4.0
+@set INCLUDE=%INCLUDE%;%OSGEO4W_ROOT%\include
+@set LIB=%LIB%;%OSGEO4W_ROOT%\lib;%OSGEO4W_ROOT%\lib
+
+set LIB=%LIB%;%OSGEO4W_ROOT%\apps\Qt5\lib;%OSGEO4W_ROOT%\lib
+set INCLUDE=%INCLUDE%;%OSGEO4W_ROOT%\apps\Qt5\include;%OSGEO4W_ROOT%\include
+
+@cmd
+</code></pre>
+<h2 id="3-2运行cmake-gui"><a href="#3-2运行cmake-gui" class="headerlink" title="3.2运行cmake-gui"></a>3.2运行cmake-gui</h2><p>启动VS2015的x86命令行工具，运行cmake-gui，点configure，根据提示修改依赖库的路径。注意：建议不要勾选下图中蓝色方框标志项目，涉及测试程序的代码覆盖率的工具，配置较繁琐。<br>多次configure后，generate得到工程文件。</p>
+<p><img src="https://c2.im5i.com/2023/02/03/nqni3.png" alt="QGIS编译配置" title="QGIS编译配置"></p>
+<h1 id="4、编译"><a href="#4、编译" class="headerlink" title="4、编译"></a>4、编译</h1><p>编译的时候，会出现很多该类错误<br>warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失<br>解决办法：</p>
+<ul>
+<li>4.1点击错误提示，打开报错的文件。</li>
+<li>4.2用鼠标左键单击一下该报错文件位于编辑区的文件标签卡：</li>
+<li>4.3点“文件”–&gt;“高级保存”</li>
+<li>4.4根据错误提示，选择正确的格式保存。</li>
+</ul>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CMAKE/" rel="tag">CMAKE</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/QGIS/" rel="tag">QGIS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BE%9D%E8%B5%96%E9%85%8D%E7%BD%AE/" rel="tag">依赖配置</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-Opticks依赖库的手动下载"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/02/02/Opticks%E4%BE%9D%E8%B5%96%E5%BA%93%E7%9A%84%E6%89%8B%E5%8A%A8%E4%B8%8B%E8%BD%BD/"
+    >Opticks依赖库的手动下载</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/02/02/Opticks%E4%BE%9D%E8%B5%96%E5%BA%93%E7%9A%84%E6%89%8B%E5%8A%A8%E4%B8%8B%E8%BD%BD/" class="article-date">
+  <time datetime="2023-02-02T13:58:35.000Z" itemprop="datePublished">2023-02-02</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>这是很久以前整理的一个技术资料，估计接触的人不多了。在这里翻出来，作为存档。</p>
+<p>下载Opticks的代码编译，如果用其自带的retrieve-dependencies.bat下载依赖库，提示缺少模块。</p>
+<p>可以采用下面的方式，手动下载整理依赖库。</p>
+<p>一、找到如下配置文件：</p>
+<p><a target="_blank" rel="noopener" href="https://opticks.org/downloads/ivy-repo/opticks/opticks-deps/4.12.0/opticks-deps-ivy.xml">https://opticks.org/downloads/ivy-repo/opticks/opticks-deps/4.12.0/opticks-deps-ivy.xml</a></p>
+<p>打开文件，查看如下内容：</p>
+<pre><code>&lt;dependency org=&quot;opticks&quot; name=&quot;boost&quot; rev=&quot;1.0.2″/&gt;
+&lt;dependency org=&quot;opticks&quot; name=&quot;boost-binaries&quot; rev=&quot;1.0.2″/&gt;
+&lt;dependency org=&quot;opticks&quot; name=&quot;cfitsio&quot; rev=&quot;1.0.0″/&gt;
+&lt;dependency org=&quot;opticks&quot; name=&quot;cg&quot; rev=&quot;1.0.0″/&gt;
+&lt;dependency org=&quot;opticks&quot; name=&quot;curl&quot; rev=&quot;1.0.1″/&gt;
+&lt;dependency org=&quot;opticks&quot; name=&quot;doxygen&quot; rev=&quot;1.0.0″/&gt;
+&lt;dependency org=&quot;opticks&quot; name=&quot;ehs&quot; rev=&quot;1.0.6″/&gt;
+&lt;dependency org=&quot;opticks&quot; name=&quot;expat&quot; rev=&quot;1.0.0″/&gt;
+&lt;dependency org=&quot;opticks&quot; name=&quot;ffmpeg&quot; rev=&quot;1.0.3″/&gt;
+&lt;dependency org=&quot;opticks&quot; name=&quot;gdal&quot; rev=&quot;1.0.2″/&gt;
+&lt;dependency org=&quot;opticks&quot; name=&quot;glew&quot; rev=&quot;1.1.0″/&gt;
+&lt;dependency org=&quot;opticks&quot; name=&quot;graphviz&quot; rev=&quot;1.0.1″/&gt;
+&lt;dependency org=&quot;opticks&quot; name=&quot;hdf4″ rev=&quot;1.0.1″/&gt;
+&lt;dependency org=&quot;opticks&quot; name=&quot;hdf5″ rev=&quot;1.1.0″/&gt;
+&lt;dependency org=&quot;opticks&quot; name=&quot;jpeg&quot; rev=&quot;1.0.0″/&gt;
+&lt;dependency org=&quot;opticks&quot; name=&quot;libgeotiff&quot; rev=&quot;1.0.1″/&gt;
+&lt;dependency org=&quot;opticks&quot; name=&quot;liblas&quot; rev=&quot;1.0.2″/&gt;
+&lt;dependency org=&quot;opticks&quot; name=&quot;libproj&quot; rev=&quot;1.0.1″/&gt;
+&lt;dependency org=&quot;opticks&quot; name=&quot;libtiff&quot; rev=&quot;1.0.1″/&gt;
+&lt;dependency org=&quot;opticks&quot; name=&quot;minizip&quot; rev=&quot;1.0.1″/&gt;
+&lt;dependency org=&quot;opticks&quot; name=&quot;opencollada&quot; rev=&quot;1.0.3″/&gt;
+&lt;dependency org=&quot;opticks&quot; name=&quot;opencv&quot; rev=&quot;1.0.1″/&gt;
+&lt;dependency org=&quot;opticks&quot; name=&quot;openjpeg&quot; rev=&quot;1.0.4″/&gt;
+&lt;dependency org=&quot;opticks&quot; name=&quot;ossim&quot; rev=&quot;1.0.4″/&gt;
+&lt;dependency org=&quot;opticks&quot; name=&quot;pcre&quot; rev=&quot;1.0.2″/&gt;
+&lt;dependency org=&quot;opticks&quot; name=&quot;pthreads&quot; rev=&quot;1.0.0″/&gt;
+&lt;dependency org=&quot;opticks&quot; name=&quot;qt&quot; rev=&quot;1.0.2″/&gt;
+&lt;dependency org=&quot;opticks&quot; name=&quot;qwt&quot; rev=&quot;1.0.2″/&gt;
+&lt;dependency org=&quot;opticks&quot; name=&quot;raptor&quot; rev=&quot;1.0.1″/&gt;
+&lt;dependency org=&quot;opticks&quot; name=&quot;shapelib&quot; rev=&quot;1.0.1″/&gt;
+&lt;dependency org=&quot;opticks&quot; name=&quot;szip&quot; rev=&quot;1.0.1″/&gt;
+&lt;dependency org=&quot;opticks&quot; name=&quot;tbb&quot; rev=&quot;1.0.1″/&gt;
+&lt;dependency org=&quot;opticks&quot; name=&quot;xerces&quot; rev=&quot;1.0.1″/&gt;
+&lt;dependency org=&quot;opticks&quot; name=&quot;xqilla&quot; rev=&quot;1.0.2″/&gt;
+&lt;dependency org=&quot;opticks&quot; name=&quot;yaml-cpp&quot; rev=&quot;1.0.0″/&gt;
+&lt;dependency org=&quot;opticks&quot; name=&quot;zlib&quot; rev=&quot;1.0.0″/&gt;
+</code></pre>
+<p>这些就是opticks编译所需的依赖库，这些依赖库的地址在如下地址可以找到</p>
+<pre><code>https://opticks.org/downloads/ivy-repo/opticks/
+</code></pre>
+<p>二、把配置文件里的依赖库名称和版本号加上上面这个地址，组合出所有依赖库的下载路径如下：</p>
+<pre><code>https://opticks.org/downloads/ivy-repo/opticks/boost/1.0.2/
+https://opticks.org/downloads/ivy-repo/opticks/boost-binaries/1.0.2/
+https://opticks.org/downloads/ivy-repo/opticks/cfitsio/1.0.0/
+https://opticks.org/downloads/ivy-repo/opticks/cg/1.0.0/
+https://opticks.org/downloads/ivy-repo/opticks/curl/1.0.1/
+https://opticks.org/downloads/ivy-repo/opticks/doxygen/1.0.0/
+https://opticks.org/downloads/ivy-repo/opticks/ehs/1.0.6/
+https://opticks.org/downloads/ivy-repo/opticks/expat/1.0.0/
+https://opticks.org/downloads/ivy-repo/opticks/ffmpeg/1.0.3/
+https://opticks.org/downloads/ivy-repo/opticks/gdal/1.0.2/
+https://opticks.org/downloads/ivy-repo/opticks/glew/1.1.0/
+https://opticks.org/downloads/ivy-repo/opticks/graphviz/1.0.1/
+https://opticks.org/downloads/ivy-repo/opticks/hdf4/1.0.1/
+https://opticks.org/downloads/ivy-repo/opticks/hdf5/1.1.0/
+https://opticks.org/downloads/ivy-repo/opticks/jpeg/1.0.0/
+https://opticks.org/downloads/ivy-repo/opticks/libgeotiff/1.0.1/
+https://opticks.org/downloads/ivy-repo/opticks/liblas/1.0.2/
+https://opticks.org/downloads/ivy-repo/opticks/libproj/1.0.1/
+https://opticks.org/downloads/ivy-repo/opticks/libtiff/1.0.1/
+https://opticks.org/downloads/ivy-repo/opticks/minizip/1.0.1/
+https://opticks.org/downloads/ivy-repo/opticks/opencollada/1.0.3/
+https://opticks.org/downloads/ivy-repo/opticks/opencv/1.0.1/
+https://opticks.org/downloads/ivy-repo/opticks/openjpeg/1.0.4/
+https://opticks.org/downloads/ivy-repo/opticks/ossim/1.0.4/
+https://opticks.org/downloads/ivy-repo/opticks/pcre/1.0.2/
+https://opticks.org/downloads/ivy-repo/opticks/pthreads/1.0.0/
+https://opticks.org/downloads/ivy-repo/opticks/qt/1.0.2/
+https://opticks.org/downloads/ivy-repo/opticks/qwt/1.0.2/
+https://opticks.org/downloads/ivy-repo/opticks/raptor/1.0.1/
+https://opticks.org/downloads/ivy-repo/opticks/shapelib/1.0.1/
+https://opticks.org/downloads/ivy-repo/opticks/szip/1.0.1/
+https://opticks.org/downloads/ivy-repo/opticks/tbb/1.0.1/
+https://opticks.org/downloads/ivy-repo/opticks/xerces/1.0.1/
+https://opticks.org/downloads/ivy-repo/opticks/xqilla/1.0.2/
+https://opticks.org/downloads/ivy-repo/opticks/yaml-cpp/1.0.0/
+https://opticks.org/downloads/ivy-repo/opticks/zlib/1.0.0/
+</code></pre>
+<p>将上述目录下的文件下载到本地。</p>
+<p>三、本地建一个目录，存放解压后的依赖库，并在系统环境变量中添加一条配置，OPTICKSDEPENDENCIES，指向这个目录。</p>
+<p>四、在这个目录下再建两个文件夹，名称分别为32和64，Win32和x64的内容分别解压到这两个目录，分别形成include，lib和bin三个下一级目录。</p>
+<p>五、接着打开工程Opticks.sln，即可开始编译了。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Opticks/" rel="tag">Opticks</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BE%9D%E8%B5%96%E9%85%8D%E7%BD%AE/" rel="tag">依赖配置</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-兔年大吉，开工大吉"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/02/01/%E5%85%94%E5%B9%B4%E5%A4%A7%E5%90%89%EF%BC%8C%E5%BC%80%E5%B7%A5%E5%A4%A7%E5%90%89/"
+    >兔年大吉，开工大吉</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/02/01/%E5%85%94%E5%B9%B4%E5%A4%A7%E5%90%89%EF%BC%8C%E5%BC%80%E5%B7%A5%E5%A4%A7%E5%90%89/" class="article-date">
+  <time datetime="2023-02-01T11:09:16.000Z" itemprop="datePublished">2023-02-01</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%91%A2%E5%96%83%E7%BB%86%E8%AF%AD/">呢喃细语</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="开篇"><a href="#开篇" class="headerlink" title="开篇"></a>开篇</h1><p>2023年2月1日，新的一个工作年度算是完完全全的开始了。</p>
+<p>过去的2022年，发生了许多事情，但是2022年度本身，可以说是彻彻底底的结束了。</p>
+<p>新的年度既已来到，那就要定下目标，严格执行。</p>
+<h1 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h1><h2 id="1、工作"><a href="#1、工作" class="headerlink" title="1、工作"></a>1、工作</h2><p>找到一份工作，年薪在12W-20W之间，岗位以技术岗为主，程序员或技术经理均可。</p>
+<h2 id="2、技能提升"><a href="#2、技能提升" class="headerlink" title="2、技能提升"></a>2、技能提升</h2><h3 id="2-1-开发能力"><a href="#2-1-开发能力" class="headerlink" title="2.1 开发能力"></a>2.1 开发能力</h3><p>利用B站及各种网络资源，以自学方式，提升以下几种开发语言的开发能力：</p>
+<ul>
+<li><p>C++\QT</p>
+</li>
+<li><p>Java\SpringBoot</p>
+</li>
+<li><p>Vue\Openlayer\leaflet</p>
+</li>
+<li><p>Python</p>
+</li>
+</ul>
+<h3 id="2-2-项目管理能力"><a href="#2-2-项目管理能力" class="headerlink" title="2.2 项目管理能力"></a>2.2 项目管理能力</h3><p>利用B站及各种网络资源，以自学方式，获取以下几种资格证书：</p>
+<ul>
+<li>信息系统项目管理师<br>（切记：时刻关注报名登记消息，不要忘了）</li>
+<li>注册测绘师</li>
+</ul>
+<h3 id="2-3-驾照"><a href="#2-3-驾照" class="headerlink" title="2.3 驾照"></a>2.3 驾照</h3><p>争取上半年通过驾考剩余科目考试，拿到驾照，下半年通过租车方式提升车感及熟练度，能在来年春节期间驾车拜亲访友、郊游出行。</p>
+<h2 id="3、锻炼身体"><a href="#3、锻炼身体" class="headerlink" title="3、锻炼身体"></a>3、锻炼身体</h2><p>参照抖音各类减肥健身视频，工作日以室内锻炼为主，周末外出有氧运动为主，减去大肚囊。</p>
+<h1 id="执行"><a href="#执行" class="headerlink" title="执行"></a>执行</h1><h2 id="做好时间规划"><a href="#做好时间规划" class="headerlink" title="做好时间规划"></a>做好时间规划</h2><h2 id="早睡早起"><a href="#早睡早起" class="headerlink" title="早睡早起"></a>早睡早起</h2><h2 id="每日做好记录"><a href="#每日做好记录" class="headerlink" title="每日做好记录"></a>每日做好记录</h2> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B9%B4%E5%BA%A6%E8%AE%A1%E5%88%92/" rel="tag">年度计划</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%96%B0%E5%B9%B4%E7%A5%9D%E7%A6%8F/" rel="tag">新年祝福</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+  </article>
+  
+
+  
+  <nav class="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/41/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/40/">40</a><a class="page-number" href="/page/41/">41</a><span class="page-number current">42</span>
+  </nav>
+  
+</section>
+</div>
+
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2022-2023
+        <i class="ri-heart-fill heart_icon"></i> paladin1893
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="帕拉丁的游鱼"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/friends">友链</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

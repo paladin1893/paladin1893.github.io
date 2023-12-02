@@ -154,7 +154,7 @@
     
     
     <article
-  id="post-SpringBoot逻辑删除之基本条件"
+  id="post-java读取JSON文件的多种方式"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -165,8 +165,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/03/12/SpringBoot%E9%80%BB%E8%BE%91%E5%88%A0%E9%99%A4%E4%B9%8B%E5%9F%BA%E6%9C%AC%E6%9D%A1%E4%BB%B6/"
-    >springboot逻辑删除之基本条件</a> 
+  <a class="article-title" href="/2023/03/27/java%E8%AF%BB%E5%8F%96JSON%E6%96%87%E4%BB%B6%E7%9A%84%E5%A4%9A%E7%A7%8D%E6%96%B9%E5%BC%8F/"
+    >java读取JSON文件的多种方式</a> 
 </h2>
  
 
@@ -174,8 +174,8 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2023/03/12/SpringBoot%E9%80%BB%E8%BE%91%E5%88%A0%E9%99%A4%E4%B9%8B%E5%9F%BA%E6%9C%AC%E6%9D%A1%E4%BB%B6/" class="article-date">
-  <time datetime="2023-03-12T14:50:22.000Z" itemprop="datePublished">2023-03-12</time>
+      <a href="/2023/03/27/java%E8%AF%BB%E5%8F%96JSON%E6%96%87%E4%BB%B6%E7%9A%84%E5%A4%9A%E7%A7%8D%E6%96%B9%E5%BC%8F/" class="article-date">
+  <time datetime="2023-03-27T15:32:06.000Z" itemprop="datePublished">2023-03-27</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -185,18 +185,105 @@
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>SpringBoot 配置方式：</p>
-<p>application.yml 加入配置(如果你的默认值和mp默认的一样,该配置可无):</p>
-<pre><code>mybatis-plus:
-  global-config:
-    db-config:
-      logic-delete-field: deleted # 全局逻辑删除的实体字段名(since 3.3.0,配置后可以忽略不配置步骤2)
-      logic-delete-value: 1 # 逻辑已删除值(默认为 1)
-      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
+  <p>在开发过程中有时会遇到需要读取本地.json文件的需求，通常会自己写Reader代码去读，但是这么做写出来的代码有些繁琐（需要关流、创建StringBuilder对象等操作）。最近发现几个小工具可以让需求代码变得更加简洁。</p>
+<h1 id="准备："><a href="#准备：" class="headerlink" title="准备："></a>准备：</h1><p>json文件：D:\test.json</p>
+<pre><code>&#123;
+    &quot;ID&quot;: 10001,
+    &quot;detail&quot;: &quot;detail&quot;,
+    &quot;json_format_version&quot;: 1.0,
+    &quot;other_info&quot;: &#123;
+        &quot;array_one&quot;: [
+            [855, 410],
+            [854, 411],
+            [847, 411],
+            [846, 410],
+            [845, 410],
+            [844, 409]
+        ],
+        &quot;array_two&quot;: [
+            [832, 303],
+            [829, 303],
+            [828, 302],
+            [825, 302],
+            [824, 301]
+        ],
+        &quot;array_three&quot;: [
+            [1013, 224],
+            [1012, 225],
+            [1010, 225],
+            [1009, 226],
+            [1023, 224]
+        ],
+        &quot;point&quot;: [853, 310],
+        &quot;boolean&quot;: true
+    &#125;
+&#125;
 </code></pre>
-<p>Postgresql更改字段默认值：</p>
-<pre><code>alter table sys_user ALTER COLUMN deleted set DEFAULT 0; 
+<h1 id="1-使用FileReader读取json文件"><a href="#1-使用FileReader读取json文件" class="headerlink" title="1.使用FileReader读取json文件"></a>1.使用FileReader读取json文件</h1><h2 id="1-1、添加依赖"><a href="#1-1、添加依赖" class="headerlink" title="1.1、添加依赖"></a>1.1、添加依赖</h2><pre><code>&lt;dependencies&gt;
+    &lt;dependency&gt;
+       &lt;groupId&gt;com.alibaba&lt;/groupId&gt;
+       &lt;artifactId&gt;fastjson&lt;/artifactId&gt;
+       &lt;version&gt;2.0.12&lt;/version&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;
 </code></pre>
+<h2 id="1-2源代码"><a href="#1-2源代码" class="headerlink" title="1.2源代码"></a>1.2源代码</h2><p>import com.alibaba.fastjson.JSON;</p>
+<p>import java.io.*;</p>
+<p>public class ReadLocalJsonFileDemo {<br>    publicstatic void main(String[] args) throws IOException {<br>        Filefile = new File(“D:\test.json”);<br>       readerMethod(file);</p>
+<pre><code>&#125;
+
+privatestatic void readerMethod(File file) throws IOException &#123;
+   FileReader fileReader = new FileReader(file);
+    Readerreader = new InputStreamReader(new FileInputStream(file), &quot;Utf-8&quot;);
+    int ch= 0;
+   StringBuffer sb = new StringBuffer();
+    while((ch = reader.read()) != -1) &#123;
+       sb.append((char) ch);
+    &#125;
+   fileReader.close();
+   reader.close();
+    StringjsonStr = sb.toString();
+   System.out.println(JSON.parseObject(jsonStr));
+&#125;
+</code></pre>
+<p>}</p>
+<h2 id="1-3-控制台输出"><a href="#1-3-控制台输出" class="headerlink" title="1.3.控制台输出"></a>1.3.控制台输出</h2><p>{“other_info”:{“array_two”:[[832,303],[829,303],[828,302],[825,302],[824,301]],”array_three”:[[1013,224],[1012,225],[1010,225],[1009,226],[1023,224]],”boolean”:true,”array_one”:[[855,410],[854,411],[847,411],[846,410],[845,410],[844,409]],”point”:[853,310]},”ID”:10001,”detail”:”detail”,”json_format_version”:1.0}</p>
+<h1 id="2-使用jacksonAPI读取json文件"><a href="#2-使用jacksonAPI读取json文件" class="headerlink" title="2.使用jacksonAPI读取json文件"></a>2.使用jacksonAPI读取json文件</h1><h2 id="2-1、添加依赖"><a href="#2-1、添加依赖" class="headerlink" title="2.1、添加依赖"></a>2.1、添加依赖</h2><pre><code>&lt;dependencies&gt;
+    &lt;dependency&gt;
+       &lt;groupId&gt;com.fasterxml.jackson.core&lt;/groupId&gt;
+       &lt;artifactId&gt;jackson-databind&lt;/artifactId&gt;
+       &lt;version&gt;2.13.3&lt;/version&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;
+</code></pre>
+<h2 id="2-2源代码"><a href="#2-2源代码" class="headerlink" title="2.2源代码"></a>2.2源代码</h2><p>import com.fasterxml.jackson.databind.ObjectMapper;</p>
+<p>import java.io.File;<br>import java.io.IOException;<br>import java.util.Map;</p>
+<p>public class ReadLocalJsonFileDemo {<br>    publicstatic void main(String[] args) throws IOException {<br>        Filefile = new File(“D:\test.json”);<br>       jacksonMethod(file);<br>    }</p>
+<pre><code>privatestatic void jacksonMethod(File file) throws IOException &#123;
+   ObjectMapper objectMapper = new ObjectMapper();
+   System.out.println(objectMapper.readValue(file, Map.class));
+&#125;
+</code></pre>
+<p>}</p>
+<h2 id="2-3-控制台输出"><a href="#2-3-控制台输出" class="headerlink" title="2.3.控制台输出"></a>2.3.控制台输出</h2><p>{ID=10001,detail=detail, json_format_version=1.0, other_info={array_one=[[855, 410],[854, 411], [847, 411], [846, 410], [845, 410], [844, 409]], array_two=[[832,303], [829, 303], [828, 302], [825, 302], [824, 301]], array_three=[[1013,224], [1012, 225], [1010, 225], [1009, 226], [1023, 224]], point=[853, 310],boolean=true}}</p>
+<h1 id="3-使用nio读取json文件"><a href="#3-使用nio读取json文件" class="headerlink" title="3.使用nio读取json文件"></a>3.使用nio读取json文件</h1><h2 id="3-1、添加依赖"><a href="#3-1、添加依赖" class="headerlink" title="3.1、添加依赖"></a>3.1、添加依赖</h2><pre><code>&lt;dependencies&gt;
+    &lt;dependency&gt;
+       &lt;groupId&gt;com.alibaba&lt;/groupId&gt;
+       &lt;artifactId&gt;fastjson&lt;/artifactId&gt;
+       &lt;version&gt;2.0.12&lt;/version&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;
+</code></pre>
+<h2 id="3-2源代码"><a href="#3-2源代码" class="headerlink" title="3.2源代码"></a>3.2源代码</h2><p>import com.alibaba.fastjson.JSONObject;</p>
+<p>import java.io.File;<br>import java.io.IOException;<br>import java.nio.file.Files;<br>import java.nio.file.Paths;</p>
+<p>public class ReadLocalJsonFileDemo {<br>    publicstatic void main(String[] args) throws IOException {<br>        Filefile = new File(“D:\test.json”);<br>       nioMethod(file);<br>    }</p>
+<pre><code>privatestatic void nioMethod(File file) throws IOException &#123;
+    StringjsonString = new String(Files.readAllBytes(Paths.get(file.getPath())));
+   System.out.println(JSONObject.parseObject(jsonString));
+&#125;
+</code></pre>
+<p>}</p>
+<h2 id="3-3-控制台输出"><a href="#3-3-控制台输出" class="headerlink" title="3.3.控制台输出"></a>3.3.控制台输出</h2><p>{“other_info”:{“array_two”:[[832,303],[829,303],[828,302],[825,302],[824,301]],”array_three”:[[1013,224],[1012,225],[1010,225],[1009,226],[1023,224]],”boolean”:true,”array_one”:[[855,410],[854,411],[847,411],[846,410],[845,410],[844,409]],”point”:[853,310]},”ID”:10001,”detail”:”detail”,”json_format_version”:1.0}</p>
  
       <!-- reward -->
       
@@ -207,7 +294,7 @@
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SpringBoot/" rel="tag">SpringBoot</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JSON/" rel="tag">JSON</a></li></ul>
 
     </footer>
   </div>
@@ -218,7 +305,7 @@
 
     
     <article
-  id="post-vue正则验证（二）"
+  id="post-maven中quickstart与webapp的区别"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -229,8 +316,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/03/11/vue%E6%AD%A3%E5%88%99%E9%AA%8C%E8%AF%81%EF%BC%88%E4%BA%8C%EF%BC%89/"
-    >vue正则验证（二）</a> 
+  <a class="article-title" href="/2023/03/26/maven%E4%B8%ADquickstart%E4%B8%8Ewebapp%E7%9A%84%E5%8C%BA%E5%88%AB/"
+    >maven中quickstart与webapp的区别</a> 
 </h2>
  
 
@@ -238,8 +325,8 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2023/03/11/vue%E6%AD%A3%E5%88%99%E9%AA%8C%E8%AF%81%EF%BC%88%E4%BA%8C%EF%BC%89/" class="article-date">
-  <time datetime="2023-03-11T11:23:36.000Z" itemprop="datePublished">2023-03-11</time>
+      <a href="/2023/03/26/maven%E4%B8%ADquickstart%E4%B8%8Ewebapp%E7%9A%84%E5%8C%BA%E5%88%AB/" class="article-date">
+  <time datetime="2023-03-26T15:26:19.000Z" itemprop="datePublished">2023-03-26</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -249,316 +336,18 @@
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>验证数字的正则表达式集</p>
-<pre><code>验证数字：^[0-9]*$
-验证n位的数字：^\d&#123;n&#125;$
-验证至少n位数字：^\d&#123;n,&#125;$
-验证m-n位的数字：^\d&#123;m,n&#125;$
-验证零和非零开头的数字：^(0|[1-9][0-9]*)$
-验证有两位小数的正实数：^[0-9]+(.[0-9]&#123;2&#125;)?$
-验证有1-3位小数的正实数：^[0-9]+(.[0-9]&#123;1,3&#125;)?$
-验证非零的正整数：^\+?[1-9][0-9]*$
-验证非零的负整数：^\-[1-9][0-9]*$
-验证非负整数（正整数 + 0） ^\d+$
-验证非正整数（负整数 + 0） ^((-\d+)|(0+))$
-验证长度为3的字符：^.&#123;3&#125;$
-验证由26个英文字母组成的字符串：^[A-Za-z]+$
-验证由26个大写英文字母组成的字符串：^[A-Z]+$
-验证由26个小写英文字母组成的字符串：^[a-z]+$
-验证由数字和26个英文字母组成的字符串：^[A-Za-z0-9]+$
-验证由数字、26个英文字母或者下划线组成的字符串：^\w+$
-验证用户密码:^[a-zA-Z]\w&#123;5,17&#125;$ 正确格式为：以字母开头，长度在6-18之间，只能包含字符、数字和下划线。
-验证是否含有 ^%&amp;&#39;,;=?$\&quot; 等字符：[^%&amp;&#39;,;=?$\x22]+
-验证汉字：^[\u4e00-\u9fa5],&#123;0,&#125;$
-验证Email地址：^\w+[-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$
-验证InternetURL：^http://([\w-]+\.)+[\w-]+(/[\w-./?%&amp;=]*)?$ ；^[a-zA-z]+://(w+(-w+)*)(.(w+(-w+)*))*(?S*)?$
-验证电话号码：^(\(\d&#123;3,4&#125;\)|\d&#123;3,4&#125;-)?\d&#123;7,8&#125;$：--正确格式为：XXXX-XXXXXXX，XXXX-XXXXXXXX，XXX-XXXXXXX，XXX-XXXXXXXX，XXXXXXX，XXXXXXXX。
-验证身份证号（15位或18位数字）：^\d&#123;15&#125;|\d&#123;&#125;18$
-验证一年的12个月：^(0?[1-9]|1[0-2])$ 正确格式为：“01”-“09”和“1”“12”
-验证一个月的31天：^((0?[1-9])|((1|2)[0-9])|30|31)$ 正确格式为：01、09和1、31。
-整数：^-?\d+$
-非负浮点数（正浮点数 + 0）：^\d+(\.\d+)?$
-正浮点数 ^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$
-非正浮点数（负浮点数 + 0） ^((-\d+(\.\d+)?)|(0+(\.0+)?))$
-负浮点数 ^(-(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*)))$
-浮点数 ^(-?\d+)(\.\d+)?$
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/" rel="tag">软件开发</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-vue正则验证（一）"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/03/10/vue%E6%AD%A3%E5%88%99%E9%AA%8C%E8%AF%81%EF%BC%88%E4%B8%80%EF%BC%89/"
-    >vue正则验证（一）</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/03/10/vue%E6%AD%A3%E5%88%99%E9%AA%8C%E8%AF%81%EF%BC%88%E4%B8%80%EF%BC%89/" class="article-date">
-  <time datetime="2023-03-10T11:20:45.000Z" itemprop="datePublished">2023-03-10</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>vue的常用数据验证规则：</p>
-<pre><code>1. 手机号：
-    var validateMobilePhone = (rule, value, callback) =&gt; &#123;
-            if (value === &#39;&#39;) &#123;
-              callback(new Error(&#39;手机号不可为空&#39;));
-            &#125; else &#123;
-              if (value !== &#39;&#39;) &#123; 
-                var reg=/^1[3456789]\d&#123;9&#125;$/;
-                if(!reg.test(value))&#123;
-                  callback(new Error(&#39;请输入有效的手机号码&#39;));
-                &#125;
-              &#125;
-              callback();
-            &#125;
-          &#125;;
-2. 邮箱：
-    var validateEmail = (rule, value, callback) =&gt; &#123;
-            if (value === &#39;&#39;) &#123;
-              callback(new Error(&#39;请正确填写邮箱&#39;));
-            &#125; else &#123;
-              if (value !== &#39;&#39;) &#123; 
-                var reg=/^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
-                if(!reg.test(value))&#123;
-                  callback(new Error(&#39;请输入有效的邮箱&#39;));
-                &#125;
-              &#125;
-              callback();
-            &#125;
-          &#125;;
-3. 密码：
-    var validatePass = (rule, value, callback) =&gt; &#123;
-            if (value === &#39;&#39;) &#123;
-              callback(new Error(&#39;密码格式不正确&#39;));
-            &#125; else if(value.length &lt; 6)&#123;
-              callback(new Error(&#39;密码长度最小6位&#39;));
-            &#125;else&#123;
-              callback();
-            &#125;
-          &#125;;
-4. 固定电话：
-    var validatePhone = (rule, value, callback) =&gt; &#123;
-            if (value === &#39;&#39;) &#123;
-              callback(new Error(&#39;电话不可为空&#39;));
-            &#125; else &#123;
-              if (value !== &#39;&#39;) &#123; 
-                var reg =/^((0\d&#123;2,3&#125;-\d&#123;7,8&#125;)|(1[3584]\d&#123;9&#125;))$/;
-                if(!reg.test(value))&#123;
-                  callback(new Error(&#39;请输入正确的座机号格式为：0000-0000000&#39;));
-                &#125;
-              &#125;
-              callback();
-            &#125;
-          &#125;;
-5. 微信号：
-    var validateWeixin = (rule, value, callback) =&gt; &#123;
-            if (value === &#39;&#39;) &#123;
-              callback(new Error(&#39;微信号不能为空&#39;));
-            &#125;else&#123;
-              var reg= /^[a-zA-Z][a-zA-Z0-9_-]&#123;5,19&#125;$/;
-              if(!reg.test(value))&#123;
-                callback(new Error(&#39;请输入正确的微信号码&#39;));
-              &#125;else&#123;
-                callback();
-              &#125;
-            &#125; 
-          &#125;;
-6. IP地址：
-     var validateIP(rule, value, callback) &#123;
-        if(value &amp;&amp; &quot;...&quot; === value)&#123;
-            callback(new Error(&#39;请输入IP地址&#39;))
-        &#125;if (value &amp;&amp; !(/((25[0-5]|2[0-4]\d|((1\d&#123;2&#125;)|([1-9]?\d)))\.)&#123;3&#125;(25[0-5]|2[0-4]\d|((1\d&#123;2&#125;)|([1-9]?\d)))/).test(value)) &#123;
-          callback(new Error(&#39;IP地址不规范&#39;))
-        &#125; else &#123;
-          callback()
-        &#125;
-      &#125;
-7. 身份证号：
-    var  validateIDCard(rule, value, callback) &#123;
-        if (value &amp;&amp; (!(/\d&#123;17&#125;[\d|x]|\d&#123;15&#125;/).test(value) || (value.length !== 15 &amp;&amp; value.length !== 18))) &#123;
-          callback(new Error(&#39;身份证号码不规范&#39;))
-        &#125; else &#123;
-          callback()
-        &#125;
-      &#125;
-8. 正整数：
-    var validateIntegerP(rule, value, callback) &#123;
-        if (value &amp;&amp; !(/^[1-9]\d*$/).test(value)) &#123;
-          callback(new Error(&#39;只能填写正整数&#39;))
-        &#125; else &#123;
-          callback()
-        &#125;
-      &#125;
-    //负整数 /^-[1-9]\d*$/
-9. 电脑MAC地址：
-     var validateMac (rule, value, callback) &#123;
-        let temp = /[A-Fa-f0-9]&#123;2&#125;-[A-Fa-f0-9]&#123;2&#125;-[A-Fa-f0-9]&#123;2&#125;-[A-Fa-f0-9]&#123;2&#125;-[A-Fa-f0-9]    &#123;2&#125;-[A-Fa-f0-9]&#123;2&#125;/;
-        if (!temp.test(value)) &#123;
-          callback(new Error(&#39;请输入xx-xx-xx-xx-xx-xx形式的MAC地址！&#39;));
-        &#125; else&#123;
-          callback();
-        &#125;
-      &#125;
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/VUE/" rel="tag">VUE</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-跨域处理"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/03/09/%E8%B7%A8%E5%9F%9F%E5%A4%84%E7%90%86/"
-    >跨域处理</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/03/09/%E8%B7%A8%E5%9F%9F%E5%A4%84%E7%90%86/" class="article-date">
-  <time datetime="2023-03-09T15:42:59.000Z" itemprop="datePublished">2023-03-09</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>注意事项：</p>
-<ul>
-<li>import org.springframework.web.filter.CorsFilter;</li>
-<li>configuration.addAllowedOriginPattern(“*”);</li>
+  <h1 id="Archetype"><a href="#Archetype" class="headerlink" title="Archetype"></a>Archetype</h1><p>骨架的意思。简单的说，Archetype是Maven工程的模板工具包。一个Archetype定义了要做的相同类型事情的初始样式或模型。这个名称给我们提供来了一个一致的生成Maven工程的方式。Archetype会帮助作者给用户创建Maven工程模板，并给用户提供生成相关工程模板版本的参数化方法。</p>
+<p>使用Archetype提供的好的方法，是开发者能够使用最佳实践来快速的构建和组织一致化的工程。在Maven工程中，我们努力使用Archetype来尽可能快的给用户提供示例工程，同时也会把Maven的最佳实践介绍给新的用户。一个新的用户可以使用工作中的Maven工作作为跳板来研究更过的Maven中功能。我们也可以使用Archetype的添加机制，这样就意味着允许我们抓取Archetype中项目片段，并把它们添加到既存的工程中。Maven网站的Archetype就是很好的例子。例如，你可以使用“quick start archetype”来生成一个工程，然后就可以通过其中既存的“site archetype”来快速的创建一个网址工程。你能够使用Archetype来做很多这样的事情。</p>
+<p>在你的团队中可能想要标准化的J2EE开发，这需要你提供EJBs、或者是WARs、或者是Web services的原型。一旦在你团队资源库中创建和部署这些原型，它们就可以在你团队内共享使用。</p>
+<h1 id="如何使用Archetype"><a href="#如何使用Archetype" class="headerlink" title="如何使用Archetype"></a>如何使用Archetype</h1><p>要基于Archetype来创建一个新的工程，需要像下面示例这样来调用：</p>
+<p>mvn archetype:generate</p>
+<h1 id="已有的Archetypes"><a href="#已有的Archetypes" class="headerlink" title="已有的Archetypes"></a>已有的Archetypes</h1><p>Archetype ID   说明<br>maven-archetype-archetype  一个样例原型<br>maven-archetype-j2ee-simple    简单的J2EE应用程序样例<br>maven-archetype-mojo    Maven插件样本的示例<br>maven-archetype-plugin    Maven插件样本<br>maven-archetype-plugin-site    Mave插件网站的样例<br>maven-archetype-portlet    JSR-268门户样例<br>maven-archetype-quickstart    Maven工程样例<br>maven-archetype-simple    一个简单的Maven工程<br>maven-archetype-site    Maven网站的样例，它演示了对诸如APT、XDoc和FML等文档类型的支持，并演示了如果把网站国际化（i18n）<br>maven-archetype-site-simple    Maven网站样例<br>maven-archetype-webapp    Maven的Webapp工程样例</p>
+<h1 id="常用Archetype"><a href="#常用Archetype" class="headerlink" title="常用Archetype"></a>常用Archetype</h1><ul>
+<li><p>1，maven-archetype-quickstart<br>默认的Archetype,基本内容包括：<br>一个包含junit依赖声明的pom.xml<br>src/main/java主代码目录及一个名为App的类<br>src/test/java测试代码目录及一个名为AppTest的测试用例</p>
+</li>
+<li><p>2，maven-archetype-webapp<br>一个最简单的Maven war项目模板，当需要快速创建一个Web应用的时候可以使用它。生成的项目内容包括：<br>一个packaging为war且带有junit依赖声明的pom.xml<br>src/main/webapp/目录<br>src/main/webapp/index.jsp文件<br>src/main/webapp/WEB-INF/web.xml文件</p>
+</li>
 </ul>
-<p>示例代码：</p>
-<pre><code>package com.energy.config;
-
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
-
-@Configuration
-public class MyCorsConfig &#123;
-
-//    @Bean
-//    public CorsFilter corsFilter()&#123;
-//        CorsConfiguration configuration = new CorsConfiguration();
-//        configuration.addAllowedOriginPattern(&quot;*&quot;);
-//        configuration.setAllowCredentials(true);
-//        configuration.addAllowedMethod(&quot;*&quot;);
-//        configuration.addAllowedHeader(&quot;*&quot;);
-//
-//        UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
-//        urlBasedCorsConfigurationSource.registerCorsConfiguration(&quot;/**&quot;,configuration);
-//
-//        return  new CorsFilter(urlBasedCorsConfigurationSource);
-//    &#125;
-
-//-------------------------------------------------------------
-
-//    private CorsConfiguration buildConfig() &#123;
-//        CorsConfiguration corsConfiguration = new CorsConfiguration();
-//        corsConfiguration.addAllowedOriginPattern(&quot;*&quot;); // 允许任何域名使用
-//        corsConfiguration.addAllowedHeader(&quot;*&quot;); // 允许任何头
-//        corsConfiguration.addAllowedMethod(&quot;*&quot;); // 允许任何方法（post、get等）
-//        corsConfiguration.setAllowCredentials(true);
-//        return corsConfiguration;
-//    &#125;
-//
-//    @Bean
-//    public CorsFilter corsFilter() &#123;
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration(&quot;/**&quot;, buildConfig());
-//        return new CorsFilter(source);
-//    &#125;
-
-//-------------------------------------------------------------
-
-    @Bean
-    public CorsFilter corsFilter() &#123;
-        final UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
-        final CorsConfiguration corsConfiguration = new CorsConfiguration();
-        /*是否允许请求带有验证信息*/
-        corsConfiguration.setAllowCredentials(true);
-        /*允许访问的客户端域名*/
-        corsConfiguration.addAllowedOriginPattern(&quot;*&quot;);
-        /*允许服务端访问的客户端请求头*/
-        corsConfiguration.addAllowedHeader(&quot;*&quot;);
-        /*允许访问的方法名,GET POST等*/
-        corsConfiguration.addAllowedMethod(&quot;*&quot;);
-        urlBasedCorsConfigurationSource.registerCorsConfiguration(&quot;/**&quot;, corsConfiguration);
-        return new CorsFilter(urlBasedCorsConfigurationSource);
-    &#125;
-
-&#125;
-</code></pre>
  
       <!-- reward -->
       
@@ -569,7 +358,7 @@ public class MyCorsConfig &#123;
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%B7%A8%E5%9F%9F%E5%A4%84%E7%90%86/" rel="tag">跨域处理</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MAVEN/" rel="tag">MAVEN</a></li></ul>
 
     </footer>
   </div>
@@ -580,7 +369,7 @@ public class MyCorsConfig &#123;
 
     
     <article
-  id="post-Springboot-Postgresql-FastAutoGenerator-2"
+  id="post-Notepad-免安装版注册右键菜单"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -591,8 +380,8 @@ public class MyCorsConfig &#123;
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/03/08/Springboot-Postgresql-FastAutoGenerator-2/"
-    >Springboot+Postgresql+FastAutoGenerator（二）</a> 
+  <a class="article-title" href="/2023/03/25/Notepad-%E5%85%8D%E5%AE%89%E8%A3%85%E7%89%88%E6%B3%A8%E5%86%8C%E5%8F%B3%E9%94%AE%E8%8F%9C%E5%8D%95/"
+    >Notepad++免安装版注册右键菜单</a> 
 </h2>
  
 
@@ -600,163 +389,20 @@ public class MyCorsConfig &#123;
     </header>
      
     <div class="article-meta">
-      <a href="/2023/03/08/Springboot-Postgresql-FastAutoGenerator-2/" class="article-date">
-  <time datetime="2023-03-08T07:04:40.000Z" itemprop="datePublished">2023-03-08</time>
+      <a href="/2023/03/25/Notepad-%E5%85%8D%E5%AE%89%E8%A3%85%E7%89%88%E6%B3%A8%E5%86%8C%E5%8F%B3%E9%94%AE%E8%8F%9C%E5%8D%95/" class="article-date">
+  <time datetime="2023-03-25T15:22:46.000Z" itemprop="datePublished">2023-03-25</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
   </div>
    
     </div>
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>执行日志如下，SQL语句备用：</p>
-<pre><code>14:55:09.076 [main] DEBUG com.baomidou.mybatisplus.generator.AutoGenerator - ==========================准备生成文件...==========================
-14:55:10.014 [main] DEBUG com.baomidou.mybatisplus.generator.config.querys.PostgreSqlQuery - 执行SQL:
-
-SELECT A.tablename, obj_description(relfilenode, &#39;pg_class&#39;) AS comments FROM pg_tables A, pg_class B WHERE A.schemaname=&#39;system&#39; AND A.tablename = B.relname AND tablename IN (&#39;sys_role_menu&#39;,&#39;sys_user_role&#39;,&#39;sys_user&#39;,&#39;sys_menu&#39;,&#39;sys_role&#39;)
-
-14:55:10.029 [main] DEBUG com.baomidou.mybatisplus.generator.config.querys.PostgreSqlQuery - 返回记录数:5,耗时(ms):19
-14:55:10.076 [main] DEBUG com.baomidou.mybatisplus.generator.config.querys.PostgreSqlQuery - 执行SQL:
-SELECT
-   A.attname AS name,format_type (A.atttypid,A.atttypmod) AS type,col_description (A.attrelid,A.attnum) AS comment,
-     D.column_default,
-   CASE WHEN length(B.attname) &gt; 0 THEN &#39;PRI&#39; ELSE &#39;&#39; END AS key
-FROM
-   pg_attribute A
-LEFT JOIN (
-    SELECT
-        pg_attribute.attname
-    FROM
-        pg_index,
-        pg_class,
-        pg_attribute
-    WHERE
-        pg_class.oid =&#39;&quot;sys_menu&quot;&#39; :: regclass
-    AND pg_index.indrelid = pg_class.oid
-    AND pg_attribute.attrelid = pg_class.oid
-    AND pg_attribute.attnum = ANY (pg_index.indkey)
-) B ON A.attname = b.attname
-INNER JOIN pg_class C on A.attrelid = C.oid
-INNER JOIN information_schema.columns D on A.attname = D.column_name
-WHERE A.attrelid =&#39;&quot;sys_menu&quot;&#39; :: regclass AND A.attnum&gt; 0 AND NOT A.attisdropped AND D.table_name = &#39;sys_menu&#39;
-ORDER BY A.attnum;
-
-14:55:10.107 [main] DEBUG com.baomidou.mybatisplus.generator.config.querys.PostgreSqlQuery - 返回记录数:10,耗时(ms):31
-14:55:10.107 [main] DEBUG com.baomidou.mybatisplus.generator.config.querys.PostgreSqlQuery - 执行SQL:
-
-SELECT
-   A.attname AS name,format_type (A.atttypid,A.atttypmod) AS type,col_description (A.attrelid,A.attnum) AS comment,
-     D.column_default,
-   CASE WHEN length(B.attname) &gt; 0 THEN &#39;PRI&#39; ELSE &#39;&#39; END AS key
-FROM
-   pg_attribute A
-LEFT JOIN (
-    SELECT
-        pg_attribute.attname
-    FROM
-        pg_index,
-        pg_class,
-        pg_attribute
-    WHERE
-        pg_class.oid =&#39;&quot;sys_role&quot;&#39; :: regclass
-    AND pg_index.indrelid = pg_class.oid
-    AND pg_attribute.attrelid = pg_class.oid
-    AND pg_attribute.attnum = ANY (pg_index.indkey)
-) B ON A.attname = b.attname
-INNER JOIN pg_class C on A.attrelid = C.oid
-INNER JOIN information_schema.columns D on A.attname = D.column_name
-WHERE A.attrelid =&#39;&quot;sys_role&quot;&#39; :: regclass AND A.attnum&gt; 0 AND NOT A.attisdropped AND D.table_name = &#39;sys_role&#39;
-ORDER BY A.attnum;
-
-14:55:10.123 [main] DEBUG com.baomidou.mybatisplus.generator.config.querys.PostgreSqlQuery - 返回记录数:3,耗时(ms):5
-14:55:10.123 [main] DEBUG com.baomidou.mybatisplus.generator.config.querys.PostgreSqlQuery - 执行SQL:
-
-SELECT
-   A.attname AS name,format_type (A.atttypid,A.atttypmod) AS type,col_description (A.attrelid,A.attnum) AS comment,
-     D.column_default,
-   CASE WHEN length(B.attname) &gt; 0 THEN &#39;PRI&#39; ELSE &#39;&#39; END AS key
-FROM
-   pg_attribute A
-LEFT JOIN (
-    SELECT
-        pg_attribute.attname
-    FROM
-        pg_index,
-        pg_class,
-        pg_attribute
-    WHERE
-        pg_class.oid =&#39;&quot;sys_role_menu&quot;&#39; :: regclass
-    AND pg_index.indrelid = pg_class.oid
-    AND pg_attribute.attrelid = pg_class.oid
-    AND pg_attribute.attnum = ANY (pg_index.indkey)
-) B ON A.attname = b.attname
-INNER JOIN pg_class C on A.attrelid = C.oid
-INNER JOIN information_schema.columns D on A.attname = D.column_name
-WHERE A.attrelid =&#39;&quot;sys_role_menu&quot;&#39; :: regclass AND A.attnum&gt; 0 AND NOT A.attisdropped AND D.table_name = &#39;sys_role_menu&#39;
-ORDER BY A.attnum;
-
-14:55:10.123 [main] DEBUG com.baomidou.mybatisplus.generator.config.querys.PostgreSqlQuery - 返回记录数:3,耗时(ms):5
-14:55:10.139 [main] DEBUG com.baomidou.mybatisplus.generator.config.querys.PostgreSqlQuery - 执行SQL:
-
-SELECT
-   A.attname AS name,format_type (A.atttypid,A.atttypmod) AS type,col_description (A.attrelid,A.attnum) AS comment,
-     D.column_default,
-   CASE WHEN length(B.attname) &gt; 0 THEN &#39;PRI&#39; ELSE &#39;&#39; END AS key
-FROM
-   pg_attribute A
-LEFT JOIN (
-    SELECT
-        pg_attribute.attname
-    FROM
-        pg_index,
-        pg_class,
-        pg_attribute
-    WHERE
-        pg_class.oid =&#39;&quot;sys_user&quot;&#39; :: regclass
-    AND pg_index.indrelid = pg_class.oid
-    AND pg_attribute.attrelid = pg_class.oid
-    AND pg_attribute.attnum = ANY (pg_index.indkey)
-) B ON A.attname = b.attname
-INNER JOIN pg_class C on A.attrelid = C.oid
-INNER JOIN information_schema.columns D on A.attname = D.column_name
-WHERE A.attrelid =&#39;&quot;sys_user&quot;&#39; :: regclass AND A.attnum&gt; 0 AND NOT A.attisdropped AND D.table_name = &#39;sys_user&#39;
-ORDER BY A.attnum;
-
-14:55:10.139 [main] DEBUG com.baomidou.mybatisplus.generator.config.querys.PostgreSqlQuery - 返回记录数:11,耗时(ms):6
-14:55:10.139 [main] DEBUG com.baomidou.mybatisplus.generator.config.querys.PostgreSqlQuery - 执行SQL:
-
-SELECT
-   A.attname AS name,format_type (A.atttypid,A.atttypmod) AS type,col_description (A.attrelid,A.attnum) AS comment,
-     D.column_default,
-   CASE WHEN length(B.attname) &gt; 0 THEN &#39;PRI&#39; ELSE &#39;&#39; END AS key
-FROM
-   pg_attribute A
-LEFT JOIN (
-    SELECT
-        pg_attribute.attname
-    FROM
-        pg_index,
-        pg_class,
-        pg_attribute
-    WHERE
-        pg_class.oid =&#39;&quot;sys_user_role&quot;&#39; :: regclass
-    AND pg_index.indrelid = pg_class.oid
-    AND pg_attribute.attrelid = pg_class.oid
-    AND pg_attribute.attnum = ANY (pg_index.indkey)
-) B ON A.attname = b.attname
-INNER JOIN pg_class C on A.attrelid = C.oid
-INNER JOIN information_schema.columns D on A.attname = D.column_name
-WHERE A.attrelid =&#39;&quot;sys_user_role&quot;&#39; :: regclass AND A.attnum&gt; 0 AND NOT A.attisdropped AND D.table_name = &#39;sys_user_role&#39;
-ORDER BY A.attnum;
-
-14:55:10.154 [main] DEBUG com.baomidou.mybatisplus.generator.config.querys.PostgreSqlQuery - 返回记录数:3,耗时(ms):5
-
-14:55:10.373 [main] DEBUG com.baomidou.mybatisplus.generator.AutoGenerator - ==========================文件生成完成！！！==========================
-
-Process finished with exit code 0
-</code></pre>
+  <p>在免安装版目录打开管理员命令窗口cmd</p>
+<p>注册<br>regsvr32 NppShell_06.dll</p>
+<p>反注册<br>regsvr32 NppShell_06.dll /u</p>
  
       <!-- reward -->
       
@@ -767,7 +413,7 @@ Process finished with exit code 0
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SpringBoot/" rel="tag">SpringBoot</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Notepad/" rel="tag">Notepad++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/windows/" rel="tag">windows</a></li></ul>
 
     </footer>
   </div>
@@ -778,7 +424,7 @@ Process finished with exit code 0
 
     
     <article
-  id="post-Springboot-Postgresql-FastAutoGenerator-1"
+  id="post-JAVA中最方便的Unicode转换方法"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -789,8 +435,8 @@ Process finished with exit code 0
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/03/07/Springboot-Postgresql-FastAutoGenerator-1/"
-    >Springboot+Postgresql+FastAutoGenerator（一）</a> 
+  <a class="article-title" href="/2023/03/24/JAVA%E4%B8%AD%E6%9C%80%E6%96%B9%E4%BE%BF%E7%9A%84Unicode%E8%BD%AC%E6%8D%A2%E6%96%B9%E6%B3%95/"
+    >JAVA中最方便的Unicode转换方法</a> 
 </h2>
  
 
@@ -798,8 +444,8 @@ Process finished with exit code 0
     </header>
      
     <div class="article-meta">
-      <a href="/2023/03/07/Springboot-Postgresql-FastAutoGenerator-1/" class="article-date">
-  <time datetime="2023-03-07T06:57:38.000Z" itemprop="datePublished">2023-03-07</time>
+      <a href="/2023/03/24/JAVA%E4%B8%AD%E6%9C%80%E6%96%B9%E4%BE%BF%E7%9A%84Unicode%E8%BD%AC%E6%8D%A2%E6%96%B9%E6%B3%95/" class="article-date">
+  <time datetime="2023-03-24T15:43:36.000Z" itemprop="datePublished">2023-03-24</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -809,51 +455,151 @@ Process finished with exit code 0
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>Postgreql默认是public，需要手动指定schema。<br>URL指定schema也不行，必须单独构造一个DataSourceConfig.Builder进行指定。</p>
-<pre><code>package com.goland.gis;
+  <h1 id="在命令行界面用native2ascii工具"><a href="#在命令行界面用native2ascii工具" class="headerlink" title="在命令行界面用native2ascii工具"></a>在命令行界面用native2ascii工具</h1><ul>
+<li><p>1.将汉字转为Unicode:<br>C:\Program   Files\Java\jdk1.5.0_04\bin&gt;native2ascii<br>测试<br>\u6d4b\u8bd5  </p>
+</li>
+<li><p>2.将Unicode转换为汉字:<br>C:\Program   Files\Java\jdk1.5.0_04\bin&gt;native2ascii   -reverse<br>\u6d4b\u8bd5<br>测试</p>
+</li>
+</ul>
+<h1 id="native2ascii深入"><a href="#native2ascii深入" class="headerlink" title="native2ascii深入"></a>native2ascii深入</h1><p>java 自带的一个native2ascii.exe是一个很好的转码工具，在bin目录下。如果你的properties中有汉字，需要转成unicode . 则把含有汉字的properties拷贝到bin 目录下， 然后在cmd里面进入bin目录，输入：native2ascii -encoding  utf-8  Language-ext_zh_CN.properties.native Language-ext_zh_CN.properties就ok了。Language-ext_zh_CN.properties是转码后的文件。</p>
+<p>在做Java开发的时候，常常会出现一些乱码，或者无法正确识别或读取的文件，比如常见的validator验 证用的消息资源 （properties） 文件就需要进行Unicode重新编码。<br>原因是java默认的编码方式为Unicode，而我们的计算机系统编码 常常是GBK等编码。需要将系统的编码转换为java正确识别的编码问题就解决了。</p>
+<ul>
+<li><p>1、native2ascii简介<br>native2ascii 是sun java sdk提供的一个工具。用来将别的文本类文件（比如*.txt,<em>.ini,</em>.properties,*.java等等）编码转为Unicode编码。 为什么要进行转码，原因在于程序的国际化。Unicode编码的定义：Unicode（统一码、万国码、单一码）是一种在计算机上使用的字符编码。它为每 种语言中的每个字符设定了统一并且唯一的二进制编码，以满足跨语言、跨平台进行文本转换、处理的要求。1990年开始研发，1994年正式公布。随着计算 机工作能力的增强，Unicode也在面世以来的十多年里得到普及。（声明：Unicode编码定义来自互联网）。</p>
+</li>
+<li><p>2、获取native2ascii<br>安装了jdk后，假如你是在windows上安装，那么在jdk的安装目录下，会有一个bin目录，其中native2ascii.exe正是。</p>
+</li>
+<li><p>3、native2ascii的命令行的命名格式：</p>
+</li>
+</ul>
+<p>native2ascii -[options] [inputfile [outputfile]]</p>
+<p>说明：<br>-[options]：表示命令开关，有两个选项可供选择<br>-reverse：将Unicode编码转为本地或者指定编码，不指定编码情况下，将转为本地编码。<br>-encoding encoding_name：转换为指定编码，encoding_name为编码名称。<br>[inputfile [outputfile]]<br>inputfile：表示输入文件全名。<br>outputfile：输出文件名。如果缺少此参数，将输出到控制台。</p>
+<ul>
+<li>4、最佳实践<br>首先将JDK的bin目录加入系统变量path。在盘下建立一个test目录，在test目录里建立一个zh.txt文件，文件内容为：“熔岩”，打开“命令行提示符”，并进入C:\test目录下。下面就可以按照说明一步一步来操作，注意观察其中编码的变化。</li>
+</ul>
+<p>** 1)将zh.txt转换为Unicode编码，输出文件到u.txt<br>native2ascii zh.txt u.txt<br>打开u.txt，内容为“\u7194\u5ca9”。</p>
+<p>** 2)将zh.txt转换为Unicode编码，输出到控制台<br>C:\test&gt;native2ascii zh.txt<br>\u7194\u5ca9<br>可以看到，控制台输出了“\u7194\u5ca9”。</p>
+<p>** 3)将zh.txt转换为ISO8859-1编码，输出文件到i.txt<br>native2ascii -encoding ISO8859-1 zh.txt i.txt<br>打开i.txt文件，内容为“\u00c8\u00db\u00d1\u00d2”。</p>
+<p>** 4)将u.txt转换为本地编码，输出到文件u_nv.txt<br>native2ascii -reverse u.txt u_nv.txt<br>打开u_nv.txt文件，内容为“熔岩”。</p>
+<p>** 5)将u.txt转换为本地编码，输出到控制台<br>C:\test&gt;native2ascii -reverse u.txt<br>熔岩<br>可以看到，控制台输出了“熔岩”。</p>
+<p>** 6)将i.txt转换为本地编码，输出到i_nv.txt<br>native2ascii -reverse i.txt i_nv.txt<br>打开i_nv.txt文件，内容为“\u00c8\u00db\u00d1\u00d2”。发现转码前后完全一样的。也就是说，等于没有转，或者说思想糊涂，对命名没有理解。。</p>
+<p>** 7)将i.txt转换为GBK编码，输出到i_gbk.txt<br>native2ascii -reverse -encoding GBK i.txt i_gbk.txt<br>打开i_gbk.txt文件，内容为“\u00c8\u00db\u00d1\u00d2”。发现转码前后完全一样的。也就是说，等于没有转，或者说思想糊涂，对命名没有理解。</p>
+<p>** 8)将u_nv.txt转码到本地编码GBK，输出到控制台<br>C:\test&gt;native2ascii -reverse -encoding ISO8859-1 i.txt<br>熔岩<br>从这个结果看，目标达到到了，编码i.txt为ISO8859-1，转为本地编码后内容为“熔岩”。从这里应该意识到，native2ascii -reverse命令中-encoding指定的编码为源文件的编码格式。而在native2ascii 命令中-encoding指定的编码为（生成的)目标文件的编码格式。这一点非常的重要！切记！！<br>继续探索，新建文件12a.txt，内容“12axyz”。看看纯字母数字的编码又如何。</p>
+<p>** 9)将纯字母数字的文本文件12a.txt转换为Unicode编码<br>native2ascii 12a.txt 12a_nv.txt<br>打开12a_nv.txt文件，内容为“12axyz”。<br>继续测试，转为ISO8859-1编码看看<br>C:\test&gt;native2ascii -encoding ISO8859-1 12a.txt<br>12axyz<br>结果还是没有转码。</p>
+<p>从结果可以得出结论：对于纯数字和字母的文本类型件，转码前后的内容是一样的。</p>
+<ul>
+<li>5、总结<br>native2ascii 是一个非常的好转码工具，并且转码是可逆的！而其真正的含义并非本地编码——&gt;转码为ASCII码，而是一个通用的文本文件编码转换工具。在做编码 转换的时候有两类指定编码的情形，分别指输出文件编码和输入文件编码，具体可以看看最佳实践部分。</li>
+</ul>
+ 
+      <!-- reward -->
+      
+    </div>
+    
 
-import com.baomidou.mybatisplus.generator.FastAutoGenerator;
-import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
-import com.baomidou.mybatisplus.generator.config.OutputFile;
-import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li></ul>
 
-import java.util.Collections;
+    </footer>
+  </div>
 
-public class CodeGenerator &#123;
+   
+    
+</article>
 
-    public static void main(String[] args) &#123;
+    
+    <article
+  id="post-黑果小兵github"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/03/23/%E9%BB%91%E6%9E%9C%E5%B0%8F%E5%85%B5github/"
+    >黑果小兵github</a> 
+</h2>
+ 
 
-        String url =&quot;jdbc:postgresql://localhost:5432/power?currentSchema=system&quot;;
-        String username = &quot;postgres&quot;;
-        String password = &quot;postgres&quot;;
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/03/23/%E9%BB%91%E6%9E%9C%E5%B0%8F%E5%85%B5github/" class="article-date">
+  <time datetime="2023-03-23T08:07:01.000Z" itemprop="datePublished">2023-03-23</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p><a target="_blank" rel="noopener" href="https://github.com/daliansky">https://github.com/daliansky</a><br><a target="_blank" rel="noopener" href="https://blog.daliansky.net/">https://blog.daliansky.net</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
 
-        String moduleName = &quot;sys&quot;;
-        String mapperLocation = &quot;E:\\Java\\work4\\grid\\gis\\src\\main\\resources\\mapper\\&quot; + moduleName;
-        String tableNames = &quot;sys_user,sys_menu,sys_role,sys_role_menu,sys_user_role&quot;;
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/macOS/" rel="tag">macOS</a></li></ul>
 
-        DataSourceConfig.Builder builderOutSide = new DataSourceConfig.Builder(url, username, password);
-        builderOutSide.schema(&quot;system&quot;);
+    </footer>
+  </div>
 
-        FastAutoGenerator.create(builderOutSide)
-                .globalConfig(builder -&gt; &#123;
-                    builder.author(&quot;zhangsmile1893&quot;) // 设置作者
-                            //.enableSwagger() // 开启 swagger 模式
-                            //.fileOverride() // 覆盖已生成文件
-                            .outputDir(&quot;E:\\Java\\work4\\grid\\gis\\src\\main\\java&quot;); // 指定输出目录
-                &#125;)
-                .packageConfig(builder -&gt; &#123;
-                    builder.parent(&quot;com.goland.gis&quot;) // 设置父包名
-                            .moduleName(moduleName) // 设置父包模块名
-                            .pathInfo(Collections.singletonMap(OutputFile.xml, mapperLocation)); // 设置mapperXml生成路径
-                &#125;)
-                .strategyConfig(builder -&gt; &#123;
-                    builder.addInclude(tableNames) // 设置需要生成的表名
-                            .addTablePrefix(&quot;sys_&quot;); // 设置过滤表前缀
-                &#125;)
-                .templateEngine(new FreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板
-                .execute();
-    &#125;
-&#125;
+   
+    
+</article>
+
+    
+    <article
+  id="post-nacos2-2-1版本及以后开启了默认鉴权"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/03/22/nacos2-2-1%E7%89%88%E6%9C%AC%E5%8F%8A%E4%BB%A5%E5%90%8E%E5%BC%80%E5%90%AF%E4%BA%86%E9%BB%98%E8%AE%A4%E9%89%B4%E6%9D%83/"
+    >nacos2.2.1版本及以后开启了默认鉴权</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/03/22/nacos2-2-1%E7%89%88%E6%9C%AC%E5%8F%8A%E4%BB%A5%E5%90%8E%E5%BC%80%E5%90%AF%E4%BA%86%E9%BB%98%E8%AE%A4%E9%89%B4%E6%9D%83/" class="article-date">
+  <time datetime="2023-03-22T02:26:25.000Z" itemprop="datePublished">2023-03-22</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>nacos 2.2.1版本及以后开启了默认鉴权，需要填写jwt key，不填写key后果，启动报错</p>
+<pre><code>org.springframework.context.ApplicationContextException: Unable to start web server; nested exception is org.springframework.boot.web.server.WebServerException: Unable to start embedded Tomcat
+</code></pre>
+<p>参照 <a target="_blank" rel="noopener" href="https://nacos.io/zh-cn/docs/v2/guide/user/auth.html">nacos鉴权文档</a> 说明，修改application.properties中secret.key配置，即可本地单机正常启动。</p>
+<pre><code>### 2.1.0 版本后
+nacos.core.auth.plugin.nacos.token.secret.key=VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=
 </code></pre>
  
       <!-- reward -->
@@ -865,7 +611,7 @@ public class CodeGenerator &#123;
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SpringBoot/" rel="tag">SpringBoot</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nacos/" rel="tag">nacos</a></li></ul>
 
     </footer>
   </div>
@@ -881,7 +627,7 @@ public class CodeGenerator &#123;
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/29/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/">28</a><a class="page-number" href="/page/29/">29</a><span class="page-number current">30</span><a class="page-number" href="/page/31/">31</a><a class="page-number" href="/page/32/">32</a><span class="space">&hellip;</span><a class="page-number" href="/page/40/">40</a><a class="extend next" rel="next" href="/page/31/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/29/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/">28</a><a class="page-number" href="/page/29/">29</a><span class="page-number current">30</span><a class="page-number" href="/page/31/">31</a><a class="page-number" href="/page/32/">32</a><span class="space">&hellip;</span><a class="page-number" href="/page/42/">42</a><a class="extend next" rel="next" href="/page/31/">下一页</a>
   </nav>
   
 </section>
