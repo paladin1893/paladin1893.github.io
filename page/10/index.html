@@ -154,6 +154,313 @@
     
     
     <article
+  id="post-正反向隔离装置"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/07/31/%E6%AD%A3%E5%8F%8D%E5%90%91%E9%9A%94%E7%A6%BB%E8%A3%85%E7%BD%AE/"
+    >正反向隔离装置</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/07/31/%E6%AD%A3%E5%8F%8D%E5%90%91%E9%9A%94%E7%A6%BB%E8%A3%85%E7%BD%AE/" class="article-date">
+  <time datetime="2023-07-31T07:32:41.000Z" itemprop="datePublished">2023-07-31</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="一、安全区定义"><a href="#一、安全区定义" class="headerlink" title="一、安全区定义"></a>一、安全区定义</h1><p>根据电力二次系统的特点，划分为生产控制大区和管理信息大区。生产控制大区分为控制区（安全区Ⅰ）和非控制区（安全区Ⅱ）。信息管理大区分为生产管理区（安全区Ⅲ）和管理信息区（安全区Ⅳ）。不同安全区确定不同安全防护要求，其中安全区Ⅰ安全等级最高，安全区Ⅱ次之，其余依次类推。</p>
+<p>安全区Ⅰ典型系统:调度自动化系统、变电站自动化系统、继电保护、安全自动控制系统等。<br>安全区Ⅱ典型系统:水库调度自动化系统、电能量计量系统、继保及故障录波信息管理系统等。<br>安全区Ⅲ典型系统:调度生产管理系统（DMIS）、雷电监测系统、统计报表系统等。<br>安全区Ⅳ典型系统:管理信息系统（MIS）、办公自动化系统（OA）、客户服务系统等。</p>
+<h1 id="二、物理隔离"><a href="#二、物理隔离" class="headerlink" title="二、物理隔离"></a>二、物理隔离</h1><p>物理隔离指内部网不直接或间接地连接公共网。物理隔离的目的是保护网络设备及计算机等硬件实体和通信链路免受自然灾害、人为破坏和搭线窃听攻击。只有使内部网和公共网物理隔离，才能真正保证内部信息网络不受来自互联网的黑客攻击。同时，物理隔离也为内部网划定了明确的安全边界，使得网络的可控性增强，便于内部管理。</p>
+<p>在物理隔离技术出现之前，对网络的信息安全采取了许多措施，如在网络中增加防火墙、防病毒系统，对网络进行入侵检测、漏洞扫描等。由于这些技术的极端复杂性，安全控制十分有限性，这些在线分析技术无法提供涉密机构提出的高度数据安全要求。而且，此类软件的保护是一种逻辑机制，对于逻辑实体而言极易被操纵。因此，必须有一道绝对安全的大门，保证涉密网的信息不被泄露和破坏，这就是物理隔离所起的作用。</p>
+<h1 id="三、正反向隔离"><a href="#三、正反向隔离" class="headerlink" title="三、正反向隔离"></a>三、正反向隔离</h1><p>电力系统按照安全等级的要求把计算机系统分为了I、II、III等。I和II之间要有防火墙，I/II区与III区之间则要在物理上做隔离。即I/II发到III区的数据要经过正向隔离装置，III区发到I/II区的数据要经过反向隔离装置。</p>
+<p>正向隔离装置不接受III区的数据(最多只能过一个字节的数据)，反向隔离装置只能容许III区的文件穿透到I区。</p>
+<ul>
+<li>A.正向安全隔离装置</li>
+</ul>
+<p>1.两个安全区之间的非网络方式的安全的数据交换，并且保证安全隔离装置内外两个处理系统不同时连通;<br>2.表示层与应用层数据完全单向传输，即从安全区III到安全区I/II的TCP应答禁止携带应用数据;<br>3.透明工作方式:虚拟主机IP地址、隐藏MAC地址<br>4.基于MAC、IP、传输协议、传输端口以及通信方向的综合报文过滤与访问控制;<br>5.支持NAT;<br>6.防止穿透性TCP联接:禁止两个应用网关之间直接建立TCP联接，将内外两个应用网关之间的TCP联接分解成内外两个应用网关分别到隔离装置内外两个网卡的两个TCP虚拟联接。隔离装置内外两个网卡在装置内部是非网络连接，且只允许数据单向传输;<br>7.具有可定制的应用层解析功能，支持应用层特殊标记识别;<br>8.安全、方便的维护管理方式:基于证书的管理人员认证，使用图形化的管理界面。</p>
+<ul>
+<li>B.反向隔离装置</li>
+</ul>
+<p>反向隔离装置用于从安全区III到安全区I/II传递数据，是安全区III到安全区I/II的唯一一个数据传递途径。反向隔离装置集中接收安全区III发向安全区I/II的数据，进行签名验证、内容过滤、有效性检查等处理后，转发给安全区I/II内部的接收程序具体过程如下：<br>1.全区III内的数据发送端首先对需要发送的数据签名，然后发给反向隔离装置；<br>2.反向隔离装置接收数据后，进行签名验证，并对数据进行内容过滤、有效性检查等处理。</p>
+<ul>
+<li>C.安全区I/II内部接收程序  </li>
+</ul>
+<p>将处理过的数据转发给安全区I/II内部的接收程序，其功能如下:<br>1.有应用网关功能，实现应用数据的接收与转发;<br>2.具有应用数据内容有效性检查功能;<br>3.具有基于数字证书的数据签名/解签名功能;<br>4.实现两个安全区之间的非网络方式的安全的数据传递;<br>5.支持透明工作方式：虚拟主机IP地址、隐藏MAC地址;<br>6.支持NAT;<br>7.基于MAC、IP、传输协议、传输端口以及通信方向的综合报文过滤与访问控制;<br>8.防止穿透性TCP联接。</p>
+<ul>
+<li>D.装置安全保障要点</li>
+</ul>
+<p>隔离装置本身应该具有较高的安全防护能力，其安全性要求主要包括：<br>1.用非INTEL指令系统的(及兼容)微处理器；<br>2.安全、固化的操作系统；<br>3.不存在设计与实现上的安全漏洞，抵御除Dos以外的已知的网络攻击。</p>
+<h1 id="四-网络隔离装置要点"><a href="#四-网络隔离装置要点" class="headerlink" title="四.网络隔离装置要点"></a>四.网络隔离装置要点</h1><p>1.一个网络隔离装置(作为阻塞点、控制点)能极大地提高一个监控系统的安全性，并通过过滤不安全的服务而降低风险。由于只有经过精心选择的应用协议才能通过网络隔离装置，所以网络环境变得更安全。如网络隔离装置可以禁止不安全的NFS协议进出保护网络，这样外部的攻击者就不可能利用这些脆弱的协议来攻击监控系统。网络隔离装置同时可以保护网络免受基于路由的攻击，如IP选项中的源路由攻击和ICMP重定向中的重定向路径。网络隔离装置应该可以拒绝所有以上类型攻击的报文并通知网络隔离装置管理员。</p>
+<p>2.通过以网络隔离装置为中心的安全方案配置，能将所有安全策略配置在网络隔离装置上。与将网络安全问题分散到各个主机上相比，网络隔离装置的集中安全管理更方便可靠。例如在网络访问时，监控系统通过加密口令/身份认证方式与其它信息系统通信，在电力监控系统基本上不可行，它意味监控系统要重新测试，因此用网络隔离装置集中控制，无需修改双端应用程序是最佳的选择。</p>
+<p>3.如果所有的访问都经过网络隔离装置，那么，网络隔离装置就能记录下这些访问并作出日志记录，同时也能提供网络使用情况的统计数据。当发生可疑动作时，网络隔离装置能进行适当的报警，并提供网络是否受到监测和攻击的详细信息。</p>
+<p>4.通过网络隔离装置对监控系统及其它信息系统的划分，实现监控系统重点网段的隔离，一个监控系统中不引人注意的细节可能包含了有关安全的线索而引起外部攻击者的兴趣，甚至因此而暴露了监控系统的某些安全漏洞。使用网络隔离装置就可以隐蔽那些透漏内部细节，例如网络隔离装置可以进行网络地址转换(NAT)，这样一台主机IP地址就不会被外界所了解, 不会为外部攻击创造条件</p>
+<hr>
+<p>作者：三氯甲烷<br>来源：CSDN<br>原文：<a target="_blank" rel="noopener" href="https://blog.csdn.net/stillfantasy1988/article/details/78805859">https://blog.csdn.net/stillfantasy1988/article/details/78805859</a><br>版权声明：本文为博主原创文章，转载请附上博文链接！<br>————————————————<br>版权声明：本文为CSDN博主「金士顿」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/wojiuguowei/article/details/86542299">https://blog.csdn.net/wojiuguowei/article/details/86542299</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9A%94%E7%A6%BB%E8%A3%85%E7%BD%AE/" rel="tag">隔离装置</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-最新docker部署禅道指南"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/07/30/%E6%9C%80%E6%96%B0docker%E9%83%A8%E7%BD%B2%E7%A6%85%E9%81%93%E6%8C%87%E5%8D%97/"
+    >最新docker部署禅道指南</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/07/30/%E6%9C%80%E6%96%B0docker%E9%83%A8%E7%BD%B2%E7%A6%85%E9%81%93%E6%8C%87%E5%8D%97/" class="article-date">
+  <time datetime="2023-07-30T07:32:41.000Z" itemprop="datePublished">2023-07-30</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><p><a target="_blank" rel="noopener" href="https://www.zentao.net/book/zentaopms/38.html">Docker方式部署禅道</a></p>
+<h1 id="拉取镜像"><a href="#拉取镜像" class="headerlink" title="拉取镜像"></a>拉取镜像</h1><pre><code>docker pull hub.zentao.net/app/zentao:latest
+</code></pre>
+<h1 id="安装镜像"><a href="#安装镜像" class="headerlink" title="安装镜像"></a>安装镜像</h1><pre><code>sudo docker run -d \
+    --name zentao \
+    --restart always \
+    -p 9880:80 \
+    -p 9806:3306 \
+    -v /home/zentao/zentaopms:/www/zentaopms \
+    -v /home/zentao/mysqldata:/var/lib/mysql \
+    hub.zentao.net/app/zentao:latest
+</code></pre>
+<p>访问ip:9880，安装禅道，mysql默认密码：123456</p>
+<p>如果需要修改镜像安装参数，先停止禅道容器，再删除容器，然后重新安装镜像</p>
+<h1 id="停止禅道容器"><a href="#停止禅道容器" class="headerlink" title="停止禅道容器"></a>停止禅道容器</h1><pre><code>sudo docker stop zentao
+</code></pre>
+<h1 id="删除容器"><a href="#删除容器" class="headerlink" title="删除容器"></a>删除容器</h1><pre><code>sudo docker rm zentao 
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/" rel="tag">Docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%A6%85%E9%81%93/" rel="tag">禅道</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-最新docker部署ownCloud指南"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/07/29/%E6%9C%80%E6%96%B0docker%E9%83%A8%E7%BD%B2ownCloud%E6%8C%87%E5%8D%97/"
+    >最新docker部署ownCloud指南</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/07/29/%E6%9C%80%E6%96%B0docker%E9%83%A8%E7%BD%B2ownCloud%E6%8C%87%E5%8D%97/" class="article-date">
+  <time datetime="2023-07-29T06:21:51.000Z" itemprop="datePublished">2023-07-29</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><p><a target="_blank" rel="noopener" href="https://doc.owncloud.com/server/10.12/admin_manual/installation/docker/">Installing with Docker</a></p>
+<h1 id="安装命令"><a href="#安装命令" class="headerlink" title="安装命令"></a>安装命令</h1><pre><code>docker pull owncloud
+docker pull mariadb
+
+docker run --name mariadb -e MYSQL_ROOT_PASSWORD=owncloud -v /home/owncloud/mariadb:/var/lib/mysql --restart=always -d mariadb
+docker run --name owncloud -p 10080:80 -v /home/owncloud/owncloud:/var/www/html/data --link mariadb:mysql --restart=always -d owncloud
+</code></pre>
+<h1 id="信任域问题"><a href="#信任域问题" class="headerlink" title="信任域问题"></a>信任域问题</h1><p> find / -name config.php<br>编辑 …/config/config.php文件</p>
+<pre><code>A typical configuration may look like this:
+
+&#39;trusted_domains&#39; =&gt; [
+   0 =&gt; &#39;localhost&#39;,
+   1 =&gt; &#39;server1.example.com&#39;,
+   2 =&gt; &#39;192.168.1.50&#39;,
+],
+</code></pre>
+<p>仿照格式添加信任域，然后重新访问 http://公网IP:端口，问题解决了</p>
+<h1 id="数据库连接"><a href="#数据库连接" class="headerlink" title="数据库连接"></a>数据库连接</h1><p>登录<a href="http://ip:9780，第一次登录需要配置，配置信息如下：">http://ip:9780，第一次登录需要配置，配置信息如下：</a><br>管理员账号密码<br>数据目录（默认值，不改）<br>数据库：选择mysql/mariadb。数据库用户root，数据库密码ownCloud，数据库名owncloud，localhost设为mariadb</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/" rel="tag">Docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ownCloud/" rel="tag">ownCloud</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-最新docker部署gitlab指南"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/07/28/%E6%9C%80%E6%96%B0docker%E9%83%A8%E7%BD%B2gitlab%E6%8C%87%E5%8D%97/"
+    >最新docker部署gitlab指南</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/07/28/%E6%9C%80%E6%96%B0docker%E9%83%A8%E7%BD%B2gitlab%E6%8C%87%E5%8D%97/" class="article-date">
+  <time datetime="2023-07-28T06:21:15.000Z" itemprop="datePublished">2023-07-28</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><p><a target="_blank" rel="noopener" href="https://docs.gitlab.cn/jh/install/docker.html">极狐GitLab Docker 镜像</a></p>
+<h1 id="拉取镜像"><a href="#拉取镜像" class="headerlink" title="拉取镜像"></a>拉取镜像</h1><pre><code>sudo docker pull gitlab/gitlab-ce:latest
+</code></pre>
+<h1 id="安装容器"><a href="#安装容器" class="headerlink" title="安装容器"></a>安装容器</h1><pre><code>sudo docker run --detach \
+  --hostname 192.168.10.33 \
+  --publish 9443:443 --publish 9980:80 --publish 9822:22 \
+  --name gitlab \
+  --restart always \
+  --volume /home/gitlab/config:/etc/gitlab \
+  --volume /home/gitlab/logs:/var/log/gitlab \
+  --volume /home/gitlab/data:/var/opt/gitlab \
+  gitlab/gitlab-ce:latest
+</code></pre>
+<h1 id="查看日志"><a href="#查看日志" class="headerlink" title="查看日志"></a>查看日志</h1><pre><code>，可以用容器名，也可以用容器id
+
+sudo docker logs -f gitlab
+</code></pre>
+<h1 id="进入容器"><a href="#进入容器" class="headerlink" title="进入容器"></a>进入容器</h1><pre><code>sudo docker exec -it gitlab /bin/bash
+</code></pre>
+<h1 id="修改root密码"><a href="#修改root密码" class="headerlink" title="修改root密码"></a>修改root密码</h1><ol>
+<li>切换到相应路径下: cd /opt/gitlab/bin/</li>
+<li>打开控制台: gitlab-rails console -e production</li>
+<li>查询用户账号信息并赋值给u: u=User.where(id:1).first</li>
+<li>设置该用户名的密码: u.password=’Demo9999’</li>
+<li>确认密码: u.password_confirmation=’Demo9999’</li>
+<li>保存信息： u.save </li>
+<li>退出: exit</li>
+</ol>
+<h1 id="修改外部访问地址"><a href="#修改外部访问地址" class="headerlink" title="修改外部访问地址"></a>修改外部访问地址</h1><pre><code>vi /etc/gitlab/gitlab.rb
+
+external_url &#39;http://192.168.10.33:9980&#39;
+gitlab_rails[&#39;gitlab_ssh_host&#39;]=&#39;192.168.10.33&#39;
+gitlab_rails[&#39;gitlab_shell_ssh_port&#39;]=&#39;9822&#39;
+gitlab_rails[&#39;time_zone&#39;] = &#39;Asia/Shanghai&#39;
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/" rel="tag">Docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GitLab/" rel="tag">GitLab</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-最新centos部署docker指南"
   class="article article-type-post"
   itemscope
@@ -295,409 +602,13 @@ sudo docker ps | grep zentao
 </article>
 
     
-    <article
-  id="post-Jetbrains软件下载地址"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/07/25/Jetbrains%E8%BD%AF%E4%BB%B6%E4%B8%8B%E8%BD%BD%E5%9C%B0%E5%9D%80/"
-    >Jetbrains软件下载地址</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/07/25/Jetbrains%E8%BD%AF%E4%BB%B6%E4%B8%8B%E8%BD%BD%E5%9C%B0%E5%9D%80/" class="article-date">
-  <time datetime="2023-07-25T13:23:12.000Z" itemprop="datePublished">2023-07-25</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>IDEA</p>
-<p><a target="_blank" rel="noopener" href="https://www.jetbrains.com/idea/download/other.html">https://www.jetbrains.com/idea/download/other.html</a></p>
-<p>WebStorm</p>
-<p><a target="_blank" rel="noopener" href="https://www.jetbrains.com/webstorm/download/other.html">https://www.jetbrains.com/webstorm/download/other.html</a></p>
-<p>Pycharm</p>
-<p><a target="_blank" rel="noopener" href="https://www.jetbrains.com/pycharm/download/other.html">https://www.jetbrains.com/pycharm/download/other.html</a></p>
-<p>Goland</p>
-<p><a target="_blank" rel="noopener" href="https://www.jetbrains.com/go/download/other.html">https://www.jetbrains.com/go/download/other.html</a></p>
-<p>Clion</p>
-<p><a target="_blank" rel="noopener" href="https://www.jetbrains.com/clion/download/other.html">https://www.jetbrains.com/clion/download/other.html</a></p>
-<p>其他软件，可访问官网【jetbrains.com】查找并下载<br>选择对应版本下载</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Jetbrains/" rel="tag">Jetbrains</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-CentOS7修改SSH默认端口22教程"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/07/24/CentOS7%E4%BF%AE%E6%94%B9SSH%E9%BB%98%E8%AE%A4%E7%AB%AF%E5%8F%A322%E6%95%99%E7%A8%8B/"
-    >CentOS7修改SSH默认端口22教程</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/07/24/CentOS7%E4%BF%AE%E6%94%B9SSH%E9%BB%98%E8%AE%A4%E7%AB%AF%E5%8F%A322%E6%95%99%E7%A8%8B/" class="article-date">
-  <time datetime="2023-07-24T04:28:48.000Z" itemprop="datePublished">2023-07-24</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>1.先查看防火墙状态</p>
-<pre><code>systemctl status firewalld    #查看防火墙状态
-</code></pre>
-<p>不建议关闭防火墙，测试服务器可以关闭省事</p>
-<pre><code>systemctl stop firewalld     #关闭防火墙
-systemctl disable firewalld #禁止开机启动
-</code></pre>
-<p>关闭封火墙存在很大的风险，生产环境强烈建议不要关闭。</p>
-<p>2、想好你要修改的端口，这里我以修改默认端口22为2222为例。</p>
-<p>可以通过以下命令授权开放端口：开放2222端口</p>
-<pre><code>firewall-cmd --permanent --add-port=2222/tcp
-</code></pre>
-<p>3、修改ssh端口</p>
-<pre><code>vi /etc/ssh/sshd_config
-Port 2222    //去掉前面的#号，然后把22改成你要的端口，最大别超过65535
-</code></pre>
-<p>wq保存退出。</p>
-<p>4、SELinux设置</p>
-<p>如果SELinux未开启可跳过直接重启防火墙和sshd服务即可。默认SELinux都是开启的。</p>
-<p>设置SELinux允许SSH监听新的自定义SSH端口</p>
-<pre><code>semanage port -a -t ssh_port_t -p tcp 2222
-</code></pre>
-<p>如果提示semanage没安装，可以执行下面的命令安装。</p>
-<pre><code>yum -y install policycoreutils-python             //安装后就可以使用semanage命令了。
-</code></pre>
-<p>接下来执行以下命令查看SELinux下SSH相关端口是不是成功修改为自定义SSH端口</p>
-<pre><code>semanage port -l|grep ssh
-ssh_port_t tcp 2222, 22              //这么显示说明端口已经修改了。
-</code></pre>
-<p>第⑤步：重启SSH服务和防火墙</p>
-<pre><code>systemctl restart sshd       //重启SSH
-systemctl restart firewalld.service     //重启防火墙
-</code></pre>
-<p>步骤全部完成，可以打开新的putty客户端通过新端口测试下。</p>
-<p>如果不行，可联系售后 进去检查配置。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS7/" rel="tag">CentOS7</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-WebGIS开源时空架构方案"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/07/23/WebGIS%E5%BC%80%E6%BA%90%E6%97%B6%E7%A9%BA%E6%9E%B6%E6%9E%84%E6%96%B9%E6%A1%88/"
-    >WebGIS开源时空架构方案</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/07/23/WebGIS%E5%BC%80%E6%BA%90%E6%97%B6%E7%A9%BA%E6%9E%B6%E6%9E%84%E6%96%B9%E6%A1%88/" class="article-date">
-  <time datetime="2023-07-23T05:10:12.000Z" itemprop="datePublished">2023-07-23</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h1><p>一套WebGIS架构方案包含以下几个基本要素：</p>
-<h2 id="1-前端框架"><a href="#1-前端框架" class="headerlink" title="1. 前端框架"></a>1. 前端框架</h2><p>前端框架选择主要考虑到易用性、维护性和功能性。目前比较流行的前端框架有Vue、React和Angular等，其中Vue最为轻量级、易上手和扩展性好，因此可以选择Vue作为前端框架。</p>
-<h2 id="2-后端框架"><a href="#2-后端框架" class="headerlink" title="2. 后端框架"></a>2. 后端框架</h2><p>后端框架主要负责处理数据接口请求和数据存储。根据项目规模和需求，可以选择Flask、Django、Express、Spring等框架。其中，Flask是一款轻量级、灵活的框架，易于搭建，因此可以选择Flask作为后端框架。</p>
-<h2 id="3-数据库选择"><a href="#3-数据库选择" class="headerlink" title="3. 数据库选择"></a>3. 数据库选择</h2><p>数据库主要用于存储和管理各种数据，包括地理空间数据、非地理空间数据等。目前较为常见的数据库有MySQL、PostgreSQL、MongoDB等，其中PostgreSQL是一款可扩展性和稳定性较好的数据库，支持地理空间数据的存储和查询，因此可以选择PostgreSQL作为数据库。</p>
-<h2 id="4-数据库管理工具"><a href="#4-数据库管理工具" class="headerlink" title="4. 数据库管理工具"></a>4. 数据库管理工具</h2><p>数据库管理工具可以方便地对数据库进行管理、维护和优化。目前比较优质的数据库管理工具有PgAdmin、Navicat等，其中PgAdmin是一款免费且开源的数据库管理工具，支持PostgreSQL的管理和维护。</p>
-<h2 id="5-地图渲染引擎"><a href="#5-地图渲染引擎" class="headerlink" title="5. 地图渲染引擎"></a>5. 地图渲染引擎</h2><p>地图渲染引擎负责将地理空间数据转换为可视化的地图，并提供丰富的地图交互功能。目前较为流行的地图渲染引擎有Mapbox、Leaflet、OpenLayers等，其中Leaflet是一款轻量级、易扩展的地图渲染引擎，提供丰富的地图渲染和交互功能，因此可以选择Leaflet作为地图渲染引擎。</p>
-<h2 id="6-地理编码服务"><a href="#6-地理编码服务" class="headerlink" title="6. 地理编码服务"></a>6. 地理编码服务</h2><p>地理编码服务主要用于将地址转换为经纬度坐标或者将经纬度坐标转换为地址。目前市面上比较好的地理编码服务有Google Maps API、ArcGIS Online等，其中Google Maps API是一款大众使用的地理编码服务，免费版可以提供较准确的地址解析和逆地址解析功能，因此可以选择Google Maps API作为地理编码服务。</p>
-<h2 id="7-部署环境"><a href="#7-部署环境" class="headerlink" title="7. 部署环境"></a>7. 部署环境</h2><p>部署环境在开源WebGIS方案中也是十分关键的，可以选择Linux操作系统、Nginx服务器和Docker容器。其中，Linux操作系统是开源、快速、安全和稳定的操作系统，适用于部署Web应用、网络服务器等；Nginx服务器是一款高性能的Web服务器和反向代理服务器，可以提高Web应用程序的性能和规模化适应能力；Docker容器是一款轻量级、移植性强的容器技术平台，可以确保应用程序在任何环境下都能够正常运行。</p>
-<p>以此为基本架构，可以根据实际情况进行灵活的定制和优化，以满足项目需求。</p>
-<p>目前国际上著名的地理空间信息生产商大都拥有了成熟的产品线， 基本涵盖了从数据采集、数据编辑、数据管理、空间数据互操作、空间分析到网络地理信息服务注册、发布、聚合等所有地理信息工程相关的功能模块 。有时候，在商业软件价格比较昂贵的情况下，使用开源WebGIS也是一个不错的选择。</p>
-<h1 id="二、开源WebGIS架构"><a href="#二、开源WebGIS架构" class="headerlink" title="二、开源WebGIS架构"></a>二、开源WebGIS架构</h1><p>一套开源WebGIS架构方案包含以下三个部分：</p>
-<h2 id="2-1-地理信息数据库和业务数据库"><a href="#2-1-地理信息数据库和业务数据库" class="headerlink" title="2.1 地理信息数据库和业务数据库"></a>2.1 地理信息数据库和业务数据库</h2><p>地理信息数据库用于存储地理信息数据（包含矢量、地名地址、专题及瓦片数据）；<br>业务数据库用于存储前端网站或者行业应用的关系型数据；</p>
-<h2 id="2-2-GIS服务器"><a href="#2-2-GIS服务器" class="headerlink" title="2.2 GIS服务器"></a>2.2 GIS服务器</h2><p>GIS服务器则用于提供WMS、WTMS、WFS和WCS等GIS服务；</p>
-<h2 id="2-3-Web应用服务器"><a href="#2-3-Web应用服务器" class="headerlink" title="2.3 Web应用服务器"></a>2.3 Web应用服务器</h2><p>Web应用服务器主要针对行业应用，用于调取GIS服务和后台的业务数据，并在前端展示。</p>
-<p>提供Web信息浏览服务，通常你看到的是一个网站。</p>
-<h2 id="2-4-开源WebGIS解决方案"><a href="#2-4-开源WebGIS解决方案" class="headerlink" title="2.4 开源WebGIS解决方案"></a>2.4 开源WebGIS解决方案</h2><p>针对WebGIS以上组成部分，一套开源WebGIS有着相应的解决方案，其架构方式如下 ：</p>
-<p>数据生产（桌面软件–uDig、QGIS等）<br>数据存储（关系型或非关系型数据库：postgreSQL、mySQL、mongodb）<br>GIS服务（GIS服务器：mapserver、Geoserver）<br>Web服务（Web服务器：tomcat、apache、nginx）<br>前端渲染（OpenLayers 、cesium、mapbox、leaflet）<br>当然还需要提供这一整套架构方式的外围软件环境：</p>
-<p>虚拟化或者云环境(VirtualBox、OpenStack、docker)<br>操作系统（linux：centos、ubuntu）<br>堡垒机( teleport )<br>运维系统( spug )<br>Nas服务器(TrueNas)</p>
-<ul>
-<li>2.4.1 地图数据生产</li>
-</ul>
-<p>使用uDig、QGIS、Grass等开源桌面GIS软件采集、加工地理信息数据<br>uDig：<a target="_blank" rel="noopener" href="http://udig.refractions.net/">http://udig.refractions.net/</a><br>QGIS：<a target="_blank" rel="noopener" href="https://www.qgis.org/">https://www.qgis.org/</a><br>Grass：<a target="_blank" rel="noopener" href="https://grass.osgeo.org/">https://grass.osgeo.org/</a><br>OpenEV：<a target="_blank" rel="noopener" href="http://openev.sourceforge.net/">http://openev.sourceforge.net/</a><br>gvSIG ：<a target="_blank" rel="noopener" href="http://www.gvsig.com/">http://www.gvsig.com/</a><br>OpenJUMP：<a target="_blank" rel="noopener" href="http://www.openjump.org/">http://www.openjump.org/</a><br>OSSIM：<a target="_blank" rel="noopener" href="http://trac.osgeo.org/ossim/">http://trac.osgeo.org/ossim/</a><br>InterImage：<a target="_blank" rel="noopener" href="http://www.lvc.ele.puc-rio.br/projects/interimage/%EF%BC%88%E4%B8%93%E6%B3%A8%E5%BD%B1%E5%83%8F%E8%A7%A3%E8%AF%91%EF%BC%89">http://www.lvc.ele.puc-rio.br/projects/interimage/（专注影像解译）</a><br>PolSARPro：<a target="_blank" rel="noopener" href="https://earth.esa.int/web/polsarpro%EF%BC%88%E6%9E%81%E5%8C%96%E9%9B%B7%E8%BE%BE%E5%A4%84%E7%90%86%EF%BC%89">https://earth.esa.int/web/polsarpro（极化雷达处理）</a><br>E-foto：<a target="_blank" rel="noopener" href="http://www.efoto.eng.uerj.br/en">http://www.efoto.eng.uerj.br/en</a> 航空摄影测量</p>
-<ul>
-<li>2.4.2 地理信息数据存储</li>
-</ul>
-<p>关系型数据使用PostGIS或者MySQL Spatial数据库存储地理信息数据和关系型业务数据，</p>
-<p>非关系型数据使用mongodb数据库（瓦片、图像）<br>PostGIS：<a target="_blank" rel="noopener" href="http://postgis.net/">http://postgis.net/</a><br>PostgreSQL：<a target="_blank" rel="noopener" href="https://www.postgresql.org/">https://www.postgresql.org/</a><br>MySQL：<a target="_blank" rel="noopener" href="https://www.mysql.com/">https://www.mysql.com</a><br>mongodb ：<a target="_blank" rel="noopener" href="https://www.mongodb.com/">https://www.mongodb.com/</a><br>rasdaman：<a target="_blank" rel="noopener" href="http://www.rasdaman.org/">http://www.rasdaman.org/</a> （栅格数据库）<br>SpatiaLite:<a target="_blank" rel="noopener" href="http://www.gaia-gis.it/gaia-sins/">http://www.gaia-gis.it/gaia-sins/</a> (轻量级数据库SQLite空间扩展)</p>
-<ul>
-<li>2.4.3 GIS服务器</li>
-</ul>
-<p>使用GeoServer、MapServer生产地图瓦片，注册、发布地理信息服务。</p>
-<p>GeoServer：<a target="_blank" rel="noopener" href="http://geoserver.org/">http://geoserver.org/</a><br>MapServer：<a target="_blank" rel="noopener" href="http://mapserver.org/">http://mapserver.org/</a><br>Mapnik：<a target="_blank" rel="noopener" href="http://mapnik.org/">http://mapnik.org/</a><br>TileCache：<a target="_blank" rel="noopener" href="http://tilecache.org/">http://tilecache.org/</a><br>MapTiler:<a target="_blank" rel="noopener" href="https://www.maptiler.com/">https://www.maptiler.com/</a></p>
-<ul>
-<li>2.4.4 Web服务器应用</li>
-</ul>
-<p>使用Geomajas、Tomcat或apache搭建网站，在网页中嵌入地图容器加载地图；使用niginx作为反向代理或者负载均衡。</p>
-<p>Tomcat：<a target="_blank" rel="noopener" href="http://tomcat.apache.org/">http://tomcat.apache.org/</a> （网站服务器）<br>apache:<a target="_blank" rel="noopener" href="https://www.apache.org/(apache%E5%8D%B3%E5%8F%AF%E5%81%9A%E7%BD%91%E7%AB%99%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8F%88%E5%8F%AF%E4%BD%9C%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E3%80%81%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1)">https://www.apache.org/(apache即可做网站服务器又可作反向代理、负载均衡)</a><br>nginx：<a target="_blank" rel="noopener" href="http://nginx.org/">http://nginx.org/</a> （负载均衡、反向代理）</p>
-<p>地图网站专用服务器<br>GeoMoose：<a target="_blank" rel="noopener" href="https://demo.geomoose.org/">https://demo.geomoose.org/</a><br>Geomajas：<a target="_blank" rel="noopener" href="http://www.geomajas.org/">http://www.geomajas.org/</a></p>
-<ul>
-<li>2.4.5 个人客户端或者web应用服务器的前端展示：</li>
-</ul>
-<p>地理信息服务使用OpenScales、支持Java的Openlayers或Leaflet地图容器前端展示。前端其他数据展示使用Java、vue等流行网页API。</p>
-<p>openlayers(Java): <a target="_blank" rel="noopener" href="http://openlayers.org/">http://openlayers.org/</a><br>openscales(Flex): <a target="_blank" rel="noopener" href="http://openscales.org/">http://openscales.org/</a><br>LeafLet：<a target="_blank" rel="noopener" href="https://leafletjs.com/">https://leafletjs.com</a><br>Cesium:<a target="_blank" rel="noopener" href="https://github.com/CesiumGS/cesium">https://github.com/CesiumGS/cesium</a><br>ol-cesium:<a target="_blank" rel="noopener" href="https://openlayers.org/ol-cesium/">https://openlayers.org/ol-cesium/</a><br>注：这里的web应用服务器相对于GIS服务器而言是客户端，相对于浏览者而言是服务器。</p>
-<p>以上给出使用开源软件实现WebGIS各个环节可采用的软件，在实际项目中，应根据项目需要做一下筛选。</p>
-<p>比如：uDig (QGIS)+ PostgreSQL/PostGIS （mongodb）+ GeoServer + Tomcat +Openlayers组合。</p>
-<p>倘若有高性能、高可用的需求，还应使用集群技术，搭建数据库集群、GIS服务器集群和web应用服务器集群生态，增加服务的冗余，提高服务性能，毕竟地图服务不是简单的网页服务，其消耗的资源是非常大的，即便是一个空间查询语句，对数据库的性能消耗也是非常可观的。</p>
-<h1 id="三、开源地理数据函数库"><a href="#三、开源地理数据函数库" class="headerlink" title="三、开源地理数据函数库"></a>三、开源地理数据函数库</h1><p>以下列出所有开源软地理信息软件或者商业地理信息软件都可能有到的开源地理信息函数库。其中，GDAL/ORG、PROJ.4、GEOS是地理信息软件或者系统开发的三架马车，它们搭建了地理信息软件的基础。</p>
-<p>GDAL/OGR:<a target="_blank" rel="noopener" href="https://gdal.org/">https://gdal.org/</a> 开源栅格/矢量空间数据转换库<br>PROJ.4:<a target="_blank" rel="noopener" href="https://proj.org/">https://proj.org/</a> 地图投影库<br>GEOS:<a target="_blank" rel="noopener" href="http://trac.osgeo.org/geos">http://trac.osgeo.org/geos</a> 开源地理空间数据引擎<br>pyshp:<a target="_blank" rel="noopener" href="https://pypi.org/project/pyshp/">https://pypi.org/project/pyshp/</a> 用于处理shapfile的简单函数库<br>Shapely:<a target="_blank" rel="noopener" href="https://pypi.org/project/Shapely/">https://pypi.org/project/Shapely/</a> 基于 GEOS，用于操作和分析平面几何对象的函数库<br>Fiona:<a target="_blank" rel="noopener" href="https://pypi.org/project/Fiona/">https://pypi.org/project/Fiona/</a> 基于GDAL,用于读取空间矢量数据的函数库<br>Rasterio:<a target="_blank" rel="noopener" href="https://pypi.org/project/rasterio/">https://pypi.org/project/rasterio/</a> 基于GDAL和Numpy，用于读取地理空间栅格数据的函数库<br>PIL:<a target="_blank" rel="noopener" href="https://pypi.org/project/PIL/">https://pypi.org/project/PIL/</a> 用于处理影像的python库<br>NumPy：<a target="_blank" rel="noopener" href="https://pypi.org/project/numpy/">https://pypi.org/project/numpy/</a> 用于矩阵科学计算的函数库<br>Scikit-image：基于scipy的一款图像处理python库<br>GeoPandas:<a target="_blank" rel="noopener" href="http://geopandas.org/">http://geopandas.org/</a> 用于空间分析的函数库<br>SPy:<a target="_blank" rel="noopener" href="http://www.spectralpython.net/">http://www.spectralpython.net/</a> 用于高光谱遥感影像处理的python库<br>GML4J：<a target="_blank" rel="noopener" href="http://gml4j.sourceforge.net/">http://gml4j.sourceforge.net/</a> 用于读取gml数据的函数库<br>GSLIB：<a target="_blank" rel="noopener" href="http://www.gslib.com/">http://www.gslib.com/</a> 用于空间统计的函数库<br>JTS：<a target="_blank" rel="noopener" href="https://sourceforge.net/projects/jts-topo-suite/">https://sourceforge.net/projects/jts-topo-suite/</a> （支持JAVA的空间分析包）<br>GeoTools：<a target="_blank" rel="noopener" href="https://www.geotools.org/">https://www.geotools.org/</a> （支持JAVA的地理处理工具箱）<br>GeoMesa：<a target="_blank" rel="noopener" href="https://www.geomesa.org/">https://www.geomesa.org/</a> 分布式时空大数据分析工具，配合hadoop使用</p>
-<h1 id="四、开放网络地图引擎"><a href="#四、开放网络地图引擎" class="headerlink" title="四、开放网络地图引擎"></a>四、开放网络地图引擎</h1><p>OSM:<a target="_blank" rel="noopener" href="https://www.openstreetmap.org/">https://www.openstreetmap.org/</a> 地图<br>Navit:<a target="_blank" rel="noopener" href="https://www.navit-project.org/">https://www.navit-project.org/</a> 导航</p>
-<h1 id="五、开放三维引擎"><a href="#五、开放三维引擎" class="headerlink" title="五、开放三维引擎"></a>五、开放三维引擎</h1><p>Cesium：<a target="_blank" rel="noopener" href="https://cesium.com/">https://cesium.com/</a><br>OSG earth:<a target="_blank" rel="noopener" href="http://www.openscenegraph.org/">http://www.openscenegraph.org/</a><br>ogre:<a target="_blank" rel="noopener" href="https://www.ogre3d.org/">https://www.ogre3d.org/</a><br>marble:<a target="_blank" rel="noopener" href="https://marble.kde.org/">https://marble.kde.org/</a></p>
-<h1 id="六、开放地理处理工具"><a href="#六、开放地理处理工具" class="headerlink" title="六、开放地理处理工具"></a>六、开放地理处理工具</h1><p>GeoTools：<a target="_blank" rel="noopener" href="https://www.geotools.org/">https://www.geotools.org/</a> 地理处理工具箱<br>GeoNetwork：<a target="_blank" rel="noopener" href="https://geonetwork-opensource.org/">https://geonetwork-opensource.org/</a> 网络地图查看和目录工具<br>Orfeo ToolBox：<a target="_blank" rel="noopener" href="https://www.orfeo-toolbox.org/">https://www.orfeo-toolbox.org/</a> 可以处理TB级的高分辨率光学，多光谱和雷达图像。 </p>
-<h1 id="七、时空大数据框架"><a href="#七、时空大数据框架" class="headerlink" title="七、时空大数据框架"></a>七、时空大数据框架</h1><p>随着全球化和信息化的发展，数据已经成为一种非常宝贵的资源。时空大数据处理技术也因其在军事、环境、气象、交通和金融等领域的广泛应用而备受关注。为了提高数据处理效率和准确度，许多企业和机构开始采用开源框架来构建他们的时空大数据应用。</p>
-<p>在本文中，我们介绍几个流行的时空大数据开源框架。</p>
-<ul>
-<li><ol>
-<li>Apache Hadoop</li>
-</ol>
-</li>
-</ul>
-<p>Apahce Hadoop是一款流行的分布式存储和分析平台，它可以处理大规模数据和时间序列数据。Hadoop是一种完全开源的框架，旨在处理大数据集并在集群中分发数据。它主要由HDFS（Hadoop 分布式文件系统）和MapReduce（一种计算框架）组成。Hadoop有着广泛的数据处理能力，因此可以在很多大型企业、政府机构和科研团队中得到应用。</p>
-<ul>
-<li><ol start="2">
-<li>Apache Spark</li>
-</ol>
-</li>
-</ul>
-<p>Apache Spark是一款快速的大数据计算系统，其可以在内存中快速处理大数据。它能够支持复杂的数据分析任务和像机器学习这样的数据科学工作负载。Spark比Hadoop处理速度更快，并且可以在不占用太多资源的情况下进行大数据处理。它也支持Python、Java和Scala等多种编程语言。Apache Spark常被用来对时空数据进行分析和可视化。</p>
-<ul>
-<li><ol start="3">
-<li>GeoMesa</li>
-</ol>
-</li>
-</ul>
-<p>GeoMesa是一个地理信息系统（GIS）库，可以用于管理和分析大规模时空数据集。它是一个开源库，形成了在云中处理海量时空数据的技术基础，并提供了一些用于时空数据管理和分析的工具。GeoMesa支持多种数据源，如Hadoop、Spark和Accumulo等。利用GeoMesa框架，可以实现时空数据的存储、查询、分析和可视化等操作。</p>
-<ul>
-<li><ol start="4">
-<li>GeoSpark</li>
-</ol>
-</li>
-</ul>
-<p>GeoSpark是基于Spark的时空数据处理、分析和可视化框架。与Apache Spark相似，GeoSpark使用内存计算技术，利于大规模数据的处理。该框架支持多种时空数据源，包括点、线、面、栅格等各种空间数据类型，并提供了丰富的时空数据分析算法。GeoSpark发挥了Spark和Hadoop的优点，使它成为一种非常强大的时空数据分析框架，被广泛应用于城市规划、交通管理和环境监测等领域。</p>
-<p>总之，这些时空大数据开源框架可以帮助企业和组织快速处理和分析时空数据，最大程度地实现数据价值。以上框架都是经过长期测试的，应用广泛的开源框架，因此用户可以根据项目需求和特点对其进行灵活的选择和定制。</p>
-<h1 id="八、开放协会或组织"><a href="#八、开放协会或组织" class="headerlink" title="八、开放协会或组织"></a>八、开放协会或组织</h1><p><a target="_blank" rel="noopener" href="https://www.osgeo.org/">https://www.osgeo.org/</a> 开源地理空间基金会<br><a target="_blank" rel="noopener" href="https://www.osgeo.cn/">https://www.osgeo.cn/</a> 中国开放地理空间实验室<br><a target="_blank" rel="noopener" href="https://www.opengeospatial.org/">https://www.opengeospatial.org/</a> OGC开放地理空间信息联盟</p>
-<p>加利福利亚大学荧光动力学实验室python 库:<br><a target="_blank" rel="noopener" href="https://www.lfd.uci.edu/~gohlke/pythonlibs/">https://www.lfd.uci.edu/~gohlke/pythonlibs/</a></p>
-<p>也可参见grss-ieee地球科学与遥感学会与遥感相关的开源函数库和软件列表：<br><a target="_blank" rel="noopener" href="http://www.grss-ieee.org/open-source-software-related-to-geoscience-and-remote-sensing/">http://www.grss-ieee.org/open-source-software-related-to-geoscience-and-remote-sensing/</a></p>
-<p>OSGeoLive 目录：<br><a target="_blank" rel="noopener" href="http://live.osgeo.org/en/overview/overview.html">http://live.osgeo.org/en/overview/overview.html</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OpenSource/" rel="tag">OpenSource</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebGIS/" rel="tag">WebGIS</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-CentOS7下的GItLab安装与删除"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/07/22/CentOS7%E4%B8%8B%E7%9A%84GItLab%E5%AE%89%E8%A3%85%E4%B8%8E%E5%88%A0%E9%99%A4/"
-    >CentOS7下的GitLab安装与删除</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/07/22/CentOS7%E4%B8%8B%E7%9A%84GItLab%E5%AE%89%E8%A3%85%E4%B8%8E%E5%88%A0%E9%99%A4/" class="article-date">
-  <time datetime="2023-07-22T04:04:33.000Z" itemprop="datePublished">2023-07-22</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="一-GitLab-安装"><a href="#一-GitLab-安装" class="headerlink" title="一. GitLab 安装"></a>一. GitLab 安装</h1><h2 id="1-安装和配置必须的依赖项"><a href="#1-安装和配置必须的依赖项" class="headerlink" title="1. 安装和配置必须的依赖项"></a>1. 安装和配置必须的依赖项</h2><pre><code>sudo yum install -y curl policycoreutils-python openssh-server perl
-sudo systemctl enable sshd
-sudo systemctl start sshd
-sudo firewall-cmd --permanent --add-service=http
-sudo firewall-cmd --permanent --add-service=https
-sudo systemctl reload firewalld
-
-sudo yum install postfix
-sudo systemctl enable postfix
-sudo systemctl start postfix
-</code></pre>
-<h2 id="2-下载-安装极狐GitLab"><a href="#2-下载-安装极狐GitLab" class="headerlink" title="2. 下载/安装极狐GitLab"></a>2. 下载/安装极狐GitLab</h2><p>配置极狐GitLab 软件源镜像。</p>
-<ul>
-<li><p>旗舰版、官网教程</p>
-<p>  curl -fsSL <a target="_blank" rel="noopener" href="https://packages.gitlab.cn/repository/raw/scripts/setup.sh">https://packages.gitlab.cn/repository/raw/scripts/setup.sh</a> | /bin/bash<br>  sudo EXTERNAL_URL=”<a href="https://192.168.10.33:9998&quot;">https://192.168.10.33:9998&quot;</a> yum install -y gitlab-jh</p>
-</li>
-<li><p>社区版，CSDN参考</p>
-<p>  curl <a target="_blank" rel="noopener" href="https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh">https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh</a> | sudo bash<br>  sudo EXTERNAL_URL=”<a href="http://192.168.10.33:9998&quot;">http://192.168.10.33:9998&quot;</a> yum install -y gitlab-ce</p>
-<p>  gitlab-ctl reconfigure</p>
-<p>  gitlab-ctl start || gitlab-ctl restart</p>
-</li>
-</ul>
-<h2 id="4-设置开机自启动"><a href="#4-设置开机自启动" class="headerlink" title="4 设置开机自启动"></a>4 设置开机自启动</h2><pre><code>sudo systemctl enable gitlab-runsvdir.service
-</code></pre>
-<h2 id="5-切换目录使用命令进入控制台修改用户状态"><a href="#5-切换目录使用命令进入控制台修改用户状态" class="headerlink" title="5.切换目录使用命令进入控制台修改用户状态"></a>5.切换目录使用命令进入控制台修改用户状态</h2><pre><code>1) 切换到相应路径下: cd /opt/gitlab/bin/
-2) 打开控制台: sudo gitlab-rails console -e production
-3) 查询用户账号信息并赋值给u: u=User.where(id:1).first
-4) 设置该用户名的密码: u.password=&#39;Demo9999&#39;
-5) 确认密码: u.password_confirmation=&#39;Demo9999&#39;
-6) 保存信息： u.save 
-7) 退出: exit
-</code></pre>
-<h1 id="二-GitLab-卸载"><a href="#二-GitLab-卸载" class="headerlink" title="二. GitLab 卸载"></a>二. GitLab 卸载</h1><h2 id="1、停止-gitlab服务"><a href="#1、停止-gitlab服务" class="headerlink" title="1、停止 gitlab服务"></a>1、停止 gitlab服务</h2><pre><code>gitlab-ctl stop
-</code></pre>
-<h2 id="2、卸载-gitlab（社区版）"><a href="#2、卸载-gitlab（社区版）" class="headerlink" title="2、卸载 gitlab（社区版）"></a>2、卸载 gitlab（社区版）</h2><pre><code>rpm -e gitlab-ce 或者  yum remove gitlab-ce
-</code></pre>
-<h2 id="3、查看-gitlab-进程"><a href="#3、查看-gitlab-进程" class="headerlink" title="3、查看 gitlab 进程"></a>3、查看 gitlab 进程</h2><pre><code>ps aux | grep gitlab 
-</code></pre>
-<h2 id="4、杀掉gitlab-service进程，该进程与runsvdir相关（带有好多…………-的进程）"><a href="#4、杀掉gitlab-service进程，该进程与runsvdir相关（带有好多…………-的进程）" class="headerlink" title="4、杀掉gitlab service进程，该进程与runsvdir相关（带有好多…………. 的进程）"></a>4、杀掉gitlab service进程，该进程与runsvdir相关（带有好多…………. 的进程）</h2><pre><code>kill -9 xxxxxx
-</code></pre>
-<p>其实就是强杀/opt/gitlab/service进程</p>
-<p>如果还不知道怎么杀，就重启服务器也行。</p>
-<h2 id="5、查找并删除所有包含-gitlab-的遗留文件"><a href="#5、查找并删除所有包含-gitlab-的遗留文件" class="headerlink" title="5、查找并删除所有包含 gitlab 的遗留文件"></a>5、查找并删除所有包含 gitlab 的遗留文件</h2><pre><code>find / -name *gitlab*|xargs rm -rf  
-find / -name gitlab |xargs rm -rf 
-
-find / -name postgres |xargs rm -rf 
-
-删除gitlab-ctl uninstall时自动在root下备份的配置文件（ls /root/gitlab* 看看有没有，有也删除）
-</code></pre>
-<h2 id="6、根据上面列出来的目录清单主要删除一下目录"><a href="#6、根据上面列出来的目录清单主要删除一下目录" class="headerlink" title="6、根据上面列出来的目录清单主要删除一下目录"></a>6、根据上面列出来的目录清单主要删除一下目录</h2><pre><code>rm -rf /etc/gitlab
-rm -rf /opt/gitlab
-rm -rf /log/gitlab
-rm -rf /var/opt/gitlab
-rm -rf /var/log/gitlab
-rm -rf /run/gitlab
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS7/" rel="tag">CentOS7</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GitLab/" rel="tag">GitLab</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
   </article>
   
 
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/9/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/43/">43</a><a class="extend next" rel="next" href="/page/11/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/9/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><a class="extend next" rel="next" href="/page/11/">下一页</a>
   </nav>
   
 </section>

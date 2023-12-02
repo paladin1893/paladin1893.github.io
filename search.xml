@@ -1,6 +1,424 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>vue中下载excel文件4种方法</title>
+    <url>/2023/09/23/vue%E4%B8%AD%E4%B8%8B%E8%BD%BDexcel%E6%96%87%E4%BB%B64%E7%A7%8D%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="1、通过url下载"><a href="#1、通过url下载" class="headerlink" title="1、通过url下载"></a>1、通过url下载</h1><p>即后端提供文件的地址，直接使用浏览器去下载</p>
+<p>通过window.location.href = 文件路径下载</p>
+<pre><code>window.location.href = `$&#123;location.origin&#125;/operation/ruleImport/template`
+</code></pre>
+<p>通过 window.open(url, ‘_blank’)</p>
+<pre><code>window.open(`$&#123;location.origin&#125;/operation/ruleImport/template`)
+</code></pre>
+<p>这两种使用方法的不同：</p>
+<p>window.location：当前页跳转，也就是重新定位当前页；只能在网站中打开本网站的网页。<br>window.open：在新窗口中打开链接；可以在网站上打开另外一个网站的地址。</p>
+<h1 id="2、通过-a-标签-download-属性结合-blob-构造函数下载"><a href="#2、通过-a-标签-download-属性结合-blob-构造函数下载" class="headerlink" title="2、通过 a 标签 download 属性结合 blob 构造函数下载"></a>2、通过 a 标签 download 属性结合 blob 构造函数下载</h1><p>a 标签的 download 属性是 HTML5 标准新增的，作用是触发浏览器的下载操作而不是导航到下载的 url，这个属性可以设置下载时使用新的文件名称。</p>
+<p>前端创建超链接，接收后端的文件流：</p>
+<pre><code>axios.get(`/operation/ruleImport/template`,
+    responseType:&quot;blob&quot; //服务器响应的数据英型，可以是&#39;arraybuffer&quot;,&quot;blob&#39;,&quot;document&#39;&quot;,&#39;json&#39;,&#39;text&quot;,&#39;stream&#39;
+    &#125;)
+    .then(res =&gt;
+        if(!res) return
+        const blob = new Blob([res.data],(type:&#39;application/vnd.ms-excel&#39;&#125;)/构造一blob对象来处数据，并设置文件
+        
+        if (window.navigator.msSaveOrOpenBlob)&#123; //兼容IE10
+            navigator.msSaveBlob(blob, this.filename)
+        &#125; else &#123;
+            const href = URL.createObjectURL(blob) //创建所航URL装示指定bLob对象
+            const a = document.createElement(&#39;a&#39;)   //创建a标签
+            a.style.display = &#39;none&#39;
+            a.href = href //指定下视链接
+            a.download = this.fi1ename //指定下件文件名
+            a.click() //发下
+            URL.revokeObjectURL(a.href) //释放URL对象
+        &#125;
+        //这里也可以不创建a接，蓝简vindow.open(href)也能下，
+    &#125;)
+    .catch(err-&gt;&#123;
+        console.1og(err)
+    &#125;)
+</code></pre>
+<p>注：请求后台接口时要在请求头上加{responseType: ‘blob’}；download 设置文件名时，可以直接设置扩展名，如果没有设置浏览器将自动检测正确的文件扩展名并添加到文件。</p>
+<h1 id="3、通过-js-file-download-插件"><a href="#3、通过-js-file-download-插件" class="headerlink" title="3、通过 js-file-download 插件"></a>3、通过 js-file-download 插件</h1><p>安装：</p>
+<pre><code>npm install js-file-download --S
+</code></pre>
+<p>代码：</p>
+<pre><code>import fileDownload from &#39;js-file-download&#39;
+
+axios.get(`/operation/ruleImport/template`,&#123;
+    responseType: &#39;blob&#39; //返回的数据英型
+&#125;)
+.then(res =&gt; &#123;
+    fileDownload(res.data,this.fileName)
+&#125;)
+</code></pre>
+<h1 id="4、使用fetch下载"><a href="#4、使用fetch下载" class="headerlink" title="4、使用fetch下载"></a>4、使用fetch下载</h1><pre><code>exportFile()&#123;
+    fetch(&#39;http://127.0.0.1:8765/course/exportCourse/33&#39;,&#123;
+        method:&#39;GET&#39;,
+        headers:new Headers(&#123;
+            &#39;Authorization&#39;:Cookie.get(&#39;Authorization&#39;)
+        &#125;),
+    &#125;)
+    .then(res =&gt; res.blob())
+    .then(data =&gt; &#123;
+        const blobUrl = window.URL.createobjectURL(data);
+        const a = document.createElement(&#39;a&#39;);
+        a.download = this.fileName+&#39;.xlsx&#39;;
+        a.href = blobUrl;
+        a.click();
+    &#125;);
+    &#125;,
+</code></pre>
+<p>原文链接：<a href="https://www.clzg.cn/article/441428.html">https://www.clzg.cn/article/441428.html</a></p>
+]]></content>
+      <categories>
+        <category>软件开发</category>
+      </categories>
+      <tags>
+        <tag>Vue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>17个vue常用的数组方法总结与实例演示</title>
+    <url>/2023/09/22/17%E4%B8%AAvue%E5%B8%B8%E7%94%A8%E7%9A%84%E6%95%B0%E7%BB%84%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93%E4%B8%8E%E5%AE%9E%E4%BE%8B%E6%BC%94%E7%A4%BA/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>这篇文章主要介绍了vue中常用的数组方法,包括：VUE数组转换字符串，VUE数组遍历，VUE数组过滤，VUE数组查询,VUE数组排序等功能，需要的朋友可以参考下</p>
+<h1 id="1-join"><a href="#1-join" class="headerlink" title="1. join()"></a>1. join()</h1><p>join（’参数‘）把数组的元素以传入的参数为分割符，转换成字符串。</p>
+<pre><code>let arr = [1,2,3,4,5];
+let str = arr.join(&#39;,&#39;);
+console.log(str) // -&gt; &#39;1,2,3,4,5&#39;;
+</code></pre>
+<h1 id="2-push-和pop"><a href="#2-push-和pop" class="headerlink" title="2.push()和pop()"></a>2.push()和pop()</h1><p>push(): 可以接收任意数量的参数，把它们逐个添加到数组末尾，并返回修改后数组的长度。<br>pop()：数组末尾移除最后一项，减少数组的 length 值，然后返回移除的项。</p>
+<pre><code>let arr = [&#39;张三&#39;,&#39;李四&#39;,&#39;王五&#39;];
+let count = arr.push(&#39;马六&#39;);
+console.log(arr) // -&gt; [&#39;张三&#39;,&#39;李四&#39;,&#39;王五&#39;,&#39;马六&#39;]
+console.log(count) // -&gt; 4
+  
+let item = arr.pop();
+console.log(item) // -&gt; 马六;
+</code></pre>
+<h1 id="3-shift-和-unshift"><a href="#3-shift-和-unshift" class="headerlink" title="3.shift() 和 unshift()"></a>3.shift() 和 unshift()</h1><p>shift()：删除原数组第一项，并返回删除元素的值；如果数组为空则返回undefined 。<br>unshift:将参数添加到原数组开头，并返回数组的长度 。</p>
+<pre><code>let arr = [&#39;张三&#39;,&#39;李四&#39;,&#39;王五&#39;];
+let item = arr.shift();
+console.log(arr) // -&gt; [&#39;李四&#39;,&#39;王五&#39;]
+console.log(item); // -&gt; 张三
+  
+let count = arr.unshift(&#39;马六&#39;);
+  
+console.log(arr) // -&gt; [&#39;马六&#39;,&#39;李四&#39;,&#39;王五&#39;]
+console.log(count) // -&gt; 3
+</code></pre>
+<h1 id="4-reverse"><a href="#4-reverse" class="headerlink" title="4.reverse();"></a>4.reverse();</h1><p>将数组的数据进行反转，并且返回反转后的数组，会改变原数组</p>
+<pre><code>let arr = [1,2,3,4,5];
+let arr1 = arr.reverse();
+console.log(arr1) // -&gt; [5,4,3,2,1]
+console.log(arr) // -&gt; [5,4,3,2,1]
+</code></pre>
+<h1 id="5-sort"><a href="#5-sort" class="headerlink" title="5.sort();"></a>5.sort();</h1><p>对数组内的数据进行排序(默认为升序)，并且返回排过序的新数组，会改变原来的数组</p>
+<pre><code>let arr = [12,2,43,5,2,5];
+console.log(arr.sort()) // -&gt; [12, 2, 2, 43, 5, 5]
+// 注意：通过上面的案例，你会发现 打印的数组和原数组比较还是有变化的 [12,2,43,5,2,5] -&gt; [12, 2, 2, 43, 5, 5];但是有没有达到我们想要的结果，这是为什么呢？
+// 因为排序是针对字符的排序，先使用数组的toString()方法转为字符串，再逐位比较，3是大于12的，因为首位3&gt;1，不要与Number型的数据排序混淆。
+</code></pre>
+<p>5.1那如果需要数值排序怎么办呢？</p>
+<pre><code>// 如果需要数值排序，sort(callback) 需要传入一个回调涵数，该函数应该具有两个参数，比较这两个参数，然后返回一个用于说明这两个值的相对顺序的数字（a-b）；
+例如：
+let arr = [12,2,43,5,2,5];
+console.log(arr.sort((a,b)=&gt;a-b)) // -&gt; [2, 2, 5, 5, 12, 43]
+</code></pre>
+<h1 id="6-slice"><a href="#6-slice" class="headerlink" title="6.slice();"></a>6.slice();</h1><p>截取指定位置的数组，并且返回截取的数组，不会改变原数组</p>
+<pre><code>// 注意：slice（startIndex, endIndex）可以有两个参数，startIndex为必选，表示从第几位开始；endIndex为可选，表示到第几位结束(不包含endIndex位)，省略表示到最后一位；startIndex和endIndex都可以为负数，负数时表示从最后一位开始算起，如-1表示最后一位。
+let arr =  [&#39;张三&#39;,&#39;李四&#39;,&#39;王五&#39;,&#39;马六&#39;];
+console.log(arr.slice(1,3)); // -&gt; [&#39;李四&#39;, &#39;王五&#39;]
+console.log(arr) // -&gt; [&#39;张三&#39;,&#39;李四&#39;,&#39;王五&#39;,&#39;马六&#39;]; 原数组是没有改变的。
+</code></pre>
+<h1 id="7-splice"><a href="#7-splice" class="headerlink" title="7.splice();"></a>7.splice();</h1><p>向数组中添加，或从数组删除，或替换数组中的元素，然后返回被删除/替换的元素。</p>
+<pre><code>// 注意：splice(start,num,val1,val2,...); 所有参数全部可选。和 slice 相比 splice 是会改变原数组的。
+// start 是开始位置,可以为负数，-1就代表从最后一位开始，num代表要删除或者替换的长度，不能为负数。
+let arr = [&#39;张三&#39;,&#39;李四&#39;,&#39;王五&#39;,&#39;马六&#39;];
+console.log(arr.splice(2,1)) // -&gt; [&#39;王五&#39;]
+console.log(arr) // -&gt; [&#39;张三&#39;,&#39;李四&#39;,&#39;马六&#39;]
+  
+let arr = [&#39;张三&#39;,&#39;李四&#39;,&#39;王五&#39;,&#39;马六&#39;];
+console.log(arr.splice(2,1,&#39;七郎&#39;)) // -&gt; [&#39;王五&#39;] 
+console.log(arr) // -&gt; [&#39;张三&#39;, &#39;李四&#39;, &#39;七郎&#39;, &#39;马六&#39;]
+</code></pre>
+<h1 id="8-toString"><a href="#8-toString" class="headerlink" title="8.toString();"></a>8.toString();</h1><p>将数组转换成字符串，类似于没有参数的join()。该方法会在数据发生隐式类型转换时被自动调用，如果手动调用，就是直接转为字符串。不会改变原数组</p>
+<pre><code>let arr = [1,2,3,4,5,6];
+console.log(arr.toString()) // -&gt; &#39;1,2,3,4,5,6&#39;
+// 注意：没有参数。
+</code></pre>
+<h1 id="9-indexOf"><a href="#9-indexOf" class="headerlink" title="9.indexOf();"></a>9.indexOf();</h1><p>根据指定的数据，从左向右，查询在数组中出现的位置，如果不存在指定的数据，返回-1，找到了指定的数据返回该数据的索引</p>
+<pre><code>// 注意：indexOf(value, start);value为要查询的数据；start为可选，表示开始查询的位置，当start为负数时，从数组的尾部向前数；如果查询不到value的存在，则方法返回-1
+  
+let arr = [&#39;张三&#39;,&#39;李四&#39;,&#39;王五&#39;,&#39;马六&#39;];
+console.log(arr.indexOf(&#39;李四&#39;)) // -&gt; 1
+console.log(arr.indexOf(&#39;李四&#39;,2)) // -&gt; -1
+</code></pre>
+<h1 id="10-forEach"><a href="#10-forEach" class="headerlink" title="10.forEach()"></a>10.forEach()</h1><p>ES5新增的方法，用来遍历数组，没有返回值，</p>
+<pre><code>// 注意：forEach(callback);callback默认有三个参数，分别为value(遍历到的数组的数据)，index(对应的索引)，self(数组自身)。
+let arr = [&#39;张三&#39;,&#39;李四&#39;,&#39;王五&#39;,&#39;马六&#39;]
+let a = arr.forEach((item,index,self)=&gt;&#123;
+    console.log(value + &quot;--&quot; + index + &quot;--&quot; + (arr === self));
+&#125;)
+// 打印结果为：
+// 张三--0--true
+// 李四--1--true
+// 王五--2--true
+// 马六--3--true
+console.log(a);  // -&gt; undefined---forEach没有返回值
+//该方法为遍历方法，不会修改原数组
+</code></pre>
+<h1 id="11-map-；"><a href="#11-map-；" class="headerlink" title="11.map()；"></a>11.map()；</h1><p>1.同forEach功能；<br>2.map的回调函数会将执行结果返回，最后map将所有回调函数的返回值组成新数组返回。</p>
+<pre><code>//注意：map(callback);callback默认有三个参数，分别为value，index，self。跟上面的forEach()的参数一样
+let arr = [&#39;张三&#39;,&#39;李四&#39;,&#39;王五&#39;,&#39;马六&#39;];
+let arr1 = arr.map(item =&gt; &#123;
+    return &#39;你好：&#39;+item
+&#125;)
+console.log(arr1) // -&gt; [&#39;你好：张三&#39;, &#39;你好：李四&#39;, &#39;你好：王五&#39;, &#39;你好：马六&#39;]
+</code></pre>
+<h1 id="12-filter"><a href="#12-filter" class="headerlink" title="12.filter();"></a>12.filter();</h1><p>1.同forEach功能；2.filter的回调函数需要返回布尔值，当为true时，将本次数组的数据返回给filter，最后filter将所有回调函数的返回值组成新数组返回（此功能可理解为“过滤”）。</p>
+<pre><code>// 注意：filter(callback);callback默认有三个参数，分别为value，index，self。
+let arr = [1,2,3,4,5,6];
+let arr1 = arr.filter((value,index,self)=&gt;&#123;
+    console.log(item) // -&gt; 1,2,3,4,5,6
+    console.log(index) // -&gt; 0,1,2,3,4,5
+    console.log(self) // -&gt; [1,2,3,4,5,6]
+    return item &gt; 3
+&#125;)
+  
+console.log(arr1) // -&gt; [4,5,6]
+</code></pre>
+<h1 id="13-find"><a href="#13-find" class="headerlink" title="13.find();"></a>13.find();</h1><p>数组的循环，查找到符合条件的值并且打断循环返回找到的值；</p>
+<pre><code>let arr = [&#39;张三&#39;,&#39;李四&#39;,&#39;王五&#39;,&#39;马六&#39;];
+let str = arr.find(item =&gt; item == &#39;李四&#39;);
+console.log(str); // -&gt; &#39;李四&#39;
+</code></pre>
+<h1 id="14-findIndex"><a href="#14-findIndex" class="headerlink" title="14.findIndex();"></a>14.findIndex();</h1><p>数组的循环，查找到符合条件的索引并且打断循环返回找到的索引值</p>
+<pre><code>let arr = [&#39;张三&#39;,&#39;李四&#39;,&#39;王五&#39;,&#39;马六&#39;];
+let index = arr.findIndex(item =&gt; item == &#39;李四&#39;);
+console.log(index); // -&gt; 1;
+</code></pre>
+<h1 id="15-every"><a href="#15-every" class="headerlink" title="15.every();"></a>15.every();</h1><p>判断数组中每一项是否都满足条件，只有所有项都满足条件，才会返回true。</p>
+<pre><code>// 注意： every()接收一个回调函数作为参数，这个回调函数需要有返回值，every(callback);callback默认有三个参数，分别为value，index，self。
+let arr = [1,2,3,4,5,6];
+let bool = arr.every(item =&gt; item &gt; 0);
+console.log(bool); // -&gt; true;
+  
+let bool = arr.every(item =&gt; item &gt; 3);
+console.log(bool); // -&gt; false;
+</code></pre>
+<h1 id="16-some"><a href="#16-some" class="headerlink" title="16.some();"></a>16.some();</h1><p>判断数组中是否存在满足条件的项，只要有一项满足条件，就会返回true。否侧就会返回false</p>
+<pre><code>//注意： some()接收一个回调函数作为参数，这个回调函数需要有返回值，some(callback);callback默认有三个参数，分别为value，index，self。
+let arr = [1,2,3,4,5,6];
+let bool = arr.some(item =&gt; item &gt; 3);
+console.log(bool) // -&gt; true;
+  
+let bool = arr.some(item =&gt; item &gt; 6);
+console.log(bool) // -&gt; false;
+</code></pre>
+<h1 id="17-reduce"><a href="#17-reduce" class="headerlink" title="17.reduce();"></a>17.reduce();</h1><p>数组的第一项开始，逐个遍历到最后，迭代数组的所有项，然后构建一个最终返回的值。</p>
+<pre><code>// 注意：参数：reduce()接收一个或两个参数：第一个是回调函数，表示在数组的每一项上调用的函数；第二个参数（可选的）作为归并的初始值，被回调函数第一次执行时的第一个参数接收。 reduce(callback,initial);callback默认有四个参数，分别为prev，now，index，self。 callback返回的任何值都会作为下一次执行的第一个参数。 如果initial参数被省略，那么第一次迭代发生在数组的第二项上，因此callback的第一个参数是数组的第一项，第二个参数就是数组的第二项。
+  
+let arr = [10,20,30,40,50];
+let sum = arr.reduce((prev,now) =&gt; prev+now)
+  
+console.log(sum); // -&gt; 150;
+  
+let sum = arr.reduce((prev,now) =&gt; prev+now,110)
+  
+console.log(sum)
+</code></pre>
+<p>本文为大家讲解了17个vue常用的数组方法总结与实例演示，包括：VUE数组转换字符串，VUE数组遍历，VUE数组过滤，VUE数组查询等功能</p>
+<p><a href="https://www.jb51.net/article/269686.htm">https://www.jb51.net/article/269686.htm</a></p>
+]]></content>
+      <categories>
+        <category>软件开发</category>
+      </categories>
+      <tags>
+        <tag>Vue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Vue中下载不同文件五种常用的方式</title>
+    <url>/2023/09/21/Vue%E4%B8%AD%E4%B8%8B%E8%BD%BD%E4%B8%8D%E5%90%8C%E6%96%87%E4%BB%B6%E4%BA%94%E7%A7%8D%E5%B8%B8%E7%94%A8%E7%9A%84%E6%96%B9%E5%BC%8F/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>当在Vue中需要实现文件下载功能时，我们可以有多种方式来完成。下面将介绍五种常用的方法。</p>
+<h1 id="1-使用window-open方法下载文件"><a href="#1-使用window-open方法下载文件" class="headerlink" title="1. 使用window.open方法下载文件"></a>1. 使用window.open方法下载文件</h1><pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;button @click=&quot;downloadFile(&#39;file1.pdf&#39;)&quot;&gt;下载文件1&lt;/button&gt;
+    &lt;button @click=&quot;downloadFile(&#39;file2.jpg&#39;)&quot;&gt;下载文件2&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+export default &#123;
+  methods: &#123;
+    downloadFile(fileName) &#123;
+      const fileUrl = &#39;/path/to/&#39; + fileName; // 文件的URL地址
+      window.open(fileUrl);
+    &#125;
+  &#125;
+&#125;;
+&lt;/script&gt;
+</code></pre>
+<p>在上面的示例中，我们使用了window.open方法来打开一个新窗口，并直接访问文件的URL地址，从而触发文件下载。</p>
+<h1 id="2-使用标签进行文件下载"><a href="#2-使用标签进行文件下载" class="headerlink" title="2. 使用标签进行文件下载"></a>2. 使用<a>标签进行文件下载</a></h1><pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;button @click=&quot;downloadFile(&#39;file1.pdf&#39;)&quot;&gt;下载文件1&lt;/button&gt;
+    &lt;button @click=&quot;downloadFile(&#39;file2.jpg&#39;)&quot;&gt;下载文件2&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+export default &#123;
+  methods: &#123;
+    downloadFile(fileName) &#123;
+      const fileUrl = &#39;/path/to/&#39; + fileName; // 文件的URL地址
+      const link = document.createElement(&#39;a&#39;);
+      link.href = fileUrl;
+      link.setAttribute(&#39;download&#39;, fileName);
+      link.click();
+    &#125;
+  &#125;
+&#125;;
+&lt;/script&gt;
+</code></pre>
+<p>在上面的示例中，我们首先创建一个<a>标签，然后设置其href属性为文件的URL地址，download属性为要下载的文件名。最后，通过调用click()方法触发链接的点击事件，实现文件的下载。</a></p>
+<h1 id="3-使用axios下载文件"><a href="#3-使用axios下载文件" class="headerlink" title="3. 使用axios下载文件"></a>3. 使用axios下载文件</h1><pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;button @click=&quot;downloadFile(&#39;file1.pdf&#39;)&quot;&gt;下载文件1&lt;/button&gt;
+    &lt;button @click=&quot;downloadFile(&#39;file2.jpg&#39;)&quot;&gt;下载文件2&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import axios from &#39;axios&#39;;
+export default &#123;
+  methods: &#123;
+    downloadFile(fileName) &#123;
+      const fileUrl = &#39;/path/to/&#39; + fileName; // 文件的URL地址
+      axios.get(fileUrl, &#123; responseType: &#39;blob&#39; &#125;)
+        .then(response =&gt; &#123;
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement(&#39;a&#39;);
+          link.href = url;
+          link.setAttribute(&#39;download&#39;, fileName);
+          document.body.appendChild(link);
+          link.click();
+        &#125;)
+        .catch(error =&gt; &#123;
+          console.error(error);
+        &#125;);
+    &#125;
+  &#125;
+&#125;;
+&lt;/script&gt;
+</code></pre>
+<p>在上面的示例中，我们使用了axios发送GET请求，设置responseType为blob以便获取文件的二进制数据。然后，通过创建临时URL、创建<a>标签并设置下载属性，实现文件的下载。</a></p>
+<h1 id="4-使用Fetch-API下载文件"><a href="#4-使用Fetch-API下载文件" class="headerlink" title="4. 使用Fetch API下载文件"></a>4. 使用Fetch API下载文件</h1><pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;button @click=&quot;downloadFile(&#39;file1.pdf&#39;)&quot;&gt;下载文件1&lt;/button&gt;
+    &lt;button @click=&quot;downloadFile(&#39;file2.jpg&#39;)&quot;&gt;下载文件2&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+export default &#123;
+  methods: &#123;
+    downloadFile(fileName) &#123;
+      const fileUrl = &#39;/path/to/&#39; + fileName; // 文件的URL地址
+      fetch(fileUrl)
+        .then(response =&gt; response.blob())
+        .then(blob =&gt; &#123;
+          const url = window.URL.createObjectURL(blob);
+          const link = document.createElement(&#39;a&#39;);
+          link.href = url;
+          link.setAttribute(&#39;download&#39;, fileName);
+          document.body.appendChild(link);
+          link.click();
+        &#125;)
+        .catch(error =&gt; &#123;
+          console.error(error);
+        &#125;);
+    &#125;
+  &#125;
+&#125;;
+&lt;/script&gt;
+</code></pre>
+<p>在上面的示例中，我们使用了Fetch API发送GET请求，并使用.blob()方法将返回的数据转换为blob对象。然后，通过创建临时URL、创建<a>标签并设置下载属性，实现文件的下载。</a></p>
+<h1 id="5-使用Vue的-download方法下载文件"><a href="#5-使用Vue的-download方法下载文件" class="headerlink" title="5. 使用Vue的$download方法下载文件"></a>5. 使用Vue的$download方法下载文件</h1><pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;button @click=&quot;downloadFile(&#39;file1.pdf&#39;)&quot;&gt;下载文件1&lt;/button&gt;
+    &lt;button @click=&quot;downloadFile(&#39;file2.jpg&#39;)&quot;&gt;下载文件2&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+export default &#123;
+  methods: &#123;
+    downloadFile(fileName) &#123;
+      const fileUrl = &#39;/path/to/&#39; + fileName; // 文件的URL地址
+      this.$download(fileUrl, fileName);
+    &#125;
+  &#125;
+&#125;;
+&lt;/script&gt;
+</code></pre>
+<p>在这个示例中，我们直接调用Vue实例的$download方法，并传入文件的URL地址和下载的文件名，即可实现文件的下载。</p>
+<h1 id="6-使用创建a标签方法下载文件"><a href="#6-使用创建a标签方法下载文件" class="headerlink" title="6. 使用创建a标签方法下载文件"></a>6. 使用创建a标签方法下载文件</h1><pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;button @click=&quot;downloadFile(&#39;file1.pdf&#39;)&quot;&gt;下载文件1&lt;/button&gt;
+    &lt;button @click=&quot;downloadFile(&#39;file2.jpg&#39;)&quot;&gt;下载文件2&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+export default &#123;
+  methods: &#123;
+    downloadFile(fileName) &#123;
+      const folderPath = &#39;/path/to/folder/&#39;; // 文件所在的文件夹路径
+      const fileUrl = folderPath + fileName; // 拼接文件夹路径和文件名
+      const link = document.createElement(&#39;a&#39;);
+      link.href = fileUrl;
+      link.setAttribute(&#39;download&#39;, fileName);
+      link.click();
+    &#125;
+  &#125;
+&#125;;
+&lt;/script&gt;
+</code></pre>
+<p>在这个示例中，我们首先定义了文件所在的文件夹路径folderPath，然后通过拼接文件夹路径和文件名来构建完整的文件URL地址fileUrl。接着，我们创建一个<a>标签，并设置其href属性为文件URL，download属性为要下载的文件名。最后，通过调用click()方法触发链接的点击事件，实现文件的下载。</a></p>
+<p>以上是六种常用的在Vue中实现文件下载的方式，请根据项目需求选择合适的方式来完成文件下载功能。</p>
+<p><a href="https://www.jb51.net/javascript/2987938qn.htm">https://www.jb51.net/javascript/2987938qn.htm</a></p>
+]]></content>
+      <categories>
+        <category>软件开发</category>
+      </categories>
+      <tags>
+        <tag>Vue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用elmentUI里面el-button按钮替换input type=“file“ 默认按钮</title>
+    <url>/2023/09/20/%E4%BD%BF%E7%94%A8elmentUI%E9%87%8C%E9%9D%A2el-button%E6%8C%89%E9%92%AE%E6%9B%BF%E6%8D%A2input%20type=%E2%80%9Cfile%E2%80%9C%20%E9%BB%98%E8%AE%A4%E6%8C%89%E9%92%AE/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>先隐藏input的默认按钮，再把el-button的点击事件指向input的点击事件</p>
+<pre><code>&lt;form name=&quot;formInput&quot;&gt;
+    &lt;input type=&quot;file&quot; 
+           id=&quot;fileDemo&quot;
+           class=&quot;input&quot; 
+           style=&quot;position:absolute; clip:rect(0 0 0 0);&quot;   //隐藏样式
+           @change=&quot;changeFileDemo&quot;&gt;
+&lt;/form&gt;
+&lt;el-button size=&quot;small&quot; 
+        type=&quot;primary&quot; 
+        plain 
+        onclick=&quot;document.formInput.fileDemo.click()&quot;&gt;选择文件  //点击事件指向input
+&lt;/el-button&gt;
+</code></pre>
+<p>formInput 为<form>里面name的值</form></p>
+<p>fileDemo 为<input>里面id的值<br>————————————————<br>版权声明：本文为CSDN博主「前端小蔡姬」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a href="https://blog.csdn.net/x_nweBorder01k/article/details/124715048">https://blog.csdn.net/x_nweBorder01k/article/details/124715048</a></p>
+]]></content>
+      <categories>
+        <category>软件开发</category>
+      </categories>
+      <tags>
+        <tag>Vue</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Vue3 点击el-button 触发input type=“file“ 选择本地文件 并修改样式</title>
     <url>/2023/09/19/Vue3%20%E7%82%B9%E5%87%BBel-button%20%E8%A7%A6%E5%8F%91input%20type=%E2%80%9Cfile%E2%80%9C%20%E9%80%89%E6%8B%A9%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6%20%E5%B9%B6%E4%BF%AE%E6%94%B9%E6%A0%B7%E5%BC%8F/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>template</p>

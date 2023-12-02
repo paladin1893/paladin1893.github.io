@@ -154,6 +154,478 @@
     
     
     <article
+  id="post-Vue2传值方式详解05"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/09/05/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A305/"
+    >Vue2传值方式详解05-Vuex通信</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/09/05/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A305/" class="article-date">
+  <time datetime="2023-09-05T04:12:12.000Z" itemprop="datePublished">2023-09-05</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>组件通过 dispatch 到 actions，actions 是异步操作，再 actions中通过 commit 到 mutations，mutations 再通过逻辑操作改变 state，从而同步到组件，更新其数据状态</p>
+<p>代码示例：</p>
+<p>父组件</p>
+<pre><code>//父组件
+template&gt;
+  &lt;div id=&quot;app&quot;&gt;
+    &lt;ChildA/&gt;
+    &lt;ChildB/&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+  import ChildA from &#39;./ChildA&#39; // 导入A组件
+  import ChildB from &#39;./ChildB&#39; // 导入B组件
+  export default &#123;
+    components: &#123;ChildA, ChildB&#125; // 注册组件
+  &#125;
+&lt;/script&gt;
+</code></pre>
+<p>子组件A</p>
+<pre><code>//子组件A
+&lt;template&gt;
+ &lt;div id=&quot;childA&quot;&gt;
+   &lt;h1&gt;我是A组件&lt;/h1&gt;
+   &lt;button @click=&quot;transform&quot;&gt;点我让B组件接收到数据&lt;/button&gt;
+   &lt;p&gt;因为点了B，所以信息发生了变化：&#123;&#123;BMessage&#125;&#125;&lt;/p&gt;
+ &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+ export default &#123;
+   data() &#123;
+     return &#123;
+       AMessage: &#39;Hello，B组件，我是A组件&#39;
+     &#125;
+   &#125;,
+   computed: &#123;
+     BMessage() &#123;
+       // 这里存储从store里获取的B组件的数据
+       return this.$store.state.BMsg
+     &#125;
+   &#125;,
+   methods: &#123;
+     transform() &#123;
+       // 触发receiveAMsg，将A组件的数据存放到store里去
+       this.$store.commit(&#39;receiveAMsg&#39;, &#123;
+         AMsg: this.AMessage
+       &#125;)
+     &#125;
+   &#125;
+ &#125;
+&lt;/script&gt;
+</code></pre>
+<p>子组件B</p>
+<pre><code>//子组件B
+&lt;template&gt;
+ &lt;div id=&quot;childB&quot;&gt;
+   &lt;h1&gt;我是B组件&lt;/h1&gt;
+   &lt;button @click=&quot;transform&quot;&gt;点我让A组件接收到数据&lt;/button&gt;
+   &lt;p&gt;点了A，我的信息发生了变化：&#123;&#123;AMessage&#125;&#125;&lt;/p&gt;
+ &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+ export default &#123;
+   data() &#123;
+     return &#123;
+       BMessage: &#39;Hello，A组件，我是B组件&#39;
+     &#125;
+   &#125;,
+   computed: &#123;
+     AMessage() &#123;
+       // 这里存储从store里获取的A组件的数据
+       return this.$store.state.AMsg
+     &#125;
+   &#125;,
+   methods: &#123;
+     transform() &#123;
+       // 触发receiveBMsg，将B组件的数据存放到store里去
+       this.$store.commit(&#39;receiveBMsg&#39;, &#123;
+         BMsg: this.BMessage
+       &#125;)
+     &#125;
+   &#125;
+ &#125;
+&lt;/script&gt;
+</code></pre>
+<p>vuex</p>
+<pre><code>//vuex
+import Vue from &#39;vue&#39;
+ import Vuex from &#39;vuex&#39;
+ Vue.use(Vuex)
+ const state = &#123;
+   AMsg: &#39;&#39;,
+   BMsg: &#39;&#39;
+ &#125;
+ 
+ const mutations = &#123;
+   receiveAMsg(state, payload) &#123;
+     // 将A组件的数据存放于state
+     state.AMsg = payload.AMsg
+   &#125;,
+   receiveBMsg(state, payload) &#123;
+     // 将B组件的数据存放于state
+     state.BMsg = payload.BMsg
+   &#125;
+ &#125;
+ 
+ export default new Vuex.Store(&#123;
+   state,
+   mutations
+ &#125;)
+</code></pre>
+<p>————————————————<br>版权声明：本文为CSDN博主「小毕学习代码」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_70703397/article/details/132201160">https://blog.csdn.net/qq_70703397/article/details/132201160</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-Vue2传值方式详解04"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/09/04/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A304/"
+    >Vue2传值方式详解04-ref/refs（父子组件通信）</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/09/04/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A304/" class="article-date">
+  <time datetime="2023-09-04T13:21:21.000Z" itemprop="datePublished">2023-09-04</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>（1）ref 如果在普通的 DOM 元素上使用，引用指向的就是 DOM 元素；如果用在子组件上，引用就指向组件实例，<br>（2）可以通过实例直接调用组件的方法或访问数据。也算是子组件向父组件传值的一种</p>
+<p>代码示例：</p>
+<p>父组件</p>
+<pre><code>//父组件
+&lt;template&gt;
+  &lt;div&gt;
+    &lt;button @click=&quot;sayHello&quot;&gt;sayHello&lt;/button&gt;
+    &lt;child ref=&quot;childForRef&quot;&gt;&lt;/child&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import child from &#39;./child.vue&#39;
+  export default &#123;
+    components: &#123; child &#125;,
+    data () &#123;
+      return &#123;
+        childForRef: null,
+      &#125;
+    &#125;,
+    mounted() &#123;
+      this.childForRef = this.$refs.childForRef;
+      console.log(this.childForRef.name);
+    &#125;,
+    methods: &#123;
+      sayHello() &#123;
+        this.childForRef.sayHello()
+      &#125;
+    &#125;
+  &#125;
+&lt;/script&gt;
+</code></pre>
+<p>子组件</p>
+<pre><code>//子组件
+&lt;template&gt;
+  &lt;div&gt;child 的内容&lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+export default &#123;
+  data () &#123;
+    return &#123;
+      name: &#39;我是 child&#39;,
+    &#125;
+  &#125;,
+  methods: &#123;
+    sayHello () &#123;
+      console.log(&#39;hello&#39;);
+      alert(&#39;hello&#39;);
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>————————————————<br>版权声明：本文为CSDN博主「小毕学习代码」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_70703397/article/details/132201160">https://blog.csdn.net/qq_70703397/article/details/132201160</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-Vue2传值方式详解03"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/09/03/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A303/"
+    >Vue2传值方式详解03-兄弟组件通信（bus总线）</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/09/03/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A303/" class="article-date">
+  <time datetime="2023-09-03T11:19:19.000Z" itemprop="datePublished">2023-09-03</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>main.js</p>
+<pre><code>// main.js 文件
+import Vue from &#39;vue&#39;
+import App from &#39;./App.vue&#39;
+
+Vue.config.productionTip = false
+
+new Vue(&#123;
+  render: h =&gt; h(App),
+  beforeCreate() &#123;
+    // 需要在全局添加一个属性
+    Vue.prototype.$bus = this
+  &#125;
+&#125;).$mount(&#39;#app&#39;)
+</code></pre>
+<p>Father.vue</p>
+<pre><code>// Father.vue 文件
+&lt;template&gt;
+  &lt;div id=&quot;father&quot;&gt;
+    &lt;button @click=&quot;btn&quot;&gt;我要给 Brother 组件传数据&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default &#123;
+  name: &quot;Father&quot;,
+  methods: &#123;
+    btn() &#123;
+      this.$bus.$emit(&quot;change&quot;, 66666);
+    &#125;,
+  &#125;,
+&#125;;
+&lt;/script&gt;
+</code></pre>
+<p>Brother.vue</p>
+<pre><code>// Brother.vue 文件
+&lt;template&gt;
+  &lt;div id=&quot;brother&quot;&gt;&lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default &#123;
+  name: &quot;Brother&quot;,
+  mounted() &#123;
+    this.$bus.$on(&quot;change&quot;, (msg) =&gt; &#123;
+      console.log(msg);
+    &#125;);
+  &#125;,
+&#125;;
+&lt;/script&gt;
+</code></pre>
+<p>————————————————<br>版权声明：本文为CSDN博主「codeCat!」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_60547084/article/details/124408513">https://blog.csdn.net/weixin_60547084/article/details/124408513</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-Vue2传值方式详解02"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/09/02/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A302/"
+    >Vue2传值方式详解02-子传父传递</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/09/02/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A302/" class="article-date">
+  <time datetime="2023-09-02T12:34:26.000Z" itemprop="datePublished">2023-09-02</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>（1）在父组件的子组件标签上自定义一个事件，然后调用需要的方法<br>（2）在子组件的方法中通过 this.$emit(“事件”)来触发在父组件中定义的事件，数据是以参数的形式进行传递的</p>
+<p>代码示例：</p>
+<p>父组件</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;i&gt;父组件&lt;/i&gt;
+    &lt;!--页面使用--&gt;
+    &lt;son @lcclick=&quot;lcclick&quot;&gt;&lt;/son&gt;//自定义一个事件
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+import son from &quot;./son.vue&quot;; //导入父组件
+export default &#123;
+  components: &#123; son &#125;, //注册组件
+  name: &quot;父组件&quot;,
+  data() &#123;
+    return &#123;&#125;;
+  &#125;,
+  methods: &#123;
+    lcclick()&#123;
+      alert(&#39;子传父&#39;)
+    &#125;
+  &#125;,
+&#125;;
+&lt;/script&gt;
+</code></pre>
+<p>子组件</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;button @click=&quot;lcalter&quot;&gt;点我&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+export default &#123;
+components: &#123; &#125;,
+  name: &#39;子组件&#39;,
+  methods: &#123;
+    lcalter()&#123;
+      this.$emit(&#39;lcclick&#39;)//通过emit来触发事件
+    &#125;
+  &#125;,
+&#125;;
+&lt;/script&gt;
+</code></pre>
+<p>————————————————<br>版权声明：本文为CSDN博主「小毕学习代码」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_70703397/article/details/132201160">https://blog.csdn.net/qq_70703397/article/details/132201160</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-Vue2传值方式详解01"
   class="article article-type-post"
   itemscope
@@ -723,531 +1195,13 @@ plt.show()
 </article>
 
     
-    <article
-  id="post-vue循环遍历对象、数组和字符串"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/08/30/vue%E5%BE%AA%E7%8E%AF%E9%81%8D%E5%8E%86%E5%AF%B9%E8%B1%A1%E3%80%81%E6%95%B0%E7%BB%84%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2/"
-    >vue循环遍历对象、数组和字符串</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/08/30/vue%E5%BE%AA%E7%8E%AF%E9%81%8D%E5%8E%86%E5%AF%B9%E8%B1%A1%E3%80%81%E6%95%B0%E7%BB%84%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2/" class="article-date">
-  <time datetime="2023-08-30T09:00:11.000Z" itemprop="datePublished">2023-08-30</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="1-循环遍历对象"><a href="#1-循环遍历对象" class="headerlink" title="1.循环遍历对象"></a>1.循环遍历对象</h1><h2 id="1-1vue-在html里面循环遍历对象"><a href="#1-1vue-在html里面循环遍历对象" class="headerlink" title="1.1vue 在html里面循环遍历对象"></a>1.1vue 在html里面循环遍历对象</h2><pre><code>v-for=&quot; (val, key , i) in dimItemMap&quot; :key=&quot;key&quot;
-
-val-每一项
-key -key值
-i-第几个
-
-&lt;el-table-column prop=&quot;score&quot; label=&quot;评分&quot; :show-overflow-tooltip=&quot;true&quot; align=&quot;center&quot;&gt;
-    &lt;template slot-scope=&quot;scope&quot;&gt;
-    &lt;span&gt;
-        &lt;span v-for=&quot; (val, key , i) in scope.row.dimItemMap&quot; :key=&quot;key&quot;&gt;
-        &#123;&#123;val.score&#125;&#125;//score为键，val.score为值
-        &lt;/span&gt;
-    &lt;/span&gt;
-    &lt;/template&gt;
-&lt;/el-table-column&gt;
-</code></pre>
-<h2 id="1-2-在js里面forin遍历对象"><a href="#1-2-在js里面forin遍历对象" class="headerlink" title="1.2 在js里面forin遍历对象"></a>1.2 在js里面forin遍历对象</h2><p>for…in 循环主要是为了遍历对象而生，不适用于遍历数组</p>
-<pre><code>let data = [&#123; wiun2dvi: 232, wiun3dvi: 55, wiu4ndvi: 33, wiun1dvi: 24432 &#125;];
-    data.forEach((item,index)=&gt;&#123;
-      for (const key in item) &#123;
-        console.log(&quot;item[key]&quot;,item[key]);//值
-        console.log(&quot;key&quot;,key);//键
-      &#125;
-    &#125;)
-</code></pre>
-<h1 id="2-循环遍历数组"><a href="#2-循环遍历数组" class="headerlink" title="2.循环遍历数组"></a>2.循环遍历数组</h1><h2 id="2-1-vue-在html里面循环遍历数组"><a href="#2-1-vue-在html里面循环遍历数组" class="headerlink" title="2.1 vue 在html里面循环遍历数组"></a>2.1 vue 在html里面循环遍历数组</h2><pre><code>&lt;el-table-column v-for=&quot;item in tableCol&quot; :key=&quot;item.id&quot; :prop=&quot;item.id&quot; :label=&quot;item.name&quot; :show-overflow-tooltip=&quot;true&quot; align=&quot;center&quot;&gt;
-    &lt;template slot-scope=&quot;scope&quot;&gt;
-        &lt;span&gt;&#123;&#123;scope.row.dimItemMap?scope.row.dimItemMap[item.id].name:""&#125;&#125;&lt;/span&gt;
-    &lt;/template&gt;
-&lt;/el-table-column&gt;
-
-&lt;el-table-column prop=&quot;score&quot; label=&quot;评分&quot; :show-overflow-tooltip=&quot;true&quot; align=&quot;center&quot;&gt;
-    &lt;template slot-scope=&quot;scope&quot;&gt;
-        &lt;span&gt;
-            &lt;span v-for=&quot; (item, index) in scope.row.dimItemMap&quot; :key=&quot;index&quot;&gt;
-                &#123;&#123;item.score&#125;&#125;
-            &lt;/span&gt;
-        &lt;/span&gt;
-    &lt;/template&gt;
-&lt;/el-table-column&gt;
-</code></pre>
-<h2 id="2-2-在js里面for遍历数组"><a href="#2-2-在js里面for遍历数组" class="headerlink" title="2.2 在js里面for遍历数组"></a>2.2 在js里面for遍历数组</h2><pre><code>let id = 1524466
-for (let i = 0; i &lt; list.length; i++) &#123;
-    let a = list[i];
-    if (a.id === id) &#123;
-        return a.name;
-    &#125; 
-&#125;
-</code></pre>
-<h2 id="2-3-在js里面forof遍历数组"><a href="#2-3-在js里面forof遍历数组" class="headerlink" title="2.3 在js里面forof遍历数组"></a>2.3 在js里面forof遍历数组</h2><p>   let arr = [{<br>        name: 12,<br>        hello: “wsdfnioq”,<br>    }, {<br>        name: 12,<br>        hello: “wsdfnioq”,<br>    }, {<br>        name: 12,<br>        hello: “wsdfnioq”,<br>    }]</p>
-<pre><code>for (const i of arr) &#123;
-    console.log(&quot;i&quot;, i);
-&#125;
-        
-//i &#123;name: 12, hello: &#39;wsdfnioq&#39;&#125;
-//i &#123;name: 12, hello: &#39;wsdfnioq&#39;&#125;
-//i &#123;name: 12, hello: &#39;wsdfnioq&#39;&#125;
-
-let arr = [
-    [&#39;name&#39;, &quot;张三&quot;],
-    [&#39;地址&#39;, &#39;北京&#39;],
-    [&#39;手机&#39;, &#39;123&#39;]
-]
-for (const [value0, value1] of arr) &#123;
-    console.log(&#39;k&#39;, value0, value1);
-&#125;
-// k name 张三
-// k 地址 北京
-// k 手机 123
-</code></pre>
-<h2 id="2-4-for-in，不推荐对数组进行遍历"><a href="#2-4-for-in，不推荐对数组进行遍历" class="headerlink" title="2.4 for in，不推荐对数组进行遍历"></a>2.4 for in，不推荐对数组进行遍历</h2><pre><code>let arr = [&quot;lsadnkol&quot;, &quot;klsmvaod&quot;, &quot;lpsaojfoas&quot;]
-for (const key in arr) &#123;
-    console.log(&quot;arr&quot;, key, typeof key, arr[key]);
-&#125;
-// 0 string lsadnkol
-// 1 string klsmvaod
-// 2 string lpsaojfoas
-</code></pre>
-<h2 id="2-5-forEach-函数遍历数组"><a href="#2-5-forEach-函数遍历数组" class="headerlink" title="2.5 forEach() 函数遍历数组"></a>2.5 forEach() 函数遍历数组</h2><p>①无任何返回，可改变原来数组中的内容</p>
-<p>②循环次数：数组的长度</p>
-<p>③不支持return，不需要return语句</p>
-<p>如下案例：给每个对象中添加age属性</p>
-<pre><code>let forArr = [&#123;name:&#39;tom&#39;,sex:&#39;man&#39;&#125;,&#123;name:&#39;linda&#39;,sex:&#39;woman&#39;&#125;,]
- forArr.forEach((item,index) =&gt; &#123;
-    console.log(&quot;forEach循环==index==&quot;,index,item);
-     item.age = 27
-&#125;)
-console.log(&quot;forArr==遍历后===&quot;,forArr)
-// forArr ----&gt;[&#123;name:&#39;tom&#39;,sex:&#39;man&#39;,age:27&#125;,&#123;name:&#39;linda&#39;,sex:&#39;woman&#39;,age:27&#125;]
-</code></pre>
-<h1 id="vue循环遍历-指令v-for"><a href="#vue循环遍历-指令v-for" class="headerlink" title="vue循环遍历,指令v-for"></a>vue循环遍历,指令v-for</h1><h2 id="1-循环遍历"><a href="#1-循环遍历" class="headerlink" title="1.循环遍历"></a>1.循环遍历</h2><p>vue的循环遍历用v-for，语法类似于js中的for循环</p>
-<p>当我们有一组数据需要进行渲染时，我们就可以使用v-for来完成。</p>
-<p>v-for使用格式：</p>
-<p>格式为：v-for = item in items</p>
-<p> (遍历items中的数据)</p>
-<h2 id="2-v-for遍历数组"><a href="#2-v-for遍历数组" class="headerlink" title="2.v-for遍历数组"></a>2.v-for遍历数组</h2><p>用v-for指令基于一个数组来渲染一个列表。</p>
-<p>v-for 指令使用item in items形式的语法，其中items是源数据数组， 而item则是被迭代的数组元素。</p>
-<ul>
-<li>如果v-for遍历数组中的数组值</li>
-</ul>
-<p>语法格式：v-for=”movie in movies”<br>依次从movies中取出movie，并且在元素的内容中，我们可以使用Mustache语法，来使用movie</p>
-<pre><code>&lt;li v-for=&quot;movie in movies&quot;&gt; &#123;&#123;movie&#125;&#125; &lt;/li&gt;
- 
-</code></pre>
-<ul>
-<li>如果v-for遍历数组中的数组值、索引值</li>
-</ul>
-<p>语法格式：v-for=(item, index) in items<br>v-for中使用二个参数，即当前项和当前项的索引</p>
-<pre><code>&lt;li v-for=&quot;(item, index) in items&quot;&gt;&#123;&#123;index&#125;&#125;. &#123;&#123;item&#125;&#125;&lt;/li&gt;
-</code></pre>
-<p>样例：</p>
-<pre><code>&lt;div id=&quot;app&quot;&gt;
-  &lt;ul&gt;
-    &lt;li v-for=&quot;name in names&quot;&gt;&#123;&#123;name&#125;&#125;&lt;/li&gt;
-  &lt;/ul&gt;
-   //v-for遍历过程中，遍历数组中值,并显示
-  &lt;ul&gt;
-    &lt;li v-for=&quot;(name,index) in names&quot;&gt;&#123;&#123;index&#125;&#125;. &#123;&#123;name&#125;&#125;&lt;/li&gt;
-  &lt;/ul&gt;
-   //遍历过程中，遍历数组中值、索引值，并显示
-&lt;/div&gt;
-
-&lt;script&gt;
-  const app = new Vue(&#123;
-    el:&quot;#app&quot;,
-    data:&#123;
-      names:[&quot;刘富楠&quot;,&quot;科比&quot;,&quot;詹姆斯&quot;,&quot;库里&quot;]
-    &#125;
-  &#125;)
-&lt;/script&gt;
-</code></pre>
-<h2 id="3-v-for遍历对象"><a href="#3-v-for遍历对象" class="headerlink" title="3.v-for遍历对象"></a>3.v-for遍历对象</h2><p>1.遍历对象属性 用value值<br>2.遍历对象属性和属性值 用value值和key<br>3.遍历对象属性和属性值和索引 用value值、key和index</p>
-<pre><code>&lt;div id=&quot;app&quot;&gt;
-    //展示出所有信息
-    &lt;ul&gt;
-        &lt;li &gt;&#123;&#123;info.name&#125;&#125;&lt;/li&gt;
-        &lt;li &gt;&#123;&#123;info.age&#125;&#125;&lt;/li&gt;
-        &lt;li &gt;&#123;&#123;info.height&#125;&#125;&lt;/li&gt;
-    &lt;/ul&gt;
-    //方法1.一个个写出来
-    &lt;ul&gt;
-        &lt;li v-for=&quot;item in info&quot;&gt;&#123;&#123;item&#125;&#125;&lt;/li&gt;
-    &lt;/ul&gt;
-    //方法2.用v-for遍历对象的value值。(属性)
-    &lt;ul&gt;
-        &lt;li v-for=&quot;(value,key) in info&quot;&gt;&#123;&#123;value&#125;&#125;--&#123;&#123;key&#125;&#125;&lt;/li&gt;
-    &lt;/ul&gt;
-    //方法3.用v-for遍历对象的value值和key，value在前面。(属性和属性值)
-    &lt;ul&gt;
-        &lt;li v-for=&quot;(value,key,index) in info&quot;&gt;&#123;&#123;value&#125;&#125;--&#123;&#123;key&#125;&#125;--&#123;&#123;index&#125;&#125;&lt;/li&gt;
-    &lt;/ul&gt;
-    //方法4.用v-for遍历对象的value值、key和index。(属性和属性值和索引)
-&lt;/div&gt;
-
-&lt;script&gt;
-    const app = new Vue(&#123;
-        el:&quot;#app&quot;,
-        data:&#123;
-            info:&#123;
-                name:&quot;lfn&quot;,
-                age :18,
-                height:180
-            &#125;
-        &#125;
-    &#125;)
-&lt;/script&gt;    
-</code></pre>
-<h2 id="4-v-for使用中添加key"><a href="#4-v-for使用中添加key" class="headerlink" title="4.v-for使用中添加key"></a>4.v-for使用中添加key</h2><p>在遍历数组时可以在元素中绑定一个key，key=数组值</p>
-<p>绑定key的作用 ：主要是为了高效的更新虚拟DOM。(vue内部；让性能高一点)</p>
-<ul>
-<li><p>当某一层有很多相同的节点时，也就是列表节点时，我们希望插入一个新的节点，</p>
-<p> 则Diff算法默认执行起来是比较复杂的。(一个个重新替换)</p>
-</li>
-<li><p>但绑定key后，可以使用key来给每个节点做一个唯一标识</p>
-<p> Diff算法就可以正确的识别此节点，找到正确的位置区插入新的节点。</p>
-  <div id="app">
-    <ul>
-      <li v-for="item in letters" :key="item"></li>
-    </ul>
-  </div>
-
-  <script>
-    const app = new Vue({
-      el:"#app",
-      data:{
-        letters:["A","B","C","D","E"]
-      }
-    })
-  </script></li>
-</ul>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-vue遍历对象的几种方式"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/08/29/vue%E9%81%8D%E5%8E%86%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/"
-    >vue遍历对象的几种方式</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/08/29/vue%E9%81%8D%E5%8E%86%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/" class="article-date">
-  <time datetime="2023-08-29T08:33:22.000Z" itemprop="datePublished">2023-08-29</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>在vue项目开发中，我们需要对对象进行处理等问题，这里简单记录遍历对象的几种方法</p>
-<p>一、for in 这是遍历对象的基本方法，其中key代表键，值可以通过Object[key]进行获取，</p>
-<pre><code>let obj1 = &#123;
-    name: &#39;张三&#39;,
-    age: &#39;18&#39;,
-    height: &#39;180&#39;
-&#125;
-for (let key in obj2) &#123;
-    console.log(&#39;key&#39;, key)
-    console.log(&#39;value&#39;, obj1[key])
-&#125;
-        
-</code></pre>
-<p>衍生：obj2中部分key与obj1相同，这是需要将obj1与obj2中key相同的进行赋值，代码如下</p>
-<pre><code>let obj2 = &#123;
-    name: &#39;&#39;,
-    age: &#39;&#39;,
-&#125;
-let obj1 = &#123;
-    name: &#39;张三&#39;,
-    age: &#39;18&#39;,
-    height: &#39;180&#39;
-&#125;
-for (let key in obj2) &#123;
-    obj2[key] = obj1[key]
-&#125;
-console.log(obj2)
-        
-</code></pre>
-<p>二、Object.keys(),ES5新增的对象方法，该方法会返回自身属性名组成的数组</p>
-<pre><code>let obj1 = &#123;
-    name: &#39;张三&#39;,
-    age: &#39;18&#39;,
-    height: &#39;180&#39;
-&#125;
-let a = Object.keys(obj1)
-console.log(a) //输出[&#39;name&#39;, &#39;age&#39;, &#39;height&#39;]
-        
-</code></pre>
-<p>衍生：obj2中部分key与obj1相同，这是需要将obj1与obj2中key相同的进行赋值，代码如下</p>
-<pre><code>let obj2 = &#123;
-    name: &#39;&#39;,
-    age: &#39;&#39;,
-&#125;
-let obj1 = &#123;
-    name: &#39;张三&#39;,
-    age: &#39;18&#39;,
-    height: &#39;180&#39;
-&#125;
-Object.keys(obj2).forEach(item =&gt; &#123;
-    obj2[item] = obj1[item]
-&#125;)
-console.log(obj2) //输出&#123;name: &#39;张三&#39;, age: &#39;18&#39;&#125;
-        
-</code></pre>
-<p>三、Object.getOwnPropertyNames()，该方法也是ES5新增的，返回一个自身属性名的数组，包括不可枚举的属性</p>
-<pre><code>let obj1 = &#123;
-    name: &#39;张三&#39;,
-    age: &#39;18&#39;,
-    height: &#39;180&#39;
-&#125;
-let a = Object.getOwnPropertyNames(obj1)
-console.log(a) //[&#39;name&#39;, &#39;age&#39;, &#39;height&#39;]
-        
-</code></pre>
-<p>————————————————<br>版权声明：本文为CSDN博主「Maidangchen」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/A1123352950/article/details/132687113">https://blog.csdn.net/A1123352950/article/details/132687113</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Vue使用RegExp"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/08/28/Vue%E4%BD%BF%E7%94%A8RegExp/"
-    >Vue使用RegExp</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/08/28/Vue%E4%BD%BF%E7%94%A8RegExp/" class="article-date">
-  <time datetime="2023-08-28T07:44:55.000Z" itemprop="datePublished">2023-08-28</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>vue 把字符串的所有=替换成&amp;&amp;&amp;的方法</p>
-<pre><code>//把字符串中所有=换成&amp;&amp;&amp;
-let reg=new RegExp(&#39;=&#39;,&#39;g&#39;)//g代表全部
-let newMsg=JSON.stringify(msg).replace(reg,&#39;&amp;&amp;&amp;&#39;);
-console.log(newMsg)
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-CSS样式的书写顺序及规范"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/08/27/CSS%E6%A0%B7%E5%BC%8F%E7%9A%84%E4%B9%A6%E5%86%99%E9%A1%BA%E5%BA%8F%E5%8F%8A%E8%A7%84%E8%8C%83/"
-    >CSS样式的书写顺序及规范</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/08/27/CSS%E6%A0%B7%E5%BC%8F%E7%9A%84%E4%B9%A6%E5%86%99%E9%A1%BA%E5%BA%8F%E5%8F%8A%E8%A7%84%E8%8C%83/" class="article-date">
-  <time datetime="2023-08-27T06:09:36.000Z" itemprop="datePublished">2023-08-27</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="CSS样式的书写顺序及规范"><a href="#CSS样式的书写顺序及规范" class="headerlink" title="CSS样式的书写顺序及规范"></a>CSS样式的书写顺序及规范</h1><p>CSS样式属性有很多，开发过程中书写顺序对于浏览器渲染其实至关重要。规范化编码有利于程序的后期维护，并且别人也容易理解其中意思。</p>
-<h1 id="书写顺序"><a href="#书写顺序" class="headerlink" title="书写顺序"></a>书写顺序</h1><h2 id="布局定位属性"><a href="#布局定位属性" class="headerlink" title="布局定位属性"></a>布局定位属性</h2><p>display    置元素是否被视为块或者内联元素以及用于子元素的布局，例如流式布局、网格布局或弹性布局。<br>visibility    指定一个元素是否是可见的。<br>list-style    在一个声明中设置所有的列表属性。<br>list-style-type    设置列表项标记的类型。<br>list-style-position    指示如何相对于对象的内容绘制列表项标记。<br>list-style-image    使用图像来替换列表项的标记。<br>position    指定一个元素（静态的，相对的，绝对或固定）的定位方法的类型。<br>top    定义了一个定位元素的上外边距边界与其包含块上边界之间的偏移。<br>right    定义了定位元素右外边距边界与其包含块右边界之间的偏移。<br>bottom    定义了定位元素下外边距边界与其包含块下边界之间的偏移。<br>left    定义了定位元素左外边距边界与其包含块左边界之间的偏移。<br>z-index    指定一个元素的堆叠顺序。<br>clear    指定段落的左侧或右侧不允许浮动的元素。<br>float    指定一个盒子（元素）是否应该浮动。</p>
-<h2 id="自身属性"><a href="#自身属性" class="headerlink" title="自身属性"></a>自身属性</h2><p>width    设置元素的宽度。<br>max-width    设置元素的最大宽度。<br>min-width    设置元素的最小宽度。<br>height    设置元素的高度。<br>max-height    设置元素的最大高度。<br>min-height    设置元素的最低高度。<br>overflow    指定如果内容溢出一个元素的框，会发生什么。<br>clip    定义及使用说明如果图像大于包含它的元素,会发生什么?<br>margin    一个声明中设置所有外边距属性。<br>margin-top    设置元素的上部边距。<br>margin-right    设置元素的右边距。<br>margin-bottom    设置元素的下边距。<br>margin-left    设置元素的左边距。<br>padding    在一个声明中设置所有填充属性。<br>padding-top    设置一个元素的顶部填充（空格）。<br>padding-right    设置一个元素的右填充（空格）。<br>padding-bottom    设置一个元素的底部填充（空格）。<br>padding-left    设置一个元素的左填充（空格）。<br>outline    在一个声明中设置所有的轮廓属性。<br>outline-color    指定轮廓颜色。<br>outline-style    指定outline的样式。<br>outline-width    指定轮廓的宽度。<br>border    用于指定元素边框的样式、宽度和颜色。<br>background    在一个声明中设置所有的背景属性。<br>background-color    指定要使用的背景颜色。<br>background-image    指定要使用的一个或多个背景图像。<br>background-repeat    指定如何重复背景图像。<br>background-attachment    设置背景图像是否固定或者随着页面的其余部分滚动。<br>background-position    指定背景图像的位置。</p>
-<h2 id="文本属性"><a href="#文本属性" class="headerlink" title="文本属性"></a>文本属性</h2><p>color    指定文本的颜色。<br>font    在一个声明中设置所有字体属性。<br>font-style    规定字体样式<br>font-variant    规定字体异体。<br>font-weight    规定字体粗细。<br>font-size    规定字体尺寸。<br>line-height    规定字体行高。<br>font-family    规定字体系列。<br>caption    定义被标题控件（比如按钮、下拉列表等）使用的字体。<br>icon    定义被图标标记使用的字体。<br>menu    定义被下拉列表使用的字体。<br>message-box    定义被对话框使用的字体。<br>small-caption    caption 字体的小型版本。<br>status-bar    定义被窗口状态栏使用的字体。<br>text-overflow    指定当文本溢出包含它的元素时，应该如何显示。<br>text-align    指定元素文本的水平对齐方式。<br>text-indent    规定文本块中首行文本的缩进。<br>white-space    指定元素内的空白怎样处理。<br>vertical-align    设置一个元素的垂直对齐方式。</p>
-<h2 id="其他属性"><a href="#其他属性" class="headerlink" title="其他属性"></a>其他属性</h2><p>cursor    设置鼠标指针(光标)在元素上面时的显示样式<br>animation    通过关键帧@keyframes来实现更为复杂的动画效果。<br>transition    设置元素当过渡效果，</p>
-<h1 id="CSS3浏览器私有前缀写法"><a href="#CSS3浏览器私有前缀写法" class="headerlink" title="CSS3浏览器私有前缀写法"></a>CSS3浏览器私有前缀写法</h1><p>CSS3 浏览器私有前缀在前，标准前缀在后</p>
-<pre><code>-webkit-border-radius: 10px;
--moz-border-radius: 10px;
--o-border-radius: 10px;
--ms-border-radius: 10px;
-border-radius: 10px;
-</code></pre>
-<h1 id="浏览器的渲染流程"><a href="#浏览器的渲染流程" class="headerlink" title="浏览器的渲染流程"></a>浏览器的渲染流程</h1><p>1、解析html构建dom树，解析css构建css树：将html解析成树形的数据结构，将css解析成树形的数据结构布局<br>2、构建render树：DOM树和CSS树合并以后造成的render树。<br>3、布局render树：有了render树，浏览器已经知道那些网页中有哪些节点，各个节点的css定义和以及它们的从属关系，从而计算出每一个节点在屏幕中的位置。<br>4、绘制render树：按照计算出来的规则，经过显卡把内容画在屏幕上。</p>
-<p>css样式解析到显示至浏览器屏幕上就发生在②③④步骤，可见浏览器并非一获取到css样式就立马开始解析而是根据css样式的书写顺序将之按照dom树的结构分布render样式，完成第②步，而后开始遍历每一个树结点的css样式进行解析，此时的css样式的遍历顺序彻底是按照以前的书写顺序。在解析过程当中，一旦浏览器发现某个元素的定位变化影响布局，则须要倒回去从新渲染.</p>
-<ul>
-<li><p>例如<br>按照这样的书写书序：</p>
-<p> width: 100px;<br> height: 100px;<br> background-color: red;<br> position: absolute;</p>
-</li>
-</ul>
-<p>当浏览器解析到position的时候忽然发现该元素是绝对定位元素须要脱离文档流，而以前倒是按照普通元素进行解析的，因此不得不从新渲染，解除该元素在文档中所占位置，然而因为该元素的占位发生变化，其余元素也可能会受到它回流的影响而从新排位。最终致使③步骤花费的时间过久而影响到④步骤的显示，影响了用户体验。</p>
-<p>因此规范的的css书写顺序对于文档渲染来讲必定是事半功倍的！</p>
-<h1 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h1><p>回流必将引起重绘, 重绘不一定引起回流。</p>
-<ul>
-<li>reflow（回流）:<br>会引起元素位置变化的就会reflow(回流),窗口大小改变、字体大小改变、以及元素位置改变，都会引起周围的元素改变他们以前的位置。</li>
-</ul>
-<p>*repaint（重绘）：<br>改变某个元素的背景色、文字颜色、边框颜色等等不影响它周围或内部布局的属性时，屏幕的一部分要重画，可是元素的几何尺寸没有变。</p>
-<h1 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h1><p>a.render树的结构不等同于DOM树的结构，一些设置display:none的节点不会被放在render树中，但会在dom树中。</p>
-<p>b.有些状况，好比修改了元素的样式，浏览器并不会理科reflow或repaint，而是把这些操做积攒一批，而后作一次reflow，这也叫作异步reflow.但在有些状况下，好比改变窗口，改变页面默认的字体等，对于这些状况，浏览器会立刻进行reflow.</p>
-<p>c.为了更好的用户体验，渲染引擎将会尽量早的将内容呈现到屏幕上，并不会等到全部的html都解析完成以后再去构建和布局render树。它是解析完一部份内容就显示一部份内容，同时，可能还在经过网络下载其他内容。</p>
-<h1 id="布局流程"><a href="#布局流程" class="headerlink" title="布局流程"></a>布局流程</h1><p>必须确定页面的版心(可视区),我们测量可知<br>分析页面中的行模块,以及每个行模块中的列模块,其实页面布局就是一行行罗列而成<br>制作html结构,我们还是遵循,现有结构后有样式的原则,结构永远最重要<br>然后开始运用盒子模型的原理,通过div+css布局来控制网页的各个模块</p>
-<h1 id="顺序书写的优点"><a href="#顺序书写的优点" class="headerlink" title="顺序书写的优点"></a>顺序书写的优点</h1><p>正确的样式顺序有利于查看维护。<br>减小浏览器reflow（回流）与repaint（重绘），提高浏览器渲染dom的性能<br>利于网页加载代码，加快代码加载顺序。<br>正确的样式顺序也是css样式优化的一种方式。</p>
-<h1 id="命名规范"><a href="#命名规范" class="headerlink" title="命名规范"></a>命名规范</h1><h2 id="css文件命名规范"><a href="#css文件命名规范" class="headerlink" title="css文件命名规范"></a>css文件命名规范</h2><p>文件名    说明<br>reset.css    重置样式，重置元素默认样式<br>global.css    全局样式，全站公用，定义页面基础样式<br>themes.css    主题样式，用于实现换肤功能<br>module.css    模块样式，用于模块的样式<br>print.css    打印样式，用于打印的样式<br>master.css    主要样式<br>themes.css    主体样式<br>font.css    文字样式<br>layout.css    布局样式<br>columns.css    专栏<br>forms.css    表单<br>mend.css    补丁样式</p>
-<h2 id="id和class命名"><a href="#id和class命名" class="headerlink" title="id和class命名"></a>id和class命名</h2><p>骆驼峰命名法，例如topMain、 subLeftMenu。<br>中划线命名法，例如top-main、sub-left-menu。<br>下划线命名法，例如top_ main、sub_ Jeft_ menu。</p>
-<h2 id="id和class命名规范"><a href="#id和class命名规范" class="headerlink" title="id和class命名规范"></a>id和class命名规范</h2><p>网页部分    命名<br>最外层    wrapper<br>头部    header<br>容器    container<br>内容    content<br>导航条    nav<br>主导航    mainnav<br>子导航    subnav<br>顶导航    topnav<br>边导航、侧栏    sidebar<br>左导航    leftsidebar<br>右导航    rightsidebar<br>主体    main<br>左侧    main-left<br>右侧    main-right<br>底部    footer<br>左    left<br>中    right<br>右    center<br>栏目    column<br>菜单    menu<br>子菜单    submenu<br>登录条    loginbar<br>登录    login<br>注册    register<br>标志    logo<br>功能区    shop<br>按钮    btn<br>当前的    current<br>图标    icon<br>注释    note<br>搜索    search<br>滚动    scroll<br>标签    tags<br>标籤页    tab<br>状态    status<br>提示信息    msg<br>小技巧    tips<br>栏目标题    title<br>摘要    summary<br>下载    download<br>链接    link<br>友情链接    friendlink<br>加入我们    joinus<br>版权    copyright<br>服务    service<br>新闻    news<br>文章列表    list<br>广告    banner<br>热点    hot<br>加入    joinus<br>指南    guide<br>投票    vote<br>合作伙伴    partner</p>
-<h2 id="规范命名的优点"><a href="#规范命名的优点" class="headerlink" title="规范命名的优点"></a>规范命名的优点</h2><p>把样式文件划分为多个文件，按照功能模块划分CSS文件，是为了方便在开发阶段进行开发和修改。<br>好的元素id和class的命名，方便阅读、方便维护。</p>
-<h2 id="CSS书写规范"><a href="#CSS书写规范" class="headerlink" title="CSS书写规范"></a>CSS书写规范</h2><p>*使用CSS缩写属性</p>
-<p>CSS有些属性是可以缩写的，比如padding,margin,font等等，这样精简代码同时又能提高用户的阅读体验。</p>
-<p>*不要随意使用id</p>
-<p>id在JS是唯一的，不能多次使用，而使用class类选择器却可以重复使用，另外id的优先级优先与class，所以id应该按需使用，而不能滥用。</p>
-<p>*为选择器添加状态前缀</p>
-<p>有时候可以给选择器添加一个表示状态的前缀，让语义更明了。<br>为了避免class命名的重复，命名时- -般取父元素的class名作为前缀，例如:</p>
-<pre><code>&lt;div class=&quot;column&quot;&gt;
-  &lt;h3 class=&quot;column-title&quot;&gt;&lt;/h3&gt;
-  &lt;div class=&quot;column-content&quot;&gt;&lt;/div&gt;.
-&lt;/div&gt;
-</code></pre>
-<h2 id="id和class命名统一规范"><a href="#id和class命名统一规范" class="headerlink" title="id和class命名统一规范"></a>id和class命名统一规范</h2><p>id和class命名一律小写，尽量用英文，尽量不缩写，除非一看就明白的单词。<br>尽量不要出现一个用中划线命名，而另外一个用下划线命名的情况。虽然下划线和中划线都可以，但是建议使用中划线，可参见各大型网站。</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>为了长远发展考虑，建议大家应该重视这些编码习惯。当然，本文所述内容并不完全是绝对正确的指导，但学会了这些内容，你就学会了最基本的CSS编码规范。可参考本文内容，结合您自己的部分编码习惯，编写适合您的优秀、规范代码。<br>————————————————<br>版权声明：本文为CSDN博主「song-yl」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_42367460/article/details/131042969">https://blog.csdn.net/weixin_42367460/article/details/131042969</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/css/" rel="tag">css</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
   </article>
   
 
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/3/">上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/43/">43</a><a class="extend next" rel="next" href="/page/5/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/3/">上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><a class="extend next" rel="next" href="/page/5/">下一页</a>
   </nav>
   
 </section>

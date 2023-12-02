@@ -154,6 +154,413 @@
     
     
     <article
+  id="post-PostgreSQL的所有环境变量"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/02/21/PostgreSQL%E7%9A%84%E6%89%80%E6%9C%89%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/"
+    >PostgreSQL的所有环境变量</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/02/21/PostgreSQL%E7%9A%84%E6%89%80%E6%9C%89%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/" class="article-date">
+  <time datetime="2023-02-21T04:56:24.000Z" itemprop="datePublished">2023-02-21</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>下列环境变量能被用于选择默认的连接参数值，如果调用代码没有直接指定值，它们将被用于PQconnectdb, PQsetdbLogin 和 PQsetdb。<br>例如，这些有助于防止数据库连接信息被硬编码到简单的客户端应用中。<br>PGHOST的行为和host连接参数相同。<br>PGHOSTADDR的行为和hostaddr连接参数相同。可以设置它来替代或者作为PGHOST的补充来防止 DNS 查找负担。<br>PGPORT的行为和port连接参数相同。<br>PGDATABASE的行为和dbname连接参数相同。<br>PGUSER的行为和user连接参数相同。 PGPASSWORD的行为和password连接参数相同。出于安全原因，我们不推荐使用这个环境变量，因为某些操作系统允许非根用户通过ps看到进程的环境变量。可以考虑使用一个口令文件（见第 33.15 节）。<br>PGPASSFILE的行为和passfile连接参数相同。<br>PGCHANNELBINDING 的行为和 channel_binding 连接参数相同.<br>PGSERVICE的行为和service连接参数相同。<br>PGSERVICEFILE指定针对每个用户的连接服务文件名。如果没有设置，默认为~/.pg_service.conf（见第 33.16 节）。<br>PGOPTIONS的行为和options连接参数相同。<br>PGAPPNAME的行为和application_name连接参数相同。<br>PGSSLMODE的行为和sslmode连接参数相同。 PGREQUIRESSL的行为和requiressl连接参数相同。为了支持PGSSLMODE变量，这个环境变量已被废弃。同时设置两个变量会抑制这一个的效果。 PGSSLCOMPRESSION的行为和sslcompression连接参数相同。<br>PGSSLCERT的行为和sslcert连接参数相同。<br>PGSSLKEY的行为和sslkey连接参数相同。<br>PGSSLROOTCERT的行为和sslrootcert连接参数相同。<br>PGSSLCRL的行为和sslcrl连接参数相同。<br>PGREQUIREPEER的行为和requirepeer连接参数相同。<br>PGSSLMINPROTOCOLVERSION 的行为和 ssl_min_protocol_version 连接参数相同。<br>PGSSLMAXPROTOCOLVERSION 行为和 ssl_min_protocol_version 连接参数相同。<br>PGGSSENCMODE 的行为和 gssencmode连接参数相同。<br>PGKRBSRVNAME的行为和krbsrvname连接参数相同。<br>PGGSSLIB的行为和gsslib连接参数相同。<br>PGCONNECT_TIMEOUT的行为和connect_timeout连接参数相同。<br>PGCLIENTENCODING的行为和client_encoding连接参数相同。<br>PGTARGETSESSIONATTRS的行为和target_session_attrs连接参数相同。 </p>
+<p>下面的环境变量可用来为每一个PostgreSQL会话指定默认行为（为每一个用户或每一个数据库设置默认行为的方法还可见ALTER ROLE和ALTER DATABASE命令）。<br>PGDATESTYLE设置日期/时间表示的默认风格（等同于SET datestyle TO …）。 PGTZ设置默认的时区（等同于SET timezone TO …）。<br>PGGEQO为遗传查询优化器设置默认模式（等同于SET geqo TO …）。 这些环境变量的正确值可参考SQL 命令 SET。 </p>
+<p>下面的环境变量决定libpq的内部行为，它们会覆盖编译在程序中的默认值。 PGSYSCONFDIR设置包含pg_service.conf文件以及未来版本中可能出现的其他系统范围配置文件的目录。 PGLOCALEDIR设置包含用于消息本地化的locale文件的目录。</p>
+<p>————————————————<br>版权声明：本文为「小麦苗DBA宝典(<a target="_blank" rel="noopener" href="http://www.xmmup.com)」的原创文章,遵循cc/">www.xmmup.com)」的原创文章，遵循CC</a> 4.0 BY -SA版权协议，转载请附上原文出处链接及本声明。<br>转载请保留原文链接: <a target="_blank" rel="noopener" href="https://www.xmmup.com/pgdesuoyouhuanjingbianliang.html">https://www.xmmup.com/pgdesuoyouhuanjingbianliang.html</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-Qt播放视频报错"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/02/20/Qt%E6%92%AD%E6%94%BE%E8%A7%86%E9%A2%91%E6%8A%A5%E9%94%99/"
+    >Qt播放视频报错</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/02/20/Qt%E6%92%AD%E6%94%BE%E8%A7%86%E9%A2%91%E6%8A%A5%E9%94%99/" class="article-date">
+  <time datetime="2023-02-20T07:05:41.000Z" itemprop="datePublished">2023-02-20</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>首先，对于这个问题，编译也能通过，但是运行就会出错：</p>
+<p>DirectShowPlayerService::doRender: Unresolved error code 0x80040266</p>
+<p>原因：Qt 中的多媒体播放，底层是使用 DirectShowPlayerService，所以安装一个 DirectShow 解码器，例如 LAV Filters，就可以解决运行出错问题。</p>
+<p>下载并安装 LAVFilters：<a target="_blank" rel="noopener" href="https://github.com/Nevcairiel/LAVFilters/releases">https://github.com/Nevcairiel/LAVFilters/releases</a></p>
+<p>installer 方式直接按步骤安装<br>压缩包方式解压右键以管理员运行 install_video.bat 文件<br>最后，重启电脑<br>————————————————<br>版权声明：本文为CSDN博主「tianyvHon」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44916154/article/details/121755328">https://blog.csdn.net/weixin_44916154/article/details/121755328</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Qt/" rel="tag">Qt</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BE%9D%E8%B5%96%E9%85%8D%E7%BD%AE/" rel="tag">依赖配置</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-PostgreSQL数据库免密登录配置"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/02/19/PostgreSQL%E6%95%B0%E6%8D%AE%E5%BA%93%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95%E9%85%8D%E7%BD%AE/"
+    >PostgreSQL数据库免密登录配置</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/02/19/PostgreSQL%E6%95%B0%E6%8D%AE%E5%BA%93%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95%E9%85%8D%E7%BD%AE/" class="article-date">
+  <time datetime="2023-02-19T03:45:56.000Z" itemprop="datePublished">2023-02-19</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>PG数据库在登录的时候，需要显示输入密码，因此在很多维护操作中都不方便，比如：定时的VACUUM脚本、定时备份脚本等。PG不能像MySQL那样可以在命令中直接输入密码。</p>
+<p>本文梳理了以下几种PG配置免密的方法。</p>
+<h1 id="具体方法"><a href="#具体方法" class="headerlink" title="具体方法"></a>具体方法</h1><ul>
+<li>方法一：设置pg_hab.conf 认证方式为trust</li>
+</ul>
+<p>示例：</p>
+<pre><code>#Type database user address method
+host all postgres 127.0.0.1/32 trust
+</code></pre>
+<p>该方式最不安全，导致通过指定IP连接数据库的连接都可以任意登录数据，毫无安全保障。禁止在生产环境使用。</p>
+<ul>
+<li>方法二：设置PG环境变量PGPASSWORD</li>
+</ul>
+<p>PGPASSWORD是PostgreSQL系统环境变量，在客户端设置后再远程连接数据库时，将优先使用这个密码。</p>
+<p>示例：</p>
+<pre><code>[postgres@PG-1 ~]$ export PGPASSWORD=root
+[postgres@PG-1 ~]$ psql -U postgres -h 127.0.0.1 -p 5432
+Timing is on.
+Border style is 2.
+Null display is &quot;NULL&quot;.
+psql (13.2)
+Type &quot;help&quot; for help.
+</code></pre>
+<p>此时数据库登录时，不在提示输入用户密码</p>
+<ul>
+<li>方法三：设置环境变量PGSERVICE</li>
+</ul>
+<p>pg_service.conf 通过定义服务文件的方式，可以对多个数据库进行免密登录。</p>
+<p>示例：</p>
+<pre><code>vi /home/postgres/.pg_service.conf
+[backup]
+hostaddr=127.0.0.1
+port=5432
+user=postgres
+dbname=postgres
+password=root
+connect_timeout=10
+[postgres@PG-1 ~]$ export PGSERVICE=backup
+[postgres@PG-1 ~]$ psql -h 127.0.0.1 -p 5432 -U postgres
+Timing is on.
+Border style is 2.
+Null display is &quot;NULL&quot;.
+psql (13.2)
+Type &quot;help&quot; for help.
+</code></pre>
+<p>定义pg_service.conf文件，该文件可以包含多个模块，每个模块代表一个连接。</p>
+<ul>
+<li>方法四：设置.pgpass文件</li>
+</ul>
+<p>该文件默认在/home/postgres/，且该文件的权限要为600，如果文件权限不对，则在登录会有相应的告警输出，并要求输入用户密码。</p>
+<pre><code>WARNING: password file &quot;/home/postgres/.pgpass&quot; has group or world access; permissions should be u=rw (0600) or less
+Password for user postgres:
+</code></pre>
+<p>内容格式：</p>
+<pre><code>host:port:dbname:username:password
+</code></pre>
+<p>示例：</p>
+<pre><code>[postgres@PG-1 ~]$ cat .pgpass
+127.0.0.1:5432:postgres:postgres:root
+localhost:5432:postgres:postgres:root
+</code></pre>
+<p>文件权限：</p>
+<pre><code>[postgres@PG-1 ~]$ ll -h .pgpass
+-rw------- 1 postgres postgres 76 2月 24 19:26 .pgpass
+</code></pre>
+<p>登录：</p>
+<pre><code>[postgres@PG-1 ~]$ psql -U postgres -h 127.0.0.1 -p 5432
+Timing is on.
+Border style is 2.
+Null display is &quot;NULL&quot;.
+psql (13.2)
+Type &quot;help&quot; for help.
+</code></pre>
+<p>以上的几种免密方式，在使用pg_basebackup进行备份时都可适用。以下是相关验证：</p>
+<h1 id="相关验证"><a href="#相关验证" class="headerlink" title="相关验证"></a>相关验证</h1><ul>
+<li><ol>
+<li>使用PGSERVICE环境变量</li>
+</ol>
+</li>
+</ul>
+<p>示例：</p>
+<pre><code>export PGSERVICE=backup
+pg_basebackup -D /data/aa -Fp -X stream -R -P -c fast
+</code></pre>
+<ul>
+<li><ol start="2">
+<li>使用PGPASSWORD环境变量</li>
+</ol>
+</li>
+</ul>
+<p>示例：</p>
+<pre><code>export PGPASSWORD=password
+pg_basebackup -D /data/bb -Fp -X stream -R -P -c fast -h 127.0.0.1 -p 5432 -U postgres
+</code></pre>
+<ul>
+<li><ol start="3">
+<li>使用.pgpass方式</li>
+</ol>
+</li>
+</ul>
+<p>示例：</p>
+<pre><code>vi /home/postgres/.pgpass
+127.0.0.1:5432:postgres:postgres:root
+chmod 600 .pgpass
+pg_basebackup -D /data/bb -Fp -X stream -R -P -c fast -h 127.0.0.1 -p 5432 -U postgres
+</code></pre>
+<ul>
+<li><ol start="4">
+<li>pg_basebackup备份使用-d参数，在连接字符串中配置连接信息</li>
+</ol>
+</li>
+</ul>
+<p>示例：</p>
+<pre><code>pg_basebackup   -D /data/pgdata/ -F p -R -X stream -c fast  -U replic -d host=192.168.28.169 port=5432 password=replic dbname=postgres
+</code></pre>
+<p>转载自<a target="_blank" rel="noopener" href="https://www.ucloud.cn/yun/129860.html">https://www.ucloud.cn/yun/129860.html</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-Notepad-正则表达式"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/02/18/Notepad-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"
+    >Notepad++正则表达式</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/02/18/Notepad-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="article-date">
+  <time datetime="2023-02-18T01:59:10.000Z" itemprop="datePublished">2023-02-18</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>则表达式是一个查询的字符串，它包含一般的字符和一些特殊的字符，特殊字符可以扩展查找字符串的能力，正则表达式在查找和替换字符串的作用不可忽视，它 能很好提高工作效率。</p>
+<p>EditPlus的查找，替换，文件中查找支持以下的正则表达式：</p>
+<p>表达式 说明<br>/t 制表符.<br>/n 新行.<br>. 匹配任意字符.<br>| 匹配表达式左边和右边的字符. 例如, “ab|bc” 匹配 “ab” 或者 “bc”.<br>[] 匹配列表之中的任何单个字符. 例如, “[ab]” 匹配 “a” 或者 “b”. “[0-9]” 匹配任意数字.<br>[^] 匹配列表之外的任何单个字符. 例如, “[^ab]” 匹配 “a” 和 “b” 以外的字符. “[^0-9]” 匹配任意非数字字符.</p>
+<ul>
+<li>其左边的字符被匹配任意次(0次，或者多次). 例如 “be*” 匹配 “b”, “be” 或者 “bee”.</li>
+</ul>
+<ul>
+<li>其左边的字符被匹配至少一次(1次，或者多次). 例如 “be+” 匹配 “be” 或者 “bee” 但是不匹配 “b”.<br>? 其左边的字符被匹配0次或者1次. 例如 “be?” 匹配 “b” 或者 “be” 但是不匹配 “bee”.<br>^ 其右边的表达式被匹配在一行的开始. 例如 “^A” 仅仅匹配以 “A” 开头的行.<br>$ 其左边的表达式被匹配在一行的结尾. 例如 “e$” 仅仅匹配以 “e” 结尾的行.<br>() 影响表达式匹配的顺序，并且用作表达式的分组标记.<br>/ 转义字符. 如果你要使用 “/“ 本身, 则应该使用 “//“.</li>
+</ul>
+<p>例子：</p>
+<p>原始串<br>str[1]abc[991];<br>str[2]abc[992];<br>str[11]abc[993];<br>str[22]abc[994];<br>str[111]abc[995];<br>str[222]abc[996];<br>str[1111]abc[997];<br>str[2222]abc[999];</p>
+<p>目标串：<br>abc[1];<br>abc[2];<br>abc[11];<br>abc[22];<br>abc[111];<br>abc[222];<br>abc[1111];<br>abc[2222];</p>
+<p>处理：<br>查找串：str/[([0-9]+)/]abc/[[0-9]+/]<br>替换串：abc[/1]</p>
+<p>一、包含“hello word”的行</p>
+<p>^.<em>hello word.</em>$</p>
+<p>二、以“hello word”开始的行</p>
+<p>^hello word.*$</p>
+<p>三、以“hello word”结尾的行</p>
+<p>.*hello word$</p>
+<p>查找目标\n([a-zA-Z0-9])</p>
+<p>或者\r([a-zA-Z0-9])</p>
+<p>替换目标$1(http前面的换行变成 ‘,’ ,然后再加其他的)</p>
+<p>【1】正则表达式应用——替换指定内容到行尾<br>原始文本如下面两行<br>abc aaaaa<br>123 abc 444</p>
+<p>希望每次遇到“abc”，则替换“abc”以及其后到行尾的内容为“abc efg”<br>即上面的文本最终替换为：<br>abc efg<br>123 abc efg</p>
+<p>解决：<br>① 在替换对话框，查找内容里输入“abc.<em>”<br>② 同时勾选“正则表达式”复选框，然后点击“全部替换”按钮<br>其中，符号的含义如下：<br>“.” ＝匹配任意字符<br>“</em>” ＝匹配0次或更多</p>
+<p>注意：其实就是正则表达式替换，这里只是把一些曾经提出的问题加以整理，单纯从正则表达式本身来说，就可以引申出成千上万种特例。</p>
+<p>【2】正则表达式应用——数字替换<br>希望把<br>asdadas123asdasdas456asdasdasd789asdasd<br>替换为:<br>asdadas[123]asdasdas[456]asdasdasd[789]asdasd</p>
+<p>在替换对话框里面，勾选“正则表达式”复选框；<br>在查找内容里面输入“[0-9][0-9][0-9]”，不含引号<br>“替换为:”里面输入“[/0/1/2]”，不含引号<br>范围为你所操作的范围，然后选择替换即可。</p>
+<p>实际上这也是正则表达式的使用特例，“[0-9]”表示匹配0～9之间的任何特例，同样“[a-z]”就表示匹配a～z之间的任何特例<br>上面重复使用了“[0-9]”，表示连续出现的三个数字<br>“/0”代表第一个“[0-9]”对应的原型，“/1”代表第二个“[0-9]”对应的原型，依此类推<br>“[”、“]”为单纯的字符，表示添加“[”或“]”，如果输入“其它/0/1/2其它”，则替换结果为：</p>
+<p>asdadas其它123其它asdasdas其它456其它asdasdasd其它789其它asdasd</p>
+<p>功能增强（by jiuk2k）：<br>如果将查找内容“[0-9][0-9][0-9]”改为“[0-9]*[0-9]”，对应1 或 123 或 12345 或 …<br>大家根据需要定制</p>
+<p>相关内容还有很多，可以自己参考正则表达式的语法仔细研究一下</p>
+<p>【3】正则表达式应用——删除每一行行尾的指定字符<br>因为这几个字符在行中也是出现的,所以肯定不能用简单的替换实现<br>比如<br>12345 1265345<br>2345<br>需要删除每行末尾的“345”<br>这个也算正则表达式的用法，其实仔细看正则表达式应该比较简单，不过既然有这个问题提出，说明对正则表达式还得有个认识过程，解决方法如下<br>解决：<br>在替换对话框中，启用“正则表达式”复选框<br>在查找内容里面输入“345$”<br>这里“$”表示从行尾匹配</p>
+<p>如果从行首匹配，可以用“^”来实现，不过 EditPlus 有另一个功能可以很简单的删除行首的字符串<br>a. 选择要操作的行<br>b. 编辑－格式－删除行注释<br>c. 在弹出对话框里面输入要清除的行首字符，确定</p>
+<p>【4】正则表达式应用——替换带有半角括号的多行<br>几百个网页中都有下面一段代码：<br>/n<br>在替换对话框启用“正则表达式”选项，这时就可以完成替换了</p>
+<p>【5】正则表达式应用——删除空行<br>启动EditPlus，打开待处理的文本类型文件。<br>①、选择“查找”菜单的“替换”命令，弹出文本替换对话框。选中“正则表达式”复选框，表明我们要在查找、替换中使用正则表达式。然后，选中“替换范围” 中的“当前文件”，表明对当前文件操作。<br>②、单击“查找内容”组合框右侧的按钮，出现下拉菜单。<br>③、下面的操作添加正则表达式，该表达式代表待查找的空行。（技巧提示：空行仅包括空格符、制表符、回车符，且必须以这三个符号之一作为一行的开头，并且 以回车符结尾，查找空行的关键是构造代表空行的正则表达式）。<br>直接在”查找”中输入正则表达式“^[ /t]<em>/n”，注意/t前有空格符。<br>（1）选择“从行首开始匹配”，“查找内容”组合框中出现字符“^”，表示待查找字符串必须出现在文本中一行的行首。<br>（2）选择“字符在范围中”，那么在“^”后会增加一对括号“[]”，当前插入点在括号中。括号在正则表达式中表示，文本中的字符匹配括号中任意一个字符 即符合查找条件。<br>（3）按一下空格键，添加空格符。空格符是空行的一个组成成分。<br>（4）选择“制表符”，添加代表制表符的“/t”。<br>（5）移动光标，将当前插入点移到“]”之后，然后选择“匹配 0 次或更多”，该操作会添加星号字符“</em>”。星号表示，其前面的括号“[]”内的空格符或制表符，在一行中出现0个或多个。<br>（6）选择“换行符”，插入“/n”，表示回车符。<br>④、“替换为”组合框保持空，表示删除查找到的内容。单击“替换”按钮逐个行删除空行，或单击“全部替换”按钮删除全部空行（注意：EditPlus有时 存在“全部替换”不能一次性完全删除空行的问题，可能是程序BUG，需要多按几次按钮）。</p>
+<p>1.在汉化的时候，是否经常碰到这样的语句需要翻译：</p>
+<p>Code:<br>“Error adding the post!”;<br>“Error adding the comment!”;<br>“Error adding the user!”;</p>
+<p>如果有很多类似的文件一个一个翻译显然很累而且感觉很无聊。</p>
+<p>其实可以这样处理，在Editplus里面用 替换 功能，在替换对话框选中“正则表达式”复选框：<br>查找原文件：</p>
+<p>Code:<br>“Error adding ([^!|”|;]*)</p>
+<p>替换成：</p>
+<p>Code:<br>“在增加/1时发生错误</p>
+<p>这样替换之后发生了什么？结果是：</p>
+<p>Code:<br>“在增加the post时发生错误!”;<br>“在增加the comment时发生错误!”;<br>“在增加the user时发生错误!”;</p>
+<p>ok，接下来你会怎么做？当然再替换一次把the post、the comment、the user替换成你要翻译的词。得到最后的结果：</p>
+<p>Code:<br>“在增加帖子时发生错误!”;<br>“在增加评论时发生错误!”;<br>“在增加用户时发生错误!”;</p>
+<p>2.要提取的单词在中间，比如：</p>
+<p>Code:<br>can not be deleted because<br>can not be added because<br>can not be updating because</p>
+<p>可以用这种方式：<br>在Editplus里面用 替换 功能，在替换对话框选中“正则表达式”复选框：<br>查找原文件：</p>
+<p>Code:<br>can not be ([^ ]*) because</p>
+<p>替换成：</p>
+<p>Code:<br>无法被/1因为</p>
+<p>这样替换之后发生了什么？结果是：</p>
+<p>Code:<br>无法被deleted因为<br>无法被added因为<br>无法被updating因为</p>
+<p>其余步骤如上。</p>
+<p>在汉化量很大而且句式比较单调的情况下对效率的提高很明显！</p>
+<p>解释一下：([^!|”|;]*) 的意思是 不等于 ! 和 ” 和 ; 中的任何一个，意思就是这3个字符之外的所有字符将被选中（替换区域）；<br>/1 即被选中的替换区域所在的新位置（复制到这个新位置）。</p>
+<p>3.经常手工清理一行一行地删除文本文件里面的空白行，其实可以交给Editplus更好的完成，在Editplus里面用替换功能，在替换对话框选中 “正则表达式”复选框：<br>查找原文件：</p>
+<p>Code:<br>^[ /t]*/n</p>
+<p>替换部分为空就可以删除空白行了，执行一下看看：）</p>
+<p>abandon[2’’b9nd2n]v.抛弃，放弃<br>abandonment[2’’b9nd2nm2nt]n.放弃<br>abbreviation[2bri:vi’’ei62n]n.缩写<br>abeyance[2’’bei2ns]n.缓办，中止<br>abide[2’’baid]v.遵守<br>ability[2’’biliti]n.能力<br>able[‘’eibl]adj.有能力的，能干的<br>abnormal[9b’’n0:m2l]adj.反常的，变态的<br>aboard[2’’b0:d]adv.船(车)上</p>
+<p>1.<br>查找: (^[a-zA-Z0-0/-]+)(/[<em>.</em>/]+)(.*)<br>替换: @@@@@”/1″,”/2″,”/3″,<br>效果:<br>@@@@@”abandon”,”[2’’b9nd2n]“,”v.抛弃，放弃”,<br>@@@@@”abandonment”,”[2’’b9nd2nm2nt]“,”n.放弃”,<br>@@@@@”abbreviation”,”[2bri:vi’’ei62n]“,”n.缩写”,<br>@@@@@”abeyance”,”[2’’bei2ns]“,”n.缓办，中止”,<br>@@@@@”abide”,”[2’’baid]“,”v.遵守”,<br>@@@@@”ability”,”[2’’biliti]“,”n.能力”,<br>@@@@@”able”,”[‘’eibl]“,”adj.有能力的，能干的”,<br>@@@@@”abnormal”,”[9b’’n0:m2l]“,”adj.反常的，变态的”,<br>@@@@@”aboard”,”[2’’b0:d]“,”adv.船(车)上”,</p>
+<p>2.<br>查找: /n<br>替换:<br>注: 要次替换内容为空<br>效果:<br>@@@@@”abandon”,”[2’’b9nd2n]“,”v.抛弃，放弃 ”,@@@@@”abandonment”,”[2’’b9nd2nm2nt]“,”n.放弃 ”,@@@@@”abbreviation”,”[2bri:vi’’ei62n]“,”n.缩写 ”,@@@@@”abeyance”,”[2’’bei2ns]“,”n.缓办，中止”,@@@@@”abide”,”[2’’baid]“,”v.遵守 ”,@@@@@”ability”,”[2’’biliti]“,”n.能力”,@@@@@”able”,”[‘’eibl]“,”adj.有能力的，能 干的 ”,@@@@@”abnormal”,”[9b’’n0:m2l]“,”adj.反常的，变态的 ”,@@@@@”aboard”,”[2’’b0:d]“,”adv.船(车)上”,@@@@@”abolish”,”[2’’b0li6]“,”v.废 除，取消”,@@@@@”abolition”,”[9b2’’li62n]“,”n.废除，取消”</p>
+<p>3.<br>查找: @@@@@<br>替换: /n<br>效果:<br>“abandon”,”[2’’b9nd2n]“,”v.抛弃，放弃”,<br>“abandonment”,”[2’’b9nd2nm2nt]“,”n.放弃”,<br>“abbreviation”,”[2bri:vi’’ei62n]“,”n.缩写”,<br>“abeyance”,”[2’’bei2ns]“,”n.缓办，中止”,<br>“abide”,”[2’’baid]“,”v.遵守”,<br>“ability”,”[2’’biliti]“,”n.能力”,<br>“able”,”[‘’eibl]“,”adj.有能力的，能干的”,<br>“abnormal”,”[9b’’n0:m2l]“,”adj.反常的，变态的”,<br>“aboard”,”[2’’b0:d]“,”adv.船(车)上”,<br>“abolish”,”[2’’b0li6]“,”v.废除，取消”,</p>
+<ol start="4">
+<li>任务完成</li>
+</ol>
+<p>一、删除空行（不包括有空格类符号的空行）<br>1、\r\n转义符替换<br>按ctrl+h，跳出搜索替换框，把查找模式定义为扩展（\n，\r…）<br>查找目标：\r\n\r\n<br>替换为：\r\n</p>
+<p>有编程基础的读者应该知道是什么意思了。</p>
+<p>2、Textfx插件<br>先选中要删部分文本内容，如果是整个文件那就全选Ctrl+A，然后使用Notepad++自带的Textfx插件，在长长的列表中找到Delete Blank Lines，点击即可。</p>
+<p>注意Notepad++的正则表达式与转义符等之间不兼容，所以局限性较大，不可以直接用正则表达式替换。</p>
+<p>二、删除有空格的空行<br>1、先删除空格，后删除空行<br>如何删除只有空格行的空格？<br>在菜单编辑中找到Blank Operations（行编辑），点击移除行尾空白，再用上面的方法删除空行。</p>
+<p>2、使用正则表达式删除空格行空格<br>替换中查找模式选择正则表达式^ +$，替换为空（就是什么都不填），再用上面的方法删除空行。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-如何查看雷电模拟器里的sqilte数据"
   class="article article-type-post"
   itemscope
@@ -285,256 +692,13 @@ sqlite&gt;
 </article>
 
     
-    <article
-  id="post-PyCharm中的文件模版变量"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/02/17/PyCharm%E4%B8%AD%E7%9A%84%E6%96%87%E4%BB%B6%E6%A8%A1%E7%89%88%E5%8F%98%E9%87%8F/"
-    >PyCharm中的文件模版变量</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/02/17/PyCharm%E4%B8%AD%E7%9A%84%E6%96%87%E4%BB%B6%E6%A8%A1%E7%89%88%E5%8F%98%E9%87%8F/" class="article-date">
-  <time datetime="2023-02-17T01:47:27.000Z" itemprop="datePublished">2023-02-17</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <pre><code>$&#123;PROJECT_NAME&#125; - 当前的项目名
-$&#123;NAME&#125; - 在文件创建过程中，新文件对话框的命名
-$&#123;USER&#125; - 当前的登录用户
-$&#123;DATE&#125; - 现在的系统日期
-$&#123;TIME&#125; - 现在的系统时间
-$&#123;YEAR&#125; - 当前年份
-$&#123;MONTH&#125; - 当前月份
-$&#123;DAY&#125; - 当前月份中的第几日
-$&#123;HOUR&#125; - 现在的小时
-$&#123;MINUTE&#125; - 现在的分钟
-$&#123;PRODUCT_NAME&#125; - IDE创建文件的名称
-$&#123;MONTH_NAME_SHORT&#125; - 月份的前三个字母缩写
-$&#123;MONTH_NAME_FULL&#125; - 完整的月份名
-
- 
-</code></pre>
-<p>示例：</p>
-<pre><code>#-*- coding = utf-8 -*-
-#@Time : $&#123;DATE&#125; $&#123;TIME&#125;
-#@Author : YourName
-#@File : $&#123;NAME&#125;.py
-#@Software : $&#123;PRODUCT_NAME&#125;
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PyCharm/" rel="tag">PyCharm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/" rel="tag">Python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-查看PostgreSQL序列最后值的方法"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/02/16/%E6%9F%A5%E7%9C%8BPostgreSQL%E5%BA%8F%E5%88%97%E6%9C%80%E5%90%8E%E5%80%BC%E7%9A%84%E6%96%B9%E6%B3%95/"
-    >查看PostgreSQL序列最后值的方法</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/02/16/%E6%9F%A5%E7%9C%8BPostgreSQL%E5%BA%8F%E5%88%97%E6%9C%80%E5%90%8E%E5%80%BC%E7%9A%84%E6%96%B9%E6%B3%95/" class="article-date">
-  <time datetime="2023-02-16T04:18:32.000Z" itemprop="datePublished">2023-02-16</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <pre><code>SELECT SCHEMANAME AS SCHEMA,SEQUENCENAME AS SEQUENCE,LAST_VALUE FROM PG_SEQUENCES
-
-SELECT * FROM ALL_BOU1_4L_GID_SEQ;
-
-SELECT CURRVAL(&#39;ALL_BOU1_4L_GID_SEQ&#39;);
-
-SELECT NEXTVAL(&#39;ALL_BOU1_4L_GID_SEQ&#39;);
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-PostgreSQL备份与恢复"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/02/16/PostgreSQL%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D/"
-    >PostgreSQL备份与恢复</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/02/16/PostgreSQL%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D/" class="article-date">
-  <time datetime="2023-02-16T04:17:09.000Z" itemprop="datePublished">2023-02-16</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>（一）备份数据库，步骤如下：<br>（1）开始-运行-cmd 弹出dos控制台；然后 在控制台里，进入PostgreSQL安装目录bin下：<br>    cd C:\Program Files\PostgreSQL\9.0\bin<br>    pg_dump -h localhost -U postgres databasename &gt; D:\databasename.bak</p>
-<p>（二）恢复数据库，步骤如下：<br>（1）预先建好数据库databasename，<br>（2）开始-运行-cmd 弹出dos控制台；然后 在控制台里，进入PostgreSQL安装目录bin下：<br>    cd C:\Program Files\PostgreSQL\9.0\bin<br>    psql -h localhost -U postgres -d databasename &lt; D:\databasename.bak</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-windows下注册和取消PostgreSQL服务的方法"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/02/16/windows%E4%B8%8B%E6%B3%A8%E5%86%8C%E5%92%8C%E5%8F%96%E6%B6%88PostgreSQL%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%96%B9%E6%B3%95/"
-    >windows下注册和取消PostgreSQL服务的方法</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/02/16/windows%E4%B8%8B%E6%B3%A8%E5%86%8C%E5%92%8C%E5%8F%96%E6%B6%88PostgreSQL%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%96%B9%E6%B3%95/" class="article-date">
-  <time datetime="2023-02-16T04:16:04.000Z" itemprop="datePublished">2023-02-16</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="（一）"><a href="#（一）" class="headerlink" title="（一）"></a>（一）</h1><p>pg_ctl register [-N servicename] [-U username] [-P password] [-D datadir] [-w][-t seconds] [-o options]<br>pg_ctl unregister [-N servicename]<br>参数说明如下：<br>-N servicename：要注册的系统服务的名字。这个名字将用于服务名和 显示名。<br>-P password：用于启动服务的密码<br>-U：用于启动服务的用户名。如果是域用户，需要使用“DOMAIN\username”的格式<br>使用举例如下：<br>删除一个服务：<br>pg_ctl unregister -N postgresql-9.2<br>增加一个服务：<br>pg_ctl register -D “C:\Program Files\Postgresql\9.2\data”</p>
-<h1 id="（二）"><a href="#（二）" class="headerlink" title="（二）"></a>（二）</h1><p>重新注册服务，其实比重新安装还简单了；执行命令就可以了，<br>第一步：进入到数据库的安装目录，cd D:\PostgreSQL\bin；<br>第二部：执行服务注册：pg_ctl register -N pg921 -D D:\PostgreSQL\data -S auto -w -t 10 -l D:/PostgreSQL/pg921.log -o “-p 5432”,<br>-N pg921 代表注册服务的名称 ，-D代表数据库文件目录 ，-S代表服务启动方式auto自动，demand手动，-o “-p 5432”指启动服务端口；（可以通过pg_ctl –help命令查看使用方法）<br>第三步：启动服务，net start pg921；<br>通过上面的的方法就成功的注册了服务器，以后每次开机都可以使用数据库了；<br>但是postgresql自带的一个管理工具pgAdmin3还是不能正常使用，需要我们配置，配置方法见下图：<br>注意：服务项不需要填写，主机填写localhost，如果填写真实的ip，必须在数据库配置文件中配置ip权限，否则不能连接；</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
   </article>
   
 
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/36/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/35/">35</a><a class="page-number" href="/page/36/">36</a><span class="page-number current">37</span><a class="page-number" href="/page/38/">38</a><a class="page-number" href="/page/39/">39</a><span class="space">&hellip;</span><a class="page-number" href="/page/43/">43</a><a class="extend next" rel="next" href="/page/38/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/36/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/35/">35</a><a class="page-number" href="/page/36/">36</a><span class="page-number current">37</span><a class="page-number" href="/page/38/">38</a><a class="page-number" href="/page/39/">39</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><a class="extend next" rel="next" href="/page/38/">下一页</a>
   </nav>
   
 </section>
