@@ -154,6 +154,524 @@
     
     
     <article
+  id="post-GO入门04：结构体"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/03/31/GO%E5%85%A5%E9%97%A804%EF%BC%9A%E7%BB%93%E6%9E%84%E4%BD%93/"
+    >GO入门04：结构体</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/03/31/GO%E5%85%A5%E9%97%A804%EF%BC%9A%E7%BB%93%E6%9E%84%E4%BD%93/" class="article-date">
+  <time datetime="2023-03-31T15:09:29.000Z" itemprop="datePublished">2023-03-31</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="Go-语言结构体"><a href="#Go-语言结构体" class="headerlink" title="Go 语言结构体"></a>Go 语言结构体</h1><p>Go 语言中数组可以存储同一类型的数据，但在结构体中我们可以为不同项定义不同的数据类型。</p>
+<p>结构体是由一系列具有相同类型或不同类型的数据构成的数据集合。</p>
+<p>结构体表示一项记录，比如保存图书馆的书籍记录，每本书有以下属性：</p>
+<pre><code>Title ：标题
+Author ： 作者
+Subject：学科
+ID：书籍ID
+</code></pre>
+<h1 id="定义结构体"><a href="#定义结构体" class="headerlink" title="定义结构体"></a>定义结构体</h1><p>结构体定义需要使用 type 和 struct 语句。struct 语句定义一个新的数据类型，结构体中有一个或多个成员。type 语句设定了结构体的名称。结构体的格式如下：</p>
+<pre><code>type struct_variable_type struct &#123;
+   member definition
+   member definition
+   ...
+   member definition
+&#125;
+</code></pre>
+<p>一旦定义了结构体类型，它就能用于变量的声明，语法格式如下：</p>
+<pre><code>variable_name := structure_variable_type &#123;value1, value2...valuen&#125;
+或
+variable_name := structure_variable_type &#123; key1: value1, key2: value2..., keyn: valuen&#125;
+</code></pre>
+<p>实例如下：</p>
+<pre><code>package main
+
+import &quot;fmt&quot;
+
+type Books struct &#123;
+   title string
+   author string
+   subject string
+   book_id int
+&#125;
+
+
+func main() &#123;
+
+    // 创建一个新的结构体
+    fmt.Println(Books&#123;&quot;Go 语言&quot;, &quot;www.runoob.com&quot;, &quot;Go 语言教程&quot;, 6495407&#125;)
+
+    // 也可以使用 key =&gt; value 格式
+    fmt.Println(Books&#123;title: &quot;Go 语言&quot;, author: &quot;www.runoob.com&quot;, subject: &quot;Go 语言教程&quot;, book_id: 6495407&#125;)
+
+    // 忽略的字段为 0 或 空
+   fmt.Println(Books&#123;title: &quot;Go 语言&quot;, author: &quot;www.runoob.com&quot;&#125;)
+&#125;
+</code></pre>
+<p>输出结果为：</p>
+<pre><code>&#123;Go 语言 www.runoob.com Go 语言教程 6495407&#125;
+&#123;Go 语言 www.runoob.com Go 语言教程 6495407&#125;
+&#123;Go 语言 www.runoob.com  0&#125;
+</code></pre>
+<h1 id="访问结构体成员"><a href="#访问结构体成员" class="headerlink" title="访问结构体成员"></a>访问结构体成员</h1><p>如果要访问结构体成员，需要使用点号 . 操作符，格式为：</p>
+<pre><code>结构体.成员名
+</code></pre>
+<p>结构体类型变量使用 struct 关键字定义，实例如下：</p>
+<pre><code>package main
+
+import &quot;fmt&quot;
+
+type Books struct &#123;
+   title string
+   author string
+   subject string
+   book_id int
+&#125;
+
+func main() &#123;
+   var Book1 Books        /* 声明 Book1 为 Books 类型 */
+   var Book2 Books        /* 声明 Book2 为 Books 类型 */
+
+   /* book 1 描述 */
+   Book1.title = &quot;Go 语言&quot;
+   Book1.author = &quot;www.runoob.com&quot;
+   Book1.subject = &quot;Go 语言教程&quot;
+   Book1.book_id = 6495407
+
+   /* book 2 描述 */
+   Book2.title = &quot;Python 教程&quot;
+   Book2.author = &quot;www.runoob.com&quot;
+   Book2.subject = &quot;Python 语言教程&quot;
+   Book2.book_id = 6495700
+
+   /* 打印 Book1 信息 */
+   fmt.Printf( &quot;Book 1 title : %s\n&quot;, Book1.title)
+   fmt.Printf( &quot;Book 1 author : %s\n&quot;, Book1.author)
+   fmt.Printf( &quot;Book 1 subject : %s\n&quot;, Book1.subject)
+   fmt.Printf( &quot;Book 1 book_id : %d\n&quot;, Book1.book_id)
+
+   /* 打印 Book2 信息 */
+   fmt.Printf( &quot;Book 2 title : %s\n&quot;, Book2.title)
+   fmt.Printf( &quot;Book 2 author : %s\n&quot;, Book2.author)
+   fmt.Printf( &quot;Book 2 subject : %s\n&quot;, Book2.subject)
+   fmt.Printf( &quot;Book 2 book_id : %d\n&quot;, Book2.book_id)
+&#125;
+</code></pre>
+<p>以上实例执行运行结果为：</p>
+<pre><code>Book 1 title : Go 语言
+Book 1 author : www.runoob.com
+Book 1 subject : Go 语言教程
+Book 1 book_id : 6495407
+Book 2 title : Python 教程
+Book 2 author : www.runoob.com
+Book 2 subject : Python 语言教程
+Book 2 book_id : 6495700
+</code></pre>
+<h1 id="结构体作为函数参数"><a href="#结构体作为函数参数" class="headerlink" title="结构体作为函数参数"></a>结构体作为函数参数</h1><p>你可以像其他数据类型一样将结构体类型作为参数传递给函数。并以以上实例的方式访问结构体变量：</p>
+<pre><code>package main
+
+import &quot;fmt&quot;
+
+type Books struct &#123;
+   title string
+   author string
+   subject string
+   book_id int
+&#125;
+
+func main() &#123;
+   var Book1 Books        /* 声明 Book1 为 Books 类型 */
+   var Book2 Books        /* 声明 Book2 为 Books 类型 */
+
+   /* book 1 描述 */
+   Book1.title = &quot;Go 语言&quot;
+   Book1.author = &quot;www.runoob.com&quot;
+   Book1.subject = &quot;Go 语言教程&quot;
+   Book1.book_id = 6495407
+
+   /* book 2 描述 */
+   Book2.title = &quot;Python 教程&quot;
+   Book2.author = &quot;www.runoob.com&quot;
+   Book2.subject = &quot;Python 语言教程&quot;
+   Book2.book_id = 6495700
+
+   /* 打印 Book1 信息 */
+   printBook(Book1)
+
+   /* 打印 Book2 信息 */
+   printBook(Book2)
+&#125;
+
+func printBook( book Books ) &#123;
+   fmt.Printf( &quot;Book title : %s\n&quot;, book.title)
+   fmt.Printf( &quot;Book author : %s\n&quot;, book.author)
+   fmt.Printf( &quot;Book subject : %s\n&quot;, book.subject)
+   fmt.Printf( &quot;Book book_id : %d\n&quot;, book.book_id)
+&#125;
+</code></pre>
+<p>以上实例执行运行结果为：</p>
+<pre><code>Book title : Go 语言
+Book author : www.runoob.com
+Book subject : Go 语言教程
+Book book_id : 6495407
+Book title : Python 教程
+Book author : www.runoob.com
+Book subject : Python 语言教程
+Book book_id : 6495700
+</code></pre>
+<h1 id="结构体指针"><a href="#结构体指针" class="headerlink" title="结构体指针"></a>结构体指针</h1><p>你可以定义指向结构体的指针类似于其他指针变量，格式如下：</p>
+<pre><code>var struct_pointer *Books
+</code></pre>
+<p>以上定义的指针变量可以存储结构体变量的地址。查看结构体变量地址，可以将 &amp; 符号放置于结构体变量前：</p>
+<pre><code>struct_pointer = &amp;Book1
+</code></pre>
+<p>使用结构体指针访问结构体成员，使用 “.” 操作符：</p>
+<pre><code>struct_pointer.title
+</code></pre>
+<p>接下来让我们使用结构体指针重写以上实例，代码如下：</p>
+<pre><code>package main
+
+import &quot;fmt&quot;
+
+type Books struct &#123;
+   title string
+   author string
+   subject string
+   book_id int
+&#125;
+
+func main() &#123;
+   var Book1 Books        /* 声明 Book1 为 Books 类型 */
+   var Book2 Books        /* 声明 Book2 为 Books 类型 */
+
+   /* book 1 描述 */
+   Book1.title = &quot;Go 语言&quot;
+   Book1.author = &quot;www.runoob.com&quot;
+   Book1.subject = &quot;Go 语言教程&quot;
+   Book1.book_id = 6495407
+
+   /* book 2 描述 */
+   Book2.title = &quot;Python 教程&quot;
+   Book2.author = &quot;www.runoob.com&quot;
+   Book2.subject = &quot;Python 语言教程&quot;
+   Book2.book_id = 6495700
+
+   /* 打印 Book1 信息 */
+   printBook(&amp;Book1)
+
+   /* 打印 Book2 信息 */
+   printBook(&amp;Book2)
+&#125;
+func printBook( book *Books ) &#123;
+   fmt.Printf( &quot;Book title : %s\n&quot;, book.title)
+   fmt.Printf( &quot;Book author : %s\n&quot;, book.author)
+   fmt.Printf( &quot;Book subject : %s\n&quot;, book.subject)
+   fmt.Printf( &quot;Book book_id : %d\n&quot;, book.book_id)
+&#125;
+</code></pre>
+<p>以上实例执行运行结果为：</p>
+<pre><code>Book title : Go 语言
+Book author : www.runoob.com
+Book subject : Go 语言教程
+Book book_id : 6495407
+Book title : Python 教程
+Book author : www.runoob.com
+Book subject : Python 语言教程
+Book book_id : 6495700
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GO/" rel="tag">GO</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-GO入门03：关系运算符"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/03/30/GO%E5%85%A5%E9%97%A803%EF%BC%9A%E5%85%B3%E7%B3%BB%E8%BF%90%E7%AE%97%E7%AC%A6/"
+    >GO入门03：关系运算符</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/03/30/GO%E5%85%A5%E9%97%A803%EF%BC%9A%E5%85%B3%E7%B3%BB%E8%BF%90%E7%AE%97%E7%AC%A6/" class="article-date">
+  <time datetime="2023-03-30T14:54:23.000Z" itemprop="datePublished">2023-03-30</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h1><pre><code>关系运算符
+</code></pre>
+<h1 id="示例代码："><a href="#示例代码：" class="headerlink" title="示例代码："></a>示例代码：</h1><pre><code>package main
+
+import &quot;fmt&quot;
+
+func main() &#123;
+   var a int = 21
+   var b int = 10
+
+   if( a == b ) &#123;
+      fmt.Printf(&quot;第一行 - a 等于 b\n&quot; )
+   &#125; else &#123;
+      fmt.Printf(&quot;第一行 - a 不等于 b\n&quot; )
+   &#125;
+   if ( a &lt; b ) &#123;
+      fmt.Printf(&quot;第二行 - a 小于 b\n&quot; )
+   &#125; else &#123;
+      fmt.Printf(&quot;第二行 - a 不小于 b\n&quot; )
+   &#125;
+   
+   if ( a &gt; b ) &#123;
+      fmt.Printf(&quot;第三行 - a 大于 b\n&quot; )
+   &#125; else &#123;
+      fmt.Printf(&quot;第三行 - a 不大于 b\n&quot; )
+   &#125;
+   /* Lets change value of a and b */
+   a = 5
+   b = 20
+   if ( a &lt;= b ) &#123;
+      fmt.Printf(&quot;第四行 - a 小于等于 b\n&quot; )
+   &#125;
+   if ( b &gt;= a ) &#123;
+      fmt.Printf(&quot;第五行 - b 大于等于 a\n&quot; )
+   &#125;
+&#125;
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GO/" rel="tag">GO</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-GO入门02：for循环"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/03/29/GO%E5%85%A5%E9%97%A802%EF%BC%9Afor%E5%BE%AA%E7%8E%AF/"
+    >GO入门02：for循环</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/03/29/GO%E5%85%A5%E9%97%A802%EF%BC%9Afor%E5%BE%AA%E7%8E%AF/" class="article-date">
+  <time datetime="2023-03-29T14:38:27.000Z" itemprop="datePublished">2023-03-29</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h1><pre><code>for循环
+break
+</code></pre>
+<h1 id="示例代码1："><a href="#示例代码1：" class="headerlink" title="示例代码1："></a>示例代码1：</h1><pre><code>package main
+
+import &quot;fmt&quot;
+
+func main() &#123;
+   strings := []string&#123;&quot;google&quot;, &quot;runoob&quot;&#125;
+   for i, s := range strings &#123;
+      fmt.Println(i, s)
+   &#125;
+&#125;
+</code></pre>
+<h1 id="示例代码2："><a href="#示例代码2：" class="headerlink" title="示例代码2："></a>示例代码2：</h1><pre><code>package main
+
+import &quot;fmt&quot;
+
+func main() &#123;
+    arr := [5]int&#123;1, 2, 3, 4, 5&#125;
+    sum := 0
+    for i := 0; i &lt;= len(arr); i++ &#123;
+        sum += i
+    &#125;
+    fmt.Println(sum)
+&#125;
+</code></pre>
+<h1 id="示例代码3："><a href="#示例代码3：" class="headerlink" title="示例代码3："></a>示例代码3：</h1><pre><code>package main
+
+import &quot;fmt&quot;
+
+func main() &#123;
+
+   var a int = 10
+   
+   for a &lt; 20 &#123;
+      fmt.Printf(&quot;a = : %d\n&quot;, a);
+      a++;
+      if a &gt; 15 &#123;
+         break;
+      &#125;
+   &#125;
+&#125;
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GO/" rel="tag">GO</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-GO入门01：Hello-World"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/03/28/GO%E5%85%A5%E9%97%A801%EF%BC%9AHello-World/"
+    >GO入门01：Hello World!</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/03/28/GO%E5%85%A5%E9%97%A801%EF%BC%9AHello-World/" class="article-date">
+  <time datetime="2023-03-28T14:34:30.000Z" itemprop="datePublished">2023-03-28</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>入门示例代码：</p>
+<pre><code>package main
+
+import &quot;fmt&quot;
+
+func main() &#123;
+    fmt.Println(&quot;Hello, World!&quot;)
+&#125;
+</code></pre>
+<p>执行命令：</p>
+<pre><code>$ go run hello.go
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GO/" rel="tag">GO</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-java读取JSON文件的多种方式"
   class="article article-type-post"
   itemscope
@@ -368,266 +886,13 @@ privatestatic void readerMethod(File file) throws IOException &#123;
 </article>
 
     
-    <article
-  id="post-Notepad-免安装版注册右键菜单"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/03/25/Notepad-%E5%85%8D%E5%AE%89%E8%A3%85%E7%89%88%E6%B3%A8%E5%86%8C%E5%8F%B3%E9%94%AE%E8%8F%9C%E5%8D%95/"
-    >Notepad++免安装版注册右键菜单</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/03/25/Notepad-%E5%85%8D%E5%AE%89%E8%A3%85%E7%89%88%E6%B3%A8%E5%86%8C%E5%8F%B3%E9%94%AE%E8%8F%9C%E5%8D%95/" class="article-date">
-  <time datetime="2023-03-25T15:22:46.000Z" itemprop="datePublished">2023-03-25</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>在免安装版目录打开管理员命令窗口cmd</p>
-<p>注册<br>regsvr32 NppShell_06.dll</p>
-<p>反注册<br>regsvr32 NppShell_06.dll /u</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Notepad/" rel="tag">Notepad++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/windows/" rel="tag">windows</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-JAVA中最方便的Unicode转换方法"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/03/24/JAVA%E4%B8%AD%E6%9C%80%E6%96%B9%E4%BE%BF%E7%9A%84Unicode%E8%BD%AC%E6%8D%A2%E6%96%B9%E6%B3%95/"
-    >JAVA中最方便的Unicode转换方法</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/03/24/JAVA%E4%B8%AD%E6%9C%80%E6%96%B9%E4%BE%BF%E7%9A%84Unicode%E8%BD%AC%E6%8D%A2%E6%96%B9%E6%B3%95/" class="article-date">
-  <time datetime="2023-03-24T15:43:36.000Z" itemprop="datePublished">2023-03-24</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="在命令行界面用native2ascii工具"><a href="#在命令行界面用native2ascii工具" class="headerlink" title="在命令行界面用native2ascii工具"></a>在命令行界面用native2ascii工具</h1><ul>
-<li><p>1.将汉字转为Unicode:<br>C:\Program   Files\Java\jdk1.5.0_04\bin&gt;native2ascii<br>测试<br>\u6d4b\u8bd5  </p>
-</li>
-<li><p>2.将Unicode转换为汉字:<br>C:\Program   Files\Java\jdk1.5.0_04\bin&gt;native2ascii   -reverse<br>\u6d4b\u8bd5<br>测试</p>
-</li>
-</ul>
-<h1 id="native2ascii深入"><a href="#native2ascii深入" class="headerlink" title="native2ascii深入"></a>native2ascii深入</h1><p>java 自带的一个native2ascii.exe是一个很好的转码工具，在bin目录下。如果你的properties中有汉字，需要转成unicode . 则把含有汉字的properties拷贝到bin 目录下， 然后在cmd里面进入bin目录，输入：native2ascii -encoding  utf-8  Language-ext_zh_CN.properties.native Language-ext_zh_CN.properties就ok了。Language-ext_zh_CN.properties是转码后的文件。</p>
-<p>在做Java开发的时候，常常会出现一些乱码，或者无法正确识别或读取的文件，比如常见的validator验 证用的消息资源 （properties） 文件就需要进行Unicode重新编码。<br>原因是java默认的编码方式为Unicode，而我们的计算机系统编码 常常是GBK等编码。需要将系统的编码转换为java正确识别的编码问题就解决了。</p>
-<ul>
-<li><p>1、native2ascii简介<br>native2ascii 是sun java sdk提供的一个工具。用来将别的文本类文件（比如*.txt,<em>.ini,</em>.properties,*.java等等）编码转为Unicode编码。 为什么要进行转码，原因在于程序的国际化。Unicode编码的定义：Unicode（统一码、万国码、单一码）是一种在计算机上使用的字符编码。它为每 种语言中的每个字符设定了统一并且唯一的二进制编码，以满足跨语言、跨平台进行文本转换、处理的要求。1990年开始研发，1994年正式公布。随着计算 机工作能力的增强，Unicode也在面世以来的十多年里得到普及。（声明：Unicode编码定义来自互联网）。</p>
-</li>
-<li><p>2、获取native2ascii<br>安装了jdk后，假如你是在windows上安装，那么在jdk的安装目录下，会有一个bin目录，其中native2ascii.exe正是。</p>
-</li>
-<li><p>3、native2ascii的命令行的命名格式：</p>
-</li>
-</ul>
-<p>native2ascii -[options] [inputfile [outputfile]]</p>
-<p>说明：<br>-[options]：表示命令开关，有两个选项可供选择<br>-reverse：将Unicode编码转为本地或者指定编码，不指定编码情况下，将转为本地编码。<br>-encoding encoding_name：转换为指定编码，encoding_name为编码名称。<br>[inputfile [outputfile]]<br>inputfile：表示输入文件全名。<br>outputfile：输出文件名。如果缺少此参数，将输出到控制台。</p>
-<ul>
-<li>4、最佳实践<br>首先将JDK的bin目录加入系统变量path。在盘下建立一个test目录，在test目录里建立一个zh.txt文件，文件内容为：“熔岩”，打开“命令行提示符”，并进入C:\test目录下。下面就可以按照说明一步一步来操作，注意观察其中编码的变化。</li>
-</ul>
-<p>** 1)将zh.txt转换为Unicode编码，输出文件到u.txt<br>native2ascii zh.txt u.txt<br>打开u.txt，内容为“\u7194\u5ca9”。</p>
-<p>** 2)将zh.txt转换为Unicode编码，输出到控制台<br>C:\test&gt;native2ascii zh.txt<br>\u7194\u5ca9<br>可以看到，控制台输出了“\u7194\u5ca9”。</p>
-<p>** 3)将zh.txt转换为ISO8859-1编码，输出文件到i.txt<br>native2ascii -encoding ISO8859-1 zh.txt i.txt<br>打开i.txt文件，内容为“\u00c8\u00db\u00d1\u00d2”。</p>
-<p>** 4)将u.txt转换为本地编码，输出到文件u_nv.txt<br>native2ascii -reverse u.txt u_nv.txt<br>打开u_nv.txt文件，内容为“熔岩”。</p>
-<p>** 5)将u.txt转换为本地编码，输出到控制台<br>C:\test&gt;native2ascii -reverse u.txt<br>熔岩<br>可以看到，控制台输出了“熔岩”。</p>
-<p>** 6)将i.txt转换为本地编码，输出到i_nv.txt<br>native2ascii -reverse i.txt i_nv.txt<br>打开i_nv.txt文件，内容为“\u00c8\u00db\u00d1\u00d2”。发现转码前后完全一样的。也就是说，等于没有转，或者说思想糊涂，对命名没有理解。。</p>
-<p>** 7)将i.txt转换为GBK编码，输出到i_gbk.txt<br>native2ascii -reverse -encoding GBK i.txt i_gbk.txt<br>打开i_gbk.txt文件，内容为“\u00c8\u00db\u00d1\u00d2”。发现转码前后完全一样的。也就是说，等于没有转，或者说思想糊涂，对命名没有理解。</p>
-<p>** 8)将u_nv.txt转码到本地编码GBK，输出到控制台<br>C:\test&gt;native2ascii -reverse -encoding ISO8859-1 i.txt<br>熔岩<br>从这个结果看，目标达到到了，编码i.txt为ISO8859-1，转为本地编码后内容为“熔岩”。从这里应该意识到，native2ascii -reverse命令中-encoding指定的编码为源文件的编码格式。而在native2ascii 命令中-encoding指定的编码为（生成的)目标文件的编码格式。这一点非常的重要！切记！！<br>继续探索，新建文件12a.txt，内容“12axyz”。看看纯字母数字的编码又如何。</p>
-<p>** 9)将纯字母数字的文本文件12a.txt转换为Unicode编码<br>native2ascii 12a.txt 12a_nv.txt<br>打开12a_nv.txt文件，内容为“12axyz”。<br>继续测试，转为ISO8859-1编码看看<br>C:\test&gt;native2ascii -encoding ISO8859-1 12a.txt<br>12axyz<br>结果还是没有转码。</p>
-<p>从结果可以得出结论：对于纯数字和字母的文本类型件，转码前后的内容是一样的。</p>
-<ul>
-<li>5、总结<br>native2ascii 是一个非常的好转码工具，并且转码是可逆的！而其真正的含义并非本地编码——&gt;转码为ASCII码，而是一个通用的文本文件编码转换工具。在做编码 转换的时候有两类指定编码的情形，分别指输出文件编码和输入文件编码，具体可以看看最佳实践部分。</li>
-</ul>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-黑果小兵github"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/03/23/%E9%BB%91%E6%9E%9C%E5%B0%8F%E5%85%B5github/"
-    >黑果小兵github</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/03/23/%E9%BB%91%E6%9E%9C%E5%B0%8F%E5%85%B5github/" class="article-date">
-  <time datetime="2023-03-23T08:07:01.000Z" itemprop="datePublished">2023-03-23</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://github.com/daliansky">https://github.com/daliansky</a><br><a target="_blank" rel="noopener" href="https://blog.daliansky.net/">https://blog.daliansky.net</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/macOS/" rel="tag">macOS</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-nacos2-2-1版本及以后开启了默认鉴权"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/03/22/nacos2-2-1%E7%89%88%E6%9C%AC%E5%8F%8A%E4%BB%A5%E5%90%8E%E5%BC%80%E5%90%AF%E4%BA%86%E9%BB%98%E8%AE%A4%E9%89%B4%E6%9D%83/"
-    >nacos2.2.1版本及以后开启了默认鉴权</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/03/22/nacos2-2-1%E7%89%88%E6%9C%AC%E5%8F%8A%E4%BB%A5%E5%90%8E%E5%BC%80%E5%90%AF%E4%BA%86%E9%BB%98%E8%AE%A4%E9%89%B4%E6%9D%83/" class="article-date">
-  <time datetime="2023-03-22T02:26:25.000Z" itemprop="datePublished">2023-03-22</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>nacos 2.2.1版本及以后开启了默认鉴权，需要填写jwt key，不填写key后果，启动报错</p>
-<pre><code>org.springframework.context.ApplicationContextException: Unable to start web server; nested exception is org.springframework.boot.web.server.WebServerException: Unable to start embedded Tomcat
-</code></pre>
-<p>参照 <a target="_blank" rel="noopener" href="https://nacos.io/zh-cn/docs/v2/guide/user/auth.html">nacos鉴权文档</a> 说明，修改application.properties中secret.key配置，即可本地单机正常启动。</p>
-<pre><code>### 2.1.0 版本后
-nacos.core.auth.plugin.nacos.token.secret.key=VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nacos/" rel="tag">nacos</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
   </article>
   
 
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/29/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/">28</a><a class="page-number" href="/page/29/">29</a><span class="page-number current">30</span><a class="page-number" href="/page/31/">31</a><a class="page-number" href="/page/32/">32</a><span class="space">&hellip;</span><a class="page-number" href="/page/42/">42</a><a class="extend next" rel="next" href="/page/31/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/29/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/">28</a><a class="page-number" href="/page/29/">29</a><span class="page-number current">30</span><a class="page-number" href="/page/31/">31</a><a class="page-number" href="/page/32/">32</a><span class="space">&hellip;</span><a class="page-number" href="/page/43/">43</a><a class="extend next" rel="next" href="/page/31/">下一页</a>
   </nav>
   
 </section>

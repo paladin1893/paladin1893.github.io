@@ -154,6 +154,298 @@
     
     
     <article
+  id="post-最新centos部署docker指南"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/07/27/%E6%9C%80%E6%96%B0centos%E9%83%A8%E7%BD%B2docker%E6%8C%87%E5%8D%97/"
+    >最新centos部署docker指南</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/07/27/%E6%9C%80%E6%96%B0centos%E9%83%A8%E7%BD%B2docker%E6%8C%87%E5%8D%97/" class="article-date">
+  <time datetime="2023-07-27T02:42:32.000Z" itemprop="datePublished">2023-07-27</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>2023年7月之后，Docker Compose V1不再更新，与后续新版Docker Destop也不再适配。<br>取而代之，当前支持的Docker Desktop均使用Docker Compose V2。</p>
+<h1 id="参考文档："><a href="#参考文档：" class="headerlink" title="参考文档："></a>参考文档：</h1><p><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/install/centos/">Install Docker Engine on CentOS</a><br><a target="_blank" rel="noopener" href="https://docs.docker.com/compose/install/">Overview of installing Docker Compose</a></p>
+<h1 id="安装命令"><a href="#安装命令" class="headerlink" title="安装命令"></a>安装命令</h1><p>整理如下：</p>
+<pre><code>sudo yum remove docker \
+                  docker-client \
+                  docker-client-latest \
+                  docker-common \
+                  docker-latest \
+                  docker-latest-logrotate \
+                  docker-logrotate \
+                  docker-engine
+
+sudo yum install -y yum-utils
+sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+sudo yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+
+sudo yum install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+</code></pre>
+<h1 id="查看版本："><a href="#查看版本：" class="headerlink" title="查看版本："></a>查看版本：</h1><pre><code>sudo docker -v
+sudo docker compose version
+</code></pre>
+<h1 id="启动docker"><a href="#启动docker" class="headerlink" title="启动docker"></a>启动docker</h1><pre><code>sudo systemctl start docker
+sudo systemctl enable docker
+</code></pre>
+<h1 id="测试docker"><a href="#测试docker" class="headerlink" title="测试docker"></a>测试docker</h1><pre><code>sudo docker run hello-world
+</code></pre>
+<h1 id="查看docker容器"><a href="#查看docker容器" class="headerlink" title="查看docker容器"></a>查看docker容器</h1><pre><code>sudo docker ps
+sudo docker ps | grep zentao
+</code></pre>
+<h1 id="查看docker容器日志，XXXXXX可以是容器名字，也可以是容器id"><a href="#查看docker容器日志，XXXXXX可以是容器名字，也可以是容器id" class="headerlink" title="查看docker容器日志，XXXXXX可以是容器名字，也可以是容器id"></a>查看docker容器日志，XXXXXX可以是容器名字，也可以是容器id</h1><pre><code>docker logs -f XXXXXX
+</code></pre>
+<h1 id="进入容器操作"><a href="#进入容器操作" class="headerlink" title="进入容器操作"></a>进入容器操作</h1><pre><code>sudo docker exec -it gitlab /bin/bash
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS7/" rel="tag">CentOS7</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/" rel="tag">Docker</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-oracle统计字符串包含字符个数"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/07/26/oracle%E7%BB%9F%E8%AE%A1%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%85%E5%90%AB%E5%AD%97%E7%AC%A6%E4%B8%AA%E6%95%B0/"
+    >oracle统计字符串包含字符个数</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/07/26/oracle%E7%BB%9F%E8%AE%A1%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%85%E5%90%AB%E5%AD%97%E7%AC%A6%E4%B8%AA%E6%95%B0/" class="article-date">
+  <time datetime="2023-07-26T12:32:26.000Z" itemprop="datePublished">2023-07-26</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>函数：REGEXP_COUNT();</p>
+<pre><code>select REGEXP_COUNT(&#39;1,2,6,8,7,9&#39;,&#39;,&#39;) from dual
+
+结果：5
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Jetbrains/" rel="tag">Jetbrains</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-Jetbrains软件下载地址"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/07/25/Jetbrains%E8%BD%AF%E4%BB%B6%E4%B8%8B%E8%BD%BD%E5%9C%B0%E5%9D%80/"
+    >Jetbrains软件下载地址</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/07/25/Jetbrains%E8%BD%AF%E4%BB%B6%E4%B8%8B%E8%BD%BD%E5%9C%B0%E5%9D%80/" class="article-date">
+  <time datetime="2023-07-25T13:23:12.000Z" itemprop="datePublished">2023-07-25</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>IDEA</p>
+<p><a target="_blank" rel="noopener" href="https://www.jetbrains.com/idea/download/other.html">https://www.jetbrains.com/idea/download/other.html</a></p>
+<p>WebStorm</p>
+<p><a target="_blank" rel="noopener" href="https://www.jetbrains.com/webstorm/download/other.html">https://www.jetbrains.com/webstorm/download/other.html</a></p>
+<p>Pycharm</p>
+<p><a target="_blank" rel="noopener" href="https://www.jetbrains.com/pycharm/download/other.html">https://www.jetbrains.com/pycharm/download/other.html</a></p>
+<p>Goland</p>
+<p><a target="_blank" rel="noopener" href="https://www.jetbrains.com/go/download/other.html">https://www.jetbrains.com/go/download/other.html</a></p>
+<p>Clion</p>
+<p><a target="_blank" rel="noopener" href="https://www.jetbrains.com/clion/download/other.html">https://www.jetbrains.com/clion/download/other.html</a></p>
+<p>其他软件，可访问官网【jetbrains.com】查找并下载<br>选择对应版本下载</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Jetbrains/" rel="tag">Jetbrains</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-CentOS7修改SSH默认端口22教程"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/07/24/CentOS7%E4%BF%AE%E6%94%B9SSH%E9%BB%98%E8%AE%A4%E7%AB%AF%E5%8F%A322%E6%95%99%E7%A8%8B/"
+    >CentOS7修改SSH默认端口22教程</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/07/24/CentOS7%E4%BF%AE%E6%94%B9SSH%E9%BB%98%E8%AE%A4%E7%AB%AF%E5%8F%A322%E6%95%99%E7%A8%8B/" class="article-date">
+  <time datetime="2023-07-24T04:28:48.000Z" itemprop="datePublished">2023-07-24</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>1.先查看防火墙状态</p>
+<pre><code>systemctl status firewalld    #查看防火墙状态
+</code></pre>
+<p>不建议关闭防火墙，测试服务器可以关闭省事</p>
+<pre><code>systemctl stop firewalld     #关闭防火墙
+systemctl disable firewalld #禁止开机启动
+</code></pre>
+<p>关闭封火墙存在很大的风险，生产环境强烈建议不要关闭。</p>
+<p>2、想好你要修改的端口，这里我以修改默认端口22为2222为例。</p>
+<p>可以通过以下命令授权开放端口：开放2222端口</p>
+<pre><code>firewall-cmd --permanent --add-port=2222/tcp
+</code></pre>
+<p>3、修改ssh端口</p>
+<pre><code>vi /etc/ssh/sshd_config
+Port 2222    //去掉前面的#号，然后把22改成你要的端口，最大别超过65535
+</code></pre>
+<p>wq保存退出。</p>
+<p>4、SELinux设置</p>
+<p>如果SELinux未开启可跳过直接重启防火墙和sshd服务即可。默认SELinux都是开启的。</p>
+<p>设置SELinux允许SSH监听新的自定义SSH端口</p>
+<pre><code>semanage port -a -t ssh_port_t -p tcp 2222
+</code></pre>
+<p>如果提示semanage没安装，可以执行下面的命令安装。</p>
+<pre><code>yum -y install policycoreutils-python             //安装后就可以使用semanage命令了。
+</code></pre>
+<p>接下来执行以下命令查看SELinux下SSH相关端口是不是成功修改为自定义SSH端口</p>
+<pre><code>semanage port -l|grep ssh
+ssh_port_t tcp 2222, 22              //这么显示说明端口已经修改了。
+</code></pre>
+<p>第⑤步：重启SSH服务和防火墙</p>
+<pre><code>systemctl restart sshd       //重启SSH
+systemctl restart firewalld.service     //重启防火墙
+</code></pre>
+<p>步骤全部完成，可以打开新的putty客户端通过新端口测试下。</p>
+<p>如果不行，可联系售后 进去检查配置。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS7/" rel="tag">CentOS7</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-WebGIS开源时空架构方案"
   class="article article-type-post"
   itemscope
@@ -399,268 +691,13 @@ rm -rf /run/gitlab
 </article>
 
     
-    <article
-  id="post-WinRar删除文件有妙用"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/07/21/WinRar%E5%88%A0%E9%99%A4%E6%96%87%E4%BB%B6%E6%9C%89%E5%A6%99%E7%94%A8/"
-    >WinRar删除文件有妙用</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/07/21/WinRar%E5%88%A0%E9%99%A4%E6%96%87%E4%BB%B6%E6%9C%89%E5%A6%99%E7%94%A8/" class="article-date">
-  <time datetime="2023-07-21T01:04:33.000Z" itemprop="datePublished">2023-07-21</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>经常出现文件删掉了，文件夹无法删除，出现“该项目不在请确认该项目位置,然后重试”的场景</p>
-<p>使用WinRar的压缩功能，把文件夹选中，点右键选中压缩功能，在弹窗中勾选压缩后自动删除源文件，压缩。神奇的事情发生了，可以把源文件删掉。win11亲测有效。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WinRar/" rel="tag">WinRar</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%88%A0%E9%99%A4%E6%96%87%E4%BB%B6/" rel="tag">删除文件</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-RPM软件包名中的el5、el6、el7是什么"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/07/20/RPM%E8%BD%AF%E4%BB%B6%E5%8C%85%E5%90%8D%E4%B8%AD%E7%9A%84el5%E3%80%81el6%E3%80%81el7%E6%98%AF%E4%BB%80%E4%B9%88/"
-    >RPM软件包名中的el5、el6、el7是什么</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/07/20/RPM%E8%BD%AF%E4%BB%B6%E5%8C%85%E5%90%8D%E4%B8%AD%E7%9A%84el5%E3%80%81el6%E3%80%81el7%E6%98%AF%E4%BB%80%E4%B9%88/" class="article-date">
-  <time datetime="2023-07-20T04:04:33.000Z" itemprop="datePublished">2023-07-20</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>EL 是 Red Hat Enterprise Linux 的简写。同理，OL 大概是 Oracle Linux的意思吧。</p>
-<p>EL6 表示软件包可以在 Red Hat 6.x，CentOS 6.x，CloudLinux 6.x 进行安装<br>EL5 表示软件包可以在 Red Hat 5.x，CentOS 5.x，CloudLinux 5.x 进行安装<br>EL7 表示软件包可以在 Red Hat 7.x，CentOS 7.x，CloudLinux 7.x 进行安装</p>
-<p>————————————————<br>版权声明：本文为CSDN博主「liaowenxiong」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/liaowenxiong/article/details/117136545">https://blog.csdn.net/liaowenxiong/article/details/117136545</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RPM/" rel="tag">RPM</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Github国内镜像网址，亲测好用"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/07/19/Github%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F%E7%BD%91%E5%9D%80%EF%BC%8C%E4%BA%B2%E6%B5%8B%E5%A5%BD%E7%94%A8/"
-    >Github国内镜像网址，亲测好用</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/07/19/Github%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F%E7%BD%91%E5%9D%80%EF%BC%8C%E4%BA%B2%E6%B5%8B%E5%A5%BD%E7%94%A8/" class="article-date">
-  <time datetime="2023-07-19T13:40:33.000Z" itemprop="datePublished">2023-07-19</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>不定期测试更新可用网址。建议先收藏</p>
-<p><a target="_blank" rel="noopener" href="https://kgithub.com/">https://kgithub.com/</a></p>
-<p>使用方式：<br>将github源网址前面加k即可。</p>
-<p>比如：<a target="_blank" rel="noopener" href="https://github.com/spring-projects/spring-boot">https://github.com/spring-projects/spring-boot</a></p>
-<p>改为：<a target="_blank" rel="noopener" href="https://kgithub.com/spring-projects/spring-boot">https://kgithub.com/spring-projects/spring-boot</a></p>
-<p>然后可以查看代码，查看issue和评论，默认自动带上k，方便。</p>
-<p>限制：<br>1.不能注册</p>
-<p>2.不能上传文件，可以登录，可以在线编辑</p>
-<p>3.来自raw.githubusercontent.com的下载可使用raw.kgithub.com替代</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Github/" rel="tag">Github</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-电价机制迎来新变化，拉大峰谷价差，建立“尖峰”电价"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/07/18/%E7%94%B5%E4%BB%B7%E6%9C%BA%E5%88%B6%E8%BF%8E%E6%9D%A5%E6%96%B0%E5%8F%98%E5%8C%96%EF%BC%8C%E6%8B%89%E5%A4%A7%E5%B3%B0%E8%B0%B7%E4%BB%B7%E5%B7%AE%EF%BC%8C%E5%BB%BA%E7%AB%8B%E2%80%9C%E5%B0%96%E5%B3%B0%E2%80%9D%E7%94%B5%E4%BB%B7/"
-    >电价机制迎来新变化 拉大峰谷价差，建立“尖峰”电价</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/07/18/%E7%94%B5%E4%BB%B7%E6%9C%BA%E5%88%B6%E8%BF%8E%E6%9D%A5%E6%96%B0%E5%8F%98%E5%8C%96%EF%BC%8C%E6%8B%89%E5%A4%A7%E5%B3%B0%E8%B0%B7%E4%BB%B7%E5%B7%AE%EF%BC%8C%E5%BB%BA%E7%AB%8B%E2%80%9C%E5%B0%96%E5%B3%B0%E2%80%9D%E7%94%B5%E4%BB%B7/" class="article-date">
-  <time datetime="2023-07-18T10:30:23.000Z" itemprop="datePublished">2023-07-18</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>来源：人民日报海外版</p>
-<p>拉大峰谷价差，建立“尖峰”电价——电价机制迎来新变化</p>
-<p>“最大用电负荷创历史新高”——今夏，全国各地高温天气频繁，发用电量连刷新纪录。国家能源局数据显示，7月，全社会用电量达7758亿千瓦时，同比增长12.8%。</p>
-<p>为缓解电力供需矛盾，国家发改委日前印发《关于进一步完善分时电价机制的通知》（下称《通知》），部署各地进一步完善分时电价机制。完善分时电价机制有何考量？具体作了哪些调整？对工商业和普通居民用电有啥影响？</p>
-<p>适应电力供需新形势</p>
-<p>立秋后，暑热未消。下班回到家，王东从冰箱里拿出一罐冰可乐一饮而尽。“天气太热了，每天都离不开冷饮和空调。”家住上海市长宁区的王东抱怨，高温“炙烤”模式下，家里的空调几乎从早开到晚，7月的电费因此比上个月翻了一番。</p>
-<p>受全国多地持续大范围高温天气影响，进入迎峰度夏以来，全国发用电量持续攀升。数据显示，7月14日，全国用电量达271.87亿千瓦时，比去年夏季最高值增长超10%。华东、华中、南网3个区域电网和河北南网、上海、江苏等12个省级电网最高用电负荷均创历史新高。</p>
-<p>日前，发改委下发《通知》，要求各地进一步完善分时电价机制。这将对用电产生哪些影响？</p>
-<p>据介绍，分时电价机制，是基于电能时间价值设计的，是引导用户削峰填谷、保障电力系统安全稳定经济运行的一项重要机制安排。通过对各时段制定不同的电价水平，引导电力用户在高峰时段少用电、低谷时段多用电。</p>
-<p>自上世纪80年代起，国家开始推行分时电价：四川等地按月划分丰水期、枯水期，对电力供应紧张的枯水期执行丰枯电价；上海等地按季划分夏季、非夏季，对盛夏用电高峰期执行更高的季节性电价……截至目前，全国已有29个省份实施了分时电价机制。</p>
-<p>“总体来看，这些年峰谷分时电价机制实施效果不错。”华北电力大学能源互联网研究中心主任曾鸣告诉本报记者，“尤其是用电占比大的工商业，由于其用电成本较高，对于能降低用电成本的削峰填谷机制也较重视。因此，多数工商业用户会通过积极调整用电时间等方式，达到降低成本的目的。”</p>
-<p>不过，随着近年来中国电力消费结构加快变化，用电负荷对气温变化更敏感，电力系统负荷夏、冬两季尖峰化特征日益突出，电力供需呈现“平时充裕、尖峰紧张”“整体平衡、局部紧张”新特征，原有的分时电价机制已难以适应新形势。</p>
-<p>国家发改委发布的数据显示，各地夏季最热、冬季最冷时段的全年累计时间普遍低于60个小时，但对应的尖峰电力需求可较平时高出1亿千瓦以上，保障电力系统安全稳定运行面临更大挑战，去年以来部分地方已不得不实施有序用电。</p>
-<p>“进一步完善分时电价机制，特别是优化峰谷电价机制、出台尖峰电价机制，有利于充分发挥电价信号作用，引导用户错峰用电，保障电力系统安全稳定运行，降低经济社会运行成本。”国家发改委价格司相关负责人表示。</p>
-<p>合理拉大峰谷价差</p>
-<p>此次完善分时电价，做了哪些调整？</p>
-<p>据介绍，调整主要包括优化峰谷电价机制、建立尖峰电价机制、建立健全季节性电价机制和丰枯电价机制、明确分时电价机制执行范围、建立动态调整机制、加强与电力市场的衔接等6个方面。其中，最大的亮点是合理拉大了峰谷电价价差，为引导电力用户削峰填谷、促进储能加快发展释放了清晰强烈的价格信号。</p>
-<p>数据显示，目前，国内居民生活用电峰谷价差平均值在2∶1以下，工商业用电峰谷价差平均值在3∶1以下。面对不断攀升的用电负荷，偏低的峰谷电价价差可能削弱分时电价机制的经济性调节作用。</p>
-<p>对此，新分时电价机制作出调整：电力系统峰谷差率超过40%的地方，峰谷电价价差原则上不低于4∶1，其他地方原则上不低于3∶1。各地应建立尖峰电价机制，尖峰时段根据前两年当地电力系统最高负荷95%及以上用电负荷出现的时段合理确定，尖峰电价在峰段电价基础上的上浮比例原则上不低于20%。</p>
-<p>“此次调整增加了电价的浮动范围，有利于在电力供需矛盾极为突出的情况下，引导用户错峰用电，保障电力系统安全。”北京理工大学能源与环境政策研究中心副主任廖华告诉本报记者。</p>
-<p>对于高峰用电的成本支出，江苏省昆山市一家笔记本电脑零部件企业负责人颇有感触。“夏季是我们的用电高峰期，不仅办公楼空调用电负担加重，还得加大生产车间换气设备投入。每到7月，电费就会比其他月份高出十几万元。”提及此次分时电价调整，他有些担忧：“拉大峰谷电价价差，会不会导致电费总体上涨？”</p>
-<p>国家发改委价格司相关负责人表示，进一步完善分时电价机制，要坚持一项原则：保持电网企业的销售电价总水平基本稳定。</p>
-<p>“也就是说，进一步完善分时电价机制，对社会总体用电成本影响较小，电网企业不会因此多收钱。”该负责人说。具体看，由于合理拉大了峰谷电价价差，高峰时段的电价会有所上调，低谷时段的电价会有所下调，能够错峰用电、在低谷时段多用电的用户用电成本会下降，在高峰时段用电的用户用电成本会有所上升。考虑到部分商业用户错峰用电难度大，同时明确对部分不适宜错峰用电的一般工商业电力用户，各地可研究制定平均电价，由用户自行选择。</p>
-<p>对于居民用电，国家发改委的《通知》作出要求：有条件的地方，要按程序推广居民峰谷电价机制，逐步拉大峰谷电价价差，引导居民用户在高峰时段少用电、低谷时段多用电，发挥削峰填谷的作用。“总的看，此次进一步完善分时电价机制，对居民用电价格的影响较小。”发改委相关负责人表示。</p>
-<p>推动构建新型电力市场</p>
-<p>进一步完善分时电价机制，对能源产业发展有何现实意义？</p>
-<p>“无论是鼓励高峰抑制用电，还是低谷促进用电，从经济层面看来，执行峰谷电价的积极意义都不小。”国网能源研究院财会与审计研究所所长李成仁接受本报记者采访表示，“前者可以降低电力系统投入，后者则能提高电力系统利用率。随着负荷峰谷差降低，还可能减少调峰资源的投入，节约燃料等运行成本。”</p>
-<p>近年来，可再生能源装机规模和发电量不断增长，以风、光等为代表的新能源跻身发电“生力军”。由于“极热无风”“晚峰无光”“云来无光”“冬季枯水”，新能源存在一定“靠天吃饭”的特性。专家认为，推行新的分时电价机制，有助于提高可再生电力资源利用效率，加快推进能源系统转型升级。同时，也将为抽水蓄能、新型储能发展创造更大的空间。</p>
-<p>“供应方面，分时电价机制有助于促进新能源发展和消纳。需求方面，能进一步推动储能和智能用电技术发展。”廖华说。通过拉大峰谷价差，鼓励高峰时段以较高价格发电，低谷时段以较低价格蓄能，将为储能技术提供发展动力。“在电价可变情形下，今后可以逐步推广更智能的用电设施，根据电价波动，智能调整用电时段。比如，未来可推广电动汽车智能充电技术和设施，根据电价水平自动决定是否充电。”</p>
-<p>着眼中长期，完善分时电价机制，还将有力推动实现碳达峰、碳中和目标。“分时电价能促进可再生能源的消纳，从而助力实现‘双碳’目标。特别是中国电力市场还处于初期建设阶段、政府定价将在相当长时间内存在的情况下，分时电价机制将发挥非常重要的作用。”李成仁表示。</p>
-<p>“未来，以风光为代表的可再生能源比例越来越大，发电出力曲线也会因此变化。执行分时电价机制，就是将需求侧的灵活性资源与供应侧的波动性曲线相匹配，这有利于建立新型电力系统和新型电力市场。长远来看，有助于‘双碳’目标的实现。”曾鸣说。</p>
-<p>在具体执行方面，曾鸣认为，各地发电结构不一，新能源比例和出力特征不同。他建议，各地应因地制宜，划定分时电价的各种时段和具体价差。</p>
-<p>廖睿灵</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%94%B5%E5%8A%9B/" rel="tag">电力</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
   </article>
   
 
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/9/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/42/">42</a><a class="extend next" rel="next" href="/page/11/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/9/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/43/">43</a><a class="extend next" rel="next" href="/page/11/">下一页</a>
   </nav>
   
 </section>
