@@ -1,6 +1,531 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>【Python】使用 requirements.txt 和 pip 打包批量安装</title>
+    <url>/2023/09/28/%E3%80%90Python%E3%80%91%E4%BD%BF%E7%94%A8%20requirements.txt%20%E5%92%8C%20pip%20%E6%89%93%E5%8C%85%E6%89%B9%E9%87%8F%E5%AE%89%E8%A3%85/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>当我们程序越来越复杂，使用pip管理Python包（库）。我们可以方便的使用配置文件 requirements.txt 批量安装指定版本的指定包。</p>
+<p>关于涉及到的pip官方的手册在这个位置： pip documentationv23.1.dev0</p>
+<p>本文对以下内容进行说明：</p>
+<p>pip 的批量安装选项： -r requirements.txt</p>
+<p>配置文件 requirements.txt 的写法</p>
+<p>生成当前环境的requirements.txt配置文件： pip freeze</p>
+<ol>
+<li><p>pip 的批量安装选项：-r requirements.txt<br>以下命令根据配置文件 requirements.txt 批量安装包。</p>
+<p> $ pip install -r requirements.txt</p>
+</li>
+</ol>
+<p>配置文件名是任意的，但经常使用 requirements.txt 这个名字。<br>将 requirements.txt 放在运行命令的目录中。如果它在另一个目录中，请指定当前目录的绝对路径或相对路径。</p>
+<ol start="2">
+<li>配置文件requirements.txt怎么写</li>
+</ol>
+<p>下面是一个典型的requirements.txt文件的例子</p>
+<pre><code>###### 下面的是不需要版本要求的 ######`
+nose
+nose-cov
+beautifulsoup4
+
+###### 进行版本要求的例子 ######`
+docopt == 0.6.1         # 必须严格的 0.6.1 的版本
+keyring &gt;= 4.1.1        # 最小的版本 4.1.1
+coverage != 3.5         # 版本排除，只要不是 3.5 都可以
+Mopidy-Dirble ~= 1.1    # 兼容版本。与&gt;=1.1，==1.* 相同
+</code></pre>
+<p>仔细看上面的代码，我们有如下规律</p>
+<p>与 Python 代码一样， # 之后的任何内容都是注释。<br>在实际使用时，可以使用 == 、 &gt; 、 &gt;= 、 &lt; 、 &lt;= 等指定版本。如果省略版本说明，将安装最新版本。<br>另外，如果需要可以用 AND 指定两个条件，方法是用逗号 , 分隔它们。在以下示例中，将安装高于 1.0 AND 低于 2.0 的版本。</p>
+<pre><code>package &gt;= 1.0, &lt;=2.0
+</code></pre>
+<ol start="3">
+<li><p>导出当前环境配置文件：pip freeze<br>pip freeze 命令将当前环境安装的包和版本以配置文件的形式输出，可以和 pip install -r 一起使用。</p>
+<p> $ pip freeze<br> agate==1.6.0<br> agate-dbf==0.2.0<br> agate-excel==0.2.1<br> agate-sql==0.5.2</p>
+</li>
+</ol>
+<p>因此，如果将 pip freeze 输出到带有重定向 &gt; 的文件，则可以使用该文件在单独的环境中安装与原始环境相同版本的包。</p>
+<p>田辛老师在复制环境的时候，经常这样做：</p>
+<p>第一步，生成requirements.txt文件</p>
+<pre><code>$ pip freeze &gt; requirements.txt
+</code></pre>
+<p>第二步，在新的机器上</p>
+<pre><code>$ pip install -r requirements.txt
+</code></pre>
+<p>————————————————<br>版权声明：本文为CSDN博主「田辛 | 田豆芽」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a href="https://blog.csdn.net/u013589130/article/details/129039961">https://blog.csdn.net/u013589130/article/details/129039961</a></p>
+]]></content>
+      <categories>
+        <category>软件开发</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>flask</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python 用pip批量安装包 requirements.txt</title>
+    <url>/2023/09/27/Python%20%E7%94%A8pip%E6%89%B9%E9%87%8F%E5%AE%89%E8%A3%85%E5%8C%85%20requirements.txt/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="一、python用pip批量安装包"><a href="#一、python用pip批量安装包" class="headerlink" title="一、python用pip批量安装包"></a>一、python用pip批量安装包</h1><p>python查看安装的第三方扩展包,就是使用命令 pip freeze。</p>
+<p>在已经配置好的一台机器上，将需要的包导出到requirements.txt</p>
+<pre><code>./pip freeze &gt; requirements.txt
+</code></pre>
+<p>此种方式会将环境中所有的包都打包进去，适合单虚拟环境（每个项目都处在不同的虚拟环境里，这个环境里是这个项目所需要的所有包）。因此，如果不是Python虚拟环境Virtualenv。我们不推荐这么使用，推荐使用 使用pipreqs 写入requirements.txt。</p>
+<p>pip安装包的方式中，有如下一种安装方式：</p>
+<pre><code>pip install -r requirements.txt
+</code></pre>
+<p>而文件requirement.txt里面内容的格式和pip freeze的格式完全一样。因此我们可以将pip freeze的内容输出至requirements.txt。</p>
+<p>推荐如下使用方式</p>
+<pre><code>./pip freeze | tee requirements.txt # 输出本地包环境至文件
+./pip install -r requirements.txt # 根据文件进行包安装
+</code></pre>
+<p>pip freeze 为什么比 pip list 的包少几个呢？<br>因为pip , wheel , setuptools 等包，是自带的而无法(un)install的。考虑到pip freeze的用途，所以这些包并没有显示。</p>
+<p>ps：<br>如果一定要用pip freeze来显示所有包，可以加上参数-all，即pip freeze -all</p>
+<h1 id="二、-推荐-使用pipreqs-写入requirements-txt"><a href="#二、-推荐-使用pipreqs-写入requirements-txt" class="headerlink" title="二、[推荐]使用pipreqs 写入requirements.txt"></a>二、[推荐]使用pipreqs 写入requirements.txt</h1><p>使用pipreqs 写入requirements.txt，只是程序中所用到的包，并不是电脑中安装的所有的包。</p>
+<pre><code>pip install pipreqs
+</code></pre>
+<p>cd 到程序所在的文件夹位置</p>
+<p>执行下面的语句，Windows下得加encoding=utf8，不然会出现编码问题。</p>
+<pre><code>pipreqs ./ --encoding=utf8 
+</code></pre>
+<h1 id="三、利用requirements-txt离线安装依赖包"><a href="#三、利用requirements-txt离线安装依赖包" class="headerlink" title="三、利用requirements.txt离线安装依赖包"></a>三、利用requirements.txt离线安装依赖包</h1><p>1、下载离线的包到指定目录</p>
+<p>将requirements.txt中导入的包离线下载到 package_tmp_dir 文件夹</p>
+<pre><code>pip wheel -w package_tmp_dir -r requirements.txt
+pip download -d package_tmp_dir -r requirements.txt
+</code></pre>
+<p>2、安装离线的包</p>
+<pre><code>pip install --no-index --find-links=package_tmp_dir  -r requirements.txt
+</code></pre>
+<ol>
+<li>使用 pip wheel 实现 Python 依赖包的离线安装</li>
+</ol>
+<p>Wheel 也是一种 built 包，而且是官方推荐的打包方式。也许你曾经遇见或使用过 egg 包，但现在 wheel 是官方推荐的打包方式（<a href="https://wheel.readthedocs.io/en/stable/%EF%BC%89%E3%80%82">https://wheel.readthedocs.io/en/stable/）。</a><br>wheel 包的优点：</p>
+<p> 1.更快地安装纯 Python 和本机 C 扩展包。<br> 2.避免安装时执行任意代码。 （避免 setup.py）<br> 3.在 Windows 或 macOS 上安装 C 扩展不需要编译器。<br> 4.为测试和持续集成提供更好的缓存。<br> 5.创建 .pyc 文件作为安装的一部分，以确保它们与使用的 Python 解释器匹配。<br> 6.跨平台和机器的更一致的安装。</p>
+<p>没有网络连接, 借助 wheel把整个 Python 应用做成离线安装包。</p>
+<p>安装 wheel:</p>
+<pre><code>pip install wheel
+</code></pre>
+<p>下载依赖包的 wheel 文件</p>
+<pre><code>pip wheel -r requirements.txt
+</code></pre>
+<p>默认情况下, 上述命令会下载 requirements.txt 中每个包的 wheel 包到当前目录的 wheelhouse 文件夹, 包括依赖的依赖。</p>
+<p>在你的安装脚本中执行:</p>
+<pre><code>pip install --use-wheel --no-index --find-links=wheelhouse -r requirements.txt
+</code></pre>
+<ol start="2">
+<li>下载命令</li>
+</ol>
+<p>一、对于单个包的安装</p>
+<p>1、离线</p>
+<p>(1)pip离线下载</p>
+<pre><code>pip download 你的包名 -d “下载的路径(windows下双引号来表示文件夹)”
+pip download pymysql -d &quot;D:\pipDownloadTest&quot;
+</code></pre>
+<p>(2)pip 离线安装</p>
+<pre><code>pip install 包路径
+pip install PyMySQL-0.9.3-py2.py3-none-any.whl
+</code></pre>
+<p>2、在线</p>
+<pre><code>pip install pymysql
+</code></pre>
+<p>二、对于多个包的安装与下载</p>
+<p>1、离线</p>
+<p>离线下载</p>
+<pre><code>pip download -d packages -r requirements.txt
+</code></pre>
+<p>离线安装</p>
+<pre><code>pip install --no-index --find-links=packages -r requirements.txt
+</code></pre>
+<p>2、在线</p>
+<pre><code>pip install -r requirements.txt
+</code></pre>
+<p>总结：多个包下载就多了一个 -r requirements.txt。</p>
+<ol start="3">
+<li>pip download 和 pip wheel 这两个命令的区别</li>
+</ol>
+<ul>
+<li><p>下载的文件格式不同</p>
+<p>  pip download 下载的是源代码的压缩包,通常是 .tar.gz 格式<br>  pip wheel 下载的是编译好的 wheel 二进制包,以 .whl 作为文件扩展名</p>
+</li>
+<li><p>是否编译</p>
+<p>  pip download 仅仅下载源码,不会编译<br>  pip wheel 会自动为所支持的平台编译Wheel包</p>
+</li>
+<li><p>下载位置不同</p>
+<p>  pip download 会下载到当前目录<br>  pip wheel 默认下载到 ~/.cache/pip/wheels 目录</p>
+</li>
+<li><p>用途不同<br>  pip download 用于获取源码包以便查看或自定义编译<br>  pip wheel 常用于离线环境,下载好Wheel包后直接pip install使用</p>
+</li>
+</ul>
+<p>所以,简单来说:</p>
+<p>需要源码包 - 使用pip download<br>需要离线安装 - 使用pip wheel</p>
+<p>两者有不同的使用场景。</p>
+<h1 id="四、pip-install-工作常见报错"><a href="#四、pip-install-工作常见报错" class="headerlink" title="四、pip install 工作常见报错"></a>四、pip install 工作常见报错</h1><p>Python.h: No such file or directory报错</p>
+<ul>
+<li>centos7 pip3 安装psycopg2出错</li>
+</ul>
+<p>参考URL: <a href="https://www.jianshu.com/p/fbbe3bdf1905">https://www.jianshu.com/p/fbbe3bdf1905</a><br>原因是：</p>
+<p>As mentioned in psycopg documentation <a href="http://initd.org/psycopg/docs/install.html">http://initd.org/psycopg/docs/install.html</a></p>
+<p>C compiler<br>Python header files</p>
+<ul>
+<li><p>没有安装python的环境：</p>
+<p>  For apt (Ubuntu, Debian…):</p>
+<pre><code>  sudo apt-get install python-dev # for python2.x installs
+  sudo apt-get install python3-dev # for python3.x installs
+</code></pre>
+<p>  For yum (CentOS, RHEL…):</p>
+<pre><code>  sudo yum install python-devel # for python2.x installs
+  sudo yum install python3-devel # for python3.x installs
+</code></pre>
+</li>
+</ul>
+<p>————————————————<br>版权声明：本文为CSDN博主「西京刀客」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a href="https://blog.csdn.net/inthat/article/details/117026589">https://blog.csdn.net/inthat/article/details/117026589</a></p>
+]]></content>
+      <categories>
+        <category>软件开发</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>conda、python环境配置</title>
+    <url>/2023/09/26/conda%E3%80%81python%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>新建虚拟环境</p>
+<pre><code>conda create -n python36 python=3.6
+</code></pre>
+<p>设为当前环境</p>
+<pre><code>conda activate python36
+</code></pre>
+<p>删除虚拟环境</p>
+<pre><code>conda remove -n python36 --all
+</code></pre>
+<p>安装必要的包</p>
+<pre><code>pip install -i https://pypi.tuna.tsinghua.edu.cn/simple xgboost==1.5.2
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple xlrd==1.2.0
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple pandas==1.1.4
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple openpyxl==3.0.10
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple Flask==2.0.2
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple Flask-Cors==3.0.10
+</code></pre>
+<p>导出依赖配置</p>
+<pre><code>pip freeze &gt; requirements.txt
+</code></pre>
+]]></content>
+      <categories>
+        <category>软件开发</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>flask部署的几种常见方式，部署流程及问题总结</title>
+    <url>/2023/09/25/flask%E9%83%A8%E7%BD%B2%E7%9A%84%E5%87%A0%E7%A7%8D%E5%B8%B8%E8%A7%81%E6%96%B9%E5%BC%8F%EF%BC%8C%E9%83%A8%E7%BD%B2%E6%B5%81%E7%A8%8B%E5%8F%8A%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>部署 Flask 应用通常涉及多个组件，包括 Flask 框架本身、uWSGI 进程服务器、Gunicorn WSGI 服务器、Nginx 反向代理服务器以及Supervisor 进程管理工具。</p>
+<p>以下是一个常见的 Flask 部署流程及可能遇到的问题总结：</p>
+<h1 id="安装必要的软件和依赖："><a href="#安装必要的软件和依赖：" class="headerlink" title="安装必要的软件和依赖："></a>安装必要的软件和依赖：</h1><ol>
+<li><p>首先，在服务器上安装 Python 和 pip。根据操作系统的不同，可以使用以下命令安装：</p>
+<ul>
+<li>Ubuntu/Debian:</li>
+</ul>
+<p> sudo apt update<br> sudo apt install python3 python3-pip</p>
+<ul>
+<li>CentOS/Fedora:</li>
+</ul>
+<p> sudo yum update<br> sudo yum install python3 python3-pip</p>
+</li>
+<li><p>安装 Flask 框架和其他需要的库。在命令行中运行以下命令：</p>
+<p> sudo pip3 install flask</p>
+</li>
+</ol>
+<h1 id="编写-Flask-应用："><a href="#编写-Flask-应用：" class="headerlink" title="编写 Flask 应用："></a>编写 Flask 应用：</h1><ol>
+<li><p>创建一个 Python 文件，例如 <code>app.py</code>，并编写 Flask 应用的代码。示例代码如下：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"> </span><br><span class="line">app = Flask(__name__)</span><br><span class="line"> </span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">hello</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;Hello, World!&#x27;</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run()</span><br></pre></td></tr></table></figure></li>
+<li><p>保存并退出文件。</p>
+</li>
+<li><p>测试 Flask 应用：在终端中运行 Flask 应用，以确保应用可以在本地运行。</p>
+<p> python3 app.py</p>
+</li>
+</ol>
+<h1 id="配置uWSGI："><a href="#配置uWSGI：" class="headerlink" title="配置uWSGI："></a>配置uWSGI：</h1><ol>
+<li><p>创建一个 uWSGI 配置文件，例如 <code>your_uwsgi_config.ini</code>，并指定 Flask 应用的入口、进程数、线程数等配置项。示例配置如下：</p>
+<p> [uwsgi]<br> module = app<br> callable = app<br> master = true<br> processes = 4<br> threads = 2<br> socket = 127.0.0.1:5000<br> chmod-socket = 660<br> vacuum = true<br> die-on-term = true</p>
+</li>
+</ol>
+<p>其中，<code>module</code> 指定了 Flask 应用的入口，<code>processes</code> 指定了进程数，<code>threads</code> 指定了线程数，<code>socket</code> 指定了 uWSGI 监听的地址和端口。</p>
+<h1 id="启动uWSGI："><a href="#启动uWSGI：" class="headerlink" title="启动uWSGI："></a>启动uWSGI：</h1><ol>
+<li><p>在命令行中运行以下命令，启动 uWSGI，并使用指定的配置文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">uwsgi --ini your_uwsgi_config.ini</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>确保 uWSGI 可以成功启动并监听指定的端口。</p>
+<h1 id="测试uWSGI："><a href="#测试uWSGI：" class="headerlink" title="测试uWSGI："></a>测试uWSGI：</h1><ol>
+<li>使用 curl 或浏览器访问 uWSGI 提供的接口，例如 <code>http://127.0.0.1:5000/</code>，确保应用可以通过 uWSGI 进程服务器正常访问。</li>
+</ol>
+<h1 id="配置Gunicorn："><a href="#配置Gunicorn：" class="headerlink" title="配置Gunicorn："></a>配置Gunicorn：</h1><ol>
+<li><p>创建一个 Gunicorn 配置文件，例如 <code>your_gunicorn_config.py</code>，并指定 Flask 应用的入口和其他配置项。示例配置如下：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">bind = <span class="string">&#x27;127.0.0.1:5000&#x27;</span></span><br><span class="line">workers = <span class="number">4</span></span><br><span class="line">threads = <span class="number">2</span></span><br><span class="line">module = <span class="string">&#x27;app:app&#x27;</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>其中，<code>bind</code> 指定了 Gunicorn 监听的地址和端口，<code>workers</code> 指定了进程数，<code>threads</code> 指定了线程数，<code>module</code> 指定了 Flask 应用的入口。</p>
+<h1 id="启动Gunicorn："><a href="#启动Gunicorn：" class="headerlink" title="启动Gunicorn："></a>启动Gunicorn：</h1><ol>
+<li><p>在命令行中运行以下命令，启动 Gunicorn，并使用指定的配置文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">gunicorn -c your_gunicorn_config.py your_app:app</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>确保 Gunicorn 可以成功启动并监听指定的端口。</p>
+<h1 id="测试Gunicorn："><a href="#测试Gunicorn：" class="headerlink" title="测试Gunicorn："></a>测试Gunicorn：</h1><ol>
+<li>使用 curl 或浏览器访问 Gunicorn 提供的接口，例如 <code>http://127.0.0.1:5000/</code>，确保应用可以通过 Gunicorn WSGI 服务器正常访问。</li>
+</ol>
+<h1 id="配置Nginx："><a href="#配置Nginx：" class="headerlink" title="配置Nginx："></a>配置Nginx：</h1><ol>
+<li><p>创建一个 Nginx 配置文件，例如 <code>your_nginx_config.conf</code>，并指定反向代理规则，将客户端请求转发到 uWSGI 或 Gunicorn 服务器。示例配置如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    server_name your_domain.com;</span><br><span class="line"> </span><br><span class="line">    location / &#123;</span><br><span class="line">        proxy_pass http://127.0.0.1:5000;</span><br><span class="line">        proxy_set_header Host $host;</span><br><span class="line">        proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>其中，<code>listen</code> 指定了 Nginx 监听的端口，<code>server_name</code> 指定了服务器的域名或 IP 地址，<code>location</code> 指定了转发规则，将请求转发到 uWSGI 或 Gunicorn服务器。</p>
+<h1 id="启动Nginx："><a href="#启动Nginx：" class="headerlink" title="启动Nginx："></a>启动Nginx：</h1><ol>
+<li><p>在命令行中运行以下命令，启动 Nginx，并使用指定的配置文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">nginx -c your_nginx_config.conf</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>确保 Nginx 可以成功启动并监听指定的端口。</p>
+<h1 id="测试Nginx："><a href="#测试Nginx：" class="headerlink" title="测试Nginx："></a>测试Nginx：</h1><ol>
+<li>通过浏览器访问 Nginx 服务器的 IP 或域名，例如 <code>http://your_domain.com/</code>，确保 Nginx 可以接收客户端请求并正确转发到 uWSGI 或 Gunicorn 服务器。</li>
+</ol>
+<h1 id="配置Supervisor："><a href="#配置Supervisor：" class="headerlink" title="配置Supervisor："></a>配置Supervisor：</h1><ol>
+<li><p>创建一个 Supervisor 配置文件，例如 <code>your_supervisor_config.conf</code>，并指定要监控的 uWSGI 或 Gunicorn 进程。示例配置如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[program:your_process]</span><br><span class="line">command=/path/to/gunicorn -c /path/to/your_gunicorn_config.py your_app:app</span><br><span class="line">directory=/path/to/your/app/directory</span><br><span class="line">user=your_user</span><br><span class="line">autostart=true</span><br><span class="line">autorestart=true</span><br><span class="line">redirect_stderr=true</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>其中，<code>command</code> 指定了启动 Gunicorn 的命令，<code>directory</code> 指定了应用程序的目录，<code>user</code> 指定了运行应用程序的用户，<code>autostart</code> 和 <code>autorestart</code> 分别指定了是否自动启动和自动重启进程，<code>redirect_stderr</code> 指定了是否将标准错误输出重定向到日志文件。</p>
+<h1 id="启动Supervisor："><a href="#启动Supervisor：" class="headerlink" title="启动Supervisor："></a>启动Supervisor：</h1><ol>
+<li><p>在命令行中运行以下命令，启动 Supervisor，并监控指定的进程：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">supervisorctl start your_process</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>确保 Supervisor 可以成功启动并监控指定的进程。</p>
+<h1 id="测试Supervisor："><a href="#测试Supervisor：" class="headerlink" title="测试Supervisor："></a>测试Supervisor：</h1><ol>
+<li>通过 Supervisor 的状态命令，例如 <code>supervisorctl status</code>，确保进程状态正常。</li>
+</ol>
+<p>以上是实现基本的部署流程，可以根据实际需求和环境进行适当的调整。需要注意的是，每个步骤的命令和配置文件路径可能会因为操作系统和具体的应用程序而有所不同，请根据实际情况进行调整。</p>
+<p>可能遇到的问题及解决方法：<br>当你完成了上述部署过程后，你可能还会遇到一些常见的问题。以下是一些可能出现的问题及解决方法：</p>
+<ol>
+<li><p>权限问题：确保相关文件和目录对于 uWSGI、Gunicorn、Nginx 和 Supervisor 进程可读可写，并且用户拥有足够的权限。如果权限不足，可以使用 <code>sudo</code> 命令或修改文件和目录的所有者和权限。</p>
+</li>
+<li><p>端口冲突：确保 uWSGI、Gunicorn、Nginx 监听的端口与配置文件中的端口一致，并确保这些端口未被其他进程占用。你可以使用 <code>netstat</code> 命令来查看端口的使用情况，并修改配置文件中的端口号。</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">netstat -tuln    # 查看当前监听的端口</span><br><span class="line">sudo lsof -i :&lt;port&gt;   # 查看指定端口的进程</span><br></pre></td></tr></table></figure></li>
+<li><p>配置文件错误：检查 uWSGI、Gunicorn、Nginx 和 Supervisor 的配置文件语法和路径是否正确。配置文件中的路径应该是正确的，并且文件内容应符合相应的配置语法规范。</p>
+</li>
+<li><p>日志跟踪：查看相关组件的日志文件，以便了解错误信息和异常情况。uWSGI、Gunicorn、Nginx 和 Supervisor 都会生成日志文件，你可以在配置文件中指定日志文件位置，或者查看默认生成的日志文件。</p>
+</li>
+<li><p>防火墙设置：确保服务器上的防火墙允许进入和离开相关的端口流量。你可以使用防火墙工具（如 UFW 或 iptables）来配置端口的访问权限。</p>
+<p>sudo ufw allow <port>    # 允许指定端口的访问<br>sudo ufw enable    # 启用防火墙<br>sudo ufw status    # 查看防火墙状态</port></p>
+</li>
+<li><p>进程管理：使用进程管理工具（如 Supervisor）可以更好地管理 uWSGI 和 Gunicorn 进程，保证进程的稳定和可靠性。确保 Supervisor 的配置文件正确，并使用 Supervisor 执行启动、停止和重启等命令。</p>
+<p>sudo supervisorctl start <process_name>    # 启动指定进程<br>sudo supervisorctl restart <process_name>    # 重启指定进程<br>sudo supervisorctl stop <process_name>    # 停止指定进程</process_name></process_name></process_name></p>
+</li>
+</ol>
+<p>这些是常见的问题和解决方法，部署过程可能因环境和需求而有所不同。如果你遇到了其他问题，可以仔细检查日志文件、查找在线资源或在相关社区提问以获取帮助。</p>
+<p>注意，此处提到的部署流程和问题总结是一种常见方式，根据实际情况可能会有所不同。在部署过程中</p>
+<p>————————————————<br>版权声明：本文为CSDN博主「白熊先生」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a href="https://blog.csdn.net/2302_77595648/article/details/131926223">https://blog.csdn.net/2302_77595648/article/details/131926223</a></p>
+]]></content>
+      <categories>
+        <category>软件开发</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>flask</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Vue.nextTick 的原理和用途</title>
+    <url>/2023/09/24/Vue.nextTick%20%E7%9A%84%E5%8E%9F%E7%90%86%E5%92%8C%E7%94%A8%E9%80%94/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>Vue.nextTick 的原理和用途</p>
+<p>对于 Vue.nextTick 方法，自己有些疑惑。在查询了各种资料后，总结了一下其原理和用途，如有错误，请不吝赐教。</p>
+<h1 id="异步说明"><a href="#异步说明" class="headerlink" title="异步说明"></a>异步说明</h1><p>Vue 实现响应式并不是数据发生变化之后 DOM 立即变化，而是按一定的策略进行 DOM 的更新。<br>在 Vue 的文档中，说明 Vue 是异步执行 DOM 更新的。关于异步的解析，可以查看阮一峰老师的这篇文章。截取关键部分如下：</p>
+<p>具体来说，异步执行的运行机制如下。</p>
+<p>（1）所有同步任务都在主线程上执行，形成一个执行栈（execution context stack）。<br>（2）主线程之外，还存在一个”任务队列”（task queue）。只要异步任务有了运行结果，就在”任务队列”之中放置一个事件。<br>（3）一旦”执行栈”中的所有同步任务执行完毕，系统就会读取”任务队列”，看看里面有哪些事件。那些对应的异步任务，于是结束等待状态，进入执行栈，开始执行。<br>（4）主线程不断重复上面的第三步。</p>
+<h1 id="事件循环说明"><a href="#事件循环说明" class="headerlink" title="事件循环说明"></a>事件循环说明</h1><p>简单来说，Vue 在修改数据后，视图不会立刻更新，而是等同一事件循环中的所有数据变化完成之后，再统一进行视图更新。</p>
+<p>知乎上的例子：</p>
+<pre><code>//改变数据
+vm.message = &#39;changed&#39;
+
+//想要立即使用更新后的DOM。这样不行，因为设置message后DOM还没有更新
+console.log(vm.$el.textContent) // 并不会得到&#39;changed&#39;
+
+//这样可以，nextTick里面的代码会在DOM更新后执行
+Vue.nextTick(function()&#123;
+    console.log(vm.$el.textContent) //可以得到&#39;changed&#39;
+&#125;)
+</code></pre>
+<p>事件循环：</p>
+<p>第一个 tick（图例中第一个步骤，即’本次更新循环’）：</p>
+<p>首先修改数据，这是同步任务。同一事件循环的所有的同步任务都在主线程上执行，形成一个执行栈，此时还未涉及 DOM 。<br>Vue 开启一个异步队列，并缓冲在此事件循环中发生的所有数据改变。如果同一个 watcher 被多次触发，只会被推入到队列中一次。<br>第二个 tick（图例中第二个步骤，即’下次更新循环’）：</p>
+<p>同步任务执行完毕，开始执行异步 watcher 队列的任务，更新 DOM 。Vue 在内部尝试对异步队列使用原生的 Promise.then 和 MessageChannel 方法，如果执行环境不支持，会采用 setTimeout(fn, 0) 代替。</p>
+<p>第三个 tick（图例中第三个步骤）：</p>
+<p>此时就是文档所说的</p>
+<p>下次 DOM 更新循环结束之后<br>此时通过 Vue.nextTick 获取到改变后的 DOM 。通过 setTimeout(fn, 0) 也可以同样获取到。</p>
+<p>简单总结事件循环：</p>
+<p>同步代码执行 -&gt; 查找异步队列，推入执行栈，执行Vue.nextTick[事件循环1] -&gt;查找异步队列，推入执行栈，执行Vue.nextTick[事件循环2]…</p>
+<p>总之，异步是单独的一个tick，不会和同步在一个 tick 里发生，也是 DOM 不会马上改变的原因。</p>
+<p>对于事件循环，可以在这里查看更详细的内容： <a href="https://segmentfault.com/a/11">https://segmentfault.com/a/11</a>…<br>用途<br>应用场景：需要在视图更新之后，基于新的视图进行操作。<br>created、mounted<br>需要注意的是，在 created 和 mounted 阶段，如果需要操作渲染后的试图，也要使用 nextTick 方法。</p>
+<p>官方文档说明：</p>
+<p>注意 mounted 不会承诺所有的子组件也都一起被挂载。如果你希望等到整个视图都渲染完毕，可以用 vm.$nextTick 替换掉 mounted</p>
+<pre><code>mounted: function () &#123;
+  this.$nextTick(function () &#123;
+    // Code that will run only after the
+    // entire view has been rendered
+  &#125;)
+&#125;
+</code></pre>
+<h1 id="其他应用场景"><a href="#其他应用场景" class="headerlink" title="其他应用场景"></a>其他应用场景</h1><p>其他应用场景如下三例：</p>
+<h2 id="例子1："><a href="#例子1：" class="headerlink" title="例子1："></a>例子1：</h2><p>点击按钮显示原本以 v-show = false 隐藏起来的输入框，并获取焦点。</p>
+<pre><code>showsou()&#123;
+  this.showit = true //修改 v-show
+  document.getElementById(&quot;keywords&quot;).focus()  //在第一个 tick 里，获取不到输入框，自然也获取不到焦点
+&#125;
+</code></pre>
+<p>修改为：</p>
+<pre><code>showsou()&#123;
+  this.showit = true
+  this.$nextTick(function () &#123;
+    // DOM 更新了
+    document.getElementById(&quot;keywords&quot;).focus()
+  &#125;)
+&#125;
+</code></pre>
+<h2 id="例子2："><a href="#例子2：" class="headerlink" title="例子2："></a>例子2：</h2><p>点击获取元素宽度。</p>
+<pre><code>&lt;div id=&quot;app&quot;&gt;
+    &lt;p ref=&quot;myWidth&quot; v-if=&quot;showMe&quot;&gt;&#123;&#123; message &#125;&#125;&lt;/p&gt;
+    &lt;button @click=&quot;getMyWidth&quot;&gt;获取p元素宽度&lt;/button&gt;
+&lt;/div&gt;
+
+getMyWidth() &#123;
+    this.showMe = true;
+    //this.message = this.$refs.myWidth.offsetWidth;
+    //报错 TypeError: this.$refs.myWidth is undefined
+    this.$nextTick(()=&gt;&#123;
+        //dom元素更新后执行，此时能拿到p元素的属性
+        this.message = this.$refs.myWidth.offsetWidth;
+  &#125;)
+&#125;
+</code></pre>
+<h2 id="例子3："><a href="#例子3：" class="headerlink" title="例子3："></a>例子3：</h2><p>使用 swiper 插件通过 ajax 请求图片后的滑动问题。</p>
+<h1 id="实例理解-nextTick-应用"><a href="#实例理解-nextTick-应用" class="headerlink" title="实例理解 nextTick 应用"></a>实例理解 nextTick 应用</h1><p>下面的例子各位可以复制运行一遍，加深理解。</p>
+<pre><code>&lt;template&gt;
+    &lt;div&gt;
+        &lt;ul&gt;
+            &lt;li class=&quot;example&quot; v-for=&quot;item in list1&quot;&gt;&#123;&#123;item&#125;&#125;&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;ul&gt;
+            &lt;li class=&quot;example&quot; v-for=&quot;item in list2&quot;&gt;&#123;&#123;item&#125;&#125;&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;ol&gt;
+            &lt;li class=&quot;example&quot; v-for=&quot;item in list3&quot;&gt;&#123;&#123;item&#125;&#125;&lt;/li&gt;
+        &lt;/ol&gt;
+        &lt;ol&gt;
+            &lt;li class=&quot;example&quot; v-for=&quot;item in list4&quot;&gt;&#123;&#123;item&#125;&#125;&lt;/li&gt;
+        &lt;/ol&gt;
+        &lt;ol&gt;
+            &lt;li class=&quot;example&quot; v-for=&quot;item in list5&quot;&gt;&#123;&#123;item&#125;&#125;&lt;/li&gt;
+        &lt;/ol&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+export default &#123;
+    data() &#123;
+        return &#123;
+            list1: [],
+            list2: [],
+            list3: [],
+            list4: [],
+            list5: []
+        &#125;
+    &#125;,
+    created() &#123;
+        this.composeList12()
+        this.composeList34()
+        this.composeList5()
+        this.$nextTick(function() &#123;
+            // DOM 更新了
+            console.log(&#39;finished test &#39; + new Date().toString(),document.querySelectorAll(&#39;.example&#39;).length)
+        &#125;)
+    &#125;,
+    methods: &#123;
+        composeList12() &#123;
+            let me = this
+            let count = 10000
+
+            for (let i = 0; i &lt; count; i++) &#123;
+                this.$set(me.list1, i, &#39;I am a 测试信息～～啦啦啦&#39; + i)
+            &#125;
+            console.log(&#39;finished list1 &#39; + new Date().toString(),document.querySelectorAll(&#39;.example&#39;).length)
+
+            for (let i = 0; i &lt; count; i++) &#123;
+                this.$set(me.list2, i, &#39;I am a 测试信息～～啦啦啦&#39; + i)
+            &#125;
+            console.log(&#39;finished list2 &#39; + new Date().toString(),document.querySelectorAll(&#39;.example&#39;).length)
+
+            this.$nextTick(function() &#123;
+                // DOM 更新了
+                console.log(&#39;finished tick1&amp;2 &#39; + new Date().toString(),document.querySelectorAll(&#39;.example&#39;).length)
+            &#125;)
+        &#125;,
+        composeList34() &#123;
+            let me = this
+            let count = 10000
+
+            for (let i = 0; i &lt; count; i++) &#123;
+                this.$set(me.list3, i, &#39;I am a 测试信息～～啦啦啦&#39; + i)
+            &#125;
+            console.log(&#39;finished list3 &#39; + new Date().toString(),document.querySelectorAll(&#39;.example&#39;).length)
+
+            this.$nextTick(function() &#123;
+                // DOM 更新了
+                console.log(&#39;finished tick3 &#39; + new Date().toString(),document.querySelectorAll(&#39;.example&#39;).length)
+            &#125;)
+
+            setTimeout(me.setTimeout1, 0)
+        &#125;,
+        setTimeout1() &#123;
+            let me = this
+            let count = 10000
+
+            for (let i = 0; i &lt; count; i++) &#123;
+                this.$set(me.list4, i, &#39;I am a 测试信息～～啦啦啦&#39; + i)
+            &#125;
+            console.log(&#39;finished list4 &#39; + new Date().toString(),document.querySelectorAll(&#39;.example&#39;).length)
+
+            me.$nextTick(function() &#123;
+                // DOM 更新了
+                console.log(&#39;finished tick4 &#39; + new Date().toString(),document.querySelectorAll(&#39;.example&#39;).length)
+            &#125;)
+        &#125;,
+        composeList5() &#123;
+            let me = this
+            let count = 10000
+
+            this.$nextTick(function() &#123;
+                // DOM 更新了
+                console.log(&#39;finished tick5-1 &#39; + new Date().toString(),document.querySelectorAll(&#39;.example&#39;).length)
+            &#125;)
+
+            setTimeout(me.setTimeout2, 0)
+        &#125;,
+        setTimeout2() &#123;
+            let me = this
+            let count = 10000
+
+            for (let i = 0; i &lt; count; i++) &#123;
+                this.$set(me.list5, i, &#39;I am a 测试信息～～啦啦啦&#39; + i)
+            &#125;
+            console.log(&#39;finished list5 &#39; + new Date().toString(),document.querySelectorAll(&#39;.example&#39;).length)
+
+            me.$nextTick(function() &#123;
+                // DOM 更新了
+                console.log(&#39;finished tick5 &#39; + new Date().toString(),document.querySelectorAll(&#39;.example&#39;).length)
+            &#125;)
+        &#125;
+    &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+]]></content>
+      <categories>
+        <category>软件开发</category>
+      </categories>
+      <tags>
+        <tag>Vue</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>vue中下载excel文件4种方法</title>
     <url>/2023/09/23/vue%E4%B8%AD%E4%B8%8B%E8%BD%BDexcel%E6%96%87%E4%BB%B64%E7%A7%8D%E6%96%B9%E6%B3%95/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="1、通过url下载"><a href="#1、通过url下载" class="headerlink" title="1、通过url下载"></a>1、通过url下载</h1><p>即后端提供文件的地址，直接使用浏览器去下载</p>

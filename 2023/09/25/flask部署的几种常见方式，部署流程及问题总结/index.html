@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+       
+      <meta name="keywords" content="RS,GPS,GIS,QGIS,Opticks,QT,OpenCV,OSG" />
+       
+      <meta name="description" content="地理信息系统，遥感科学，卫星导航定位技术综合研究。" />
+      
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>flask部署的几种常见方式，部署流程及问题总结 |  帕拉丁的游鱼</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/favicon.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    <link rel="alternate" href="/atom.xml" title="帕拉丁的游鱼" type="application/atom+xml">
+</head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-flask部署的几种常见方式，部署流程及问题总结"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  flask部署的几种常见方式，部署流程及问题总结
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/09/25/flask%E9%83%A8%E7%BD%B2%E7%9A%84%E5%87%A0%E7%A7%8D%E5%B8%B8%E8%A7%81%E6%96%B9%E5%BC%8F%EF%BC%8C%E9%83%A8%E7%BD%B2%E6%B5%81%E7%A8%8B%E5%8F%8A%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/" class="article-date">
+  <time datetime="2023-09-25T07:49:27.000Z" itemprop="datePublished">2023-09-25</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">1.8k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">7 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>部署 Flask 应用通常涉及多个组件，包括 Flask 框架本身、uWSGI 进程服务器、Gunicorn WSGI 服务器、Nginx 反向代理服务器以及Supervisor 进程管理工具。</p>
+<p>以下是一个常见的 Flask 部署流程及可能遇到的问题总结：</p>
+<h1 id="安装必要的软件和依赖："><a href="#安装必要的软件和依赖：" class="headerlink" title="安装必要的软件和依赖："></a>安装必要的软件和依赖：</h1><ol>
+<li><p>首先，在服务器上安装 Python 和 pip。根据操作系统的不同，可以使用以下命令安装：</p>
+<ul>
+<li>Ubuntu/Debian:</li>
+</ul>
+<p> sudo apt update<br> sudo apt install python3 python3-pip</p>
+<ul>
+<li>CentOS/Fedora:</li>
+</ul>
+<p> sudo yum update<br> sudo yum install python3 python3-pip</p>
+</li>
+<li><p>安装 Flask 框架和其他需要的库。在命令行中运行以下命令：</p>
+<p> sudo pip3 install flask</p>
+</li>
+</ol>
+<h1 id="编写-Flask-应用："><a href="#编写-Flask-应用：" class="headerlink" title="编写 Flask 应用："></a>编写 Flask 应用：</h1><ol>
+<li><p>创建一个 Python 文件，例如 <code>app.py</code>，并编写 Flask 应用的代码。示例代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"> </span><br><span class="line">app = Flask(__name__)</span><br><span class="line"> </span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">hello</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;Hello, World!&#x27;</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run()</span><br></pre></td></tr></table></figure></li>
+<li><p>保存并退出文件。</p>
+</li>
+<li><p>测试 Flask 应用：在终端中运行 Flask 应用，以确保应用可以在本地运行。</p>
+<p> python3 app.py</p>
+</li>
+</ol>
+<h1 id="配置uWSGI："><a href="#配置uWSGI：" class="headerlink" title="配置uWSGI："></a>配置uWSGI：</h1><ol>
+<li><p>创建一个 uWSGI 配置文件，例如 <code>your_uwsgi_config.ini</code>，并指定 Flask 应用的入口、进程数、线程数等配置项。示例配置如下：</p>
+<p> [uwsgi]<br> module = app<br> callable = app<br> master = true<br> processes = 4<br> threads = 2<br> socket = 127.0.0.1:5000<br> chmod-socket = 660<br> vacuum = true<br> die-on-term = true</p>
+</li>
+</ol>
+<p>其中，<code>module</code> 指定了 Flask 应用的入口，<code>processes</code> 指定了进程数，<code>threads</code> 指定了线程数，<code>socket</code> 指定了 uWSGI 监听的地址和端口。</p>
+<h1 id="启动uWSGI："><a href="#启动uWSGI：" class="headerlink" title="启动uWSGI："></a>启动uWSGI：</h1><ol>
+<li><p>在命令行中运行以下命令，启动 uWSGI，并使用指定的配置文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uwsgi --ini your_uwsgi_config.ini</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>确保 uWSGI 可以成功启动并监听指定的端口。</p>
+<h1 id="测试uWSGI："><a href="#测试uWSGI：" class="headerlink" title="测试uWSGI："></a>测试uWSGI：</h1><ol>
+<li>使用 curl 或浏览器访问 uWSGI 提供的接口，例如 <code>http://127.0.0.1:5000/</code>，确保应用可以通过 uWSGI 进程服务器正常访问。</li>
+</ol>
+<h1 id="配置Gunicorn："><a href="#配置Gunicorn：" class="headerlink" title="配置Gunicorn："></a>配置Gunicorn：</h1><ol>
+<li><p>创建一个 Gunicorn 配置文件，例如 <code>your_gunicorn_config.py</code>，并指定 Flask 应用的入口和其他配置项。示例配置如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">bind = <span class="string">&#x27;127.0.0.1:5000&#x27;</span></span><br><span class="line">workers = <span class="number">4</span></span><br><span class="line">threads = <span class="number">2</span></span><br><span class="line">module = <span class="string">&#x27;app:app&#x27;</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>其中，<code>bind</code> 指定了 Gunicorn 监听的地址和端口，<code>workers</code> 指定了进程数，<code>threads</code> 指定了线程数，<code>module</code> 指定了 Flask 应用的入口。</p>
+<h1 id="启动Gunicorn："><a href="#启动Gunicorn：" class="headerlink" title="启动Gunicorn："></a>启动Gunicorn：</h1><ol>
+<li><p>在命令行中运行以下命令，启动 Gunicorn，并使用指定的配置文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gunicorn -c your_gunicorn_config.py your_app:app</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>确保 Gunicorn 可以成功启动并监听指定的端口。</p>
+<h1 id="测试Gunicorn："><a href="#测试Gunicorn：" class="headerlink" title="测试Gunicorn："></a>测试Gunicorn：</h1><ol>
+<li>使用 curl 或浏览器访问 Gunicorn 提供的接口，例如 <code>http://127.0.0.1:5000/</code>，确保应用可以通过 Gunicorn WSGI 服务器正常访问。</li>
+</ol>
+<h1 id="配置Nginx："><a href="#配置Nginx：" class="headerlink" title="配置Nginx："></a>配置Nginx：</h1><ol>
+<li><p>创建一个 Nginx 配置文件，例如 <code>your_nginx_config.conf</code>，并指定反向代理规则，将客户端请求转发到 uWSGI 或 Gunicorn 服务器。示例配置如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    server_name your_domain.com;</span><br><span class="line"> </span><br><span class="line">    location / &#123;</span><br><span class="line">        proxy_pass http://127.0.0.1:5000;</span><br><span class="line">        proxy_set_header Host $host;</span><br><span class="line">        proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>其中，<code>listen</code> 指定了 Nginx 监听的端口，<code>server_name</code> 指定了服务器的域名或 IP 地址，<code>location</code> 指定了转发规则，将请求转发到 uWSGI 或 Gunicorn服务器。</p>
+<h1 id="启动Nginx："><a href="#启动Nginx：" class="headerlink" title="启动Nginx："></a>启动Nginx：</h1><ol>
+<li><p>在命令行中运行以下命令，启动 Nginx，并使用指定的配置文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx -c your_nginx_config.conf</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>确保 Nginx 可以成功启动并监听指定的端口。</p>
+<h1 id="测试Nginx："><a href="#测试Nginx：" class="headerlink" title="测试Nginx："></a>测试Nginx：</h1><ol>
+<li>通过浏览器访问 Nginx 服务器的 IP 或域名，例如 <code>http://your_domain.com/</code>，确保 Nginx 可以接收客户端请求并正确转发到 uWSGI 或 Gunicorn 服务器。</li>
+</ol>
+<h1 id="配置Supervisor："><a href="#配置Supervisor：" class="headerlink" title="配置Supervisor："></a>配置Supervisor：</h1><ol>
+<li><p>创建一个 Supervisor 配置文件，例如 <code>your_supervisor_config.conf</code>，并指定要监控的 uWSGI 或 Gunicorn 进程。示例配置如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[program:your_process]</span><br><span class="line">command=/path/to/gunicorn -c /path/to/your_gunicorn_config.py your_app:app</span><br><span class="line">directory=/path/to/your/app/directory</span><br><span class="line">user=your_user</span><br><span class="line">autostart=true</span><br><span class="line">autorestart=true</span><br><span class="line">redirect_stderr=true</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>其中，<code>command</code> 指定了启动 Gunicorn 的命令，<code>directory</code> 指定了应用程序的目录，<code>user</code> 指定了运行应用程序的用户，<code>autostart</code> 和 <code>autorestart</code> 分别指定了是否自动启动和自动重启进程，<code>redirect_stderr</code> 指定了是否将标准错误输出重定向到日志文件。</p>
+<h1 id="启动Supervisor："><a href="#启动Supervisor：" class="headerlink" title="启动Supervisor："></a>启动Supervisor：</h1><ol>
+<li><p>在命令行中运行以下命令，启动 Supervisor，并监控指定的进程：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">supervisorctl start your_process</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>确保 Supervisor 可以成功启动并监控指定的进程。</p>
+<h1 id="测试Supervisor："><a href="#测试Supervisor：" class="headerlink" title="测试Supervisor："></a>测试Supervisor：</h1><ol>
+<li>通过 Supervisor 的状态命令，例如 <code>supervisorctl status</code>，确保进程状态正常。</li>
+</ol>
+<p>以上是实现基本的部署流程，可以根据实际需求和环境进行适当的调整。需要注意的是，每个步骤的命令和配置文件路径可能会因为操作系统和具体的应用程序而有所不同，请根据实际情况进行调整。</p>
+<p>可能遇到的问题及解决方法：<br>当你完成了上述部署过程后，你可能还会遇到一些常见的问题。以下是一些可能出现的问题及解决方法：</p>
+<ol>
+<li><p>权限问题：确保相关文件和目录对于 uWSGI、Gunicorn、Nginx 和 Supervisor 进程可读可写，并且用户拥有足够的权限。如果权限不足，可以使用 <code>sudo</code> 命令或修改文件和目录的所有者和权限。</p>
+</li>
+<li><p>端口冲突：确保 uWSGI、Gunicorn、Nginx 监听的端口与配置文件中的端口一致，并确保这些端口未被其他进程占用。你可以使用 <code>netstat</code> 命令来查看端口的使用情况，并修改配置文件中的端口号。</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">netstat -tuln    # 查看当前监听的端口</span><br><span class="line">sudo lsof -i :&lt;port&gt;   # 查看指定端口的进程</span><br></pre></td></tr></table></figure></li>
+<li><p>配置文件错误：检查 uWSGI、Gunicorn、Nginx 和 Supervisor 的配置文件语法和路径是否正确。配置文件中的路径应该是正确的，并且文件内容应符合相应的配置语法规范。</p>
+</li>
+<li><p>日志跟踪：查看相关组件的日志文件，以便了解错误信息和异常情况。uWSGI、Gunicorn、Nginx 和 Supervisor 都会生成日志文件，你可以在配置文件中指定日志文件位置，或者查看默认生成的日志文件。</p>
+</li>
+<li><p>防火墙设置：确保服务器上的防火墙允许进入和离开相关的端口流量。你可以使用防火墙工具（如 UFW 或 iptables）来配置端口的访问权限。</p>
+<p>sudo ufw allow <port>    # 允许指定端口的访问<br>sudo ufw enable    # 启用防火墙<br>sudo ufw status    # 查看防火墙状态</port></p>
+</li>
+<li><p>进程管理：使用进程管理工具（如 Supervisor）可以更好地管理 uWSGI 和 Gunicorn 进程，保证进程的稳定和可靠性。确保 Supervisor 的配置文件正确，并使用 Supervisor 执行启动、停止和重启等命令。</p>
+<p>sudo supervisorctl start <process_name>    # 启动指定进程<br>sudo supervisorctl restart <process_name>    # 重启指定进程<br>sudo supervisorctl stop <process_name>    # 停止指定进程</process_name></process_name></process_name></p>
+</li>
+</ol>
+<p>这些是常见的问题和解决方法，部署过程可能因环境和需求而有所不同。如果你遇到了其他问题，可以仔细检查日志文件、查找在线资源或在相关社区提问以获取帮助。</p>
+<p>注意，此处提到的部署流程和问题总结是一种常见方式，根据实际情况可能会有所不同。在部署过程中</p>
+<p>————————————————<br>版权声明：本文为CSDN博主「白熊先生」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/2302_77595648/article/details/131926223">https://blog.csdn.net/2302_77595648/article/details/131926223</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://paladin1893.github.io/2023/09/25/flask%E9%83%A8%E7%BD%B2%E7%9A%84%E5%87%A0%E7%A7%8D%E5%B8%B8%E8%A7%81%E6%96%B9%E5%BC%8F%EF%BC%8C%E9%83%A8%E7%BD%B2%E6%B5%81%E7%A8%8B%E5%8F%8A%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flask/" rel="tag">flask</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2023/09/26/conda%E3%80%81python%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            conda、python环境配置
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2023/09/24/Vue.nextTick%20%E7%9A%84%E5%8E%9F%E7%90%86%E5%92%8C%E7%94%A8%E9%80%94/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">Vue.nextTick 的原理和用途</div>
+      </a>
+    
+  </nav>
+
+  
+   
+    
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2022-2023
+        <i class="ri-heart-fill heart_icon"></i> paladin1893
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="帕拉丁的游鱼"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/friends">友链</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>
