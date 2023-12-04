@@ -6,7 +6,7 @@
   <link href="https://paladin1893.github.io/atom.xml" rel="self"/>
   
   <link href="https://paladin1893.github.io/"/>
-  <updated>2023-12-03T15:22:24.000Z</updated>
+  <updated>2023-12-04T02:02:55.579Z</updated>
   <id>https://paladin1893.github.io/</id>
   
   <author>
@@ -15,6 +15,56 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Anaconda与Miniconda之间的选择</title>
+    <link href="https://paladin1893.github.io/2023/09/30/Anaconda%E4%B8%8EMiniconda%E4%B9%8B%E9%97%B4%E7%9A%84%E9%80%89%E6%8B%A9/"/>
+    <id>https://paladin1893.github.io/2023/09/30/Anaconda%E4%B8%8EMiniconda%E4%B9%8B%E9%97%B4%E7%9A%84%E9%80%89%E6%8B%A9/</id>
+    <published>2023-09-30T02:40:35.000Z</published>
+    <updated>2023-12-04T02:02:55.579Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;\assets\css\APlayer.min.css&quot;&gt;&lt;script src=&quot;\assets\js\APlayer.min.js&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="软件开发" scheme="https://paladin1893.github.io/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/"/>
+    
+    
+    <category term="python" scheme="https://paladin1893.github.io/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Anaconda 添加清华镜像源</title>
+    <link href="https://paladin1893.github.io/2023/09/29/Anaconda%20%E6%B7%BB%E5%8A%A0%E6%B8%85%E5%8D%8E%E9%95%9C%E5%83%8F%E6%BA%90/"/>
+    <id>https://paladin1893.github.io/2023/09/29/Anaconda%20%E6%B7%BB%E5%8A%A0%E6%B8%85%E5%8D%8E%E9%95%9C%E5%83%8F%E6%BA%90/</id>
+    <published>2023-09-29T01:50:24.000Z</published>
+    <updated>2023-12-04T01:55:05.143Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;\assets\css\APlayer.min.css&quot;&gt;&lt;script src=&quot;\assets\js\APlayer.min.js&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="软件开发" scheme="https://paladin1893.github.io/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/"/>
+    
+    
+    <category term="python" scheme="https://paladin1893.github.io/tags/python/"/>
+    
+  </entry>
   
   <entry>
     <title>【Python】使用 requirements.txt 和 pip 打包批量安装</title>
@@ -451,56 +501,6 @@
     <id>https://paladin1893.github.io/2023/09/11/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A311/</id>
     <published>2023-09-11T06:28:42.000Z</published>
     <updated>2023-12-02T03:39:09.755Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;\assets\css\APlayer.min.css&quot;&gt;&lt;script src=&quot;\assets\js\APlayer.min.js&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="软件开发" scheme="https://paladin1893.github.io/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/"/>
-    
-    
-    <category term="Vue" scheme="https://paladin1893.github.io/tags/Vue/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Vue2传值方式详解10-孙传祖使用$listeners</title>
-    <link href="https://paladin1893.github.io/2023/09/10/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A310/"/>
-    <id>https://paladin1893.github.io/2023/09/10/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A310/</id>
-    <published>2023-09-10T05:26:39.000Z</published>
-    <updated>2023-12-02T03:37:41.672Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;\assets\css\APlayer.min.css&quot;&gt;&lt;script src=&quot;\assets\js\APlayer.min.js&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="软件开发" scheme="https://paladin1893.github.io/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/"/>
-    
-    
-    <category term="Vue" scheme="https://paladin1893.github.io/tags/Vue/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Vue2传值方式详解09-祖传孙 $attrs</title>
-    <link href="https://paladin1893.github.io/2023/09/09/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A309/"/>
-    <id>https://paladin1893.github.io/2023/09/09/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A309/</id>
-    <published>2023-09-09T12:40:59.000Z</published>
-    <updated>2023-12-02T03:36:22.605Z</updated>
     
     
       
