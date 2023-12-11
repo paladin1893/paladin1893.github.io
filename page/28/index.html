@@ -154,7 +154,7 @@
     
     
     <article
-  id="post-微型电网"
+  id="post-vcpkg使用说明"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -165,8 +165,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/04/23/%E5%BE%AE%E5%9E%8B%E7%94%B5%E7%BD%91/"
-    >微型电网</a> 
+  <a class="article-title" href="/2023/05/01/vcpkg%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/"
+    >vcpkg使用说明</a> 
 </h2>
  
 
@@ -174,8 +174,179 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2023/04/23/%E5%BE%AE%E5%9E%8B%E7%94%B5%E7%BD%91/" class="article-date">
-  <time datetime="2023-04-23T04:01:07.000Z" itemprop="datePublished">2023-04-23</time>
+      <a href="/2023/05/01/vcpkg%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/" class="article-date">
+  <time datetime="2023-05-01T08:58:50.000Z" itemprop="datePublished">2023-05-01</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="1-安装"><a href="#1-安装" class="headerlink" title="1. 安装"></a>1. 安装</h1><p>去GitHub上下载源码，然后点击安装脚本就可以了。</p>
+<ul>
+<li><p>先决条件：</p>
+<p>  Windows 7 或更高版本<br>  用于 Windows 的 Git</p>
+</li>
+<li><p>安装过程：</p>
+<p>  vcpkg的GitHub主页在这里：<a target="_blank" rel="noopener" href="https://github.com/microsoft/vcpkg">https://github.com/microsoft/vcpkg</a><br>  Visual Studio 2015 更新 3 或更高版本（带英文语言包）</p>
+</li>
+</ul>
+<p>在“命令提示符”窗口中，为 vcpkg 的克隆实例创建目录。 如果打算为不同的生成目标安装库，最好在目录名称中包含目标。 建议使用短路径名称（不含空格）（如 C:\src\win32\ 或 C:\dev\iot\），否则，某些端口生成系统可能会出现路径问题 。 在命令窗口中，切换到刚刚创建的目录。</p>
+<p>从 GitHub 克隆 vcpkg 存储库：<a target="_blank" rel="noopener" href="https://github.com/Microsoft/vcpkg%E3%80%82">https://github.com/Microsoft/vcpkg。</a></p>
+<pre><code>git clone https://github.com/microsoft/vcpkg
+</code></pre>
+<p>此命令在 vcpkg 子目录中创建存储库的本地副本。 此位置是此 vcpkg 克隆的 vcpkg 根目录。</p>
+<p>下载完成后，在“命令提示符”窗口切换到 vcpkg 目录。</p>
+<p>在 vcpkg 根目录下，运行 vcpkg 引导程序命令：</p>
+<pre><code>bootstrap-vcpkg.bat
+</code></pre>
+<p>引导程序将使用 Microsoft C/C++ 工具、库和 Windows SDK 的位置配置 vcpkg。</p>
+<ul>
+<li>更新 vcpkg</li>
+</ul>
+<p>vcpkg 包管理器在 GitHub 上定期更新。 若要将 vcpkg 的克隆更新到最新版本，请从 vcpkg 根目录运行 git pull。 此命令会将 vcpkg 的副本与 GitHub 上的版本同步。 下载完成后，再次运行引导程序。 引导程序会重新生成 vcpkg 程序，但保留已安装的库。</p>
+<ul>
+<li>卸载 vcpkg</li>
+</ul>
+<p>若要卸载 vcpkg，只需删除 vcpkg 目录。 删除此目录会卸载 vcpkg 分发以及 vcpkg 已安装的所有库。</p>
+<p>但是，如果已执行 vcpkg integrate install，则应执行 vcpkg integrate remove 来确保在删除文件夹之前已清理集成 。</p>
+<ol start="2">
+<li>使用</li>
+</ol>
+<ul>
+<li><p>命令</p>
+<p>  Command    描述<br>  vcpkg search [pat]    搜索可安装的包<br>  vcpkg install <pkg>…    安装包<br>  vcpkg remove <pkg>…    卸载包<br>  vcpkg remove –outdated    卸载所有过期包<br>  vcpkg list    列出已安装的包<br>  vcpkg update    显示用于更新的包列表<br>  vcpkg upgrade    重新生成所有过期包<br>  vcpkg hash <file> [alg]    通过特定算法对文件执行哈希操作，默认为 SHA512<br>  vcpkg integrate install    使已安装包在用户范围内可用。 首次使用时需要管理权限<br>  vcpkg integrate remove    删除用户范围的集成<br>  vcpkg integrate project    为使用单个 VS 项目生成引用 NuGet 包<br>  vcpkg export <pkg>… [opt]…    导出包<br>  vcpkg edit <pkg>    打开端口进行编辑（使用 %EDITOR%，默认为“code”）<br>  vcpkg create <pkg> <url> [archivename]    创建新程序包<br>  vcpkg cache    列出缓存的已编译包<br>  vcpkg version    显示版本信息<br>  vcpkg contact –survey    显示联系信息，以便发送反馈。</url></pkg></pkg></pkg></file></pkg></pkg></p>
+</li>
+<li><p>选项</p>
+</li>
+</ul>
+<p>选项    描述<br>–triplet <t>    指定目标体系结构三元组。 （默认：%VCPKG_DEFAULT_TRIPLET%，另请参阅 vcpkg help triplet）<br>–vcpkg-root <path></path>    指定 vcpkg 根目录（默认：%VCPKG_ROOT%）</t></p>
+<h1 id="3-集成vcpkg"><a href="#3-集成vcpkg" class="headerlink" title="3. 集成vcpkg"></a>3. 集成vcpkg</h1><ul>
+<li>Windows 上的 Visual Studio 集成</li>
+</ul>
+<p>从 vcpkg 根目录，运行 vcpkg integrate install来配置 Visual Studio，以便按用户找到所有 vcpkg 头文件和二进制文件。 无需在 Visual Studio 中编辑 VC + + 目录路径。 如果有多个 vcpkg 克隆，则你从中运行此命令的克隆将成为新的默认位置。<br>现在，只需键入文件夹/标头名称即可轻松加入标头，并且自动完成功能将帮助你完成这一切。 无需执行任何额外的步骤即可链接到库或添加项目引用。 下图演示了 Visual Studio 查找 azure-storage-cpp 标头的方法。 Vcpkg 将其标头置于 /installed 子文件夹中，由目标平台予以分区。 下图显示库的 /was 子文件夹中包含文件的列表：</p>
+<ul>
+<li>Linux 或 macOS 上的 Visual Studio Code 集成</li>
+</ul>
+<p>在 shell 或“终端”窗口中，将目录更改为 vcpkg 根目录。 然后运行./vcpkg integrate install，在 Linux 或 macOS 上配置 Visual Studio Code。 此命令将设置 vcpkg 工具和库的位置，并对源文件启用 IntelliSense。</p>
+<ul>
+<li><p>删除 vcpkg 集成<br>如果已使用 integrate 选项，则应在删除 vcpkg 实例之前删除该集成。 若要删除和清理该集成，请将目录更改为 vcpkg 根目录。</p>
+<p>  在 Windows 上，运行vcpkg integrate remove，确保清除该集成。<br>  在 Linux 或 macOS 上，运行./vcpkg integrate remove 命令。</p>
+</li>
+<li><p>使用举例<br>我现在的场景是我需要 libpng 来进行开发，输入命令：vcpkg install libpng来安装，可以看到他在开始自动下载。</p>
+</li>
+</ul>
+<p>注意我们可以使用.\vcpkg help triplet来看库支持的模式。</p>
+<h1 id="4-详细介绍"><a href="#4-详细介绍" class="headerlink" title="4. 详细介绍"></a>4. 详细介绍</h1><ul>
+<li>4.1 新增库</li>
+</ul>
+<p>使用指令：vcpkg help triplet可以看到都支持什么平台。</p>
+<p>下载某一个平台的包：.\vcpkg.exe install jsoncpp:x64-windows</p>
+<pre><code>(base) PS C:\Users\cds&gt; vcpkg help triplet
+Available architecture triplets
+VCPKG built-in triplets:
+  arm-uwp
+  arm64-windows
+  x64-linux
+  x64-osx
+  x64-uwp
+  x64-windows-static
+  x64-windows
+  x86-windows
+
+VCPKG community triplets:
+  arm-ios
+  arm-linux
+  arm-mingw-dynamic
+  arm-mingw-static
+  arm-windows
+  arm64-ios
+  arm64-linux
+  arm64-mingw-dynamic
+  arm64-mingw-static
+  arm64-osx
+  arm64-uwp
+  arm64-windows-static-md
+  arm64-windows-static
+  ppc64le-linux
+  s390x-linux
+  wasm32-emscripten
+  x64-ios
+  x64-mingw-dynamic
+  x64-mingw-static
+  x64-openbsd
+  x64-osx-dynamic
+  x64-windows-static-md
+  x86-freebsd
+  x86-ios
+  x86-mingw-dynamic
+  x86-mingw-static
+  x86-uwp
+  x86-windows-static-md
+  x86-windows-static
+  x86-windows-v120
+</code></pre>
+<ul>
+<li><p>4.2 删除库</p>
+<p>  .\vcpkg.exe remove jsoncpp</p>
+</li>
+</ul>
+<p>注意：</p>
+<p>这个时候只是移除了默认的x86-winodws版本的文件，如果有其他平台的版本需要移除，需要制定相应的triplet。<br>移除也只是移除了二进制程序库而已，源码包和解压缩的源码并没有删除。</p>
+<ul>
+<li><p>4.3 查看已经安装的列表</p>
+<p>  .\vcpkg.exe list</p>
+</li>
+<li><p>4.4 更新已经安装的开源库</p>
+</li>
+</ul>
+<p>一般有两种更新方式。一个是update指令，可以显示可以升级的开源库的列表。另一个是upgrade的指令，会重新编译所有需要更新的包。<br>————————————————<br>版权声明：本文为CSDN博主「早睡的叶子」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/sexyluna/article/details/115285405">https://blog.csdn.net/sexyluna/article/details/115285405</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vcpkg/" rel="tag">vcpkg</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-httpbin"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/04/30/httpbin/"
+    >httpbin</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/04/30/httpbin/" class="article-date">
+  <time datetime="2023-04-30T08:05:02.000Z" itemprop="datePublished">2023-04-30</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
@@ -185,36 +356,156 @@
       
     <div class="article-entry" itemprop="articleBody">
        
-  <h1 id="微网"><a href="#微网" class="headerlink" title="微网"></a>微网</h1><p>微型电网(微电网)有时简称微网:是相对传统大电网的一个概念，是指多个分布式电源及其相关负载按照一定的拓扑结构组成的网络，并通过静态开关关联至常规电网。</p>
-<p>微电网(micro-grid，microgrid)，是指由分布式电源、储能装置、能量转换装置、相关负荷和监控、保护装置汇集而成的小型发配电系统，是一个能够实现自我控制、保护和管理的自治系统，既可以与外部电网并网运行，也可以孤立运行。是智能电网的重要组成部分。</p>
-<h1 id="基本信息"><a href="#基本信息" class="headerlink" title="基本信息"></a>基本信息</h1><ul>
-<li><p>中文名称<br>微网(微型电网、微电网)</p>
-</li>
-<li><p>外文名称<br>micro-grid，microgrid</p>
-</li>
-<li><p>结构<br>拓扑结构组成的网络</p>
-</li>
-<li><p>连接方式<br>通过静态开关关联至常规电网</p>
-</li>
-<li><p>别名<br>微电网</p>
-</li>
-<li><p>组成部分<br>分布式电源、储能装置等</p>
-</li>
-<li><p>含义<br>近距离网络接触的代名词</p>
-</li>
-</ul>
-<h1 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h1><p>美国电气可靠性技术解决方案联合会( CERTS-Consortium for Electric Reliability Technology Solutions)给出的定义为:微电网是一种由负荷和微型电源共同组成系统，它可同时提供电能和热量;微电网内部的电源主要由电力电子器件负责能量的转换，并提供必需的控制;微电网相对于外部大电网表现为单一的受控单元，并可同时满足用户对电能质量和供电安全等的要求。</p>
-<p>欧盟微电网项目(European Commission Project Micro-grids)给出的定义是:利用一次能源;使用微型电源，分为不可控、部分可控和全控三种，并可冷、热、电三联供;配有储能装置;使用电力电子装置进行能量的调节。</p>
-<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在过去的几十年，电网规模不断扩大，已逐步发展成集中发电、远距离输电的超大互联网络系统。但远距离输电的不断增大、使得受端电网对外来电力的依赖程度不断提高，电网运行的稳定性和安全性趋于下降，而且难于满足多样化供电需求。另一方面，对全球常规能源的逐渐枯竭、环境污染等问题的担忧却日益突显。鉴于此，环保、高效和灵活的分布式发电广受青睐。</p>
-<p>分布式发电一般是指将相对小型的发电装置(一般50 MW以下)分散布置在用户/负荷现场、或邻近地点，从而实现发电供能的方式。分布式发电具有位置灵活、分散的特点，极好地适应了分散电力需求和资源分布，延缓了输配电网升级换代所需的巨额投资;与大电网互为备用，也使供电可靠性得以改善;一般还具有污染少、能源利用效率高的优势。</p>
-<p>尽管优点突出，但分布式发电也存在诸多问题:分布式电源单机接入成本高，控制困难等;分布式电源相对大电网来说是一个不可控源，大系统往往采取限制、隔离的方式来处置分布式电源，以减小其对大电网的冲击。当电力系统发生故障时，分布式电源往往都须在第一时间退出运行，这就大大限制了分布式发电效能的充分发挥。为协调大电网与分布式电源间的矛盾，充分挖掘分布式电源为电网和用户带来的价值和效益，提出并不断发展了微电网(Microgrid)的概念。</p>
-<p>根据Navigant Research第九版微电网部署报告显示，全球已经公布的微电网项目累计达到1437个，装机容量超过13吉瓦，其中超半数属于远程微电网。</p>
-<p>报告中指出，微电网已经成为全球现象。已经超过100个国家都在部署微电网项目，累计装机容量超过13吉瓦，其中，俄罗斯北极圈附近的微电网项目累计约816兆瓦。</p>
-<p>从国家来看，无论是微电网装机容量还是项目数量，美国都位居第一，其中，纽约州就有83个微电网项目。</p>
-<p>从区域来看，亚太地区和北美地区是微电网最大的两个区域市场，市场占有率均为42%。</p>
-<h1 id="优势"><a href="#优势" class="headerlink" title="优势:"></a>优势:</h1><p>微电网，也被称为分布式能源孤岛系统，将发电机、负荷、储能装置及控制装置等系统地结合在一起，形成一个单一可控的单元，同时向用户供给电能和热能。微电网中的电源多为微电源，亦即含有电力电子界面的小型机组(小于100kW)，包括微型燃气轮机，燃料电池、光伏电池以及超级电容、飞轮、蓄电池等储能装置。微电网接在用户侧，具有低成本、低电压、低污染等特点。微电网既可与大电网联网运行，也可在电网故障或需要时与主网断开单独运行。</p>
-<p>微网具有双重角色。对于电网，微电网作为一个大小可以改变的智能负载，为本地电力系统提供了可调度负荷，可以在数秒内做出响应以满足系统需要，适时向大电网提供有力支撑;可以在维修系统同时不影响客户的负荷;可以减轻(延长)配电网更新换代，采用IEEE1547.4标准，指导分布式电源孤岛运行，能够消除某些特殊操作要求产生的技术阻碍。对于用户，微电网作为一个可定制的电源，可以满足用户多样化的需求，例如，增强局部供电可靠性，降低馈电损耗，支持当地电压，通过利用废热提高效率，提供电压下陷的校正，或作为不可中断电源服务等。</p>
-<p>此外，紧紧围绕全系统能量需求的设计理念和向用户提供多样化电能质量的供电理念，是微电网的2个重要特征。在接入问题上，微电网的并网标准只针对微电网与大电网的公共连接点(PCC)，而不针对各个具体的微电源。微电网不仅解决了分布式电源的大规模接入问题，充分发挥了分布式电源的各项优势，还为用户带来了其他多方面的效益。微网将从根本上改变传统的应对负荷增长的方式，在降低能耗、提高电力系统可靠性和灵活性等方面具有巨大潜力。</p>
+  <p>httpbin 是一个使用 Python + Flask 编写的 HTTP HTTP Request &amp; Response Service。该服务主要用于测试 HTTP 库。<br>你可以向他发送请求，然后他会按照指定的规则将你的请求返回。这个类似于echo服务器，但是功能又比它要更强大一些。 httpbin支持HTTP/HTTPS，支持所有的HTTP动词，能模拟302跳转乃至302跳转的次数，还可以返回一个HTML文件或一个XML文件或一个图片文件（还支持指定返回图片的格式）。实在是请求调试中居家必备的良器！</p>
+<p><a target="_blank" rel="noopener" href="http://httpbin.org/">http://httpbin.org/</a></p>
+<h1 id="相同推荐"><a href="#相同推荐" class="headerlink" title="相同推荐"></a>相同推荐</h1><p>类似这种能够很方便调试接口的还有很多，但是无疑还是httpbin最好用。</p>
+<p>requestb<br>putsreq<br>ttpresponder<br>runscope</p>
+<h1 id="如何使用"><a href="#如何使用" class="headerlink" title="如何使用"></a>如何使用</h1><p>使用你擅长的语言，与它的接口互动。</p>
+<h1 id="接口列表"><a href="#接口列表" class="headerlink" title="接口列表"></a>接口列表</h1><pre><code>Endpoint***************Description
+
+/************************This page.
+
+/ip**********************Returns Origin IP.
+
+/user-agent*************Returns user-agent.
+
+/headers*****************Returns header dict.
+
+/get******************Returns GET data.
+
+/post*****************Returns POST data.
+
+/patch*************Returns PATCH data.
+
+/put*******************Returns PUT data.
+
+/delete****************Returns DELETE data
+
+/gzip********************Returns gzip-encoded data.
+
+/deflate*****************Returns deflate-encoded data.
+
+/status/:code****************Returns given HTTP Status code.
+
+/response-headers******************Returns given response headers.
+
+/redirect/:n***************************302 Redirects n times.
+
+/redirect-to?url=foo**********************302 Redirects to the foo URL.
+
+/relative-redirect/:n****************302 Relative redirects n times.
+
+/cookies*******************Returns cookie data.
+
+/cookies/set?name=value**********************Sets one or more simple cookies.
+
+/cookies/delete?name*********************Deletes one or more simple cookies.
+
+/basic-auth/:user/:passwd****************Challenges HTTPBasic Auth.
+
+/hidden-basic-auth/:user/:passwd*************404&#39;d BasicAuth.
+
+/digest-auth/:qop/:user/:passwd***********Challenges HTTP Digest Auth.
+
+/stream/:n***************Streams n – 100 lines.
+
+/delay/:n****************Delays responding for n – 10 seconds.
+
+/drip*************Drips data over a duration after an optional initial delay, then (optionally) returns with the given status code.
+
+/range/:n************************Streams n bytes, and allows specifying a Range header to select a subset of the data. Accepts a chunk_size and request durationparameter.
+
+/html****************Renders an HTML Page.
+
+/robots.txt******************Returns some robots.txt rules.
+
+/deny*******************Denied by robots.txt file.
+
+/cache********************Returns 200 unless an If-Modified-Since or If-None-Match header is provided, when it returns a 304.
+
+/cache/:n*********Sets a Cache-Control header for n seconds.
+
+/bytes/:n****************Generates n random bytes of binary data, accepts optional seedinteger parameter.
+
+/stream-bytes/:n*******************Streams n random bytes of binary data, accepts optional seed and chunk_size integer parameters.
+
+/links/:n*****************Returns page containing n HTML links.
+
+/forms/post*************HTML form that submits to /post
+
+/xml*******************Returns some XML
+
+/encoding/utf8**************Returns page containing UTF-8 data.
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/httpbin/" rel="tag">httpbin</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-微电网到底是什么，为什么早些年无法普及？"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/04/29/%E5%BE%AE%E7%94%B5%E7%BD%91%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E6%97%A9%E4%BA%9B%E5%B9%B4%E6%97%A0%E6%B3%95%E6%99%AE%E5%8F%8A%EF%BC%9F/"
+    >微电网到底是什么，为什么早些年无法普及？</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/04/29/%E5%BE%AE%E7%94%B5%E7%BD%91%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E6%97%A9%E4%BA%9B%E5%B9%B4%E6%97%A0%E6%B3%95%E6%99%AE%E5%8F%8A%EF%BC%9F/" class="article-date">
+  <time datetime="2023-04-29T14:39:16.000Z" itemprop="datePublished">2023-04-29</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>微电网的官方定义<br>由分布式电源、用电负荷、配电设施、监控和保护装置等组成的小型发配用电系统</p>
+<p>（发改能源〔2017〕1339号《推进并网型微电网建设试行办法》）。</p>
+<p>解读：微电网是包含源、网、荷、储（这四个字是不是超级常见）的小型发配用电系统，配置完备的控制保护系统，具有以下四个特征。</p>
+<p>微型：主要体现在微电网接入到配网侧，电压等级低且容量小，一般在 35 千伏及以下且系统容量（最大用电负荷）原则上不大于 20 兆瓦。<br>清洁：“源”以光伏、风电、潮汐能等可再生能源为主，或以天然气多联供（CHP）等能源综合利用为目标的发电形式，清洁环保。<br>自治：微电网内部基本实现电力供需自平衡，且可独立运行。<br>友好：通过源、荷、储的协调控制，实现与电网之间的交换功率可控可调，可减少大规模分布式电源接入对电网造成的冲击。</p>
+<p>是不是没啥感觉，看看这些项目的内容，找找感觉</p>
+<p>微电网性价比主要表现在10KV及以上的工商业用户！</p>
+<p>为什么现在才强调微电网？</p>
+<p>新能源后时代，1光伏、2储能、3充电桩等硬件普及以及盈利模式明确，4 电力市场交易规则加速完善，多方面因素驱动企业微电网能效管理系统配置意愿增强。</p>
+<p>1、2022年全国新增并网容量87.4GW，其中集中式36.29GW，分布式总计51.11GW，户用分布式25.25GW；截至2022年底累计并网容量共392GW，其中集中式234.44GW，分布式157.62GW。</p>
+<p>2、工商业储能主要负荷是满足工商业自身内部的电力需求，实现光伏发电最大化自发自用，或者通过峰谷价差套利和需求侧响应实现投资回报。</p>
+<p>3、充电桩普及程度渐高，保有量持续提升。充电桩是保障电动汽车用户出行的基础设施，是推动汽车电动化的最基础抓手。根据中国充电联盟的数据如下。</p>
+<p>4、电力市场交易制度加速完善</p>
+<p>微电网能效管理系统可以实现平台一体化管理和协调</p>
+<p>三方面因素驱动企业配置微电网</p>
+<p>（1）可靠用电安全可靠用电是电力用户的刚性需求。近两年，国际形势紧张，部分国家地区能源安全问题突出。国内“双碳”背景下，企业能耗双控力度偏大，较多高能耗企业面临拉闸限电问题。同时，国内用电需求持续高企，电力供需日益偏紧，2022年6月以来，国内部分流域来水偏少，水电紧缺，国内多次出现电 力紧张局面。企业铺设分布式能源及微电网调度系统，可以独立于主电网，主干网可靠性减弱的情况下，微电网可以快速解耦，实现电力自给自足，减少停电损失，保障经营。</p>
+<p>（2）节能降本电价上行，峰谷价差拉大，同时部分省市实行尖峰电价。电力成本是工商业企业的重要成本之一，峰谷价差拉大，企业能耗精细化管理意愿渐强，微电网可以按照峰谷电价、实时电价，为企业做优化策略，帮助企业排工派单，对源荷进行柔性控制，实现节能降本。除电力成本外，微电网平台还可以综合电、气、水等多样能源数据，并进行分析，帮助企业梳理能源账单，避免能源浪费。</p>
+<p>（3）参与电力市场交易，提升经济性电力市场改革力度加大，企业装机新能源比例逐步上升，电价交易机制完善，虚拟电厂建设加速，工商业用户可参与电力现货市场交易。企业微电网实现打破与主干网之间的“屏障”，与外部电网互联互通，辅助企业形成“自发自用-外网取电-余电上网”的运行模式，动态优化用电策略、 赚取电费收益，微电网经济性进一步提升。微电网是虚拟电厂的关键一环。虚拟电厂管控平台向可调节资源下达调控 指令，用户侧需根据自身情况对各类设备进行功率控制，同时虚拟电厂管控平 台与用户侧需进行实时信息交互。随着电力市场交易机制完善、控制/通信等 关键技术的升级，虚拟电厂建设加速，而企业微电网作为围墙内和围墙外的有效连接，也将发挥重要作用。</p>
  
       <!-- reward -->
       
@@ -236,7 +527,7 @@
 
     
     <article
-  id="post-新能源消纳能力要跟上"
+  id="post-微电网用途"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -247,8 +538,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/04/22/%E6%96%B0%E8%83%BD%E6%BA%90%E6%B6%88%E7%BA%B3%E8%83%BD%E5%8A%9B%E8%A6%81%E8%B7%9F%E4%B8%8A/"
-    >新能源消纳能力要跟上</a> 
+  <a class="article-title" href="/2023/04/28/%E5%BE%AE%E7%94%B5%E7%BD%91%E7%94%A8%E9%80%94/"
+    >微电网用途</a> 
 </h2>
  
 
@@ -256,8 +547,8 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2023/04/22/%E6%96%B0%E8%83%BD%E6%BA%90%E6%B6%88%E7%BA%B3%E8%83%BD%E5%8A%9B%E8%A6%81%E8%B7%9F%E4%B8%8A/" class="article-date">
-  <time datetime="2023-04-22T05:13:30.000Z" itemprop="datePublished">2023-04-22</time>
+      <a href="/2023/04/28/%E5%BE%AE%E7%94%B5%E7%BD%91%E7%94%A8%E9%80%94/" class="article-date">
+  <time datetime="2023-04-28T14:31:19.000Z" itemprop="datePublished">2023-04-28</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
@@ -267,15 +558,28 @@
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>发布时间：2022-06-10 来源：经济日报 大中小</p>
-<p>　　今年以来，我国新能源装机出现大幅增长，但是在局部地区也同时出现了弃风弃光率提升的现象。</p>
-<p>　　弃风弃光现象曾是制约我国新能源产业高质量发展的重要因素。有人形象地比喻，风电光电就像地头的农特产品，随着种植规模扩大，当地老百姓吃不完，深加工能力跟不上，外送物流渠道又不畅通，只能将一部分白白扔掉。由此可见，弃风弃光的根源，是一定区域内的新能源电源建设速度超出消纳能力，从而造成能源的规模化发展和高效消纳利用之间的矛盾。</p>
-<p>　　近年来，我国以风电、光伏发电为代表的新能源装机规模稳居全球首位，发电量占比稳步提升，成本快速下降，已基本进入平价无补贴发展的新阶段。在“双碳”目标下，我国已明确到2030年，风电和太阳能发电总装机容量达到12亿千瓦以上。从国家规划、能源消费的低碳化趋势和新能源装备技术等各个层面，都释放出了新能源进一步大规模开发利用的利好信号。</p>
-<p>　　但要引起警惕的是，如果忽视电力系统对大规模高比例新能源接网和消纳的适应性不足等制约因素，那么新能源的开发利用还有可能重演大规模弃风弃电的困境。因此，我国新能源发展面临着既要大规模开发、又要高水平消纳、更要保障电力安全可靠供应等多重挑战。</p>
-<p>　　日前公布的《“十四五”可再生能源发展规划》中指出，我国可再生能源将进入高质量跃升发展新阶段。在这一判断中，“高质量”不难理解，所谓“跃升”，既是装机规模的跨越式发展，也是可再生能源在电力消费中的占比快速提升，更是发展模式由政策驱动向市场驱动的新转变。以风电、光电为代表的新能源作为可再生能源的主力军，将在未来清洁低碳、安全高效的能源体系中起到“挑大梁”的作用。因此，必须坚持先立后破、通盘谋划和系统观念，有效化解新能源发展面临的各种挑战。当务之急是要统筹解决好新能源大规模开发和高水平消纳，以及保障电力安全可靠供应之间的关系，协同推进新能源的规模、效益和安全。</p>
-<p>　　一方面，要挖掘新能源就地消纳的潜力。从利用方式看，新能源就地消纳是最经济的方式。提高新能源就地消纳水平，需要进一步挖掘潜力空间，鼓励引导全社会消费新能源等绿色电力，推动绿色电力在交易组织、电网调度、价格形成机制等方面体现优先地位，为市场主体提供功能健全、友好易用的绿色电力交易服务。同时，在具备条件的工业企业、工业园区，加快发展分布式光伏、分散式风电等新能源项目，提高终端用能的新能源电力比重。</p>
-<p>　　另一方面，要加快外送通道建设。特高压输电线路就像电力“高速公路”，在新能源就地消纳能力有限的情况下，通过外送通道将新能源电力输送至用电负荷较高的发达地区，既能满足产业聚集地区用电需求，也能实现新能源电力的有效利用。从长远看，提高新能源消纳水平，需要加快构建新型电力系统，突破省际壁垒，从电网技术、交易机制、基础设施等多方面发力，实现新能源电力在全国范围内的合理配置。</p>
-<p>　　此外，还需要探索多渠道储能路径。近年来，不少新能源富集地区实施了抽水蓄能、绿电制氢等储能项目，一定程度上提高了新能源的利用水平。通过将暂时富余的风电、光电转化成其他形式的能源，在用电高峰时再次转化成电能输出，可以有效实现新能源电力的“错峰上市”。（陈发明）</p>
+  <p>作者：浙江电网信息<br>链接：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/558702432/answer/2711099433">https://www.zhihu.com/question/558702432/answer/2711099433</a><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+<p>01.微电网的定义</p>
+<p>微电网(Micro-Grid)是由分布式电源、负荷、储能、变配电和控制系统构成的小型电力系统。<br>微电网是一个能够实现自我控制、保护和管理的自治电力系统，既可以与外部电网并网运行，也可以孤网运行。<br>微电网是相对传统大电网的一个概念，发展微电网能够充分促进分布式可再生能源的大规模接入。微电网与大电网是相辅相成的，尤其在大电网没有覆盖的地区可以发挥更大的作用，以弥补大电网的不足。</p>
+<p>02.微电网的划分</p>
+<p>按照运行方式划分：并网型、孤网型(独立型)<br>按照电网类型划分：交流微电网、直流微电网、混合型<br>按照电压等级划分：低压(400V-1kV)、中压(1-35kV)、高压(35kV以上)<br>按照规模划分：小型(电网容量&lt;500kVA)、中型(500kVA&lt;=电网容量&lt;6MVA)、大型(电网容量&gt;6MVA)</p>
+<p>03.微电网的应用</p>
+<p>独立型微电网</p>
+<p>独立型微电网：不依赖于外部电网，可以通过分布式电源、储能系统独立、稳定、长期地给负荷供电。<br>可分为直流型、交流型、交直流混合型三种。</p>
+<p>为什么要发展独立型微电网系统?<br>(1)在现阶段，在大电网覆盖的经济发达地区，微电网的供电成本远高于大电网，缺乏经济性;<br>(2)尤其是并网型微电网，易被大电网替代，缺乏竞争力;<br>(3)但在大电网没有覆盖的地方，例如岛屿、偏远地区、城市周边、旅游景点等，微电网反而具有优势，因此迫切需要发展独立型微电网。</p>
+<p>01.分布式电源</p>
+<p>(1)独立型微电网相关的分布式电源<br>光伏发电<br>风力发电<br>燃气发电(天然气、沼气)<br>生物质发电<br>海洋能发电<br>小水电<br>柴油发电</p>
+<p>(2)分布式发电的优缺点</p>
+<p>优点：可利用丰富的清洁和可再生能源。<br>缺点：一些可再生能源具有间歇性和随机性。</p>
+<p>(3)独立型微电网相关的分布式电源</p>
+<p>其中分布式光伏是最有潜力的可再生能源，适应面广，受限制少，技术进步快和成本下降迅速，最有应用前景。</p>
+<p>现阶段发展分布式光伏的困难与对策：<br>困难：地难找，电难接，补贴慢，用电需求不稳定;<br>对策：可以采用独立型微电网方式，不依赖于电网;寻求适合的用电需求，真正实现自发自用。</p>
+<p>02.储能系统<br>独立型微电网相关的储能系统：</p>
+<p>化学储能<br>铅酸电池、铅酸胶休电池、铅碳电池、铅品电池<br>锂电池：磷酸铁悝、锰酸锂、三元、钛酸悝，<br>液流电池：全钒液流、锌溴，镍氢电池、钠硫电池、锌空、锂空</p>
+<p>物理储能<br>抽水蓄能、压缩空气、飞轮、相变储能、超级电容器、超导储能、蓄热蓄冷</p>
+<p>储能系统是独立型微电网不可或缺的组成部分，也是造成微电网系统成本高的主要原因。<br>需要找到大幅降低储能成木的方式方法：<br>a. 技术进步<br>b. 商业模式创新<br>(结合电动汽车充放电、退役电池梯级利用)</p>
+<p>03.推广应用<br>典型推广应用方向：</p>
+<p>独立光伏电动汽车充换电站<br>独立光伏水泵灌溉系统<br>独立光伏制氢系统<br>独立风光储村庄供电系统<br>独立风光柴储岛屿供电系统<br>独立风电海水淡化系统</p>
  
       <!-- reward -->
       
@@ -286,7 +590,7 @@
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%96%B0%E8%83%BD%E6%BA%90/" rel="tag">新能源</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%BE%AE%E5%9E%8B%E7%94%B5%E7%BD%91/" rel="tag">微型电网</a></li></ul>
 
     </footer>
   </div>
@@ -297,7 +601,7 @@
 
     
     <article
-  id="post-下载《算法秘籍》和《刷题笔记》"
+  id="post-嵌入式EMS：流水线生产微电网"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -308,8 +612,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/04/21/%E4%B8%8B%E8%BD%BD%E3%80%8A%E7%AE%97%E6%B3%95%E7%A7%98%E7%B1%8D%E3%80%8B%E5%92%8C%E3%80%8A%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0%E3%80%8B/"
-    >下载《算法秘籍》和《刷题笔记》</a> 
+  <a class="article-title" href="/2023/04/27/%E5%B5%8C%E5%85%A5%E5%BC%8FEMS%EF%BC%9A%E6%B5%81%E6%B0%B4%E7%BA%BF%E7%94%9F%E4%BA%A7%E5%BE%AE%E7%94%B5%E7%BD%91/"
+    >嵌入式EMS：流水线生产微电网</a> 
 </h2>
  
 
@@ -317,8 +621,8 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2023/04/21/%E4%B8%8B%E8%BD%BD%E3%80%8A%E7%AE%97%E6%B3%95%E7%A7%98%E7%B1%8D%E3%80%8B%E5%92%8C%E3%80%8A%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0%E3%80%8B/" class="article-date">
-  <time datetime="2023-04-21T09:32:43.000Z" itemprop="datePublished">2023-04-21</time>
+      <a href="/2023/04/27/%E5%B5%8C%E5%85%A5%E5%BC%8FEMS%EF%BC%9A%E6%B5%81%E6%B0%B4%E7%BA%BF%E7%94%9F%E4%BA%A7%E5%BE%AE%E7%94%B5%E7%BD%91/" class="article-date">
+  <time datetime="2023-04-27T14:23:55.000Z" itemprop="datePublished">2023-04-27</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
@@ -328,11 +632,13 @@
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>此链接可下载《算法秘籍》和《刷题笔记》两本 PDF 以及 Chrome 插件的离线安装程序：</p>
-<p>链接：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1PoG0Zxy7H64aXUM-Gj0UuA?pwd=541i">https://pan.baidu.com/s/1PoG0Zxy7H64aXUM-Gj0UuA?pwd=541i</a> 提取码：541i</p>
-<p>另外，该链接会持续更新本链接中的插件和 PDF 的版本，你从上面链接中下载到的都将是最新版本。请直接下载，不要转存，因为转存后不会同步更新最新内容。</p>
-<p>刷题全家桶的安装使用手册点这里：<br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/M5Ud_RCzIe9pNl1cLSDPRQ">https://mp.weixin.qq.com/s/M5Ud_RCzIe9pNl1cLSDPRQ</a></p>
-<p>或长按识别对应的二维码查看（如果二维码过多无法识别，可以放大图片再长按识别对应的二维码）。</p>
+  <p>作者：极简物控<br>链接：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/372948858/answer/2990066810">https://www.zhihu.com/question/372948858/answer/2990066810</a><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+<p>嵌入式EMS也已经有了实践答案。极简物控应用嵌入式EMS在杭州某区域打造了集化工、印染、轻加工等在内的8类用能企业、52家用户的智慧协同微网群示范。我们了解到，区域超90%能源依赖于外部输入，具有典型大受端城市工业园区特征，以化纤纺织业、化学原料和化学制品制造业、化学纤维制造业、金属制品业、通用设备制造业、汽车制造业六大行业为主，属于高负荷密度区域，未来区域也仍以工业负荷为主，负荷发展相对稳定。我们选择其中1个供电单元为微电网群示范建设区域，该供电单元由4个10kV标准单环网组成，因此我们划分为4个微电网群，示范区的电压等级在10千伏及以下，单个微电网群容量小于12兆瓦。微电网群区域已建光伏12户（6649kWp）、储能1户（300kW/600kWh）。未来拟新建光伏14户（15110kWp）、储能7户（3000kW/6000kWh）、可调节负荷21户（9950kW），在3个企业中拟新建一体化充电设施，每套设备可同时服务停车场内40辆新能源车。</p>
+<p>示范区微电网群拓扑示意图传统微电网群协同控制通常采用集中式架构，但是随着微电网数量不断增多，系统计算负担增大、处理效力降低，同时，由于集中式系统过于庞大，存在某一节点失灵可能影响全局的风险，系统可靠性较差，扩展灵活性不足。在这样的场景下，分布式控制架构或许是更优的选择！然而，哪怕采用分布式控制架构，每一层级的微电网分布式协同控制都需要服务器、控制器、物联网关等多个硬件支撑，结构笨重，而且需要针对不同应用场景逐一开发系统平台，通用性较差。嵌入式EMS让微电网的分层分区（分布式）协同控制更加简单！极简物控的嵌入式EMS是目前市面上核心的微电网能量管理产品化方案之一。嵌入式EMS软硬件高度集成，相当于１个嵌入式EMS＝数据网关＋微网控制器＋能量管理服务器，即１个用户仅需安装１个嵌入式EMS即可打造微网智能控制平台。</p>
+<p>嵌入式EMS软硬件高度集成分层分区协同控制可分为“微电网层”、“协同控制层”、“系统平台层”。</p>
+<p>基于嵌入式EMS的微电网分层协同控制架构在微电网层中，通过1个嵌入式EMS实现对1个微电网优化调控，包括内部源网荷的直接控制、微电网运行模式切换、微网稳定运行以及与外部电网的能量交互，满足微网自治优化运行需求。一方面，微电网层上送关键的基础数据，包括设备的状态、需求响应潜力评估和策略执行反馈等，共协同控制层决策参考。另一方面，微电网层接受上级下发的分解指令，包括调度策略、响应顺序和设备状态调节指令等，根据微电网自身状态，管理微电网内部源荷储资源，保障微网内部的功率平衡，有效保障系统的稳定性和经济性。在协同控制层中，由嵌入式EMS和可视化平台构成，是架构中的中间层，是上下层数据和指令交互媒介，具备边缘计算、边缘互联、云边协同能力。一方面，协同控制层接收系统平台层下发的调控指令和下层微网群上发数据信息，制定考虑多目标约束的微网群优化调控策略，并下发控制指令下发给微电网层，实现微网群互联互济、协同运行。另一方面，将微网群执行情况，响应能力等信息反馈至系统平台层，辅助电网调度策略制定。在系统平台层中，主要是电网调度中心与能源大数据中心，是区域的能源智能大脑。一方面，根据所辖区域内的能源消费特征以及微电网群的状态，制定区域调度策略，并下发至协同控制层。另一方面，接受系统控制层上报的执行情况、响应能力等数据，以此为重要的数据参考制定下阶段的调度策略。</p>
+<p>操作面板在这样的系统架构下，单个微电网能够实现“最大功率输出模式、可调度模式、孤岛运行模式”及其他控制模式之间的切换，并且根据用户计划调度以及故障场景可以在并网和离网状态之间进行无缝切换，在孤岛模式下实现微电网自供电，依靠分布式电源和储能为电网用户供电。同时，微电网与微电网群之间进行能源、信息的交互互动，微电网与大电网实现电能的灵活互济，实现“企业收益最大、电网稳定运行、碳排总量最小”等多方面平衡，满足政府、用户、电网多方利益诉求，实现共建共享共赢。在经济效益方面，微电网控制系统的建设成本下降超60%以上，系统运维由需要2个及以上专业编程人员降至1个兼职巡检人员。随着微电网数量地不断增多，系统建设边际成本将会进一步下降。在系统运营期间，光伏预期发电量（现有+新建）2700万度电/年，按照“80%自发自用，20%余量上网”的原则，预计可节约电费约2000万元／年，储能（现有+新建）通过“低充高放”等方式盈利约420万元／年，通过参与电网日前削峰响应获得补贴约380万元／年（按浙江省需求响应按照4元/千瓦时的上限标准进行补偿）。在安全运行方面，微电网具备自平衡、自管理、自调节能力，独立运行时能保障内部负荷连续供电不低于2小时，微电网群的电量交换率接近50%，外部电网输入功率峰谷差下降比例超过25%，帮助实现日前削峰填谷20MW/次，每次大约为1.8小时，帮助电网稳定运行，极端事故条件下，配合需求响应和储能，内部非可调负荷可短时孤岛运行。此外，采取分层分区协同控制架构后，有效提高了系统的运行可靠性，不仅降低电网调度中心的调节负担。在低碳发展方面，光伏发电占总用电比例高于100%的有9家，50%-100%之间7家，微电网群的光伏发电占总用电整体比例超过50%，新能源消纳率达100%，平均每年减少二氧化碳13500吨。</p>
+<p>屋顶光伏受益于嵌入式EMS是产品化的解决方案，微电网群的建设边际成本会进一步降低，并为微电网群提供了一个“交流沟通”的平台，邀请微电网们“加入群聊”，实现微电网群分层分区的协调控制。</p>
  
       <!-- reward -->
       
@@ -343,7 +649,7 @@
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0/" rel="tag">刷题笔记</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95%E7%A7%98%E7%B1%8D/" rel="tag">算法秘籍</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%BE%AE%E5%9E%8B%E7%94%B5%E7%BD%91/" rel="tag">微型电网</a></li></ul>
 
     </footer>
   </div>
@@ -354,7 +660,7 @@
 
     
     <article
-  id="post-Accept-Encoding"
+  id="post-智能微电网优点"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -365,8 +671,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/04/20/Accept-Encoding/"
-    >Accept-Encoding</a> 
+  <a class="article-title" href="/2023/04/26/%E6%99%BA%E8%83%BD%E5%BE%AE%E7%94%B5%E7%BD%91%E4%BC%98%E7%82%B9/"
+    >智能微电网优点</a> 
 </h2>
  
 
@@ -374,141 +680,8 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2023/04/20/Accept-Encoding/" class="article-date">
-  <time datetime="2023-04-20T09:01:58.000Z" itemprop="datePublished">2023-04-20</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="一、项目经历"><a href="#一、项目经历" class="headerlink" title="一、项目经历"></a>一、项目经历</h1><p>碰到个奇葩的服务，请求头加了Accept-Encoding，但凡结果不为空的，就报异常，结果为空的就给放行说成功。</p>
-<h1 id="二、同行遭遇"><a href="#二、同行遭遇" class="headerlink" title="二、同行遭遇"></a>二、同行遭遇</h1><h2 id="1、请求头设置-Accept-Encoding"><a href="#1、请求头设置-Accept-Encoding" class="headerlink" title="1、请求头设置 Accept-Encoding"></a>1、请求头设置 Accept-Encoding</h2><pre><code>&quot;Accept-Encoding&quot;: &quot;gzip, deflate, br&quot;
-</code></pre>
-<p>返回的数据是乱码，无论设置utf-8、gbk、gb2312都无法解码</p>
-<p>一个奇怪的现象是本地测试可以正常解码，代码在服务器上运行就无法解码，最终将该请求头去除就正常了。</p>
-<p>在使用okhttp请求服务器数据的时候，发现返回的数据一直都是乱码，但是使用fiddler抓包，decode后，可以正常显示。刚开始一直怀疑是编码的问题，后来对比了hex的数据和程序中乱码的二进制，发现不一样。fiddler可以自动处理，说明不是密钥加密。经过不断的尝试发现时Accept-Encoding设置的问题，下面就一一详细介绍一下</p>
-<h2 id="2、设置Accept-Encoding为gzip-deflate，返回的网页是乱码"><a href="#2、设置Accept-Encoding为gzip-deflate，返回的网页是乱码" class="headerlink" title="2、设置Accept-Encoding为gzip,deflate，返回的网页是乱码"></a>2、设置Accept-Encoding为gzip,deflate，返回的网页是乱码</h2><ul>
-<li>HTTP 内容协商</li>
-</ul>
-<p>要了解 Vary 的作用，先得了解 HTTP 的内容协商机制。有时候，同一个 URL 可以提供多份不同的文档，这就要求服务端和客户端之间有一个选择最合适版本的机制，这就是内容协商。</p>
-<ul>
-<li>协商方式有两种</li>
-</ul>
-<p>一种是服务端把文档可用版本列表发给客户端让用户选，这可以使用 300 Multiple Choices 状态码来实现。这种方案有不少问题，首先多一次网络往返；其次服务端同一文档的某些版本可能是为拥有某些技术特征的客户端准备的，而普通用户不一定了解这些细节。举个例子，服务端通常可以将静态资源输出为压缩和未压缩两个版本，压缩版显然是为支持压缩的客户端而准备的，但如果让普通用户选，很可能选择错误的版本。</p>
-<p>另外一种方案：服务端根据客户端发送的请求头中某些字段自动发送最合适的版本。可以用于这个机制的请求头字段又分两种：内容协商专用字段（Accept 字段）、其他字段。HTTP 的内容协商通常使用这个方案</p>
-<pre><code>请求头字段    说明    响应头字段
-Accept    告知服务器发送何种媒体类型    Content-Type
-Accept-Language    告知服务器发送何种语言    Content-Language
-Accept-Charset    告知服务器发送何种字符集    Content-Type
-Accept-Encoding    告知服务器采用何种压缩方式    Content-Encoding
-</code></pre>
-<p>例如客户端发送以下请求头：</p>
-<pre><code>Accept:*/*
-Accept-Encoding:gzip,deflate,sdch
-Accept-Language:zh-CN,en-US;q=0.8,en;q=0.6
-</code></pre>
-<p>表示它可以接受任何 MIME 类型的资源；支持采用 gzip、deflate 或 sdch 压缩过的资源；可以接受 zh-CN、en-US 和 en 三种语言，并且 zh-CN 的权重最高（q 取值 0 - 1，最高为 1，最低为 0，默认为 1），服务端应该优先返回语言等于 zh-CN 的版本。</p>
-<p>浏览器的响应头可能是这样的：</p>
-<pre><code>Content-Type: text/javascript
-Content-Encoding: gzip
-</code></pre>
-<p>表示这个文档确切的 MIME 类型是 text/javascript；文档内容进行了 gzip 压缩；响应头没有 Content-Language 字段，通常说明返回版本的语言正好是请求头 Accept-Language 中权重最高的那个。</p>
-<p>有时候，上面四个 Accept 字段并不够用，例如要针对特定浏览器如 IE6 输出不一样的内容，就需要用到请求头中的 User-Agent 字段。类似的，请求头中的 Cookie 也可能被服务端用做输出差异化内容的依据。</p>
-<p>由于客户端和服务端之间可能存在一个或多个中间实体（如缓存服务器），而缓存服务最基本的要求是给用户返回正确的文档。如果服务端根据不同 User-Agent 返回不同内容，而缓存服务器把 IE6 用户的响应缓存下来，并返回给使用其他浏览器的用户，肯定会出问题 。</p>
-<p>所以 HTTP 协议规定，如果服务端提供的内容取决于 User-Agent 这样「常规 Accept 协商字段之外」的请求头字段，那么响应头中必须包含 Vary 字段，且 Vary 的内容必须包含 User-Agent。同理，如果服务端同时使用请求头中 User-Agent 和 Cookie 这两个字段来生成内容，那么响应中的 Vary 字段看上去应该是这样的：</p>
-<pre><code>Vary: User-Agent, Cookie
-</code></pre>
-<p>也就是说 Vary 字段用于列出一个响应字段列表，告诉缓存服务器遇到同一个 URL 对应着不同版本文档的情况时，如何缓存和筛选合适的版本。</p>
-<ul>
-<li><p>在Okhttp中的解决方法<br>上面返回乱码的原因就是没有正确解压Gzip的数据，</p>
-</li>
-<li><p>分析：<br>在 Okhttp 中，如果在请求头添加addHeader(“Accept-Encoding”, “gzip, deflate”)，Okhttp 不会帮你处理Gzip的解压，需要你自己去处理。</p>
-</li>
-</ul>
-<p>部分源码如下：</p>
-<pre><code>boolean transparentGzip = false;
-if (userRequest.header(&quot;Accept-Encoding&quot;) == null)
-&#123;
-  transparentGzip = true;
-  requestBuilder.header(&quot;Accept-Encoding&quot;, &quot;gzip&quot;);
-&#125;
-
-if (transparentGzip &amp;&amp;
- &quot;gzip&quot;.equalsIgnoreCase(networkResponse.header(&quot;Content-Encoding&quot;))
-    &amp;&amp; HttpHeaders.hasBody(networkResponse))
-&#123;
-  GzipSource responseBody = new GzipSource(networkResponse.body().source());
-  Headers strippedHeaders = networkResponse.headers().newBuilder()
-      .removeAll(&quot;Content-Encoding&quot;)
-      .removeAll(&quot;Content-Length&quot;)
-      .build();
-  responseBuilder.headers(strippedHeaders);
-  responseBuilder.body(new RealResponseBody(strippedHeaders, Okio.buffer(responseBody)));
-&#125;
-</code></pre>
-<ul>
-<li>解决方法：<br>把Request的header中去掉header(“Accept-Encoding”)就行了</li>
-</ul>
-<p>通过Request.Builder.tag(“url”)来打tag，然后通过下述代码即可做到cancel某一个Request的功能，你需要做的只是返回url就行了。</p>
-<pre><code>public static void cancelCallWithTag(String tag) &#123;
-    for (Call call : RequestApi2.getInstance().getOkHttpClient().dispatcher().queuedCalls()) &#123;
-        if (call.request().tag().equals(tag))
-            call.cancel();
-    &#125;
-    for (Call call : RequestApi2.getInstance().getOkHttpClient().dispatcher().runningCalls()) &#123;
-        if (call.request().tag().equals(tag))
-            call.cancel();
-    &#125;
-&#125;
-</code></pre>
-<p>有朋友可能想到，如果在header添加”Accept-Encoding”, “gzip, deflate”，返回的是gzip压缩的数据，自己解压可不可以？<br>使用其他的http库，可以拿到最原始的http数据，是可以的。但使用okhttp，返回的字符串是经过编码的，此时已经不是gzip数据格式了，所以没法解压。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Axure下载及汉化"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/04/19/Axure%E4%B8%8B%E8%BD%BD%E5%8F%8A%E6%B1%89%E5%8C%96/"
-    >Axure RP下载及汉化</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/04/19/Axure%E4%B8%8B%E8%BD%BD%E5%8F%8A%E6%B1%89%E5%8C%96/" class="article-date">
-  <time datetime="2023-04-19T02:48:47.000Z" itemprop="datePublished">2023-04-19</time>
+      <a href="/2023/04/26/%E6%99%BA%E8%83%BD%E5%BE%AE%E7%94%B5%E7%BD%91%E4%BC%98%E7%82%B9/" class="article-date">
+  <time datetime="2023-04-26T14:20:12.000Z" itemprop="datePublished">2023-04-26</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
@@ -518,19 +691,25 @@ if (transparentGzip &amp;&amp;
       
     <div class="article-entry" itemprop="articleBody">
        
-  <h1 id="Axure-RP"><a href="#Axure-RP" class="headerlink" title="Axure RP"></a>Axure RP</h1><p>Axure RP 是一款专业的快速原型设计工具。Axure（发音：Ack-sure），代表美国Axure公司；RP则是Rapid Prototyping（快速原型）的缩写。<br>Axure RP 是美国Axure Software Solution 公司旗舰产品，是一个专业的快速原型设计工具，让负责定义需求和规格、设计功能和界面的专家能够快速创建应用软件或Web网站的线框图、流程图、原型和规格说明文档。</p>
-<p>作为专业的原型设计工具，它能快速、高效的创建原型，同时支持多人协作设计和版本控制管理。<br>Axure RP 的使用者主要包括商业分析师、信息架构师、产品经理、IT咨询师、用户体验设计师、交互设计师、UI设计师等，另外，架构师、程序员也在使用Axure。</p>
-<h1 id="软件下载"><a href="#软件下载" class="headerlink" title="软件下载"></a>软件下载</h1><p><a target="_blank" rel="noopener" href="https://www.axure.com/release-history">https://www.axure.com/release-history</a><br><a target="_blank" rel="noopener" href="https://www.axure.com/release-history/rp8">https://www.axure.com/release-history/rp8</a><br><a target="_blank" rel="noopener" href="https://www.axure.com/release-history/rp9">https://www.axure.com/release-history/rp9</a><br><a target="_blank" rel="noopener" href="https://www.axure.com/release-history/rp7">https://www.axure.com/release-history/rp7</a></p>
-<h1 id="汉化资源"><a href="#汉化资源" class="headerlink" title="汉化资源"></a>汉化资源</h1><p>Axure中文网<br><a target="_blank" rel="noopener" href="https://www.axure.com.cn/78629">https://www.axure.com.cn/78629</a><br><a target="_blank" rel="noopener" href="https://www.axure.com.cn/84384">https://www.axure.com.cn/84384</a></p>
-<p>汉化资源使用方法，以 Axure RP 9 为例：</p>
+  <p>作者：汉碳云<br>链接：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/372948858/answer/3030184012">https://www.zhihu.com/question/372948858/answer/3030184012</a><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+<p>随着环保意识日益增强，越来越多的国家和地区开始重视碳中和，加快绿色经济和可持续发展的步伐。而智能微电网作为一种新兴的电力供应方式，在实现碳中和方面有着重要的意义，本文将从以下几个方面进行探讨。</p>
 <ul>
-<li><p>【使用方法】<br>1、将汉化压缩包解压缩。<br>2、将解压缩后的【lang文件夹】复制粘贴到软件安装根目录下。</p>
-</li>
-<li><p>【Windows系统汉化路径】<br>以Win7-64位系统为例：C:\Program Files (x86)\Axure\Axure RP 9</p>
-</li>
-<li><p>【Mac系统汉化路径】<br>以中文版为例：前往–应用程序–右键点击程序图标–显示包内容，依次打开文件夹：Contents&gt;Resources&gt;</p>
-</li>
+<li>促进清洁能源发展：</li>
 </ul>
+<p>智能微电网是一种小型、灵活、可靠的电力供应系统，它具备能源的自治管理和分配功能，可以灵活应对不同的需求，使清洁能源更容易被广泛使用。在智能微电网的支持下，太阳能、风能等新能源可以更加广泛的应用，而传统的化石燃料可以得到替代。这有助于实现碳中和的目标，减少二氧化碳的排放，推动清洁能源的发展。</p>
+<ul>
+<li>提高能源供应效率：</li>
+</ul>
+<p>智能微电网是一种灵活的能量供应方式，能够将化繁为简，优化能源管理，减少能源浪费，从而实现更高效的能源利用，降低能源成本。随着技术和管理能力的不断提升，智能微电网能够更好地分配和管理能源，使其更加合理、高效地使用，从而有助于减少碳排放，实现碳中和。</p>
+<ul>
+<li>提高电网稳定性：</li>
+</ul>
+<p>智能微电网是一种小型的分布式电力系统，分布式能源的优越性在于可以充分利用地方资源，降低长距离输电功率损耗和线路故障的风险。而且智能微电网可以对接到传统的电力系统，通过智能化的控制，调节电量、提高电网的稳定性和可靠性，减少电网对环境的影响，从而更加适合碳中和的发展需求。</p>
+<ul>
+<li>促进能源去中心化：</li>
+</ul>
+<p>智能微电网的自治化管理可以将较小的电力系统转化为具有独立运行能力的电力区域。这些电力区域可以充分利用当地的可再生能源资源，减轻对集中供电系统的依赖，降低对化石燃料的需求，从而实现碳中和的目标。此外，去中心化还可以加强能源系统的安全性和独立性，使其免受对中央能源控制的可能性和黑客攻击的威胁。</p>
+<p>综上所述，汉碳云智能微电网不仅有助于碳中和的实现，还可以提高能源利用效率，降低污染排放，促进能源去中心化等。它是一种前景广阔的电力供应方式，相信随着技术和经验的不断积累，将会在未来得到更广泛的应用。</p>
  
       <!-- reward -->
       
@@ -541,64 +720,7 @@ if (transparentGzip &amp;&amp;
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Axure-RP/" rel="tag">Axure RP</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-数据结构浅谈（一）"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/04/18/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%B5%85%E8%B0%88%EF%BC%88%E4%B8%80%EF%BC%89/"
-    >数据结构浅谈（一）</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/04/18/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%B5%85%E8%B0%88%EF%BC%88%E4%B8%80%EF%BC%89/" class="article-date">
-  <time datetime="2023-04-18T04:16:47.000Z" itemprop="datePublished">2023-04-18</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>数据结构主要描述数据之间的关系，每一个数据可以称之为数据元素，一般以结构体或类来描述。</p>
-<p>数据元素的内部组成，一般基础数据类型或复合数据类型。<br>基础数据类型大体可以分为：数值型,字符串型和日期时间型。复合数据类型又分为结构体、联合体。</p>
-<p>数据元素之间的关系，从表现形式来看，可以分为四种：离散结构、线性结构、树形结构、图形结构。从组织方式来看，可以分为两种：数组和链表。</p>
-<p>一般研究讨论的都是线性结构、树形结构、图形结构。<br>1、线性结构：元素之间是“一对一”的关系，典型有：队列、栈。<br>2、树形结构：元素之间是“一对多”的关系，典型有：树，堆。<br>3、图形结构：元素之间是“多对多”的关系。</p>
-<p>数组是申请连续的数据块，查找快捷。链表则是离散数据块，元素之间要记录相互关系，增删方便，</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%BE%AE%E5%9E%8B%E7%94%B5%E7%BD%91/" rel="tag">微型电网</a></li></ul>
 
     </footer>
   </div>
@@ -614,7 +736,7 @@ if (transparentGzip &amp;&amp;
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/27/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/26/">26</a><a class="page-number" href="/page/27/">27</a><span class="page-number current">28</span><a class="page-number" href="/page/29/">29</a><a class="page-number" href="/page/30/">30</a><span class="space">&hellip;</span><a class="page-number" href="/page/45/">45</a><a class="extend next" rel="next" href="/page/29/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/27/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/26/">26</a><a class="page-number" href="/page/27/">27</a><span class="page-number current">28</span><a class="page-number" href="/page/29/">29</a><a class="page-number" href="/page/30/">30</a><span class="space">&hellip;</span><a class="page-number" href="/page/46/">46</a><a class="extend next" rel="next" href="/page/29/">下一页</a>
   </nav>
   
 </section>

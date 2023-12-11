@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+       
+      <meta name="keywords" content="RS,GPS,GIS,QGIS,Opticks,QT,OpenCV,OSG" />
+       
+      <meta name="description" content="地理信息系统，遥感科学，卫星导航定位技术综合研究。" />
+      
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>Mybatis-Plus高级查询LambdaQueryWrapper&amp;QueryWrapper |  帕拉丁的游鱼</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/favicon.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    <link rel="alternate" href="/atom.xml" title="帕拉丁的游鱼" type="application/atom+xml">
+</head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-Mybatis-Plus高级查询LambdaQueryWrapper&amp;QueryWrapper"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  Mybatis-Plus高级查询LambdaQueryWrapper&amp;QueryWrapper
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/10/05/Mybatis-Plus%E9%AB%98%E7%BA%A7%E6%9F%A5%E8%AF%A2LambdaQueryWrapper&QueryWrapper/" class="article-date">
+  <time datetime="2023-10-05T02:05:00.000Z" itemprop="datePublished">2023-10-05</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">2.4k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">13 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="LambdaQueryWrapper"><a href="#LambdaQueryWrapper" class="headerlink" title="LambdaQueryWrapper"></a>LambdaQueryWrapper</h1><p>LambdaQueryWrapper使用lambda表达式可以直接通过实体类get()属性，而QueryWrapper必须要与数据库的中表名一致，由于表名可能会很复杂，这时候相较而言LambdaQueryWrapper会比QueryWrapper便捷不少</p>
+<h1 id="Wrapper"><a href="#Wrapper" class="headerlink" title="Wrapper"></a>Wrapper</h1><p>查询构造器</p>
+<pre><code>条件    说明
+allEq    基于 map 的比较
+eq    等于 =
+ne    不等于 &lt;&gt; 或者 !=
+gt    大于 &gt;
+ge    大于等于 &gt;=
+lt    小于 &lt;
+le    小于等于 &lt;
+between    BETWEEN 值1 AND 值2
+notBetween    NOT BETWEEN 值1 AND 值2
+like    LIKE ‘%值%’
+notLike    NOT LIKE ‘%值%’
+likeLeft    LIKE ‘%值’
+likeRight    LIKE ‘值%’
+isNull    字段 IS NULL
+isNotNull    字段 IS NOT NULL
+in    字段 IN (value1, value2, …)
+notIn    字段 NOT IN (value1, value2, …)
+inSql    字段 IN (sql 语句)
+inSql(“age”, “1,2,3”) -&gt; age in (1,2,3)
+inSql(“id”, “select id from student where id &lt; 3”) -&gt; id in (select id from student where id &lt; 3)
+notInSql    字段 NOT IN (sql 语句)
+groupBy    GROUP BY 字段
+orderByAsc    升序 ORDER BY 字段, … ASC
+orderByDesc    降序 ORDER BY 字段, … DESC
+orderBy    自定义字段排序
+orderBy(true, true, “id”, “name”) -&gt; order by id ASC, name ASC
+having    条件分组
+or    OR 语句，拼接 + OR 字段=值
+and    AND 语句，拼接 + AND 字段=值
+apply    拼接 sql
+last    在 sql 语句后拼接自定义条件
+exists    拼接 EXISTS(sql语句)
+exists(“selece id from student where age = 1”) -&gt; exists(selece id from student where age = 1)
+notExists    拼接 NOT EXISTS(sql语句)
+nested    正常嵌套 不带 AND 或者 OR
+</code></pre>
+<h1 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h1><h2 id="创建一个数据库-mybatisplus"><a href="#创建一个数据库-mybatisplus" class="headerlink" title="创建一个数据库 mybatisplus"></a>创建一个数据库 mybatisplus</h2><h2 id="创建-user-表"><a href="#创建-user-表" class="headerlink" title="创建 user 表"></a>创建 user 表</h2><pre><code>CREATE TABLE `user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(30) DEFAULT NULL,
+  `age` int(11) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+</code></pre>
+<h2 id="创建-springboot-工程"><a href="#创建-springboot-工程" class="headerlink" title="创建 springboot 工程"></a>创建 springboot 工程</h2><h2 id="导入对应-maven-坐标"><a href="#导入对应-maven-坐标" class="headerlink" title="导入对应 maven 坐标"></a>导入对应 maven 坐标</h2><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+    &lt;parent&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;
+        &lt;version&gt;2.5.3&lt;/version&gt;
+        &lt;relativePath/&gt; &lt;!-- lookup parent from repository --&gt;
+    &lt;/parent&gt;
+    &lt;groupId&gt;com.cmy&lt;/groupId&gt;
+    &lt;artifactId&gt;mybatis_plus&lt;/artifactId&gt;
+    &lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;
+    &lt;name&gt;mybatis_plus&lt;/name&gt;
+    &lt;description&gt;Demo project for Spring Boot&lt;/description&gt;
+    &lt;properties&gt;
+        &lt;java.version&gt;1.8&lt;/java.version&gt;
+    &lt;/properties&gt;
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+ 
+        &lt;!-- mybatis-plus --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.baomidou&lt;/groupId&gt;
+            &lt;artifactId&gt;mybatis-plus-boot-starter&lt;/artifactId&gt;
+            &lt;version&gt;3.4.0&lt;/version&gt;
+        &lt;/dependency&gt;
+ 
+        &lt;!-- mysql --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;mysql&lt;/groupId&gt;
+            &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
+            &lt;scope&gt;runtime&lt;/scope&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;
+            &lt;scope&gt;test&lt;/scope&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+ 
+    &lt;build&gt;
+        &lt;plugins&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+                &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;
+            &lt;/plugin&gt;
+        &lt;/plugins&gt;
+    &lt;/build&gt;
+ 
+&lt;/project&gt;
+</code></pre>
+<h2 id="mysql数据库相关配置"><a href="#mysql数据库相关配置" class="headerlink" title="mysql数据库相关配置"></a>mysql数据库相关配置</h2><pre><code>spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1/mybatisplus?useUnicode=true&amp;characterEncoding=utf-8
+    username: root
+    password: root
+mybatis-plus 日志信息配置
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+</code></pre>
+<h2 id="创建实体类-User"><a href="#创建实体类-User" class="headerlink" title="创建实体类 User"></a>创建实体类 User</h2><pre><code>package com.cmy.mybatis_plus.entity;
+ 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+ 
+/**
+ * 实体类 user
+ */
+public class User &#123;
+    /**
+     * 指定主键id生成的方式
+     * value 是主键字段的名称，如果是id，可以不用写
+     * type 指定主键的类型，主键的值如何生成。idType.AUTO 自动增长
+     */
+    @TableId(
+            value = &quot;id&quot;,
+            type = IdType.AUTO
+    )
+    private Long id;
+    private String name;
+    private String email;
+    private Integer age;
+ 
+    public Long getId() &#123;
+        return id;
+    &#125;
+ 
+    public void setId(Long id) &#123;
+        this.id = id;
+    &#125;
+ 
+    public String getName() &#123;
+        return name;
+    &#125;
+ 
+    public void setName(String name) &#123;
+        this.name = name;
+    &#125;
+ 
+    public String getEmail() &#123;
+        return email;
+    &#125;
+ 
+    public void setEmail(String email) &#123;
+        this.email = email;
+    &#125;
+ 
+    public Integer getAge() &#123;
+        return age;
+    &#125;
+ 
+    public void setAge(Integer age) &#123;
+        this.age = age;
+    &#125;
+ 
+    @Override
+    public String toString() &#123;
+        return &quot;User&#123;&quot; +
+                &quot;id=&quot; + id +
+                &quot;, name=&#39;&quot; + name + &#39;\&#39;&#39; +
+                &quot;, email=&#39;&quot; + email + &#39;\&#39;&#39; +
+                &quot;, age=&quot; + age +
+                &#39;&#125;&#39;;
+    &#125;
+&#125;
+</code></pre>
+<h2 id="自定义-User-的-Mapper-接口"><a href="#自定义-User-的-Mapper-接口" class="headerlink" title="自定义 User 的 Mapper 接口"></a>自定义 User 的 Mapper 接口</h2><pre><code>package com.cmy.mybatis_plus.mapper;
+ 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.cmy.mybatis_plus.entity.User;
+ 
+/**
+ * 自定义 Mapper 接口，就是 dao 接口
+ * 1. 实现BaseMapper
+ * 2. 指定实体类（泛型）
+ *
+ * BaseMapper 是 MP 框架中的对象，定义了 17 个操作方法（CRUD）
+ */
+public interface UserMapper extends BaseMapper&lt;User&gt; &#123;
+&#125;
+</code></pre>
+<h1 id="查询条件"><a href="#查询条件" class="headerlink" title="查询条件"></a>查询条件</h1><h2 id="allEq"><a href="#allEq" class="headerlink" title="allEq"></a>allEq</h2><p>条件用 Map 进行封装</p>
+<pre><code>“name” -&gt; “张三”
+“age” -&gt; 20
+
+public void testAllEq() &#123;
+    QueryWrapper&lt;User&gt; queryWrapper = new QueryWrapper&lt;&gt;();
+    // 封装条件
+    Map&lt;String, Object&gt; hashMap = new HashMap&lt;&gt;();
+    hashMap.put(&quot;name&quot;, &quot;张三&quot;);
+    hashMap.put(&quot;age&quot;, 20);
+ 
+    queryWrapper.allEq(hashMap);
+ 
+    List&lt;User&gt; userList = userMapper.selectList(queryWrapper);
+    userList.forEach(user -&gt; &#123;
+        System.out.println(user);
+    &#125;);
+&#125;
+</code></pre>
+<h2 id="eq"><a href="#eq" class="headerlink" title="eq"></a>eq</h2><p>eq(“列名”, 值) -&gt; 列名 = 值</p>
+<pre><code>public List&lt;Dict&gt; listByDictCode(DictCode dictCode) &#123;
+    LambdaQueryWrapper&lt;Dict&gt; wrapper = Wrappers.lambdaQuery();
+    wrapper.eq(Dict::getDictCode, dictCode.getCode())
+           .eq(Dict::getEnabled, DictEnableEnum.VALID.getType());
+    return this.baseMapper.selectList(wrapper);
+&#125;
+</code></pre>
+<h2 id="ne"><a href="#ne" class="headerlink" title="ne"></a>ne</h2><p>ne(“列名”, 值) -&gt; 列名 != 值</p>
+<pre><code>public List&lt;Dict&gt; listByDictCode(DictCode dictCode) &#123;
+    LambdaQueryWrapper&lt;Dict&gt; wrapper = Wrappers.lambdaQuery();
+    wrapper.ne(Dict::getDictCode, dictCode.getCode())
+           .ne(Dict::getEnabled, DictEnableEnum.VALID.getType());
+    return this.baseMapper.selectList(wrapper);
+&#125;
+</code></pre>
+<h2 id="gt"><a href="#gt" class="headerlink" title="gt"></a>gt</h2><p>gt(“age”, 20) -&gt; age &gt; 20</p>
+<pre><code>public List&lt;User&gt; userList() &#123;
+    LambdaQueryWrapper&lt;User&gt; wrapper = Wrappers.lambdaQuery();
+    wrapper.gt(User::getAge, 20);            
+    return this.baseMapper.selectList(wrapper);
+&#125;
+</code></pre>
+<h2 id="ge"><a href="#ge" class="headerlink" title="ge"></a>ge</h2><p>ge(“age”, 20) -&gt; age &gt;= 20</p>
+<pre><code>public List&lt;User&gt; userList() &#123;
+    LambdaQueryWrapper&lt;User&gt; wrapper = Wrappers.lambdaQuery();
+    wrapper.ge(User::getAge, 20);            
+    return this.baseMapper.selectList(wrapper);
+&#125;
+</code></pre>
+<h2 id="lt"><a href="#lt" class="headerlink" title="lt"></a>lt</h2><p>lt(“age”, 20) -&gt; age &lt; 20</p>
+<pre><code>public List&lt;User&gt; userList() &#123;
+    LambdaQueryWrapper&lt;User&gt; wrapper = Wrappers.lambdaQuery();
+    wrapper.lt(User::getAge, 20);            
+    return this.baseMapper.selectList(wrapper);
+&#125;
+</code></pre>
+<h2 id="le"><a href="#le" class="headerlink" title="le"></a>le</h2><p>le(“age”, 21) -&gt; age &lt;= 21</p>
+<pre><code>public List&lt;User&gt; userList() &#123;
+    LambdaQueryWrapper&lt;User&gt; wrapper = Wrappers.lambdaQuery();
+    wrapper.le(User::getAge, 20);            
+    return this.baseMapper.selectList(wrapper);
+&#125;
+</code></pre>
+<h2 id="between-notBetween"><a href="#between-notBetween" class="headerlink" title="between,notBetween"></a>between,notBetween</h2><p>between(“age”, 18, 25) -&gt; age BETWEEN 18 AND 25 ，年龄在18到25之间</p>
+<p>notBetween就是不在18到25之间</p>
+<pre><code>public List&lt;User&gt; userList() &#123;
+    LambdaQueryWrapper&lt;User&gt; wrapper = Wrappers.lambdaQuery();
+    wrapper.between(User::getAge, 18,25);                
+    return this.baseMapper.selectList(wrapper);
+&#125;
+</code></pre>
+<h2 id="like-notLike"><a href="#like-notLike" class="headerlink" title="like,notLike"></a>like,notLike</h2><p>like 匹配值 -&gt; “%值%” 模糊查询</p>
+<p>notLike 模糊查询不匹配”%值%”</p>
+<pre><code>public List&lt;User&gt; userList() &#123;
+    LambdaQueryWrapper&lt;User&gt; wrapper = Wrappers.lambdaQuery();
+     wrapper.like(User::getName, &quot;张&quot;);           
+    return this.baseMapper.selectList(wrapper);
+&#125;
+</code></pre>
+<h2 id="likeLeft"><a href="#likeLeft" class="headerlink" title="likeLeft"></a>likeLeft</h2><p>likeLeft 匹配值 -&gt; “%值”</p>
+<pre><code>public List&lt;User&gt; userList() &#123;
+    LambdaQueryWrapper&lt;User&gt; wrapper = Wrappers.lambdaQuery();
+     wrapper.likeLeft(User::getName, &quot;张&quot;);           
+    return this.baseMapper.selectList(wrapper);
+&#125;
+</code></pre>
+<h2 id="likeRight"><a href="#likeRight" class="headerlink" title="likeRight"></a>likeRight</h2><p>likeRight 匹配值 -&gt; “值%”</p>
+<pre><code>public List&lt;User&gt; userList() &#123;
+    LambdaQueryWrapper&lt;User&gt; wrapper = Wrappers.lambdaQuery();
+    wrapper.likeRight(User::getName, &quot;张&quot;);           
+    return this.baseMapper.selectList(wrapper);
+&#125;
+</code></pre>
+<h2 id="isNull，isNotNull"><a href="#isNull，isNotNull" class="headerlink" title="isNull，isNotNull"></a>isNull，isNotNull</h2><p>isNull 空值查询<br>isNotNull 非空值查询</p>
+<pre><code>public List&lt;User&gt; userList() &#123;
+    LambdaQueryWrapper&lt;User&gt; wrapper = Wrappers.lambdaQuery();
+    wrapper.isNull(User::getName);
+    //wrapper.isNotNull(User::getName);              
+    return this.baseMapper.selectList(wrapper);
+&#125;
+</code></pre>
+<h2 id="in，notIn"><a href="#in，notIn" class="headerlink" title="in，notIn"></a>in，notIn</h2><p>in(“name”, “张三”, “李四”) -&gt; name in (“张三”, “李四”) 姓名是张三或李四的用户</p>
+<p>notIn(“name”, “张三”, “李四”) -&gt; name not in (“张三”, “李四”) 姓名不是张三或李四的用户</p>
+<pre><code>public List&lt;User&gt; userList() &#123;
+    LambdaQueryWrapper&lt;User&gt; wrapper = Wrappers.lambdaQuery();
+    wrapper.in(User::getName, &quot;张三&quot;,&quot;李四&quot;);
+    //wrapper.in(User::getName, &quot;张三&quot;,&quot;李四&quot;);           
+    return this.baseMapper.selectList(wrapper);
+&#125;
+</code></pre>
+<h2 id="inSql、notInSql"><a href="#inSql、notInSql" class="headerlink" title="inSql、notInSql"></a>inSql、notInSql</h2><pre><code>public List&lt;User&gt; userList() &#123;
+    LambdaQueryWrapper&lt;User&gt; wrapper= new LambdaQueryWrapper&lt;&gt;();
+    // SELECT id,name,email,age FROM user WHERE (age IN (select age from user where id = 1))
+    wrapper.inSql(User::getAge, &quot;select age from user where id = 1&quot;);
+    return this.baseMapper.selectList(wrapper);
+&#125;
+</code></pre>
+<h2 id="groupBy"><a href="#groupBy" class="headerlink" title="groupBy"></a>groupBy</h2><p>分组</p>
+<pre><code>public List&lt;User&gt; userList() &#123;
+    LambdaQueryWrapper&lt;User&gt; wrapper = new LambdaQueryWrapper&lt;&gt;();
+    wrapper.groupBy(User::getName);
+    return this.baseMapper.selectList(wrapper);
+&#125;
+</code></pre>
+<h2 id="orderBy、orderByAsc、orderByDesc"><a href="#orderBy、orderByAsc、orderByDesc" class="headerlink" title="orderBy、orderByAsc、orderByDesc"></a>orderBy、orderByAsc、orderByDesc</h2><pre><code>public List&lt;User&gt; userList() &#123;
+    LambdaQueryWrapper&lt;User&gt; wrapper = new LambdaQueryWrapper&lt;&gt;();
+    // SELECT id,name,email,age FROM user ORDER BY name ASC,age DESC
+    wrapper.orderBy(true, true, User::getName).orderBy(true, false, User::getAge);
+    
+    // SELECT id,name,email,age FROM user ORDER BY name ASC,age ASC
+    wrapper.orderByAsc(User::getName, User::getAge);
+ 
+    // SELECT id,name,email,age FROM user ORDER BY name DESC,age DESC
+    wrapper.orderByDesc(User::getName, User::getAge);
+ 
+    return this.baseMapper.selectList(wrapper);
+&#125;
+</code></pre>
+<h2 id="or、and"><a href="#or、and" class="headerlink" title="or、and"></a>or、and</h2><pre><code>public List&lt;User&gt; userList() &#123;
+    LambdaQueryWrapper&lt;User&gt; wrapper = Wrappers.lambdaQuery();
+
+    // SELECT id,name,email,age FROM user WHERE (name = ? AND id = ?)
+    wrapper.eq(User::getName, &quot;张三&quot;).and().eq(User::getId,1);
+
+    // SELECT id,name,email,age FROM user WHERE (name = ? OR id = ?)       
+    wrapper.eq(User::getName, &quot;张三&quot;).or().eq(User::getId,1);     
+    return this.baseMapper.selectList(wrapper);
+&#125;
+</code></pre>
+<p>这里说明一下or和and的问题</p>
+<p>错误代码</p>
+<pre><code>public List&lt;User&gt; userList() &#123;
+ 
+    LambdaQueryWrapper&lt;User&gt; wrapper = new LambdaQueryWrapper&lt;&gt;();
+    wrapper.eq(User::getId,1);
+    wrapper.like(User::getName,&quot;张&quot;)
+           .or()
+           .like(User::getEmail,&quot;163&quot;)
+           .or()
+           .like(User::getAge,1);
+&#125;
+</code></pre>
+<p>根据上面的写法写出的sql语句如下：</p>
+<pre><code>WHERE id = &#39;1&#39; 
+    AND name LIKE &#39;%张%&#39;
+    OR email LIKE &#39;%163%&#39;
+    OR age LIKE &#39;%1%&#39;
+</code></pre>
+<p>这样明显是不对的，根据mysql语句执行顺序or最后执行 ，这会导致一旦[name like ‘%张%’]条件成立后面的or条件就会失效，所以第一个条件 并没有起到and的作用。</p>
+<p>解决方法</p>
+<pre><code>public List&lt;User&gt; userList() &#123;
+ 
+    LambdaQueryWrapper&lt;User&gt; wrapper = new LambdaQueryWrapper&lt;&gt;();
+    wrapper.eq(User::getId,1);
+    wrapper.and(wrapper-&gt;wrapper.like(User::getName,&quot;张&quot;)
+                                .or()
+                                .like(User::getEmail,&quot;163&quot;)
+                                .or()
+                                .like(User::getAge,1)
+               );
+&#125;
+</code></pre>
+<p>这样得到的sql语句如下</p>
+<pre><code>WHERE id = &#39;1&#39; 
+    AND (name LIKE &#39;%张%&#39;
+    OR email LIKE &#39;%163%&#39;
+    OR age LIKE &#39;%1%&#39;)
+</code></pre>
+<p>这样就解决了，这个问题在我的公司中新人(包括我在内)貌似都遇到这个问题，在此说明一下</p>
+<h2 id="last"><a href="#last" class="headerlink" title="last"></a>last</h2><p>在末尾拼接sql语句</p>
+<p>注：last()有sql注入的风险，请谨慎使用！</p>
+<pre><code>public List&lt;User&gt; userList() &#123;
+    LambdaQueryWrapper&lt;User&gt; wrapper = new LambdaQueryWrapper&lt;&gt;();
+    // SELECT id,name,email,age FROM user WHERE (name = ? OR age = ?) limit 1
+    wrapper.eq(User::getName, &quot;张三&quot;).or().eq(User::getAge, 20).last(&quot;limit 1&quot;);
+    return this.baseMapper.selectList(wrapper);
+&#125;
+exists、notExists
+public List&lt;User&gt; userList() &#123;
+    LambdaQueryWrapper&lt;User&gt; wrapper = new LambdaQueryWrapper&lt;&gt;();
+ 
+    // SELECT id,name,email,age FROM user WHERE (EXISTS (select name from user where age &gt; ?))
+    wrapper.exists(&quot;select name from user where age &gt; 21&quot;);
+ 
+    // SELECT id,name,email,age FROM user WHERE (NOT EXISTS (select name from user where age &gt; ?))
+    wrapper.notExists(&quot;select name from user where age &gt; 21&quot;);
+ 
+    return this.baseMapper.selectList(wrapper);
+&#125;
+</code></pre>
+<h1 id="附加MySQL语句执行顺序"><a href="#附加MySQL语句执行顺序" class="headerlink" title="附加MySQL语句执行顺序"></a>附加MySQL语句执行顺序</h1><pre><code>1、from
+2、where (or 最后执行)
+3、group by
+4、having
+5、DISTINCT
+6、order by
+7、limit
+</code></pre>
+<p>————————————————<br>版权声明：本文为CSDN博主「初级bug小天才」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_52317961/article/details/128317591">https://blog.csdn.net/weixin_52317961/article/details/128317591</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://paladin1893.github.io/2023/10/05/Mybatis-Plus%E9%AB%98%E7%BA%A7%E6%9F%A5%E8%AF%A2LambdaQueryWrapper&QueryWrapper/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2023/10/06/LambdaQueryWrapper%E5%A6%82%E4%BD%95%E6%AD%A3%E7%A1%AE%E4%BD%BF%E7%94%A8or%E6%88%96%E8%80%85and/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            LambdaQueryWrapper如何正确使用or或者and
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2023/10/04/QueryWrapper%E5%92%8CLambdaQueryWrapper%E5%92%8CWrappers/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">QueryWrapper和LambdaQueryWrapper和Wrappers</div>
+      </a>
+    
+  </nav>
+
+  
+   
+    
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2022-2023
+        <i class="ri-heart-fill heart_icon"></i> paladin1893
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="帕拉丁的游鱼"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/friends">友链</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

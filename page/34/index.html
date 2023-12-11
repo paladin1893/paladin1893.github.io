@@ -154,7 +154,7 @@
     
     
     <article
-  id="post-rust国内镜像地址"
+  id="post-maven中quickstart与webapp的区别"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -165,8 +165,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/03/18/rust%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F%E5%9C%B0%E5%9D%80/"
-    >rust国内镜像地址</a> 
+  <a class="article-title" href="/2023/03/26/maven%E4%B8%ADquickstart%E4%B8%8Ewebapp%E7%9A%84%E5%8C%BA%E5%88%AB/"
+    >maven中quickstart与webapp的区别</a> 
 </h2>
  
 
@@ -174,8 +174,8 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2023/03/18/rust%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F%E5%9C%B0%E5%9D%80/" class="article-date">
-  <time datetime="2023-03-18T13:55:27.000Z" itemprop="datePublished">2023-03-18</time>
+      <a href="/2023/03/26/maven%E4%B8%ADquickstart%E4%B8%8Ewebapp%E7%9A%84%E5%8C%BA%E5%88%AB/" class="article-date">
+  <time datetime="2023-03-26T15:26:19.000Z" itemprop="datePublished">2023-03-26</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -185,10 +185,341 @@
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>ustup-init 为在线安装工具，默认的安装源为国外的站点，网速较慢，可设置环境变量，使其从国内镜像中下载。</p>
-<p>在系统环境变量中添加如下变量（二选一即可）：</p>
-<h3 id="下面的配置-二选一即可"><a href="#下面的配置-二选一即可" class="headerlink" title="下面的配置 二选一即可"></a>下面的配置 二选一即可</h3><h1 id="中国科学技术大学"><a href="#中国科学技术大学" class="headerlink" title="中国科学技术大学"></a>中国科学技术大学</h1><p>RUSTUP_DIST_SERVER=<a target="_blank" rel="noopener" href="https://mirrors.ustc.edu.cn/rust-static">https://mirrors.ustc.edu.cn/rust-static</a><br>RUSTUP_UPDATE_ROOT=<a target="_blank" rel="noopener" href="https://mirrors.ustc.edu.cn/rust-static/rustup">https://mirrors.ustc.edu.cn/rust-static/rustup</a></p>
-<h1 id="清华大学"><a href="#清华大学" class="headerlink" title="清华大学"></a>清华大学</h1><p>RUSTUP_DIST_SERVER=<a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/rustup">https://mirrors.tuna.tsinghua.edu.cn/rustup</a><br>RUSTUP_UPDATE_ROOT=<a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/rustup/rustup">https://mirrors.tuna.tsinghua.edu.cn/rustup/rustup</a></p>
+  <h1 id="Archetype"><a href="#Archetype" class="headerlink" title="Archetype"></a>Archetype</h1><p>骨架的意思。简单的说，Archetype是Maven工程的模板工具包。一个Archetype定义了要做的相同类型事情的初始样式或模型。这个名称给我们提供来了一个一致的生成Maven工程的方式。Archetype会帮助作者给用户创建Maven工程模板，并给用户提供生成相关工程模板版本的参数化方法。</p>
+<p>使用Archetype提供的好的方法，是开发者能够使用最佳实践来快速的构建和组织一致化的工程。在Maven工程中，我们努力使用Archetype来尽可能快的给用户提供示例工程，同时也会把Maven的最佳实践介绍给新的用户。一个新的用户可以使用工作中的Maven工作作为跳板来研究更过的Maven中功能。我们也可以使用Archetype的添加机制，这样就意味着允许我们抓取Archetype中项目片段，并把它们添加到既存的工程中。Maven网站的Archetype就是很好的例子。例如，你可以使用“quick start archetype”来生成一个工程，然后就可以通过其中既存的“site archetype”来快速的创建一个网址工程。你能够使用Archetype来做很多这样的事情。</p>
+<p>在你的团队中可能想要标准化的J2EE开发，这需要你提供EJBs、或者是WARs、或者是Web services的原型。一旦在你团队资源库中创建和部署这些原型，它们就可以在你团队内共享使用。</p>
+<h1 id="如何使用Archetype"><a href="#如何使用Archetype" class="headerlink" title="如何使用Archetype"></a>如何使用Archetype</h1><p>要基于Archetype来创建一个新的工程，需要像下面示例这样来调用：</p>
+<p>mvn archetype:generate</p>
+<h1 id="已有的Archetypes"><a href="#已有的Archetypes" class="headerlink" title="已有的Archetypes"></a>已有的Archetypes</h1><p>Archetype ID   说明<br>maven-archetype-archetype  一个样例原型<br>maven-archetype-j2ee-simple    简单的J2EE应用程序样例<br>maven-archetype-mojo    Maven插件样本的示例<br>maven-archetype-plugin    Maven插件样本<br>maven-archetype-plugin-site    Mave插件网站的样例<br>maven-archetype-portlet    JSR-268门户样例<br>maven-archetype-quickstart    Maven工程样例<br>maven-archetype-simple    一个简单的Maven工程<br>maven-archetype-site    Maven网站的样例，它演示了对诸如APT、XDoc和FML等文档类型的支持，并演示了如果把网站国际化（i18n）<br>maven-archetype-site-simple    Maven网站样例<br>maven-archetype-webapp    Maven的Webapp工程样例</p>
+<h1 id="常用Archetype"><a href="#常用Archetype" class="headerlink" title="常用Archetype"></a>常用Archetype</h1><ul>
+<li><p>1，maven-archetype-quickstart<br>默认的Archetype,基本内容包括：<br>一个包含junit依赖声明的pom.xml<br>src/main/java主代码目录及一个名为App的类<br>src/test/java测试代码目录及一个名为AppTest的测试用例</p>
+</li>
+<li><p>2，maven-archetype-webapp<br>一个最简单的Maven war项目模板，当需要快速创建一个Web应用的时候可以使用它。生成的项目内容包括：<br>一个packaging为war且带有junit依赖声明的pom.xml<br>src/main/webapp/目录<br>src/main/webapp/index.jsp文件<br>src/main/webapp/WEB-INF/web.xml文件</p>
+</li>
+</ul>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MAVEN/" rel="tag">MAVEN</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-Notepad-免安装版注册右键菜单"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/03/25/Notepad-%E5%85%8D%E5%AE%89%E8%A3%85%E7%89%88%E6%B3%A8%E5%86%8C%E5%8F%B3%E9%94%AE%E8%8F%9C%E5%8D%95/"
+    >Notepad++免安装版注册右键菜单</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/03/25/Notepad-%E5%85%8D%E5%AE%89%E8%A3%85%E7%89%88%E6%B3%A8%E5%86%8C%E5%8F%B3%E9%94%AE%E8%8F%9C%E5%8D%95/" class="article-date">
+  <time datetime="2023-03-25T15:22:46.000Z" itemprop="datePublished">2023-03-25</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>在免安装版目录打开管理员命令窗口cmd</p>
+<p>注册<br>regsvr32 NppShell_06.dll</p>
+<p>反注册<br>regsvr32 NppShell_06.dll /u</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Notepad/" rel="tag">Notepad++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/windows/" rel="tag">windows</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-JAVA中最方便的Unicode转换方法"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/03/24/JAVA%E4%B8%AD%E6%9C%80%E6%96%B9%E4%BE%BF%E7%9A%84Unicode%E8%BD%AC%E6%8D%A2%E6%96%B9%E6%B3%95/"
+    >JAVA中最方便的Unicode转换方法</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/03/24/JAVA%E4%B8%AD%E6%9C%80%E6%96%B9%E4%BE%BF%E7%9A%84Unicode%E8%BD%AC%E6%8D%A2%E6%96%B9%E6%B3%95/" class="article-date">
+  <time datetime="2023-03-24T15:43:36.000Z" itemprop="datePublished">2023-03-24</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="在命令行界面用native2ascii工具"><a href="#在命令行界面用native2ascii工具" class="headerlink" title="在命令行界面用native2ascii工具"></a>在命令行界面用native2ascii工具</h1><ul>
+<li><p>1.将汉字转为Unicode:<br>C:\Program   Files\Java\jdk1.5.0_04\bin&gt;native2ascii<br>测试<br>\u6d4b\u8bd5  </p>
+</li>
+<li><p>2.将Unicode转换为汉字:<br>C:\Program   Files\Java\jdk1.5.0_04\bin&gt;native2ascii   -reverse<br>\u6d4b\u8bd5<br>测试</p>
+</li>
+</ul>
+<h1 id="native2ascii深入"><a href="#native2ascii深入" class="headerlink" title="native2ascii深入"></a>native2ascii深入</h1><p>java 自带的一个native2ascii.exe是一个很好的转码工具，在bin目录下。如果你的properties中有汉字，需要转成unicode . 则把含有汉字的properties拷贝到bin 目录下， 然后在cmd里面进入bin目录，输入：native2ascii -encoding  utf-8  Language-ext_zh_CN.properties.native Language-ext_zh_CN.properties就ok了。Language-ext_zh_CN.properties是转码后的文件。</p>
+<p>在做Java开发的时候，常常会出现一些乱码，或者无法正确识别或读取的文件，比如常见的validator验 证用的消息资源 （properties） 文件就需要进行Unicode重新编码。<br>原因是java默认的编码方式为Unicode，而我们的计算机系统编码 常常是GBK等编码。需要将系统的编码转换为java正确识别的编码问题就解决了。</p>
+<ul>
+<li><p>1、native2ascii简介<br>native2ascii 是sun java sdk提供的一个工具。用来将别的文本类文件（比如*.txt,<em>.ini,</em>.properties,*.java等等）编码转为Unicode编码。 为什么要进行转码，原因在于程序的国际化。Unicode编码的定义：Unicode（统一码、万国码、单一码）是一种在计算机上使用的字符编码。它为每 种语言中的每个字符设定了统一并且唯一的二进制编码，以满足跨语言、跨平台进行文本转换、处理的要求。1990年开始研发，1994年正式公布。随着计算 机工作能力的增强，Unicode也在面世以来的十多年里得到普及。（声明：Unicode编码定义来自互联网）。</p>
+</li>
+<li><p>2、获取native2ascii<br>安装了jdk后，假如你是在windows上安装，那么在jdk的安装目录下，会有一个bin目录，其中native2ascii.exe正是。</p>
+</li>
+<li><p>3、native2ascii的命令行的命名格式：</p>
+</li>
+</ul>
+<p>native2ascii -[options] [inputfile [outputfile]]</p>
+<p>说明：<br>-[options]：表示命令开关，有两个选项可供选择<br>-reverse：将Unicode编码转为本地或者指定编码，不指定编码情况下，将转为本地编码。<br>-encoding encoding_name：转换为指定编码，encoding_name为编码名称。<br>[inputfile [outputfile]]<br>inputfile：表示输入文件全名。<br>outputfile：输出文件名。如果缺少此参数，将输出到控制台。</p>
+<ul>
+<li>4、最佳实践<br>首先将JDK的bin目录加入系统变量path。在盘下建立一个test目录，在test目录里建立一个zh.txt文件，文件内容为：“熔岩”，打开“命令行提示符”，并进入C:\test目录下。下面就可以按照说明一步一步来操作，注意观察其中编码的变化。</li>
+</ul>
+<p>** 1)将zh.txt转换为Unicode编码，输出文件到u.txt<br>native2ascii zh.txt u.txt<br>打开u.txt，内容为“\u7194\u5ca9”。</p>
+<p>** 2)将zh.txt转换为Unicode编码，输出到控制台<br>C:\test&gt;native2ascii zh.txt<br>\u7194\u5ca9<br>可以看到，控制台输出了“\u7194\u5ca9”。</p>
+<p>** 3)将zh.txt转换为ISO8859-1编码，输出文件到i.txt<br>native2ascii -encoding ISO8859-1 zh.txt i.txt<br>打开i.txt文件，内容为“\u00c8\u00db\u00d1\u00d2”。</p>
+<p>** 4)将u.txt转换为本地编码，输出到文件u_nv.txt<br>native2ascii -reverse u.txt u_nv.txt<br>打开u_nv.txt文件，内容为“熔岩”。</p>
+<p>** 5)将u.txt转换为本地编码，输出到控制台<br>C:\test&gt;native2ascii -reverse u.txt<br>熔岩<br>可以看到，控制台输出了“熔岩”。</p>
+<p>** 6)将i.txt转换为本地编码，输出到i_nv.txt<br>native2ascii -reverse i.txt i_nv.txt<br>打开i_nv.txt文件，内容为“\u00c8\u00db\u00d1\u00d2”。发现转码前后完全一样的。也就是说，等于没有转，或者说思想糊涂，对命名没有理解。。</p>
+<p>** 7)将i.txt转换为GBK编码，输出到i_gbk.txt<br>native2ascii -reverse -encoding GBK i.txt i_gbk.txt<br>打开i_gbk.txt文件，内容为“\u00c8\u00db\u00d1\u00d2”。发现转码前后完全一样的。也就是说，等于没有转，或者说思想糊涂，对命名没有理解。</p>
+<p>** 8)将u_nv.txt转码到本地编码GBK，输出到控制台<br>C:\test&gt;native2ascii -reverse -encoding ISO8859-1 i.txt<br>熔岩<br>从这个结果看，目标达到到了，编码i.txt为ISO8859-1，转为本地编码后内容为“熔岩”。从这里应该意识到，native2ascii -reverse命令中-encoding指定的编码为源文件的编码格式。而在native2ascii 命令中-encoding指定的编码为（生成的)目标文件的编码格式。这一点非常的重要！切记！！<br>继续探索，新建文件12a.txt，内容“12axyz”。看看纯字母数字的编码又如何。</p>
+<p>** 9)将纯字母数字的文本文件12a.txt转换为Unicode编码<br>native2ascii 12a.txt 12a_nv.txt<br>打开12a_nv.txt文件，内容为“12axyz”。<br>继续测试，转为ISO8859-1编码看看<br>C:\test&gt;native2ascii -encoding ISO8859-1 12a.txt<br>12axyz<br>结果还是没有转码。</p>
+<p>从结果可以得出结论：对于纯数字和字母的文本类型件，转码前后的内容是一样的。</p>
+<ul>
+<li>5、总结<br>native2ascii 是一个非常的好转码工具，并且转码是可逆的！而其真正的含义并非本地编码——&gt;转码为ASCII码，而是一个通用的文本文件编码转换工具。在做编码 转换的时候有两类指定编码的情形，分别指输出文件编码和输入文件编码，具体可以看看最佳实践部分。</li>
+</ul>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-黑果小兵github"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/03/23/%E9%BB%91%E6%9E%9C%E5%B0%8F%E5%85%B5github/"
+    >黑果小兵github</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/03/23/%E9%BB%91%E6%9E%9C%E5%B0%8F%E5%85%B5github/" class="article-date">
+  <time datetime="2023-03-23T08:07:01.000Z" itemprop="datePublished">2023-03-23</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p><a target="_blank" rel="noopener" href="https://github.com/daliansky">https://github.com/daliansky</a><br><a target="_blank" rel="noopener" href="https://blog.daliansky.net/">https://blog.daliansky.net</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/macOS/" rel="tag">macOS</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-nacos2-2-1版本及以后开启了默认鉴权"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/03/22/nacos2-2-1%E7%89%88%E6%9C%AC%E5%8F%8A%E4%BB%A5%E5%90%8E%E5%BC%80%E5%90%AF%E4%BA%86%E9%BB%98%E8%AE%A4%E9%89%B4%E6%9D%83/"
+    >nacos2.2.1版本及以后开启了默认鉴权</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/03/22/nacos2-2-1%E7%89%88%E6%9C%AC%E5%8F%8A%E4%BB%A5%E5%90%8E%E5%BC%80%E5%90%AF%E4%BA%86%E9%BB%98%E8%AE%A4%E9%89%B4%E6%9D%83/" class="article-date">
+  <time datetime="2023-03-22T02:26:25.000Z" itemprop="datePublished">2023-03-22</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>nacos 2.2.1版本及以后开启了默认鉴权，需要填写jwt key，不填写key后果，启动报错</p>
+<pre><code>org.springframework.context.ApplicationContextException: Unable to start web server; nested exception is org.springframework.boot.web.server.WebServerException: Unable to start embedded Tomcat
+</code></pre>
+<p>参照 <a target="_blank" rel="noopener" href="https://nacos.io/zh-cn/docs/v2/guide/user/auth.html">nacos鉴权文档</a> 说明，修改application.properties中secret.key配置，即可本地单机正常启动。</p>
+<pre><code>### 2.1.0 版本后
+nacos.core.auth.plugin.nacos.token.secret.key=VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nacos/" rel="tag">nacos</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-cargo基础命令"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/03/21/cargo%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/"
+    >cargo基础命令</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/03/21/cargo%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/" class="article-date">
+  <time datetime="2023-03-21T14:48:38.000Z" itemprop="datePublished">2023-03-21</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <pre><code># 查看cargo版本
+cargo --version
+
+# 新建项目
+cargo new &lt;project_name&gt;
+
+# 构建项目
+cargo build
+
+# 运行项目
+cargo run
+
+# 检查项目
+cargo check
+
+# 查看帮助
+cargo -h
+</code></pre>
  
       <!-- reward -->
       
@@ -209,368 +540,13 @@
 </article>
 
     
-    <article
-  id="post-PostgreSQL逻辑删除的表的唯一约束的控制"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/03/17/PostgreSQL%E9%80%BB%E8%BE%91%E5%88%A0%E9%99%A4%E7%9A%84%E8%A1%A8%E7%9A%84%E5%94%AF%E4%B8%80%E7%BA%A6%E6%9D%9F%E7%9A%84%E6%8E%A7%E5%88%B6/"
-    >PostgreSQL逻辑删除的表的唯一约束的控制</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/03/17/PostgreSQL%E9%80%BB%E8%BE%91%E5%88%A0%E9%99%A4%E7%9A%84%E8%A1%A8%E7%9A%84%E5%94%AF%E4%B8%80%E7%BA%A6%E6%9D%9F%E7%9A%84%E6%8E%A7%E5%88%B6/" class="article-date">
-  <time datetime="2023-03-17T15:19:31.000Z" itemprop="datePublished">2023-03-17</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <pre><code>很多时候，当我们的数据很重要，删除采用的是逻辑删除，仅仅是在记录上指定一个删除标记；这个时候，我们又需要该表的某一字段唯一（未删除的保持唯一，已经有删除标记的行不管），仅仅是采用数据库本身的check unique就不行了。
-</code></pre>
-<p>   现在开始讲一种解决方案:</p>
-<ol>
-<li><p>建表<br>postgres=# create table person(id serial,name character varying,delete_flag integer not null default 0);</p>
-</li>
-<li><p>查看表结构<br>postgres=# \d person</p>
-<pre><code>                          Table &quot;public.person&quot;
-</code></pre>
-<p>Column    |       Type        |                      Modifiers                     </p>
-</li>
-</ol>
-<p>————-+——————-+———————————————-<br> id          | integer           | not null default nextval(‘person_id_seq’::regclass)<br> name        | character varying |<br> delete_flag | integer           | not null default 0</p>
-<ol start="3">
-<li><p>创建function<br>CREATE OR REPLACE FUNCTION check_person_name_unique( p_name character varying, flag integer)<br>RETURNS boolean AS<br>$BODY$<br>declare<br> count integer:=0;<br>begin<br> if(flag=1) then</p>
-<pre><code> return true; 
-</code></pre>
-<p> end if;<br> select count(0) from person where name=p_name and delete_flag=0 into count;<br> if count&gt;0 then</p>
-<pre><code> return false;
-</code></pre>
-<p> elseif count=0 then</p>
-<pre><code> return true;
-</code></pre>
-<p> end if;<br>end;<br>$BODY$<br>LANGUAGE plpgsql VOLATILE;</p>
-</li>
-<li><p>应用到表上<br>postgres=# alter table person add CONSTRAINT check_unique CHECK (check_person_name_unique(name, delete_flag));</p>
-</li>
-<li><p>插入测试数据<br>postgres=# insert into person(name) values(‘zhangsan’);<br>INSERT 0 1<br>postgres=# insert into person(name) values(‘zhangsan’);<br>ERROR:  new row for relation “person” violates check constraint “check_unique”<br>DETAIL:  Failing row contains (2, zhangsan, 0).<br>插入两条相同的违反了唯一约束</p>
-</li>
-<li><p>现在把记录更新 delete_flag=1;<br>postgres=# select * from person;<br>id |   name   | delete_flag </p>
-</li>
-</ol>
-<p>—-+———-+————-<br>  1 | zhangsan |           0<br>(1 row)<br>postgres=# update person person set delete_flag=1;<br>UPDATE 1<br>postgres=# select * from person;<br> id |   name   | delete_flag<br>—-+———-+————-<br>  1 | zhangsan |           1<br>(1 row)</p>
-<ol start="7">
-<li><p>再插入名字相同的<br>postgres=# insert into person(name) values(‘zhangsan’);<br>INSERT 0 1<br>插入成功</p>
-</li>
-<li><p>查看数据<br>postgres=# select * from person;<br>id |   name   | delete_flag </p>
-</li>
-</ol>
-<p>—-+———-+————-<br>  1 | zhangsan |           1<br>  3 | zhangsan |           0<br>(2 rows)</p>
-<p>这样就可以保证逻辑删除的记录的唯一性。<br>————————————————<br>版权声明：本文为CSDN博主「金一白」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/luojinbai/article/details/43670233">https://blog.csdn.net/luojinbai/article/details/43670233</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-PostgreSQL修改表常用命令操作"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/03/16/PostgreSQL%E4%BF%AE%E6%94%B9%E8%A1%A8%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%93%8D%E4%BD%9C/"
-    >PostgreSQL修改表常用命令操作</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/03/16/PostgreSQL%E4%BF%AE%E6%94%B9%E8%A1%A8%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%93%8D%E4%BD%9C/" class="article-date">
-  <time datetime="2023-03-16T15:14:59.000Z" itemprop="datePublished">2023-03-16</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>补充：PostgreSQL修改表(alter table语句)</p>
-<p>PostgreSQL ALTER TABLE命令用于添加，删除或修改现有表中的列。您还可以使用ALTER TABLE命令在现有表上添加和删除各种约束。</p>
-<p>语法：</p>
-<p>使用ALTER TABLE语句在现有表中添加新列：</p>
-<p>ALTER TABLE table_name ADD column_name datatype;</p>
-<p>现有表中ALTER TABLE到DROP COLUMN(删除某个字段)：</p>
-<p>ALTER TABLE table_name DROP COLUMN column_name;</p>
-<p>ALTER TABLE更改表中列的DATA TYPE(修改字段类型)：</p>
-<p>ALTER TABLE table_name ALTER COLUMN column_name TYPE datatype;</p>
-<p>ALTER TABLE向表中的列添加NOT NULL约束：</p>
-<p>ALTER TABLE table_name MODIFY column_name datatype NOT NULL;</p>
-<p>ALTER TABLE添加唯一约束ADD UNIQUE CONSTRAINT到表中：</p>
-<p>ALTER TABLE table_name ADD CONSTRAINT MyUniqueConstraint UNIQUE(column1, column2…);</p>
-<p>ALTER TABLE将“检查约束”添加到表中：</p>
-<p>ALTER TABLE table_name ADD CONSTRAINT MyUniqueConstraint CHECK (CONDITION);</p>
-<p>ALTER TABLE添加主键ADD PRIMARY KEY约束：</p>
-<p>ALTER TABLE table_name ADD CONSTRAINT MyPrimaryKey PRIMARY KEY (column1, column2…);</p>
-<p>使用ALTER TABLE从表中删除约束(DROP CONSTRAINT)：</p>
-<p>ALTER TABLE table_name DROP CONSTRAINT MyUniqueConstraint;</p>
-<p>使用ALTER TABLE从表中删除主键约束(DROP PRIMARY KEY)约束：</p>
-<p>ALTER TABLE table_name DROP CONSTRAINT MyPrimaryKey;</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-PostgreSQL修改表字段常用命令操作"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/03/15/PostgreSQL%E4%BF%AE%E6%94%B9%E8%A1%A8%E5%AD%97%E6%AE%B5%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%93%8D%E4%BD%9C/"
-    >PostgreSQL修改表字段常用命令操作</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/03/15/PostgreSQL%E4%BF%AE%E6%94%B9%E8%A1%A8%E5%AD%97%E6%AE%B5%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%93%8D%E4%BD%9C/" class="article-date">
-  <time datetime="2023-03-15T15:13:42.000Z" itemprop="datePublished">2023-03-15</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>–数据库、模式、表名 “identities”.”Test”.”tab_test”</p>
-<p>–修改字段名</p>
-<p>ALTER TABLE “identities”.”Test”.”tab_test” RENAME “u_name” to realname ;</p>
-<p>–添加字段</p>
-<p>ALTER TABLE “identities”.”Test”.”tab_test” ADD COLUMN updcontent VARCHAR(50);</p>
-<p>–添加字段 给默认值</p>
-<p>ALTER TABLE “identities”.”Test”.”tab_test” ADD COLUMN utype INT DEFAULT(1);</p>
-<p>–字段注解</p>
-<p>COMMENT ON COLUMN “identities”.”Test”.”tab_test”.”utype” IS ‘类型 1为普通 2为高级’;</p>
-<p>–修改字段类型</p>
-<p>ALTER TABLE “identities”.”Test”.”tab_test” alter COLUMN utype type VARCHAR(50) ;</p>
-<p>–删除非空约束</p>
-<p>ALTER TABLE “identities”.”Test”.”tab_test” ALTER COLUMN realname drop not NULL;</p>
-<p>–添加主键</p>
-<p>ALTER TABLE “identities”.”Test”.”tab_test” ADD PRIMARY KEY (“id”);</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-PostgreSQL常用ALTER语句"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/03/14/PostgreSQL%E5%B8%B8%E7%94%A8ALTER%E8%AF%AD%E5%8F%A5/"
-    >PostgreSql常用ALTER语句</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/03/14/PostgreSQL%E5%B8%B8%E7%94%A8ALTER%E8%AF%AD%E5%8F%A5/" class="article-date">
-  <time datetime="2023-03-14T15:11:55.000Z" itemprop="datePublished">2023-03-14</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <ul>
-<li><p>数据库操作</p>
-<p>  ALTER DATABASE name ALLOW_CONNECTIONS true|false;<br>  ALTER DATABASE name CONNECTION LIMIT connlimit;<br>  ALTER DATABASE name CONNECTION IS_TEMPLATE true|false;<br>  ALTER DATABASE name RENAME TO new_name;<br>  ALTER DATABASE name OWNER TO new_owner;<br>  ALTER DATABASE name SET TABLESPACE new_tablespace;<br>  ALTER DATABASE name SET configuration_parameter {TO|=} {value|DEFAULT};<br>  ALTER DATABASE name SET configuration_parameter FROM CURRENT;<br>  ALTER DATABASE name RESET configuration_parameter;<br>  ALTER DATABASE name RESET ALL;</p>
-</li>
-<li><p>用户角色操作</p>
-<p>  ALTER ROLE|USER role_name WITH PASSWORD ‘password’;<br>  ALTER ROLE|USER role_name WITH PASSWORD NULL;<br>  ALTER ROLE|USER role_name VALID UNTIL ‘May 4 12:00:00 2015 +1’;<br>  ALTER ROLE|USER role_name VALID UNTIL ‘infinity’;<br>  ALTER ROLE|USER role_name CREATEROLE CREATEDB;<br>  ALTER ROLE|USER role_name SET maintenance_work_mem = 100000;<br>  ALTER ROLE|USER role_name {IN DATABASE name} SET configuration_parameter {TO|=} {value|DEFAULT};<br>  ALTER ROLE|USER role_name {IN DATABASE name} SET configuration_parameter FROM CURRENT;<br>  ALTER ROLE|USER role_name {IN DATABASE name} RESET configuration_parameter;<br>  ALTER ROLE|USER role_name {IN DATABASE name} RESET ALL;</p>
-</li>
-<li><p>SCHEMA 操作</p>
-<p>  ALTER SCHEMA schema_name RENAME TO new_name;<br>  ALTER SCHEMA schema_name OWNER TO new_owner;</p>
-</li>
-<li><p>表操作</p>
-<p>  ALTER TABLE table_name RENAME TO new_name;<br>  ALTER TABLE table_name SET SCHEMA new_schema;<br>  ALTER TABLE table_name OWNER TO role_name;<br>  ALTER TABLE table_name SET TABLESPACE tablespace_name;<br>  ALTER TABLE table_name ADD column_name datatype;<br>  ALTER TABLE table_name DROP column_name;<br>  ALTER TABLE table_name ALTER column_name TYPE datatype;<br>  ALTER TABLE table_name RENAME column_name TO new_column_name;<br>  ALTER TABLE table_name ALTER column_name {SET|DROP} NOT NULL;<br>  ALTER TABLE table_name ALTER column_name SET DEFAULT expression;<br>  ALTER TABLE table_name RENAME CONSTRAINT constraint_name TO new_constraint_name;<br>  ALTER TABLE table_name ADD CONSTRAINT constraint_name PRIMARY KEY(id);<br>  ALTER TABLE table_name ADD CONSTRAINT constraint_name UNIQUE(id);<br>  ALTER TABLE table_name ADD CONSTRAINT constraint_name CHECK(id &gt; 100);<br>  ALTER TABLE table_name ADD CONSTRAINT constraint_name FOREIGN KEY(id) REFERENCES reftable(id);<br>  ALTER TABLE table_name DROP CONSTRAINT constraint_name;</p>
-</li>
-</ul>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-PostgreSQL更改字段默认值、设置字段默认值、删除字段默认值"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/03/13/PostgreSQL%E6%9B%B4%E6%94%B9%E5%AD%97%E6%AE%B5%E9%BB%98%E8%AE%A4%E5%80%BC%E3%80%81%E8%AE%BE%E7%BD%AE%E5%AD%97%E6%AE%B5%E9%BB%98%E8%AE%A4%E5%80%BC%E3%80%81%E5%88%A0%E9%99%A4%E5%AD%97%E6%AE%B5%E9%BB%98%E8%AE%A4%E5%80%BC/"
-    >Postgresql更改字段默认值、设置字段默认值、删除字段默认值</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/03/13/PostgreSQL%E6%9B%B4%E6%94%B9%E5%AD%97%E6%AE%B5%E9%BB%98%E8%AE%A4%E5%80%BC%E3%80%81%E8%AE%BE%E7%BD%AE%E5%AD%97%E6%AE%B5%E9%BB%98%E8%AE%A4%E5%80%BC%E3%80%81%E5%88%A0%E9%99%A4%E5%AD%97%E6%AE%B5%E9%BB%98%E8%AE%A4%E5%80%BC/" class="article-date">
-  <time datetime="2023-03-13T15:10:25.000Z" itemprop="datePublished">2023-03-13</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>Postgresql更改字段默认值：<br>alter table  t_report ALTER   COLUMN reportno set DEFAULT  gen_random_uuid();  </p>
-<p>Postgresql添加字段默认值：<br>ALTER TABLE tablename ADD COLUMN name1 INTEGER  DEFAULT 1;</p>
-<p>Postgresql删除字段默认值：<br>ALTER TABLE tablename ALTER COLUMN name1 DROP DEFAULT;</p>
-<p>Postgresql删除字段：<br>ALTER TABLE tablename  DROP COLUMN if exists name1 ;</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
   </article>
   
 
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/33/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/32/">32</a><a class="page-number" href="/page/33/">33</a><span class="page-number current">34</span><a class="page-number" href="/page/35/">35</a><a class="page-number" href="/page/36/">36</a><span class="space">&hellip;</span><a class="page-number" href="/page/45/">45</a><a class="extend next" rel="next" href="/page/35/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/33/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/32/">32</a><a class="page-number" href="/page/33/">33</a><span class="page-number current">34</span><a class="page-number" href="/page/35/">35</a><a class="page-number" href="/page/36/">36</a><span class="space">&hellip;</span><a class="page-number" href="/page/46/">46</a><a class="extend next" rel="next" href="/page/35/">下一页</a>
   </nav>
   
 </section>
