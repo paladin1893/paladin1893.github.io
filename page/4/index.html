@@ -154,7 +154,7 @@
     
     
     <article
-  id="post-使用elmentUI里面el-button按钮替换input type=“file“ 默认按钮"
+  id="post-修改conda虚拟环境安装路径"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -165,8 +165,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/09/20/%E4%BD%BF%E7%94%A8elmentUI%E9%87%8C%E9%9D%A2el-button%E6%8C%89%E9%92%AE%E6%9B%BF%E6%8D%A2input%20type=%E2%80%9Cfile%E2%80%9C%20%E9%BB%98%E8%AE%A4%E6%8C%89%E9%92%AE/"
-    >使用elmentUI里面el-button按钮替换input type=“file“ 默认按钮</a> 
+  <a class="article-title" href="/2023/10/01/%E4%BF%AE%E6%94%B9conda%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85%E8%B7%AF%E5%BE%84/"
+    >修改conda虚拟环境安装路径</a> 
 </h2>
  
 
@@ -174,8 +174,8 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2023/09/20/%E4%BD%BF%E7%94%A8elmentUI%E9%87%8C%E9%9D%A2el-button%E6%8C%89%E9%92%AE%E6%9B%BF%E6%8D%A2input%20type=%E2%80%9Cfile%E2%80%9C%20%E9%BB%98%E8%AE%A4%E6%8C%89%E9%92%AE/" class="article-date">
-  <time datetime="2023-09-20T12:40:59.000Z" itemprop="datePublished">2023-09-20</time>
+      <a href="/2023/10/01/%E4%BF%AE%E6%94%B9conda%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85%E8%B7%AF%E5%BE%84/" class="article-date">
+  <time datetime="2023-10-01T02:01:00.000Z" itemprop="datePublished">2023-10-01</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -185,22 +185,41 @@
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>先隐藏input的默认按钮，再把el-button的点击事件指向input的点击事件</p>
-<pre><code>&lt;form name=&quot;formInput&quot;&gt;
-    &lt;input type=&quot;file&quot; 
-           id=&quot;fileDemo&quot;
-           class=&quot;input&quot; 
-           style=&quot;position:absolute; clip:rect(0 0 0 0);&quot;   //隐藏样式
-           @change=&quot;changeFileDemo&quot;&gt;
-&lt;/form&gt;
-&lt;el-button size=&quot;small&quot; 
-        type=&quot;primary&quot; 
-        plain 
-        onclick=&quot;document.formInput.fileDemo.click()&quot;&gt;选择文件  //点击事件指向input
-&lt;/el-button&gt;
+  <p>前言<br>第一次创建conda虚拟环境时，发现默认安装路径是C盘。为了避免后期装的包越来越多，虚拟环境占用空间太大导致C盘爆满的问题，需要修改conda的安装路径。在网上仔细学习，总结出如下有效的解决方法。</p>
+<p>下载Miniconda<br>因为我希望能够根据实际需要装包，所以选择了轻量化的miniconda。话不多说，下面先放上miniconda的下载地址。</p>
+<p>官方地址：<a target="_blank" rel="noopener" href="https://conda.io/en/latest/miniconda.html">https://conda.io/en/latest/miniconda.html</a></p>
+<p>清华镜像网址：<a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/">https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/</a></p>
+<p>下载后-右键-“以管理员身份运行”</p>
+<p>这一步建议选择“All Users”</p>
+<p>这一步记得修改安装路径到D盘，最好自己提前新建一个文件夹然后装到里面</p>
+<p>后面应该问题不大，一直“next”到最后“finish”就好。</p>
+<p>安装完成后，打开Anaconda Prompt(conda)，输入conda –version如果正确显示版本号说明安装成功。</p>
+<p>准备工作</p>
+<p>首先在D盘新建一个文件夹，命名任意（我命名为conda_base），然后在这个文件夹里面再新建两个文件夹，命名分别为envs和pkgs。</p>
+<p>打开Anaconda Prompt(conda)，输入以下代码（一行一行复制）</p>
+<pre><code>conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
+conda config --set show_channel_urls yes
 </code></pre>
-<p>formInput 为<form>里面name的值</form></p>
-<p>fileDemo 为<input>里面id的值<br>————————————————<br>版权声明：本文为CSDN博主「前端小蔡姬」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/x_nweBorder01k/article/details/124715048">https://blog.csdn.net/x_nweBorder01k/article/details/124715048</a></p>
+<p>接着，打开路径“C:\Users[用户名]\，找到文件夹中的.condarc文件，使用记事本打开。打开后会看到里面的内容如下：</p>
+<p>现在我们在最下面加入以下内容：（路径按照自己实际情况修改 ）</p>
+<pre><code>envs_dirs:
+  - D:\conda_base\envs
+pkgs_dirs:
+  - D:\conda_base\pkgs
+</code></pre>
+<p>加入后保存即可退出。</p>
+<p>创建环境</p>
+<p>打开Anaconda Prompt(conda)，输入以下内容：</p>
+<pre><code>conda create --name kennn python=3.9 -y
+</code></pre>
+<p>其中“kennn”是环境名字，python版本可根据需要更改“=”后的版本号即可</p>
+<p>点击回车，自动创建环境，至此教程结束。</p>
+<p>conda常用指令</p>
+<p>进入某个环境：conda activate [环境名]（一开始打开Anaconda Prompt默认处于base环境）</p>
+<p>退出当前环境：conda deactivate</p>
+<p>已创建环境目录：conda info –envs</p>
+<p>————————————————<br>版权声明：本文为CSDN博主「黯岚岚岚岚岚」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_59209871/article/details/134674607">https://blog.csdn.net/weixin_59209871/article/details/134674607</a></p>
  
       <!-- reward -->
       
@@ -211,7 +230,7 @@
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
 
     </footer>
   </div>
@@ -222,7 +241,7 @@
 
     
     <article
-  id="post-Vue3 点击el-button 触发input type=“file“ 选择本地文件 并修改样式"
+  id="post-Anaconda与Miniconda之间的选择"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -233,8 +252,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/09/19/Vue3%20%E7%82%B9%E5%87%BBel-button%20%E8%A7%A6%E5%8F%91input%20type=%E2%80%9Cfile%E2%80%9C%20%E9%80%89%E6%8B%A9%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6%20%E5%B9%B6%E4%BF%AE%E6%94%B9%E6%A0%B7%E5%BC%8F/"
-    >Vue3 点击el-button 触发input type=“file“ 选择本地文件 并修改样式</a> 
+  <a class="article-title" href="/2023/09/30/Anaconda%E4%B8%8EMiniconda%E4%B9%8B%E9%97%B4%E7%9A%84%E9%80%89%E6%8B%A9/"
+    >Anaconda与Miniconda之间的选择</a> 
 </h2>
  
 
@@ -242,8 +261,8 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2023/09/19/Vue3%20%E7%82%B9%E5%87%BBel-button%20%E8%A7%A6%E5%8F%91input%20type=%E2%80%9Cfile%E2%80%9C%20%E9%80%89%E6%8B%A9%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6%20%E5%B9%B6%E4%BF%AE%E6%94%B9%E6%A0%B7%E5%BC%8F/" class="article-date">
-  <time datetime="2023-09-19T11:38:57.000Z" itemprop="datePublished">2023-09-19</time>
+      <a href="/2023/09/30/Anaconda%E4%B8%8EMiniconda%E4%B9%8B%E9%97%B4%E7%9A%84%E9%80%89%E6%8B%A9/" class="article-date">
+  <time datetime="2023-09-30T02:40:35.000Z" itemprop="datePublished">2023-09-30</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -253,35 +272,21 @@
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>template</p>
-<pre><code>&lt;el-button class=&quot;file-box&quot; text&gt;
-    &lt;input type=&quot;file&quot; multiple class=&quot;file-btn&quot; required
-        @change=&quot;setImage&quot;/&gt;上传  
-&lt;/el-button&gt;
-</code></pre>
-<p>style</p>
-<pre><code>.file-box &#123;
-    display: inline-block;
-    position: relative;
-    overflow: hidden;
-    color: rgb(252, 113, 0);
-    background-color: rgb(255, 255, 255);
-&#125;
- 
-.file-btn &#123;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    outline: none;
-    filter: alpha(opacity=0);
-    -moz-opacity: 0;
-    -khtml-opacity: 0;
-    opacity: 0;
-&#125;
-</code></pre>
-<p>————————————————<br>版权声明：本文为CSDN博主「wlik」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45220510/article/details/126172494">https://blog.csdn.net/weixin_45220510/article/details/126172494</a></p>
+  <p>导言</p>
+<p>Python语言因其灵活性、易用性和强大的数据处理能力在科学计算和数据分析领域受到广泛欢迎。然而，Python的一大挑战是库的管理和环境的隔离。解决这个问题的一个方案是使用分布式管理系统，如Anaconda或Miniconda。本文将深入探讨这两者的相似之处、差异和应用场景。</p>
+<p>Anaconda和Miniconda的基本概念</p>
+<p>Anaconda和Miniconda都是Continuum Analytics的开源项目，用于管理Python的环境和包。两者都有用于创建和管理虚拟环境的Conda包管理器，这使得在不同的项目之间切换和隔离变得简单。但是，两者之间存在一些重要的区别。</p>
+<p>Anaconda是一个包含了conda、Python和超过150个科学包及其依赖项的科学Python发行版。它具有可视化图形用户界面（Anaconda Navigator）并且为了方便新手使用，预先包含了大量的库，如NumPy, Pandas, Scipy, Matplotlib等。</p>
+<p>相较之下，Miniconda更加轻量级。它只包含了Python和Conda，但并没有预装其他的库。Miniconda用户需要手动安装他们需要的包，这使得Miniconda的环境更为简洁，可以根据实际需求来安装必要的包，避免不必要的存储占用。</p>
+<p>对比Anaconda和Miniconda</p>
+<p>首先，我们看到Anaconda和Miniconda最显著的区别在于他们所包含的包的数量。Anaconda预安装了大量科学计算和数据分析所需的库，使得用户可以立即开始工作。而Miniconda只包含了Python和conda，它的轻量级特性使得它在需要快速部署Python环境，或者在磁盘空间有限、网络环境较差、或者需要定制特定环境的情况下具有优势。</p>
+<p>其次，Anaconda提供了Anaconda Navigator这样的图形用户界面，它使得库的安装、环境的创建和管理变得更为简单直观。这对于新手用户来说是非常有帮助的，尤其是对于那些不习惯使用命令行的用户。而Miniconda没有这样的用户界面，所有的操作都需要通过命令行来完成。</p>
+<p>最后，由于Anaconda包含了大量的预装库，因此它的安装文件非常大，而Miniconda则相对较小。这可能会影响到安装的速度和存储空间的占用。</p>
+<p>选择Anaconda还是Miniconda？</p>
+<p>选择Anaconda还是Miniconda主要取决于你的具体需求。如果你是Python新手，或者你需要的所有库都在Anaconda的预装库中，那么Anaconda可能是更好的选择。它可以让你迅速开始你的项目，而无需担心库的安装和管理。</p>
+<p>然而，如果你需要定制你的Python环境，或者你需要在有限的资源下工作，那么Miniconda可能是更好的选择。它允许你只安装你需要的库，避免了不必要的存储占用。此外，由于Miniconda的安装文件更小，因此它的安装速度通常更快。</p>
+<p>总结</p>
+<p>无论你选择Anaconda还是Miniconda，都能获得强大的Python环境管理功能。你的选择应基于你的具体需求和资源状况。不论选择哪一个，都能通过conda进行库的管理和环境的隔离，大大提升Python开发和科学计算的效率。</p>
  
       <!-- reward -->
       
@@ -292,7 +297,7 @@
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
 
     </footer>
   </div>
@@ -303,7 +308,7 @@
 
     
     <article
-  id="post-vue 实现文件上传、下载"
+  id="post-Anaconda 添加清华镜像源"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -314,8 +319,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/09/18/vue%20%E5%AE%9E%E7%8E%B0%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E3%80%81%E4%B8%8B%E8%BD%BD/"
-    >vue 实现文件上传、下载</a> 
+  <a class="article-title" href="/2023/09/29/Anaconda%20%E6%B7%BB%E5%8A%A0%E6%B8%85%E5%8D%8E%E9%95%9C%E5%83%8F%E6%BA%90/"
+    >Anaconda 添加清华镜像源</a> 
 </h2>
  
 
@@ -323,8 +328,8 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2023/09/18/vue%20%E5%AE%9E%E7%8E%B0%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E3%80%81%E4%B8%8B%E8%BD%BD/" class="article-date">
-  <time datetime="2023-09-18T10:36:54.000Z" itemprop="datePublished">2023-09-18</time>
+      <a href="/2023/09/29/Anaconda%20%E6%B7%BB%E5%8A%A0%E6%B8%85%E5%8D%8E%E9%95%9C%E5%83%8F%E6%BA%90/" class="article-date">
+  <time datetime="2023-09-29T01:50:24.000Z" itemprop="datePublished">2023-09-29</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -334,104 +339,39 @@
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>1、使用element ui 中的el-upload</p>
-<pre><code>&lt;!-- :limit=&quot;1&quot; 限制上传数量  :drag=&quot;true&quot; 可实现拖拽上传 :file-list会返显在下方--&gt;
-&lt;el-upload
-    class=&quot;upload-demo&quot;
-    action=&quot;#&quot;
-    :drag=&quot;true&quot;
-    :before-upload=&quot;uploadFileFun&quot;
-    :file-list=&quot;uploadFile.fileList&quot;&gt;
-    &lt;div class=&quot;el-upload__text&quot;&gt;将文件拖到此处，或&lt;em&gt;点击上传&lt;/em&gt;&lt;/div&gt;
-    &lt;div class=&quot;el-upload__tip fontSize12 colorRed&quot; slot=&quot;tip&quot;&gt;文件包括评审指南、须知及回避要求等，上传文件格式为word或pdf，文件大小在2M以内&lt;/div&gt;
-&lt;/el-upload&gt;
+  <h1 id="1、删除之前的镜像源，恢复默认状态"><a href="#1、删除之前的镜像源，恢复默认状态" class="headerlink" title="1、删除之前的镜像源，恢复默认状态"></a>1、删除之前的镜像源，恢复默认状态</h1><pre><code>conda config --remove-key channels
 </code></pre>
-<p>2、data中定义相关数据，methods中书写上传方法</p>
-<pre><code>data () &#123;
-    return &#123;
-        fileIdArr: [],
-        uploadFile:&#123;
-            createUser:&#39;&#39;,
-            createTime:&#39;&#39;,
-            fileId: &#39;&#39;, // 存放选择的文件
-            fileList: [],
-        &#125;,
-        uploadFileRules: &#123;
-          fileList: [&#123; required: true, message: &quot;请上传文件&quot;, trigger: &quot;blur&quot; &#125;],
-        &#125;
-    &#125;
-  &#125;,
-methods: &#123;
-    uploadFileFun(file)&#123;
-        var test = /(doc|docx|pdf)$/.test(file.type);
-        if (!test) &#123;
-             this.$message.error(&quot;请上传正确的文档格式!&quot;);
-             return false;
-         &#125;
-         const isLt2M = file.size / 1024 / 1024 &lt; 2;
-        if (!isLt2M) &#123;
-            this.$message.error(&quot;上传文件大小不能超过 2MB!&quot;);
-             return false;
-         &#125;
-        // 创建formdata实例
-        let formData = new window.FormData();
-        // 将获取的文件通过append方法加入实例中
-        formData.append(&quot;file&quot;, file);
-        this.$api.
-            uploadFile(formData)
-            .then(res =&gt; &#123;
-                // fileList用于反显
-                this.uploadFile.fileList.push(res.data)
-                this.fileIdArr.push(res.data.id)
-            &#125;)
-            .catch(err =&gt; &#123;&#125;);
-      &#125;,
- &#125;
+<h1 id="2、添加清华镜像源-清华大学开源软件镜像站"><a href="#2、添加清华镜像源-清华大学开源软件镜像站" class="headerlink" title="2、添加清华镜像源 清华大学开源软件镜像站"></a>2、添加清华镜像源 清华大学开源软件镜像站</h1><pre><code>#添加镜像源
+
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/pro
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/msys2
+
+#显示检索路径
+
+conda config --set show_channel_urls yes
+
+#显示镜像通道
+
+conda config --show channels
 </code></pre>
-<p>3、下载</p>
-<pre><code>methods: &#123;
-    // 附件下载
-    downloadFile(row)&#123;
-        // 判断如果没有文件就不进行文件的下载
-       if (row.fileName)&#123;
-             this.$api
-             .downloadFile(&#123;fileId: row.fileId&#125;)
-             .then(res =&gt; &#123;
-                // 如果有文件且接口掉成功，后端会直接返回文件流，因此若返回res.code，表示接口没有返回文件流
-                 if(res.code)&#123;
-                     this.$message(&#123;
-                         type: &#39;error&#39;,
-                         message: res.msg
-                     &#125;)
-                 &#125;else&#123;
-                 
-                    // 这里最重要，这里最重要！！！！！
-                    
-                     const link = document.createElement(&quot;a&quot;);
-                     let blob = new Blob([res]);  //文件流处理
-                     link.style.display = &quot;none&quot;;  //去除a标签的样式
-                     // 设置链接
-                     link.href = window.URL.createObjectURL(blob);
-                     link.download = row.fileName; // 指定下载文件名，包含文件后缀
-                     document.body.appendChild(link);
-                     //模拟点击事件
-                     link.click();
-                     //移除创建的a标签
-                     window.URL.revokeObjectURL(link.href);
-                     document.body.removeChild(link);
-                 &#125;
-                
-             &#125;)
-             .catch(err =&gt; &#123;&#125;)
-         &#125;else&#123;
-             this.$message(&#123;
-                 message: &#39;该邮件模板没有可下载的附件&#39;
-             &#125;)
-         &#125;
-     &#125;,
-&#125;
+<h1 id="3、国内常见的镜像源"><a href="#3、国内常见的镜像源" class="headerlink" title="3、国内常见的镜像源"></a>3、国内常见的镜像源</h1><pre><code>清华：https://pypi.tuna.tsinghua.edu.cn/simple
+阿里云：https://mirrors.aliyun.com/pypi/simple/
+中国科技大学: https://pypi.mirrors.ustc.edu.cn/simple/
+华中理工大学：https://pypi.hustunique.com/
+山东理工大学：https://pypi.sdutlinux.org/ 
+豆瓣：https://pypi.douban.com/simple/
 </code></pre>
-<p>————————————————<br>版权声明：本文为CSDN博主「淡紫色的回忆」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/niuniu2878499107/article/details/131958497">https://blog.csdn.net/niuniu2878499107/article/details/131958497</a></p>
+<h1 id="4、补充：conda的常用命令"><a href="#4、补充：conda的常用命令" class="headerlink" title="4、补充：conda的常用命令"></a>4、补充：conda的常用命令</h1><pre><code>查看所有虚拟环境 conda info --env 在显示的环境中，有*的表示当前所在的环境
+创建环境 conda create -n envname python=3.6(指定python版本为3.6)
+启动环境 conda activate envnane
+关闭环境 conda deactivate envname
+删除环境 conda remove -n envname --all
+克隆环境 本地已有一个环境AAA，若需要创建一个同样的BBB conda create -n BBB --clone AAA
+</code></pre>
+<p>————————————————<br>版权声明：本文为CSDN博主「小金~~」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_33682559/article/details/110389091">https://blog.csdn.net/qq_33682559/article/details/110389091</a></p>
  
       <!-- reward -->
       
@@ -442,7 +382,7 @@ methods: &#123;
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
 
     </footer>
   </div>
@@ -453,7 +393,7 @@ methods: &#123;
 
     
     <article
-  id="post-vue获取当前日期时间(moment、new Date())"
+  id="post-【Python】使用 requirements.txt 和 pip 打包批量安装"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -464,8 +404,8 @@ methods: &#123;
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/09/17/vue%E8%8E%B7%E5%8F%96%E5%BD%93%E5%89%8D%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4(moment%E3%80%81new%20Date())/"
-    >vue获取当前日期时间(moment、new Date())</a> 
+  <a class="article-title" href="/2023/09/28/%E3%80%90Python%E3%80%91%E4%BD%BF%E7%94%A8%20requirements.txt%20%E5%92%8C%20pip%20%E6%89%93%E5%8C%85%E6%89%B9%E9%87%8F%E5%AE%89%E8%A3%85/"
+    >【Python】使用 requirements.txt 和 pip 打包批量安装</a> 
 </h2>
  
 
@@ -473,8 +413,8 @@ methods: &#123;
     </header>
      
     <div class="article-meta">
-      <a href="/2023/09/17/vue%E8%8E%B7%E5%8F%96%E5%BD%93%E5%89%8D%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4(moment%E3%80%81new%20Date())/" class="article-date">
-  <time datetime="2023-09-17T09:34:51.000Z" itemprop="datePublished">2023-09-17</time>
+      <a href="/2023/09/28/%E3%80%90Python%E3%80%91%E4%BD%BF%E7%94%A8%20requirements.txt%20%E5%92%8C%20pip%20%E6%89%93%E5%8C%85%E6%89%B9%E9%87%8F%E5%AE%89%E8%A3%85/" class="article-date">
+  <time datetime="2023-09-28T08:38:16.000Z" itemprop="datePublished">2023-09-28</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -484,121 +424,51 @@ methods: &#123;
       
     <div class="article-entry" itemprop="articleBody">
        
-  <h1 id="vue获取当前日期时间"><a href="#vue获取当前日期时间" class="headerlink" title="vue获取当前日期时间"></a>vue获取当前日期时间</h1><p>开发中会有要获取当前日期的需求，有的是获取到当前月份，有的是精确到分秒。</p>
-<p>而且日期的格式还不一样，一下有两种获取时间的方式：</p>
-<h1 id="1-new-Date-拼接"><a href="#1-new-Date-拼接" class="headerlink" title="1 new Date()+拼接"></a>1 new Date()+拼接</h1><h2 id="格式一："><a href="#格式一：" class="headerlink" title="格式一："></a>格式一：</h2><pre><code>yy/MM/dd hh:mm:ss – 例如：2022/05/01 00:00:00
-yy/M/d hh:mm:ss – 例如：2022/5/1 00:00:00
-</code></pre>
-<p>获取当前时间</p>
-<pre><code>/**
-* 获取当前时间
-*/
-currentTime() &#123;
-    var date = new Date();
-    var year = date.getFullYear(); //月份从0~11，所以加一
-    let month = date.getMonth();
-    console.log(&quot;month&quot;,month);
-    var dateArr = [
-        date.getMonth() + 1,
-        date.getDate(),
-        date.getHours(),
-        date.getMinutes(),
-        date.getSeconds(),
-    ];
-    //如果格式是MM则需要此步骤，如果是M格式则此循环注释掉
-    for (var i = 0; i &lt; dateArr.length; i++) &#123;
-        if (dateArr[i] &gt;= 1 &amp;&amp; dateArr[i] &lt;= 9) &#123;
-            dateArr[i] = &quot;0&quot; + dateArr[i];
-        &#125;
-    &#125;
-    var strDate =
-        year +
-        &quot;/&quot; +
-        dateArr[0] +
-        &quot;/&quot; +
-        dateArr[1] +
-        &quot; &quot; +
-        dateArr[2] +
-        &quot;:&quot; +
-        dateArr[3] +
-        &quot;:&quot; +
-        dateArr[4];
-        //此处可以拿外部的变量接收，也可直接返回  strDate:2022-05-01 13:25:30
-        //this.date = strDate;
-    console.log(&quot;strDate&quot;,strDate);
-&#125;,
-</code></pre>
-<h2 id="格式二："><a href="#格式二：" class="headerlink" title="格式二："></a>格式二：</h2><pre><code>yy-MM-dd hh:mm:ss – 例如：2022-05-01 00:00:00
-yy-MM-dd hh:mm:ss – 例如：2022-05-01 00:00:00
-</code></pre>
-<p>获取当前时间</p>
-<pre><code>/**
-* 获取当前时间
-*/
-currentTime() &#123;
-    var date = new Date();
-    var year = date.getFullYear(); //月份从0~11，所以加一
-    let month = date.getMonth();
-    console.log(&quot;month&quot;,month);
-    var dateArr = [
-        date.getMonth() + 1,
-        date.getDate(),
-        date.getHours(),
-        date.getMinutes(),
-        date.getSeconds(),
-    ];
-    //如果格式是MM则需要此步骤，如果是M格式则此循环注释掉
-    for (var i = 0; i &lt; dateArr.length; i++) &#123;
-        if (dateArr[i] &gt;= 1 &amp;&amp; dateArr[i] &lt;= 9) &#123;
-            dateArr[i] = &quot;0&quot; + dateArr[i];
-        &#125;
-    &#125;
-    var strDate =
-        year +
-        &quot;/&quot; +
-        dateArr[0] +
-        &quot;/&quot; +
-        dateArr[1] +
-        &quot; &quot; +
-        dateArr[2] +
-        &quot;:&quot; +
-        dateArr[3] +
-        &quot;:&quot; +
-        dateArr[4];
-        //此处可以拿外部的变量接收  strDate:2022-05-01 13:25:30
-        //this.date = strDate;
-    console.log(&quot;strDate&quot;,strDate);
-&#125;,
-</code></pre>
-<p>获取当前月份</p>
-<pre><code>/**
-* 获取当前月份，可直接返回
-*/
-currentTime() &#123;
-    var date = new Date();
-    var year = date.getFullYear(); //月份从0~11，所以加一
-    let month = date.getMonth() + 1;
-    console.log(&quot;month&quot;, month);
+  <p>当我们程序越来越复杂，使用pip管理Python包（库）。我们可以方便的使用配置文件 requirements.txt 批量安装指定版本的指定包。</p>
+<p>关于涉及到的pip官方的手册在这个位置： pip documentationv23.1.dev0</p>
+<p>本文对以下内容进行说明：</p>
+<p>pip 的批量安装选项： -r requirements.txt</p>
+<p>配置文件 requirements.txt 的写法</p>
+<p>生成当前环境的requirements.txt配置文件： pip freeze</p>
+<ol>
+<li><p>pip 的批量安装选项：-r requirements.txt<br>以下命令根据配置文件 requirements.txt 批量安装包。</p>
+<p> $ pip install -r requirements.txt</p>
+</li>
+</ol>
+<p>配置文件名是任意的，但经常使用 requirements.txt 这个名字。<br>将 requirements.txt 放在运行命令的目录中。如果它在另一个目录中，请指定当前目录的绝对路径或相对路径。</p>
+<ol start="2">
+<li>配置文件requirements.txt怎么写</li>
+</ol>
+<p>下面是一个典型的requirements.txt文件的例子</p>
+<pre><code>###### 下面的是不需要版本要求的 ######`
+nose
+nose-cov
+beautifulsoup4
 
-    //如果格式是MM则需要此步骤，如果是M格式则此处注释掉
-    if (month &gt;= 1 &amp;&amp; month &lt;= 9) &#123;
-        month = &quot;0&quot; + month;
-    &#125;
-    let strDate = year + &quot;-&quot; + month;
-    return strDate;
-&#125;,
+###### 进行版本要求的例子 ######`
+docopt == 0.6.1         # 必须严格的 0.6.1 的版本
+keyring &gt;= 4.1.1        # 最小的版本 4.1.1
+coverage != 3.5         # 版本排除，只要不是 3.5 都可以
+Mopidy-Dirble ~= 1.1    # 兼容版本。与&gt;=1.1，==1.* 相同
 </code></pre>
-<h1 id="2-moment-函数获取"><a href="#2-moment-函数获取" class="headerlink" title="2 moment()函数获取"></a>2 moment()函数获取</h1><p>下载moment依赖</p>
-<pre><code>npm i moment
+<p>仔细看上面的代码，我们有如下规律</p>
+<p>与 Python 代码一样， # 之后的任何内容都是注释。<br>在实际使用时，可以使用 == 、 &gt; 、 &gt;= 、 &lt; 、 &lt;= 等指定版本。如果省略版本说明，将安装最新版本。<br>另外，如果需要可以用 AND 指定两个条件，方法是用逗号 , 分隔它们。在以下示例中，将安装高于 1.0 AND 低于 2.0 的版本。</p>
+<pre><code>package &gt;= 1.0, &lt;=2.0
 </code></pre>
-<p>在所需要的页面引入</p>
-<pre><code>import moment from &quot;moment&quot;
+<ol start="3">
+<li><p>导出当前环境配置文件：pip freeze<br>pip freeze 命令将当前环境安装的包和版本以配置文件的形式输出，可以和 pip install -r 一起使用。</p>
+<p> $ pip freeze<br> agate==1.6.0<br> agate-dbf==0.2.0<br> agate-excel==0.2.1<br> agate-sql==0.5.2</p>
+</li>
+</ol>
+<p>因此，如果将 pip freeze 输出到带有重定向 &gt; 的文件，则可以使用该文件在单独的环境中安装与原始环境相同版本的包。</p>
+<p>田辛老师在复制环境的时候，经常这样做：</p>
+<p>第一步，生成requirements.txt文件</p>
+<pre><code>$ pip freeze &gt; requirements.txt
 </code></pre>
-<p>为了方便也可以在全局引入<br>用法</p>
-<pre><code>this.$moment().format(&#39;YYYY-MM-DD HH:mm:ss&#39;)
+<p>第二步，在新的机器上</p>
+<pre><code>$ pip install -r requirements.txt
 </code></pre>
-<p>此函数很方便，只需在format设置自己需要的格式即可<br>————————————————</p>
-<p>版权声明：本文为CSDN博主「猪大侠0.0」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_43331014/article/details/127698605">https://blog.csdn.net/qq_43331014/article/details/127698605</a></p>
+<p>————————————————<br>版权声明：本文为CSDN博主「田辛 | 田豆芽」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/u013589130/article/details/129039961">https://blog.csdn.net/u013589130/article/details/129039961</a></p>
  
       <!-- reward -->
       
@@ -609,7 +479,7 @@ currentTime() &#123;
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flask/" rel="tag">flask</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
 
     </footer>
   </div>
@@ -620,7 +490,7 @@ currentTime() &#123;
 
     
     <article
-  id="post-Vue中使用定时器(setInterval、setTimeout)的两种方式"
+  id="post-Python 用pip批量安装包 requirements.txt"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -631,8 +501,8 @@ currentTime() &#123;
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/09/16/Vue%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%AE%9A%E6%97%B6%E5%99%A8(setInterval%E3%80%81setTimeout)%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F/"
-    >Vue中使用定时器(setInterval、setTimeout)的两种方式</a> 
+  <a class="article-title" href="/2023/09/27/Python%20%E7%94%A8pip%E6%89%B9%E9%87%8F%E5%AE%89%E8%A3%85%E5%8C%85%20requirements.txt/"
+    >Python 用pip批量安装包 requirements.txt</a> 
 </h2>
  
 
@@ -640,8 +510,8 @@ currentTime() &#123;
     </header>
      
     <div class="article-meta">
-      <a href="/2023/09/16/Vue%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%AE%9A%E6%97%B6%E5%99%A8(setInterval%E3%80%81setTimeout)%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F/" class="article-date">
-  <time datetime="2023-09-16T08:32:48.000Z" itemprop="datePublished">2023-09-16</time>
+      <a href="/2023/09/27/Python%20%E7%94%A8pip%E6%89%B9%E9%87%8F%E5%AE%89%E8%A3%85%E5%8C%85%20requirements.txt/" class="article-date">
+  <time datetime="2023-09-27T07:49:27.000Z" itemprop="datePublished">2023-09-27</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -651,76 +521,119 @@ currentTime() &#123;
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>js中定时器有两种，一个是循环执行 setInterval，另一个是定时执行 setTimeout。</p>
-<p>注意：定时器需要在页面销毁的时候清除掉，不然会一直存在！</p>
-<h1 id="1-循环执行（-setInterval-）"><a href="#1-循环执行（-setInterval-）" class="headerlink" title="1. 循环执行（ setInterval ）"></a>1. 循环执行（ setInterval ）</h1><p>顾名思义，循环执行就是设置一个时间间隔，每过一段时间都会循环执行这个方法,直到这个定时器被销毁掉；</p>
-<p>语法：</p>
-<pre><code>setInterval(code, milliseconds)；
-setInterval(function, milliseconds, param1, param2, ...)；
-  
-code/function           必需。要调用一个代码串，也可以是一个函数。
-milliseconds            必须。周期性执行或调用 code/function 之间的时间间隔，以毫秒计。
-param1, param2, ...     可选。 传给执行函数的其他参数（IE9 及其更早版本不支持该参数）。
-  
-  
-返回值:      返回一个 ID（数字），可以将这个ID传递给 clearInterval() 来取消执行。
+  <h1 id="一、python用pip批量安装包"><a href="#一、python用pip批量安装包" class="headerlink" title="一、python用pip批量安装包"></a>一、python用pip批量安装包</h1><p>python查看安装的第三方扩展包,就是使用命令 pip freeze。</p>
+<p>在已经配置好的一台机器上，将需要的包导出到requirements.txt</p>
+<pre><code>./pip freeze &gt; requirements.txt
 </code></pre>
-<p>eg:</p>
-<p>开始的时候创建了一个定时器 setInterval ，时间间隔为2秒，每2秒都会调用一次函数 valChange，从而使 value 的值+1。</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    &lt;h1&gt;&#123;&#123;value&#125;&#125;&lt;/h1&gt;
-    &lt;el-button type=&quot;primary&quot; @click=&quot;start&quot;&gt;开始&lt;/el-button&gt;
-    &lt;el-button type=&quot;danger&quot; @click=&quot;over&quot;&gt;结束&lt;/el-button&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-  
-&lt;script&gt;
-export default &#123;
-  data() &#123;
-    return &#123;
-      timer: &quot;&quot;,
-      value: 0,
-    &#125;;
-  &#125;,
-  methods: &#123;
-    start()&#123;
-      this.timer = setInterval(this.valChange, 2000); // 注意: 第一个参数为方法名的时候不要加括号;
-    &#125;,
-    valChange() &#123;
-      this.value++;
-      console.log(this.value);
-    &#125;,
-    over()&#123;
-      clearInterval(this.timer);
-    &#125;
-  &#125;,
-  mounted() &#123;&#125;,
-  beforeDestroy() &#123;
-    clearInterval(this.timer);
-  &#125;,
-&#125;;
-&lt;/script&gt;
+<p>此种方式会将环境中所有的包都打包进去，适合单虚拟环境（每个项目都处在不同的虚拟环境里，这个环境里是这个项目所需要的所有包）。因此，如果不是Python虚拟环境Virtualenv。我们不推荐这么使用，推荐使用 使用pipreqs 写入requirements.txt。</p>
+<p>pip安装包的方式中，有如下一种安装方式：</p>
+<pre><code>pip install -r requirements.txt
 </code></pre>
-<h1 id="2-定时执行-（-setTimeout）"><a href="#2-定时执行-（-setTimeout）" class="headerlink" title="2. 定时执行 （ setTimeout）"></a>2. 定时执行 （ setTimeout）</h1><p>定时执行 setTimeout 是设置一个时间，等待时间到达的时候只执行一次，但是执行完以后定时器还在，只是不再运行；</p>
-<p>语法：</p>
-<pre><code>setTimeout(code, milliseconds, param1, param2, ...)
-setTimeout(function, milliseconds, param1, param2, ...)
-  
-code/function            必需。要调用一个代码串，也可以是一个函数。
-milliseconds             可选。执行或调用 code/function 需要等待的时间，以毫秒计。默认为 0。
-param1, param2, ...      可选。 传给执行函数的其他参数（IE9 及其更早版本不支持该参数）。
-
-返回值:    返回一个 ID（数字），可以将这个ID传递给 clearTimeout() 来取消执行。
+<p>而文件requirement.txt里面内容的格式和pip freeze的格式完全一样。因此我们可以将pip freeze的内容输出至requirements.txt。</p>
+<p>推荐如下使用方式</p>
+<pre><code>./pip freeze | tee requirements.txt # 输出本地包环境至文件
+./pip install -r requirements.txt # 根据文件进行包安装
 </code></pre>
-<p>eg:</p>
-<p>开始时候创建一个定时器 setTimeout，只在2秒后执行一次方法。</p>
-<pre><code>let timer = setTimeout(() =&gt; &#123;
-      //需要定时执行的代码
-      console.debug(&quot;Hello World&quot;);
-      &#125;, 2000)
+<p>pip freeze 为什么比 pip list 的包少几个呢？<br>因为pip , wheel , setuptools 等包，是自带的而无法(un)install的。考虑到pip freeze的用途，所以这些包并没有显示。</p>
+<p>ps：<br>如果一定要用pip freeze来显示所有包，可以加上参数-all，即pip freeze -all</p>
+<h1 id="二、-推荐-使用pipreqs-写入requirements-txt"><a href="#二、-推荐-使用pipreqs-写入requirements-txt" class="headerlink" title="二、[推荐]使用pipreqs 写入requirements.txt"></a>二、[推荐]使用pipreqs 写入requirements.txt</h1><p>使用pipreqs 写入requirements.txt，只是程序中所用到的包，并不是电脑中安装的所有的包。</p>
+<pre><code>pip install pipreqs
 </code></pre>
-<p>到此这篇关于Vue中 使用定时器 （setInterval、setTimeout）的文章就介绍到这了</p>
+<p>cd 到程序所在的文件夹位置</p>
+<p>执行下面的语句，Windows下得加encoding=utf8，不然会出现编码问题。</p>
+<pre><code>pipreqs ./ --encoding=utf8 
+</code></pre>
+<h1 id="三、利用requirements-txt离线安装依赖包"><a href="#三、利用requirements-txt离线安装依赖包" class="headerlink" title="三、利用requirements.txt离线安装依赖包"></a>三、利用requirements.txt离线安装依赖包</h1><p>1、下载离线的包到指定目录</p>
+<p>将requirements.txt中导入的包离线下载到 package_tmp_dir 文件夹</p>
+<pre><code>pip wheel -w package_tmp_dir -r requirements.txt
+pip download -d package_tmp_dir -r requirements.txt
+</code></pre>
+<p>2、安装离线的包</p>
+<pre><code>pip install --no-index --find-links=package_tmp_dir  -r requirements.txt
+</code></pre>
+<ol>
+<li>使用 pip wheel 实现 Python 依赖包的离线安装</li>
+</ol>
+<p>Wheel 也是一种 built 包，而且是官方推荐的打包方式。也许你曾经遇见或使用过 egg 包，但现在 wheel 是官方推荐的打包方式（<a target="_blank" rel="noopener" href="https://wheel.readthedocs.io/en/stable/%EF%BC%89%E3%80%82">https://wheel.readthedocs.io/en/stable/）。</a><br>wheel 包的优点：</p>
+<p> 1.更快地安装纯 Python 和本机 C 扩展包。<br> 2.避免安装时执行任意代码。 （避免 setup.py）<br> 3.在 Windows 或 macOS 上安装 C 扩展不需要编译器。<br> 4.为测试和持续集成提供更好的缓存。<br> 5.创建 .pyc 文件作为安装的一部分，以确保它们与使用的 Python 解释器匹配。<br> 6.跨平台和机器的更一致的安装。</p>
+<p>没有网络连接, 借助 wheel把整个 Python 应用做成离线安装包。</p>
+<p>安装 wheel:</p>
+<pre><code>pip install wheel
+</code></pre>
+<p>下载依赖包的 wheel 文件</p>
+<pre><code>pip wheel -r requirements.txt
+</code></pre>
+<p>默认情况下, 上述命令会下载 requirements.txt 中每个包的 wheel 包到当前目录的 wheelhouse 文件夹, 包括依赖的依赖。</p>
+<p>在你的安装脚本中执行:</p>
+<pre><code>pip install --use-wheel --no-index --find-links=wheelhouse -r requirements.txt
+</code></pre>
+<ol start="2">
+<li>下载命令</li>
+</ol>
+<p>一、对于单个包的安装</p>
+<p>1、离线</p>
+<p>(1)pip离线下载</p>
+<pre><code>pip download 你的包名 -d “下载的路径(windows下双引号来表示文件夹)”
+pip download pymysql -d &quot;D:\pipDownloadTest&quot;
+</code></pre>
+<p>(2)pip 离线安装</p>
+<pre><code>pip install 包路径
+pip install PyMySQL-0.9.3-py2.py3-none-any.whl
+</code></pre>
+<p>2、在线</p>
+<pre><code>pip install pymysql
+</code></pre>
+<p>二、对于多个包的安装与下载</p>
+<p>1、离线</p>
+<p>离线下载</p>
+<pre><code>pip download -d packages -r requirements.txt
+</code></pre>
+<p>离线安装</p>
+<pre><code>pip install --no-index --find-links=packages -r requirements.txt
+</code></pre>
+<p>2、在线</p>
+<pre><code>pip install -r requirements.txt
+</code></pre>
+<p>总结：多个包下载就多了一个 -r requirements.txt。</p>
+<ol start="3">
+<li>pip download 和 pip wheel 这两个命令的区别</li>
+</ol>
+<ul>
+<li><p>下载的文件格式不同</p>
+<p>  pip download 下载的是源代码的压缩包,通常是 .tar.gz 格式<br>  pip wheel 下载的是编译好的 wheel 二进制包,以 .whl 作为文件扩展名</p>
+</li>
+<li><p>是否编译</p>
+<p>  pip download 仅仅下载源码,不会编译<br>  pip wheel 会自动为所支持的平台编译Wheel包</p>
+</li>
+<li><p>下载位置不同</p>
+<p>  pip download 会下载到当前目录<br>  pip wheel 默认下载到 ~/.cache/pip/wheels 目录</p>
+</li>
+<li><p>用途不同<br>  pip download 用于获取源码包以便查看或自定义编译<br>  pip wheel 常用于离线环境,下载好Wheel包后直接pip install使用</p>
+</li>
+</ul>
+<p>所以,简单来说:</p>
+<p>需要源码包 - 使用pip download<br>需要离线安装 - 使用pip wheel</p>
+<p>两者有不同的使用场景。</p>
+<h1 id="四、pip-install-工作常见报错"><a href="#四、pip-install-工作常见报错" class="headerlink" title="四、pip install 工作常见报错"></a>四、pip install 工作常见报错</h1><p>Python.h: No such file or directory报错</p>
+<ul>
+<li>centos7 pip3 安装psycopg2出错</li>
+</ul>
+<p>参考URL: <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/fbbe3bdf1905">https://www.jianshu.com/p/fbbe3bdf1905</a><br>原因是：</p>
+<p>As mentioned in psycopg documentation <a target="_blank" rel="noopener" href="http://initd.org/psycopg/docs/install.html">http://initd.org/psycopg/docs/install.html</a></p>
+<p>C compiler<br>Python header files</p>
+<ul>
+<li><p>没有安装python的环境：</p>
+<p>  For apt (Ubuntu, Debian…):</p>
+<pre><code>  sudo apt-get install python-dev # for python2.x installs
+  sudo apt-get install python3-dev # for python3.x installs
+</code></pre>
+<p>  For yum (CentOS, RHEL…):</p>
+<pre><code>  sudo yum install python-devel # for python2.x installs
+  sudo yum install python3-devel # for python3.x installs
+</code></pre>
+</li>
+</ul>
+<p>————————————————<br>版权声明：本文为CSDN博主「西京刀客」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/inthat/article/details/117026589">https://blog.csdn.net/inthat/article/details/117026589</a></p>
  
       <!-- reward -->
       
@@ -731,7 +644,7 @@ param1, param2, ...      可选。 传给执行函数的其他参数（IE9 及�
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
 
     </footer>
   </div>
@@ -742,7 +655,7 @@ param1, param2, ...      可选。 传给执行函数的其他参数（IE9 及�
 
     
     <article
-  id="post-Vue父组件子组件的通信方式20种（全网最全总结）"
+  id="post-conda、python环境配置"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -753,8 +666,8 @@ param1, param2, ...      可选。 传给执行函数的其他参数（IE9 及�
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/09/15/Vue%E7%88%B6%E7%BB%84%E4%BB%B6%E5%AD%90%E7%BB%84%E4%BB%B6%E7%9A%84%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F20%E7%A7%8D%EF%BC%88%E5%85%A8%E7%BD%91%E6%9C%80%E5%85%A8%E6%80%BB%E7%BB%93%EF%BC%89/"
-    >Vue父组件子组件的通信方式20种（全网最全总结）</a> 
+  <a class="article-title" href="/2023/09/26/conda%E3%80%81python%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/"
+    >conda、python环境配置</a> 
 </h2>
  
 
@@ -762,8 +675,8 @@ param1, param2, ...      可选。 传给执行函数的其他参数（IE9 及�
     </header>
      
     <div class="article-meta">
-      <a href="/2023/09/15/Vue%E7%88%B6%E7%BB%84%E4%BB%B6%E5%AD%90%E7%BB%84%E4%BB%B6%E7%9A%84%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F20%E7%A7%8D%EF%BC%88%E5%85%A8%E7%BD%91%E6%9C%80%E5%85%A8%E6%80%BB%E7%BB%93%EF%BC%89/" class="article-date">
-  <time datetime="2023-09-15T07:30:45.000Z" itemprop="datePublished">2023-09-15</time>
+      <a href="/2023/09/26/conda%E3%80%81python%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" class="article-date">
+  <time datetime="2023-09-26T09:36:43.000Z" itemprop="datePublished">2023-09-26</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -773,977 +686,26 @@ param1, param2, ...      可选。 传给执行函数的其他参数（IE9 及�
       
     <div class="article-entry" itemprop="articleBody">
        
-  <h1 id="一、常用"><a href="#一、常用" class="headerlink" title="一、常用"></a>一、常用</h1><p>最近一直在封装各种组件, 提高组员开发效率,<br>遇到了各种情况下的父子组件, 兄弟组件之间各种传值,<br>这里做下总结和一些探索, 欢迎补充~</p>
-<h2 id="Props"><a href="#Props" class="headerlink" title="Props"></a>Props</h2><p>父组件向子组件传递数据，子组件通过props属性接收数据</p>
-<p>父组件：</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    &lt;child-component :parentData=&quot;data&quot;&gt;&lt;/child-component&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-import ChildComponent from &#39;./ChildComponent.vue&#39;
- 
-export default &#123;
-  components: &#123;
-    ChildComponent
-  &#125;,
-  data () &#123;
-    return &#123;
-      data: &#39;父组件传递的数据&#39;
-    &#125;
-  &#125;
-&#125;
-&lt;/script&gt;
+  <p>新建虚拟环境</p>
+<pre><code>conda create -n python36 python=3.6
 </code></pre>
-<p>子组件：</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    子组件接收到的数据：&#123;&#123; parentData &#125;&#125;
-  &lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-export default &#123;
-  props: &#123;
-    parentData: String
-  &#125;
-&#125;
-&lt;/script&gt;
+<p>设为当前环境</p>
+<pre><code>conda activate python36
 </code></pre>
-<p>Vue props默认值类型有哪些</p>
-<h2 id="emit和-on"><a href="#emit和-on" class="headerlink" title="$emit和$on"></a>$emit和$on</h2><p>子组件向父组件传递数据，子组件通过$emit触发事件，父组件通过$on监听事件并接收数据。</p>
-<p>父组件：</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    &lt;child-component @childEvent=&quot;handleChild&quot;&gt;&lt;/child-component&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-import ChildComponent from &#39;./ChildComponent.vue&#39;
- 
-export default &#123;
-  components: &#123;
-    ChildComponent
-  &#125;,
-  methods: &#123;
-    handleChild (data) &#123;
-      console.log(&#39;父组件接收到的数据：&#39; + data)
-    &#125;
-  &#125;
-&#125;
-&lt;/script&gt;
+<p>删除虚拟环境</p>
+<pre><code>conda remove -n python36 --all
 </code></pre>
-<p>子组件：</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    &lt;button @click=&quot;handleClick&quot;&gt;点击触发事件&lt;/button&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-export default &#123;
-  methods: &#123;
-    handleClick () &#123;
-      this.$emit(&#39;childEvent&#39;, &#39;子组件传递的数据&#39;)
-    &#125;
-  &#125;
-&#125;
-&lt;/script&gt;
+<p>安装必要的包</p>
+<pre><code>pip install -i https://pypi.tuna.tsinghua.edu.cn/simple xgboost==1.5.2
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple xlrd==1.2.0
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple pandas==1.1.4
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple openpyxl==3.0.10
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple Flask==2.0.2
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple Flask-Cors==3.0.10
 </code></pre>
-<h2 id="parent和-children"><a href="#parent和-children" class="headerlink" title="$parent和$children"></a>$parent和$children</h2><p>父组件向子组件传递数据，父组件通过$children获取子组件实例并调用子组件方法传递数据。</p>
-<p>父组件：</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    &lt;button @click=&quot;handleClick&quot;&gt;向子组件传递数据&lt;/button&gt;
-    &lt;child-component ref=&quot;child&quot;&gt;&lt;/child-component&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-import ChildComponent from &#39;./ChildComponent.vue&#39;
- 
-export default &#123;
-  components: &#123;
-    ChildComponent
-  &#125;,
-  methods: &#123;
-    handleClick () &#123;
-      this.$refs.child.handleData(&#39;父组件传递的数据&#39;)
-    &#125;
-  &#125;
-&#125;
-&lt;/script&gt;
+<p>导出依赖配置</p>
+<pre><code>pip freeze &gt; requirements.txt
 </code></pre>
-<p>子组件：</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    子组件
-  &lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-export default &#123;
-  methods: &#123;
-    handleData (data) &#123;
-      console.log(&#39;子组件接收到的数据：&#39; + data)
-    &#125;
-  &#125;
-&#125;
-&lt;/script&gt;
-</code></pre>
-<h2 id="attrs和-listeners"><a href="#attrs和-listeners" class="headerlink" title="$attrs和$listeners"></a>$attrs和$listeners</h2><p>父组件向子组件传递属性和事件，子组件通过$attrs获取属性，通过$listeners获取事件并绑定在子组件上。</p>
-<p>父组件：</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    &lt;child-component attr1=&quot;属性1&quot; attr2=&quot;属性2&quot; @event1=&quot;handleEvent&quot;&gt;&lt;/child-component&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-import ChildComponent from &#39;./ChildComponent.vue&#39;
- 
-export default &#123;
-  components: &#123;
-    ChildComponent
-  &#125;,
-  methods: &#123;
-    handleEvent (data) &#123;
-      console.log(&#39;父组件接收到的数据：&#39; + data)
-    &#125;
-  &#125;
-&#125;
-&lt;/script&gt;
-</code></pre>
-<p>子组件：</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    子组件
-  &lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-export default &#123;
-  mounted () &#123;
-    this.$emit(&#39;event1&#39;, &#39;子组件传递的数据&#39;)
-  &#125;
-&#125;
-&lt;/script&gt;
-</code></pre>
-<h2 id="provide和inject"><a href="#provide和inject" class="headerlink" title="provide和inject"></a>provide和inject</h2><p>父组件向子组件传递数据，父组件通过provide提供数据，子组件通过inject注入数据。</p>
-<p>父组件：</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    &lt;child-component&gt;&lt;/child-component&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-import ChildComponent from &#39;./ChildComponent.vue&#39;
- 
-export default &#123;
-  components: &#123;
-    ChildComponent
-  &#125;,
-  provide () &#123;
-    return &#123;
-      parentData: &#39;父组件提供的数据&#39;
-    &#125;
-  &#125;
-&#125;
-&lt;/script&gt;
-</code></pre>
-<p>子组件：</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    子组件接收到的数据：&#123;&#123; childData &#125;&#125;
-  &lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-export default &#123;
-  inject: [&#39;parentData&#39;],
-  computed: &#123;
-    childData () &#123;
-      return this.parentData + &#39;，子组件加工处理后的数据&#39;
-    &#125;
-  &#125;
-&#125;
-&lt;/script&gt;
-</code></pre>
-<h1 id="二、其他探索"><a href="#二、其他探索" class="headerlink" title="二、其他探索"></a>二、其他探索</h1><h2 id="EventBus"><a href="#EventBus" class="headerlink" title="EventBus"></a>EventBus</h2><p>父组件和子组件之间通过中央事件总线(EventBus)进行通信。</p>
-<p>EventBus.js：</p>
-<pre><code>import Vue from &#39;vue&#39;
-export const EventBus = new Vue()
-</code></pre>
-<p>父组件：</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    &lt;button @click=&quot;handleParent&quot;&gt;向子组件传递数据&lt;/button&gt;
-    &lt;child-component&gt;&lt;/child-component&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-import ChildComponent from &#39;./ChildComponent.vue&#39;
-import &#123; EventBus &#125; from &#39;./EventBus&#39;
- 
-export default &#123;
-  components: &#123;
-    ChildComponent
-  &#125;,
-  methods: &#123;
-    handleParent () &#123;
-      EventBus.$emit(&#39;parent-event&#39;, &#39;父组件传递的数据&#39;)
-    &#125;
-  &#125;
-&#125;
-&lt;/script&gt;
-</code></pre>
-<p>子组件：</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    子组件接收到的数据：&#123;&#123; childData &#125;&#125;
-  &lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-import &#123; EventBus &#125; from &#39;./EventBus&#39;
- 
-export default &#123;
-  data () &#123;
-    return &#123;
-      childData: &#39;&#39;
-    &#125;
-  &#125;,
-  mounted () &#123;
-    EventBus.$on(&#39;parent-event&#39;, data =&gt; &#123;
-      this.childData = data
-    &#125;)
-  &#125;
-&#125;
-&lt;/script&gt;
-</code></pre>
-<h2 id="Vuex"><a href="#Vuex" class="headerlink" title="Vuex"></a>Vuex</h2><p>父组件和子组件之间通过Vuex进行通信，共享同一状态树。</p>
-<p>store.js：</p>
-<pre><code>import Vue from &#39;vue&#39;
-import Vuex from &#39;vuex&#39;
- 
-Vue.use(Vuex)
- 
-export default new Vuex.Store(&#123;
-  state: &#123;
-    data: &#39;共享的数据&#39;
-  &#125;,
-  mutations: &#123;
-    setData (state, data) &#123;
-      state.data = data
-    &#125;
-  &#125;
-&#125;)
-</code></pre>
-<p>父组件：</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    &lt;button @click=&quot;handleParent&quot;&gt;向子组件传递数据&lt;/button&gt;
-    &lt;child-component&gt;&lt;/child-component&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-import ChildComponent from &#39;./ChildComponent.vue&#39;
-import store from &#39;./store&#39;
- 
-export default &#123;
-  components: &#123;
-    ChildComponent
-  &#125;,
-  methods: &#123;
-    handleParent () &#123;
-      store.commit(&#39;setData&#39;, &#39;父组件传递的数据&#39;)
-    &#125;
-  &#125;
-&#125;
-&lt;/script&gt;
-</code></pre>
-<p>子组件：</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    子组件接收到的数据：&#123;&#123; childData &#125;&#125;
-  &lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-import &#123; mapState &#125; from &#39;vuex&#39;
- 
-export default &#123;
-  computed: &#123;
-    ...mapState([&#39;data&#39;]),
-    childData () &#123;
-      return this.data + &#39;，子组件加工处理后的数据&#39;
-    &#125;
-  &#125;
-&#125;
-&lt;/script&gt;
-</code></pre>
-<h2 id="refs属性"><a href="#refs属性" class="headerlink" title="$refs属性"></a>$refs属性</h2><p>父组件可以通过$refs获取子组件的实例，进而访问子组件的属性和方法。</p>
-<p>父组件：</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    &lt;button @click=&quot;handleParent&quot;&gt;向子组件传递数据&lt;/button&gt;
-    &lt;child-component ref=&quot;child&quot;&gt;&lt;/child-component&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-import ChildComponent from &#39;./ChildComponent.vue&#39;
- 
-export default &#123;
-  components: &#123;
-    ChildComponent
-  &#125;,
-  methods: &#123;
-    handleParent () &#123;
-      this.$refs.child.childData = &#39;父组件修改的数据&#39;
-    &#125;
-  &#125;
-&#125;
-&lt;/script&gt;
-</code></pre>
-<p>子组件：</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    子组件接收到的数据：&#123;&#123; childData &#125;&#125;
-  &lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-export default &#123;
-  data () &#123;
-    return &#123;
-      childData: &#39;子组件原始数据&#39;
-    &#125;
-  &#125;
-&#125;
-&lt;/script&gt;
-</code></pre>
-<h2 id="parent属性"><a href="#parent属性" class="headerlink" title="$parent属性"></a>$parent属性</h2><p>子组件可以通过$parent获取父组件的实例，进而访问父组件的属性和方法。</p>
-<p>父组件：</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    &lt;child-component&gt;&lt;/child-component&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-import ChildComponent from &#39;./ChildComponent.vue&#39;
- 
-export default &#123;
-  components: &#123;
-    ChildComponent
-  &#125;,
-  data () &#123;
-    return &#123;
-      parentData: &#39;父组件数据&#39;
-    &#125;
-  &#125;,
-  methods: &#123;
-    handleParent () &#123;
-      console.log(&#39;父组件的方法&#39;)
-    &#125;
-  &#125;
-&#125;
-&lt;/script&gt;
-</code></pre>
-<p>子组件：</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    &lt;button @click=&quot;handleChild&quot;&gt;调用父组件方法&lt;/button&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-export default &#123;
-  methods: &#123;
-    handleChild () &#123;
-      console.log(this.$parent.parentData)
-      this.$parent.handleParent()
-    &#125;
-  &#125;
-&#125;
-&lt;/script&gt;
-</code></pre>
-<h2 id="root属性"><a href="#root属性" class="headerlink" title="$root属性"></a>$root属性</h2><p>子组件可以通过$root获取根组件的实例，进而访问根组件的属性和方法。</p>
-<p>根组件：</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    &lt;child-component&gt;&lt;/child-component&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-import ChildComponent from &#39;./ChildComponent.vue&#39;
- 
-export default &#123;
-  components: &#123;
-    ChildComponent
-  &#125;,
-  mounted () &#123;
-    console.log(&#39;根组件的数据：&#39; + this.rootData)
-    this.rootMethod()
-  &#125;,
-  data () &#123;
-    return &#123;
-      rootData: &#39;根组件的数据&#39;
-    &#125;
-  &#125;,
-  methods: &#123;
-    rootMethod () &#123;
-      console.log(&#39;根组件的方法&#39;)
-    &#125;
-  &#125;
-&#125;
-&lt;/script&gt;
-</code></pre>
-<p>子组件：</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    子组件
-  &lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-export default &#123;
-  mounted () &#123;
-    console.log(&#39;根组件的数据：&#39; + this.$root.rootData)
-    this.$root.rootMethod()
-  &#125;
-&#125;
-&lt;/script&gt;
-</code></pre>
-<h2 id="provide-inject-高级"><a href="#provide-inject-高级" class="headerlink" title="provide / inject (高级)"></a>provide / inject (高级)</h2><p>provide / inject 可以让祖先组件向所有后代组件注入一个依赖，让这些组件使用相同的依赖注入。</p>
-<p>祖先组件：</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    &lt;child-component&gt;&lt;/child-component&gt;
-    &lt;grand-child&gt;&lt;/grand-child&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-import ChildComponent from &#39;./ChildComponent.vue&#39;
-import GrandChild from &#39;./GrandChild.vue&#39;
- 
-export default &#123;
-  components: &#123;
-    ChildComponent,
-    GrandChild
-  &#125;,
-  provide: &#123;
-    sharedObj: &#123;
-      message: &#39;这是祖先组件注入的对象&#39;
-    &#125;
-  &#125;
-&#125;
-&lt;/script&gt;
-</code></pre>
-<p>直接子组件：</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    子组件
-  &lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-export default &#123;
-  inject: [&#39;sharedObj&#39;]
-&#125;
-&lt;/script&gt;
-</code></pre>
-<p>间接子组件：</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    子组件接收到的数据：&#123;&#123; childData &#125;&#125;
-  &lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-export default &#123;
-  inject: [&#39;sharedObj&#39;],
-  computed: &#123;
-    childData () &#123;
-      return this.sharedObj.message + &#39;，子组件加工处理后的数据&#39;
-    &#125;
-  &#125;
-&#125;
-&lt;/script&gt;
-</code></pre>
-<h2 id="provide-inject-Vuex-高级"><a href="#provide-inject-Vuex-高级" class="headerlink" title="provide / inject + Vuex (高级)"></a>provide / inject + Vuex (高级)</h2><p>使用provide / inject注入Vuex的实例，使所有组件使用相同的Vuex实例。</p>
-<p>store.js：</p>
-<pre><code>import Vue from &#39;vue&#39;
-import Vuex from &#39;vuex&#39;
- 
-Vue.use(Vuex)
- 
-export default new Vuex.Store(&#123;
-  state: &#123;
-    data: &#39;共享的数据&#39;
-  &#125;,
-  mutations: &#123;
-    setData (state, data) &#123;
-      state.data = data
-    &#125;
-  &#125;
-&#125;)
-</code></pre>
-<p>根组件：</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    &lt;child-component&gt;&lt;/child-component&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-import ChildComponent from &#39;./ChildComponent.vue&#39;
-import store from &#39;./store&#39;
- 
-export default &#123;
-  components: &#123;
-    ChildComponent
-  &#125;,
-  provide () &#123;
-    return &#123;
-      store
-    &#125;
-  &#125;
-&#125;
-&lt;/script&gt;
-</code></pre>
-<p>子组件和孙组件：</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    组件接收到的数据：&#123;&#123; componentData &#125;&#125;
-  &lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-export default &#123;
-  inject: &#123;
-    store: &#123;
-      default: null
-    &#125;
-  &#125;,
-  computed: &#123;
-    componentData () &#123;
-      return this.store.state.data + &#39;，组件加工处理后的数据&#39;
-    &#125;
-  &#125;
-&#125;
-&lt;/script&gt;
-</code></pre>
-<h2 id="自定义事件"><a href="#自定义事件" class="headerlink" title="自定义事件"></a>自定义事件</h2><p>使用vm.$on(eventName, callback)事件监听，使用vm.$emit(eventName, …args)触发事件。</p>
-<p>父组件：</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    &lt;child-component @custom-event=&quot;handleCustomEvent&quot;&gt;&lt;/child-component&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-import ChildComponent from &#39;./ChildComponent.vue&#39;
- 
-export default &#123;
-  components: &#123;
-    ChildComponent
-  &#125;,
-  methods: &#123;
-    handleCustomEvent (data) &#123;
-      console.log(&#39;父组件接收到的数据：&#39; + data)
-    &#125;
-  &#125;
-&#125;
-&lt;/script&gt;
-</code></pre>
-<p>子组件：</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    &lt;button @click=&quot;handleClick&quot;&gt;点击触发事件&lt;/button&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-export default &#123;
-  methods: &#123;
-    handleClick () &#123;
-      this.$emit(&#39;custom-event&#39;, &#39;子组件传递的数据&#39;)
-    &#125;
-  &#125;
-&#125;
-&lt;/script&gt;
-</code></pre>
-<h2 id="兄弟组件之间的通信"><a href="#兄弟组件之间的通信" class="headerlink" title="兄弟组件之间的通信"></a>兄弟组件之间的通信</h2><p>使用一个空的Vue实例作为事件总线，一边向事件总线发出事件，另一边监听事件。</p>
-<p>EventBus.js：</p>
-<pre><code>import Vue from &#39;vue&#39;
-export const EventBus = new Vue()
-</code></pre>
-<p>组件A：<br>    <template><br>      <div><br>        &lt;button @click=”handleClick”&gt;向组件B传递数据<br>      </div><br>    </template></p>
-<pre><code>&lt;script&gt;
-import &#123; EventBus &#125; from &#39;./EventBus&#39;
- 
-export default &#123;
-  methods: &#123;
-    handleClick () &#123;
-      EventBus.$emit(&#39;event&#39;, &#39;组件A传递的数据&#39;)
-    &#125;
-  &#125;
-&#125;
-&lt;/script&gt;
-</code></pre>
-<p>组件B：</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    组件B接收到的数据：&#123;&#123; data &#125;&#125;
-  &lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-import &#123; EventBus &#125; from &#39;./EventBus&#39;
- 
-export default &#123;
-  data () &#123;
-    return &#123;
-      data: &#39;&#39;
-    &#125;
-  &#125;,
-  mounted () &#123;
-    EventBus.$on(&#39;event&#39;, data =&gt; &#123;
-      this.data = data
-    &#125;)
-  &#125;
-&#125;
-&lt;/script&gt;
-</code></pre>
-<h2 id="localStorage（浏览器缓存）"><a href="#localStorage（浏览器缓存）" class="headerlink" title="localStorage（浏览器缓存）"></a>localStorage（浏览器缓存）</h2><p>使用浏览器缓存来存储数据，在需要通信的组件中存储并监听缓存中的数据。</p>
-<p>组件A：</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    &lt;button @click=&quot;handleClick&quot;&gt;向组件B传递数据&lt;/button&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-export default &#123;
-  methods: &#123;
-    handleClick () &#123;
-      localStorage.setItem(&#39;data&#39;, &#39;组件A传递的数据&#39;)
-    &#125;
-  &#125;
-&#125;
-&lt;/script&gt;
-</code></pre>
-<p>组件B：</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    组件B接收到的数据：&#123;&#123; data &#125;&#125;
-  &lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-export default &#123;
-  data () &#123;
-    return &#123;
-      data: &#39;&#39;
-    &#125;
-  &#125;,
-  mounted () &#123;
-    window.addEventListener(&#39;storage&#39;, this.handleStorageUpdate)
-    this.updateData()
-  &#125;,
-  beforeDestroy () &#123;
-    window.removeEventListener(&#39;storage&#39;, this.handleStorageUpdate)
-  &#125;,
-  methods: &#123;
-    handleStorageUpdate (event) &#123;
-      if (event.key === &#39;data&#39;) &#123;
-        this.updateData()
-      &#125;
-    &#125;,
-    updateData () &#123;
-      this.data = localStorage.getItem(&#39;data&#39;) || &#39;&#39;
-    &#125;
-  &#125;
-&#125;
-&lt;/script&gt;
-</code></pre>
-<h2 id="发布订阅（Pub-Sub）模式"><a href="#发布订阅（Pub-Sub）模式" class="headerlink" title="发布订阅（Pub/Sub）模式"></a>发布订阅（Pub/Sub）模式</h2><p>使用一个消息中心，订阅者向消息中心订阅消息，发布者向消息中心发布消息，消息中心将消息通知给所有订阅者。</p>
-<p>消息中心：</p>
-<pre><code>// PubSub.js
-export const PubSub = &#123;
-  events: &#123;&#125;,
-  subscribe (event, callback) &#123;
-    if (!this.events[event]) &#123;
-      this.events[event] = []
-    &#125;
-    this.events[event].push(callback)
-  &#125;,
-  publish (event, data) &#123;
-    if (!this.events[event]) &#123;
-      this.events[event] = []
-    &#125;
-    this.events[event].forEach(callback =&gt; callback(data))
-  &#125;
-&#125;
-</code></pre>
-<p>组件A：</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    &lt;button @click=&quot;handleClick&quot;&gt;向组件B传递数据&lt;/button&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-import &#123; PubSub &#125; from &#39;./PubSub&#39;
- 
-export default &#123;
-  methods: &#123;
-    handleClick () &#123;
-      PubSub.publish(&#39;event&#39;, &#39;组件A传递的数据&#39;)
-    &#125;
-  &#125;
-&#125;
-&lt;/script&gt;
-</code></pre>
-<p>组件B：</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    组件B接收到的数据：&#123;&#123; data &#125;&#125;
-  &lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-import &#123; PubSub &#125; from &#39;./PubSub&#39;
- 
-export default &#123;
-  data () &#123;
-    return &#123;
-      data: &#39;&#39;
-    &#125;
-  &#125;,
-  mounted () &#123;
-    PubSub.subscribe(&#39;event&#39;, data =&gt; &#123;
-      this.data = data
-    &#125;)
-  &#125;
-&#125;
-&lt;/script&gt;
-</code></pre>
-<h2 id="WebSocket-高级"><a href="#WebSocket-高级" class="headerlink" title="WebSocket (高级)"></a>WebSocket (高级)</h2><p>使用WebSocket协议实现实时通信，将所有组件连接到同一个WebSocket服务器，通过推送消息实现通信。</p>
-<p>连接WebSocket服务器：</p>
-<pre><code>const ws = new WebSocket(&#39;ws://localhost:3000&#39;)
- 
-ws.onopen = function () &#123;
-  console.log(&#39;WebSocket已连接&#39;)
-&#125;
- 
-ws.onclose = function () &#123;
-  console.log(&#39;WebSocket已关闭&#39;)
-&#125;
- 
-ws.onerror = function () &#123;
-  console.log(&#39;WebSocket出错&#39;)
-&#125;
-</code></pre>
-<p>组件A：</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    &lt;button @click=&quot;handleClick&quot;&gt;向组件B传递数据&lt;/button&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-const ws = new WebSocket(&#39;ws://localhost:3000&#39;)
- 
-export default &#123;
-  methods: &#123;
-    handleClick () &#123;
-      ws.send(&#39;组件A传递的数据&#39;)
-    &#125;
-  &#125;
-&#125;
-&lt;/script&gt;
-</code></pre>
-<p>组件B：</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    组件B接收到的数据：&#123;&#123; data &#125;&#125;
-  &lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-const ws = new WebSocket(&#39;ws://localhost:3000&#39;)
- 
-export default &#123;
-  data () &#123;
-    return &#123;
-      data: &#39;&#39;
-    &#125;
-  &#125;,
-  mounted () &#123;
-    ws.onmessage = event =&gt; &#123;
-      this.data = event.data
-    &#125;
-  &#125;
-&#125;
-&lt;/script&gt;
-</code></pre>
-<h2 id="路由参数（高级）"><a href="#路由参数（高级）" class="headerlink" title="路由参数（高级）"></a>路由参数（高级）</h2><p>使用路由参数来传递数据，通常适用于父子组件之间或兄弟组件之间的通信。</p>
-<p>父组件：</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    点击以下链接可以传递数据：&lt;br&gt;
-    &lt;router-link :to=&quot;&#123; name: &#39;child&#39;, params: &#123; data: &#39;父组件传递的数据&#39; &#125; &#125;&quot;&gt;传递数据到子组件&lt;/router-link&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-</code></pre>
-<p>子组件：</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    子组件接收到的数据：&#123;&#123; $route.params.data &#125;&#125;
-  &lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-export default &#123;
-  mounted () &#123;
-    console.log(&#39;子组件接收到的数据：&#39; + this.$route.params.data)
-  &#125;
-&#125;
-&lt;/script&gt;
-</code></pre>
-<p>兄弟组件：</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    兄弟组件接收到的数据：&#123;&#123; $route.params.data &#125;&#125;
-  &lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-export default &#123;
-  mounted () &#123;
-    console.log(&#39;兄弟组件接收到的数据：&#39; + this.$route.params.data)
-  &#125;
-&#125;
-&lt;/script&gt;
-</code></pre>
-<h2 id="Vuex状态管理（高级）"><a href="#Vuex状态管理（高级）" class="headerlink" title="Vuex状态管理（高级）"></a>Vuex状态管理（高级）</h2><p>使用Vuex管理公共状态，组件通过Vuex进行通信。</p>
-<p>store.js：</p>
-<pre><code>import Vue from &#39;vue&#39;
-import Vuex from &#39;vuex&#39;
- 
-Vue.use(Vuex)
- 
-export default new Vuex.Store(&#123;
-  state: &#123;
-    data: &#39;共享的数据&#39;
-  &#125;,
-  mutations: &#123;
-    setData (state, data) &#123;
-      state.data = data
-    &#125;
-  &#125;
-&#125;)
-</code></pre>
-<p>组件A：</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    &lt;button @click=&quot;handleClick&quot;&gt;向组件B传递数据&lt;/button&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-import store from &#39;./store&#39;
- 
-export default &#123;
-  methods: &#123;
-    handleClick () &#123;
-      store.commit(&#39;setData&#39;, &#39;组件A传递的数据&#39;)
-    &#125;
-  &#125;
-&#125;
-&lt;/script&gt;
-</code></pre>
-<p>组件B：</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    组件B接收到的数据：&#123;&#123; data &#125;&#125;
-  &lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-import &#123; mapState &#125; from &#39;vuex&#39;
- 
-export default &#123;
-  computed: &#123;
-    ...mapState([&#39;data&#39;])
-  &#125;,
-  mounted () &#123;
-    console.log(&#39;组件B接收到的数据：&#39; + this.data)
-  &#125;
-&#125;
-&lt;/script&gt;
-</code></pre>
-<h2 id="事件总线（高级）"><a href="#事件总线（高级）" class="headerlink" title="事件总线（高级）"></a>事件总线（高级）</h2><p>使用一个空的Vue实例作为事件总线，组件A通过事件总线向组件B传递数据。</p>
-<p>事件总线：</p>
-<pre><code>// EventBus.js
-import Vue from &#39;vue&#39;
-export const EventBus = new Vue()
-</code></pre>
-<p>组件A：</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    &lt;button @click=&quot;handleClick&quot;&gt;向组件B传递数据&lt;/button&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-import &#123; EventBus &#125; from &#39;./EventBus&#39;
- 
-export default &#123;
-  methods: &#123;
-    handleClick () &#123;
-      EventBus.$emit(&#39;event&#39;, &#39;组件A传递的数据&#39;)
-    &#125;
-  &#125;
-&#125;
-&lt;/script&gt;
-</code></pre>
-<p>组件B：</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    组件B接收到的数据：&#123;&#123; data &#125;&#125;
-  &lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-import &#123; EventBus &#125; from &#39;./EventBus&#39;
- 
-export default &#123;
-  data () &#123;
-    return &#123;
-      data: &#39;&#39;
-    &#125;
-  &#125;,
-  mounted () &#123;
-    EventBus.$on(&#39;event&#39;, data =&gt; &#123;
-      this.data = data
-    &#125;)
-  &#125;
-&#125;
-&lt;/script&gt;
-</code></pre>
-<p>————————————————<br>版权声明：本文为CSDN博主「慕白Lee」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/libusi001/article/details/131668644">https://blog.csdn.net/libusi001/article/details/131668644</a></p>
  
       <!-- reward -->
       
@@ -1754,7 +716,7 @@ export default &#123;
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
 
     </footer>
   </div>
@@ -1770,7 +732,7 @@ export default &#123;
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/3/">上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/46/">46</a><a class="extend next" rel="next" href="/page/5/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/3/">上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/48/">48</a><a class="extend next" rel="next" href="/page/5/">下一页</a>
   </nav>
   
 </section>

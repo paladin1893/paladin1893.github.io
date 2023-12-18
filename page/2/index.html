@@ -154,7 +154,7 @@
     
     
     <article
-  id="post-Avue-crud 常用方法、属性"
+  id="post-Python判断文件是否存在并且删除"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -165,8 +165,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/10/02/Avue-crud%20%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E3%80%81%E5%B1%9E%E6%80%A7/"
-    >Avue-crud 常用方法、属性</a> 
+  <a class="article-title" href="/2023/10/13/Python%E5%88%A4%E6%96%AD%E6%96%87%E4%BB%B6%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8%E5%B9%B6%E4%B8%94%E5%88%A0%E9%99%A4/"
+    >Python判断文件是否存在并且删除</a> 
 </h2>
  
 
@@ -174,8 +174,8 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2023/10/02/Avue-crud%20%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E3%80%81%E5%B1%9E%E6%80%A7/" class="article-date">
-  <time datetime="2023-10-02T02:02:00.000Z" itemprop="datePublished">2023-10-02</time>
+      <a href="/2023/10/13/Python%E5%88%A4%E6%96%AD%E6%96%87%E4%BB%B6%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8%E5%B9%B6%E4%B8%94%E5%88%A0%E9%99%A4/" class="article-date">
+  <time datetime="2023-10-13T02:13:00.000Z" itemprop="datePublished">2023-10-13</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -185,330 +185,69 @@
       
     <div class="article-entry" itemprop="articleBody">
        
-  <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>Avue的v2版本是一个基于element-ui低代码前端框架，Avue的v3是一个基于element-plus低代码前端框架，它使用 JSON 配置来生成页面，可以减少页面开发工作量，极大提升效率。avue对于后台管理系统的开发极其便捷，就是配置不容易记住，熟练该框架配置来开发会好点，不然真不如直接用element来开发的好，以下以v2为例。</p>
-<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>npm、yarn安装</p>
-<pre><code>npm i @smallwei/avue -S
-yarn add @smallwei/avue -S
-</code></pre>
-<p>或<br>CDN在线安装</p>
-<pre><code>&lt;!-- 引入样式文件 --&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@smallwei/avue/lib/index.css&quot;/&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://unpkg.com/element-ui/lib/theme-chalk/index.css&quot;/&gt;
-&lt;!-- 引入相关JS 文件 --&gt;
-&lt;script src=&quot;https://unpkg.com/vue/dist/vue.js&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;https://unpkg.com/element-ui/lib/index.js&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;https://cdn.jsdelivr.net/npm/@smallwei/avue/lib/avue.min.js&quot;&gt;&lt;/script&gt;
-</code></pre>
-<h1 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h1><p>通过CDN安装的，会挂载在全局属性AVUE下，通过 Vue.use(AVUE) 注册。</p>
-<pre><code>import Avue from &#39;@smallwei/avue&#39;;
-import &#39;@smallwei/avue/lib/index.css&#39;;
-Vue.use(Avue);
-</code></pre>
-<h1 id="全局配置"><a href="#全局配置" class="headerlink" title="全局配置"></a>全局配置</h1><pre><code>Vue.use(AVUE,&#123;
-  size:&#39;&#39;, // 组件的尺寸，默认small。可选值 small/mini/medium
-  tableSize:&#39;&#39;, // 
-  formSize:&#39;&#39;, // 
-  appendToBody:true, //
-  modalAppendToBody:true, // 
-  menuType:&#39;&#39;, // 用于改变操作栏菜单按钮类型性，属性的组件的默认尺寸均为 text。可选值 button/icon/text/menu
-  qiniu:&#123; // 七牛云配置
-    AK: &#39;&#39;,
-    SK: &#39;&#39;,
-    scope: &#39;&#39;,
-    url: &#39;&#39;,
-    deadline: 1
-  &#125;,
-  ali:&#123; // 阿里云配置
-    region: &#39;&#39;,
-    endpoint: &#39;&#39;,
-    accessKeyId: &#39;&#39;,
-    accessKeySecret: &#39;&#39;,
-    bucket: &#39;&#39;,
-  &#125;,
-  theme:&#39;&#39;, // 主题颜色配置，属性的组件的默认白色。可选值 dark
-  canvas:&#123; // 水印配置
-    text: &#39;avuejs.com&#39;,
-    fontFamily: &#39;microsoft yahei&#39;,
-    color: &quot;#999&quot;,
-    fontSize: 16,
-    opacity: 100,
-    bottom: 10,
-    right: 10,
-    ratio: 1
-  &#125;,
-&#125;);
-</code></pre>
-<h1 id="国际化"><a href="#国际化" class="headerlink" title="国际化"></a>国际化</h1><p>Avue 采用中文作为默认语言，同时支持多语言切换</p>
-<pre><code>import Vue from &#39;vue&#39;
-import Avue from &#39;@smallwei/avue&#39;
-import zhLocale from &#39;@smallwei/avue/lib/locale/lang/zh&#39;
-import enLocale from &#39;@smallwei/avue/lib/locale/lang/en&#39;
- 
-Vue.use(Avue, &#123; enLocale &#125;)
-</code></pre>
-<h1 id="全局api"><a href="#全局api" class="headerlink" title="全局api"></a>全局api</h1><pre><code>$DialogForm弹窗表单
-$Clipboard复制到剪切板
-$ImagePreview图片预览
-$Print 打印插件
-$Export excel导出
-watermark全局水印
-downFile文件下载
-deepClone对象深拷贝
-validatenull判断空
-findNode数组中寻找对象
-findArray数组中寻找对象下标
-</code></pre>
-<h1 id="crud-配置项-option"><a href="#crud-配置项-option" class="headerlink" title="crud 配置项 option"></a>crud 配置项 option</h1><p>crud 表格回调函数事件</p>
-<p>on-load：这个事件会在表格所在的组件加载时就会执行，初始化表格数据。当表格翻页、页码变化时候也会自动执行该方法，使用了这个方法可以省略表格的current-change 、size-change两个回调函数。</p>
-<p>current-change：表格页码发生变化时触发，第一个参数为当前页码。</p>
-<p>size-change：表格页容量变化时触发，第一个参数就是当前页容量大小。</p>
-<p>search-change ：表格查询按钮回调函数，默认有两个参数 form与done， form为搜索框的值，done为关闭搜索的刷新状态回调函数。</p>
-<p>row-save ：表格新增表单确定按钮的回调函数，默认有三个参数分别为：row（表单的值），done（用于关闭表单回调函数），loading（页面loading状态） 。</p>
-<p>row-update ：表格行编辑确定按钮的回调，默认四个参数 row（当前行），index（索引），done（关闭弹框回调函数），loading（页面loading状态）。</p>
-<p>row-del：表格操作行删除按钮回调函数，默认两个参数，row（当前行数据），index（当前索引） 。</p>
-<p>refresh-change：表格的刷新按钮回调函数。</p>
-<p>current-row-change：当前表格行被点击时的回调函数，第一个参数是当前行数据。</p>
-<p>tree-load：表格行展开的懒加载回调，带三个参数 row（当前展开行的数据），treeNode（展开行节点数据），resolve（行懒加载的成功回调函数，在resolve里面将懒加载的数据传出去表格进行渲染）。</p>
-<p>before-close：打开前的回调函数，两个参数done（用于关闭Dialog），type（当前窗口类型）。</p>
-<p>before-close：关闭前的回调函数，done（用于关闭Dialog），type（当前窗口的类型）。</p>
-<p>search-reset：点击清空按钮触发，清空搜索框回调函数。</p>
-<p>selection-change：当表格选择项勾选发生变化时会触发该回调函数。</p>
-<p>dateChange：dateBtn为true时的选择日期回调函数。</p>
-<pre><code>&lt;avue-crud
-  ref=&quot;crud&quot;
-  data=&quot;data&quot; // 表格显示的数据
-  :option=&quot;option&quot; // 表格配置项
-  :page.sync=&quot;page&quot;
-  :permission=&quot;permission&quot; // 表格按钮权限控制
-  @on-load=&quot;onLoad&quot;
-  @current-change=&quot;currentChange&quot;
-  @size-change=&quot;pageSizeChange&quot;
-  @search-change=&quot;searchChange&quot;
-  @row-save=&quot;rowSave&quot;
-  @row-update=&quot;rowUpdate&quot;
-  @row-del=&quot;rowDel&quot;
-  @refresh-change=&quot;refreshChange&quot;
-  @current-row-change=&quot;handleCurrentRowChange&quot;
-  @tree-load=&quot;treeLoad&quot;
-  @before-open=&quot;beforeOpen&quot;
-  @before-close=&quot;beforeClose&quot;
-  @search-reset=&quot;searchReset&quot;
-/&gt;
-const option = &#123;
-    &#39;table-loading&#39;:&#39;&#39;, // 表格等待框的控制
-    size:&#39;&#39;, // 组件尺寸
-    maxHeight:&#39;&#39;, // 表格的最大高度
-    index:&#39;&#39;, // 是否有序号
-    indexWidth:&#39;&#39;, // 序号列宽度
-    indexFixed:&#39;&#39;, // 序号列是否冻结列
-    menu:&#39;&#39;, // 是否有操作栏
-    menuWidth:&#39;&#39;, // 操作栏宽度
-    menuTitle:&#39;&#39;, // 操作栏标题
-    menuFixed:&#39;&#39;, // 操作栏列冻结列
-    menuType:&#39;&#39;, // 操作栏按钮样式
-    menuHeaderAlign:&#39;&#39;, // 操作栏表头的对齐方式
-    title:&#39;&#39;, // 表格标题
-    addBtn:&#39;&#39;, // 表格新增按钮；edit（修改）、del（删除）、view（查看）、update（修改）、save（保存）、cancel（取消）、search（查询）、empty（清空）
-    addBtnText:&#39;&#39;, // 表格新增按钮文案
-    addBtnIcon:&#39;&#39;, // 表格新增按钮图标
-    printBtn:&#39;&#39;, // 表格打印按钮
-    excelBtn:&#39;&#39;, // 表格导出按钮
-    filterBtn:&#39;&#39;, // 表格自定义过滤按钮
-    refreshBtn:&#39;&#39;, // 表格刷新数据按钮
-    columnBtn:&#39;&#39;, // 表格列操作按钮
-    searchShowBtn:&#39;&#39;, // 表格搜索显隐按钮
-    copyBtn:&#39;&#39;, // 表格复制数据按钮
-    addTitle:&#39;&#39;, // 表格新增弹窗标题 edit（修改）、view（查看）
-    dialogDrag:&#39;&#39;, // 表格弹窗是否可以拖拽
-    searchIndex:&#39;&#39;, // 表格搜索半收缩个数
-    searchPlaceholder:&#39;&#39;, // 搜索项辅助文字
-    searchSpan:&#39;&#39;, // 搜索项框栅列
-    searchGutter:&#39;&#39;, // 搜索项框间距
-    searchLabelWidth:&#39;&#39;, // 搜索项标题宽度
-    searchLabelPosition:&#39;&#39;, // 搜索项标题位置
-    column:[ // 表格列配置
-        &#123;
-            label:&#39;&#39;, // 列标题
-            prop:&#39;&#39;, // 列标题的内容属性名称
-            type:&#39;&#39;, // 
-            width:&#39;&#39;, // 对应列的宽度
-            minWidth:&#39;&#39;, // 对应列的最小宽度
-            fixed:&#39;&#39;, // 列固定
-            sortable:&#39;&#39;, // 对应列是否可以排序，监听 sort-change 回调，true, false, &#39;custom&#39;
-            formatter:&#39;&#39;, // 格式化列内容，(row, value, row, column)
-            overHidden:&#39;&#39;, // 当内容过长被隐藏时显示 tooltip
-            align:&#39;&#39;, // 对齐方式
-            headerAlign:&#39;&#39;, // 表头对齐方式
-            filters:&#39;&#39;, // 数据过滤的选项
-            search:&#39;&#39;, // 是否为搜索项
-            searchValue:&#39;&#39;, // 搜索项初始化值
-            searchPlaceholder:&#39;&#39;, // 搜索项辅助文字
-            searchSpan:&#39;&#39;, // 搜索项框栅列
-            searchOrder:&#39;&#39;, // 搜索项位置排序，序号越大越靠前
-            searchLabelWidth:&#39;&#39;, // 搜索项标题宽度
-            searchClearable:&#39;&#39;, // 搜索项清除
-            searchMultiple:&#39;&#39;, // 搜索项是否多选
-            searchTags:&#39;&#39;, // 搜索项将选中值按文字的形式展示
-            display:&#39;&#39;, // 弹出表单是否显示
-            disabled:&#39;&#39;, // 弹出表单是否禁止
-            addDisabled:&#39;&#39;, // 表单新增时项是否禁止，edit（编辑）、view（查看）
-            addDisplay:&#39;&#39;, // 表单新增时项是否显示，edit（编辑）、view（查看）
-            resizable:&#39;&#39;, // 对应列是否可以通过拖动改变宽度（需要在option中border属性为真）
-            searchClearable:&#39;&#39;, // 搜索项清除
-            searchClearable:&#39;&#39;, // 搜索项清除
-            searchClearable:&#39;&#39;, // 搜索项清除
-            dicData:[ // 下拉项字典枚举
-                &#123;label:&#39;A&#39;,value: &#39;a&#39;&#125;,
-            ],
-            rules:[ // 表单字段校验规则
-                &#123;equired: true,message: &quot;请输入姓名&quot;,trigger: &quot;blur&quot;&#125;,
-            ],
-            hide: false, // 隐藏列
-        &#125;
-    ],
-&#125;;
-</code></pre>
-<h1 id="自定义内容"><a href="#自定义内容" class="headerlink" title="自定义内容"></a>自定义内容</h1><pre><code>&lt;avue-crud :data=&quot;data&quot; :option=&quot;option&quot; ref=&quot;crud&quot;&gt;
-  &lt;!-- 左边插槽 --&gt;
-  &lt;template slot-scope=&quot;scope&quot; slot=&quot;menuLeft&quot;&gt;
-    &lt;el-button type=&quot;danger&quot; @click=&quot;$refs.crud.rowAdd()&quot;&gt;新增&lt;/el-button&gt;
-  &lt;/template&gt;
-  &lt;!-- 右边插槽 --&gt;
-  &lt;template slot-scope=&quot;scope&quot; slot=&quot;menuRight&quot;&gt;
-    &lt;el-button type=&quot;danger&quot; @click=() =&gt; &#123;&#125;&quot;&gt;刷新&lt;/el-button&gt;
-  &lt;/template&gt;
-  &lt;!-- 自定义行内操作栏插槽 --&gt;
-  &lt;template slot-scope=&quot;&#123;row,index&#125;&quot; slot=&quot;menu&quot;&gt;
-     &lt;el-button @click=&quot;$refs.crud.rowEdit(row,index)&quot;&gt;编辑&lt;/el-button&gt;
-     &lt;el-button @click=&quot;$refs.crud.rowDel(row,index)&quot;&gt;删除&lt;/el-button&gt;
-  &lt;/template&gt;
-  &lt;!-- 自定义弹窗内按钮插槽 --&gt;
-  &lt;template slot-scope=&quot;&#123;row,index,type&#125;&quot; slot=&quot;menuForm&quot;&gt;
-    &lt;el-button v-if=&quot;type==&#39;add&#39;&quot; @click=&quot;$refs.crud.rowSave()&quot;&gt;自定义新增&lt;/el-button&gt;
-    &lt;el-button v-if=&quot;type==&#39;edit&#39;&quot; @click=&quot;$refs.crud.rowUpdate()&gt;自定义修改&lt;/el-button&gt;
-    &lt;el-button @click=&quot;$refs.crud.closeDialog()&quot;&gt;取消&lt;/el-button&gt;
-  &lt;/template&gt;
-  &lt;!-- 自定义表单插槽，slot=&quot;propForm&quot; --&gt;
-  &lt;template slot-scope=&quot;&#123;type,disabled&#125;&quot; slot=&quot;nameForm&quot;&gt; // column: [&#123;prop:&#39;name&#39;,formslot:true&#125;]
-      &lt;el-tag v-if=&quot;type==&#39;add&#39;&quot;&gt;新增&lt;/el-tag&gt;
-      &lt;el-tag v-else-if=&quot;type==&#39;edit&#39;&quot;&gt;修改&lt;/el-tag&gt;
-      &lt;el-tag v-else-if=&quot;type==&#39;view&#39;&quot;&gt;查看&lt;/el-tag&gt;
-      &lt;el-tag&gt;&#123;&#123;user.name?user.name:'暂时没有内容'&#125;&#125;&lt;/el-tag&gt;
-      &lt;el-input :disabled=&quot;disabled&quot; v-model=&quot;user.name&quot;&gt;&lt;/el-input&gt;
-  &lt;/template&gt;
-  &lt;!-- 自定义表单错误提示插槽，slot=&quot;propError&quot; --&gt;
-  &lt;template slot-scope=&quot;&#123;error&#125;&quot; slot=&quot;nameError&quot;&gt; // column: [&#123;prop:&#39;name&#39;,labelslot:true&#125;]
-      &lt;p style=&quot;color:green&quot;&gt;自定义提示&#123;&#123;error&#125;&#125;&lt;/p&gt;
-  &lt;/template&gt;
-  &lt;!-- 自定义表单标题，slot=&quot;propLabel&quot; --&gt;
-  &lt;template slot-scope=&quot;scope&quot; slot=&quot;nameLabel&quot;&gt; // column: [&#123;prop:&#39;name&#39;,errorslot:true&#125;]
-     &lt;span&gt;姓名&amp;nbsp;&amp;nbsp;&lt;/span&gt;
-     &lt;el-tooltip class=&quot;item&quot; effect=&quot;dark&quot; content=&quot;文字提示&quot; placement=&quot;top-start&quot;&gt;
-      &lt;i class=&quot;el-icon-warning&quot;&gt;&lt;/i&gt;
-    &lt;/el-tooltip&gt;
-  &lt;/template&gt;
-  &lt;!-- 向搜索表单插入一个额外的（column中没有的字段）输入框 --&gt;
-  &lt;template slot=&quot;search&quot;&gt;
-      &lt;el-form-item label=&quot;状态&quot;&gt;
-          &lt;el-input placeholder=&quot;状态&quot; v-model=&quot;search.value&quot;/&gt;
-      &lt;/el-form-item&gt;
-  &lt;/template&gt;
-  &lt;!-- 向表单中插入一个额外的输入框 --&gt;
-  &lt;template slot=&quot;menuForm&quot;&gt;
-      &lt;el-form-item label=&quot;维修&quot;&gt;
-          &lt;el-input placeholder=&quot;维修&quot; v-model=&quot;search.value&quot;/&gt;
-      &lt;/el-form-item&gt;
-  &lt;/template&gt;
-&lt;/avue-crud&gt;
-</code></pre>
-<p>————————————————<br>版权声明：本文为CSDN博主「my__flower」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/my__flower/article/details/129419199">https://blog.csdn.net/my__flower/article/details/129419199</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
+  <p><a target="_blank" rel="noopener" href="https://www.python100.com/html/4XI33HW03WL0.html">https://www.python100.com/html/4XI33HW03WL0.html</a></p>
+<p>对于不熟悉Python文件操作的开发者来说，如何判断文件是否存在并删除是一件常见的问题。本文将会详细介绍Python如何判断文件是否存在，并通过多个方面介绍如何删除指定文件。</p>
+<p>一、Python如何判断文件是否存在？</p>
+<p>在Python中，使用os和os.path模块可以判断文件是否存在。下面是一个判断文件是否存在的代码：</p>
+<pre><code>import os
 
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-修改conda虚拟环境安装路径"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/10/01/%E4%BF%AE%E6%94%B9conda%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85%E8%B7%AF%E5%BE%84/"
-    >修改conda虚拟环境安装路径</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/10/01/%E4%BF%AE%E6%94%B9conda%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85%E8%B7%AF%E5%BE%84/" class="article-date">
-  <time datetime="2023-10-01T02:01:00.000Z" itemprop="datePublished">2023-10-01</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>前言<br>第一次创建conda虚拟环境时，发现默认安装路径是C盘。为了避免后期装的包越来越多，虚拟环境占用空间太大导致C盘爆满的问题，需要修改conda的安装路径。在网上仔细学习，总结出如下有效的解决方法。</p>
-<p>下载Miniconda<br>因为我希望能够根据实际需要装包，所以选择了轻量化的miniconda。话不多说，下面先放上miniconda的下载地址。</p>
-<p>官方地址：<a target="_blank" rel="noopener" href="https://conda.io/en/latest/miniconda.html">https://conda.io/en/latest/miniconda.html</a></p>
-<p>清华镜像网址：<a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/">https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/</a></p>
-<p>下载后-右键-“以管理员身份运行”</p>
-<p>这一步建议选择“All Users”</p>
-<p>这一步记得修改安装路径到D盘，最好自己提前新建一个文件夹然后装到里面</p>
-<p>后面应该问题不大，一直“next”到最后“finish”就好。</p>
-<p>安装完成后，打开Anaconda Prompt(conda)，输入conda –version如果正确显示版本号说明安装成功。</p>
-<p>准备工作</p>
-<p>首先在D盘新建一个文件夹，命名任意（我命名为conda_base），然后在这个文件夹里面再新建两个文件夹，命名分别为envs和pkgs。</p>
-<p>打开Anaconda Prompt(conda)，输入以下代码（一行一行复制）</p>
-<pre><code>conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
-conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
-conda config --set show_channel_urls yes
+if os.path.isfile(&#39;test.txt&#39;):
+    print(&quot;File exists&quot;)
+else:
+    print(&quot;File not exists&quot;)
 </code></pre>
-<p>接着，打开路径“C:\Users[用户名]\，找到文件夹中的.condarc文件，使用记事本打开。打开后会看到里面的内容如下：</p>
-<p>现在我们在最下面加入以下内容：（路径按照自己实际情况修改 ）</p>
-<pre><code>envs_dirs:
-  - D:\conda_base\envs
-pkgs_dirs:
-  - D:\conda_base\pkgs
+<p>上面的代码通过isfile()函数判断指定文件是否存在，如果存在则输出”File exists”，否则输出”File not exists”。</p>
+<pre><code>import os
+
+if os.path.exists(&#39;/path/to/file&#39;):
+    print(&#39;文件存在&#39;)
+else:
+    print(&#39;文件不存在&#39;)
 </code></pre>
-<p>加入后保存即可退出。</p>
-<p>创建环境</p>
-<p>打开Anaconda Prompt(conda)，输入以下内容：</p>
-<pre><code>conda create --name kennn python=3.9 -y
+<p>以上代码中，/path/to/file是要检测的文件路径。如果文件存在，就会输出文件存在，否则输出文件不存在。</p>
+<p>二、Python如何删除文件？</p>
+<p>如果我们需要删除文件，可以使用Python的os模块中的remove函数。下面是一个删除文件的代码：</p>
+<pre><code>import os
+
+if os.path.isfile(&#39;test.txt&#39;):
+    os.remove(&#39;test.txt&#39;)
+    print(&quot;File removed&quot;)
+else:
+    print(&quot;File not exists&quot;)
 </code></pre>
-<p>其中“kennn”是环境名字，python版本可根据需要更改“=”后的版本号即可</p>
-<p>点击回车，自动创建环境，至此教程结束。</p>
-<p>conda常用指令</p>
-<p>进入某个环境：conda activate [环境名]（一开始打开Anaconda Prompt默认处于base环境）</p>
-<p>退出当前环境：conda deactivate</p>
-<p>已创建环境目录：conda info –envs</p>
-<p>————————————————<br>版权声明：本文为CSDN博主「黯岚岚岚岚岚」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_59209871/article/details/134674607">https://blog.csdn.net/weixin_59209871/article/details/134674607</a></p>
+<p>上面的代码会检查文件是否存在，如果存在则删除文件，并输出”File removed”，否则输出”File not exists”。</p>
+<p>三、Python如何删除目录？</p>
+<p>如果我们需要删除整个目录，可以使用Python的os模块中的rmdir函数或者shutil模块中的rmtree函数。下面是一个使用rmdir函数删除目录的代码：</p>
+<pre><code>import os
+
+if os.path.isdir(&#39;test&#39;):
+    os.rmdir(&#39;test&#39;)
+    print(&quot;Directory removed&quot;)
+else:
+    print(&quot;Directory not exists&quot;)
+</code></pre>
+<p>上面的代码会检查目录是否存在，如果存在则删除目录，并输出”Directory removed”，否则输出”Directory not exists”。</p>
+<p>使用shutil模块的rmtree函数可以删除整个目录，包括目录下的所有文件和子目录。下面是一个使用rmtree函数删除目录的代码：</p>
+<pre><code>import shutil
+
+if os.path.exists(&#39;test&#39;):
+    shutil.rmtree(&#39;test&#39;)
+    print(&quot;Directory removed&quot;)
+else:
+    print(&quot;Directory not exists&quot;)
+</code></pre>
+<p>上面的代码会检查目录是否存在，如果存在则删除目录，并输出”Directory removed”，否则输出”Directory not exists”。</p>
+<p>四、Python如何删除特定类型的文件？</p>
+<p>如果我们需要删除特定类型的文件，可以通过glob模块来获取所有指定类型的文件，然后使用os模块中的remove函数删除它们。下面是一个删除所有txt文件的代码：</p>
+<pre><code>import glob, os
+
+for file in glob.glob(&quot;*.txt&quot;):
+    os.remove(file)
+    print(&quot;File removed: %s&quot; % file)
+</code></pre>
+<p>上面的代码会列出所有txt文件，并依次删除它们。删除每个文件时，代码会输出”File removed: file.txt”，其中file.txt是被删除的文件名。</p>
+<p>五、总结</p>
+<p>本文详细介绍了如何在Python中判断文件是否存在并删除。从多个方面介绍了如何删除文件和目录，以及如何删除特定类型的文件。为Python开发者提供了解决类似问题的思路和代码示例，希望本文对您有所帮助。</p>
  
       <!-- reward -->
       
@@ -530,7 +269,7 @@ pkgs_dirs:
 
     
     <article
-  id="post-Anaconda与Miniconda之间的选择"
+  id="post-Python中查找文件是否存在"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -541,8 +280,8 @@ pkgs_dirs:
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/09/30/Anaconda%E4%B8%8EMiniconda%E4%B9%8B%E9%97%B4%E7%9A%84%E9%80%89%E6%8B%A9/"
-    >Anaconda与Miniconda之间的选择</a> 
+  <a class="article-title" href="/2023/10/12/Python%E4%B8%AD%E6%9F%A5%E6%89%BE%E6%96%87%E4%BB%B6%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8/"
+    >Python中查找文件是否存在</a> 
 </h2>
  
 
@@ -550,8 +289,8 @@ pkgs_dirs:
     </header>
      
     <div class="article-meta">
-      <a href="/2023/09/30/Anaconda%E4%B8%8EMiniconda%E4%B9%8B%E9%97%B4%E7%9A%84%E9%80%89%E6%8B%A9/" class="article-date">
-  <time datetime="2023-09-30T02:40:35.000Z" itemprop="datePublished">2023-09-30</time>
+      <a href="/2023/10/12/Python%E4%B8%AD%E6%9F%A5%E6%89%BE%E6%96%87%E4%BB%B6%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8/" class="article-date">
+  <time datetime="2023-10-12T02:12:00.000Z" itemprop="datePublished">2023-10-12</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -561,368 +300,60 @@ pkgs_dirs:
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>导言</p>
-<p>Python语言因其灵活性、易用性和强大的数据处理能力在科学计算和数据分析领域受到广泛欢迎。然而，Python的一大挑战是库的管理和环境的隔离。解决这个问题的一个方案是使用分布式管理系统，如Anaconda或Miniconda。本文将深入探讨这两者的相似之处、差异和应用场景。</p>
-<p>Anaconda和Miniconda的基本概念</p>
-<p>Anaconda和Miniconda都是Continuum Analytics的开源项目，用于管理Python的环境和包。两者都有用于创建和管理虚拟环境的Conda包管理器，这使得在不同的项目之间切换和隔离变得简单。但是，两者之间存在一些重要的区别。</p>
-<p>Anaconda是一个包含了conda、Python和超过150个科学包及其依赖项的科学Python发行版。它具有可视化图形用户界面（Anaconda Navigator）并且为了方便新手使用，预先包含了大量的库，如NumPy, Pandas, Scipy, Matplotlib等。</p>
-<p>相较之下，Miniconda更加轻量级。它只包含了Python和Conda，但并没有预装其他的库。Miniconda用户需要手动安装他们需要的包，这使得Miniconda的环境更为简洁，可以根据实际需求来安装必要的包，避免不必要的存储占用。</p>
-<p>对比Anaconda和Miniconda</p>
-<p>首先，我们看到Anaconda和Miniconda最显著的区别在于他们所包含的包的数量。Anaconda预安装了大量科学计算和数据分析所需的库，使得用户可以立即开始工作。而Miniconda只包含了Python和conda，它的轻量级特性使得它在需要快速部署Python环境，或者在磁盘空间有限、网络环境较差、或者需要定制特定环境的情况下具有优势。</p>
-<p>其次，Anaconda提供了Anaconda Navigator这样的图形用户界面，它使得库的安装、环境的创建和管理变得更为简单直观。这对于新手用户来说是非常有帮助的，尤其是对于那些不习惯使用命令行的用户。而Miniconda没有这样的用户界面，所有的操作都需要通过命令行来完成。</p>
-<p>最后，由于Anaconda包含了大量的预装库，因此它的安装文件非常大，而Miniconda则相对较小。这可能会影响到安装的速度和存储空间的占用。</p>
-<p>选择Anaconda还是Miniconda？</p>
-<p>选择Anaconda还是Miniconda主要取决于你的具体需求。如果你是Python新手，或者你需要的所有库都在Anaconda的预装库中，那么Anaconda可能是更好的选择。它可以让你迅速开始你的项目，而无需担心库的安装和管理。</p>
-<p>然而，如果你需要定制你的Python环境，或者你需要在有限的资源下工作，那么Miniconda可能是更好的选择。它允许你只安装你需要的库，避免了不必要的存储占用。此外，由于Miniconda的安装文件更小，因此它的安装速度通常更快。</p>
-<p>总结</p>
-<p>无论你选择Anaconda还是Miniconda，都能获得强大的Python环境管理功能。你的选择应基于你的具体需求和资源状况。不论选择哪一个，都能通过conda进行库的管理和环境的隔离，大大提升Python开发和科学计算的效率。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
+  <p><a target="_blank" rel="noopener" href="https://www.python100.com/html/14E0N1LV1S5V.html">https://www.python100.com/html/14E0N1LV1S5V.html</a></p>
+<p>在Python编程中，我们经常需要查找文件是否存在。这个功能在文件处理、数据分析、系统管理等各个领域都非常有用。在本文中，我们将以Python作为中心，详细介绍如何使用Python来查找文件是否存在。</p>
+<p>一、使用os模块的方法</p>
+<p>Python的标准库中的os模块提供了一些方法来操作文件和目录。其中，os.path模块提供了一些判断文件或目录是否存在的函数。</p>
+<pre><code>import os
 
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+# 检查文件是否存在
+def file_exists(path):
+    return os.path.exists(path)
 
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Anaconda 添加清华镜像源"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/09/29/Anaconda%20%E6%B7%BB%E5%8A%A0%E6%B8%85%E5%8D%8E%E9%95%9C%E5%83%8F%E6%BA%90/"
-    >Anaconda 添加清华镜像源</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/09/29/Anaconda%20%E6%B7%BB%E5%8A%A0%E6%B8%85%E5%8D%8E%E9%95%9C%E5%83%8F%E6%BA%90/" class="article-date">
-  <time datetime="2023-09-29T01:50:24.000Z" itemprop="datePublished">2023-09-29</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="1、删除之前的镜像源，恢复默认状态"><a href="#1、删除之前的镜像源，恢复默认状态" class="headerlink" title="1、删除之前的镜像源，恢复默认状态"></a>1、删除之前的镜像源，恢复默认状态</h1><pre><code>conda config --remove-key channels
+# 检查目录是否存在
+def directory_exists(path):
+    return os.path.isdir(path)
 </code></pre>
-<h1 id="2、添加清华镜像源-清华大学开源软件镜像站"><a href="#2、添加清华镜像源-清华大学开源软件镜像站" class="headerlink" title="2、添加清华镜像源 清华大学开源软件镜像站"></a>2、添加清华镜像源 清华大学开源软件镜像站</h1><pre><code>#添加镜像源
+<p>使用os.path.exists函数可以判断文件是否存在，返回值为True或False。如果文件存在，则返回True；如果文件不存在，则返回False。</p>
+<p>使用os.path.isdir函数可以判断目录是否存在，返回值同样为True或False。如果目录存在，则返回True；如果目录不存在，则返回False。</p>
+<p>二、使用glob模块的方法</p>
+<p>除了os模块，Python还提供了一个强大的文件和目录操作模块glob。glob模块可以使用通配符来查找文件。</p>
+<pre><code>import glob
 
-conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main
-conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free
-conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r
-conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/pro
-conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/msys2
+# 查找指定目录下的所有文件
+def find_files(directory, pattern):
+    return glob.glob(os.path.join(directory, pattern))
 
-#显示检索路径
-
-conda config --set show_channel_urls yes
-
-#显示镜像通道
-
-conda config --show channels
+# 判断文件是否存在
+def file_exists(path):
+    return len(find_files(os.path.dirname(path), os.path.basename(path))) &gt; 0
 </code></pre>
-<h1 id="3、国内常见的镜像源"><a href="#3、国内常见的镜像源" class="headerlink" title="3、国内常见的镜像源"></a>3、国内常见的镜像源</h1><pre><code>清华：https://pypi.tuna.tsinghua.edu.cn/simple
-阿里云：https://mirrors.aliyun.com/pypi/simple/
-中国科技大学: https://pypi.mirrors.ustc.edu.cn/simple/
-华中理工大学：https://pypi.hustunique.com/
-山东理工大学：https://pypi.sdutlinux.org/ 
-豆瓣：https://pypi.douban.com/simple/
+<p>使用glob.glob函数可以根据通配符模式查找符合条件的文件。在find_files函数中，我们使用os.path.join函数将目录和文件名拼接在一起，然后使用glob.glob函数查找匹配的文件。</p>
+<p>在file_exists函数中，我们调用find_files函数查找指定文件并返回匹配到的文件列表，然后用len函数来判断文件列表的长度。如果长度大于0，则表示文件存在；如果长度等于0，则表示文件不存在。</p>
+<p>三、使用pathlib模块的方法</p>
+<p>Python 3.4及以上版本引入的pathlib模块提供了一种更简洁的方式来查找文件。</p>
+<pre><code>from pathlib import Path
+
+# 检查文件是否存在
+def file_exists(path):
+    return Path(path).is_file()
+
+# 检查目录是否存在
+def directory_exists(path):
+    return Path(path).is_dir()
 </code></pre>
-<h1 id="4、补充：conda的常用命令"><a href="#4、补充：conda的常用命令" class="headerlink" title="4、补充：conda的常用命令"></a>4、补充：conda的常用命令</h1><pre><code>查看所有虚拟环境 conda info --env 在显示的环境中，有*的表示当前所在的环境
-创建环境 conda create -n envname python=3.6(指定python版本为3.6)
-启动环境 conda activate envnane
-关闭环境 conda deactivate envname
-删除环境 conda remove -n envname --all
-克隆环境 本地已有一个环境AAA，若需要创建一个同样的BBB conda create -n BBB --clone AAA
-</code></pre>
-<p>————————————————<br>版权声明：本文为CSDN博主「小金~~」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_33682559/article/details/110389091">https://blog.csdn.net/qq_33682559/article/details/110389091</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-【Python】使用 requirements.txt 和 pip 打包批量安装"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/09/28/%E3%80%90Python%E3%80%91%E4%BD%BF%E7%94%A8%20requirements.txt%20%E5%92%8C%20pip%20%E6%89%93%E5%8C%85%E6%89%B9%E9%87%8F%E5%AE%89%E8%A3%85/"
-    >【Python】使用 requirements.txt 和 pip 打包批量安装</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/09/28/%E3%80%90Python%E3%80%91%E4%BD%BF%E7%94%A8%20requirements.txt%20%E5%92%8C%20pip%20%E6%89%93%E5%8C%85%E6%89%B9%E9%87%8F%E5%AE%89%E8%A3%85/" class="article-date">
-  <time datetime="2023-09-28T08:38:16.000Z" itemprop="datePublished">2023-09-28</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>当我们程序越来越复杂，使用pip管理Python包（库）。我们可以方便的使用配置文件 requirements.txt 批量安装指定版本的指定包。</p>
-<p>关于涉及到的pip官方的手册在这个位置： pip documentationv23.1.dev0</p>
-<p>本文对以下内容进行说明：</p>
-<p>pip 的批量安装选项： -r requirements.txt</p>
-<p>配置文件 requirements.txt 的写法</p>
-<p>生成当前环境的requirements.txt配置文件： pip freeze</p>
+<p>在pathlib模块中，我们可以使用Path类的is_file方法来判断文件是否存在，使用is_dir方法来判断目录是否存在。这些方法返回值同样为True或False。</p>
+<p>四、其他注意事项<br>在使用Python查找文件是否存在时，还有一些注意事项需要注意：</p>
 <ol>
-<li><p>pip 的批量安装选项：-r requirements.txt<br>以下命令根据配置文件 requirements.txt 批量安装包。</p>
-<p> $ pip install -r requirements.txt</p>
+<li><p>文件路径的表示：在使用文件路径时，我们需要注意使用不同的表示方式，如绝对路径、相对路径、转义字符等。</p>
+</li>
+<li><p>文件权限的问题：有时候文件存在，但是由于权限问题，我们无法操作或读取该文件。</p>
+</li>
+<li><p>文件名和文件后缀：有时候文件名或文件后缀的大小写问题可能导致文件找不到。</p>
 </li>
 </ol>
-<p>配置文件名是任意的，但经常使用 requirements.txt 这个名字。<br>将 requirements.txt 放在运行命令的目录中。如果它在另一个目录中，请指定当前目录的绝对路径或相对路径。</p>
-<ol start="2">
-<li>配置文件requirements.txt怎么写</li>
-</ol>
-<p>下面是一个典型的requirements.txt文件的例子</p>
-<pre><code>###### 下面的是不需要版本要求的 ######`
-nose
-nose-cov
-beautifulsoup4
-
-###### 进行版本要求的例子 ######`
-docopt == 0.6.1         # 必须严格的 0.6.1 的版本
-keyring &gt;= 4.1.1        # 最小的版本 4.1.1
-coverage != 3.5         # 版本排除，只要不是 3.5 都可以
-Mopidy-Dirble ~= 1.1    # 兼容版本。与&gt;=1.1，==1.* 相同
-</code></pre>
-<p>仔细看上面的代码，我们有如下规律</p>
-<p>与 Python 代码一样， # 之后的任何内容都是注释。<br>在实际使用时，可以使用 == 、 &gt; 、 &gt;= 、 &lt; 、 &lt;= 等指定版本。如果省略版本说明，将安装最新版本。<br>另外，如果需要可以用 AND 指定两个条件，方法是用逗号 , 分隔它们。在以下示例中，将安装高于 1.0 AND 低于 2.0 的版本。</p>
-<pre><code>package &gt;= 1.0, &lt;=2.0
-</code></pre>
-<ol start="3">
-<li><p>导出当前环境配置文件：pip freeze<br>pip freeze 命令将当前环境安装的包和版本以配置文件的形式输出，可以和 pip install -r 一起使用。</p>
-<p> $ pip freeze<br> agate==1.6.0<br> agate-dbf==0.2.0<br> agate-excel==0.2.1<br> agate-sql==0.5.2</p>
-</li>
-</ol>
-<p>因此，如果将 pip freeze 输出到带有重定向 &gt; 的文件，则可以使用该文件在单独的环境中安装与原始环境相同版本的包。</p>
-<p>田辛老师在复制环境的时候，经常这样做：</p>
-<p>第一步，生成requirements.txt文件</p>
-<pre><code>$ pip freeze &gt; requirements.txt
-</code></pre>
-<p>第二步，在新的机器上</p>
-<pre><code>$ pip install -r requirements.txt
-</code></pre>
-<p>————————————————<br>版权声明：本文为CSDN博主「田辛 | 田豆芽」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/u013589130/article/details/129039961">https://blog.csdn.net/u013589130/article/details/129039961</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flask/" rel="tag">flask</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Python 用pip批量安装包 requirements.txt"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/09/27/Python%20%E7%94%A8pip%E6%89%B9%E9%87%8F%E5%AE%89%E8%A3%85%E5%8C%85%20requirements.txt/"
-    >Python 用pip批量安装包 requirements.txt</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/09/27/Python%20%E7%94%A8pip%E6%89%B9%E9%87%8F%E5%AE%89%E8%A3%85%E5%8C%85%20requirements.txt/" class="article-date">
-  <time datetime="2023-09-27T07:49:27.000Z" itemprop="datePublished">2023-09-27</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="一、python用pip批量安装包"><a href="#一、python用pip批量安装包" class="headerlink" title="一、python用pip批量安装包"></a>一、python用pip批量安装包</h1><p>python查看安装的第三方扩展包,就是使用命令 pip freeze。</p>
-<p>在已经配置好的一台机器上，将需要的包导出到requirements.txt</p>
-<pre><code>./pip freeze &gt; requirements.txt
-</code></pre>
-<p>此种方式会将环境中所有的包都打包进去，适合单虚拟环境（每个项目都处在不同的虚拟环境里，这个环境里是这个项目所需要的所有包）。因此，如果不是Python虚拟环境Virtualenv。我们不推荐这么使用，推荐使用 使用pipreqs 写入requirements.txt。</p>
-<p>pip安装包的方式中，有如下一种安装方式：</p>
-<pre><code>pip install -r requirements.txt
-</code></pre>
-<p>而文件requirement.txt里面内容的格式和pip freeze的格式完全一样。因此我们可以将pip freeze的内容输出至requirements.txt。</p>
-<p>推荐如下使用方式</p>
-<pre><code>./pip freeze | tee requirements.txt # 输出本地包环境至文件
-./pip install -r requirements.txt # 根据文件进行包安装
-</code></pre>
-<p>pip freeze 为什么比 pip list 的包少几个呢？<br>因为pip , wheel , setuptools 等包，是自带的而无法(un)install的。考虑到pip freeze的用途，所以这些包并没有显示。</p>
-<p>ps：<br>如果一定要用pip freeze来显示所有包，可以加上参数-all，即pip freeze -all</p>
-<h1 id="二、-推荐-使用pipreqs-写入requirements-txt"><a href="#二、-推荐-使用pipreqs-写入requirements-txt" class="headerlink" title="二、[推荐]使用pipreqs 写入requirements.txt"></a>二、[推荐]使用pipreqs 写入requirements.txt</h1><p>使用pipreqs 写入requirements.txt，只是程序中所用到的包，并不是电脑中安装的所有的包。</p>
-<pre><code>pip install pipreqs
-</code></pre>
-<p>cd 到程序所在的文件夹位置</p>
-<p>执行下面的语句，Windows下得加encoding=utf8，不然会出现编码问题。</p>
-<pre><code>pipreqs ./ --encoding=utf8 
-</code></pre>
-<h1 id="三、利用requirements-txt离线安装依赖包"><a href="#三、利用requirements-txt离线安装依赖包" class="headerlink" title="三、利用requirements.txt离线安装依赖包"></a>三、利用requirements.txt离线安装依赖包</h1><p>1、下载离线的包到指定目录</p>
-<p>将requirements.txt中导入的包离线下载到 package_tmp_dir 文件夹</p>
-<pre><code>pip wheel -w package_tmp_dir -r requirements.txt
-pip download -d package_tmp_dir -r requirements.txt
-</code></pre>
-<p>2、安装离线的包</p>
-<pre><code>pip install --no-index --find-links=package_tmp_dir  -r requirements.txt
-</code></pre>
-<ol>
-<li>使用 pip wheel 实现 Python 依赖包的离线安装</li>
-</ol>
-<p>Wheel 也是一种 built 包，而且是官方推荐的打包方式。也许你曾经遇见或使用过 egg 包，但现在 wheel 是官方推荐的打包方式（<a target="_blank" rel="noopener" href="https://wheel.readthedocs.io/en/stable/%EF%BC%89%E3%80%82">https://wheel.readthedocs.io/en/stable/）。</a><br>wheel 包的优点：</p>
-<p> 1.更快地安装纯 Python 和本机 C 扩展包。<br> 2.避免安装时执行任意代码。 （避免 setup.py）<br> 3.在 Windows 或 macOS 上安装 C 扩展不需要编译器。<br> 4.为测试和持续集成提供更好的缓存。<br> 5.创建 .pyc 文件作为安装的一部分，以确保它们与使用的 Python 解释器匹配。<br> 6.跨平台和机器的更一致的安装。</p>
-<p>没有网络连接, 借助 wheel把整个 Python 应用做成离线安装包。</p>
-<p>安装 wheel:</p>
-<pre><code>pip install wheel
-</code></pre>
-<p>下载依赖包的 wheel 文件</p>
-<pre><code>pip wheel -r requirements.txt
-</code></pre>
-<p>默认情况下, 上述命令会下载 requirements.txt 中每个包的 wheel 包到当前目录的 wheelhouse 文件夹, 包括依赖的依赖。</p>
-<p>在你的安装脚本中执行:</p>
-<pre><code>pip install --use-wheel --no-index --find-links=wheelhouse -r requirements.txt
-</code></pre>
-<ol start="2">
-<li>下载命令</li>
-</ol>
-<p>一、对于单个包的安装</p>
-<p>1、离线</p>
-<p>(1)pip离线下载</p>
-<pre><code>pip download 你的包名 -d “下载的路径(windows下双引号来表示文件夹)”
-pip download pymysql -d &quot;D:\pipDownloadTest&quot;
-</code></pre>
-<p>(2)pip 离线安装</p>
-<pre><code>pip install 包路径
-pip install PyMySQL-0.9.3-py2.py3-none-any.whl
-</code></pre>
-<p>2、在线</p>
-<pre><code>pip install pymysql
-</code></pre>
-<p>二、对于多个包的安装与下载</p>
-<p>1、离线</p>
-<p>离线下载</p>
-<pre><code>pip download -d packages -r requirements.txt
-</code></pre>
-<p>离线安装</p>
-<pre><code>pip install --no-index --find-links=packages -r requirements.txt
-</code></pre>
-<p>2、在线</p>
-<pre><code>pip install -r requirements.txt
-</code></pre>
-<p>总结：多个包下载就多了一个 -r requirements.txt。</p>
-<ol start="3">
-<li>pip download 和 pip wheel 这两个命令的区别</li>
-</ol>
-<ul>
-<li><p>下载的文件格式不同</p>
-<p>  pip download 下载的是源代码的压缩包,通常是 .tar.gz 格式<br>  pip wheel 下载的是编译好的 wheel 二进制包,以 .whl 作为文件扩展名</p>
-</li>
-<li><p>是否编译</p>
-<p>  pip download 仅仅下载源码,不会编译<br>  pip wheel 会自动为所支持的平台编译Wheel包</p>
-</li>
-<li><p>下载位置不同</p>
-<p>  pip download 会下载到当前目录<br>  pip wheel 默认下载到 ~/.cache/pip/wheels 目录</p>
-</li>
-<li><p>用途不同<br>  pip download 用于获取源码包以便查看或自定义编译<br>  pip wheel 常用于离线环境,下载好Wheel包后直接pip install使用</p>
-</li>
-</ul>
-<p>所以,简单来说:</p>
-<p>需要源码包 - 使用pip download<br>需要离线安装 - 使用pip wheel</p>
-<p>两者有不同的使用场景。</p>
-<h1 id="四、pip-install-工作常见报错"><a href="#四、pip-install-工作常见报错" class="headerlink" title="四、pip install 工作常见报错"></a>四、pip install 工作常见报错</h1><p>Python.h: No such file or directory报错</p>
-<ul>
-<li>centos7 pip3 安装psycopg2出错</li>
-</ul>
-<p>参考URL: <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/fbbe3bdf1905">https://www.jianshu.com/p/fbbe3bdf1905</a><br>原因是：</p>
-<p>As mentioned in psycopg documentation <a target="_blank" rel="noopener" href="http://initd.org/psycopg/docs/install.html">http://initd.org/psycopg/docs/install.html</a></p>
-<p>C compiler<br>Python header files</p>
-<ul>
-<li><p>没有安装python的环境：</p>
-<p>  For apt (Ubuntu, Debian…):</p>
-<pre><code>  sudo apt-get install python-dev # for python2.x installs
-  sudo apt-get install python3-dev # for python3.x installs
-</code></pre>
-<p>  For yum (CentOS, RHEL…):</p>
-<pre><code>  sudo yum install python-devel # for python2.x installs
-  sudo yum install python3-devel # for python3.x installs
-</code></pre>
-</li>
-</ul>
-<p>————————————————<br>版权声明：本文为CSDN博主「西京刀客」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/inthat/article/details/117026589">https://blog.csdn.net/inthat/article/details/117026589</a></p>
+<p>总结来说，使用Python查找文件是否存在需要借助os模块、glob模块或pathlib模块，根据具体的需求选择合适的方法。同时，在使用过程中还需注意文件路径、文件权限和文件名后缀等问题。</p>
+<p>希望本文对你理解Python中查找文件是否存在有所帮助！</p>
  
       <!-- reward -->
       
@@ -934,6 +365,357 @@ pip install PyMySQL-0.9.3-py2.py3-none-any.whl
     <footer class="article-footer">
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-pyqt界面美化笔记"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/10/11/pyqt%E7%95%8C%E9%9D%A2%E7%BE%8E%E5%8C%96%E7%AC%94%E8%AE%B0/"
+    >pyqt界面美化笔记</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/10/11/pyqt%E7%95%8C%E9%9D%A2%E7%BE%8E%E5%8C%96%E7%AC%94%E8%AE%B0/" class="article-date">
+  <time datetime="2023-10-11T02:11:00.000Z" itemprop="datePublished">2023-10-11</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1VY4y1p7it/?spm_id_from=333.999.0.0">https://www.bilibili.com/video/BV1VY4y1p7it/?spm_id_from=333.999.0.0</a></p>
+<p>1、窗体用label贴图或配色，做背景</p>
+<pre><code>background-color: rgba(16,30,41,240);
+border-radius:10px;
+</code></pre>
+<p>2、lineedit配色及调样式</p>
+<pre><code>background-color: rgba(0, 0, 0,0);
+border:1px solid rgba(0,0,0,0);
+border-bottom-color:rgba(255,255,255,200);
+padding-bottom:7px;
+</code></pre>
+<p>3、pushbutton配色及调样式</p>
+<pre><code>QPushButton#pushButton&#123;
+background-color:rgba(2,65,118,255);
+color:rgba(255,255,255,200);
+border-radius:5px;
+&#125;
+QPushButton#pushButton:hover&#123;
+background-color:rgba(2,65,118,150);
+color:rgba(255,255,255,200);
+border-radius:5px;
+&#125;
+QPushButton#pushButton:pressed&#123;
+padding-left:5px;
+padding-top:5px;
+background-color:rgba(2,65,118,100);
+&#125;
+</code></pre>
+<p>4、隐藏框：</p>
+<pre><code>MainWindow.setWindowFlags(QtCore.Qt.FramelessWindowHint)
+MainWindow.setAttribute(QtCore.Qt.WA_TranslucentBackground)
+</code></pre>
+<p>5、main函数</p>
+<pre><code>import sys
+from PyQt5.QtWidgets import QApplication, QMainWindow
+import login
+if __name__ == &#39;__main__&#39;:
+    app = QApplication(sys.argv)
+    win = QMainWindow()
+    ui = login.Ui_MainWindow()
+    ui.setupUi(win)
+    win.show()
+    sys.exit(app.exec_())
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-pyqt5的打包exe软件"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/10/10/pyqt5%E7%9A%84%E6%89%93%E5%8C%85exe%E8%BD%AF%E4%BB%B6/"
+    >pyqt5的打包exe软件</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/10/10/pyqt5%E7%9A%84%E6%89%93%E5%8C%85exe%E8%BD%AF%E4%BB%B6/" class="article-date">
+  <time datetime="2023-10-10T02:10:00.000Z" itemprop="datePublished">2023-10-10</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="安装命令："><a href="#安装命令：" class="headerlink" title="安装命令："></a>安装命令：</h1><pre><code>pip install pyinstaller
+</code></pre>
+<h1 id="更新命令："><a href="#更新命令：" class="headerlink" title="更新命令："></a>更新命令：</h1><pre><code>pip install –upgrade pyinstaller
+</code></pre>
+<h1 id="打包命令："><a href="#打包命令：" class="headerlink" title="打包命令："></a>打包命令：</h1><p>通过下述命令可以打包出带有指定图标的exe，注意必须是真实的ico格式图标，不能是改后名的。</p>
+<pre><code>pyinstaller main.py -y -w -i &quot;D:\workspace\mytool\ui\icons\mytool.ico&quot;
+</code></pre>
+<h1 id="打包命令常用选项。"><a href="#打包命令常用选项。" class="headerlink" title="打包命令常用选项。"></a>打包命令常用选项。</h1><pre><code>-y 表示自动覆盖现有的 build 和 dist 文件夹
+-h，–help    查看该模块的帮助信息
+-F，-onefile    产生单个的可执行文件
+-D，–onedir    产生一个目录（包含多个文件）作为可执行程序
+-a，–ascii    不包含 Unicode 字符集支持
+-d，–debug    产生 debug 版本的可执行文件
+-w，–windowed，–noconsolc    指定程序运行时不显示命令行窗口（仅对 Windows 有效）
+-c，–nowindowed，–console    指定使用命令行窗口运行程序（仅对 Windows 有效）
+-o DIR，–out=DIR    指定 spec 文件的生成目录。如果没有指定，则默认使用当前目录来生成 spec 文件
+-p DIR，–path=DIR    设置 Python 导入模块的路径（和设置 PYTHONPATH 环境变量的作用相似）。也可使用路径分隔符（Windows 使用分号，Linux 使用冒号）来分隔多个路径
+-n NAME，–name=NAME    指定项目（产生的 spec）名字。如果省略该选项，那么第一个脚本的主文件名将作为 spec 的名字
+--distpath：指定输出目录
+--clean：在打包之前清除临时文件夹日志
+--log-level：设置日志级别，供调试嵌入其他文件
+--add-data：将data文件夹嵌入到生成的可执行文件中
+--add-binary：将binary文件与其他文件一起嵌入到可执行文件中
+--hidden-import：打包特定的Python库，例如--hidden-import=PIL
+--version：显示版本信息
+--help：显示帮助信息
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-PyCharm安装PyQt5及工具（Qt Designer、PyUIC、PyRcc）详细教程"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/10/09/PyCharm%E5%AE%89%E8%A3%85PyQt5%E5%8F%8A%E5%B7%A5%E5%85%B7%EF%BC%88Qt%20Designer%E3%80%81PyUIC%E3%80%81PyRcc%EF%BC%89%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/"
+    >PyCharm安装PyQt5及工具（Qt Designer、PyUIC、PyRcc）详细教程</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/10/09/PyCharm%E5%AE%89%E8%A3%85PyQt5%E5%8F%8A%E5%B7%A5%E5%85%B7%EF%BC%88Qt%20Designer%E3%80%81PyUIC%E3%80%81PyRcc%EF%BC%89%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/" class="article-date">
+  <time datetime="2023-10-09T02:09:00.000Z" itemprop="datePublished">2023-10-09</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>需要安装PyQt5，pyqt5-tools</p>
+<pre><code>pip install PyQt5
+pip install pyqt5-tools
+</code></pre>
+<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><p>PyCharm点击菜单栏“File”，弹出下拉框，选择“Setting”，弹出设置界面。在设置界面中选择“Tools”→“External Tools”，</p>
+<h2 id="Qt-Designer"><a href="#Qt-Designer" class="headerlink" title="Qt Designer"></a>Qt Designer</h2><p>在“Name”一栏填写“Qt-Designer”；在“Program”一栏填写designer.exe文件位置</p>
+<h2 id="PyUIC"><a href="#PyUIC" class="headerlink" title="PyUIC"></a>PyUIC</h2><p>1、在“Name”一栏填写“PyUIC”；</p>
+<p>2、Program中填写pyuic5.exe这个程序的文件路径，一般在“Python环境目录\Scripts\pyuic5.exe”（此处需根据实际情况修改）</p>
+<p>3、在Arguments中内容填写如下：</p>
+<pre><code>$FileName$ -o $FileNameWithoutExtension$.py
+</code></pre>
+<p>4、Working directory内容填写如下：</p>
+<pre><code>$FileDir$
+</code></pre>
+<p>5、完成填写后，点击“OK”，以上步骤参考图片中的步骤。</p>
+<h2 id="PyRCC"><a href="#PyRCC" class="headerlink" title="PyRCC"></a>PyRCC</h2><p>1、在“Name”一栏填写“PyRCC”；</p>
+<p>2、Program中填写pyrcc5.exe这个程序的文件路径，一般在“Python环境目录\Scripts\pyrcc5.exe”（此处需根据实际情况修改），也可以点击右侧的文件夹选择按钮浏览文件夹选中该位置；</p>
+<p>3、在Arguments中内容填写如下：</p>
+<pre><code>$FileName$ -o $FileNameWithoutExtension$_rc.py
+</code></pre>
+<p>4、Working directory内容填写如下：</p>
+<pre><code>$FileDir$
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-MyBatis-Plus 通用IService使用时的一些方法"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/10/08/MyBatis-Plus%20%E9%80%9A%E7%94%A8IService%E4%BD%BF%E7%94%A8%E6%97%B6%E7%9A%84%E4%B8%80%E4%BA%9B%E6%96%B9%E6%B3%95/"
+    >MyBatis-Plus 通用IService使用时的一些方法</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/10/08/MyBatis-Plus%20%E9%80%9A%E7%94%A8IService%E4%BD%BF%E7%94%A8%E6%97%B6%E7%9A%84%E4%B8%80%E4%BA%9B%E6%96%B9%E6%B3%95/" class="article-date">
+  <time datetime="2023-10-08T02:08:00.000Z" itemprop="datePublished">2023-10-08</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="普通方法"><a href="#普通方法" class="headerlink" title="普通方法:"></a>普通方法:</h1><pre><code>//查询所有
+userService .list();
+//根据查询条件查询一个返回实体类对象
+userService.getOne(lambdaQueryWrapper);
+//分页查询所有
+userService.page(pageInfo,lambdaQueryWrapper);
+//查询数量
+userService .count();
+//根据ID查list集合
+userService .listByIds();
+//根据ID删除
+userService .removeById();
+userService .removeByIds();
+//修改
+userService .update();
+userMapper.updateById(实体类);
+//新增
+userService .save();
+userMapper.insert(实体类);
+//批量新增
+userService .saveBatch(集合);
+</code></pre>
+<h1 id="getOne"><a href="#getOne" class="headerlink" title="getOne()"></a>getOne()</h1><p>这个是方法返回结果不止一条则会抛出异常，如果想默认取第一条结果，可以给这方法传第二个参数为false。</p>
+<pre><code>User one = userService.getOne(Wrappers.&lt;User&gt;lambdaQuery().eq(User::getAge, 11),false);
+</code></pre>
+<h1 id="saveOrUpdateBatch"><a href="#saveOrUpdateBatch" class="headerlink" title="saveOrUpdateBatch()"></a>saveOrUpdateBatch()</h1><p>批量新增或者修改方法,判断ID是否存在，如果ID不存在执行新增，如果ID存在先执行查询语句，查询结果为空新增，否则修改。</p>
+<pre><code>boolean b = userService.saveOrUpdateBatch(users);
+</code></pre>
+<h1 id="传值为null的时候不查询"><a href="#传值为null的时候不查询" class="headerlink" title="传值为null的时候不查询"></a>传值为null的时候不查询</h1><p>如果传值为null的时候不查询，有值才查询怎么做？<br>这里用到了hutool的ObjectUtil.isNotEmpty来判非空</p>
+<pre><code>//查询时间范围
+LambdaQueryWrapper&lt;ProductKhtm&gt; productKhtmLambdaQueryWrapper = new LambdaQueryWrapper&lt;&gt;();
+productKhtmLambdaQueryWrapper.between(
+ObjectUtil.isNotEmpty(productKhtmhz.getParams().get(&quot;endDbilldate&quot;)),
+ProductKhtm::getDbilldate,
+productKhtmhz.getParams().get(&quot;beginDbilldate&quot;),
+productKhtmhz.getParams().get(&quot;endDbilldate&quot;)
+);
+
+productKhtmService.list(productKhtmLambdaQueryWrapper);
+</code></pre>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><p>如果sql语句后面想补充一句sql语句应该怎么办？用last</p>
+<pre><code>lambdaQueryWrapper.last(&quot;OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY&quot;);
+</code></pre>
+<p>注意这个自定义慎用，会有sql注入的风险</p>
+<p>如果sql查询条件全部都想自定义怎么办？</p>
+<pre><code>lambdaQueryWrapper.apply(&quot;YEAR(tijiao_time) = &#123;0&#125;&quot;,year);
+</code></pre>
+<p>注意这个自定义慎用，会有sql注入的风险</p>
+<p>————————————————<br>版权声明：本文为CSDN博主「z子豪」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/a864034462/article/details/123980761">https://blog.csdn.net/a864034462/article/details/123980761</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li></ul>
 
     </footer>
   </div>
@@ -949,7 +731,7 @@ pip install PyMySQL-0.9.3-py2.py3-none-any.whl
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/">上一页</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/46/">46</a><a class="extend next" rel="next" href="/page/3/">下一页</a>
+    <a class="extend prev" rel="prev" href="/">上一页</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/48/">48</a><a class="extend next" rel="next" href="/page/3/">下一页</a>
   </nav>
   
 </section>

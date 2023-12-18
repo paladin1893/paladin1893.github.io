@@ -154,7 +154,7 @@
     
     
     <article
-  id="post-conda、python环境配置"
+  id="post-LambdaUpdateWrapper和LambdaQueryWrapper的区别"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -165,8 +165,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/09/26/conda%E3%80%81python%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/"
-    >conda、python环境配置</a> 
+  <a class="article-title" href="/2023/10/07/LambdaUpdateWrapper%E5%92%8CLambdaQueryWrapper%E7%9A%84%E5%8C%BA%E5%88%AB/"
+    >LambdaUpdateWrapper和LambdaQueryWrapper的区别</a> 
 </h2>
  
 
@@ -174,8 +174,8 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2023/09/26/conda%E3%80%81python%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" class="article-date">
-  <time datetime="2023-09-26T09:36:43.000Z" itemprop="datePublished">2023-09-26</time>
+      <a href="/2023/10/07/LambdaUpdateWrapper%E5%92%8CLambdaQueryWrapper%E7%9A%84%E5%8C%BA%E5%88%AB/" class="article-date">
+  <time datetime="2023-10-07T02:07:00.000Z" itemprop="datePublished">2023-10-07</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -185,26 +185,34 @@
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>新建虚拟环境</p>
-<pre><code>conda create -n python36 python=3.6
+  <p>LambdaQueryWrapper是查询时候给条件,例如</p>
+<pre><code>/**
+ * lambda链式编程
+ */
+@Test
+public void test88()&#123;
+    QueryWrapper&lt;User&gt; queryWrapper = new QueryWrapper&lt;&gt;();
+    queryWrapper.lambda()
+            .between(User::getAge,30,60)
+            .orderByDesc(User::getId);
+    List&lt;User&gt; list = userService.list(queryWrapper);
+    list.forEach(System.out::println);
+&#125;
 </code></pre>
-<p>设为当前环境</p>
-<pre><code>conda activate python36
+<p>LambdaUpdateWrapper是修改的时候给的条件,例如:</p>
+<pre><code>/**
+ * 测试链式编程更新操作
+ */
+@Test
+public void test99()&#123;
+    UpdateWrapper&lt;User&gt; updateWrapper = new UpdateWrapper&lt;&gt;();
+    updateWrapper.lambda()
+            .le(User::getAge, 30)
+            .setSql(&quot;email = &#39;le30@duck.top&#39;&quot;);
+    userService.update(updateWrapper);
+&#125;
 </code></pre>
-<p>删除虚拟环境</p>
-<pre><code>conda remove -n python36 --all
-</code></pre>
-<p>安装必要的包</p>
-<pre><code>pip install -i https://pypi.tuna.tsinghua.edu.cn/simple xgboost==1.5.2
-pip install -i https://pypi.tuna.tsinghua.edu.cn/simple xlrd==1.2.0
-pip install -i https://pypi.tuna.tsinghua.edu.cn/simple pandas==1.1.4
-pip install -i https://pypi.tuna.tsinghua.edu.cn/simple openpyxl==3.0.10
-pip install -i https://pypi.tuna.tsinghua.edu.cn/simple Flask==2.0.2
-pip install -i https://pypi.tuna.tsinghua.edu.cn/simple Flask-Cors==3.0.10
-</code></pre>
-<p>导出依赖配置</p>
-<pre><code>pip freeze &gt; requirements.txt
-</code></pre>
+<p>————————————————<br>版权声明：本文为CSDN博主「z子豪」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/a864034462/article/details/123980761">https://blog.csdn.net/a864034462/article/details/123980761</a></p>
  
       <!-- reward -->
       
@@ -215,7 +223,7 @@ pip install -i https://pypi.tuna.tsinghua.edu.cn/simple Flask-Cors==3.0.10
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li></ul>
 
     </footer>
   </div>
@@ -226,7 +234,7 @@ pip install -i https://pypi.tuna.tsinghua.edu.cn/simple Flask-Cors==3.0.10
 
     
     <article
-  id="post-flask部署的几种常见方式，部署流程及问题总结"
+  id="post-LambdaQueryWrapper如何正确使用or或者and"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -237,8 +245,8 @@ pip install -i https://pypi.tuna.tsinghua.edu.cn/simple Flask-Cors==3.0.10
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/09/25/flask%E9%83%A8%E7%BD%B2%E7%9A%84%E5%87%A0%E7%A7%8D%E5%B8%B8%E8%A7%81%E6%96%B9%E5%BC%8F%EF%BC%8C%E9%83%A8%E7%BD%B2%E6%B5%81%E7%A8%8B%E5%8F%8A%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/"
-    >flask部署的几种常见方式，部署流程及问题总结</a> 
+  <a class="article-title" href="/2023/10/06/LambdaQueryWrapper%E5%A6%82%E4%BD%95%E6%AD%A3%E7%A1%AE%E4%BD%BF%E7%94%A8or%E6%88%96%E8%80%85and/"
+    >LambdaQueryWrapper如何正确使用or或者and</a> 
 </h2>
  
 
@@ -246,8 +254,8 @@ pip install -i https://pypi.tuna.tsinghua.edu.cn/simple Flask-Cors==3.0.10
     </header>
      
     <div class="article-meta">
-      <a href="/2023/09/25/flask%E9%83%A8%E7%BD%B2%E7%9A%84%E5%87%A0%E7%A7%8D%E5%B8%B8%E8%A7%81%E6%96%B9%E5%BC%8F%EF%BC%8C%E9%83%A8%E7%BD%B2%E6%B5%81%E7%A8%8B%E5%8F%8A%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/" class="article-date">
-  <time datetime="2023-09-25T07:49:27.000Z" itemprop="datePublished">2023-09-25</time>
+      <a href="/2023/10/06/LambdaQueryWrapper%E5%A6%82%E4%BD%95%E6%AD%A3%E7%A1%AE%E4%BD%BF%E7%94%A8or%E6%88%96%E8%80%85and/" class="article-date">
+  <time datetime="2023-10-06T02:06:00.000Z" itemprop="datePublished">2023-10-06</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -257,467 +265,40 @@ pip install -i https://pypi.tuna.tsinghua.edu.cn/simple Flask-Cors==3.0.10
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>部署 Flask 应用通常涉及多个组件，包括 Flask 框架本身、uWSGI 进程服务器、Gunicorn WSGI 服务器、Nginx 反向代理服务器以及Supervisor 进程管理工具。</p>
-<p>以下是一个常见的 Flask 部署流程及可能遇到的问题总结：</p>
-<h1 id="安装必要的软件和依赖："><a href="#安装必要的软件和依赖：" class="headerlink" title="安装必要的软件和依赖："></a>安装必要的软件和依赖：</h1><ol>
-<li><p>首先，在服务器上安装 Python 和 pip。根据操作系统的不同，可以使用以下命令安装：</p>
-<ul>
-<li>Ubuntu/Debian:</li>
-</ul>
-<p> sudo apt update<br> sudo apt install python3 python3-pip</p>
-<ul>
-<li>CentOS/Fedora:</li>
-</ul>
-<p> sudo yum update<br> sudo yum install python3 python3-pip</p>
-</li>
-<li><p>安装 Flask 框架和其他需要的库。在命令行中运行以下命令：</p>
-<p> sudo pip3 install flask</p>
-</li>
-</ol>
-<h1 id="编写-Flask-应用："><a href="#编写-Flask-应用：" class="headerlink" title="编写 Flask 应用："></a>编写 Flask 应用：</h1><ol>
-<li><p>创建一个 Python 文件，例如 <code>app.py</code>，并编写 Flask 应用的代码。示例代码如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"> </span><br><span class="line">app = Flask(__name__)</span><br><span class="line"> </span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">hello</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;Hello, World!&#x27;</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run()</span><br></pre></td></tr></table></figure></li>
-<li><p>保存并退出文件。</p>
-</li>
-<li><p>测试 Flask 应用：在终端中运行 Flask 应用，以确保应用可以在本地运行。</p>
-<p> python3 app.py</p>
-</li>
-</ol>
-<h1 id="配置uWSGI："><a href="#配置uWSGI：" class="headerlink" title="配置uWSGI："></a>配置uWSGI：</h1><ol>
-<li><p>创建一个 uWSGI 配置文件，例如 <code>your_uwsgi_config.ini</code>，并指定 Flask 应用的入口、进程数、线程数等配置项。示例配置如下：</p>
-<p> [uwsgi]<br> module = app<br> callable = app<br> master = true<br> processes = 4<br> threads = 2<br> socket = 127.0.0.1:5000<br> chmod-socket = 660<br> vacuum = true<br> die-on-term = true</p>
-</li>
-</ol>
-<p>其中，<code>module</code> 指定了 Flask 应用的入口，<code>processes</code> 指定了进程数，<code>threads</code> 指定了线程数，<code>socket</code> 指定了 uWSGI 监听的地址和端口。</p>
-<h1 id="启动uWSGI："><a href="#启动uWSGI：" class="headerlink" title="启动uWSGI："></a>启动uWSGI：</h1><ol>
-<li><p>在命令行中运行以下命令，启动 uWSGI，并使用指定的配置文件：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uwsgi --ini your_uwsgi_config.ini</span><br></pre></td></tr></table></figure></li>
-</ol>
-<p>确保 uWSGI 可以成功启动并监听指定的端口。</p>
-<h1 id="测试uWSGI："><a href="#测试uWSGI：" class="headerlink" title="测试uWSGI："></a>测试uWSGI：</h1><ol>
-<li>使用 curl 或浏览器访问 uWSGI 提供的接口，例如 <code>http://127.0.0.1:5000/</code>，确保应用可以通过 uWSGI 进程服务器正常访问。</li>
-</ol>
-<h1 id="配置Gunicorn："><a href="#配置Gunicorn：" class="headerlink" title="配置Gunicorn："></a>配置Gunicorn：</h1><ol>
-<li><p>创建一个 Gunicorn 配置文件，例如 <code>your_gunicorn_config.py</code>，并指定 Flask 应用的入口和其他配置项。示例配置如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">bind = <span class="string">&#x27;127.0.0.1:5000&#x27;</span></span><br><span class="line">workers = <span class="number">4</span></span><br><span class="line">threads = <span class="number">2</span></span><br><span class="line">module = <span class="string">&#x27;app:app&#x27;</span></span><br></pre></td></tr></table></figure></li>
-</ol>
-<p>其中，<code>bind</code> 指定了 Gunicorn 监听的地址和端口，<code>workers</code> 指定了进程数，<code>threads</code> 指定了线程数，<code>module</code> 指定了 Flask 应用的入口。</p>
-<h1 id="启动Gunicorn："><a href="#启动Gunicorn：" class="headerlink" title="启动Gunicorn："></a>启动Gunicorn：</h1><ol>
-<li><p>在命令行中运行以下命令，启动 Gunicorn，并使用指定的配置文件：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gunicorn -c your_gunicorn_config.py your_app:app</span><br></pre></td></tr></table></figure></li>
-</ol>
-<p>确保 Gunicorn 可以成功启动并监听指定的端口。</p>
-<h1 id="测试Gunicorn："><a href="#测试Gunicorn：" class="headerlink" title="测试Gunicorn："></a>测试Gunicorn：</h1><ol>
-<li>使用 curl 或浏览器访问 Gunicorn 提供的接口，例如 <code>http://127.0.0.1:5000/</code>，确保应用可以通过 Gunicorn WSGI 服务器正常访问。</li>
-</ol>
-<h1 id="配置Nginx："><a href="#配置Nginx：" class="headerlink" title="配置Nginx："></a>配置Nginx：</h1><ol>
-<li><p>创建一个 Nginx 配置文件，例如 <code>your_nginx_config.conf</code>，并指定反向代理规则，将客户端请求转发到 uWSGI 或 Gunicorn 服务器。示例配置如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    server_name your_domain.com;</span><br><span class="line"> </span><br><span class="line">    location / &#123;</span><br><span class="line">        proxy_pass http://127.0.0.1:5000;</span><br><span class="line">        proxy_set_header Host $host;</span><br><span class="line">        proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ol>
-<p>其中，<code>listen</code> 指定了 Nginx 监听的端口，<code>server_name</code> 指定了服务器的域名或 IP 地址，<code>location</code> 指定了转发规则，将请求转发到 uWSGI 或 Gunicorn服务器。</p>
-<h1 id="启动Nginx："><a href="#启动Nginx：" class="headerlink" title="启动Nginx："></a>启动Nginx：</h1><ol>
-<li><p>在命令行中运行以下命令，启动 Nginx，并使用指定的配置文件：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx -c your_nginx_config.conf</span><br></pre></td></tr></table></figure></li>
-</ol>
-<p>确保 Nginx 可以成功启动并监听指定的端口。</p>
-<h1 id="测试Nginx："><a href="#测试Nginx：" class="headerlink" title="测试Nginx："></a>测试Nginx：</h1><ol>
-<li>通过浏览器访问 Nginx 服务器的 IP 或域名，例如 <code>http://your_domain.com/</code>，确保 Nginx 可以接收客户端请求并正确转发到 uWSGI 或 Gunicorn 服务器。</li>
-</ol>
-<h1 id="配置Supervisor："><a href="#配置Supervisor：" class="headerlink" title="配置Supervisor："></a>配置Supervisor：</h1><ol>
-<li><p>创建一个 Supervisor 配置文件，例如 <code>your_supervisor_config.conf</code>，并指定要监控的 uWSGI 或 Gunicorn 进程。示例配置如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[program:your_process]</span><br><span class="line">command=/path/to/gunicorn -c /path/to/your_gunicorn_config.py your_app:app</span><br><span class="line">directory=/path/to/your/app/directory</span><br><span class="line">user=your_user</span><br><span class="line">autostart=true</span><br><span class="line">autorestart=true</span><br><span class="line">redirect_stderr=true</span><br></pre></td></tr></table></figure></li>
-</ol>
-<p>其中，<code>command</code> 指定了启动 Gunicorn 的命令，<code>directory</code> 指定了应用程序的目录，<code>user</code> 指定了运行应用程序的用户，<code>autostart</code> 和 <code>autorestart</code> 分别指定了是否自动启动和自动重启进程，<code>redirect_stderr</code> 指定了是否将标准错误输出重定向到日志文件。</p>
-<h1 id="启动Supervisor："><a href="#启动Supervisor：" class="headerlink" title="启动Supervisor："></a>启动Supervisor：</h1><ol>
-<li><p>在命令行中运行以下命令，启动 Supervisor，并监控指定的进程：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">supervisorctl start your_process</span><br></pre></td></tr></table></figure></li>
-</ol>
-<p>确保 Supervisor 可以成功启动并监控指定的进程。</p>
-<h1 id="测试Supervisor："><a href="#测试Supervisor：" class="headerlink" title="测试Supervisor："></a>测试Supervisor：</h1><ol>
-<li>通过 Supervisor 的状态命令，例如 <code>supervisorctl status</code>，确保进程状态正常。</li>
-</ol>
-<p>以上是实现基本的部署流程，可以根据实际需求和环境进行适当的调整。需要注意的是，每个步骤的命令和配置文件路径可能会因为操作系统和具体的应用程序而有所不同，请根据实际情况进行调整。</p>
-<p>可能遇到的问题及解决方法：<br>当你完成了上述部署过程后，你可能还会遇到一些常见的问题。以下是一些可能出现的问题及解决方法：</p>
-<ol>
-<li><p>权限问题：确保相关文件和目录对于 uWSGI、Gunicorn、Nginx 和 Supervisor 进程可读可写，并且用户拥有足够的权限。如果权限不足，可以使用 <code>sudo</code> 命令或修改文件和目录的所有者和权限。</p>
-</li>
-<li><p>端口冲突：确保 uWSGI、Gunicorn、Nginx 监听的端口与配置文件中的端口一致，并确保这些端口未被其他进程占用。你可以使用 <code>netstat</code> 命令来查看端口的使用情况，并修改配置文件中的端口号。</p>
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">netstat -tuln    # 查看当前监听的端口</span><br><span class="line">sudo lsof -i :&lt;port&gt;   # 查看指定端口的进程</span><br></pre></td></tr></table></figure></li>
-<li><p>配置文件错误：检查 uWSGI、Gunicorn、Nginx 和 Supervisor 的配置文件语法和路径是否正确。配置文件中的路径应该是正确的，并且文件内容应符合相应的配置语法规范。</p>
-</li>
-<li><p>日志跟踪：查看相关组件的日志文件，以便了解错误信息和异常情况。uWSGI、Gunicorn、Nginx 和 Supervisor 都会生成日志文件，你可以在配置文件中指定日志文件位置，或者查看默认生成的日志文件。</p>
-</li>
-<li><p>防火墙设置：确保服务器上的防火墙允许进入和离开相关的端口流量。你可以使用防火墙工具（如 UFW 或 iptables）来配置端口的访问权限。</p>
-<p>sudo ufw allow <port>    # 允许指定端口的访问<br>sudo ufw enable    # 启用防火墙<br>sudo ufw status    # 查看防火墙状态</port></p>
-</li>
-<li><p>进程管理：使用进程管理工具（如 Supervisor）可以更好地管理 uWSGI 和 Gunicorn 进程，保证进程的稳定和可靠性。确保 Supervisor 的配置文件正确，并使用 Supervisor 执行启动、停止和重启等命令。</p>
-<p>sudo supervisorctl start <process_name>    # 启动指定进程<br>sudo supervisorctl restart <process_name>    # 重启指定进程<br>sudo supervisorctl stop <process_name>    # 停止指定进程</process_name></process_name></process_name></p>
-</li>
-</ol>
-<p>这些是常见的问题和解决方法，部署过程可能因环境和需求而有所不同。如果你遇到了其他问题，可以仔细检查日志文件、查找在线资源或在相关社区提问以获取帮助。</p>
-<p>注意，此处提到的部署流程和问题总结是一种常见方式，根据实际情况可能会有所不同。在部署过程中</p>
-<p>————————————————<br>版权声明：本文为CSDN博主「白熊先生」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/2302_77595648/article/details/131926223">https://blog.csdn.net/2302_77595648/article/details/131926223</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flask/" rel="tag">flask</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Vue.nextTick 的原理和用途"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/09/24/Vue.nextTick%20%E7%9A%84%E5%8E%9F%E7%90%86%E5%92%8C%E7%94%A8%E9%80%94/"
-    >Vue.nextTick 的原理和用途</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/09/24/Vue.nextTick%20%E7%9A%84%E5%8E%9F%E7%90%86%E5%92%8C%E7%94%A8%E9%80%94/" class="article-date">
-  <time datetime="2023-09-24T03:57:18.000Z" itemprop="datePublished">2023-09-24</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>Vue.nextTick 的原理和用途</p>
-<p>对于 Vue.nextTick 方法，自己有些疑惑。在查询了各种资料后，总结了一下其原理和用途，如有错误，请不吝赐教。</p>
-<h1 id="异步说明"><a href="#异步说明" class="headerlink" title="异步说明"></a>异步说明</h1><p>Vue 实现响应式并不是数据发生变化之后 DOM 立即变化，而是按一定的策略进行 DOM 的更新。<br>在 Vue 的文档中，说明 Vue 是异步执行 DOM 更新的。关于异步的解析，可以查看阮一峰老师的这篇文章。截取关键部分如下：</p>
-<p>具体来说，异步执行的运行机制如下。</p>
-<p>（1）所有同步任务都在主线程上执行，形成一个执行栈（execution context stack）。<br>（2）主线程之外，还存在一个”任务队列”（task queue）。只要异步任务有了运行结果，就在”任务队列”之中放置一个事件。<br>（3）一旦”执行栈”中的所有同步任务执行完毕，系统就会读取”任务队列”，看看里面有哪些事件。那些对应的异步任务，于是结束等待状态，进入执行栈，开始执行。<br>（4）主线程不断重复上面的第三步。</p>
-<h1 id="事件循环说明"><a href="#事件循环说明" class="headerlink" title="事件循环说明"></a>事件循环说明</h1><p>简单来说，Vue 在修改数据后，视图不会立刻更新，而是等同一事件循环中的所有数据变化完成之后，再统一进行视图更新。</p>
-<p>知乎上的例子：</p>
-<pre><code>//改变数据
-vm.message = &#39;changed&#39;
-
-//想要立即使用更新后的DOM。这样不行，因为设置message后DOM还没有更新
-console.log(vm.$el.textContent) // 并不会得到&#39;changed&#39;
-
-//这样可以，nextTick里面的代码会在DOM更新后执行
-Vue.nextTick(function()&#123;
-    console.log(vm.$el.textContent) //可以得到&#39;changed&#39;
-&#125;)
-</code></pre>
-<p>事件循环：</p>
-<p>第一个 tick（图例中第一个步骤，即’本次更新循环’）：</p>
-<p>首先修改数据，这是同步任务。同一事件循环的所有的同步任务都在主线程上执行，形成一个执行栈，此时还未涉及 DOM 。<br>Vue 开启一个异步队列，并缓冲在此事件循环中发生的所有数据改变。如果同一个 watcher 被多次触发，只会被推入到队列中一次。<br>第二个 tick（图例中第二个步骤，即’下次更新循环’）：</p>
-<p>同步任务执行完毕，开始执行异步 watcher 队列的任务，更新 DOM 。Vue 在内部尝试对异步队列使用原生的 Promise.then 和 MessageChannel 方法，如果执行环境不支持，会采用 setTimeout(fn, 0) 代替。</p>
-<p>第三个 tick（图例中第三个步骤）：</p>
-<p>此时就是文档所说的</p>
-<p>下次 DOM 更新循环结束之后<br>此时通过 Vue.nextTick 获取到改变后的 DOM 。通过 setTimeout(fn, 0) 也可以同样获取到。</p>
-<p>简单总结事件循环：</p>
-<p>同步代码执行 -&gt; 查找异步队列，推入执行栈，执行Vue.nextTick[事件循环1] -&gt;查找异步队列，推入执行栈，执行Vue.nextTick[事件循环2]…</p>
-<p>总之，异步是单独的一个tick，不会和同步在一个 tick 里发生，也是 DOM 不会马上改变的原因。</p>
-<p>对于事件循环，可以在这里查看更详细的内容： <a target="_blank" rel="noopener" href="https://segmentfault.com/a/11">https://segmentfault.com/a/11</a>…<br>用途<br>应用场景：需要在视图更新之后，基于新的视图进行操作。<br>created、mounted<br>需要注意的是，在 created 和 mounted 阶段，如果需要操作渲染后的试图，也要使用 nextTick 方法。</p>
-<p>官方文档说明：</p>
-<p>注意 mounted 不会承诺所有的子组件也都一起被挂载。如果你希望等到整个视图都渲染完毕，可以用 vm.$nextTick 替换掉 mounted</p>
-<pre><code>mounted: function () &#123;
-  this.$nextTick(function () &#123;
-    // Code that will run only after the
-    // entire view has been rendered
-  &#125;)
-&#125;
-</code></pre>
-<h1 id="其他应用场景"><a href="#其他应用场景" class="headerlink" title="其他应用场景"></a>其他应用场景</h1><p>其他应用场景如下三例：</p>
-<h2 id="例子1："><a href="#例子1：" class="headerlink" title="例子1："></a>例子1：</h2><p>点击按钮显示原本以 v-show = false 隐藏起来的输入框，并获取焦点。</p>
-<pre><code>showsou()&#123;
-  this.showit = true //修改 v-show
-  document.getElementById(&quot;keywords&quot;).focus()  //在第一个 tick 里，获取不到输入框，自然也获取不到焦点
-&#125;
-</code></pre>
-<p>修改为：</p>
-<pre><code>showsou()&#123;
-  this.showit = true
-  this.$nextTick(function () &#123;
-    // DOM 更新了
-    document.getElementById(&quot;keywords&quot;).focus()
-  &#125;)
-&#125;
-</code></pre>
-<h2 id="例子2："><a href="#例子2：" class="headerlink" title="例子2："></a>例子2：</h2><p>点击获取元素宽度。</p>
-<pre><code>&lt;div id=&quot;app&quot;&gt;
-    &lt;p ref=&quot;myWidth&quot; v-if=&quot;showMe&quot;&gt;&#123;&#123; message &#125;&#125;&lt;/p&gt;
-    &lt;button @click=&quot;getMyWidth&quot;&gt;获取p元素宽度&lt;/button&gt;
-&lt;/div&gt;
-
-getMyWidth() &#123;
-    this.showMe = true;
-    //this.message = this.$refs.myWidth.offsetWidth;
-    //报错 TypeError: this.$refs.myWidth is undefined
-    this.$nextTick(()=&gt;&#123;
-        //dom元素更新后执行，此时能拿到p元素的属性
-        this.message = this.$refs.myWidth.offsetWidth;
-  &#125;)
-&#125;
-</code></pre>
-<h2 id="例子3："><a href="#例子3：" class="headerlink" title="例子3："></a>例子3：</h2><p>使用 swiper 插件通过 ajax 请求图片后的滑动问题。</p>
-<h1 id="实例理解-nextTick-应用"><a href="#实例理解-nextTick-应用" class="headerlink" title="实例理解 nextTick 应用"></a>实例理解 nextTick 应用</h1><p>下面的例子各位可以复制运行一遍，加深理解。</p>
-<pre><code>&lt;template&gt;
-    &lt;div&gt;
-        &lt;ul&gt;
-            &lt;li class=&quot;example&quot; v-for=&quot;item in list1&quot;&gt;&#123;&#123;item&#125;&#125;&lt;/li&gt;
-        &lt;/ul&gt;
-        &lt;ul&gt;
-            &lt;li class=&quot;example&quot; v-for=&quot;item in list2&quot;&gt;&#123;&#123;item&#125;&#125;&lt;/li&gt;
-        &lt;/ul&gt;
-        &lt;ol&gt;
-            &lt;li class=&quot;example&quot; v-for=&quot;item in list3&quot;&gt;&#123;&#123;item&#125;&#125;&lt;/li&gt;
-        &lt;/ol&gt;
-        &lt;ol&gt;
-            &lt;li class=&quot;example&quot; v-for=&quot;item in list4&quot;&gt;&#123;&#123;item&#125;&#125;&lt;/li&gt;
-        &lt;/ol&gt;
-        &lt;ol&gt;
-            &lt;li class=&quot;example&quot; v-for=&quot;item in list5&quot;&gt;&#123;&#123;item&#125;&#125;&lt;/li&gt;
-        &lt;/ol&gt;
-    &lt;/div&gt;
-&lt;/template&gt;
-&lt;script type=&quot;text/javascript&quot;&gt;
-export default &#123;
-    data() &#123;
-        return &#123;
-            list1: [],
-            list2: [],
-            list3: [],
-            list4: [],
-            list5: []
-        &#125;
-    &#125;,
-    created() &#123;
-        this.composeList12()
-        this.composeList34()
-        this.composeList5()
-        this.$nextTick(function() &#123;
-            // DOM 更新了
-            console.log(&#39;finished test &#39; + new Date().toString(),document.querySelectorAll(&#39;.example&#39;).length)
-        &#125;)
-    &#125;,
-    methods: &#123;
-        composeList12() &#123;
-            let me = this
-            let count = 10000
-
-            for (let i = 0; i &lt; count; i++) &#123;
-                this.$set(me.list1, i, &#39;I am a 测试信息～～啦啦啦&#39; + i)
-            &#125;
-            console.log(&#39;finished list1 &#39; + new Date().toString(),document.querySelectorAll(&#39;.example&#39;).length)
-
-            for (let i = 0; i &lt; count; i++) &#123;
-                this.$set(me.list2, i, &#39;I am a 测试信息～～啦啦啦&#39; + i)
-            &#125;
-            console.log(&#39;finished list2 &#39; + new Date().toString(),document.querySelectorAll(&#39;.example&#39;).length)
-
-            this.$nextTick(function() &#123;
-                // DOM 更新了
-                console.log(&#39;finished tick1&amp;2 &#39; + new Date().toString(),document.querySelectorAll(&#39;.example&#39;).length)
-            &#125;)
-        &#125;,
-        composeList34() &#123;
-            let me = this
-            let count = 10000
-
-            for (let i = 0; i &lt; count; i++) &#123;
-                this.$set(me.list3, i, &#39;I am a 测试信息～～啦啦啦&#39; + i)
-            &#125;
-            console.log(&#39;finished list3 &#39; + new Date().toString(),document.querySelectorAll(&#39;.example&#39;).length)
-
-            this.$nextTick(function() &#123;
-                // DOM 更新了
-                console.log(&#39;finished tick3 &#39; + new Date().toString(),document.querySelectorAll(&#39;.example&#39;).length)
-            &#125;)
-
-            setTimeout(me.setTimeout1, 0)
-        &#125;,
-        setTimeout1() &#123;
-            let me = this
-            let count = 10000
-
-            for (let i = 0; i &lt; count; i++) &#123;
-                this.$set(me.list4, i, &#39;I am a 测试信息～～啦啦啦&#39; + i)
-            &#125;
-            console.log(&#39;finished list4 &#39; + new Date().toString(),document.querySelectorAll(&#39;.example&#39;).length)
-
-            me.$nextTick(function() &#123;
-                // DOM 更新了
-                console.log(&#39;finished tick4 &#39; + new Date().toString(),document.querySelectorAll(&#39;.example&#39;).length)
-            &#125;)
-        &#125;,
-        composeList5() &#123;
-            let me = this
-            let count = 10000
-
-            this.$nextTick(function() &#123;
-                // DOM 更新了
-                console.log(&#39;finished tick5-1 &#39; + new Date().toString(),document.querySelectorAll(&#39;.example&#39;).length)
-            &#125;)
-
-            setTimeout(me.setTimeout2, 0)
-        &#125;,
-        setTimeout2() &#123;
-            let me = this
-            let count = 10000
-
-            for (let i = 0; i &lt; count; i++) &#123;
-                this.$set(me.list5, i, &#39;I am a 测试信息～～啦啦啦&#39; + i)
-            &#125;
-            console.log(&#39;finished list5 &#39; + new Date().toString(),document.querySelectorAll(&#39;.example&#39;).length)
-
-            me.$nextTick(function() &#123;
-                // DOM 更新了
-                console.log(&#39;finished tick5 &#39; + new Date().toString(),document.querySelectorAll(&#39;.example&#39;).length)
-            &#125;)
-        &#125;
-    &#125;
-&#125;
-&lt;/script&gt;
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-vue中下载excel文件4种方法"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/09/23/vue%E4%B8%AD%E4%B8%8B%E8%BD%BDexcel%E6%96%87%E4%BB%B64%E7%A7%8D%E6%96%B9%E6%B3%95/"
-    >vue中下载excel文件4种方法</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/09/23/vue%E4%B8%AD%E4%B8%8B%E8%BD%BDexcel%E6%96%87%E4%BB%B64%E7%A7%8D%E6%96%B9%E6%B3%95/" class="article-date">
-  <time datetime="2023-09-23T15:46:09.000Z" itemprop="datePublished">2023-09-23</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="1、通过url下载"><a href="#1、通过url下载" class="headerlink" title="1、通过url下载"></a>1、通过url下载</h1><p>即后端提供文件的地址，直接使用浏览器去下载</p>
-<p>通过window.location.href = 文件路径下载</p>
-<pre><code>window.location.href = `$&#123;location.origin&#125;/operation/ruleImport/template`
-</code></pre>
-<p>通过 window.open(url, ‘_blank’)</p>
-<pre><code>window.open(`$&#123;location.origin&#125;/operation/ruleImport/template`)
-</code></pre>
-<p>这两种使用方法的不同：</p>
-<p>window.location：当前页跳转，也就是重新定位当前页；只能在网站中打开本网站的网页。<br>window.open：在新窗口中打开链接；可以在网站上打开另外一个网站的地址。</p>
-<h1 id="2、通过-a-标签-download-属性结合-blob-构造函数下载"><a href="#2、通过-a-标签-download-属性结合-blob-构造函数下载" class="headerlink" title="2、通过 a 标签 download 属性结合 blob 构造函数下载"></a>2、通过 a 标签 download 属性结合 blob 构造函数下载</h1><p>a 标签的 download 属性是 HTML5 标准新增的，作用是触发浏览器的下载操作而不是导航到下载的 url，这个属性可以设置下载时使用新的文件名称。</p>
-<p>前端创建超链接，接收后端的文件流：</p>
-<pre><code>axios.get(`/operation/ruleImport/template`,
-    responseType:&quot;blob&quot; //服务器响应的数据英型，可以是&#39;arraybuffer&quot;,&quot;blob&#39;,&quot;document&#39;&quot;,&#39;json&#39;,&#39;text&quot;,&#39;stream&#39;
-    &#125;)
-    .then(res =&gt;
-        if(!res) return
-        const blob = new Blob([res.data],(type:&#39;application/vnd.ms-excel&#39;&#125;)/构造一blob对象来处数据，并设置文件
-        
-        if (window.navigator.msSaveOrOpenBlob)&#123; //兼容IE10
-            navigator.msSaveBlob(blob, this.filename)
-        &#125; else &#123;
-            const href = URL.createObjectURL(blob) //创建所航URL装示指定bLob对象
-            const a = document.createElement(&#39;a&#39;)   //创建a标签
-            a.style.display = &#39;none&#39;
-            a.href = href //指定下视链接
-            a.download = this.fi1ename //指定下件文件名
-            a.click() //发下
-            URL.revokeObjectURL(a.href) //释放URL对象
-        &#125;
-        //这里也可以不创建a接，蓝简vindow.open(href)也能下，
-    &#125;)
-    .catch(err-&gt;&#123;
-        console.1og(err)
-    &#125;)
-</code></pre>
-<p>注：请求后台接口时要在请求头上加{responseType: ‘blob’}；download 设置文件名时，可以直接设置扩展名，如果没有设置浏览器将自动检测正确的文件扩展名并添加到文件。</p>
-<h1 id="3、通过-js-file-download-插件"><a href="#3、通过-js-file-download-插件" class="headerlink" title="3、通过 js-file-download 插件"></a>3、通过 js-file-download 插件</h1><p>安装：</p>
-<pre><code>npm install js-file-download --S
-</code></pre>
-<p>代码：</p>
-<pre><code>import fileDownload from &#39;js-file-download&#39;
-
-axios.get(`/operation/ruleImport/template`,&#123;
-    responseType: &#39;blob&#39; //返回的数据英型
-&#125;)
-.then(res =&gt; &#123;
-    fileDownload(res.data,this.fileName)
-&#125;)
-</code></pre>
-<h1 id="4、使用fetch下载"><a href="#4、使用fetch下载" class="headerlink" title="4、使用fetch下载"></a>4、使用fetch下载</h1><pre><code>exportFile()&#123;
-    fetch(&#39;http://127.0.0.1:8765/course/exportCourse/33&#39;,&#123;
-        method:&#39;GET&#39;,
-        headers:new Headers(&#123;
-            &#39;Authorization&#39;:Cookie.get(&#39;Authorization&#39;)
-        &#125;),
-    &#125;)
-    .then(res =&gt; res.blob())
-    .then(data =&gt; &#123;
-        const blobUrl = window.URL.createobjectURL(data);
-        const a = document.createElement(&#39;a&#39;);
-        a.download = this.fileName+&#39;.xlsx&#39;;
-        a.href = blobUrl;
-        a.click();
+  <h1 id="例子1"><a href="#例子1" class="headerlink" title="例子1:"></a>例子1:</h1><pre><code>LambdaQueryWrapper&lt;SysUser&gt; lambdaQueryWrapper = new LambdaQueryWrapper&lt;&gt;();
+lambdaQueryWrapper.or((wrapper)-&gt;&#123;
+    wrapper.eq(SysUser::getUserName, idUserPayBalUserName).or();
+    wrapper.eq(SysUser::getPhonenumber, idUserPayBalUserName);
     &#125;);
-    &#125;,
+lambdaQueryWrapper.and((wrapper)-&gt;&#123;
+    wrapper.eq(SysUser::getNickName, idUserPayBalName);
+        &#125;
+            );
+SysUser one = userService.getOne(lambdaQueryWrapper);
 </code></pre>
-<p>原文链接：<a target="_blank" rel="noopener" href="https://www.clzg.cn/article/441428.html">https://www.clzg.cn/article/441428.html</a></p>
+<p>sql语句为</p>
+<pre><code>SELECT *
+ FROM sys_user
+ WHERE ((user_name = &#39;15666666669&#39; OR phonenumber = &#39;15666666669&#39;) AND (nick_name = &#39;15666666669&#39;));
+</code></pre>
+<p>也就是说,使用or()包裹的代码执行后是在sql语句的括号内,再次使用or()或者and()则另起一个括号.</p>
+<h1 id="例子2"><a href="#例子2" class="headerlink" title="例子2:"></a>例子2:</h1><pre><code>LambdaQueryWrapper&lt;SysUser&gt; lambdaQueryWrapper = new LambdaQueryWrapper&lt;&gt;();
+    lambdaQueryWrapper.eq(SysUser::getUserName, idUserPayBalUserName).or();
+    lambdaQueryWrapper.eq(SysUser::getPhonenumber, idUserPayBalUserName);
+    lambdaQueryWrapper.eq(SysUser::getNickName, idUserPayBalName);
+    SysUser one = userService.getOne(lambdaQueryWrapper);
+</code></pre>
+<p>sql语句为</p>
+<pre><code>SELECT *
+ FROM sys_user
+ WHERE (user_name = &#39;15666666669&#39; OR phonenumber = &#39;15666666669&#39; AND nick_name = &#39;123&#39;);
+</code></pre>
+<p>可以理解为如下这个语句👇,所以这个sql和上面的例子的sql执行后的结果是完全不一样的.</p>
+<pre><code>SELECT *
+ FROM sys_user
+ WHERE (user_name = &#39;15666666669&#39; OR (phonenumber = &#39;15666666669&#39; AND nick_name = &#39;123&#39;));
+</code></pre>
+<p>————————————————<br>版权声明：本文为CSDN博主「z子豪」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/a864034462/article/details/123980761">https://blog.csdn.net/a864034462/article/details/123980761</a></p>
  
       <!-- reward -->
       
@@ -728,7 +309,7 @@ axios.get(`/operation/ruleImport/template`,&#123;
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li></ul>
 
     </footer>
   </div>
@@ -739,7 +320,7 @@ axios.get(`/operation/ruleImport/template`,&#123;
 
     
     <article
-  id="post-17个vue常用的数组方法总结与实例演示"
+  id="post-Mybatis-Plus高级查询LambdaQueryWrapper&amp;QueryWrapper"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -750,8 +331,8 @@ axios.get(`/operation/ruleImport/template`,&#123;
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/09/22/17%E4%B8%AAvue%E5%B8%B8%E7%94%A8%E7%9A%84%E6%95%B0%E7%BB%84%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93%E4%B8%8E%E5%AE%9E%E4%BE%8B%E6%BC%94%E7%A4%BA/"
-    >17个vue常用的数组方法总结与实例演示</a> 
+  <a class="article-title" href="/2023/10/05/Mybatis-Plus%E9%AB%98%E7%BA%A7%E6%9F%A5%E8%AF%A2LambdaQueryWrapper&QueryWrapper/"
+    >Mybatis-Plus高级查询LambdaQueryWrapper&amp;QueryWrapper</a> 
 </h2>
  
 
@@ -759,8 +340,8 @@ axios.get(`/operation/ruleImport/template`,&#123;
     </header>
      
     <div class="article-meta">
-      <a href="/2023/09/22/17%E4%B8%AAvue%E5%B8%B8%E7%94%A8%E7%9A%84%E6%95%B0%E7%BB%84%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93%E4%B8%8E%E5%AE%9E%E4%BE%8B%E6%BC%94%E7%A4%BA/" class="article-date">
-  <time datetime="2023-09-22T14:44:06.000Z" itemprop="datePublished">2023-09-22</time>
+      <a href="/2023/10/05/Mybatis-Plus%E9%AB%98%E7%BA%A7%E6%9F%A5%E8%AF%A2LambdaQueryWrapper&QueryWrapper/" class="article-date">
+  <time datetime="2023-10-05T02:05:00.000Z" itemprop="datePublished">2023-10-05</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -770,155 +351,419 @@ axios.get(`/operation/ruleImport/template`,&#123;
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>这篇文章主要介绍了vue中常用的数组方法,包括：VUE数组转换字符串，VUE数组遍历，VUE数组过滤，VUE数组查询,VUE数组排序等功能，需要的朋友可以参考下</p>
-<h1 id="1-join"><a href="#1-join" class="headerlink" title="1. join()"></a>1. join()</h1><p>join（’参数‘）把数组的元素以传入的参数为分割符，转换成字符串。</p>
-<pre><code>let arr = [1,2,3,4,5];
-let str = arr.join(&#39;,&#39;);
-console.log(str) // -&gt; &#39;1,2,3,4,5&#39;;
+  <h1 id="LambdaQueryWrapper"><a href="#LambdaQueryWrapper" class="headerlink" title="LambdaQueryWrapper"></a>LambdaQueryWrapper</h1><p>LambdaQueryWrapper使用lambda表达式可以直接通过实体类get()属性，而QueryWrapper必须要与数据库的中表名一致，由于表名可能会很复杂，这时候相较而言LambdaQueryWrapper会比QueryWrapper便捷不少</p>
+<h1 id="Wrapper"><a href="#Wrapper" class="headerlink" title="Wrapper"></a>Wrapper</h1><p>查询构造器</p>
+<pre><code>条件    说明
+allEq    基于 map 的比较
+eq    等于 =
+ne    不等于 &lt;&gt; 或者 !=
+gt    大于 &gt;
+ge    大于等于 &gt;=
+lt    小于 &lt;
+le    小于等于 &lt;
+between    BETWEEN 值1 AND 值2
+notBetween    NOT BETWEEN 值1 AND 值2
+like    LIKE ‘%值%’
+notLike    NOT LIKE ‘%值%’
+likeLeft    LIKE ‘%值’
+likeRight    LIKE ‘值%’
+isNull    字段 IS NULL
+isNotNull    字段 IS NOT NULL
+in    字段 IN (value1, value2, …)
+notIn    字段 NOT IN (value1, value2, …)
+inSql    字段 IN (sql 语句)
+inSql(“age”, “1,2,3”) -&gt; age in (1,2,3)
+inSql(“id”, “select id from student where id &lt; 3”) -&gt; id in (select id from student where id &lt; 3)
+notInSql    字段 NOT IN (sql 语句)
+groupBy    GROUP BY 字段
+orderByAsc    升序 ORDER BY 字段, … ASC
+orderByDesc    降序 ORDER BY 字段, … DESC
+orderBy    自定义字段排序
+orderBy(true, true, “id”, “name”) -&gt; order by id ASC, name ASC
+having    条件分组
+or    OR 语句，拼接 + OR 字段=值
+and    AND 语句，拼接 + AND 字段=值
+apply    拼接 sql
+last    在 sql 语句后拼接自定义条件
+exists    拼接 EXISTS(sql语句)
+exists(“selece id from student where age = 1”) -&gt; exists(selece id from student where age = 1)
+notExists    拼接 NOT EXISTS(sql语句)
+nested    正常嵌套 不带 AND 或者 OR
 </code></pre>
-<h1 id="2-push-和pop"><a href="#2-push-和pop" class="headerlink" title="2.push()和pop()"></a>2.push()和pop()</h1><p>push(): 可以接收任意数量的参数，把它们逐个添加到数组末尾，并返回修改后数组的长度。<br>pop()：数组末尾移除最后一项，减少数组的 length 值，然后返回移除的项。</p>
-<pre><code>let arr = [&#39;张三&#39;,&#39;李四&#39;,&#39;王五&#39;];
-let count = arr.push(&#39;马六&#39;);
-console.log(arr) // -&gt; [&#39;张三&#39;,&#39;李四&#39;,&#39;王五&#39;,&#39;马六&#39;]
-console.log(count) // -&gt; 4
-  
-let item = arr.pop();
-console.log(item) // -&gt; 马六;
+<h1 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h1><h2 id="创建一个数据库-mybatisplus"><a href="#创建一个数据库-mybatisplus" class="headerlink" title="创建一个数据库 mybatisplus"></a>创建一个数据库 mybatisplus</h2><h2 id="创建-user-表"><a href="#创建-user-表" class="headerlink" title="创建 user 表"></a>创建 user 表</h2><pre><code>CREATE TABLE `user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(30) DEFAULT NULL,
+  `age` int(11) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
 </code></pre>
-<h1 id="3-shift-和-unshift"><a href="#3-shift-和-unshift" class="headerlink" title="3.shift() 和 unshift()"></a>3.shift() 和 unshift()</h1><p>shift()：删除原数组第一项，并返回删除元素的值；如果数组为空则返回undefined 。<br>unshift:将参数添加到原数组开头，并返回数组的长度 。</p>
-<pre><code>let arr = [&#39;张三&#39;,&#39;李四&#39;,&#39;王五&#39;];
-let item = arr.shift();
-console.log(arr) // -&gt; [&#39;李四&#39;,&#39;王五&#39;]
-console.log(item); // -&gt; 张三
-  
-let count = arr.unshift(&#39;马六&#39;);
-  
-console.log(arr) // -&gt; [&#39;马六&#39;,&#39;李四&#39;,&#39;王五&#39;]
-console.log(count) // -&gt; 3
+<h2 id="创建-springboot-工程"><a href="#创建-springboot-工程" class="headerlink" title="创建 springboot 工程"></a>创建 springboot 工程</h2><h2 id="导入对应-maven-坐标"><a href="#导入对应-maven-坐标" class="headerlink" title="导入对应 maven 坐标"></a>导入对应 maven 坐标</h2><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+    &lt;parent&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;
+        &lt;version&gt;2.5.3&lt;/version&gt;
+        &lt;relativePath/&gt; &lt;!-- lookup parent from repository --&gt;
+    &lt;/parent&gt;
+    &lt;groupId&gt;com.cmy&lt;/groupId&gt;
+    &lt;artifactId&gt;mybatis_plus&lt;/artifactId&gt;
+    &lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;
+    &lt;name&gt;mybatis_plus&lt;/name&gt;
+    &lt;description&gt;Demo project for Spring Boot&lt;/description&gt;
+    &lt;properties&gt;
+        &lt;java.version&gt;1.8&lt;/java.version&gt;
+    &lt;/properties&gt;
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+ 
+        &lt;!-- mybatis-plus --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.baomidou&lt;/groupId&gt;
+            &lt;artifactId&gt;mybatis-plus-boot-starter&lt;/artifactId&gt;
+            &lt;version&gt;3.4.0&lt;/version&gt;
+        &lt;/dependency&gt;
+ 
+        &lt;!-- mysql --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;mysql&lt;/groupId&gt;
+            &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
+            &lt;scope&gt;runtime&lt;/scope&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;
+            &lt;scope&gt;test&lt;/scope&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+ 
+    &lt;build&gt;
+        &lt;plugins&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+                &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;
+            &lt;/plugin&gt;
+        &lt;/plugins&gt;
+    &lt;/build&gt;
+ 
+&lt;/project&gt;
 </code></pre>
-<h1 id="4-reverse"><a href="#4-reverse" class="headerlink" title="4.reverse();"></a>4.reverse();</h1><p>将数组的数据进行反转，并且返回反转后的数组，会改变原数组</p>
-<pre><code>let arr = [1,2,3,4,5];
-let arr1 = arr.reverse();
-console.log(arr1) // -&gt; [5,4,3,2,1]
-console.log(arr) // -&gt; [5,4,3,2,1]
+<h2 id="mysql数据库相关配置"><a href="#mysql数据库相关配置" class="headerlink" title="mysql数据库相关配置"></a>mysql数据库相关配置</h2><pre><code>spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1/mybatisplus?useUnicode=true&amp;characterEncoding=utf-8
+    username: root
+    password: root
+mybatis-plus 日志信息配置
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 </code></pre>
-<h1 id="5-sort"><a href="#5-sort" class="headerlink" title="5.sort();"></a>5.sort();</h1><p>对数组内的数据进行排序(默认为升序)，并且返回排过序的新数组，会改变原来的数组</p>
-<pre><code>let arr = [12,2,43,5,2,5];
-console.log(arr.sort()) // -&gt; [12, 2, 2, 43, 5, 5]
-// 注意：通过上面的案例，你会发现 打印的数组和原数组比较还是有变化的 [12,2,43,5,2,5] -&gt; [12, 2, 2, 43, 5, 5];但是有没有达到我们想要的结果，这是为什么呢？
-// 因为排序是针对字符的排序，先使用数组的toString()方法转为字符串，再逐位比较，3是大于12的，因为首位3&gt;1，不要与Number型的数据排序混淆。
+<h2 id="创建实体类-User"><a href="#创建实体类-User" class="headerlink" title="创建实体类 User"></a>创建实体类 User</h2><pre><code>package com.cmy.mybatis_plus.entity;
+ 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+ 
+/**
+ * 实体类 user
+ */
+public class User &#123;
+    /**
+     * 指定主键id生成的方式
+     * value 是主键字段的名称，如果是id，可以不用写
+     * type 指定主键的类型，主键的值如何生成。idType.AUTO 自动增长
+     */
+    @TableId(
+            value = &quot;id&quot;,
+            type = IdType.AUTO
+    )
+    private Long id;
+    private String name;
+    private String email;
+    private Integer age;
+ 
+    public Long getId() &#123;
+        return id;
+    &#125;
+ 
+    public void setId(Long id) &#123;
+        this.id = id;
+    &#125;
+ 
+    public String getName() &#123;
+        return name;
+    &#125;
+ 
+    public void setName(String name) &#123;
+        this.name = name;
+    &#125;
+ 
+    public String getEmail() &#123;
+        return email;
+    &#125;
+ 
+    public void setEmail(String email) &#123;
+        this.email = email;
+    &#125;
+ 
+    public Integer getAge() &#123;
+        return age;
+    &#125;
+ 
+    public void setAge(Integer age) &#123;
+        this.age = age;
+    &#125;
+ 
+    @Override
+    public String toString() &#123;
+        return &quot;User&#123;&quot; +
+                &quot;id=&quot; + id +
+                &quot;, name=&#39;&quot; + name + &#39;\&#39;&#39; +
+                &quot;, email=&#39;&quot; + email + &#39;\&#39;&#39; +
+                &quot;, age=&quot; + age +
+                &#39;&#125;&#39;;
+    &#125;
+&#125;
 </code></pre>
-<p>5.1那如果需要数值排序怎么办呢？</p>
-<pre><code>// 如果需要数值排序，sort(callback) 需要传入一个回调涵数，该函数应该具有两个参数，比较这两个参数，然后返回一个用于说明这两个值的相对顺序的数字（a-b）；
-例如：
-let arr = [12,2,43,5,2,5];
-console.log(arr.sort((a,b)=&gt;a-b)) // -&gt; [2, 2, 5, 5, 12, 43]
+<h2 id="自定义-User-的-Mapper-接口"><a href="#自定义-User-的-Mapper-接口" class="headerlink" title="自定义 User 的 Mapper 接口"></a>自定义 User 的 Mapper 接口</h2><pre><code>package com.cmy.mybatis_plus.mapper;
+ 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.cmy.mybatis_plus.entity.User;
+ 
+/**
+ * 自定义 Mapper 接口，就是 dao 接口
+ * 1. 实现BaseMapper
+ * 2. 指定实体类（泛型）
+ *
+ * BaseMapper 是 MP 框架中的对象，定义了 17 个操作方法（CRUD）
+ */
+public interface UserMapper extends BaseMapper&lt;User&gt; &#123;
+&#125;
 </code></pre>
-<h1 id="6-slice"><a href="#6-slice" class="headerlink" title="6.slice();"></a>6.slice();</h1><p>截取指定位置的数组，并且返回截取的数组，不会改变原数组</p>
-<pre><code>// 注意：slice（startIndex, endIndex）可以有两个参数，startIndex为必选，表示从第几位开始；endIndex为可选，表示到第几位结束(不包含endIndex位)，省略表示到最后一位；startIndex和endIndex都可以为负数，负数时表示从最后一位开始算起，如-1表示最后一位。
-let arr =  [&#39;张三&#39;,&#39;李四&#39;,&#39;王五&#39;,&#39;马六&#39;];
-console.log(arr.slice(1,3)); // -&gt; [&#39;李四&#39;, &#39;王五&#39;]
-console.log(arr) // -&gt; [&#39;张三&#39;,&#39;李四&#39;,&#39;王五&#39;,&#39;马六&#39;]; 原数组是没有改变的。
+<h1 id="查询条件"><a href="#查询条件" class="headerlink" title="查询条件"></a>查询条件</h1><h2 id="allEq"><a href="#allEq" class="headerlink" title="allEq"></a>allEq</h2><p>条件用 Map 进行封装</p>
+<pre><code>“name” -&gt; “张三”
+“age” -&gt; 20
+
+public void testAllEq() &#123;
+    QueryWrapper&lt;User&gt; queryWrapper = new QueryWrapper&lt;&gt;();
+    // 封装条件
+    Map&lt;String, Object&gt; hashMap = new HashMap&lt;&gt;();
+    hashMap.put(&quot;name&quot;, &quot;张三&quot;);
+    hashMap.put(&quot;age&quot;, 20);
+ 
+    queryWrapper.allEq(hashMap);
+ 
+    List&lt;User&gt; userList = userMapper.selectList(queryWrapper);
+    userList.forEach(user -&gt; &#123;
+        System.out.println(user);
+    &#125;);
+&#125;
 </code></pre>
-<h1 id="7-splice"><a href="#7-splice" class="headerlink" title="7.splice();"></a>7.splice();</h1><p>向数组中添加，或从数组删除，或替换数组中的元素，然后返回被删除/替换的元素。</p>
-<pre><code>// 注意：splice(start,num,val1,val2,...); 所有参数全部可选。和 slice 相比 splice 是会改变原数组的。
-// start 是开始位置,可以为负数，-1就代表从最后一位开始，num代表要删除或者替换的长度，不能为负数。
-let arr = [&#39;张三&#39;,&#39;李四&#39;,&#39;王五&#39;,&#39;马六&#39;];
-console.log(arr.splice(2,1)) // -&gt; [&#39;王五&#39;]
-console.log(arr) // -&gt; [&#39;张三&#39;,&#39;李四&#39;,&#39;马六&#39;]
-  
-let arr = [&#39;张三&#39;,&#39;李四&#39;,&#39;王五&#39;,&#39;马六&#39;];
-console.log(arr.splice(2,1,&#39;七郎&#39;)) // -&gt; [&#39;王五&#39;] 
-console.log(arr) // -&gt; [&#39;张三&#39;, &#39;李四&#39;, &#39;七郎&#39;, &#39;马六&#39;]
+<h2 id="eq"><a href="#eq" class="headerlink" title="eq"></a>eq</h2><p>eq(“列名”, 值) -&gt; 列名 = 值</p>
+<pre><code>public List&lt;Dict&gt; listByDictCode(DictCode dictCode) &#123;
+    LambdaQueryWrapper&lt;Dict&gt; wrapper = Wrappers.lambdaQuery();
+    wrapper.eq(Dict::getDictCode, dictCode.getCode())
+           .eq(Dict::getEnabled, DictEnableEnum.VALID.getType());
+    return this.baseMapper.selectList(wrapper);
+&#125;
 </code></pre>
-<h1 id="8-toString"><a href="#8-toString" class="headerlink" title="8.toString();"></a>8.toString();</h1><p>将数组转换成字符串，类似于没有参数的join()。该方法会在数据发生隐式类型转换时被自动调用，如果手动调用，就是直接转为字符串。不会改变原数组</p>
-<pre><code>let arr = [1,2,3,4,5,6];
-console.log(arr.toString()) // -&gt; &#39;1,2,3,4,5,6&#39;
-// 注意：没有参数。
+<h2 id="ne"><a href="#ne" class="headerlink" title="ne"></a>ne</h2><p>ne(“列名”, 值) -&gt; 列名 != 值</p>
+<pre><code>public List&lt;Dict&gt; listByDictCode(DictCode dictCode) &#123;
+    LambdaQueryWrapper&lt;Dict&gt; wrapper = Wrappers.lambdaQuery();
+    wrapper.ne(Dict::getDictCode, dictCode.getCode())
+           .ne(Dict::getEnabled, DictEnableEnum.VALID.getType());
+    return this.baseMapper.selectList(wrapper);
+&#125;
 </code></pre>
-<h1 id="9-indexOf"><a href="#9-indexOf" class="headerlink" title="9.indexOf();"></a>9.indexOf();</h1><p>根据指定的数据，从左向右，查询在数组中出现的位置，如果不存在指定的数据，返回-1，找到了指定的数据返回该数据的索引</p>
-<pre><code>// 注意：indexOf(value, start);value为要查询的数据；start为可选，表示开始查询的位置，当start为负数时，从数组的尾部向前数；如果查询不到value的存在，则方法返回-1
-  
-let arr = [&#39;张三&#39;,&#39;李四&#39;,&#39;王五&#39;,&#39;马六&#39;];
-console.log(arr.indexOf(&#39;李四&#39;)) // -&gt; 1
-console.log(arr.indexOf(&#39;李四&#39;,2)) // -&gt; -1
+<h2 id="gt"><a href="#gt" class="headerlink" title="gt"></a>gt</h2><p>gt(“age”, 20) -&gt; age &gt; 20</p>
+<pre><code>public List&lt;User&gt; userList() &#123;
+    LambdaQueryWrapper&lt;User&gt; wrapper = Wrappers.lambdaQuery();
+    wrapper.gt(User::getAge, 20);            
+    return this.baseMapper.selectList(wrapper);
+&#125;
 </code></pre>
-<h1 id="10-forEach"><a href="#10-forEach" class="headerlink" title="10.forEach()"></a>10.forEach()</h1><p>ES5新增的方法，用来遍历数组，没有返回值，</p>
-<pre><code>// 注意：forEach(callback);callback默认有三个参数，分别为value(遍历到的数组的数据)，index(对应的索引)，self(数组自身)。
-let arr = [&#39;张三&#39;,&#39;李四&#39;,&#39;王五&#39;,&#39;马六&#39;]
-let a = arr.forEach((item,index,self)=&gt;&#123;
-    console.log(value + &quot;--&quot; + index + &quot;--&quot; + (arr === self));
-&#125;)
-// 打印结果为：
-// 张三--0--true
-// 李四--1--true
-// 王五--2--true
-// 马六--3--true
-console.log(a);  // -&gt; undefined---forEach没有返回值
-//该方法为遍历方法，不会修改原数组
+<h2 id="ge"><a href="#ge" class="headerlink" title="ge"></a>ge</h2><p>ge(“age”, 20) -&gt; age &gt;= 20</p>
+<pre><code>public List&lt;User&gt; userList() &#123;
+    LambdaQueryWrapper&lt;User&gt; wrapper = Wrappers.lambdaQuery();
+    wrapper.ge(User::getAge, 20);            
+    return this.baseMapper.selectList(wrapper);
+&#125;
 </code></pre>
-<h1 id="11-map-；"><a href="#11-map-；" class="headerlink" title="11.map()；"></a>11.map()；</h1><p>1.同forEach功能；<br>2.map的回调函数会将执行结果返回，最后map将所有回调函数的返回值组成新数组返回。</p>
-<pre><code>//注意：map(callback);callback默认有三个参数，分别为value，index，self。跟上面的forEach()的参数一样
-let arr = [&#39;张三&#39;,&#39;李四&#39;,&#39;王五&#39;,&#39;马六&#39;];
-let arr1 = arr.map(item =&gt; &#123;
-    return &#39;你好：&#39;+item
-&#125;)
-console.log(arr1) // -&gt; [&#39;你好：张三&#39;, &#39;你好：李四&#39;, &#39;你好：王五&#39;, &#39;你好：马六&#39;]
+<h2 id="lt"><a href="#lt" class="headerlink" title="lt"></a>lt</h2><p>lt(“age”, 20) -&gt; age &lt; 20</p>
+<pre><code>public List&lt;User&gt; userList() &#123;
+    LambdaQueryWrapper&lt;User&gt; wrapper = Wrappers.lambdaQuery();
+    wrapper.lt(User::getAge, 20);            
+    return this.baseMapper.selectList(wrapper);
+&#125;
 </code></pre>
-<h1 id="12-filter"><a href="#12-filter" class="headerlink" title="12.filter();"></a>12.filter();</h1><p>1.同forEach功能；2.filter的回调函数需要返回布尔值，当为true时，将本次数组的数据返回给filter，最后filter将所有回调函数的返回值组成新数组返回（此功能可理解为“过滤”）。</p>
-<pre><code>// 注意：filter(callback);callback默认有三个参数，分别为value，index，self。
-let arr = [1,2,3,4,5,6];
-let arr1 = arr.filter((value,index,self)=&gt;&#123;
-    console.log(item) // -&gt; 1,2,3,4,5,6
-    console.log(index) // -&gt; 0,1,2,3,4,5
-    console.log(self) // -&gt; [1,2,3,4,5,6]
-    return item &gt; 3
-&#125;)
-  
-console.log(arr1) // -&gt; [4,5,6]
+<h2 id="le"><a href="#le" class="headerlink" title="le"></a>le</h2><p>le(“age”, 21) -&gt; age &lt;= 21</p>
+<pre><code>public List&lt;User&gt; userList() &#123;
+    LambdaQueryWrapper&lt;User&gt; wrapper = Wrappers.lambdaQuery();
+    wrapper.le(User::getAge, 20);            
+    return this.baseMapper.selectList(wrapper);
+&#125;
 </code></pre>
-<h1 id="13-find"><a href="#13-find" class="headerlink" title="13.find();"></a>13.find();</h1><p>数组的循环，查找到符合条件的值并且打断循环返回找到的值；</p>
-<pre><code>let arr = [&#39;张三&#39;,&#39;李四&#39;,&#39;王五&#39;,&#39;马六&#39;];
-let str = arr.find(item =&gt; item == &#39;李四&#39;);
-console.log(str); // -&gt; &#39;李四&#39;
+<h2 id="between-notBetween"><a href="#between-notBetween" class="headerlink" title="between,notBetween"></a>between,notBetween</h2><p>between(“age”, 18, 25) -&gt; age BETWEEN 18 AND 25 ，年龄在18到25之间</p>
+<p>notBetween就是不在18到25之间</p>
+<pre><code>public List&lt;User&gt; userList() &#123;
+    LambdaQueryWrapper&lt;User&gt; wrapper = Wrappers.lambdaQuery();
+    wrapper.between(User::getAge, 18,25);                
+    return this.baseMapper.selectList(wrapper);
+&#125;
 </code></pre>
-<h1 id="14-findIndex"><a href="#14-findIndex" class="headerlink" title="14.findIndex();"></a>14.findIndex();</h1><p>数组的循环，查找到符合条件的索引并且打断循环返回找到的索引值</p>
-<pre><code>let arr = [&#39;张三&#39;,&#39;李四&#39;,&#39;王五&#39;,&#39;马六&#39;];
-let index = arr.findIndex(item =&gt; item == &#39;李四&#39;);
-console.log(index); // -&gt; 1;
+<h2 id="like-notLike"><a href="#like-notLike" class="headerlink" title="like,notLike"></a>like,notLike</h2><p>like 匹配值 -&gt; “%值%” 模糊查询</p>
+<p>notLike 模糊查询不匹配”%值%”</p>
+<pre><code>public List&lt;User&gt; userList() &#123;
+    LambdaQueryWrapper&lt;User&gt; wrapper = Wrappers.lambdaQuery();
+     wrapper.like(User::getName, &quot;张&quot;);           
+    return this.baseMapper.selectList(wrapper);
+&#125;
 </code></pre>
-<h1 id="15-every"><a href="#15-every" class="headerlink" title="15.every();"></a>15.every();</h1><p>判断数组中每一项是否都满足条件，只有所有项都满足条件，才会返回true。</p>
-<pre><code>// 注意： every()接收一个回调函数作为参数，这个回调函数需要有返回值，every(callback);callback默认有三个参数，分别为value，index，self。
-let arr = [1,2,3,4,5,6];
-let bool = arr.every(item =&gt; item &gt; 0);
-console.log(bool); // -&gt; true;
-  
-let bool = arr.every(item =&gt; item &gt; 3);
-console.log(bool); // -&gt; false;
+<h2 id="likeLeft"><a href="#likeLeft" class="headerlink" title="likeLeft"></a>likeLeft</h2><p>likeLeft 匹配值 -&gt; “%值”</p>
+<pre><code>public List&lt;User&gt; userList() &#123;
+    LambdaQueryWrapper&lt;User&gt; wrapper = Wrappers.lambdaQuery();
+     wrapper.likeLeft(User::getName, &quot;张&quot;);           
+    return this.baseMapper.selectList(wrapper);
+&#125;
 </code></pre>
-<h1 id="16-some"><a href="#16-some" class="headerlink" title="16.some();"></a>16.some();</h1><p>判断数组中是否存在满足条件的项，只要有一项满足条件，就会返回true。否侧就会返回false</p>
-<pre><code>//注意： some()接收一个回调函数作为参数，这个回调函数需要有返回值，some(callback);callback默认有三个参数，分别为value，index，self。
-let arr = [1,2,3,4,5,6];
-let bool = arr.some(item =&gt; item &gt; 3);
-console.log(bool) // -&gt; true;
-  
-let bool = arr.some(item =&gt; item &gt; 6);
-console.log(bool) // -&gt; false;
+<h2 id="likeRight"><a href="#likeRight" class="headerlink" title="likeRight"></a>likeRight</h2><p>likeRight 匹配值 -&gt; “值%”</p>
+<pre><code>public List&lt;User&gt; userList() &#123;
+    LambdaQueryWrapper&lt;User&gt; wrapper = Wrappers.lambdaQuery();
+    wrapper.likeRight(User::getName, &quot;张&quot;);           
+    return this.baseMapper.selectList(wrapper);
+&#125;
 </code></pre>
-<h1 id="17-reduce"><a href="#17-reduce" class="headerlink" title="17.reduce();"></a>17.reduce();</h1><p>数组的第一项开始，逐个遍历到最后，迭代数组的所有项，然后构建一个最终返回的值。</p>
-<pre><code>// 注意：参数：reduce()接收一个或两个参数：第一个是回调函数，表示在数组的每一项上调用的函数；第二个参数（可选的）作为归并的初始值，被回调函数第一次执行时的第一个参数接收。 reduce(callback,initial);callback默认有四个参数，分别为prev，now，index，self。 callback返回的任何值都会作为下一次执行的第一个参数。 如果initial参数被省略，那么第一次迭代发生在数组的第二项上，因此callback的第一个参数是数组的第一项，第二个参数就是数组的第二项。
-  
-let arr = [10,20,30,40,50];
-let sum = arr.reduce((prev,now) =&gt; prev+now)
-  
-console.log(sum); // -&gt; 150;
-  
-let sum = arr.reduce((prev,now) =&gt; prev+now,110)
-  
-console.log(sum)
+<h2 id="isNull，isNotNull"><a href="#isNull，isNotNull" class="headerlink" title="isNull，isNotNull"></a>isNull，isNotNull</h2><p>isNull 空值查询<br>isNotNull 非空值查询</p>
+<pre><code>public List&lt;User&gt; userList() &#123;
+    LambdaQueryWrapper&lt;User&gt; wrapper = Wrappers.lambdaQuery();
+    wrapper.isNull(User::getName);
+    //wrapper.isNotNull(User::getName);              
+    return this.baseMapper.selectList(wrapper);
+&#125;
 </code></pre>
-<p>本文为大家讲解了17个vue常用的数组方法总结与实例演示，包括：VUE数组转换字符串，VUE数组遍历，VUE数组过滤，VUE数组查询等功能</p>
-<p><a target="_blank" rel="noopener" href="https://www.jb51.net/article/269686.htm">https://www.jb51.net/article/269686.htm</a></p>
+<h2 id="in，notIn"><a href="#in，notIn" class="headerlink" title="in，notIn"></a>in，notIn</h2><p>in(“name”, “张三”, “李四”) -&gt; name in (“张三”, “李四”) 姓名是张三或李四的用户</p>
+<p>notIn(“name”, “张三”, “李四”) -&gt; name not in (“张三”, “李四”) 姓名不是张三或李四的用户</p>
+<pre><code>public List&lt;User&gt; userList() &#123;
+    LambdaQueryWrapper&lt;User&gt; wrapper = Wrappers.lambdaQuery();
+    wrapper.in(User::getName, &quot;张三&quot;,&quot;李四&quot;);
+    //wrapper.in(User::getName, &quot;张三&quot;,&quot;李四&quot;);           
+    return this.baseMapper.selectList(wrapper);
+&#125;
+</code></pre>
+<h2 id="inSql、notInSql"><a href="#inSql、notInSql" class="headerlink" title="inSql、notInSql"></a>inSql、notInSql</h2><pre><code>public List&lt;User&gt; userList() &#123;
+    LambdaQueryWrapper&lt;User&gt; wrapper= new LambdaQueryWrapper&lt;&gt;();
+    // SELECT id,name,email,age FROM user WHERE (age IN (select age from user where id = 1))
+    wrapper.inSql(User::getAge, &quot;select age from user where id = 1&quot;);
+    return this.baseMapper.selectList(wrapper);
+&#125;
+</code></pre>
+<h2 id="groupBy"><a href="#groupBy" class="headerlink" title="groupBy"></a>groupBy</h2><p>分组</p>
+<pre><code>public List&lt;User&gt; userList() &#123;
+    LambdaQueryWrapper&lt;User&gt; wrapper = new LambdaQueryWrapper&lt;&gt;();
+    wrapper.groupBy(User::getName);
+    return this.baseMapper.selectList(wrapper);
+&#125;
+</code></pre>
+<h2 id="orderBy、orderByAsc、orderByDesc"><a href="#orderBy、orderByAsc、orderByDesc" class="headerlink" title="orderBy、orderByAsc、orderByDesc"></a>orderBy、orderByAsc、orderByDesc</h2><pre><code>public List&lt;User&gt; userList() &#123;
+    LambdaQueryWrapper&lt;User&gt; wrapper = new LambdaQueryWrapper&lt;&gt;();
+    // SELECT id,name,email,age FROM user ORDER BY name ASC,age DESC
+    wrapper.orderBy(true, true, User::getName).orderBy(true, false, User::getAge);
+    
+    // SELECT id,name,email,age FROM user ORDER BY name ASC,age ASC
+    wrapper.orderByAsc(User::getName, User::getAge);
+ 
+    // SELECT id,name,email,age FROM user ORDER BY name DESC,age DESC
+    wrapper.orderByDesc(User::getName, User::getAge);
+ 
+    return this.baseMapper.selectList(wrapper);
+&#125;
+</code></pre>
+<h2 id="or、and"><a href="#or、and" class="headerlink" title="or、and"></a>or、and</h2><pre><code>public List&lt;User&gt; userList() &#123;
+    LambdaQueryWrapper&lt;User&gt; wrapper = Wrappers.lambdaQuery();
+
+    // SELECT id,name,email,age FROM user WHERE (name = ? AND id = ?)
+    wrapper.eq(User::getName, &quot;张三&quot;).and().eq(User::getId,1);
+
+    // SELECT id,name,email,age FROM user WHERE (name = ? OR id = ?)       
+    wrapper.eq(User::getName, &quot;张三&quot;).or().eq(User::getId,1);     
+    return this.baseMapper.selectList(wrapper);
+&#125;
+</code></pre>
+<p>这里说明一下or和and的问题</p>
+<p>错误代码</p>
+<pre><code>public List&lt;User&gt; userList() &#123;
+ 
+    LambdaQueryWrapper&lt;User&gt; wrapper = new LambdaQueryWrapper&lt;&gt;();
+    wrapper.eq(User::getId,1);
+    wrapper.like(User::getName,&quot;张&quot;)
+           .or()
+           .like(User::getEmail,&quot;163&quot;)
+           .or()
+           .like(User::getAge,1);
+&#125;
+</code></pre>
+<p>根据上面的写法写出的sql语句如下：</p>
+<pre><code>WHERE id = &#39;1&#39; 
+    AND name LIKE &#39;%张%&#39;
+    OR email LIKE &#39;%163%&#39;
+    OR age LIKE &#39;%1%&#39;
+</code></pre>
+<p>这样明显是不对的，根据mysql语句执行顺序or最后执行 ，这会导致一旦[name like ‘%张%’]条件成立后面的or条件就会失效，所以第一个条件 并没有起到and的作用。</p>
+<p>解决方法</p>
+<pre><code>public List&lt;User&gt; userList() &#123;
+ 
+    LambdaQueryWrapper&lt;User&gt; wrapper = new LambdaQueryWrapper&lt;&gt;();
+    wrapper.eq(User::getId,1);
+    wrapper.and(wrapper-&gt;wrapper.like(User::getName,&quot;张&quot;)
+                                .or()
+                                .like(User::getEmail,&quot;163&quot;)
+                                .or()
+                                .like(User::getAge,1)
+               );
+&#125;
+</code></pre>
+<p>这样得到的sql语句如下</p>
+<pre><code>WHERE id = &#39;1&#39; 
+    AND (name LIKE &#39;%张%&#39;
+    OR email LIKE &#39;%163%&#39;
+    OR age LIKE &#39;%1%&#39;)
+</code></pre>
+<p>这样就解决了，这个问题在我的公司中新人(包括我在内)貌似都遇到这个问题，在此说明一下</p>
+<h2 id="last"><a href="#last" class="headerlink" title="last"></a>last</h2><p>在末尾拼接sql语句</p>
+<p>注：last()有sql注入的风险，请谨慎使用！</p>
+<pre><code>public List&lt;User&gt; userList() &#123;
+    LambdaQueryWrapper&lt;User&gt; wrapper = new LambdaQueryWrapper&lt;&gt;();
+    // SELECT id,name,email,age FROM user WHERE (name = ? OR age = ?) limit 1
+    wrapper.eq(User::getName, &quot;张三&quot;).or().eq(User::getAge, 20).last(&quot;limit 1&quot;);
+    return this.baseMapper.selectList(wrapper);
+&#125;
+exists、notExists
+public List&lt;User&gt; userList() &#123;
+    LambdaQueryWrapper&lt;User&gt; wrapper = new LambdaQueryWrapper&lt;&gt;();
+ 
+    // SELECT id,name,email,age FROM user WHERE (EXISTS (select name from user where age &gt; ?))
+    wrapper.exists(&quot;select name from user where age &gt; 21&quot;);
+ 
+    // SELECT id,name,email,age FROM user WHERE (NOT EXISTS (select name from user where age &gt; ?))
+    wrapper.notExists(&quot;select name from user where age &gt; 21&quot;);
+ 
+    return this.baseMapper.selectList(wrapper);
+&#125;
+</code></pre>
+<h1 id="附加MySQL语句执行顺序"><a href="#附加MySQL语句执行顺序" class="headerlink" title="附加MySQL语句执行顺序"></a>附加MySQL语句执行顺序</h1><pre><code>1、from
+2、where (or 最后执行)
+3、group by
+4、having
+5、DISTINCT
+6、order by
+7、limit
+</code></pre>
+<p>————————————————<br>版权声明：本文为CSDN博主「初级bug小天才」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_52317961/article/details/128317591">https://blog.csdn.net/weixin_52317961/article/details/128317591</a></p>
  
       <!-- reward -->
       
@@ -929,7 +774,7 @@ console.log(sum)
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li></ul>
 
     </footer>
   </div>
@@ -940,7 +785,7 @@ console.log(sum)
 
     
     <article
-  id="post-Vue中下载不同文件五种常用的方式"
+  id="post-QueryWrapper和LambdaQueryWrapper和Wrappers"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -951,8 +796,8 @@ console.log(sum)
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/09/21/Vue%E4%B8%AD%E4%B8%8B%E8%BD%BD%E4%B8%8D%E5%90%8C%E6%96%87%E4%BB%B6%E4%BA%94%E7%A7%8D%E5%B8%B8%E7%94%A8%E7%9A%84%E6%96%B9%E5%BC%8F/"
-    >Vue中下载不同文件五种常用的方式</a> 
+  <a class="article-title" href="/2023/10/04/QueryWrapper%E5%92%8CLambdaQueryWrapper%E5%92%8CWrappers/"
+    >QueryWrapper和LambdaQueryWrapper和Wrappers</a> 
 </h2>
  
 
@@ -960,8 +805,8 @@ console.log(sum)
     </header>
      
     <div class="article-meta">
-      <a href="/2023/09/21/Vue%E4%B8%AD%E4%B8%8B%E8%BD%BD%E4%B8%8D%E5%90%8C%E6%96%87%E4%BB%B6%E4%BA%94%E7%A7%8D%E5%B8%B8%E7%94%A8%E7%9A%84%E6%96%B9%E5%BC%8F/" class="article-date">
-  <time datetime="2023-09-21T13:42:03.000Z" itemprop="datePublished">2023-09-21</time>
+      <a href="/2023/10/04/QueryWrapper%E5%92%8CLambdaQueryWrapper%E5%92%8CWrappers/" class="article-date">
+  <time datetime="2023-10-04T02:04:00.000Z" itemprop="datePublished">2023-10-04</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -971,148 +816,534 @@ console.log(sum)
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>当在Vue中需要实现文件下载功能时，我们可以有多种方式来完成。下面将介绍五种常用的方法。</p>
-<h1 id="1-使用window-open方法下载文件"><a href="#1-使用window-open方法下载文件" class="headerlink" title="1. 使用window.open方法下载文件"></a>1. 使用window.open方法下载文件</h1><pre><code>&lt;template&gt;
-  &lt;div&gt;
-    &lt;button @click=&quot;downloadFile(&#39;file1.pdf&#39;)&quot;&gt;下载文件1&lt;/button&gt;
-    &lt;button @click=&quot;downloadFile(&#39;file2.jpg&#39;)&quot;&gt;下载文件2&lt;/button&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-&lt;script&gt;
-export default &#123;
-  methods: &#123;
-    downloadFile(fileName) &#123;
-      const fileUrl = &#39;/path/to/&#39; + fileName; // 文件的URL地址
-      window.open(fileUrl);
-    &#125;
-  &#125;
-&#125;;
-&lt;/script&gt;
+  <p>前言：当我们使用MybatisPlus进行数据库操作，条件构造器无可厚非会使用到！</p>
+<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><pre><code>Wrapper：条件构造抽象类，是最顶端父类；
+AbstractWrapper：用于查询条件封装，生成sql的where条件；
+AbstractLambdaWrapper：Lambda语法使用Wrapper统一处理解析lambda获取column。
+LambdaQueryWrapper：用于lambda语法使用的查询Wrapper；
+LambdaUpdateWrapper:Lambda更新封装Wrapper;
+QueryWrapper:Entity对象封装操作类，不是用lambda；
+UpdateWrapper:Update条件封装，用于Entity对象更新操作。
 </code></pre>
-<p>在上面的示例中，我们使用了window.open方法来打开一个新窗口，并直接访问文件的URL地址，从而触发文件下载。</p>
-<h1 id="2-使用标签进行文件下载"><a href="#2-使用标签进行文件下载" class="headerlink" title="2. 使用标签进行文件下载"></a>2. 使用<a>标签进行文件下载</a></h1><pre><code>&lt;template&gt;
-  &lt;div&gt;
-    &lt;button @click=&quot;downloadFile(&#39;file1.pdf&#39;)&quot;&gt;下载文件1&lt;/button&gt;
-    &lt;button @click=&quot;downloadFile(&#39;file2.jpg&#39;)&quot;&gt;下载文件2&lt;/button&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-&lt;script&gt;
-export default &#123;
-  methods: &#123;
-    downloadFile(fileName) &#123;
-      const fileUrl = &#39;/path/to/&#39; + fileName; // 文件的URL地址
-      const link = document.createElement(&#39;a&#39;);
-      link.href = fileUrl;
-      link.setAttribute(&#39;download&#39;, fileName);
-      link.click();
-    &#125;
-  &#125;
-&#125;;
-&lt;/script&gt;
+<h1 id="一、QueryWrapper"><a href="#一、QueryWrapper" class="headerlink" title="一、QueryWrapper"></a>一、QueryWrapper</h1><p>1.1 写法</p>
+<pre><code>QueryWrapper&lt;Users&gt; queryWrapper = new QueryWrapper&lt;&gt;();
+queryWrapper.eq(&quot;username&quot;,name);
+List&lt;User&gt; user = userMapper.selectList(lambdaQueryWrapper)
 </code></pre>
-<p>在上面的示例中，我们首先创建一个<a>标签，然后设置其href属性为文件的URL地址，download属性为要下载的文件名。最后，通过调用click()方法触发链接的点击事件，实现文件的下载。</a></p>
-<h1 id="3-使用axios下载文件"><a href="#3-使用axios下载文件" class="headerlink" title="3. 使用axios下载文件"></a>3. 使用axios下载文件</h1><pre><code>&lt;template&gt;
-  &lt;div&gt;
-    &lt;button @click=&quot;downloadFile(&#39;file1.pdf&#39;)&quot;&gt;下载文件1&lt;/button&gt;
-    &lt;button @click=&quot;downloadFile(&#39;file2.jpg&#39;)&quot;&gt;下载文件2&lt;/button&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-&lt;script&gt;
-import axios from &#39;axios&#39;;
-export default &#123;
-  methods: &#123;
-    downloadFile(fileName) &#123;
-      const fileUrl = &#39;/path/to/&#39; + fileName; // 文件的URL地址
-      axios.get(fileUrl, &#123; responseType: &#39;blob&#39; &#125;)
-        .then(response =&gt; &#123;
-          const url = window.URL.createObjectURL(new Blob([response.data]));
-          const link = document.createElement(&#39;a&#39;);
-          link.href = url;
-          link.setAttribute(&#39;download&#39;, fileName);
-          document.body.appendChild(link);
-          link.click();
-        &#125;)
-        .catch(error =&gt; &#123;
-          console.error(error);
-        &#125;);
-    &#125;
-  &#125;
-&#125;;
-&lt;/script&gt;
+<p>1.2 方法解释</p>
+<pre><code>queryWrapper.lt();                            // 小于
+queryWrapper.le();                            // 小于等于
+queryWrapper.gt();                            // 大于
+queryWrapper.ge();                            // 大于等于
+queryWrapper.eq();                            // 等于    
+queryWrapper.ne();                            // 不等于
+queryWrapper.betweeen(&quot;age”,10,20);            // age在值10到20之间
+queryWrapper.notBetweeen(&quot;age”,10,20);        // age不在值10到20之间
+queryWrapper.like(&quot;属性&quot;,&quot;值&quot;);            // 模糊查询匹配值
+queryWrapper.notLike(&quot;属性&quot;,&quot;值&quot;);            // 模糊查询不匹配值
+queryWrapper.likeLeft(&quot;属性&quot;,&quot;值&quot;);        // 模糊查询匹配最后一位值
+queryWrapper.likeRight(&quot;属性&quot;,&quot;值&quot;);        // 模糊查询匹配第一位值‘值%’
+queryWrapper.isNull();                        // 值为空或null
+queryWrapper.isNotNull();                    // 值不为空或null
+queryWrapper.in(&quot;属性&quot;，条件，条件);            // 符合多个条件的值
+queryWrapper.notIn(&quot;属性&quot;，条件，条件);            // 不符合多个条件的值
+queryWrapper.or();                            // 或者
+queryWrapper.and();                            // 和
+queryWrapper.orderByAsc(“属性”);                // 根据属性升序排序
+queryWrapper.orderByDesc(“属性”);                // 根据属性降序排序
+queryWrapper.inSql(“sql语句”);                // 符合sql语句的值
+queryWrapper.notSql(“sql语句”);                // 不符合SQL语句的值
+queryWrapper.esists(“SQL语句”);                // 查询符合SQL语句的值
+queryWrapper.notEsists(“SQL语句”);            // 查询不符合SQL语句的值
+queryWrapper.select(&quot;字段1&quot;，&quot;字段2&quot;，&quot;字段3&quot;);    // 设置查询字段
 </code></pre>
-<p>在上面的示例中，我们使用了axios发送GET请求，设置responseType为blob以便获取文件的二进制数据。然后，通过创建临时URL、创建<a>标签并设置下载属性，实现文件的下载。</a></p>
-<h1 id="4-使用Fetch-API下载文件"><a href="#4-使用Fetch-API下载文件" class="headerlink" title="4. 使用Fetch API下载文件"></a>4. 使用Fetch API下载文件</h1><pre><code>&lt;template&gt;
-  &lt;div&gt;
-    &lt;button @click=&quot;downloadFile(&#39;file1.pdf&#39;)&quot;&gt;下载文件1&lt;/button&gt;
-    &lt;button @click=&quot;downloadFile(&#39;file2.jpg&#39;)&quot;&gt;下载文件2&lt;/button&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-&lt;script&gt;
-export default &#123;
-  methods: &#123;
-    downloadFile(fileName) &#123;
-      const fileUrl = &#39;/path/to/&#39; + fileName; // 文件的URL地址
-      fetch(fileUrl)
-        .then(response =&gt; response.blob())
-        .then(blob =&gt; &#123;
-          const url = window.URL.createObjectURL(blob);
-          const link = document.createElement(&#39;a&#39;);
-          link.href = url;
-          link.setAttribute(&#39;download&#39;, fileName);
-          document.body.appendChild(link);
-          link.click();
-        &#125;)
-        .catch(error =&gt; &#123;
-          console.error(error);
-        &#125;);
-    &#125;
-  &#125;
-&#125;;
-&lt;/script&gt;
+<h1 id="二、LambdaQueryWrapper"><a href="#二、LambdaQueryWrapper" class="headerlink" title="二、LambdaQueryWrapper"></a>二、LambdaQueryWrapper</h1><p>2.1 写法</p>
+<pre><code>LambdaQueryWrapper&lt;User&gt; lambdaQueryWrapper = new LambdaQueryWrapper&lt;&gt;();
+lambdaQueryWrapper.eq(User::getUsername,name);
+List&lt;User&gt; user = userMapper.selectList(lambdaQueryWrapper)
 </code></pre>
-<p>在上面的示例中，我们使用了Fetch API发送GET请求，并使用.blob()方法将返回的数据转换为blob对象。然后，通过创建临时URL、创建<a>标签并设置下载属性，实现文件的下载。</a></p>
-<h1 id="5-使用Vue的-download方法下载文件"><a href="#5-使用Vue的-download方法下载文件" class="headerlink" title="5. 使用Vue的$download方法下载文件"></a>5. 使用Vue的$download方法下载文件</h1><pre><code>&lt;template&gt;
-  &lt;div&gt;
-    &lt;button @click=&quot;downloadFile(&#39;file1.pdf&#39;)&quot;&gt;下载文件1&lt;/button&gt;
-    &lt;button @click=&quot;downloadFile(&#39;file2.jpg&#39;)&quot;&gt;下载文件2&lt;/button&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-&lt;script&gt;
-export default &#123;
-  methods: &#123;
-    downloadFile(fileName) &#123;
-      const fileUrl = &#39;/path/to/&#39; + fileName; // 文件的URL地址
-      this.$download(fileUrl, fileName);
-    &#125;
-  &#125;
-&#125;;
-&lt;/script&gt;
+<p>2.2 方法解释</p>
+<pre><code> wrapper.eq(&quot;实体类::查询字段&quot;, &quot;条件值&quot;);
+ wrapper.between(&quot;实体类::查询字段&quot;, &quot;区间一&quot;, &quot;区间二&quot;);
+ wrapper.like(&quot;实体类::查询字段&quot;, &quot;模糊查询的字符&quot;); 
+ wrapper.groupBy(&quot;实体类::查询字段&quot;); 
+ wrapper.in(&quot;实体类::查询字段&quot;, &quot;包括的值,分割&quot;); 
+ wrapper.orderByAsc(&quot;实体类::查询字段&quot;);                 //升序
+ wrapper.orderByDesc(&quot;实体类::查询字段&quot;);                //降序
+ wrapper.ge(&quot;实体类::查询字段&quot;, &quot;要比较的值&quot;);             //大于等于
+ wrapper.le(&quot;实体类::查询字段&quot;, &quot;要比较的值&quot;);             //小于等于
 </code></pre>
-<p>在这个示例中，我们直接调用Vue实例的$download方法，并传入文件的URL地址和下载的文件名，即可实现文件的下载。</p>
-<h1 id="6-使用创建a标签方法下载文件"><a href="#6-使用创建a标签方法下载文件" class="headerlink" title="6. 使用创建a标签方法下载文件"></a>6. 使用创建a标签方法下载文件</h1><pre><code>&lt;template&gt;
-  &lt;div&gt;
-    &lt;button @click=&quot;downloadFile(&#39;file1.pdf&#39;)&quot;&gt;下载文件1&lt;/button&gt;
-    &lt;button @click=&quot;downloadFile(&#39;file2.jpg&#39;)&quot;&gt;下载文件2&lt;/button&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-&lt;script&gt;
-export default &#123;
-  methods: &#123;
-    downloadFile(fileName) &#123;
-      const folderPath = &#39;/path/to/folder/&#39;; // 文件所在的文件夹路径
-      const fileUrl = folderPath + fileName; // 拼接文件夹路径和文件名
-      const link = document.createElement(&#39;a&#39;);
-      link.href = fileUrl;
-      link.setAttribute(&#39;download&#39;, fileName);
-      link.click();
-    &#125;
-  &#125;
-&#125;;
-&lt;/script&gt;
+<h1 id="三、Wrappers"><a href="#三、Wrappers" class="headerlink" title="三、Wrappers"></a>三、Wrappers</h1><p>3.1 写法</p>
+<pre><code>Wrappers.&lt;User&gt;lambdaQuery().eq(User::getUsername,name);
 </code></pre>
-<p>在这个示例中，我们首先定义了文件所在的文件夹路径folderPath，然后通过拼接文件夹路径和文件名来构建完整的文件URL地址fileUrl。接着，我们创建一个<a>标签，并设置其href属性为文件URL，download属性为要下载的文件名。最后，通过调用click()方法触发链接的点击事件，实现文件的下载。</a></p>
-<p>以上是六种常用的在Vue中实现文件下载的方式，请根据项目需求选择合适的方式来完成文件下载功能。</p>
-<p><a target="_blank" rel="noopener" href="https://www.jb51.net/javascript/2987938qn.htm">https://www.jb51.net/javascript/2987938qn.htm</a></p>
+<p>3.2 方法解释</p>
+<pre><code>看上面的
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-Java8中LambdaQueryWrapper对象使用(学习笔记)"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/10/03/Java8%E4%B8%ADLambdaQueryWrapper%E5%AF%B9%E8%B1%A1%E4%BD%BF%E7%94%A8(%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0)/"
+    >Java8中LambdaQueryWrapper对象使用(学习笔记)</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/10/03/Java8%E4%B8%ADLambdaQueryWrapper%E5%AF%B9%E8%B1%A1%E4%BD%BF%E7%94%A8(%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0)/" class="article-date">
+  <time datetime="2023-10-03T02:03:00.000Z" itemprop="datePublished">2023-10-03</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="eq："><a href="#eq：" class="headerlink" title="eq："></a>eq：</h1><p>说明：等于=</p>
+<p>例：</p>
+<pre><code>eq(&quot;name&quot;,&quot;老王&quot;)--------&gt; name = &#39;老王&#39;
+</code></pre>
+<h1 id="ne："><a href="#ne：" class="headerlink" title="ne："></a>ne：</h1><p>说明：不等于&lt;&gt;</p>
+<p>例：</p>
+<pre><code>ne(&quot;name&quot;,&quot;老王&quot;)--------&gt; name &lt;&gt; &#39;老王&#39;
+</code></pre>
+<h1 id="gt："><a href="#gt：" class="headerlink" title="gt："></a>gt：</h1><p>说明：大于&gt;</p>
+<p>例：</p>
+<pre><code>gt(&quot;age&quot;,18)--------&gt; age &gt; 18
+</code></pre>
+<h1 id="ge："><a href="#ge：" class="headerlink" title="ge："></a>ge：</h1><p>说明：大于等于&gt;=</p>
+<p>例：</p>
+<pre><code>ge(&quot;age&quot;,18)--------&gt; age &gt;= 18
+</code></pre>
+<h1 id="lt："><a href="#lt：" class="headerlink" title="lt："></a>lt：</h1><p>说明：小于&lt;</p>
+<p>例：</p>
+<pre><code>lt(&quot;age&quot;,18)--------&gt; age &lt; 18
+</code></pre>
+<h1 id="le："><a href="#le：" class="headerlink" title="le："></a>le：</h1><p>说明：小于等于&lt;=</p>
+<p>例：</p>
+<pre><code>le(&quot;age&quot;,18)--------&gt; age &lt;= 18
+</code></pre>
+<h1 id="between："><a href="#between：" class="headerlink" title="between："></a>between：</h1><p>说明：BETWEEN 值1 AND 值2</p>
+<p>例：</p>
+<pre><code>between(&quot;age&quot;,18,30)--------&gt; age between 18 and 30
+</code></pre>
+<h1 id="notBetween："><a href="#notBetween：" class="headerlink" title="notBetween："></a>notBetween：</h1><p>说明：NOT BETWEEN 值1 AND 值2</p>
+<p>例：</p>
+<pre><code>notBetween(&quot;age&quot;,18,30)--------&gt; age not between 18 and 30
+</code></pre>
+<h1 id="like："><a href="#like：" class="headerlink" title="like："></a>like：</h1><p>说明：LIKE ‘%值%’</p>
+<p>例：</p>
+<pre><code>like(&quot;name&quot;,&quot;王&quot;)--------&gt; name like &#39;%王%&#39;
+</code></pre>
+<h1 id="notLike："><a href="#notLike：" class="headerlink" title="notLike："></a>notLike：</h1><p>说明：NOT LIKE ‘%值%’</p>
+<p>例：</p>
+<pre><code>notLike(&quot;name&quot;,&quot;王&quot;)--------&gt; name not like &#39;%王%&#39;
+</code></pre>
+<h1 id="likeLeft："><a href="#likeLeft：" class="headerlink" title="likeLeft："></a>likeLeft：</h1><p>说明：LIKE ‘%值’</p>
+<p>例：</p>
+<pre><code>likeLeft(&quot;name&quot;,&quot;王&quot;)--------&gt; name like &#39;%王&#39;
+</code></pre>
+<h1 id="likeRight："><a href="#likeRight：" class="headerlink" title="likeRight："></a>likeRight：</h1><p>说明：LIKE ‘值%’</p>
+<p>例：</p>
+<pre><code>likeRight(&quot;name&quot;,&quot;王&quot;)--------&gt; name like &#39;王%&#39;
+</code></pre>
+<h1 id="isNull："><a href="#isNull：" class="headerlink" title="isNull："></a>isNull：</h1><p>说明：字段 IS NULL</p>
+<p>例：</p>
+<pre><code>isNull(&quot;name&quot;)--------&gt; name is null
+</code></pre>
+<h1 id="isNotNull："><a href="#isNotNull：" class="headerlink" title="isNotNull："></a>isNotNull：</h1><p>说明：字段 IS NOT NULL</p>
+<p>例：</p>
+<pre><code>isNotNull(&quot;name&quot;)--------&gt; name is not null
+</code></pre>
+<h1 id="in："><a href="#in：" class="headerlink" title="in："></a>in：</h1><p>说明：字段 IN (v0, v1, …)</p>
+<p>例：</p>
+<pre><code>in(&quot;age&quot;,&#123;1,2,3&#125;)--------&gt; age in (1,2,3)
+</code></pre>
+<h1 id="notIn："><a href="#notIn：" class="headerlink" title="notIn："></a>notIn：</h1><p>说明：字段 NOT IN (v0, v1, …)</p>
+<p>例：</p>
+<pre><code>notIN(&quot;age&quot;,&#123;1,2,3&#125;)--------&gt; age not in (1,2,3)
+</code></pre>
+<h1 id="inSql："><a href="#inSql：" class="headerlink" title="inSql："></a>inSql：</h1><p>说明：字段 IN ( SQL语句 )</p>
+<p>例：</p>
+<pre><code>inSql(&quot;id&quot;,&quot;select id from table where id &lt; 3&quot;)--------&gt; id in (select id from table where id &lt; 3)
+</code></pre>
+<h1 id="notInSql："><a href="#notInSql：" class="headerlink" title="notInSql："></a>notInSql：</h1><p>说明：字段 NOT IN ( SQL语句 )</p>
+<p>例：</p>
+<pre><code>notInSql(&quot;id&quot;,&quot;select id from table where id &lt; 3&quot;)--------&gt; id not in (select id from table where id &lt; 3)
+</code></pre>
+<h1 id="groupBy："><a href="#groupBy：" class="headerlink" title="groupBy："></a>groupBy：</h1><p>说明：分组 GROUP BY 字段， …</p>
+<p>例：</p>
+<pre><code>groupBy(&quot;id&quot;,&quot;name&quot;)--------&gt; group by id,name
+</code></pre>
+<h1 id="orderByAsc："><a href="#orderByAsc：" class="headerlink" title="orderByAsc："></a>orderByAsc：</h1><p>说明：排序 ORDER BY 字段，… ASC</p>
+<p>例：</p>
+<pre><code>orderByAsc(&quot;id&quot;,&quot;name&quot;)--------&gt; order by id ASC,name ASC
+</code></pre>
+<h1 id="orderByDesc："><a href="#orderByDesc：" class="headerlink" title="orderByDesc："></a>orderByDesc：</h1><p>说明：排序 ORDER BY 字段，… DESC</p>
+<p>例：</p>
+<pre><code>orderByDesc(&quot;id&quot;,&quot;name&quot;)--------&gt; order by id DESC,name DESC
+</code></pre>
+<h1 id="orderBy："><a href="#orderBy：" class="headerlink" title="orderBy："></a>orderBy：</h1><p>说明：排序 ORDER BY 字段，…</p>
+<p>例：</p>
+<pre><code>orderBy(&quot;id&quot;,&quot;name&quot;)--------&gt; order by id ASC,name ASC
+</code></pre>
+<h1 id="having："><a href="#having：" class="headerlink" title="having："></a>having：</h1><p>说明：HAVING ( SQL语句 )</p>
+<p>例：</p>
+<pre><code>having(&quot;sum(age) &gt; &#123;0&#125;&quot;,11)--------&gt; having sum(age) &gt; 11
+</code></pre>
+<h1 id="or："><a href="#or：" class="headerlink" title="or："></a>or：</h1><p>说明：拼接 OR</p>
+<p>注意事项：主动调用 OR 表示紧接着下一个方法不是用 AND 连接！(不调用 OR 则默认使用 AND 连接)</p>
+<p>例：</p>
+<pre><code>eq.(&quot;id&quot;,1).or().eq(&quot;name&quot;,&quot;老王&quot;)--------&gt; id = 1 or name = &#39;老王&#39;
+</code></pre>
+<h1 id="and："><a href="#and：" class="headerlink" title="and："></a>and：</h1><p>说明：AND 嵌套</p>
+<p>例：</p>
+<pre><code>and(i -&gt; i.eq(&quot;name&quot;,&quot;老王&quot;).ne(&quot;status&quot;,1))--------&gt; and (name = &#39;老王&#39; and status &lt;&gt; 1)
+</code></pre>
+<h1 id="apply："><a href="#apply：" class="headerlink" title="apply："></a>apply：</h1><p>说明：拼接 SQL</p>
+<p>注意事项：该方法可用于数据库函数，动态入参的 params 对应前面 sqlHaving 内部的 {index} 部分，这样是不会有 SQL 注入风险的，反之会有！</p>
+<p>例：</p>
+<pre><code>apply(&quot;date_format(dateColumn,&#39;%Y-%m-%d&#39;) = &#123;0&#125;&quot;,&quot;2021-08-08&quot;)--------&gt; date_format(dateColumn,&#39;%Y-%m-%d&#39;) = &#39;2021-08-08&#39;
+</code></pre>
+<h1 id="last："><a href="#last：" class="headerlink" title="last："></a>last：</h1><p>说明：无视优化规则直接拼接到 SQL 的最后</p>
+<p>注意事项：只能调用一次，多次调用以最后一次为准，有 SQL 注入的风险，请谨慎使用</p>
+<p>例：</p>
+<pre><code>last(&quot;limit 1&quot;)
+</code></pre>
+<h1 id="exists："><a href="#exists：" class="headerlink" title="exists："></a>exists：</h1><p>说明：拼接 EXISTS ( SQL 语句 )</p>
+<p>例：</p>
+<pre><code>exists(&quot;select id from table where age = 1&quot;)--------&gt; exists (select id from table where age = 1)
+</code></pre>
+<h1 id="notExists："><a href="#notExists：" class="headerlink" title="notExists："></a>notExists：</h1><p>说明：拼接 NOT EXISTS ( SQL 语句 )</p>
+<p>例：</p>
+<pre><code>notExists(&quot;select id from table where age = 1&quot;)--------&gt; not exists (select id from table where age = 1)
+</code></pre>
+<h1 id="nested："><a href="#nested：" class="headerlink" title="nested："></a>nested：</h1><p>说明：正常嵌套 不带 AND 或者 OR</p>
+<p>例：</p>
+<pre><code>nested(i -&gt; i.eq(&quot;name&quot;,&quot;老王&quot;).ne(&quot;status&quot;,1))--------&gt; (name = &#39;老王&#39; and status &lt;&gt; 1)
+</code></pre>
+<p>————————————————<br>版权声明：本文为CSDN博主「woyaniya」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/woyaniya/article/details/129416870">https://blog.csdn.net/woyaniya/article/details/129416870</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-Avue-crud 常用方法、属性"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/10/02/Avue-crud%20%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E3%80%81%E5%B1%9E%E6%80%A7/"
+    >Avue-crud 常用方法、属性</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/10/02/Avue-crud%20%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E3%80%81%E5%B1%9E%E6%80%A7/" class="article-date">
+  <time datetime="2023-10-02T02:02:00.000Z" itemprop="datePublished">2023-10-02</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>Avue的v2版本是一个基于element-ui低代码前端框架，Avue的v3是一个基于element-plus低代码前端框架，它使用 JSON 配置来生成页面，可以减少页面开发工作量，极大提升效率。avue对于后台管理系统的开发极其便捷，就是配置不容易记住，熟练该框架配置来开发会好点，不然真不如直接用element来开发的好，以下以v2为例。</p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>npm、yarn安装</p>
+<pre><code>npm i @smallwei/avue -S
+yarn add @smallwei/avue -S
+</code></pre>
+<p>或<br>CDN在线安装</p>
+<pre><code>&lt;!-- 引入样式文件 --&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@smallwei/avue/lib/index.css&quot;/&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://unpkg.com/element-ui/lib/theme-chalk/index.css&quot;/&gt;
+&lt;!-- 引入相关JS 文件 --&gt;
+&lt;script src=&quot;https://unpkg.com/vue/dist/vue.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://unpkg.com/element-ui/lib/index.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://cdn.jsdelivr.net/npm/@smallwei/avue/lib/avue.min.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<h1 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h1><p>通过CDN安装的，会挂载在全局属性AVUE下，通过 Vue.use(AVUE) 注册。</p>
+<pre><code>import Avue from &#39;@smallwei/avue&#39;;
+import &#39;@smallwei/avue/lib/index.css&#39;;
+Vue.use(Avue);
+</code></pre>
+<h1 id="全局配置"><a href="#全局配置" class="headerlink" title="全局配置"></a>全局配置</h1><pre><code>Vue.use(AVUE,&#123;
+  size:&#39;&#39;, // 组件的尺寸，默认small。可选值 small/mini/medium
+  tableSize:&#39;&#39;, // 
+  formSize:&#39;&#39;, // 
+  appendToBody:true, //
+  modalAppendToBody:true, // 
+  menuType:&#39;&#39;, // 用于改变操作栏菜单按钮类型性，属性的组件的默认尺寸均为 text。可选值 button/icon/text/menu
+  qiniu:&#123; // 七牛云配置
+    AK: &#39;&#39;,
+    SK: &#39;&#39;,
+    scope: &#39;&#39;,
+    url: &#39;&#39;,
+    deadline: 1
+  &#125;,
+  ali:&#123; // 阿里云配置
+    region: &#39;&#39;,
+    endpoint: &#39;&#39;,
+    accessKeyId: &#39;&#39;,
+    accessKeySecret: &#39;&#39;,
+    bucket: &#39;&#39;,
+  &#125;,
+  theme:&#39;&#39;, // 主题颜色配置，属性的组件的默认白色。可选值 dark
+  canvas:&#123; // 水印配置
+    text: &#39;avuejs.com&#39;,
+    fontFamily: &#39;microsoft yahei&#39;,
+    color: &quot;#999&quot;,
+    fontSize: 16,
+    opacity: 100,
+    bottom: 10,
+    right: 10,
+    ratio: 1
+  &#125;,
+&#125;);
+</code></pre>
+<h1 id="国际化"><a href="#国际化" class="headerlink" title="国际化"></a>国际化</h1><p>Avue 采用中文作为默认语言，同时支持多语言切换</p>
+<pre><code>import Vue from &#39;vue&#39;
+import Avue from &#39;@smallwei/avue&#39;
+import zhLocale from &#39;@smallwei/avue/lib/locale/lang/zh&#39;
+import enLocale from &#39;@smallwei/avue/lib/locale/lang/en&#39;
+ 
+Vue.use(Avue, &#123; enLocale &#125;)
+</code></pre>
+<h1 id="全局api"><a href="#全局api" class="headerlink" title="全局api"></a>全局api</h1><pre><code>$DialogForm弹窗表单
+$Clipboard复制到剪切板
+$ImagePreview图片预览
+$Print 打印插件
+$Export excel导出
+watermark全局水印
+downFile文件下载
+deepClone对象深拷贝
+validatenull判断空
+findNode数组中寻找对象
+findArray数组中寻找对象下标
+</code></pre>
+<h1 id="crud-配置项-option"><a href="#crud-配置项-option" class="headerlink" title="crud 配置项 option"></a>crud 配置项 option</h1><p>crud 表格回调函数事件</p>
+<p>on-load：这个事件会在表格所在的组件加载时就会执行，初始化表格数据。当表格翻页、页码变化时候也会自动执行该方法，使用了这个方法可以省略表格的current-change 、size-change两个回调函数。</p>
+<p>current-change：表格页码发生变化时触发，第一个参数为当前页码。</p>
+<p>size-change：表格页容量变化时触发，第一个参数就是当前页容量大小。</p>
+<p>search-change ：表格查询按钮回调函数，默认有两个参数 form与done， form为搜索框的值，done为关闭搜索的刷新状态回调函数。</p>
+<p>row-save ：表格新增表单确定按钮的回调函数，默认有三个参数分别为：row（表单的值），done（用于关闭表单回调函数），loading（页面loading状态） 。</p>
+<p>row-update ：表格行编辑确定按钮的回调，默认四个参数 row（当前行），index（索引），done（关闭弹框回调函数），loading（页面loading状态）。</p>
+<p>row-del：表格操作行删除按钮回调函数，默认两个参数，row（当前行数据），index（当前索引） 。</p>
+<p>refresh-change：表格的刷新按钮回调函数。</p>
+<p>current-row-change：当前表格行被点击时的回调函数，第一个参数是当前行数据。</p>
+<p>tree-load：表格行展开的懒加载回调，带三个参数 row（当前展开行的数据），treeNode（展开行节点数据），resolve（行懒加载的成功回调函数，在resolve里面将懒加载的数据传出去表格进行渲染）。</p>
+<p>before-close：打开前的回调函数，两个参数done（用于关闭Dialog），type（当前窗口类型）。</p>
+<p>before-close：关闭前的回调函数，done（用于关闭Dialog），type（当前窗口的类型）。</p>
+<p>search-reset：点击清空按钮触发，清空搜索框回调函数。</p>
+<p>selection-change：当表格选择项勾选发生变化时会触发该回调函数。</p>
+<p>dateChange：dateBtn为true时的选择日期回调函数。</p>
+<pre><code>&lt;avue-crud
+  ref=&quot;crud&quot;
+  data=&quot;data&quot; // 表格显示的数据
+  :option=&quot;option&quot; // 表格配置项
+  :page.sync=&quot;page&quot;
+  :permission=&quot;permission&quot; // 表格按钮权限控制
+  @on-load=&quot;onLoad&quot;
+  @current-change=&quot;currentChange&quot;
+  @size-change=&quot;pageSizeChange&quot;
+  @search-change=&quot;searchChange&quot;
+  @row-save=&quot;rowSave&quot;
+  @row-update=&quot;rowUpdate&quot;
+  @row-del=&quot;rowDel&quot;
+  @refresh-change=&quot;refreshChange&quot;
+  @current-row-change=&quot;handleCurrentRowChange&quot;
+  @tree-load=&quot;treeLoad&quot;
+  @before-open=&quot;beforeOpen&quot;
+  @before-close=&quot;beforeClose&quot;
+  @search-reset=&quot;searchReset&quot;
+/&gt;
+const option = &#123;
+    &#39;table-loading&#39;:&#39;&#39;, // 表格等待框的控制
+    size:&#39;&#39;, // 组件尺寸
+    maxHeight:&#39;&#39;, // 表格的最大高度
+    index:&#39;&#39;, // 是否有序号
+    indexWidth:&#39;&#39;, // 序号列宽度
+    indexFixed:&#39;&#39;, // 序号列是否冻结列
+    menu:&#39;&#39;, // 是否有操作栏
+    menuWidth:&#39;&#39;, // 操作栏宽度
+    menuTitle:&#39;&#39;, // 操作栏标题
+    menuFixed:&#39;&#39;, // 操作栏列冻结列
+    menuType:&#39;&#39;, // 操作栏按钮样式
+    menuHeaderAlign:&#39;&#39;, // 操作栏表头的对齐方式
+    title:&#39;&#39;, // 表格标题
+    addBtn:&#39;&#39;, // 表格新增按钮；edit（修改）、del（删除）、view（查看）、update（修改）、save（保存）、cancel（取消）、search（查询）、empty（清空）
+    addBtnText:&#39;&#39;, // 表格新增按钮文案
+    addBtnIcon:&#39;&#39;, // 表格新增按钮图标
+    printBtn:&#39;&#39;, // 表格打印按钮
+    excelBtn:&#39;&#39;, // 表格导出按钮
+    filterBtn:&#39;&#39;, // 表格自定义过滤按钮
+    refreshBtn:&#39;&#39;, // 表格刷新数据按钮
+    columnBtn:&#39;&#39;, // 表格列操作按钮
+    searchShowBtn:&#39;&#39;, // 表格搜索显隐按钮
+    copyBtn:&#39;&#39;, // 表格复制数据按钮
+    addTitle:&#39;&#39;, // 表格新增弹窗标题 edit（修改）、view（查看）
+    dialogDrag:&#39;&#39;, // 表格弹窗是否可以拖拽
+    searchIndex:&#39;&#39;, // 表格搜索半收缩个数
+    searchPlaceholder:&#39;&#39;, // 搜索项辅助文字
+    searchSpan:&#39;&#39;, // 搜索项框栅列
+    searchGutter:&#39;&#39;, // 搜索项框间距
+    searchLabelWidth:&#39;&#39;, // 搜索项标题宽度
+    searchLabelPosition:&#39;&#39;, // 搜索项标题位置
+    column:[ // 表格列配置
+        &#123;
+            label:&#39;&#39;, // 列标题
+            prop:&#39;&#39;, // 列标题的内容属性名称
+            type:&#39;&#39;, // 
+            width:&#39;&#39;, // 对应列的宽度
+            minWidth:&#39;&#39;, // 对应列的最小宽度
+            fixed:&#39;&#39;, // 列固定
+            sortable:&#39;&#39;, // 对应列是否可以排序，监听 sort-change 回调，true, false, &#39;custom&#39;
+            formatter:&#39;&#39;, // 格式化列内容，(row, value, row, column)
+            overHidden:&#39;&#39;, // 当内容过长被隐藏时显示 tooltip
+            align:&#39;&#39;, // 对齐方式
+            headerAlign:&#39;&#39;, // 表头对齐方式
+            filters:&#39;&#39;, // 数据过滤的选项
+            search:&#39;&#39;, // 是否为搜索项
+            searchValue:&#39;&#39;, // 搜索项初始化值
+            searchPlaceholder:&#39;&#39;, // 搜索项辅助文字
+            searchSpan:&#39;&#39;, // 搜索项框栅列
+            searchOrder:&#39;&#39;, // 搜索项位置排序，序号越大越靠前
+            searchLabelWidth:&#39;&#39;, // 搜索项标题宽度
+            searchClearable:&#39;&#39;, // 搜索项清除
+            searchMultiple:&#39;&#39;, // 搜索项是否多选
+            searchTags:&#39;&#39;, // 搜索项将选中值按文字的形式展示
+            display:&#39;&#39;, // 弹出表单是否显示
+            disabled:&#39;&#39;, // 弹出表单是否禁止
+            addDisabled:&#39;&#39;, // 表单新增时项是否禁止，edit（编辑）、view（查看）
+            addDisplay:&#39;&#39;, // 表单新增时项是否显示，edit（编辑）、view（查看）
+            resizable:&#39;&#39;, // 对应列是否可以通过拖动改变宽度（需要在option中border属性为真）
+            searchClearable:&#39;&#39;, // 搜索项清除
+            searchClearable:&#39;&#39;, // 搜索项清除
+            searchClearable:&#39;&#39;, // 搜索项清除
+            dicData:[ // 下拉项字典枚举
+                &#123;label:&#39;A&#39;,value: &#39;a&#39;&#125;,
+            ],
+            rules:[ // 表单字段校验规则
+                &#123;equired: true,message: &quot;请输入姓名&quot;,trigger: &quot;blur&quot;&#125;,
+            ],
+            hide: false, // 隐藏列
+        &#125;
+    ],
+&#125;;
+</code></pre>
+<h1 id="自定义内容"><a href="#自定义内容" class="headerlink" title="自定义内容"></a>自定义内容</h1><pre><code>&lt;avue-crud :data=&quot;data&quot; :option=&quot;option&quot; ref=&quot;crud&quot;&gt;
+  &lt;!-- 左边插槽 --&gt;
+  &lt;template slot-scope=&quot;scope&quot; slot=&quot;menuLeft&quot;&gt;
+    &lt;el-button type=&quot;danger&quot; @click=&quot;$refs.crud.rowAdd()&quot;&gt;新增&lt;/el-button&gt;
+  &lt;/template&gt;
+  &lt;!-- 右边插槽 --&gt;
+  &lt;template slot-scope=&quot;scope&quot; slot=&quot;menuRight&quot;&gt;
+    &lt;el-button type=&quot;danger&quot; @click=() =&gt; &#123;&#125;&quot;&gt;刷新&lt;/el-button&gt;
+  &lt;/template&gt;
+  &lt;!-- 自定义行内操作栏插槽 --&gt;
+  &lt;template slot-scope=&quot;&#123;row,index&#125;&quot; slot=&quot;menu&quot;&gt;
+     &lt;el-button @click=&quot;$refs.crud.rowEdit(row,index)&quot;&gt;编辑&lt;/el-button&gt;
+     &lt;el-button @click=&quot;$refs.crud.rowDel(row,index)&quot;&gt;删除&lt;/el-button&gt;
+  &lt;/template&gt;
+  &lt;!-- 自定义弹窗内按钮插槽 --&gt;
+  &lt;template slot-scope=&quot;&#123;row,index,type&#125;&quot; slot=&quot;menuForm&quot;&gt;
+    &lt;el-button v-if=&quot;type==&#39;add&#39;&quot; @click=&quot;$refs.crud.rowSave()&quot;&gt;自定义新增&lt;/el-button&gt;
+    &lt;el-button v-if=&quot;type==&#39;edit&#39;&quot; @click=&quot;$refs.crud.rowUpdate()&gt;自定义修改&lt;/el-button&gt;
+    &lt;el-button @click=&quot;$refs.crud.closeDialog()&quot;&gt;取消&lt;/el-button&gt;
+  &lt;/template&gt;
+  &lt;!-- 自定义表单插槽，slot=&quot;propForm&quot; --&gt;
+  &lt;template slot-scope=&quot;&#123;type,disabled&#125;&quot; slot=&quot;nameForm&quot;&gt; // column: [&#123;prop:&#39;name&#39;,formslot:true&#125;]
+      &lt;el-tag v-if=&quot;type==&#39;add&#39;&quot;&gt;新增&lt;/el-tag&gt;
+      &lt;el-tag v-else-if=&quot;type==&#39;edit&#39;&quot;&gt;修改&lt;/el-tag&gt;
+      &lt;el-tag v-else-if=&quot;type==&#39;view&#39;&quot;&gt;查看&lt;/el-tag&gt;
+      &lt;el-tag&gt;&#123;&#123;user.name?user.name:'暂时没有内容'&#125;&#125;&lt;/el-tag&gt;
+      &lt;el-input :disabled=&quot;disabled&quot; v-model=&quot;user.name&quot;&gt;&lt;/el-input&gt;
+  &lt;/template&gt;
+  &lt;!-- 自定义表单错误提示插槽，slot=&quot;propError&quot; --&gt;
+  &lt;template slot-scope=&quot;&#123;error&#125;&quot; slot=&quot;nameError&quot;&gt; // column: [&#123;prop:&#39;name&#39;,labelslot:true&#125;]
+      &lt;p style=&quot;color:green&quot;&gt;自定义提示&#123;&#123;error&#125;&#125;&lt;/p&gt;
+  &lt;/template&gt;
+  &lt;!-- 自定义表单标题，slot=&quot;propLabel&quot; --&gt;
+  &lt;template slot-scope=&quot;scope&quot; slot=&quot;nameLabel&quot;&gt; // column: [&#123;prop:&#39;name&#39;,errorslot:true&#125;]
+     &lt;span&gt;姓名&amp;nbsp;&amp;nbsp;&lt;/span&gt;
+     &lt;el-tooltip class=&quot;item&quot; effect=&quot;dark&quot; content=&quot;文字提示&quot; placement=&quot;top-start&quot;&gt;
+      &lt;i class=&quot;el-icon-warning&quot;&gt;&lt;/i&gt;
+    &lt;/el-tooltip&gt;
+  &lt;/template&gt;
+  &lt;!-- 向搜索表单插入一个额外的（column中没有的字段）输入框 --&gt;
+  &lt;template slot=&quot;search&quot;&gt;
+      &lt;el-form-item label=&quot;状态&quot;&gt;
+          &lt;el-input placeholder=&quot;状态&quot; v-model=&quot;search.value&quot;/&gt;
+      &lt;/el-form-item&gt;
+  &lt;/template&gt;
+  &lt;!-- 向表单中插入一个额外的输入框 --&gt;
+  &lt;template slot=&quot;menuForm&quot;&gt;
+      &lt;el-form-item label=&quot;维修&quot;&gt;
+          &lt;el-input placeholder=&quot;维修&quot; v-model=&quot;search.value&quot;/&gt;
+      &lt;/el-form-item&gt;
+  &lt;/template&gt;
+&lt;/avue-crud&gt;
+</code></pre>
+<p>————————————————<br>版权声明：本文为CSDN博主「my__flower」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/my__flower/article/details/129419199">https://blog.csdn.net/my__flower/article/details/129419199</a></p>
  
       <!-- reward -->
       
@@ -1139,7 +1370,7 @@ export default &#123;
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/2/">上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/46/">46</a><a class="extend next" rel="next" href="/page/4/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/2/">上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/48/">48</a><a class="extend next" rel="next" href="/page/4/">下一页</a>
   </nav>
   
 </section>
