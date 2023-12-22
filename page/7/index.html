@@ -154,7 +154,7 @@
     
     
     <article
-  id="post-Vue数据更新页面却没有更新的几种情况以及解决方法"
+  id="post-Vue中下载不同文件五种常用的方式"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -165,8 +165,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/09/13/Vue%E6%95%B0%E6%8D%AE%E6%9B%B4%E6%96%B0%E9%A1%B5%E9%9D%A2%E5%8D%B4%E6%B2%A1%E6%9C%89%E6%9B%B4%E6%96%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%83%85%E5%86%B5%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/"
-    >Vue数据更新页面却没有更新的几种情况以及解决方法</a> 
+  <a class="article-title" href="/2023/09/21/Vue%E4%B8%AD%E4%B8%8B%E8%BD%BD%E4%B8%8D%E5%90%8C%E6%96%87%E4%BB%B6%E4%BA%94%E7%A7%8D%E5%B8%B8%E7%94%A8%E7%9A%84%E6%96%B9%E5%BC%8F/"
+    >Vue中下载不同文件五种常用的方式</a> 
 </h2>
  
 
@@ -174,8 +174,8 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2023/09/13/Vue%E6%95%B0%E6%8D%AE%E6%9B%B4%E6%96%B0%E9%A1%B5%E9%9D%A2%E5%8D%B4%E6%B2%A1%E6%9C%89%E6%9B%B4%E6%96%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%83%85%E5%86%B5%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" class="article-date">
-  <time datetime="2023-09-13T03:33:44.000Z" itemprop="datePublished">2023-09-13</time>
+      <a href="/2023/09/21/Vue%E4%B8%AD%E4%B8%8B%E8%BD%BD%E4%B8%8D%E5%90%8C%E6%96%87%E4%BB%B6%E4%BA%94%E7%A7%8D%E5%B8%B8%E7%94%A8%E7%9A%84%E6%96%B9%E5%BC%8F/" class="article-date">
+  <time datetime="2023-09-21T13:42:03.000Z" itemprop="datePublished">2023-09-21</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -185,782 +185,148 @@
       
     <div class="article-entry" itemprop="articleBody">
        
-  <h1 id="情况一：Vue无法检测实例被创建时不存在于data中的变量"><a href="#情况一：Vue无法检测实例被创建时不存在于data中的变量" class="headerlink" title="情况一：Vue无法检测实例被创建时不存在于data中的变量"></a>情况一：Vue无法检测实例被创建时不存在于data中的变量</h1><p>原因：由于 Vue 会在初始化实例时对 data中的数据执行 getter/setter 转化，所以 变量必须在 data 对象上存在才能让 Vue 将它转换为响应式的。</p>
-<p>例如： </p>
-<pre><code>new Vue(&#123;
-  data:&#123;&#125;,
-  template: &#39;&lt;div&gt;&#123;&#123;message&#125;&#125;&lt;/div&gt;&#39;
-&#125;)
-this.message = &#39;Hello world!&#39; // `message` 不是响应式的页面不会发生变化
-</code></pre>
-<p>解决方法：</p>
-<pre><code>new Vue(&#123;
-  data: &#123;
-    message: &#39;&#39;,
-  &#125;,
-  template: &#39;&lt;div&gt;&#123;&#123; message &#125;&#125;&lt;/div&gt;&#39;
-&#125;)
-this.message = &#39;Hello world!&#39;
-</code></pre>
-<h1 id="情况二：vue也不能检测到data中对象的动态添加和删除"><a href="#情况二：vue也不能检测到data中对象的动态添加和删除" class="headerlink" title="情况二：vue也不能检测到data中对象的动态添加和删除"></a>情况二：vue也不能检测到data中对象的动态添加和删除</h1><p>例如：</p>
-<pre><code>new Vue(&#123;
-  data:&#123;
-    obj: &#123;
-      id: 1
-    &#125;
-  &#125;,
-  template: &#39;&lt;div&gt;&#123;&#123; obj.message &#125;&#125;&lt;/div&gt;&#39;
-&#125;)
-this.obj.message = &#39;hello&#39; // 不是响应式的
-delete this.obj.id       // 不是响应式的
-</code></pre>
-<p>解决方法：</p>
-<pre><code>// 动态添加 - Vue.set
-Vue.set(this.obj, &#39;id&#39;, 002)
-  
-// 动态添加 - this.$set
-this.$set(this.obj, &#39;id&#39;, 002)
-  
-// 动态添加多个
-// 代替 Object.assign(this.obj, &#123; a: 1, b: 2 &#125;)
-this.obj = Object.assign(&#123;&#125;, this.obj, &#123; a: 1, b: 2 &#125;)
-  
-// 动态移除 - Vue.delete
-Vue.delete(this.obj, &#39;name&#39;)
-  
-// 动态移除 - this.$delete
-this.$delete(this.obj, &#39;name&#39;)
-</code></pre>
-<h1 id="情况三：变量为数组时"><a href="#情况三：变量为数组时" class="headerlink" title="情况三：变量为数组时"></a>情况三：变量为数组时</h1><p>不能通过索引直接修改或者赋值，也不能修改数组的长度</p>
-<p>例如：</p>
-<pre><code>new Vue(&#123;
-  data: &#123;
-    items: [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]
-  &#125;
-&#125;)
-this.items[1] = &#39;x&#39; // 不是响应性的
-this.items[3] = &#39;d&#39; // 不是响应性的
-this.items.length = 2 // 不是响应性的
-</code></pre>
-<p>解决方法：</p>
-<pre><code>// Vue.set
-Vue.set(this.items, 4, &#39;d&#39;)
-  
-// this.$set
-this.$set(this.items, 4, &#39;d)
-  
-// Array.prototype.splice
-this.items.splice(indexOfItem, 4, &#39;d&#39;)
-//修改长度
-this.items.splice(3)
-</code></pre>
-<h1 id="情况四：异步获取接口数据，DOM数据不发现变化"><a href="#情况四：异步获取接口数据，DOM数据不发现变化" class="headerlink" title="情况四：异步获取接口数据，DOM数据不发现变化"></a>情况四：异步获取接口数据，DOM数据不发现变化</h1><p>原因：Vue 在更新 DOM 时是异步执行的。只要侦听到数据变化，Vue 将开启一个队列，并缓冲在同一事件循环中发生的所有数据变更。如果同一个 watcher 被多次触发，只会被推入到队列中一次。这种在缓冲时去除重复数据对于避免不必要的计算和 DOM 操作是非常重要的。然后，在下一个的事件循环“tick”中，Vue 刷新队列并执行实际 (已去重的) 工作。Vue 在内部对异步队列尝试使用原生的 Promise.then、MutationObserver 和 setImmediate，如果执行环境不支持，则会采用 setTimeout(funcation, 0) 代替。</p>
-<p>例如：</p>
-<pre><code>&lt;div id=&quot;example&quot;&gt;&#123;&#123;message&#125;&#125;&lt;/div&gt;
-var vm = new Vue(&#123;
-  el: &#39;#example&#39;,
-  data: &#123;
-    message: &#39;123&#39;
-  &#125;
-&#125;)
-vm.message = &#39;new message&#39; // 更改数据
-vm.$el.textContent === &#39;new message&#39; // false
-vm.$el.style.color = &#39;red&#39; // 页面没有变化
-</code></pre>
-<p>解决方法：</p>
-<pre><code>var vm = new Vue(&#123;
-  el: &#39;#example&#39;,
-  data: &#123;
-    message: &#39;123&#39;
-  &#125;
-&#125;)
-vm.message = &#39;new message&#39; // 更改数据
-//使用 Vue.nextTick(callback) callback 将在 DOM 更新完成后被调用
-Vue.nextTick(function () &#123;
-  vm.$el.textContent === &#39;new message&#39; // true
-  vm.$el.style.color = &#39;red&#39; // 文字颜色变成红色
-&#125;)
-</code></pre>
-<h1 id="情况五：循环嵌套层级太深，视图不更新"><a href="#情况五：循环嵌套层级太深，视图不更新" class="headerlink" title="情况五：循环嵌套层级太深，视图不更新"></a>情况五：循环嵌套层级太深，视图不更新</h1><p>当嵌套太深时，页面也可能不更新，此时可以让页面强制刷新</p>
-<p>this.$forceUpdate()迫使vue实例重新（rander）渲染虚拟DOM，注意并不是重新加载组件。<br>结合vue的生命周期，调用$forceUpdate后只会触发beforeUpdate和updated这两个钩子函数，不会触发其他的钩子函数。<br>它仅仅影响实例本身和插入插槽内容的子组件，而不是所有子组件。</p>
-<pre><code>//官方说如果你现在的场景需要用forceUpdate方法 ,那么99%是你的操作有问题
-this.$forceUpdate();
-</code></pre>
-<h1 id="情况六：路由参数变化时，页面不更新-数据不更新"><a href="#情况六：路由参数变化时，页面不更新-数据不更新" class="headerlink" title="情况六：路由参数变化时，页面不更新(数据不更新)"></a>情况六：路由参数变化时，页面不更新(数据不更新)</h1><p>例如：</p>
-<pre><code>&lt;div id=&quot;app&quot;&gt;
-  &lt;ul&gt;
-    &lt;li&gt;&lt;router-link to=&quot;/home/foo&quot;&gt;To Foo&lt;/router-link&gt;&lt;/li&gt;    
-    &lt;li&gt;&lt;router-link to=&quot;/home/baz&quot;&gt;To Baz&lt;/router-link&gt;&lt;/li&gt;    
-    &lt;li&gt;&lt;router-link to=&quot;/home/bar&quot;&gt;To Bar&lt;/router-link&gt;&lt;/li&gt;    
-  &lt;/ul&gt;    
-  &lt;router-view&gt;&lt;/router-view&gt;
-&lt;/div&gt;
-
-const Home = &#123;
-  template: `&lt;div&gt;&#123;&#123;message&#125;&#125;&lt;/div&gt;`,
-  data() &#123;
-    return &#123;
-      message: this.$route.params.name
-    &#125;
-  &#125;
-&#125;
-  
-const router = new VueRouter(&#123;
-  mode:&#39;history&#39;,
-    routes: [
-    &#123;path: &#39;/home&#39;, component: Home &#125;,
-    &#123;path: &#39;/home/:name&#39;, component: Home &#125;
-  ]
-&#125;)
-  
-new Vue(&#123;
-  el: &#39;#app&#39;,
-  router
-&#125;)
-</code></pre>
-<p>上段代码中，我们在路由构建选项 routes 中配置了一个动态路由 ‘/home/:name’，它们共用一个路由组件 Home，这代表他们复用 RouterView 。</p>
-<p>当进行路由切换时，页面只会渲染第一次路由匹配到的参数，之后再进行路由切换时，message 是没有变化的。</p>
-<p>解决方法：</p>
-<ul>
-<li><p>1.通过 watch 监听 $route 的变化。</p>
-<p>  const Home = {</p>
-<pre><code>template: `&lt;div&gt;&#123;&#123;message&#125;&#125;&lt;/div&gt;`,
-data() &#123;
-  return &#123;
-    message: this.$route.params.name
-  &#125;
-&#125;,
-watch:&#123;
-   &#39;$route&#39;:function()&#123;
-      this.message = this.$route.params.name
-   &#125;
-&#125;
-</code></pre>
-<p>  }<br>  …<br>  new Vue({</p>
-<pre><code>el: &#39;#app&#39;,
-router
-</code></pre>
-<p>  })</p>
-</li>
-<li><p>2.给<router-view> 绑定key属性，这样 Vue 就会认为这是不同的 <router-view>。</router-view></router-view></p>
-</li>
-</ul>
-<p>弊端：如果从 /home 跳转到 /user 等其他路由下，我们是不用担心组件更新问题的，所以这个时候 key 属性是多余的。</p>
-<pre><code>&lt;div id=&quot;app&quot;&gt;
-   &lt;router-view :key=&quot;key&quot;&gt;&lt;/router-view&gt;
-&lt;/div&gt;
-</code></pre>
-<h1 id="情况七：变量通过赋值来定义的"><a href="#情况七：变量通过赋值来定义的" class="headerlink" title="情况七：变量通过赋值来定义的"></a>情况七：变量通过赋值来定义的</h1><p>在 Vue 中有两种类型的变量：响应式变量和非响应式变量。</p>
-<p>从后端获取的变量通常是响应式变量，也就是说它们会被 Vue 监测到变化并同步到页面上，如果你修改了这些响应式变量，页面会随之改变。</p>
-<p>而通过赋值来定义的变量通常是非响应式变量，如果你修改了这些非响应式变量，Vue 并不会监测到它们的变化，所以页面不会改变。</p>
-<p>如果你需要使一个非响应式变量变成响应式变量，可以使用 Vue.set 方法或者数组的变异方法（例如 push、splice 等）。</p>
-<p>例1：Vue.set(对象,添加的key,属性值”)</p>
-<pre><code>Vue.set
-//这个是直接用在Vue身上的。例如: Vue.set(对象,添加的key,属性值”)
-//常见于: xx.js文件中
-//注意: js文件中，需要引入vue，比如: import Vue from vue
-</code></pre>
-<p>例2：this.$set(对象,添加的key’,属性值)</p>
-<pre><code>this.$set
-//这个是用在vm或者vc实例身上的，比如vue文件中，this.$set(对象,添加的key&#39;,属性值)
-//常见于: xx.vue文件中
-强制更新数据：this.$forceUpdate();
-</code></pre>
-<p><a target="_blank" rel="noopener" href="https://www.jb51.net/javascript/286151v3n.htm">https://www.jb51.net/javascript/286151v3n.htm</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Vue2 组件通信、组件间传值的几种方式"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/09/12/Vue2%20%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E3%80%81%E7%BB%84%E4%BB%B6%E9%97%B4%E4%BC%A0%E5%80%BC%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/"
-    >Vue2 组件通信、组件间传值的几种方式</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/09/12/Vue2%20%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E3%80%81%E7%BB%84%E4%BB%B6%E9%97%B4%E4%BC%A0%E5%80%BC%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/" class="article-date">
-  <time datetime="2023-09-12T03:22:33.000Z" itemprop="datePublished">2023-09-12</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="1-文件间的关系"><a href="#1-文件间的关系" class="headerlink" title="1. 文件间的关系"></a>1. 文件间的关系</h1><p>App 为根组件<br>Father 与 Brother 为兄弟组件，也同为 App 的子组件<br>Child 是 Father 的子组件，也是 App 的孙组件</p>
-<h1 id="2-父子之间传值"><a href="#2-父子之间传值" class="headerlink" title="2. 父子之间传值"></a>2. 父子之间传值</h1><h2 id="2-1-props，父传子"><a href="#2-1-props，父传子" class="headerlink" title="2.1 props，父传子"></a>2.1 props，父传子</h2><p>Father.vue 文件</p>
-<pre><code>// Father.vue 文件
-&lt;template&gt;
-  &lt;div id=&quot;father&quot;&gt;
-    &lt;Child :cMsg=&quot;msg&quot; /&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-
-&lt;script&gt;
-import Child from &quot;./Child.vue&quot;;
-
-export default &#123;
-  name: &quot;Father&quot;,
-  components: &#123;
-    Child,
-  &#125;,
-  data() &#123;
-    return &#123;
-      msg: &quot;我是 Father 组件中的数据&quot;,
-    &#125;;
-  &#125;,
-&#125;;
-&lt;/script&gt;
-</code></pre>
-<p>Child.vue 文件</p>
-<pre><code>// Child.vue 文件
-&lt;template&gt;
-  &lt;div id=&quot;child&quot;&gt;
-    &lt;span&gt; 我是 Child 组件，接收到的数据为：&#123;&#123; cMsg &#125;&#125; &lt;/span&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-
-&lt;script&gt;
-export default &#123;
-  name: &quot;Child&quot;,
-  props: &#123;
-    cMsg: String,
-  &#125;,
-&#125;;
-&lt;/script&gt;
-</code></pre>
-<h2 id="2-2-props，子传父"><a href="#2-2-props，子传父" class="headerlink" title="2.2 props，子传父"></a>2.2 props，子传父</h2><p>Father.vue 文件</p>
-<pre><code>// Father.vue 文件
-&lt;template&gt;
-  &lt;div id=&quot;father&quot;&gt;
-    &lt;Child :cHander=&quot;fHander&quot; /&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-
-&lt;script&gt;
-import Child from &quot;./Child.vue&quot;;
-
-export default &#123;
-  name: &quot;Father&quot;,
-  components: &#123;
-    Child,
-  &#125;,
-  methods: &#123;
-    fHander(msg) &#123;
-      console.log(msg);
-    &#125;,
-  &#125;,
-&#125;;
-&lt;/script&gt;
-</code></pre>
-<p>Child.vue 文件</p>
-<pre><code>// Child.vue 文件
-&lt;template&gt;
-  &lt;div id=&quot;child&quot;&gt;
-    &lt;button @click=&quot;btn&quot;&gt;点击我向 Father 组件传入数据&lt;/button&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-
-&lt;script&gt;
-export default &#123;
-  name: &quot;Child&quot;,
-  props: &#123;
-    cHander: Function,
-  &#125;,
-  methods: &#123;
-    btn() &#123;
-      this.cHander(&quot;666666&quot;);
-    &#125;,
-  &#125;,
-&#125;;
-&lt;/script&gt;
-</code></pre>
-<h2 id="2-3-自定义事件，子传父"><a href="#2-3-自定义事件，子传父" class="headerlink" title="2.3 自定义事件，子传父"></a>2.3 自定义事件，子传父</h2><p>Father.vue 文件</p>
-<pre><code>// Father.vue 文件
-&lt;template&gt;
-  &lt;div id=&quot;father&quot;&gt;
-    &lt;Child ref=&quot;child&quot; /&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-
-&lt;script&gt;
-import Child from &quot;./Child.vue&quot;;
-
-export default &#123;
-  name: &quot;Father&quot;,
-  components: &#123;
-    Child,
-  &#125;,
-  mounted() &#123;
-    this.$refs.child.$on(&quot;change&quot;, (msg) =&gt; &#123;
-      console.log(msg);
-    &#125;);
-  &#125;,
-&#125;;
-&lt;/script&gt;
-</code></pre>
-<p>Child.vue 文件</p>
-<pre><code>// Child.vue 文件
-&lt;template&gt;
-  &lt;div id=&quot;child&quot;&gt;
-    &lt;button @click=&quot;btn&quot;&gt;点击我向 Father 组件传入数据&lt;/button&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-
-&lt;script&gt;
-export default &#123;
-  name: &quot;Child&quot;,
-  methods: &#123;
-    btn() &#123;
-      this.$emit(&quot;change&quot;, 666666);
-    &#125;,
-  &#125;,
-&#125;;
-&lt;/script&gt;
-</code></pre>
-<h1 id="3-兄弟之间传值"><a href="#3-兄弟之间传值" class="headerlink" title="3. 兄弟之间传值"></a>3. 兄弟之间传值</h1><h2 id="3-1-事件总线"><a href="#3-1-事件总线" class="headerlink" title="3.1 事件总线"></a>3.1 事件总线</h2><p>main.js 文件</p>
-<pre><code>// main.js 文件
-import Vue from &#39;vue&#39;
-import App from &#39;./App.vue&#39;
-
-Vue.config.productionTip = false
-
-new Vue(&#123;
-  render: h =&gt; h(App),
-  beforeCreate() &#123;
-    // 需要在全局添加一个属性
-    Vue.prototype.$bus = this
-  &#125;
-&#125;).$mount(&#39;#app&#39;)
-</code></pre>
-<p>Father.vue 文件</p>
-<pre><code>// Father.vue 文件
-&lt;template&gt;
-  &lt;div id=&quot;father&quot;&gt;
-    &lt;button @click=&quot;btn&quot;&gt;我要给 Brother 组件传数据&lt;/button&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-
-&lt;script&gt;
-export default &#123;
-  name: &quot;Father&quot;,
-  methods: &#123;
-    btn() &#123;
-      this.$bus.$emit(&quot;change&quot;, 66666);
-    &#125;,
-  &#125;,
-&#125;;
-&lt;/script&gt;
-</code></pre>
-<p>Brother.vue 文件</p>
-<pre><code>// Brother.vue 文件
-&lt;template&gt;
-  &lt;div id=&quot;brother&quot;&gt;&lt;/div&gt;
-&lt;/template&gt;
-
-&lt;script&gt;
-export default &#123;
-  name: &quot;Brother&quot;,
-  mounted() &#123;
-    this.$bus.$on(&quot;change&quot;, (msg) =&gt; &#123;
-      console.log(msg);
-    &#125;);
-  &#125;,
-&#125;;
-&lt;/script&gt;
-</code></pre>
-<h2 id="3-2-Vuex"><a href="#3-2-Vuex" class="headerlink" title="3.2 Vuex"></a>3.2 Vuex</h2><p>store/index.js 文件</p>
-<pre><code>// store/index.js 文件
-import Vue from &quot;vue&quot;
-import Vuex from &quot;vuex&quot;
-Vue.use(Vuex)
-
-export default new Vuex.Store(&#123;
-  state: &#123;
-    count: 1
-  &#125;,
-  mutations: &#123;
-    change(state, value) &#123;
-      state.count += value
-    &#125;
-  &#125;
-&#125;)
-</code></pre>
-<p>main.js 文件</p>
-<pre><code>// main.js 文件
-import Vue from &#39;vue&#39;
-import App from &#39;./App.vue&#39;
-import store from &quot;./store/index&quot;
-
-Vue.config.productionTip = false
-
-new Vue(&#123;
-  render: h =&gt; h(App),
-  // 需要挂载 store
-  store
-&#125;).$mount(&#39;#app&#39;)
-
-// Father.vue 文件
-&lt;template&gt;
-  &lt;div id=&quot;father&quot;&gt;
-    &lt;button @click=&quot;btn&quot;&gt;我要给 VueX 中的数据加一&lt;/button&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-
-&lt;script&gt;
-export default &#123;
-  name: &quot;Father&quot;,
-  methods: &#123;
-    btn() &#123;
-      this.$store.commit(&quot;change&quot;, 1);
-    &#125;,
-  &#125;,
-&#125;;
-&lt;/script&gt;
-</code></pre>
-<p>Brother.vue 文件</p>
-<pre><code>// Brother.vue 文件
-&lt;template&gt;
-  &lt;div id=&quot;brother&quot;&gt;
-    &#123;&#123; $store.state.count &#125;&#125;
-  &lt;/div&gt;
-&lt;/template&gt;
-
-&lt;script&gt;
-export default &#123;
-  name: &quot;Brother&quot;,
-&#125;;
-&lt;/script&gt;
-</code></pre>
-<h2 id="3-3-发布订阅"><a href="#3-3-发布订阅" class="headerlink" title="3.3 发布订阅"></a>3.3 发布订阅</h2><p>需要安装 pubsub：npm i pubsub-js</p>
-<p>Father.vue</p>
-<pre><code>// Father.vue 文件
-&lt;template&gt;
-  &lt;div id=&quot;father&quot;&gt;
-    &lt;button @click=&quot;btn&quot;&gt;我要向 Brother 组件传递数据&lt;/button&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-
-&lt;script&gt;
-import pubsub from &quot;pubsub-js&quot;;
-
-export default &#123;
-  name: &quot;Father&quot;,
-  methods: &#123;
-    btn() &#123;
-      pubsub.publish(&quot;change&quot;, 666);
-    &#125;,
-  &#125;,
-&#125;;
-&lt;/script&gt;
-</code></pre>
-<p>Brother.vue 文件</p>
-<pre><code>// Brother.vue 文件
-&lt;template&gt;
-  &lt;div id=&quot;brother&quot;&gt;&lt;/div&gt;
-&lt;/template&gt;
-
-&lt;script&gt;
-import pubsub from &quot;pubsub-js&quot;;
-
-export default &#123;
-  name: &quot;Brother&quot;,
-  mounted() &#123;
-    pubsub.subscribe(&quot;change&quot;, (msgName, msg) =&gt; &#123;
-      console.log(msgName, msg);
-    &#125;);
-  &#125;,
-&#125;;
-&lt;/script&gt;
-</code></pre>
-<h1 id="4-祖孙之间传值"><a href="#4-祖孙之间传值" class="headerlink" title="4. 祖孙之间传值"></a>4. 祖孙之间传值</h1><h2 id="4-1-provide与inject"><a href="#4-1-provide与inject" class="headerlink" title="4.1 provide与inject"></a>4.1 provide与inject</h2><p>App.vue 文件</p>
-<pre><code>// App.vue 文件
-&lt;template&gt;
-  &lt;div id=&quot;app&quot;&gt;
-    &lt;Father /&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-
-&lt;script&gt;
-import Father from &quot;./components/Father.vue&quot;;
-
-export default &#123;
-  name: &quot;App&quot;,
-  components: &#123;
-    Father,
-  &#125;,
-  provide: &#123;
-    msg: &quot;要给 Child 传数据&quot;,
-  &#125;,
-&#125;;
-&lt;/script&gt;
-</code></pre>
-<p>Father.vue 文件</p>
-<pre><code>// Father.vue 文件
-&lt;template&gt;
-  &lt;div id=&quot;father&quot;&gt;
-    &lt;Child /&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-
-&lt;script&gt;
-import Child from &quot;./Child.vue&quot;;
-
-export default &#123;
-  name: &quot;Father&quot;,
-  components: &#123;
-    Child,
-  &#125;,
-&#125;;
-&lt;/script&gt;
-</code></pre>
-<p>Child.vue 文件</p>
-<pre><code>// Child.vue 文件
-&lt;template&gt;
-  &lt;div id=&quot;child&quot;&gt;
-    &#123;&#123; msg &#125;&#125;
-  &lt;/div&gt;
-&lt;/template&gt;
-
-&lt;script&gt;
-export default &#123;
-  name: &quot;Child&quot;,
-  inject: [&quot;msg&quot;],
-&#125;;
-&lt;/script&gt;
-</code></pre>
-<p>————————————————<br>版权声明：本文为CSDN博主「codeCat!」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_60547084/article/details/124408513">https://blog.csdn.net/weixin_60547084/article/details/124408513</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Vue2传值方式详解11"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/09/11/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A311/"
-    >Vue2传值方式详解11-promise传参</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/09/11/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A311/" class="article-date">
-  <time datetime="2023-09-11T06:28:42.000Z" itemprop="datePublished">2023-09-11</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>promise 中 resolve 如何传递多个参数</p>
-<pre><code>//类似与这样使用，但实际上后面两个参数无法获取
-promise = new Promise((resolve,reject)=&gt;&#123;
-    let a = 1
-    let b = 2
-    let c = 3
-    resolve(a,b,c) 
-&#125;)
-promise.then((a,b,c)=&gt;&#123;
-    console.log(a,b,c)
-&#125;)
-</code></pre>
-<p>resolve() 只能接受并处理一个参数，多余的参数会被忽略掉。<br>如果想多个用数组，或者对象方式。。</p>
-<p>数组</p>
-<pre><code>promise = new Promise((resolve,reject)=&gt;&#123;
-    resolve([1,2,3]) 
-&#125;)
-promise.then((arr)=&gt;&#123;
-    console.log(arr[0],arr[1],arr[2])
-&#125;)
-</code></pre>
-<p>对象</p>
-<pre><code>promise = new Promise((resolve,reject)=&gt;&#123;
-    resolve(&#123;a:1,b:2,c:3&#125;) 
-&#125;)
-promise.then(obj=&gt;&#123;
-    console.log(obj.a,obj.b,obj.c)
-&#125;)
-</code></pre>
-<p>————————————————<br>版权声明：本文为CSDN博主「小毕学习代码」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_70703397/article/details/132201160">https://blog.csdn.net/qq_70703397/article/details/132201160</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Vue2传值方式详解10"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/09/10/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A310/"
-    >Vue2传值方式详解10-孙传祖使用$listeners</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/09/10/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A310/" class="article-date">
-  <time datetime="2023-09-10T05:26:39.000Z" itemprop="datePublished">2023-09-10</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>孙传祖使用$listeners<br>文字内容同第九个</p>
-<p>祖组件</p>
-<pre><code>&lt;template&gt;
-  &lt;div id=&quot;app&quot;&gt;
-    &lt;children-one @eventOne=&quot;eventOne&quot;&gt;&lt;/children-one&gt;
-    &#123;&#123; msg &#125;&#125;
-  &lt;/div&gt;
-&lt;/template&gt;
-&lt;script&gt;
-import ChildrenOne from &#39;../src/components/children.vue&#39;
-export default &#123;
-  name: &#39;App&#39;,
-  components: &#123;
-    ChildrenOne,
-  &#125;,
-  data() &#123;
-    return &#123;
-      msg: &#39;&#39;
-    &#125;
-  &#125;,
-  methods: &#123;
-    eventOne(value) &#123;
-      this.msg = value
-    &#125;
-  &#125;
-&#125;
-&lt;/script&gt;
-</code></pre>
-<p>父组件</p>
-<pre><code>&lt;template&gt;
+  <p>当在Vue中需要实现文件下载功能时，我们可以有多种方式来完成。下面将介绍五种常用的方法。</p>
+<h1 id="1-使用window-open方法下载文件"><a href="#1-使用window-open方法下载文件" class="headerlink" title="1. 使用window.open方法下载文件"></a>1. 使用window.open方法下载文件</h1><pre><code>&lt;template&gt;
   &lt;div&gt;
-    &lt;children-two v-on=&quot;$listeners&quot;&gt;&lt;/children-two&gt;
+    &lt;button @click=&quot;downloadFile(&#39;file1.pdf&#39;)&quot;&gt;下载文件1&lt;/button&gt;
+    &lt;button @click=&quot;downloadFile(&#39;file2.jpg&#39;)&quot;&gt;下载文件2&lt;/button&gt;
   &lt;/div&gt;
 &lt;/template&gt;
- 
-&lt;script&gt;
-import ChildrenTwo from &#39;./childrenTwo.vue&#39;
- 
-export default &#123;
-  name: &#39;childrenOne&#39;,
-  components: &#123;
-    ChildrenTwo
-  &#125;
-&#125;
-&lt;/script&gt;
-</code></pre>
-<p>子组件</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    &lt;button @click=&quot;setMsg&quot;&gt;点击传给祖父&lt;/button&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
- 
 &lt;script&gt;
 export default &#123;
-  name: &#39;children&#39;,
   methods: &#123;
-    setMsg() &#123;
-      this.$emit(&#39;eventOne&#39;, &#39;123&#39;)
+    downloadFile(fileName) &#123;
+      const fileUrl = &#39;/path/to/&#39; + fileName; // 文件的URL地址
+      window.open(fileUrl);
     &#125;
   &#125;
-&#125;
+&#125;;
 &lt;/script&gt;
 </code></pre>
-<p>————————————————<br>版权声明：本文为CSDN博主「小毕学习代码」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_70703397/article/details/132201160">https://blog.csdn.net/qq_70703397/article/details/132201160</a></p>
+<p>在上面的示例中，我们使用了window.open方法来打开一个新窗口，并直接访问文件的URL地址，从而触发文件下载。</p>
+<h1 id="2-使用标签进行文件下载"><a href="#2-使用标签进行文件下载" class="headerlink" title="2. 使用标签进行文件下载"></a>2. 使用<a>标签进行文件下载</a></h1><pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;button @click=&quot;downloadFile(&#39;file1.pdf&#39;)&quot;&gt;下载文件1&lt;/button&gt;
+    &lt;button @click=&quot;downloadFile(&#39;file2.jpg&#39;)&quot;&gt;下载文件2&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+export default &#123;
+  methods: &#123;
+    downloadFile(fileName) &#123;
+      const fileUrl = &#39;/path/to/&#39; + fileName; // 文件的URL地址
+      const link = document.createElement(&#39;a&#39;);
+      link.href = fileUrl;
+      link.setAttribute(&#39;download&#39;, fileName);
+      link.click();
+    &#125;
+  &#125;
+&#125;;
+&lt;/script&gt;
+</code></pre>
+<p>在上面的示例中，我们首先创建一个<a>标签，然后设置其href属性为文件的URL地址，download属性为要下载的文件名。最后，通过调用click()方法触发链接的点击事件，实现文件的下载。</a></p>
+<h1 id="3-使用axios下载文件"><a href="#3-使用axios下载文件" class="headerlink" title="3. 使用axios下载文件"></a>3. 使用axios下载文件</h1><pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;button @click=&quot;downloadFile(&#39;file1.pdf&#39;)&quot;&gt;下载文件1&lt;/button&gt;
+    &lt;button @click=&quot;downloadFile(&#39;file2.jpg&#39;)&quot;&gt;下载文件2&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import axios from &#39;axios&#39;;
+export default &#123;
+  methods: &#123;
+    downloadFile(fileName) &#123;
+      const fileUrl = &#39;/path/to/&#39; + fileName; // 文件的URL地址
+      axios.get(fileUrl, &#123; responseType: &#39;blob&#39; &#125;)
+        .then(response =&gt; &#123;
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement(&#39;a&#39;);
+          link.href = url;
+          link.setAttribute(&#39;download&#39;, fileName);
+          document.body.appendChild(link);
+          link.click();
+        &#125;)
+        .catch(error =&gt; &#123;
+          console.error(error);
+        &#125;);
+    &#125;
+  &#125;
+&#125;;
+&lt;/script&gt;
+</code></pre>
+<p>在上面的示例中，我们使用了axios发送GET请求，设置responseType为blob以便获取文件的二进制数据。然后，通过创建临时URL、创建<a>标签并设置下载属性，实现文件的下载。</a></p>
+<h1 id="4-使用Fetch-API下载文件"><a href="#4-使用Fetch-API下载文件" class="headerlink" title="4. 使用Fetch API下载文件"></a>4. 使用Fetch API下载文件</h1><pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;button @click=&quot;downloadFile(&#39;file1.pdf&#39;)&quot;&gt;下载文件1&lt;/button&gt;
+    &lt;button @click=&quot;downloadFile(&#39;file2.jpg&#39;)&quot;&gt;下载文件2&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+export default &#123;
+  methods: &#123;
+    downloadFile(fileName) &#123;
+      const fileUrl = &#39;/path/to/&#39; + fileName; // 文件的URL地址
+      fetch(fileUrl)
+        .then(response =&gt; response.blob())
+        .then(blob =&gt; &#123;
+          const url = window.URL.createObjectURL(blob);
+          const link = document.createElement(&#39;a&#39;);
+          link.href = url;
+          link.setAttribute(&#39;download&#39;, fileName);
+          document.body.appendChild(link);
+          link.click();
+        &#125;)
+        .catch(error =&gt; &#123;
+          console.error(error);
+        &#125;);
+    &#125;
+  &#125;
+&#125;;
+&lt;/script&gt;
+</code></pre>
+<p>在上面的示例中，我们使用了Fetch API发送GET请求，并使用.blob()方法将返回的数据转换为blob对象。然后，通过创建临时URL、创建<a>标签并设置下载属性，实现文件的下载。</a></p>
+<h1 id="5-使用Vue的-download方法下载文件"><a href="#5-使用Vue的-download方法下载文件" class="headerlink" title="5. 使用Vue的$download方法下载文件"></a>5. 使用Vue的$download方法下载文件</h1><pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;button @click=&quot;downloadFile(&#39;file1.pdf&#39;)&quot;&gt;下载文件1&lt;/button&gt;
+    &lt;button @click=&quot;downloadFile(&#39;file2.jpg&#39;)&quot;&gt;下载文件2&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+export default &#123;
+  methods: &#123;
+    downloadFile(fileName) &#123;
+      const fileUrl = &#39;/path/to/&#39; + fileName; // 文件的URL地址
+      this.$download(fileUrl, fileName);
+    &#125;
+  &#125;
+&#125;;
+&lt;/script&gt;
+</code></pre>
+<p>在这个示例中，我们直接调用Vue实例的$download方法，并传入文件的URL地址和下载的文件名，即可实现文件的下载。</p>
+<h1 id="6-使用创建a标签方法下载文件"><a href="#6-使用创建a标签方法下载文件" class="headerlink" title="6. 使用创建a标签方法下载文件"></a>6. 使用创建a标签方法下载文件</h1><pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;button @click=&quot;downloadFile(&#39;file1.pdf&#39;)&quot;&gt;下载文件1&lt;/button&gt;
+    &lt;button @click=&quot;downloadFile(&#39;file2.jpg&#39;)&quot;&gt;下载文件2&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+export default &#123;
+  methods: &#123;
+    downloadFile(fileName) &#123;
+      const folderPath = &#39;/path/to/folder/&#39;; // 文件所在的文件夹路径
+      const fileUrl = folderPath + fileName; // 拼接文件夹路径和文件名
+      const link = document.createElement(&#39;a&#39;);
+      link.href = fileUrl;
+      link.setAttribute(&#39;download&#39;, fileName);
+      link.click();
+    &#125;
+  &#125;
+&#125;;
+&lt;/script&gt;
+</code></pre>
+<p>在这个示例中，我们首先定义了文件所在的文件夹路径folderPath，然后通过拼接文件夹路径和文件名来构建完整的文件URL地址fileUrl。接着，我们创建一个<a>标签，并设置其href属性为文件URL，download属性为要下载的文件名。最后，通过调用click()方法触发链接的点击事件，实现文件的下载。</a></p>
+<p>以上是六种常用的在Vue中实现文件下载的方式，请根据项目需求选择合适的方式来完成文件下载功能。</p>
+<p><a target="_blank" rel="noopener" href="https://www.jb51.net/javascript/2987938qn.htm">https://www.jb51.net/javascript/2987938qn.htm</a></p>
  
       <!-- reward -->
       
@@ -982,7 +348,7 @@ export default &#123;
 
     
     <article
-  id="post-Vue2传值方式详解09"
+  id="post-使用elmentUI里面el-button按钮替换input type=“file“ 默认按钮"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -993,8 +359,8 @@ export default &#123;
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/09/09/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A309/"
-    >Vue2传值方式详解09-祖传孙 $attrs</a> 
+  <a class="article-title" href="/2023/09/20/%E4%BD%BF%E7%94%A8elmentUI%E9%87%8C%E9%9D%A2el-button%E6%8C%89%E9%92%AE%E6%9B%BF%E6%8D%A2input%20type=%E2%80%9Cfile%E2%80%9C%20%E9%BB%98%E8%AE%A4%E6%8C%89%E9%92%AE/"
+    >使用elmentUI里面el-button按钮替换input type=“file“ 默认按钮</a> 
 </h2>
  
 
@@ -1002,8 +368,8 @@ export default &#123;
     </header>
      
     <div class="article-meta">
-      <a href="/2023/09/09/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A309/" class="article-date">
-  <time datetime="2023-09-09T12:40:59.000Z" itemprop="datePublished">2023-09-09</time>
+      <a href="/2023/09/20/%E4%BD%BF%E7%94%A8elmentUI%E9%87%8C%E9%9D%A2el-button%E6%8C%89%E9%92%AE%E6%9B%BF%E6%8D%A2input%20type=%E2%80%9Cfile%E2%80%9C%20%E9%BB%98%E8%AE%A4%E6%8C%89%E9%92%AE/" class="article-date">
+  <time datetime="2023-09-20T12:40:59.000Z" itemprop="datePublished">2023-09-20</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -1013,96 +379,253 @@ export default &#123;
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>祖传孙 $attrs</p>
-<p>正常情况下需要借助父亲的props作为中间过渡，但是这样在父亲组件就会多了一些跟父组件业务无关的属性，耦合度高，借助$attrs可以简化些，而且祖跟孙都无需做修改</p>
-<p>祖组件：</p>
-<pre><code>&lt;template&gt;
-    &lt;section&gt;
-        &lt;parent name=&quot;grandParent&quot; sex=&quot;男&quot; age=&quot;88&quot; hobby=&quot;code&quot; @sayKnow=&quot;sayKnow&quot;&gt;&lt;/parent&gt;
-    &lt;/section&gt;
-&lt;/template&gt;
+  <p>先隐藏input的默认按钮，再把el-button的点击事件指向input的点击事件</p>
+<pre><code>&lt;form name=&quot;formInput&quot;&gt;
+    &lt;input type=&quot;file&quot; 
+           id=&quot;fileDemo&quot;
+           class=&quot;input&quot; 
+           style=&quot;position:absolute; clip:rect(0 0 0 0);&quot;   //隐藏样式
+           @change=&quot;changeFileDemo&quot;&gt;
+&lt;/form&gt;
+&lt;el-button size=&quot;small&quot; 
+        type=&quot;primary&quot; 
+        plain 
+        onclick=&quot;document.formInput.fileDemo.click()&quot;&gt;选择文件  //点击事件指向input
+&lt;/el-button&gt;
+</code></pre>
+<p>formInput 为<form>里面name的值</form></p>
+<p>fileDemo 为<input>里面id的值<br>————————————————<br>版权声明：本文为CSDN博主「前端小蔡姬」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/x_nweBorder01k/article/details/124715048">https://blog.csdn.net/x_nweBorder01k/article/details/124715048</a></p>
  
-&lt;script&gt;
-    import Parent from &#39;./Parent&#39;
-    export default &#123;
-        name: &quot;GrandParent&quot;,
-        components: &#123;
-          Parent
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-Vue3 点击el-button 触发input type=“file“ 选择本地文件 并修改样式"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/09/19/Vue3%20%E7%82%B9%E5%87%BBel-button%20%E8%A7%A6%E5%8F%91input%20type=%E2%80%9Cfile%E2%80%9C%20%E9%80%89%E6%8B%A9%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6%20%E5%B9%B6%E4%BF%AE%E6%94%B9%E6%A0%B7%E5%BC%8F/"
+    >Vue3 点击el-button 触发input type=“file“ 选择本地文件 并修改样式</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/09/19/Vue3%20%E7%82%B9%E5%87%BBel-button%20%E8%A7%A6%E5%8F%91input%20type=%E2%80%9Cfile%E2%80%9C%20%E9%80%89%E6%8B%A9%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6%20%E5%B9%B6%E4%BF%AE%E6%94%B9%E6%A0%B7%E5%BC%8F/" class="article-date">
+  <time datetime="2023-09-19T11:38:57.000Z" itemprop="datePublished">2023-09-19</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>template</p>
+<pre><code>&lt;el-button class=&quot;file-box&quot; text&gt;
+    &lt;input type=&quot;file&quot; multiple class=&quot;file-btn&quot; required
+        @change=&quot;setImage&quot;/&gt;上传  
+&lt;/el-button&gt;
+</code></pre>
+<p>style</p>
+<pre><code>.file-box &#123;
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+    color: rgb(252, 113, 0);
+    background-color: rgb(255, 255, 255);
+&#125;
+ 
+.file-btn &#123;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    outline: none;
+    filter: alpha(opacity=0);
+    -moz-opacity: 0;
+    -khtml-opacity: 0;
+    opacity: 0;
+&#125;
+</code></pre>
+<p>————————————————<br>版权声明：本文为CSDN博主「wlik」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45220510/article/details/126172494">https://blog.csdn.net/weixin_45220510/article/details/126172494</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-vue 实现文件上传、下载"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/09/18/vue%20%E5%AE%9E%E7%8E%B0%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E3%80%81%E4%B8%8B%E8%BD%BD/"
+    >vue 实现文件上传、下载</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/09/18/vue%20%E5%AE%9E%E7%8E%B0%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E3%80%81%E4%B8%8B%E8%BD%BD/" class="article-date">
+  <time datetime="2023-09-18T10:36:54.000Z" itemprop="datePublished">2023-09-18</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>1、使用element ui 中的el-upload</p>
+<pre><code>&lt;!-- :limit=&quot;1&quot; 限制上传数量  :drag=&quot;true&quot; 可实现拖拽上传 :file-list会返显在下方--&gt;
+&lt;el-upload
+    class=&quot;upload-demo&quot;
+    action=&quot;#&quot;
+    :drag=&quot;true&quot;
+    :before-upload=&quot;uploadFileFun&quot;
+    :file-list=&quot;uploadFile.fileList&quot;&gt;
+    &lt;div class=&quot;el-upload__text&quot;&gt;将文件拖到此处，或&lt;em&gt;点击上传&lt;/em&gt;&lt;/div&gt;
+    &lt;div class=&quot;el-upload__tip fontSize12 colorRed&quot; slot=&quot;tip&quot;&gt;文件包括评审指南、须知及回避要求等，上传文件格式为word或pdf，文件大小在2M以内&lt;/div&gt;
+&lt;/el-upload&gt;
+</code></pre>
+<p>2、data中定义相关数据，methods中书写上传方法</p>
+<pre><code>data () &#123;
+    return &#123;
+        fileIdArr: [],
+        uploadFile:&#123;
+            createUser:&#39;&#39;,
+            createTime:&#39;&#39;,
+            fileId: &#39;&#39;, // 存放选择的文件
+            fileList: [],
         &#125;,
-        data() &#123;
-            return &#123;&#125;
-        &#125;,
-        methods: &#123;
-          sayKnow(val)&#123;
-            console.log(val)
-          &#125;
-        &#125;,
-        mounted() &#123;
+        uploadFileRules: &#123;
+          fileList: [&#123; required: true, message: &quot;请上传文件&quot;, trigger: &quot;blur&quot; &#125;],
         &#125;
     &#125;
-&lt;/script&gt;
+  &#125;,
+methods: &#123;
+    uploadFileFun(file)&#123;
+        var test = /(doc|docx|pdf)$/.test(file.type);
+        if (!test) &#123;
+             this.$message.error(&quot;请上传正确的文档格式!&quot;);
+             return false;
+         &#125;
+         const isLt2M = file.size / 1024 / 1024 &lt; 2;
+        if (!isLt2M) &#123;
+            this.$message.error(&quot;上传文件大小不能超过 2MB!&quot;);
+             return false;
+         &#125;
+        // 创建formdata实例
+        let formData = new window.FormData();
+        // 将获取的文件通过append方法加入实例中
+        formData.append(&quot;file&quot;, file);
+        this.$api.
+            uploadFile(formData)
+            .then(res =&gt; &#123;
+                // fileList用于反显
+                this.uploadFile.fileList.push(res.data)
+                this.fileIdArr.push(res.data.id)
+            &#125;)
+            .catch(err =&gt; &#123;&#125;);
+      &#125;,
+ &#125;
 </code></pre>
-<p>父组件</p>
-<pre><code>&lt;template&gt;
-  &lt;section&gt;
-    &lt;p&gt;父组件收到&lt;/p&gt;
-    &lt;p&gt;祖父的名字：&#123;&#123;name&#125;&#125;&lt;/p&gt;
-    &lt;children v-bind=&quot;$attrs&quot; v-on=&quot;$listeners&quot;&gt;&lt;/children&gt;
-  &lt;/section&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-  import Children from &#39;./Children&#39;
- 
-  export default &#123;
-    name: &quot;Parent&quot;,
-    components: &#123;
-      Children
-    &#125;,
-    // 父组件接收了name,所以name值是不会传到子组件的
-    props:[&#39;name&#39;],
-    data() &#123;
-      return &#123;&#125;
-    &#125;,
-    methods: &#123;&#125;,
-    mounted() &#123;
-    &#125;
-  &#125;
-&lt;/script&gt;
+<p>3、下载</p>
+<pre><code>methods: &#123;
+    // 附件下载
+    downloadFile(row)&#123;
+        // 判断如果没有文件就不进行文件的下载
+       if (row.fileName)&#123;
+             this.$api
+             .downloadFile(&#123;fileId: row.fileId&#125;)
+             .then(res =&gt; &#123;
+                // 如果有文件且接口掉成功，后端会直接返回文件流，因此若返回res.code，表示接口没有返回文件流
+                 if(res.code)&#123;
+                     this.$message(&#123;
+                         type: &#39;error&#39;,
+                         message: res.msg
+                     &#125;)
+                 &#125;else&#123;
+                 
+                    // 这里最重要，这里最重要！！！！！
+                    
+                     const link = document.createElement(&quot;a&quot;);
+                     let blob = new Blob([res]);  //文件流处理
+                     link.style.display = &quot;none&quot;;  //去除a标签的样式
+                     // 设置链接
+                     link.href = window.URL.createObjectURL(blob);
+                     link.download = row.fileName; // 指定下载文件名，包含文件后缀
+                     document.body.appendChild(link);
+                     //模拟点击事件
+                     link.click();
+                     //移除创建的a标签
+                     window.URL.revokeObjectURL(link.href);
+                     document.body.removeChild(link);
+                 &#125;
+                
+             &#125;)
+             .catch(err =&gt; &#123;&#125;)
+         &#125;else&#123;
+             this.$message(&#123;
+                 message: &#39;该邮件模板没有可下载的附件&#39;
+             &#125;)
+         &#125;
+     &#125;,
+&#125;
 </code></pre>
-<p>子组件</p>
-<pre><code>&lt;template&gt;
-  &lt;section&gt;
-    &lt;p&gt;子组件收到&lt;/p&gt;
-    &lt;p&gt;祖父的名字：&#123;&#123;name&#125;&#125;&lt;/p&gt;
-    &lt;p&gt;祖父的性别：&#123;&#123;sex&#125;&#125;&lt;/p&gt;
-    &lt;p&gt;祖父的年龄：&#123;&#123;age&#125;&#125;&lt;/p&gt;
-    &lt;p&gt;祖父的爱好：&#123;&#123;hobby&#125;&#125;&lt;/p&gt;
- 
-    &lt;button @click=&quot;sayKnow&quot;&gt;我知道啦&lt;/button&gt;
-  &lt;/section&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-  export default &#123;
-    name: &quot;Children&quot;,
-    components: &#123;&#125;,
-    // 由于父组件已经接收了name属性，所以name不会传到子组件了
-    props:[&#39;sex&#39;,&#39;age&#39;,&#39;hobby&#39;,&#39;name&#39;],
-    data() &#123;
-      return &#123;&#125;
-    &#125;,
-    methods: &#123;
-      sayKnow()&#123;
-        this.$emit(&#39;sayKnow&#39;,&#39;我知道啦&#39;)
-      &#125;
-    &#125;,
-    mounted() &#123;
-    &#125;
-  &#125;
-&lt;/script&gt;
-</code></pre>
-<p>————————————————<br>版权声明：本文为CSDN博主「小毕学习代码」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_70703397/article/details/132201160">https://blog.csdn.net/qq_70703397/article/details/132201160</a></p>
+<p>————————————————<br>版权声明：本文为CSDN博主「淡紫色的回忆」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/niuniu2878499107/article/details/131958497">https://blog.csdn.net/niuniu2878499107/article/details/131958497</a></p>
  
       <!-- reward -->
       
@@ -1124,7 +647,7 @@ export default &#123;
 
     
     <article
-  id="post-Vue2传值方式详解08"
+  id="post-vue获取当前日期时间(moment、new Date())"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -1135,8 +658,8 @@ export default &#123;
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/09/08/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A308/"
-    >Vue2传值方式详解08-路由传值</a> 
+  <a class="article-title" href="/2023/09/17/vue%E8%8E%B7%E5%8F%96%E5%BD%93%E5%89%8D%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4(moment%E3%80%81new%20Date())/"
+    >vue获取当前日期时间(moment、new Date())</a> 
 </h2>
  
 
@@ -1144,8 +667,8 @@ export default &#123;
     </header>
      
     <div class="article-meta">
-      <a href="/2023/09/08/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A308/" class="article-date">
-  <time datetime="2023-09-08T04:24:36.000Z" itemprop="datePublished">2023-09-08</time>
+      <a href="/2023/09/17/vue%E8%8E%B7%E5%8F%96%E5%BD%93%E5%89%8D%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4(moment%E3%80%81new%20Date())/" class="article-date">
+  <time datetime="2023-09-17T09:34:51.000Z" itemprop="datePublished">2023-09-17</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -1155,31 +678,243 @@ export default &#123;
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>路由传值</p>
-<p>*使用问号传值</p>
-<p>A页面跳转B页面时使用 this.r o u t e r . p u s h ( ’ / B ? n a m e = d a n s e e k ’ ) B 页面可以使用 t h i s . router.push(’/B?name=danseek’) B页面可以使用 this.router.push(’/B?name=danseek’)B页面可以使用this.route.query.name 来获取A页面传过来的值<br>上面要注意router和route的区别</p>
-<p>*使用冒号传值</p>
-<p>配置如下路由：</p>
-<pre><code>&#123;
-    path: &#39;/b/:name&#39;,
-    name: &#39;b&#39;,
-    component: () =&gt; import( &#39;../views/B.vue&#39;)
+  <h1 id="vue获取当前日期时间"><a href="#vue获取当前日期时间" class="headerlink" title="vue获取当前日期时间"></a>vue获取当前日期时间</h1><p>开发中会有要获取当前日期的需求，有的是获取到当前月份，有的是精确到分秒。</p>
+<p>而且日期的格式还不一样，一下有两种获取时间的方式：</p>
+<h1 id="1-new-Date-拼接"><a href="#1-new-Date-拼接" class="headerlink" title="1 new Date()+拼接"></a>1 new Date()+拼接</h1><h2 id="格式一："><a href="#格式一：" class="headerlink" title="格式一："></a>格式一：</h2><pre><code>yy/MM/dd hh:mm:ss – 例如：2022/05/01 00:00:00
+yy/M/d hh:mm:ss – 例如：2022/5/1 00:00:00
+</code></pre>
+<p>获取当前时间</p>
+<pre><code>/**
+* 获取当前时间
+*/
+currentTime() &#123;
+    var date = new Date();
+    var year = date.getFullYear(); //月份从0~11，所以加一
+    let month = date.getMonth();
+    console.log(&quot;month&quot;,month);
+    var dateArr = [
+        date.getMonth() + 1,
+        date.getDate(),
+        date.getHours(),
+        date.getMinutes(),
+        date.getSeconds(),
+    ];
+    //如果格式是MM则需要此步骤，如果是M格式则此循环注释掉
+    for (var i = 0; i &lt; dateArr.length; i++) &#123;
+        if (dateArr[i] &gt;= 1 &amp;&amp; dateArr[i] &lt;= 9) &#123;
+            dateArr[i] = &quot;0&quot; + dateArr[i];
+        &#125;
+    &#125;
+    var strDate =
+        year +
+        &quot;/&quot; +
+        dateArr[0] +
+        &quot;/&quot; +
+        dateArr[1] +
+        &quot; &quot; +
+        dateArr[2] +
+        &quot;:&quot; +
+        dateArr[3] +
+        &quot;:&quot; +
+        dateArr[4];
+        //此处可以拿外部的变量接收，也可直接返回  strDate:2022-05-01 13:25:30
+        //this.date = strDate;
+    console.log(&quot;strDate&quot;,strDate);
 &#125;,
 </code></pre>
-<p>在B页面可以通过 this.$route.params.name 来获取路由传入的name的值</p>
-<p>*使用父子组件传值</p>
-<p>由于router-view本身也是一个组件，所以我们也可以使用父子组件传值方式传值，然后在对应的子页面里加上props，因为type更新后没有刷新路由，所以不能直接在子页面的mounted钩子里直接获取最新type的值，而要使用watch</p>
-<pre><code>&lt;router-view :type=&quot;type&quot;&gt;&lt;/router-view&gt;
+<h2 id="格式二："><a href="#格式二：" class="headerlink" title="格式二："></a>格式二：</h2><pre><code>yy-MM-dd hh:mm:ss – 例如：2022-05-01 00:00:00
+yy-MM-dd hh:mm:ss – 例如：2022-05-01 00:00:00
+</code></pre>
+<p>获取当前时间</p>
+<pre><code>/**
+* 获取当前时间
+*/
+currentTime() &#123;
+    var date = new Date();
+    var year = date.getFullYear(); //月份从0~11，所以加一
+    let month = date.getMonth();
+    console.log(&quot;month&quot;,month);
+    var dateArr = [
+        date.getMonth() + 1,
+        date.getDate(),
+        date.getHours(),
+        date.getMinutes(),
+        date.getSeconds(),
+    ];
+    //如果格式是MM则需要此步骤，如果是M格式则此循环注释掉
+    for (var i = 0; i &lt; dateArr.length; i++) &#123;
+        if (dateArr[i] &gt;= 1 &amp;&amp; dateArr[i] &lt;= 9) &#123;
+            dateArr[i] = &quot;0&quot; + dateArr[i];
+        &#125;
+    &#125;
+    var strDate =
+        year +
+        &quot;/&quot; +
+        dateArr[0] +
+        &quot;/&quot; +
+        dateArr[1] +
+        &quot; &quot; +
+        dateArr[2] +
+        &quot;:&quot; +
+        dateArr[3] +
+        &quot;:&quot; +
+        dateArr[4];
+        //此处可以拿外部的变量接收  strDate:2022-05-01 13:25:30
+        //this.date = strDate;
+    console.log(&quot;strDate&quot;,strDate);
+&#125;,
+</code></pre>
+<p>获取当前月份</p>
+<pre><code>/**
+* 获取当前月份，可直接返回
+*/
+currentTime() &#123;
+    var date = new Date();
+    var year = date.getFullYear(); //月份从0~11，所以加一
+    let month = date.getMonth() + 1;
+    console.log(&quot;month&quot;, month);
+
+    //如果格式是MM则需要此步骤，如果是M格式则此处注释掉
+    if (month &gt;= 1 &amp;&amp; month &lt;= 9) &#123;
+        month = &quot;0&quot; + month;
+    &#125;
+    let strDate = year + &quot;-&quot; + month;
+    return strDate;
+&#125;,
+</code></pre>
+<h1 id="2-moment-函数获取"><a href="#2-moment-函数获取" class="headerlink" title="2 moment()函数获取"></a>2 moment()函数获取</h1><p>下载moment依赖</p>
+<pre><code>npm i moment
+</code></pre>
+<p>在所需要的页面引入</p>
+<pre><code>import moment from &quot;moment&quot;
+</code></pre>
+<p>为了方便也可以在全局引入<br>用法</p>
+<pre><code>this.$moment().format(&#39;YYYY-MM-DD HH:mm:ss&#39;)
+</code></pre>
+<p>此函数很方便，只需在format设置自己需要的格式即可<br>————————————————</p>
+<p>版权声明：本文为CSDN博主「猪大侠0.0」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_43331014/article/details/127698605">https://blog.csdn.net/qq_43331014/article/details/127698605</a></p>
  
-// 子页面
-props: [&#39;type&#39;]
-watch: &#123;
-       type()&#123;
-           // console.log(&quot;在这个方法可以时刻获取最新的数据:type=&quot;,this.type)
-       &#125;,
-&#125;,
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-Vue中使用定时器(setInterval、setTimeout)的两种方式"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/09/16/Vue%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%AE%9A%E6%97%B6%E5%99%A8(setInterval%E3%80%81setTimeout)%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F/"
+    >Vue中使用定时器(setInterval、setTimeout)的两种方式</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/09/16/Vue%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%AE%9A%E6%97%B6%E5%99%A8(setInterval%E3%80%81setTimeout)%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F/" class="article-date">
+  <time datetime="2023-09-16T08:32:48.000Z" itemprop="datePublished">2023-09-16</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>js中定时器有两种，一个是循环执行 setInterval，另一个是定时执行 setTimeout。</p>
+<p>注意：定时器需要在页面销毁的时候清除掉，不然会一直存在！</p>
+<h1 id="1-循环执行（-setInterval-）"><a href="#1-循环执行（-setInterval-）" class="headerlink" title="1. 循环执行（ setInterval ）"></a>1. 循环执行（ setInterval ）</h1><p>顾名思义，循环执行就是设置一个时间间隔，每过一段时间都会循环执行这个方法,直到这个定时器被销毁掉；</p>
+<p>语法：</p>
+<pre><code>setInterval(code, milliseconds)；
+setInterval(function, milliseconds, param1, param2, ...)；
+  
+code/function           必需。要调用一个代码串，也可以是一个函数。
+milliseconds            必须。周期性执行或调用 code/function 之间的时间间隔，以毫秒计。
+param1, param2, ...     可选。 传给执行函数的其他参数（IE9 及其更早版本不支持该参数）。
+  
+  
+返回值:      返回一个 ID（数字），可以将这个ID传递给 clearInterval() 来取消执行。
 </code></pre>
-<p>————————————————<br>版权声明：本文为CSDN博主「小毕学习代码」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_70703397/article/details/132201160">https://blog.csdn.net/qq_70703397/article/details/132201160</a></p>
+<p>eg:</p>
+<p>开始的时候创建了一个定时器 setInterval ，时间间隔为2秒，每2秒都会调用一次函数 valChange，从而使 value 的值+1。</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;h1&gt;&#123;&#123;value&#125;&#125;&lt;/h1&gt;
+    &lt;el-button type=&quot;primary&quot; @click=&quot;start&quot;&gt;开始&lt;/el-button&gt;
+    &lt;el-button type=&quot;danger&quot; @click=&quot;over&quot;&gt;结束&lt;/el-button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+  
+&lt;script&gt;
+export default &#123;
+  data() &#123;
+    return &#123;
+      timer: &quot;&quot;,
+      value: 0,
+    &#125;;
+  &#125;,
+  methods: &#123;
+    start()&#123;
+      this.timer = setInterval(this.valChange, 2000); // 注意: 第一个参数为方法名的时候不要加括号;
+    &#125;,
+    valChange() &#123;
+      this.value++;
+      console.log(this.value);
+    &#125;,
+    over()&#123;
+      clearInterval(this.timer);
+    &#125;
+  &#125;,
+  mounted() &#123;&#125;,
+  beforeDestroy() &#123;
+    clearInterval(this.timer);
+  &#125;,
+&#125;;
+&lt;/script&gt;
+</code></pre>
+<h1 id="2-定时执行-（-setTimeout）"><a href="#2-定时执行-（-setTimeout）" class="headerlink" title="2. 定时执行 （ setTimeout）"></a>2. 定时执行 （ setTimeout）</h1><p>定时执行 setTimeout 是设置一个时间，等待时间到达的时候只执行一次，但是执行完以后定时器还在，只是不再运行；</p>
+<p>语法：</p>
+<pre><code>setTimeout(code, milliseconds, param1, param2, ...)
+setTimeout(function, milliseconds, param1, param2, ...)
+  
+code/function            必需。要调用一个代码串，也可以是一个函数。
+milliseconds             可选。执行或调用 code/function 需要等待的时间，以毫秒计。默认为 0。
+param1, param2, ...      可选。 传给执行函数的其他参数（IE9 及其更早版本不支持该参数）。
+
+返回值:    返回一个 ID（数字），可以将这个ID传递给 clearTimeout() 来取消执行。
+</code></pre>
+<p>eg:</p>
+<p>开始时候创建一个定时器 setTimeout，只在2秒后执行一次方法。</p>
+<pre><code>let timer = setTimeout(() =&gt; &#123;
+      //需要定时执行的代码
+      console.debug(&quot;Hello World&quot;);
+      &#125;, 2000)
+</code></pre>
+<p>到此这篇关于Vue中 使用定时器 （setInterval、setTimeout）的文章就介绍到这了</p>
  
       <!-- reward -->
       
@@ -1206,7 +941,7 @@ watch: &#123;
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/6/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/48/">48</a><a class="extend next" rel="next" href="/page/8/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/6/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/49/">49</a><a class="extend next" rel="next" href="/page/8/">下一页</a>
   </nav>
   
 </section>

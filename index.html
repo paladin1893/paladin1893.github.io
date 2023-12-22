@@ -154,7 +154,7 @@
     
     
     <article
-  id="post-如果单击眼睛图标显示隐藏密码（QPushButton）"
+  id="post-Python图像处理程序知识笔记"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -165,8 +165,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/10/19/%E5%A6%82%E6%9E%9C%E5%8D%95%E5%87%BB%E7%9C%BC%E7%9D%9B%E5%9B%BE%E6%A0%87%E6%98%BE%E7%A4%BA%E9%9A%90%E8%97%8F%E5%AF%86%E7%A0%81%EF%BC%88QPushButton%EF%BC%89/"
-    >如果单击眼睛图标显示隐藏密码（QPushButton）</a> 
+  <a class="article-title" href="/2023/10/27/Python%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E7%A8%8B%E5%BA%8F%E7%9F%A5%E8%AF%86%E7%AC%94%E8%AE%B0/"
+    >Python图像处理程序知识笔记</a> 
 </h2>
  
 
@@ -174,8 +174,8 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2023/10/19/%E5%A6%82%E6%9E%9C%E5%8D%95%E5%87%BB%E7%9C%BC%E7%9D%9B%E5%9B%BE%E6%A0%87%E6%98%BE%E7%A4%BA%E9%9A%90%E8%97%8F%E5%AF%86%E7%A0%81%EF%BC%88QPushButton%EF%BC%89/" class="article-date">
-  <time datetime="2023-10-19T02:19:00.000Z" itemprop="datePublished">2023-10-19</time>
+      <a href="/2023/10/27/Python%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E7%A8%8B%E5%BA%8F%E7%9F%A5%E8%AF%86%E7%AC%94%E8%AE%B0/" class="article-date">
+  <time datetime="2023-10-27T02:27:00.000Z" itemprop="datePublished">2023-10-27</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -185,101 +185,1188 @@
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p><a target="_blank" rel="noopener" href="https://www.cnpython.com/qa/1374456">https://www.cnpython.com/qa/1374456</a></p>
-<h1 id="方案一"><a href="#方案一" class="headerlink" title="方案一"></a>方案一</h1><p>PyQt5的一大优点是它将自动将信号连接到方法。如果您的应用程序中有一个名为<mybutton>的按钮和一个名为on_<mybutton>_clicked的方法，loadUi将自动连接。所以模式是</mybutton></mybutton></p>
-<pre><code>on_&lt;widget_name&gt;_&lt;signal&gt;
+  <h1 id="3-1-读取文件函数"><a href="#3-1-读取文件函数" class="headerlink" title="3.1 读取文件函数"></a>3.1 读取文件函数</h1><p>PyQt中QFileDialog常用来打开保存文件或打开文件对话框，允许用户选择本地文件或者文件夹，</p>
+<p>常用方法有：</p>
+<p>QFileDialog.getOpenFileName()    #获取一个打开文件的文件名<br>QFileDialog.getOpenFileNames()   #获取多个打开文件的文件名<br>QFileDialog.getExistingDirectory()  #获取打开文件夹的文件名<br>QFileDialog.getOpenFileUrl()     #获取一个打开文件的统一资源定位符<br>QFileDialog.getOpenFileUrls()    #获取多个打开文件的统一资源定位符<br>QFileDialog.getSaveFileName()    #获取保存的文件名<br>QFileDialog.getSaveFileUrl()     #获取保存的url</p>
+<h2 id="3-1-1-打开本地图片"><a href="#3-1-1-打开本地图片" class="headerlink" title="3.1.1 打开本地图片"></a>3.1.1 打开本地图片</h2><p>QFileDialog.getOpenFileName()返回值有两个，第一个是选择文件的文件名（文件路径），我们可以通过这个文件名打开本地文件，第二个是选择文件的类型。</p>
+<p>输入有4个参数，第一个参数一般是self，第2个参数是弹出框的标题，第3个参数是打开对话框的默认地址，第4个参数是过滤字符串，一般用来限制文件类型，定义打开文件下拉框中的可选列表，并且不同的文件类型用两个分号;;隔开。</p>
+<pre><code># 选择本地图片上传
+def openImage(self):
+global imgNamepath  # 这里为了方便别的地方引用图片路径，将其设置为全局变量
+
+# 弹出一个文件选择框，第一个返回值imgName记录选中的文件路径+文件名，第二个返回值imgType记录文件的类型
+# QFileDialog就是系统对话框的那个类第一个参数是上下文，第二个参数是弹框的名字，第三个参数是默认打开的路径，第四个参数是需要的格式
+
+imgNamepath, imgType = QFileDialog.getOpenFileName(self.centralwidget, &quot;选择图片&quot;,
+                                                   &quot;D:\\&quot;,&quot;*.jpg;;*.png;;All Files(*)&quot;)
+# 通过文件路径获取图片文件，并设置图片长宽为label控件的长、宽
+img = QtGui.QPixmap(imgNamepath).scaled(self.label_3.width(), self.label_3.height())
+
+# 在label控件上显示选择的图片
+self.label_3.setPixmap(img)
+
+# 显示所选图片的路径
+self.lineEdit_3.setText(imgNamepath)
 </code></pre>
-<p>如果我们将此应用于您的问题，您应该将“显示/隐藏”按钮设置为切换按钮。在Qt设计器中，将checkable属性设置为True（或dobtn_show_pwd.clicked.setChecked(True)）</p>
-<p>代码：</p>
-<pre><code>from PyQt5 import QtCore, QtGui, QtWidgets, uic
-from PyQt5.QtWidgets import QPushButton, QLineEdit
-import sys
+<h2 id="3-1-2-保存图片到本地"><a href="#3-1-2-保存图片到本地" class="headerlink" title="3.1.2 保存图片到本地"></a>3.1.2 保存图片到本地</h2><p>（1）保存图片到本地的第一种方式:首先把图片所在label控件截图，然后打开一个保存文件的弹出框，最后保存截图到选中的路径。</p>
+<pre><code>def saveImage(self):
+    screen = QApplication.primaryScreen()
+    pix = screen.grabWindow(self.label_4.winId())
+    fpath, ftype = QFileDialog.getSaveFileName(self.centralwidget, &quot;保存图片&quot;, &quot;d:\\&quot;, &quot;*.jpg;;*.png;;All Files(*)&quot;)
+    pix.save(fpath)
+</code></pre>
+<p>（2）保存图片到本地的第二种方式:首先提取相对应Qlabel中的图片，然后打开一个保存文件的弹出框，最后保存图片到选中的路径。</p>
+<pre><code>def saveImage(self):
+    # 提取Qlabel中的图片
+    img = self.label_4.pixmap().toImage()
+    fpath, ftype = QFileDialog.getSaveFileName(self.centralwidget, &quot;保存图片&quot;, &quot;d:\\&quot;, &quot;*.jpg;;*.png;;All Files(*)&quot;)
+    img.save(fpath)
+</code></pre>
+<p>以下函数读取文件函数在此实验没用到，只是用来记录</p>
+<h2 id="3-1-3-打开文件夹"><a href="#3-1-3-打开文件夹" class="headerlink" title="3.1.3 打开文件夹"></a>3.1.3 打开文件夹</h2><pre><code># 打开文件夹（目录）
+def openDirectory(self):
+fd = QFileDialog.getExistingDirectory(self.centralwidget, &quot;选择文件夹&quot;, &quot;&quot;)
 
-class MyWindow(QtWidgets.QMainWindow):
-    def __init__(self, maxWidth=None):
-        super(MyWindow, self).__init__()
-        uic.loadUi(&#39;test1.ui&#39;, self)
+# 这里的label_directoryPath要根据项目替换成自己的组件
+self.label_directoryPath.setText(fd)   
+</code></pre>
+<h2 id="3-1-4-打开本地文本文件并显示"><a href="#3-1-4-打开本地文本文件并显示" class="headerlink" title="3.1.4 打开本地文本文件并显示"></a>3.1.4 打开本地文本文件并显示</h2><pre><code># 选择文本文件上传
+    def openTextFile(self):  # 选择文本文件上传
+    fd, fp = QFileDialog.getOpenFileName(self.centralwidget, &quot;选择文件&quot;, &quot;d:\\&quot;, &quot;*.txt;;All Files(*)&quot;)
+    f = open(fd, &#39;r&#39;)
+    self.label_txt.setText(f.read())
+    self.label_filePath.setText(fd)
+    f.close()
+</code></pre>
+<h2 id="3-1-5-保存文本到本地"><a href="#3-1-5-保存文本到本地" class="headerlink" title="3.1.5 保存文本到本地"></a>3.1.5 保存文本到本地</h2><pre><code># 保存文本文件
+def saveTextFile(self):
+fd, fp = QFileDialog.getSaveFileName(self.centralwidget, &quot;保存文件&quot;, &quot;d:\\&quot;, &quot;*.txt;;All Files(*)&quot;)
+f = open(fd, &#39;w&#39;)
+f.write(self.label_txt.text())
+f.close()
+</code></pre>
+<h2 id="3-1-6-Qimage转换为mat类型"><a href="#3-1-6-Qimage转换为mat类型" class="headerlink" title="3.1.6 Qimage转换为mat类型"></a>3.1.6 Qimage转换为mat类型</h2><pre><code># 将Qimage转换为mat类型
+def qimage_to_mat(self,qimg):
+ptr = qimg.consBits()
+ptr.setsize(qimg.byteCount())
+mat = np.array(ptr).reshape(qimg.height(),qimg.width(),4)   # 注意通道数要填4，否则报错
+return mat
+</code></pre>
+<h1 id="3-2-关联函数"><a href="#3-2-关联函数" class="headerlink" title="3.2 关联函数"></a>3.2 关联函数</h1><pre><code># 按钮关联函数
+self.pushButton_2.clicked.connect(self.openImage)
+self.pushButton_3.clicked.connect(self.startAction)
+self.pushButton_4.clicked.connect(self.saveImage)
+</code></pre>
+<p>注意函数名后面没有括号，和方法调用有点不一样self.openImage和self.openImage().</p>
+<p>素描图像生成函数：</p>
+<pre><code># 生成素描图
+def startAction(self):
+    img = cv2.imread(imgNamepath)
+    img = cv2.resize(img, dsize=(768, 1080))
+    # 图像转灰度图像
+    gray_image = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    # 灰度图像到反转灰度图像
+    inverted_gray_image = 255 - gray_image
+    # 模糊倒置灰度图像
+    blurred_inverted_gray_image = cv2.GaussianBlur(inverted_gray_image, (19, 19), 0)
+    # 反转模糊图像
+    inverted_blurred_image = 255 - blurred_inverted_gray_image
+    # 准备照片素描
+    sketck = cv2.divide(gray_image, inverted_blurred_image, scale=256.0)
+ 
+    path = &quot;D:\\python\\RRJ\\pycharmProject2\\zhanCunDiZhi\\&quot;
+    # 因为不知道怎么将&lt;class &#39;numpy.ndarray&#39;&gt;转换为&lt;class &#39;PyQt5.QtGui.QPixmap&#39;&gt;类型，因此采用暂存再读出的方式
+    cv2.imwrite(path + &#39;ZC.jpg&#39;, sketck)
+    # pyqt5从路径读取图片
+    imgShow = QPixmap(path + &#39;ZC.jpg&#39;)
+    self.label_4.setScaledContents(True)
+    self.label_4.setPixmap(imgShow)
+</code></pre>
+<p>————————————————<br>版权声明：本文为CSDN博主「༄༄小半生༅࿐」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_47682721/article/details/123928585">https://blog.csdn.net/m0_47682721/article/details/123928585</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
 
-        self.line_password.setEchoMode(QLineEdit.Password)
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
 
-    def on_btn_show_pwd_toggled(self, checked):
-        if checked:
-            self.line_password.setEchoMode(QLineEdit.Password)
-        else:
-            self.line_password.setEchoMode(QLineEdit.Normal)
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-PYQT5实现图片显示"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/10/26/PYQT5%E5%AE%9E%E7%8E%B0%E5%9B%BE%E7%89%87%E6%98%BE%E7%A4%BA/"
+    >PYQT5实现图片显示</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/10/26/PYQT5%E5%AE%9E%E7%8E%B0%E5%9B%BE%E7%89%87%E6%98%BE%E7%A4%BA/" class="article-date">
+  <time datetime="2023-10-26T02:26:00.000Z" itemprop="datePublished">2023-10-26</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="版本一"><a href="#版本一" class="headerlink" title="版本一"></a>版本一</h1><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/TM0831/p/12733571.html">https://www.cnblogs.com/TM0831/p/12733571.html</a></p>
+<pre><code>import sys
+
+from PyQt5.QtGui import QImageReader
+from PyQt5.QtWidgets import QWidget, QApplication, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QFileDialog
+from PyQt5.Qt import QPixmap, QPoint, Qt, QPainter, QIcon
+from PyQt5.QtCore import QSize
+
+class ImageBox(QWidget):
+    def __init__(self):
+        super(ImageBox, self).__init__()
+        self.img = None
+        self.scaled_img = None
+        self.point = QPoint(0, 0)
+        self.start_pos = None
+        self.end_pos = None
+        self.left_click = False
+        self.scale = 1
+
+    def init_ui(self):
+        self.setWindowTitle(&quot;ImageBox&quot;)
+
+    def set_image(self, img_path):
+        &quot;&quot;&quot;
+        open image file
+        :param img_path: image file path
+        :return:
+        &quot;&quot;&quot;
+        # img = QImageReader(img_path)
+        # img.setScaledSize(QSize(self.size().width(), self.size().height()))
+        # img = img.read()
+        self.img = QPixmap(img_path)
+        self.scaled_img = self.img
+
+    def paintEvent(self, e):
+        &quot;&quot;&quot;
+        receive paint events
+        :param e: QPaintEvent
+        :return:
+        &quot;&quot;&quot;
+        if self.scaled_img:
+            painter = QPainter()
+            painter.begin(self)
+            painter.scale(self.scale, self.scale)
+            painter.drawPixmap(self.point, self.scaled_img)
+            painter.end()
+
+    def mouseMoveEvent(self, e):
+        &quot;&quot;&quot;
+        mouse move events for the widget
+        :param e: QMouseEvent
+        :return:
+        &quot;&quot;&quot;
+        if self.left_click:
+            size = self.size().width()
+            self.end_pos = e.pos() - self.start_pos
+            self.point = self.point + self.end_pos
+            self.start_pos = e.pos()
+            self.repaint()
+
+    def mousePressEvent(self, e):
+        &quot;&quot;&quot;
+        mouse press events for the widget
+        :param e: QMouseEvent
+        :return:
+        &quot;&quot;&quot;
+        if e.button() == Qt.LeftButton:
+            self.left_click = True
+            self.start_pos = e.pos()
+
+    def mouseReleaseEvent(self, e):
+        &quot;&quot;&quot;
+        mouse release events for the widget
+        :param e: QMouseEvent
+        :return:
+        &quot;&quot;&quot;
+        if e.button() == Qt.LeftButton:
+            self.left_click = False
+
+class MainDemo(QWidget):
+    def __init__(self):
+        super(MainDemo, self).__init__()
+
+        self.setWindowTitle(&quot;Image Viewer&quot;)
+        self.setFixedSize(1000, 600)
+
+        self.open_file = QPushButton(&quot;Open Image&quot;)
+        self.open_file.setToolTip(&quot;Open the image to view.&quot;)
+        self.open_file.clicked.connect(self.open_image)
+        self.open_file.setFixedSize(150, 30)
+
+        self.zoom_in = QPushButton(&quot;&quot;)
+        self.zoom_in.clicked.connect(self.large_click)
+        self.zoom_in.setFixedSize(30, 30)
+        in_icon = QIcon(&quot;icons/zoomIn.png&quot;)
+        self.zoom_in.setIcon(in_icon)
+        self.zoom_in.setIconSize(QSize(30, 30))
+
+        self.zoom_out = QPushButton(&quot;&quot;)
+        self.zoom_out.clicked.connect(self.small_click)
+        self.zoom_out.setFixedSize(30, 30)
+        out_icon = QIcon(&quot;icons/zoomOut.png&quot;)
+        self.zoom_out.setIcon(out_icon)
+        self.zoom_out.setIconSize(QSize(30, 30))
+
+        w = QWidget(self)
+        layout = QHBoxLayout()
+        layout.addWidget(self.open_file)
+        layout.addWidget(self.zoom_in)
+        layout.addWidget(self.zoom_out)
+        layout.setAlignment(Qt.AlignLeft)
+        w.setLayout(layout)
+        w.setFixedSize(300, 50)
+
+        self.box = ImageBox()
+        self.box.setFixedSize(500,500)
+
+        layout = QVBoxLayout()
+        layout.addWidget(w)
+        layout.addWidget(self.box)
+        self.setLayout(layout)
+
+    def open_image(self):
+        &quot;&quot;&quot;
+        select image file and open it
+        :return:
+        &quot;&quot;&quot;
+        # img_name, _ = QFileDialog.getOpenFileName(self, &quot;打开图片&quot;, &quot;&quot;, &quot;All Files(*);;*.jpg;;*.png&quot;)
+        img_name, _ = QFileDialog.getOpenFileName(self, &quot;Open Image File&quot;,&quot;&quot;,&quot;All Files(*);;*.jpg;;*.png;;*.jpeg&quot;)
+        self.box.set_image(img_name)
+
+    def large_click(self):
+        &quot;&quot;&quot;
+        used to enlarge image
+        :return:
+        &quot;&quot;&quot;
+        if self.box.scale &lt; 2:
+            self.box.scale += 0.1
+            self.box.adjustSize()
+            self.update()
+
+    def small_click(self):
+        &quot;&quot;&quot;
+        used to reduce image
+        :return:
+        &quot;&quot;&quot;
+        if self.box.scale &gt; 0.3:
+            self.box.scale -= 0.2
+            self.box.adjustSize()
+            self.update()
 
 if __name__ == &#39;__main__&#39;:
-    app = QtWidgets.QApplication(sys.argv)
-    window = MyWindow()
-    window.show()
-    sys.exit(app.exec_())
-    
+    app = QApplication(sys.argv)
+    box = MainDemo()
+    box.show()
+    app.exec_()
 </code></pre>
-<h1 id="方案二"><a href="#方案二" class="headerlink" title="方案二"></a>方案二</h1><p>另一种可能是将可检查的QAction添加到QLineEdit并连接到toggled（或triggered）信号</p>
-<pre><code>class MyWindow(QtWidgets.QMainWindow):
-    def __init__(self, maxWidth=None):
-        super(MyWindow, self).__init__()
-        uic.loadUi(&#39;MainWindow.ui&#39;, self)
+<h1 id="版本二"><a href="#版本二" class="headerlink" title="版本二"></a>版本二</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_42743778/article/details/118567409">https://blog.csdn.net/qq_42743778/article/details/118567409</a></p>
+<pre><code># -*- coding: utf-8 -*-
 
-        icon = QtGui.QIcon(&#39;eye-icon.png&#39;)
-        self.showPassAction = QtWidgets.QAction(icon, &#39;Show password&#39;, self)
-        self.line_password.addAction(
-            self.showPassAction, QtWidgets.QLineEdit.TrailingPosition)
-        self.showPassAction.setCheckable(True)
-        self.showPassAction.toggled.connect(self.showPassword)
+# Form implementation generated from reading ui file &#39;top-half.ui&#39;
+#
+# Created by: PyQt5 UI code generator 5.15.4
+#
+# WARNING: Any manual changes made to this file will be lost when pyuic5 is
+# run again.  Do not edit this file unless you know what you are doing.
 
-    def showPassword(self, show):
-        self.line_password.setEchoMode(
-            QtWidgets.QLineEdit.Normal if show else QtWidgets.QLineEdit.Password)
-</code></pre>
-<p>如果只想在按下鼠标时显示密码，则不要连接到toggled信号，而是找到该操作的子QToolButton并连接到pressed和released。在这种情况下，操作不需要是可检查的</p>
-<pre><code>self.line_password.addAction(
-    self.showPassAction, QtWidgets.QLineEdit.TrailingPosition)
-showPassButton = self.line_password.findChild(QtWidgets.QAbstractButton)
-showPassButton.pressed.connect(lambda: self.showPassword(True))
-showPassButton.released.connect(lambda: self.showPassword(False))
-</code></pre>
-<h1 id="方案三"><a href="#方案三" class="headerlink" title="方案三"></a>方案三</h1><p>您可以创建单个函数并切换可见性，而不是创建两个单独的方法，如eyepass_show和eyepass_hide。另外，您正试图通过self.btn_show_pwd.clicked.connect(self.eyepass_hide)和self.btn_show_pwd.clicked.connect(self.eyepass_show)将同一信号两次连接到两种不同的方法</p>
-<p>试着这样做：</p>
-<pre><code>from PyQt5 import QtCore, QtGui, QtWidgets, uic
-from PyQt5.QtWidgets import QPushButton, QLineEdit
 import sys
-import pymysql
-pymysql.install_as_MySQLdb()
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtGui import QImageReader
+from PyQt5.QtWidgets import QWidget, QApplication, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QFileDialog
+from PyQt5.Qt import QPixmap, QPoint, Qt, QPainter, QIcon
+from PyQt5.QtCore import QSize
 
-class MyWindow(QtWidgets.QMainWindow):
-    def __init__(self, maxWidth=None):
-        super(MyWindow, self).__init__()
-        uic.loadUi(&#39;MainWindow.ui&#39;, self)
 
-        self.eyepass_show()
-        self.eyepass_hide()
-        self.btn_show_pwd.clicked.connect(self.toggleVisibility)
-        
-    def toggleVisibility(self):
-        if self.line_password.echoMode()==QLineEdit.Normal:
-            self.line_password.setEchoMode(QLineEdit.Password)
+class ImageBox(QWidget):
+    def __init__(self):
+        super(ImageBox, self).__init__()
+        self.img = None
+        self.scaled_img = None
+        self.point = QPoint(0, 0)
+        self.start_pos = None
+        self.end_pos = None
+        self.left_click = False
+        self.scale = 1
+
+    def init_ui(self):
+        self.setWindowTitle(&quot;ImageBox&quot;)
+
+    def set_image(self, img_path):
+        &quot;&quot;&quot;
+        open image file
+        :param img_path: image file path
+        :return:
+        &quot;&quot;&quot;
+        # img = QImageReader(img_path)
+        # img.setScaledSize(QSize(self.size().width(), self.size().height()))
+        # img = img.read()
+        self.img = QPixmap(img_path)
+        self.scaled_img = self.img
+
+    def paintEvent(self, e):
+        &quot;&quot;&quot;
+        receive paint events
+        :param e: QPaintEvent
+        :return:
+        &quot;&quot;&quot;
+        if self.scaled_img:
+            painter = QPainter()
+            painter.begin(self)
+            painter.scale(self.scale, self.scale)
+            painter.drawPixmap(self.point, self.scaled_img)
+            painter.end()
+
+    def wheelEvent(self, event):
+        angle = event.angleDelta() / 8  # 返回QPoint对象，为滚轮转过的数值，单位为1/8度
+        angleY = angle.y()
+        # 获取当前鼠标相对于view的位置
+        if angleY &gt; 0:
+            self.scale *= 1.1
+        else:  # 滚轮下滚
+            self.scale *= 0.9
+        self.adjustSize()
+        self.update()
+
+
+    def mouseMoveEvent(self, e):
+        &quot;&quot;&quot;
+        mouse move events for the widget
+        :param e: QMouseEvent
+        :return:
+        &quot;&quot;&quot;
+        if self.left_click:
+            self.end_pos = e.pos() - self.start_pos
+            self.point = self.point + self.end_pos
+            self.start_pos = e.pos()
+            self.repaint()
+
+    def mousePressEvent(self, e):
+        &quot;&quot;&quot;
+        mouse press events for the widget
+        :param e: QMouseEvent
+        :return:
+        &quot;&quot;&quot;
+        if e.button() == Qt.LeftButton:
+            self.left_click = True
+            self.start_pos = e.pos()
+
+    def mouseReleaseEvent(self, e):
+        &quot;&quot;&quot;
+        mouse release events for the widget
+        :param e: QMouseEvent
+        :return:
+        &quot;&quot;&quot;
+        if e.button() == Qt.LeftButton:
+            self.left_click = False
+
+class Ui_Form(QWidget):
+    def setupUi(self, Form):
+        Form.setObjectName(&quot;Form&quot;)
+        Form.resize(1020, 726)
+        self.scrollArea = QtWidgets.QScrollArea(Form)
+        self.scrollArea.setGeometry(QtCore.QRect(240, 50, 719, 309))
+        self.scrollArea.setWidgetResizable(True)
+        self.scrollArea.setObjectName(&quot;scrollArea&quot;)
+        self.scrollAreaWidgetContents = QtWidgets.QWidget()
+        self.box = ImageBox()
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, self.box.width(), self.box.height()))
+        self.scrollAreaWidgetContents.setMinimumSize(QtCore.QSize(719, 309))
+        self.scrollAreaWidgetContents.setObjectName(&quot;scrollAreaWidgetContents&quot;)
+        self.gridLayout = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
+        self.gridLayout.setObjectName(&quot;gridLayout&quot;)
+
+        self.gridLayout.addWidget(self.box, 0, 0, 1, 1)
+        self.scrollArea.setWidget(self.scrollAreaWidgetContents)
+        self.open_file = QtWidgets.QPushButton(Form)
+        self.open_file.setGeometry(QtCore.QRect(30, 100, 81, 41))
+        font = QtGui.QFont()
+        font.setFamily(&quot;Aharoni&quot;)
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.open_file.setFont(font)
+        self.open_file.setObjectName(&quot;open_file&quot;)
+        self.open_file.clicked.connect(self.open_image)
+        self.progressBar = QtWidgets.QProgressBar(Form)
+        self.progressBar.setGeometry(QtCore.QRect(240, 370, 751, 23))
+        self.progressBar.setProperty(&quot;value&quot;, 24)
+        self.progressBar.setObjectName(&quot;progressBar&quot;)
+        self.line = QtWidgets.QFrame(Form)
+        self.line.setGeometry(QtCore.QRect(50, 410, 911, 16))
+        self.line.setFrameShape(QtWidgets.QFrame.HLine)
+        self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.line.setObjectName(&quot;line&quot;)
+        self.start_check = QtWidgets.QPushButton(Form)
+        self.start_check.setGeometry(QtCore.QRect(130, 100, 81, 41))
+        font = QtGui.QFont()
+        font.setFamily(&quot;Aharoni&quot;)
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.start_check.setFont(font)
+        self.start_check.setObjectName(&quot;start_check&quot;)
+        self.label = QtWidgets.QLabel(Form)
+        self.label.setGeometry(QtCore.QRect(40, 170, 61, 31))
+        font = QtGui.QFont()
+        font.setFamily(&quot;Aharoni&quot;)
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label.setFont(font)
+        self.label.setObjectName(&quot;label&quot;)
+        self.label_2 = QtWidgets.QLabel(Form)
+        self.label_2.setGeometry(QtCore.QRect(40, 300, 61, 31))
+        font = QtGui.QFont()
+        font.setFamily(&quot;Aharoni&quot;)
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_2.setFont(font)
+        self.label_2.setObjectName(&quot;label_2&quot;)
+
+
+        self.retranslateUi(Form)
+        QtCore.QMetaObject.connectSlotsByName(Form)
+
+    def retranslateUi(self, Form):
+        _translate = QtCore.QCoreApplication.translate
+        Form.setWindowTitle(_translate(&quot;Form&quot;, &quot;Form&quot;))
+        self.open_file.setText(_translate(&quot;Form&quot;, &quot;选择文件&quot;))
+        self.start_check.setText(_translate(&quot;Form&quot;, &quot;开始检测&quot;))
+        self.label.setText(_translate(&quot;Form&quot;, &quot;文件名称：&quot;))
+        self.label_2.setText(_translate(&quot;Form&quot;, &quot;检测状态:&quot;))
+
+    def open_image(self):
+        &quot;&quot;&quot;
+        select image file and open it
+        :return:
+        &quot;&quot;&quot;
+        # img_name, _ = QFileDialog.getOpenFileName(self, &quot;打开图片&quot;, &quot;&quot;, &quot;All Files(*);;*.jpg;;*.png&quot;)
+        img_name, _ = QFileDialog.getOpenFileName(None, &quot;Open Image File&quot;,&quot;&quot;,&quot;All Files(*);;*.jpg;;*.png;;*.jpeg&quot;)
+        img = QPixmap(img_name)
+        print(img.width(),&quot;+&quot;,img.height())
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, img.width(), img.height()))
+        self.box.set_image(img_name)
+
+if __name__ == &quot;__main__&quot;:
+    app = QtWidgets.QApplication(sys.argv)
+    MainWindow = QtWidgets.QMainWindow()
+    ui = Ui_Form()
+    ui.setupUi(MainWindow)
+    MainWindow.show()
+    sys.exit(app.exec_())
+</code></pre>
+<h1 id="版本三"><a href="#版本三" class="headerlink" title="版本三"></a>版本三</h1><p><a target="_blank" rel="noopener" href="https://huaweicloud.csdn.net/63808365dacf622b8df894dc.html">https://huaweicloud.csdn.net/63808365dacf622b8df894dc.html</a></p>
+<pre><code># -*- coding: utf-8 -*-
+import sys
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtGui import QImageReader
+from PyQt5.QtWidgets import QWidget, QApplication, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QFileDialog
+from PyQt5.Qt import QPixmap, QPoint, Qt, QPainter, QIcon
+from PyQt5.QtCore import QSize
+
+
+class ImageBox(QWidget):
+    def __init__(self):
+        super(ImageBox, self).__init__()
+        self.img = None
+        self.scaled_img = None
+        self.start_pos = None
+        self.end_pos = None
+        self.left_click = False
+        self.wheel_flag = False
+
+        self.scale = 1
+        self.old_scale = 1
+        self.point = QPoint(0, 0)
+        self.x = -1
+        self.y = -1
+        self.new_height = -1
+        self.new_width = -1
+
+    def init_ui(self):
+        self.setWindowTitle(&quot;ImageBox&quot;)
+
+    def set_image(self, img_path):
+        self.img = QPixmap(img_path)
+        width, height = self.img.width(), self.img.height()
+        if height / width &gt; 990 / 660:
+            new_height = 990
+            new_width = width * 990 / height
         else:
-            self.line_password.setEchoMode(QLineEdit.Normal)
+            new_height = height * 660 / width
+            new_width = 660
+        self.point = QPoint(int((660 - new_width) * 0.5), int((990 - new_height) * 0.5))
+        self.img = self.img.scaled(new_width, new_height, Qt.KeepAspectRatio)
+        self.scaled_img = self.img
 
-    #     self.btn_show_pwd.clicked.connect(self.eyepass_hide)
-    #     self.btn_show_pwd.clicked.connect(self.eyepass_show)
-    # 
-    # def eyepass_show(self):
-    #     self.line_password.setEchoMode(QLineEdit.Normal)
-    #     print(&#39;show pass&#39;)
-    # 
-    # def eyepass_hide(self):
-    #     self.line_password.setEchoMode(QLineEdit.Password)
-    #     print(&#39;hide pass&#39;)
+        self.new_height = new_height
+        self.new_width = new_width
+        self.scale = 1
+
+    def paintEvent(self, e):
+        if self.scaled_img:
+            painter = QPainter()
+            painter.begin(self)
+            painter.scale(self.scale, self.scale)
+            if self.wheel_flag:        # 定点缩放
+                self.wheel_flag = False
+                # 判断当前鼠标pos在不在图上
+                this_left_x = self.point.x() * self.old_scale
+                this_left_y = self.point.y() * self.old_scale
+                this_scale_width = self.new_width * self.old_scale
+                this_scale_height = self.new_height * self.old_scale
+
+                # 鼠标点在图上，以鼠标点为中心动作
+                gap_x = self.x - this_left_x
+                gap_y = self.y - this_left_y
+                if 0 &lt; gap_x &lt; this_scale_width and 0 &lt; gap_y &lt; this_scale_height:
+                    new_left_x = int(self.x / self.scale - gap_x / self.old_scale)
+                    new_left_y = int(self.y / self.scale - gap_y / self.old_scale)
+                    self.point = QPoint(new_left_x, new_left_y)
+                # 鼠标点不在图上，固定左上角进行缩放
+                else:
+                    true_left_x = int(self.point.x() * self.old_scale / self.scale)
+                    true_left_y = int(self.point.y() * self.old_scale / self.scale)
+                    self.point = QPoint(true_left_x, true_left_y)
+            painter.drawPixmap(self.point, self.scaled_img)  # 此函数中还会用scale对point进行处理
+            painter.end()
+
+    def wheelEvent(self, event):
+        angle = event.angleDelta() / 8  # 返回QPoint对象，为滚轮转过的数值，单位为1/8度
+        angleY = angle.y()
+        self.old_scale = self.scale
+        self.x, self.y = event.x(), event.y()
+        self.wheel_flag = True
+        # 获取当前鼠标相对于view的位置
+        if angleY &gt; 0:
+            self.scale *= 1.08
+        else:  # 滚轮下滚
+            self.scale *= 0.92
+        if self.scale &lt; 0.3:
+            self.scale = 0.3
+        self.adjustSize()
+        self.update()
+
+    def mouseMoveEvent(self, e):
+        if self.left_click:
+            self.end_pos = e.pos() - self.start_pos                    # 当前位置-起始位置=差值
+            self.point = self.point + self.end_pos / self.scale        # 左上角的距离变化
+            self.start_pos = e.pos()
+            self.repaint()
+
+    def mousePressEvent(self, e):
+        if e.button() == Qt.LeftButton:
+            self.left_click = True
+            self.start_pos = e.pos()
+
+    def mouseReleaseEvent(self, e):
+        if e.button() == Qt.LeftButton:
+            self.left_click = False
+
+
+class Ui_Form(QWidget):
+    def setupUi(self, Form):
+        Form.setObjectName(&quot;Form&quot;)
+        Form.resize(900, 1080)
+        self.scrollArea = QtWidgets.QScrollArea(Form)
+        self.scrollArea.setGeometry(QtCore.QRect(150, 10, 680, 990))
+        self.scrollArea.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.scrollArea.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        # self.scrollArea.setWidgetResizable(True)
+        self.scrollArea.setObjectName(&quot;scrollArea&quot;)
+
+        self.scrollAreaWidgetContents = QtWidgets.QWidget()
+        self.box = ImageBox()
+
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 680, 990))
+        self.scrollAreaWidgetContents.setMinimumSize(QtCore.QSize(100, 100))
+        self.scrollAreaWidgetContents.setObjectName(&quot;scrollAreaWidgetContents&quot;)
+        self.gridLayout = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
+        self.gridLayout.setObjectName(&quot;gridLayout&quot;)
+
+        self.gridLayout.addWidget(self.box, 0, 0, 1, 1)
+        self.scrollArea.setWidget(self.scrollAreaWidgetContents)
+
+        self.open_file = QtWidgets.QPushButton(Form)
+        self.open_file.setGeometry(QtCore.QRect(30, 100, 81, 41))
+        font = QtGui.QFont()
+        font.setFamily(&quot;Aharoni&quot;)
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.open_file.setFont(font)
+        self.open_file.setObjectName(&quot;open_file&quot;)
+        self.open_file.clicked.connect(self.open_image)
+
+        self.retranslateUi(Form)
+        QtCore.QMetaObject.connectSlotsByName(Form)
+
+    def retranslateUi(self, Form):
+        _translate = QtCore.QCoreApplication.translate
+        Form.setWindowTitle(_translate(&quot;Form&quot;, &quot;Form&quot;))
+        self.open_file.setText(_translate(&quot;Form&quot;, &quot;选择文件&quot;))
+
+    def open_image(self):
+        img_name, _ = QFileDialog.getOpenFileName(None, &quot;Open Image File&quot;,&quot;&quot;,&quot;All Files(*);;*.jpg;;*.png;;*.jpeg&quot;)
+        self.box.set_image(img_name)
+
+
+if __name__ == &quot;__main__&quot;:
+    app = QtWidgets.QApplication(sys.argv)
+    MainWindow = QtWidgets.QMainWindow()
+    ui = Ui_Form()
+    ui.setupUi(MainWindow)
+    MainWindow.show()
+    sys.exit(app.exec_())
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-QSS美化控件教程"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/10/25/QSS%E7%BE%8E%E5%8C%96%E6%8E%A7%E4%BB%B6%E6%95%99%E7%A8%8B/"
+    >QSS美化控件教程</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/10/25/QSS%E7%BE%8E%E5%8C%96%E6%8E%A7%E4%BB%B6%E6%95%99%E7%A8%8B/" class="article-date">
+  <time datetime="2023-10-25T02:25:00.000Z" itemprop="datePublished">2023-10-25</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>在使用Qt开发界面程序时，常用控件的美化是一件繁琐的事情，收藏一些基本控件的美化样式，可以在项目开发时节省大量时间，本篇文章由此而出，收集常用的控件美化样式。<br>以下qss代码是直接在Qt Designer设计界面中样式表中添加或者使用QFile读取qss代码进行修改控件样式。</p>
+<h1 id="1、QPushButton美化"><a href="#1、QPushButton美化" class="headerlink" title="1、QPushButton美化"></a>1、QPushButton美化</h1><pre><code>QWidget#Widget&#123;
+background-color:#fff;
+&#125;
+
+QPushButton&#123;
+border:5px solid #fff;
+border-radius:8px;
+padding:1px 5px;
+min-width:120px;
+min-height:35px;
+&#125;
+
+QPushButton#first_btn&#123;
+color:#fff;
+background-color:#0d6efd;
+&#125;
+#first_btn:hover&#123;
+background-color:#0055ff;
+&#125;
+#first_btn:pressed&#123;
+border: 4px solid #98c1fe;
+&#125;
+
+QPushButton#second_btn&#123;
+color:#fff;
+background-color:#6c757d;
+&#125;
+
+#second_btn:hover&#123;
+background-color:#5c636a;
+&#125;
+#second_btn:pressed&#123;
+border:4px solid #c0c4c8;
+&#125;
+
+QPushButton#third_btn&#123;
+color:#fff;
+background-color:#198754;
+&#125;
+#third_btn:hover&#123;
+background-color:#157347;
+&#125;
+#third_btn:pressed&#123;
+border:4px solid #9dccb6;
+&#125;
+
+QPushButton#four_btn&#123;
+color:#fff;
+background-color:#dc3545;
+&#125;
+#four_btn:hover&#123;
+background-color:#bb2d3b;
+&#125;
+#four_btn:pressed&#123;
+border:4px solid #f0a9b0;
+&#125;
+QPushButton#five_btn&#123;
+color:#000;
+background-color:#ffc107;
+&#125;
+#five_btn:hover&#123;
+background-color:#ffca2c;
+&#125;
+#five_btn:pressed&#123;
+border:5px solid #ecd182;
+&#125;
+QPushButton#six_btn&#123;
+color:#000;
+background-color:#0dcaf0;
+&#125;
+#six_btn:hover&#123;
+background-color:#31d2f2;
+&#125;
+#six_btn:pressed&#123;
+border:54x solid #85d5e5;
+&#125;
+QPushButton#seven_btn&#123;
+color:#000;
+background-color:#f8f9fa;
+&#125;
+#seven_btn:hover&#123;
+background-color:#f9fafb;
+&#125;
+#seven_btn:pressed&#123;
+border:4px solid #e9e9ea;
+&#125;
+QPushButton#eight_btn&#123;
+color:#fff;
+background-color:#212529;
+&#125;
+#eight_btn:hover&#123;
+background-color:#1c1f23;
+&#125;
+#eight_btn:pressed&#123;
+border:4px solid #a0a2a4;
+&#125;
+QPushButton#nine_btn&#123;
+color:#fff;
+background-color:#d235d2;
+&#125;
+#nine_btn:hover&#123;
+background-color:#a600a6;
+&#125;
+#nine_btn:pressed&#123;
+border:4px solid #d25fd2;
+&#125;
+</code></pre>
+<h1 id="2、QComboBox美化"><a href="#2、QComboBox美化" class="headerlink" title="2、QComboBox美化"></a>2、QComboBox美化</h1><pre><code>#cbx&#123;
+border:1px #ced4da;
+border-radius:4px;
+padding-left:10px;
+&#125;
+#cbx::drop-down&#123;
+border:0px;
+&#125;
+
+#cbx::down-arrow&#123;
+    border-image: url(:/icons/down.png);
+    width:20px;
+    height:20px;
+    margin-right:20px;
+&#125;
+#cbx:on&#123;
+border:4px solid #c2dbfe;
+&#125;
+#cbx QListView&#123;
+font-size:16px;
+border:1px solid rgba(0,0,0,10%);
+padding:5px;
+background-color:#fff;
+outline:0px;
+&#125;
+#cbx QListView::item&#123;
+padding-left:10px;
+background-color:#fff;
+&#125;
+#cbx QListView::item:hover&#123;
+background-color:#1e90ff;
+&#125;
+#cbx QListView::item:selected&#123;
+background-color:#1e90ff;
+&#125;
+</code></pre>
+<h1 id="3、QLineEdit美化"><a href="#3、QLineEdit美化" class="headerlink" title="3、QLineEdit美化"></a>3、QLineEdit美化</h1><pre><code>QLineEdit&#123;
+color:#fff;
+border:2px solid rgb(37,39,48);
+border-radius:20px;
+padding-left:20px;
+padding-right:20px;
+background-color:rgb(34,36,44);
+&#125;
+QLineEdit:hover&#123;
+border:4px solid rgb(48,50,62);
+&#125;
+QLineEdit:focus&#123;
+border:4px solid rgb(85,170,255);
+background-color:rgb(43,45,56);
+&#125;
+#Widget&#123;
+background-color:rgb(37,39,48);
+&#125;
+</code></pre>
+<p>————————————————<br>版权声明：本文为CSDN博主「神威难藏泪~」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/Thinking777/article/details/130374425">https://blog.csdn.net/Thinking777/article/details/130374425</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-Python强制替换文件"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/10/24/Python%E5%BC%BA%E5%88%B6%E6%9B%BF%E6%8D%A2%E6%96%87%E4%BB%B6/"
+    >Python强制替换文件</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/10/24/Python%E5%BC%BA%E5%88%B6%E6%9B%BF%E6%8D%A2%E6%96%87%E4%BB%B6/" class="article-date">
+  <time datetime="2023-10-24T02:24:00.000Z" itemprop="datePublished">2023-10-24</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>1、检查文件是否存在</p>
+<p>首先，我们需要检查待替换的文件是否存在。如果文件存在，我们将执行替换操作；如果文件不存在，我们需要进行相应的处理逻辑，比如抛出异常或创建新文件。</p>
+<pre><code>import os
+
+file_path = &#39;/path/to/source/file.txt&#39;
+
+if os.path.exists(file_path):
+    # 文件存在的处理逻辑
+    pass
+else:
+    # 文件不存在的处理逻辑
+    pass
+</code></pre>
+<p>2、备份现有文件<br>接下来，我们需要备份原文件，以便在替换之后可以恢复。</p>
+<pre><code>import shutil
+
+source_file_path = &#39;/path/to/source/file.txt&#39;
+backup_file_path = &#39;/path/to/backup/file.txt&#39;
+
+shutil.copyfile(source_file_path, backup_file_path)
+</code></pre>
+<p>3、替换文件</p>
+<p>现在，我们可以将新文件替换原文件。</p>
+<pre><code>import shutil
+
+new_file_path = &#39;/path/to/new/file.txt&#39;
+source_file_path = &#39;/path/to/source/file.txt&#39;
+
+shutil.copyfile(new_file_path, source_file_path)
+</code></pre>
+<p>4、恢复备份</p>
+<p>如果在替换文件后遇到问题，我们可以使用备份文件恢复原文件。</p>
+<pre><code>import shutil
+
+backup_file_path = &#39;/path/to/backup/file.txt&#39;
+source_file_path = &#39;/path/to/source/file.txt&#39;
+
+shutil.copyfile(backup_file_path, source_file_path)
+</code></pre>
+<hr>
+<p>©著作权归作者所有：来自51CTO博客作者mob64ca12eab427的原创作品，请联系作者获取转载授权，否则将追究法律责任<br>python 强制替换文件<br><a target="_blank" rel="noopener" href="https://blog.51cto.com/u_16213408/7158206">https://blog.51cto.com/u_16213408/7158206</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-PyQt5密码输入框"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/10/23/PyQt5%E5%AF%86%E7%A0%81%E8%BE%93%E5%85%A5%E6%A1%86/"
+    >PyQt5密码输入框</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/10/23/PyQt5%E5%AF%86%E7%A0%81%E8%BE%93%E5%85%A5%E6%A1%86/" class="article-date">
+  <time datetime="2023-10-23T02:23:00.000Z" itemprop="datePublished">2023-10-23</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>大栗子<br>实现了三种密码输入框的方式：<br>1.输入的密码不可见；<br>2.输入的密码可见，但是鼠标点击其他控件后，密码不可见；<br>3.输入的密码不可见，同时为了更加的安全，屏蔽了鼠标右键、禁用复制、粘贴快捷键、鼠标在密码框中不可移动，不可全选。就类似我们在输入QQ密码的时候一样。</p>
+<p>PasswdDialog.py</p>
+<pre><code>&#39;&#39;&#39;
+其实大家从这段代码中我们可以看出，本质上就是QDialog的继承，加上自己希望的界面和实现的功能。因此QDialog所有的属性，我们自定义对话框PasswdDialog都会有，这样能够省掉我们不少的时间来。这个也就是面向对象编程的魅力所在了。
+&#39;&#39;&#39;
+# coding=utf-8
+from PyQt5.QtWidgets import QDialog, QApplication, QLineEdit, QLabel, QPushButton, QHBoxLayout, QVBoxLayout, QMessageBox
+from PyQt5.QtCore import Qt, QEvent, QRegExp, QObject
+from PyQt5.QtGui import QKeyEvent, QKeySequence, QRegExpValidator
+
+
+class PasswdDialog(QDialog):
+    def __init__(self):
+        super().__init__()
+        self.initUI()
+
+    def initUI(self):
+        self.resize(350, 100)
+        self.setWindowTitle(&quot;密码输入框&quot;)
+
+        self.lb = QLabel(&quot;请输入密码：&quot;, self)
+
+        self.edit = QLineEdit(self)
+        self.edit.installEventFilter(self)
+
+        self.bt1 = QPushButton(&quot;确定&quot;, self)
+        self.bt2 = QPushButton(&quot;取消&quot;, self)
+
+        hbox = QHBoxLayout()
+        hbox.addStretch(1)
+        hbox.addWidget(self.bt1)
+        hbox.addStretch(1)
+        hbox.addWidget(self.bt2)
+        hbox.addStretch(1)
+
+        vbox = QVBoxLayout()
+        vbox.addWidget(self.lb)
+        vbox.addWidget(self.edit)
+        vbox.addStretch(1)
+        vbox.addLayout(hbox)
+
+        self.setLayout(vbox)
+
+        &#39;&#39;&#39;
+        这个三个语句是给密码输入框增加一些属性
+        &#39;&#39;&#39;
+        self.edit.setContextMenuPolicy(Qt.NoContextMenu)  # 这个语句设置QLineEdit对象的上下文菜单的策略。复制，粘贴，。。。，是否可用
+        self.edit.setPlaceholderText(
+            &quot;密码不超15位，只能有数字和字母，必须以字母开头&quot;)  # 只要行编辑为空，设置此属性将使行编辑显示为灰色的占位符文本。默认情况下，此属性包含一个空字符串。这是非常好的使用方法，可以在用户输入密码前看到一些小提示信息，但是又不影响使用，非常棒这个方法。
+        self.edit.setEchoMode(QLineEdit.Password)  # 这条语句设置了如何限定输入框中显示其包含信息的方式，这里设置的是：密码方式，即输入的时候呈现出原点出来。
+
+        &#39;&#39;&#39;
+        这三段代码大体意思就是说，运用正则表达式限定密码输入框字符接收的条件：
+        长度不能超过15位；
+        字母开头；
+        后面跟着的字符只能是字母或者数字。
+        &#39;&#39;&#39;
+        regx = QRegExp(&quot;^[a-zA-Z][0-9A-Za-z]&#123;14&#125;$&quot;)  # 为给定的模式字符串构造一个正则表达式对象。
+        validator = QRegExpValidator(regx,
+                                     self.edit)  # 构造一个验证器，该父对象接受与正则表达式匹配的所有字符串。这里的父对象就是QLineEdit对象了。匹配是针对整个字符串; 例如：如果正则表达式是[A-Fa-f0-9]+将被视为^[A-Fa-f0-9]+$。
+        self.edit.setValidator(validator)  # 将密码输入框设置为仅接受符合验证器条件的输入。 这允许您对可能输入的文本设置任何约束条件。因此我们这里设置的就是符合上面描述的三种约束条件。
+
+        self.bt1.clicked.connect(self.Ok)
+        self.bt2.clicked.connect(self.Cancel)
+
+        object = QObject()
+
+        &#39;&#39;&#39;
+        事件过滤器可是一个非常重要的概念。根据Qt的官方文档，如果对象被安装已监视对象的事件过滤器，则过滤事件。如果要过滤事件，需重新实现此函数时，若停止进一步处理，返回true； 否则返回false。
+        如果一个对象安装多个事件过滤器，那么，最后安装的过滤器首先被激活。    
+        &#39;&#39;&#39;
+
+    def eventFilter(self, object, event):
+        if object == self.edit:  # 这里是对事件的判断。其中QKeyEvent类描述了一个关键事件。当按下或释放按键时，主要事件将发送到具有键盘输入焦点的小部件。然后运用matches方法匹配具体的按键。
+            if event.type() == QEvent.MouseMove or event.type() == QEvent.MouseButtonDblClick:
+                return True
+            elif event.type() == QEvent.KeyPress:
+                key = QKeyEvent(event)
+                if key.matches(QKeySequence.SelectAll) or key.matches(QKeySequence.Copy) or key.matches(
+                        QKeySequence.Paste):  # 然后进行事件判断与转换：鼠标移动对应的事件类型为QEvent.MouseMove，鼠标双击对应的事件类型为QEvent.MouseButtonDblClick，全选、复制、粘贴对应的事件类型为 QEvent.KeyPress，当接收到这些事件时，需要被过滤掉，所以返回true。
+                    return True
+        return QDialog.eventFilter(self, object, event)  # 继续传递该事件到被观察者，由其本身调用相应的事件
+
+    def Ok(self):
+        self.text = self.edit.text()
+        if len(self.text) == 0:
+            QMessageBox.warning(self, &quot;警告&quot;, &quot;密码为空&quot;)
+        elif len(self.text) &lt; 6:
+            QMessageBox.warning(self, &quot;警告&quot;, &quot;密码长度低于6位&quot;)
+        else:
+            self.done(1)  # 结束对话框返回1
+
+    def Cancel(self):
+        self.done(0)  # 结束对话框返回0
+</code></pre>
+<p>main.py</p>
+<pre><code># coding=utf-8
+
+from PyQt5.QtWidgets import (QApplication, QWidget, QPushButton, QLabel, QInputDialog, QTextBrowser, QLineEdit)
+from PasswdDialog import PasswdDialog
+import sys
+
+
+class Example(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.initUI()
+
+    def initUI(self):
+        self.resize(380, 180)
+        self.setWindowTitle(&#39;早点毕业吧--自定义密码输入对话框&#39;)
+
+        self.lb1 = QLabel(&#39;密码在此显示...&#39;, self)
+        self.lb1.move(20, 20)
+
+        self.bt1 = QPushButton(&#39;输入密码(普通型)&#39;, self)
+        self.bt1.move(20, 60)
+
+        self.bt2 = QPushButton(&#39;输入密码(普通加强型)&#39;, self)
+        self.bt2.move(20, 100)
+
+        self.bt3 = QPushButton(&#39;输入密码(特别加强型)&#39;, self)
+        self.bt3.move(20, 140)
+
+        self.show()
+
+        self.bt1.clicked.connect(self.showDialog)
+        self.bt2.clicked.connect(self.showDialog)
+        self.bt3.clicked.connect(self.showDialog)
+
+    def showDialog(self):
+        sender = self.sender()
+        if sender == self.bt1:
+            text, ok = QInputDialog.getText(self, &#39;密码输入框&#39;, &#39;请输入密码：&#39;, QLineEdit.Password)
+            if ok:
+                self.lb1.setText(text)
+        elif sender == self.bt2:
+            text, ok = QInputDialog.getText(self, &#39;密码输入框&#39;, &#39;请输入密码：&#39;, QLineEdit.PasswordEchoOnEdit)
+            if ok:
+                self.lb1.setText(text)
+        else:
+            pwd = PasswdDialog()
+            r = pwd.exec_()
+            if r:
+                self.lb1.setText(pwd.text)
 
 
 if __name__ == &#39;__main__&#39;:
-    app = QtWidgets.QApplication(sys.argv)
-    window = MyWindow()
-    window.show()
+    app = QApplication(sys.argv)
+    ex = Example()
     sys.exit(app.exec_())
 </code></pre>
+<p>具体运行结果参考：<br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/30152208">https://zhuanlan.zhihu.com/p/30152208</a><br>谢谢 “学点编程吧”<br>————————————————<br>版权声明：本文为CSDN博主「十三吖」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_40006058/article/details/80076669">https://blog.csdn.net/qq_40006058/article/details/80076669</a></p>
  
       <!-- reward -->
       
@@ -301,7 +1388,7 @@ if __name__ == &#39;__main__&#39;:
 
     
     <article
-  id="post-AttributeError module ‘backend_interagg‘ has no attribute ‘FigureCanvas‘的解决办法"
+  id="post-QT对lineEdit添加图标"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -312,8 +1399,8 @@ if __name__ == &#39;__main__&#39;:
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/10/18/AttributeError%20module%20%E2%80%98backend_interagg%E2%80%98%20has%20no%20attribute%20%E2%80%98FigureCanvas%E2%80%98%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/"
-    >AttributeError module ‘backend_interagg‘ has no attribute ‘FigureCanvas‘的解决办法</a> 
+  <a class="article-title" href="/2023/10/22/QT%E5%AF%B9lineEdit%E6%B7%BB%E5%8A%A0%E5%9B%BE%E6%A0%87/"
+    >QT对lineEdit添加图标</a> 
 </h2>
  
 
@@ -321,8 +1408,8 @@ if __name__ == &#39;__main__&#39;:
     </header>
      
     <div class="article-meta">
-      <a href="/2023/10/18/AttributeError%20module%20%E2%80%98backend_interagg%E2%80%98%20has%20no%20attribute%20%E2%80%98FigureCanvas%E2%80%98%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" class="article-date">
-  <time datetime="2023-10-18T02:18:00.000Z" itemprop="datePublished">2023-10-18</time>
+      <a href="/2023/10/22/QT%E5%AF%B9lineEdit%E6%B7%BB%E5%8A%A0%E5%9B%BE%E6%A0%87/" class="article-date">
+  <time datetime="2023-10-22T02:22:00.000Z" itemprop="datePublished">2023-10-22</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -332,1119 +1419,122 @@ if __name__ == &#39;__main__&#39;:
       
     <div class="article-entry" itemprop="articleBody">
        
-  <h1 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h1><p>一开始我还以为是我的matoltlib和我的python版本不匹配后面发现真正原因其实是matplotlib 的 backend的默认渲染器是agg，agg是一个没有图形显示界面的终端，如果要图像正常显示，则需要切换为图形界面显示的终端TkAgg</p>
-<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>修改 backend 配置：</p>
-<pre><code>matplotlib.use(‘TkAgg’)
+  <h1 id="方案一"><a href="#方案一" class="headerlink" title="方案一"></a>方案一</h1><p>使用QLineEdit的setClearButtonEnabled方法显示清除按钮</p>
+<p>在PyQt中，QLineEdit类具有一个setClearButtonEnabled方法，该方法用于在文本框的右侧显示一个清除按钮。我们可以使用这个清除按钮来放置一个图标。</p>
+<p>首先，我们需要创建一个QLineEdit对象，并将其添加到主窗口中，如下所示：</p>
+<pre><code>import sys
+from PyQt5.QtWidgets import QApplication, QMainWindow, QLineEdit
+
+class MyWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        self.initUI()
+
+    def initUI(self):
+        self.setGeometry(100, 100, 300, 200)
+
+        self.lineedit = QLineEdit(self)
+        self.lineedit.setGeometry(50, 50, 200, 30)
+
+        self.lineedit.setClearButtonEnabled(True)
+
+
+if __name__ == &#39;__main__&#39;:
+    app = QApplication(sys.argv)
+    mywindow = MyWindow()
+    mywindow.show()
+    sys.exit(app.exec_())
 </code></pre>
-<h1 id="原代码和修改后代码对比"><a href="#原代码和修改后代码对比" class="headerlink" title="原代码和修改后代码对比"></a>原代码和修改后代码对比</h1><h2 id="原代码："><a href="#原代码：" class="headerlink" title="原代码："></a>原代码：</h2><pre><code>import numpy as np
+<p>在上面的代码中，我们创建了一个自定义的窗口类MyWindow，并在initUI方法中创建了一个QLineEdit对象lineedit。然后，我们调用setClearButtonEnabled方法并将其参数设置为True，以显示清除按钮。</p>
+<p>保存并运行上述代码，将会看到一个带有清除按钮的文本框出现在应用程序的主窗口中。</p>
+<p>在上面的代码中，我们创建了一个自定义的窗口类MyWindow，并在initUI方法中创建了一个QLineEdit对象lineedit。然后，我们调用setClearButtonEnabled方法并将其参数设置为True，以显示清除按钮。</p>
+<p>保存并运行上述代码，将会看到一个带有清除按钮的文本框出现在应用程序的主窗口中。</p>
+<h1 id="方案二"><a href="#方案二" class="headerlink" title="方案二"></a>方案二</h1><p>使用QLineEdit的setStyleSheet方法设置图标样式</p>
+<p>除了显示清除按钮之外，我们还可以使用QLineEdit的setStyleSheet方法来设置图标样式，并将其放置在文本框的左侧或右侧。</p>
+<p>首先，我们需要创建一个QLineEdit对象，并将其添加到主窗口中，如下所示：</p>
+<pre><code>import sys
+from PyQt5.QtWidgets import QApplication, QMainWindow, QLineEdit
 
-import matplotlib.pyplot as plt
+class MyWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
 
-x=np.linspace(0.0001,3,100)
-y=x**x
-plt.plot(x,y,&#39;r-&#39;,linewidth=3)
-plt.show()`
+        self.initUI()
+
+    def initUI(self):
+        self.setGeometry(100, 100, 300, 200)
+
+        self.lineedit = QLineEdit(self)
+        self.lineedit.setGeometry(50, 50, 200, 30)
+
+        self.lineedit.setStyleSheet(&quot;background-image: url(&#39;icon.png&#39;);  background-position: right; background-repeat: no-repeat; padding-right: 20px;&quot;)
+
+
+if __name__ == &#39;__main__&#39;:
+    app = QApplication(sys.argv)
+    mywindow = MyWindow()
+    mywindow.show()
+    sys.exit(app.exec_())
 </code></pre>
-<p>错误提示：</p>
-<pre><code>AttributeError: module &#39;backend_interagg&#39; has no attribute &#39;FigureCanvas&#39;. Did you mean: &#39;FigureCanvasAgg&#39;?
+<p>在上面的代码中，我们使用了QLineEdit的setStyleSheet方法，并为其设置了一个包含图标的背景样式。在这个样式中，我们使用了background-image属性来指定图标的URL，background-position属性来设置图标的位置（这里是右侧），background-repeat属性来设置图标是否重复显示，padding-right属性来设置图标与文本框之间的距离。</p>
+<p>保存并运行上述代码，将会看到一个带有图标的文本框出现在应用程序的主窗口中。</p>
+<h1 id="方案三"><a href="#方案三" class="headerlink" title="方案三"></a>方案三</h1><ol start="3">
+<li>自定义QLineEdit来放置图标<br>除了使用QLineEdit的现有方法来放置图标之外，我们还可以自定义一个QLineEdit子类，并在其中绘制图标。</li>
+</ol>
+<p>首先，我们需要创建一个自定义的QLineEdit子类，如下所示：</p>
+<pre><code>import sys
+from PyQt5.QtWidgets import QApplication, QMainWindow, QLineEdit
+from PyQt5.QtGui import QIcon, QPainter
+from PyQt5.QtCore import Qt
+
+class IconLineEdit(QLineEdit):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.icon = QIcon(&#39;icon.png&#39;)
+
+    def paintEvent(self, event):
+        super().paintEvent(event)
+        painter = QPainter(self)
+        rect = self.contentsRect()
+        icon_rect = QRect(rect.right() - 20, rect.top(), 20, rect.height())
+        self.icon.paint(painter, icon_rect, Qt.AlignCenter)
+
+class MyWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        self.initUI()
+
+    def initUI(self):
+        self.setGeometry(100, 100, 300, 200)
+
+        self.lineedit = IconLineEdit(self)
+        self.lineedit.setGeometry(50, 50, 200, 30)
+
+if __name__ == &#39;__main__&#39;:
+    app = QApplication(sys.argv)
+    mywindow = MyWindow()
+    mywindow.show()
+    sys.exit(app.exec_())
 </code></pre>
-<h2 id="修改后代码："><a href="#修改后代码：" class="headerlink" title="修改后代码："></a>修改后代码：</h2><pre><code>import numpy as np
-import matplotlib
-matplotlib.use(&#39;TkAgg&#39;)
-import matplotlib.pyplot as plt
+<p>在上面的代码中，我们创建了一个名为IconLineEdit的自定义QLineEdit子类，并在其paintEvent方法中绘制了一个图标。我们首先调用了父类QlineEdit的paintEvent方法来绘制文本框本身，然后使用QPainter对象绘制了一个图标，并设置了图标的位置（这里是在内容矩形的右侧）和对齐方式（居中对齐）。</p>
+<p>然后，我们在自定义的MyWindow类中使用这个自定义的IconLineEdit类来创建一个带有图标的文本框。</p>
+<p>保存并运行上述代码，将会看到一个带有图标的文本框出现在应用程序的主窗口中。</p>
+<h1 id="方案四"><a href="#方案四" class="headerlink" title="方案四"></a>方案四</h1><p>创建了一个QAction并设置其图标，然后通过addAction()方法将该QAction添加到QLineEdit控件的左侧。<br>第二个参数指定添加的位置，QLineEdit::LeadingPosition以在最左侧添加图像，QLineEdit::TrailingPosition以在最右侧添加图像</p>
+<pre><code>//对lineEdit左侧嵌入图片
+actionPassword = QAction(self)
+actionPassword.setIcon(QIcon(&quot;:/icons/icons/Lock.png&quot;))
+self.ui.lineEdit_Password.addAction(actionPassword, QLineEdit.LeadingPosition)
 
-x=np.linspace(0.0001,3,100)
-y=x**x
-plt.plot(x,y,&#39;r-&#39;,linewidth=3)
-plt.show()
+self.iconEyeOpen = QIcon(&quot;:/icons/icons/EyeOpen.png&quot;)
+self.iconEyeClose = QIcon(&quot;:/icons/icons/EyeClose.png&quot;)
+self.actionVisible = QAction(self)
+self.actionVisible.setIcon(self.iconEyeClose)
+self.ui.lineEdit_Password.addAction(self.actionVisible, QLineEdit.TrailingPosition)
+self.actionVisible.setCheckable(True)
+self.actionVisible.toggled.connect(self.setPasswordVisibility)
 </code></pre>
-<p>————————————————<br>版权声明：本文为CSDN博主「倚剑策马笑西风」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_51763547/article/details/126918669">https://blog.csdn.net/qq_51763547/article/details/126918669</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-“matplotlib.use(‘agg‘)“语句的作用机理"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/10/17/%E2%80%9Cmatplotlib.use(%E2%80%98agg%E2%80%98)%E2%80%9C%E8%AF%AD%E5%8F%A5%E7%9A%84%E4%BD%9C%E7%94%A8%E6%9C%BA%E7%90%86/"
-    >“matplotlib.use(‘agg‘)“语句的作用机理</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/10/17/%E2%80%9Cmatplotlib.use(%E2%80%98agg%E2%80%98)%E2%80%9C%E8%AF%AD%E5%8F%A5%E7%9A%84%E4%BD%9C%E7%94%A8%E6%9C%BA%E7%90%86/" class="article-date">
-  <time datetime="2023-10-17T02:17:00.000Z" itemprop="datePublished">2023-10-17</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><p>在很多使用 matplotlib 库的代码中出现了 matplotlib.use(‘agg’) 的语句。有些博客认为1，在导入matplotlib库后，且在matplotlib.pyplot库被导入前加“matplotlib.use(‘agg’)”语句的作用是在PyCharm中不显示绘图。例如1：</p>
-<pre><code>import numpy as np
-import matplotlib
-matplotlib.use(&#39;agg&#39;) 
-import matplotlib.pyplot as plt # matplotlib.use(&#39;agg&#39;)必须在本句执行前运行
-x = np.arange(0, 2*np.pi, 0.001) 
-y = np.sin(2 * np.pi * x) 
-plt.clf() 
-plt.plot(x,y) 
-l = plt.axhline(linewidth=1, color=&#39;black&#39;) 
-l = plt.axvline(linewidth=1, color=&#39;black&#39;) 
-plt.show()
-</code></pre>
-<p>在Pycharm里面运行就不会显示图。</p>
-<h1 id="原理分析"><a href="#原理分析" class="headerlink" title="原理分析"></a>原理分析</h1><p>实际上，这样的理解是表面的，这个语句确实会使得在Pycharm运行时无法显示图，但是必须注意，这是其原理导致的，而这个语句并不是设置Pycharm不显示图的语句，其实前述的代码中，删掉 plt.show() ，也不会显示图片。</p>
-<p>matplotlib的use()命令其实是用来配置matplotlib的backend （后端）的命令。所谓后端，就是一个渲染器，用于将前端代码渲染成我们想要的图像2。后端详细的解释可以参考博客： matplotlib中什么是后端 。</p>
-<p>对于用户接口，典型的渲染器是Agg，它是使用Anti-Grain Geometry C++库来产生光栅(像素)图。</p>
-<p>那么为什么这样设置Pycharm会导致其不显示图片呢？</p>
-<p>可以查看一下目前的后端设置。方法是执行下面代码。</p>
-<pre><code>import matplotlib
-matplotlib.get_backend()
-</code></pre>
-<p>在Pycharm的Terminal 里面输入该项命令，可以看到，Pycharm运行的时候，默认的后端是Qt5Agg。</p>
-<p>实际上，Agg 渲染器是非交互式的后端，没有GUI界面，所以不显示图片，它是用来生成图像文件。Qt5Agg 是意思是Agg渲染器输出到Qt5绘图面板，它是交互式的后端，拥有在屏幕上展示的能力3。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Python的zipfile入门教程"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/10/16/Python%E7%9A%84zipfile%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/"
-    >Python的zipfile入门教程</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/10/16/Python%E7%9A%84zipfile%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/" class="article-date">
-  <time datetime="2023-10-16T02:16:00.000Z" itemprop="datePublished">2023-10-16</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>来源如下，<br><a target="_blank" rel="noopener" href="https://muzing.top/posts/4797762a/">https://muzing.top/posts/4797762a/</a><br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/480329034">https://zhuanlan.zhihu.com/p/480329034</a></p>
-<p>本文做摘选，原文见上述地址。</p>
-<h1 id="Python-能处理-ZIP-文件吗？"><a href="#Python-能处理-ZIP-文件吗？" class="headerlink" title="Python 能处理 ZIP 文件吗？"></a>Python 能处理 ZIP 文件吗？</h1><p>是的！Python 有几个工具可以让您操作 ZIP 文件。其中一些工具在 Python 标准库 中可用。它们包括用于使用特定压缩算法（例如 zlib 、bz2 、lzma 和其他）压缩和解压缩数据的低级库。</p>
-<p>Python 还提供了一个名为“zipfile”的高级模块，专门用于创建、读取、写入、提取和列出 ZIP 文件的内容。<br>Python 的 zipfile 提供了便于使用的类和函数，允许创建、读取、写入、提取和列出 ZIP 文件包含的内容。</p>
-<p>zipfile 支持的一些附加功能：</p>
-<pre><code>大于 4 GiB 的 ZIP 文件（ZIP64 files）
-数据解密
-多种压缩算法，例如 Deflate、 Bzip2 与 LZMA
-使用 CRC32 进行信息完整性检查
-</code></pre>
-<p>请注意，zipfile 确实有一些局限性。例如，当前的数据解密功能可能非常慢，因为它使用纯 Python 代码。该模块无法处理加密 ZIP 文件的创建。最后，也不支持使用多磁盘（multi-disk） ZIP 文件。尽管有这些局限性，zipfile 仍然是一个很棒且实用的工具。</p>
-<h1 id="使用-Python-的-zipfile-操纵已存在的-ZIP-文件"><a href="#使用-Python-的-zipfile-操纵已存在的-ZIP-文件" class="headerlink" title="使用 Python 的 zipfile 操纵已存在的 ZIP 文件"></a>使用 Python 的 zipfile 操纵已存在的 ZIP 文件</h1><h2 id="打开-ZIP-文件进行读写"><a href="#打开-ZIP-文件进行读写" class="headerlink" title="打开 ZIP 文件进行读写"></a>打开 ZIP 文件进行读写</h2><p>在 zipfile 模块中，您会找到 ZipFile 类。这个类的工作方式很像 Python 内置的 open() 函数，允许使用不同的模式打开 ZIP 文件。读取模式（”r”）为默认值。也可以使用写入（”w”）、追加（”a”）和独占（”x”）模式。稍后您将详细学习其中每一项。</p>
-<p>zipfile 实现了上下文管理器协议，以便于在一个 with 语句中使用该类。此特性允许您快速打开和使用 ZIP 文件，而无需担心在完成工作后关闭文件。</p>
-<p>在编写任何代码之前，请确保您拥有将要使用的文件和归档的副本：</p>
-<p>要获取您将用于编写本教程中的示例的文件和存档，请查看本文 附A：材料下载 一节。</p>
-<p>请将下载的资源移入您的家目录（home folder）下名为 python-zipfile/ 的目录中，以准备好工作环境。将文件放在正确的位置后，移动至新创建的目录并在那里启动 Python 交互式会话。</p>
-<p>译者注：对于 Windows 10/11 用户，可以在任意路径创建该目录。在文件资源管理器中进入目录后，按住 Shift 键的同时鼠标右键单击空白处，然后选择“在此处打开 Powershell 窗口”，输入 python 命令即可。</p>
-<p>首先从读取名为 sample.zip 的 ZIP 文件开始热身。为此，可以在读取模式下使用 ZipFile ：</p>
-<pre><code>&gt;&gt;&gt; import zipfile
-
-&gt;&gt;&gt; with zipfile.ZipFile(&quot;sample.zip&quot;, mode=&quot;r&quot;) as archive:
-...     archive.printdir()
-...
-File Name                                        Modified             Size
-hello.txt                                 2021-09-07 19:50:10           83
-lorem.md                                  2021-09-07 19:50:10         2609
-realpython.md                             2021-09-07 19:50:10          428
-</code></pre>
-<p>ZipFile 初始化的第一个参数可以是一个字符串，表示需要打开的 ZIP 文件的路径。这个参数也可以接受文件对象和路径类对象。在此示例中，使用了基于字符串的路径。</p>
-<p>ZipFile 的第二个参数是一个单字母的字符串，表示用于打开文件的模式。正如您在本节开头所了解的，根据需求，ZipFile 可以接受四种可能的模式。mode 位置参数默认为 “r”，所以如果想以只读模式打开归档，可以省略它。</p>
-<p>在 with 语句中，在 archive 上调用 .printdir()。archive 变量现在包含 ZipFile 本身的实例。此函数提供了一种在屏幕上显示底层 ZIP 文件内容的快捷方法。其输出为易读的表格形式，有三列信息：</p>
-<p>File Name<br>Modified<br>Size<br>如果您想在尝试打开之前确保目标为有效的 ZIP 文件，那么可以将 ZipFile 包装在 try … except 语句中，并捕获任何 BadZipFile 异常：</p>
-<pre><code>&gt;&gt;&gt; import zipfile
-
-&gt;&gt;&gt; try:
-...     with zipfile.ZipFile(&quot;sample.zip&quot;) as archive:
-...         archive.printdir()
-... except zipfile.BadZipFile as error:
-...     print(error)
-...
-File Name                                        Modified             Size
-hello.txt                                 2021-09-07 19:50:10           83
-lorem.md                                  2021-09-07 19:50:10         2609
-realpython.md                             2021-09-07 19:50:10          428
-
-&gt;&gt;&gt; try:
-...     with zipfile.ZipFile(&quot;bad_sample.zip&quot;) as archive:
-...         archive.printdir()
-... except zipfile.BadZipFile as error:
-...     print(error)
-...
-File is not a zip file
-</code></pre>
-<p>第一个示例成功打开 sample.zip 而不引发 BadZipFile 异常。那是因为 sample.zip 具有有效的 ZIP 格式。另一方面，第二个示例无法成功打开 bad_sample.zip ，因为该文件不是有效的 ZIP 文件。</p>
-<p>为检查 ZIP 文件的有消息，您还可以使用 is_zipfile() 函数：</p>
-<pre><code>&gt;&gt;&gt; import zipfile
-
-&gt;&gt;&gt; if zipfile.is_zipfile(&quot;sample.zip&quot;):
-...     with zipfile.ZipFile(&quot;sample.zip&quot;, &quot;r&quot;) as archive:
-...         archive.printdir()
-... else:
-...     print(&quot;File is not a zip file&quot;)
-...
-File Name                                        Modified             Size
-hello.txt                                 2021-09-07 19:50:10           83
-lorem.md                                  2021-09-07 19:50:10         2609
-realpython.md                             2021-09-07 19:50:10          428
-
-&gt;&gt;&gt; if zipfile.is_zipfile(&quot;bad_sample.zip&quot;):
-...     with zipfile.ZipFile(&quot;bad_sample.zip&quot;, &quot;r&quot;) as archive:
-...         archive.printdir()
-... else:
-...     print(&quot;File is not a zip file&quot;)
-...
-File is not a zip file
-</code></pre>
-<p>在这些示例中，使用一个 is_zipfile() 作为条件的条件语句。该函数接受一个保存文件系统中 ZIP 文件的路径的 filename 参数。此参数可以接受字符串、类文件或类路径对象。如果 filename 是有效的 ZIP 文件，则该函数返回 True。否则返回 False。</p>
-<p>现在假设您想使用 ZipFile 将 hello.txt 添加到 hello.zip 归档中。为此，可以使用写入模式（”w”）。该模式打开一个 ZIP 文件进行写入。如果目标 ZIP 文件存在，则 “w” 模式会截断它并写入您传入的任何新内容。</p>
-<p>Note: 如果您使用 ZipFile 处理现有文件，那么应该小心使用 “w” 模式。您可能截断 ZIP 文件并丢失所有原有内容。</p>
-<p>如果目标 ZIP 文件不存在，则 ZipFile 会在您关闭归档时为您创建它：</p>
-<pre><code>&gt;&gt;&gt; import zipfile
-
-&gt;&gt;&gt; with zipfile.ZipFile(&quot;hello.zip&quot;, mode=&quot;w&quot;) as archive:
-...     archive.write(&quot;hello.txt&quot;)
-...
-</code></pre>
-<p>运行此代码后，python-zipfile/ 目录中将有一个 hello.zip 文件。如果使用 .printdir() 列出文件内容，那么 hello.txt 会在那里。在此示例中，可用在 ZipFile 对象上调用 .write()。此方法允许您将成员文件写入 ZIP 归档。注意 .write() 的参数应是已存在的文件。</p>
-<p>Note: 当您在写模式下使用类且目标归档不存在时， ZipFile 足够智能，可以创建一个新的归档。然而，如果这些目录尚不存在，则该类不会在目标 ZIP 文件的路径中创建新目录。</p>
-<p>这就解释了为何如下代码无法工作：</p>
-<pre><code>&gt;&gt;&gt; import zipfile
-
-&gt;&gt;&gt; with zipfile.ZipFile(&quot;missing/hello.zip&quot;, mode=&quot;w&quot;) as archive:
-...     archive.write(&quot;hello.txt&quot;)
-...
-Traceback (most recent call last):
-    ...
-FileNotFoundError: [Errno 2] No such file or directory: &#39;missing/hello.zip&#39;
-</code></pre>
-<p>因为目标 hello.zip 文件路径中的 missing/ 目录不存在，所以会出现 FileNotFoundError 异常。</p>
-<p>追加模式（”a”）允许您将新的成员文件追加到现有 ZIP 文件。此模式不会截断归档，故其原始内容是安全的。如果目标 ZIP 文件不存在，则 “a” 模式会为您创建一个新文件，然后追加作为参数传入 .write() 的任何文件。</p>
-<p>为尝试 “a” 模式，更进一步添加 new_hello.txt 文件到新创建的 hello.zip 归档中：</p>
-<pre><code>&gt;&gt;&gt; import zipfile
-
-&gt;&gt;&gt; with zipfile.ZipFile(&quot;hello.zip&quot;, mode=&quot;a&quot;) as archive:
-...     archive.write(&quot;new_hello.txt&quot;)
-...
-
-&gt;&gt;&gt; with zipfile.ZipFile(&quot;hello.zip&quot;) as archive:
-...     archive.printdir()
-...
-File Name                                        Modified             Size
-hello.txt                                 2021-09-07 19:50:10           83
-new_hello.txt                             2021-08-31 17:13:44           13
-</code></pre>
-<p>此处，使用追加模式将 new_hello.txt 添加到 hello.zip 文件中。然后运行 .printdir() 以确认新文件已存在于 ZIP 文件中。</p>
-<p>ZipFile 还支持独占模式（”x”）。 此模式允许您独占地创建新的 ZIP 文件并将新的成员文件写入其中。 当想要创建一个新的 ZIP 文件而不覆盖现有文件时，使用独占模式。 如果目标文件已存在，则会得到 FileExistsError。</p>
-<p>最后，如果您使用 “w”、”a” 或 “x” 模式创建一个 ZIP 文件，然后在不添加任何成员文件的情况下关闭归档，则 ZipFile 会创建一个具有适当 ZIP 格式的空归档。</p>
-<h2 id="从-ZIP-文件中读取元数据"><a href="#从-ZIP-文件中读取元数据" class="headerlink" title="从 ZIP 文件中读取元数据"></a>从 ZIP 文件中读取元数据</h2><p>您已将 .printdir() 付诸实践。这是一种实用的方法，可用于快速列出 ZIP 文件包含的内容。与 .printdir() 一道，ZipFile 类提供了几种从现有 ZIP 文件中提取元数据的便捷方法。</p>
-<p>以下是这些方法的摘要：</p>
-<p>方法    描述<br>.getinfo(filename)    返回一个关于 filename 提供的成员文件的信息的 ZipInfo 对象。注意 filename 必须包含底层 ZIP 文件中目标文件的路径。<br>.infolist()    返回一个 ZipInfo 对象列表，每个文件占一项。<br>.namelist()    返回一个包含底层归档中所有成员文件名的列表。该列表中的名称是 .getinfo() 的有效参数。<br>使用这三个工具，您可以检索许多关于 ZIP 文件内容的实用信息。例如，下面的例子使用了 .getinfo()：</p>
-<pre><code>&gt;&gt;&gt; import zipfile
-
-&gt;&gt;&gt; with zipfile.ZipFile(&quot;sample.zip&quot;, mode=&quot;r&quot;) as archive:
-...     info = archive.getinfo(&quot;hello.txt&quot;)
-...
-
-&gt;&gt;&gt; info.file_size
-83
-&gt;&gt;&gt; import datetime
-&gt;&gt;&gt; import zipfile
-
-&gt;&gt;&gt; with zipfile.ZipFile(&quot;sample.zip&quot;, mode=&quot;r&quot;) as archive:
-...     for info in archive.infolist():
-...         print(f&quot;Filename: &#123;info.filename&#125;&quot;)
-...         print(f&quot;Modified: &#123;datetime.datetime(*info.date_time)&#125;&quot;)
-...         print(f&quot;Normal size: &#123;info.file_size&#125; bytes&quot;)
-...         print(f&quot;Compressed size: &#123;info.compress_size&#125; bytes&quot;)
-...         print(&quot;-&quot; * 20)
-...
-Filename: hello.txt
-Modified: 2021-09-07 19:50:10
-Normal size: 83 bytes
-Compressed size: 83 bytes
---------------------
-Filename: lorem.md
-Modified: 2021-09-07 19:50:10
-Normal size: 2609 bytes
-Compressed size: 2609 bytes
---------------------
-Filename: realpython.md
-Modified: 2021-09-07 19:50:10
-Normal size: 428 bytes
-Compressed size: 428 bytes
---------------------
-
-&gt;&gt;&gt; info.compress_size
-83
-
-&gt;&gt;&gt; info.filename
-&#39;hello.txt&#39;
-
-&gt;&gt;&gt; info.date_time
-(2021, 9, 7, 19, 50, 10)
-</code></pre>
-<p>正如您在上表中所了解到的，.getinfo() 将成员文件作为参数，并返回一个包含关于其信息的 ZipInfo 对象。</p>
-<p>Note: ZipInfo 并不想要被直接实例化。.getinfo() 和 .infolist() 方法在被调用时会自动返回 ZipInfo 对象。然而，ZipInfo 包含一个名为 .from_file() 的类方法，它允许您在需要时显式地实例化该类。</p>
-<p>ZipInfo 对象有一些属性，可以检索有关目标成员文件的实用信息。例如，.file_size 和 .compress_size 分别保存未压缩原始文件和压缩后文件的大小（以字节为单位）。该类还有一些其他实用的属性，例如 .filename 和 .date_time ，它们返回文件名和最后修改日期。</p>
-<p>Note: 默认情况下，ZipFile 不会压缩输入文件以将其添加到最终归档中。这就是上例中 size 和 compressed size 大小相同的原因。您将在下面的 压缩文件和目录 部分了解有关此话题的更多信息。</p>
-<p>使用 .infolist() ，您可以从指定归档中提取所有文件信息。以下是一个使用此方法生成最小报告的示例，其中包含有关 sample.zip 归档中所有成员文件的信息：</p>
-<pre><code>&gt;&gt;&gt; import datetime
-&gt;&gt;&gt; import zipfile
-
-&gt;&gt;&gt; with zipfile.ZipFile(&quot;sample.zip&quot;, mode=&quot;r&quot;) as archive:
-...     for info in archive.infolist():
-...         print(f&quot;Filename: &#123;info.filename&#125;&quot;)
-...         print(f&quot;Modified: &#123;datetime.datetime(*info.date_time)&#125;&quot;)
-...         print(f&quot;Normal size: &#123;info.file_size&#125; bytes&quot;)
-...         print(f&quot;Compressed size: &#123;info.compress_size&#125; bytes&quot;)
-...         print(&quot;-&quot; * 20)
-...
-Filename: hello.txt
-Modified: 2021-09-07 19:50:10
-Normal size: 83 bytes
-Compressed size: 83 bytes
---------------------
-Filename: lorem.md
-Modified: 2021-09-07 19:50:10
-Normal size: 2609 bytes
-Compressed size: 2609 bytes
---------------------
-Filename: realpython.md
-Modified: 2021-09-07 19:50:10
-Normal size: 428 bytes
-Compressed size: 428 bytes
---------------------
-</code></pre>
-<p>for 循环迭代来自 .infolist() 的 ZipInfo 对象，检索文件名、最后修改日期、未压缩大小 ，以及每个成员文件的压缩后大小。在此示例中，使用 datetime 以人类易读的方式格式化日期。</p>
-<p>Note: 上面的例子改编自zipfile — ZIP Archive Access。</p>
-<p>如果只需要对 ZIP 文件执行快速检查并列出其成员文件的名称，那么可以使用 .namelist()：</p>
-<pre><code>&gt;&gt;&gt; import zipfile
-
-&gt;&gt;&gt; with zipfile.ZipFile(&quot;sample.zip&quot;, mode=&quot;r&quot;) as archive:
-...     for filename in archive.namelist():
-...         print(filename)
-...
-hello.txt
-lorem.md
-realpython.md
-</code></pre>
-<p>因为此输出中的文件名是 .getinfo() 的有效参数，所以可以结合这两种方法来仅检索关于特定成员文件的信息。</p>
-<p>例如，可能有一个 ZIP 文件，其中包含不同类型的成员文件（.docx、.xlsx、.txt 等）。但并不需要使用 .infolist() 获取完整信息，只需获取有关 .docx 文件的信息。那么可以按扩展名过滤文件并仅在 .docx 文件上调用 .getinfo() 。 来试一试吧！</p>
-<h2 id="读写成员文件"><a href="#读写成员文件" class="headerlink" title="读写成员文件"></a>读写成员文件</h2><p>有时需要在不解压一个 ZIP 文件的情况下读取指定成员文件。为此，可以使用 .read()。此方法接收一个成员文件的 name 并将该文件的内容作为字节返回：</p>
-<pre><code>&gt;&gt;&gt; import zipfile
-
-&gt;&gt;&gt; with zipfile.ZipFile(&quot;sample.zip&quot;, mode=&quot;r&quot;) as archive:
-...     for line in archive.read(&quot;hello.txt&quot;).split(b&quot;\n&quot;):
-...         print(line)
-...
-b&#39;Hello, Pythonista!&#39;
-b&#39;&#39;
-b&#39;Welcome to Real Python!&#39;
-b&#39;&#39;
-b&quot;Ready to try Python&#39;s zipfile module?&quot;
-b&#39;&#39;
-</code></pre>
-<p>为使用 .read()，需要以读取或追加模式打开 ZIP 文件。注意 .read() 以字节流的形式返回目标文件的内容。在此示例中，以换行符 “\n” 作为分隔符，使用 .split() 将流拆分为行。因为 .split() 正在在一个字节对象上进行操作，所以需要在字符串前添加前导 b 作为参数</p>
-<p>ZipFile.read() 还接受名为 pwd 的第二个位置参数。此参数允许您提供用以读取加密文件的密码。要尝试此功能，您可以使用随本教程材料下载的 sample_pwd.zip 文件：</p>
-<pre><code>&gt;&gt;&gt; import zipfile
-
-&gt;&gt;&gt; with zipfile.ZipFile(&quot;sample_pwd.zip&quot;, mode=&quot;r&quot;) as archive:
-...     for line in archive.read(&quot;hello.txt&quot;, pwd=b&quot;secret&quot;).split(b&quot;\n&quot;):
-...         print(line)
-...
-b&#39;Hello, Pythonista!&#39;
-b&#39;&#39;
-b&#39;Welcome to Real Python!&#39;
-b&#39;&#39;
-b&quot;Ready to try Python&#39;s zipfile module?&quot;
-b&#39;&#39;
-
-&gt;&gt;&gt; with zipfile.ZipFile(&quot;sample_pwd.zip&quot;, mode=&quot;r&quot;) as archive:
-...     for line in archive.read(&quot;hello.txt&quot;).split(b&quot;\n&quot;):
-...         print(line)
-...
-Traceback (most recent call last):
-    ...
-RuntimeError: File &#39;hello.txt&#39; is encrypted, password required for extraction
-</code></pre>
-<p>在第一个例子中，提供密码 secret 来读取加密文件。pwd 参数接受字节类型的值。如果在未提供所需密码的情况下对加密文件使用 .read() ，则会得到 RuntimeError，如第二个示例所示。</p>
-<p>Note: Python 的 zipfile 支持解密。但是它不支持创建加密 ZIP 文件。这就是需要使用外部文件归档工具来加密文件的原因。</p>
-<p>一些流行的文件归档工具包括 Windows 上的 7z 和 WinRAR，Linux 上的 Ark 和 GNOME Archive Manager，macOC 上的 Archiver。</p>
-<p>对于大型加密 ZIP 文件，请留意解密操作可能会非常慢，因为它是在纯 Python 中实现的。在这种情况下，请考虑使用专门的程序来处理您的归档而不是使用 zipfile。</p>
-<p>如果经常使用加密文件，那么可能希望避免每次调用 .read() 或其他接受 pwd 参数的方法时提供密码。如果是这种情况，可以使用 ZipFile.setpassword() 设置一个全局密码：</p>
-<pre><code>&gt;&gt;&gt; import zipfile
-
-&gt;&gt;&gt; with zipfile.ZipFile(&quot;sample_pwd.zip&quot;, mode=&quot;r&quot;) as archive:
-...     archive.setpassword(b&quot;secret&quot;)
-...     for file in archive.namelist():
-...         print(file)
-...         print(&quot;-&quot; * 20)
-...         for line in archive.read(file).split(b&quot;\n&quot;):
-...             print(line)
-...
-hello.txt
---------------------
-b&#39;Hello, Pythonista!&#39;
-b&#39;&#39;
-b&#39;Welcome to Real Python!&#39;
-b&#39;&#39;
-b&quot;Ready to try Python&#39;s zipfile module?&quot;
-b&#39;&#39;
-lorem.md
---------------------
-b&#39;# Lorem Ipsum&#39;
-b&#39;&#39;
-b&#39;Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-    ...
-</code></pre>
-<p>使用 .setpassword()，只需要提供一次密码。ZipFile 使用该唯一密码来解密所有成员文件。</p>
-<p>相反，如果您的 ZIP 文件的各个成员文件具有不同的密码，那么需要使用 .read() 的 pwd 参数为每个文件提供特定的密码：</p>
-<pre><code>&gt;&gt;&gt; import zipfile
-
-&gt;&gt;&gt; with zipfile.ZipFile(&quot;sample_file_pwd.zip&quot;, mode=&quot;r&quot;) as archive:
-...     for line in archive.read(&quot;hello.txt&quot;, pwd=b&quot;secret1&quot;).split(b&quot;\n&quot;):
-...         print(line)
-...
-b&#39;Hello, Pythonista!&#39;
-b&#39;&#39;
-b&#39;Welcome to Real Python!&#39;
-b&#39;&#39;
-b&quot;Ready to try Python&#39;s zipfile module?&quot;
-b&#39;&#39;
-
-&gt;&gt;&gt; with zipfile.ZipFile(&quot;sample_file_pwd.zip&quot;, mode=&quot;r&quot;) as archive:
-...     for line in archive.read(&quot;lorem.md&quot;, pwd=b&quot;secret2&quot;).split(b&quot;\n&quot;):
-...         print(line)
-...
-b&#39;# Lorem Ipsum&#39;
-b&#39;&#39;
-b&#39;Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-    ...
-</code></pre>
-<p>在这个例子中，使用 secret1 作为读取 hello.txt 的密码，secret2 作为读取 lorem.md 的。最后一个需要考虑的细节是，当使用 pwd 参数时，会覆盖可能已经通过 .setpassword() 设置的任何归档级密码。</p>
-<p>Note: 在使用不支持的压缩算法的 ZIP 文件上调用 .read() 会引发 NotImplementedError。如果所需的压缩模块在您的 Python 安装中不可用，也会收到错误信息。</p>
-<p>如果您正在寻找一种更灵活的方式来读取成员文件并创建和添加新的成员文件到归档中，那么 ZipFile.open() 适合您。与内置的 open() 函数一样，该方法实现了上下文管理器协议，因此它支持 with 语句：</p>
-<pre><code>&gt;&gt;&gt; import zipfile
-
-&gt;&gt;&gt; with zipfile.ZipFile(&quot;sample.zip&quot;, mode=&quot;r&quot;) as archive:
-...     with archive.open(&quot;hello.txt&quot;, mode=&quot;r&quot;) as hello:
-...         for line in hello:
-...             print(line)
-...
-b&#39;Hello, Pythonista!\n&#39;
-b&#39;\n&#39;
-b&#39;Welcome to Real Python!\n&#39;
-b&#39;\n&#39;
-b&quot;Ready to try Python&#39;s zipfile module?\n&quot;
-</code></pre>
-<p>在本例中，打开 hello.txt 以读取。open() 的第一个参数是 name ，表示要打开的成员文件。第二个参数是模式，像往常一样默认为 “r”。ZipFile.open() 还接受一个用于打开加密文件的 pwd 参数。此参数与 .read() 中的同名参数作用相同。</p>
-<p>您还可以将 .open() 与 “w” 模式组合使用。此模式允许创建一个新的成员文件，向其中写入内容，最后将该文件附加到底层归档，应以追加模式打开：</p>
-<pre><code>&gt;&gt;&gt; import zipfile
-
-&gt;&gt;&gt; with zipfile.ZipFile(&quot;sample.zip&quot;, mode=&quot;a&quot;) as archive:
-...     with archive.open(&quot;new_hello.txt&quot;, &quot;w&quot;) as new_hello:
-...         new_hello.write(b&quot;Hello, World!&quot;)
-...
-13
-
-&gt;&gt;&gt; with zipfile.ZipFile(&quot;sample.zip&quot;, mode=&quot;r&quot;) as archive:
-...     archive.printdir()
-...     print(&quot;------&quot;)
-...     archive.read(&quot;new_hello.txt&quot;)
-...
-File Name                                        Modified             Size
-hello.txt                                 2021-09-07 19:50:10           83
-lorem.md                                  2021-09-07 19:50:10         2609
-realpython.md                             2021-09-07 19:50:10          428
-new_hello.txt                             1980-01-01 00:00:00           13
-------
-b&#39;Hello, World!&#39;
-</code></pre>
-<p>在第一个代码片段中，以追加模式（”a”）打开 sample.zip 。然后通过以 “w” 模式调用 .open() 创建 new_hello.txt。此函数返回一个支持 .write() 的类文件对象，它允许您将字节写入新创建的文件。</p>
-<p>Note: 需要为 .open() 提供一个非现有的文件名。如果使用底层归档中已经存在的文件名，那么会最终得到一个重复的文件和一个 UserWarning 异常。</p>
-<p>在此示例中，将 b’Hello, World!’ 写入 new_hello.txt。当执行流退出内部 with 语句时，Python 将输入字节写入成员文件。当外部 with 语句退出时，Python 会将 new_hello.txt 写入底层 ZIP 文件 sample.zip。</p>
-<p>第二个代码片段证实了 new_hello.txt 现在是 sample.zip 的成员文件。在这个示例的输出中需要注意的一个细节是，.write() 将新添加的文件的 Modified 日期设置为 1980-01-01 00:00:00。这是一个奇怪的行为，使用此方法时应牢记。</p>
-<h2 id="将成员文件的内容作为文本读取"><a href="#将成员文件的内容作为文本读取" class="headerlink" title="将成员文件的内容作为文本读取"></a>将成员文件的内容作为文本读取</h2><p>正如您在上一节中所了解的，可以使用 .read() 和 .write() 方法来实现不从 ZIP 归档中提取而直接读写成员文件。这两种方法都仅适用于字节。</p>
-<p>然而，当您有一个包含文本文件的 ZIP 归档时，可能希望将其内容作为文本而不是字节来读取。至少有两种方法可以做到这一点。可以使用：</p>
-<p>bytes.decode()<br>io.TextIOWrapper<br>因为 ZipFile.read() 以字节形式返回目标成员文件的内容，故 .decode() 可以直接对这些字节进行操作。.decode() 方法使用给定的字符编码格式将 bytes 对象解码为字符串。</p>
-<p>以下为如何使用 .decode() 以从 sample.zip 归档中的 hello.txt 文件中读取文本：</p>
-<pre><code>&gt;&gt;&gt; import zipfile
-
-&gt;&gt;&gt;  with zipfile.ZipFile(&quot;sample.zip&quot;, mode=&quot;r&quot;) as archive:
-...     text = archive.read(&quot;hello.txt&quot;).decode(encoding=&quot;utf-8&quot;)
-...
-
-&gt;&gt;&gt; print(text)
-Hello, Pythonista!
-
-Welcome to Real Python!
-
-Ready to try Python&#39;s zipfile module?
-</code></pre>
-<p>在此示例中，将 hello.txt 的内容作为字节读取。然后调用 .decode() 来将字节解码为使用 UTF-8 作为编码的字符串。为设置 encoding 参数，使用 “utf-8” 字符串。然而，可以使用任何其他有效编码，例如 UTF-16 或 cp1252，用不区分大小写的字符串表示它们。注意 “utf-8” 是 .decode() 的 encoding 参数的默认值。</p>
-<p>时刻注意，您需要事先知道要使用 .decode() 处理的任何成员文件的字符编码格式。如果使用了错误的字符编码，那么代码将无法将底层字节正确解码为文本，最终可能会得到大量无法辨认的字符。</p>
-<p>译者注：对于简体中文读者，最常见的一个乱码错误是，中文文本文件使用 Windows 默认的 GB2312 编码保存，而此处被以默认的 UTF-8 解码。因此见到许多“烫烫烫的锟斤拷”时不必惊慌，指定使用 GB2312 再尝试读取一次，很可能便解决了问题。</p>
-<p>从成员文件中读取文本的第二个选项是使用 io.TextIOWrapper 对象，它提供具有缓冲的文字流。这次需要使用 .open() 而不是 .read()。以下是一个使用 io.TextIOWrapper 将 hello.txt 成员文件作为文字流读取的示例：</p>
-<pre><code>&gt;&gt;&gt; import io
-&gt;&gt;&gt; import zipfile
-
-&gt;&gt;&gt; with zipfile.ZipFile(&quot;sample.zip&quot;, mode=&quot;r&quot;) as archive:
-...     with archive.open(&quot;hello.txt&quot;, mode=&quot;r&quot;) as hello:
-...         for line in io.TextIOWrapper(hello, encoding=&quot;utf-8&quot;):
-...             print(line.strip())
-...
-Hello, Pythonista!
-
-Welcome to Real Python!
-
-Ready to try Python&#39;s zipfile module?
-</code></pre>
-<p>在本例的内层 with 语句中，从 sample.zip 归档中打开成员文件 hello.txt。然后将生成的二进制类文件对象 hello 作为参数传递给 io.TextIOWrapper。这通过使用 UTF-8 字符编码格式解码 hello 的内容来创建有缓冲的文字流。因此，可以直接从目标成员文件中获得文字流。</p>
-<p>就像 .encode() 一样，io.TextIOWrapper 类接受一个 encoding 参数。您应该始终为此参数指定一个值，因为默认文本编码取决于运行代码的操作系统，并且可能并非尝试解码的文件的正确值。</p>
-<h2 id="从您的-ZIP-归档中提取成员文件"><a href="#从您的-ZIP-归档中提取成员文件" class="headerlink" title="从您的 ZIP 归档中提取成员文件"></a>从您的 ZIP 归档中提取成员文件</h2><p>提取给定归档的内容是对 ZIP 文件执行的最常见操作之一。根据您的需要，可能希望一次提取一个文件，或一次提取所有文件。</p>
-<p>ZipFile.extract() 可以完成第一个任务。此方法接受一个 member 成员文件的名称，并将其提取到由 path 指定的目录。目标 path 默认为当前目录：</p>
-<pre><code>&gt;&gt;&gt; import zipfile
-
-&gt;&gt;&gt; with zipfile.ZipFile(&quot;sample.zip&quot;, mode=&quot;r&quot;) as archive:
-...     archive.extract(&quot;new_hello.txt&quot;, path=&quot;output_dir/&quot;)
-...
-&#39;output_dir/new_hello.txt&#39;
-</code></pre>
-<p>现在 new_hello.txt 将会出现在 output_dir/ 目录中。如果目标文件名已存在于输出目录中，则 .extract() 将不经请求确认直接覆盖它。如果输出目录不存在，则 .extract() 会为您创建它。注意 .extract() 返回提取文件的路径。</p>
-<p>成员文件的名称必须是 .namelist() 返回的文件全名。它也可以是一个包含文件信息的 ZipInfo 对象。</p>
-<p>您还可以将 .extract() 用于加密文件。在这种情况下，需要提供所需的 pwd 参数或使用 .setpassword() 设置归档级密码。</p>
-<p>当涉及到从归档中提取所有成员文件时，可以使用 .extractall()。顾名思义，此方法将所有成员文件提取到目标路径（默认为当前目录）：</p>
-<pre><code>&gt;&gt;&gt; import zipfile
-
-&gt;&gt;&gt; with zipfile.ZipFile(&quot;sample.zip&quot;, mode=&quot;r&quot;) as archive:
-...     archive.extractall(&quot;output_dir/&quot;)
-...
-</code></pre>
-<p>运行此代码后，sample.zip 中的所有当前内容将出现在 out_dir/ 目录中。如果将一个不存在的目录传递给 .extractall()，那么该方法会自动创建这个目录。最后，如果目标目录中已经存在任何成员文件，那么 .extractall() 将不经请求确认直接覆盖掉它们，所以要小心。</p>
-<p>如果只需要从给定归档中提取一些成员文件，则可以使用 members 参数。此参数接受成员文件列表，即手头归档中全部文件列表的子集。最后，就像 .extract() 一样，.extractall() 方法也接受 pwd 参数来提取加密文件。</p>
-<h2 id="使用后关闭-ZIP-文件"><a href="#使用后关闭-ZIP-文件" class="headerlink" title="使用后关闭 ZIP 文件"></a>使用后关闭 ZIP 文件</h2><p>有时候，不使用 with 语句可以便捷地打开一个给定的 ZIP 文件。在这些情况下，需要在使用后手动关闭归档以完成所有写入操作并释放获取的资源。</p>
-<p>为此，可以在 ZipFile 对象上调用 .close()：</p>
-<pre><code>&gt;&gt;&gt; import zipfile
-
-&gt;&gt;&gt; archive = zipfile.ZipFile(&quot;sample.zip&quot;, mode=&quot;r&quot;)
-
-&gt;&gt;&gt; # 在代码的不同部分使用归档
-&gt;&gt;&gt; archive.printdir()
-File Name                                        Modified             Size
-hello.txt                                 2021-09-07 19:50:10           83
-lorem.md                                  2021-09-07 19:50:10         2609
-realpython.md                             2021-09-07 19:50:10          428
-new_hello.txt                             1980-01-01 00:00:00           13
-
-&gt;&gt;&gt; # 完成后关闭归档
-&gt;&gt;&gt; archive.close()
-&gt;&gt;&gt; archive
-&lt;zipfile.ZipFile [closed]&gt;
-</code></pre>
-<p>调用 .close() 会关闭 archive 。在退出程序之前，必须调用 .close()。否则可能无法执行某些写入操作。例如，如果打开一个 ZIP 文件追加（”a”）新的成员文件，则需要关闭归档以写入文件。</p>
-<h1 id="创建、填充和提取您自己的-ZIP-文件"><a href="#创建、填充和提取您自己的-ZIP-文件" class="headerlink" title="创建、填充和提取您自己的 ZIP 文件"></a>创建、填充和提取您自己的 ZIP 文件</h1><p>到目前为止，您已经学会了如何操纵现有的 ZIP 文件。您已经学会了使用 ZipFile 的不同模式来读取、写入和追加成员文件。您还学习了如何读取相关元数据以及如何提取给定 ZIP 文件的内容。</p>
-<p>在本节中，您将编写一些练习示例，帮助您学习如何使用 zipfile 和其他 Python 工具从多个输入文件和整个目录创建 ZIP 文件。您还将学习如何使用 zipfile 进行文件压缩等。</p>
-<h2 id="从多个常规文件创建-ZIP-文件"><a href="#从多个常规文件创建-ZIP-文件" class="headerlink" title="从多个常规文件创建 ZIP 文件"></a>从多个常规文件创建 ZIP 文件</h2><p>有时您需要从多个相关的文件创建 ZIP 归档。这样将所有的文件放在一个容器中，以便通过计算机网络分发或与朋友同事分享。为此可以创建目标文件列表并使用 ZipFile 和循环将它们写入归档：</p>
-<pre><code>&gt;&gt;&gt; import zipfile
-
-&gt;&gt;&gt; filenames = [&quot;hello.txt&quot;, &quot;lorem.md&quot;, &quot;realpython.md&quot;]
-
-&gt;&gt;&gt; with zipfile.ZipFile(&quot;multiple_files.zip&quot;, mode=&quot;w&quot;) as archive:
-...     for filename in filenames:
-...         archive.write(filename)
-...
-</code></pre>
-<p>此处，创建了一个 ZipFile 对象，并将所需的归档名称作为其第一个参数。”w” 模式允许您将成员文件写入最终的 ZIP 文件。</p>
-<p>for() 循环遍历您输入的文件列表，并使用 .write() 将它们写入底层 ZIP 文件。一旦程序流退出 with 语句，ZipFile 会自动关闭归档，保存更改。现在获得了一个包含原始文件列表中所有文件的 multiple_files.zip 归档。</p>
-<h2 id="从目录创建-ZIP-文件"><a href="#从目录创建-ZIP-文件" class="headerlink" title="从目录创建 ZIP 文件"></a>从目录创建 ZIP 文件</h2><p>将一个目录中的内容打包到单个归档中是 ZIP 文件的另一个日常用法。Python 有几个工具可以与 zipfile 一起使用来完成这项任务。例如，可以使用 pathlib 读取给定目录的内容。有了这些信息，可以使用 ZipFile 创建一个容器归档。</p>
-<p>在 python-zipfile/ 目录中，有一个名为 source_dir/ 的子目录，内容如下：</p>
-<pre><code>source_dir/
-│
-├── hello.txt
-├── lorem.md
-└── realpython.md
-</code></pre>
-<p>在 source_dir/ 中，只有三个普通文件。因为目录不包含子目录，所以可以使用 pathlib.Path.iterdir() 直接迭代其内容。按照这个思路，以下是从 source_dir/ 的内容构建 ZIP 文件的方法：</p>
-<pre><code>&gt;&gt;&gt; import pathlib
-&gt;&gt;&gt; import zipfile
-
-&gt;&gt;&gt; directory = pathlib.Path(&quot;source_dir/&quot;)
-
-&gt;&gt;&gt; with zipfile.ZipFile(&quot;directory.zip&quot;, mode=&quot;w&quot;) as archive:
-...    for file_path in directory.iterdir():
-...        archive.write(file_path, arcname=file_path.name)
-...
-
-&gt;&gt;&gt; with zipfile.ZipFile(&quot;directory.zip&quot;, mode=&quot;r&quot;) as archive:
-...     archive.printdir()
-...
-File Name                                        Modified             Size
-realpython.md                             2021-09-07 19:50:10          428
-hello.txt                                 2021-09-07 19:50:10           83
-lorem.md                                  2021-09-07 19:50:10         2609
-</code></pre>
-<p>在此示例中，从源目录创建一个 pathlib.Path 对象。第一个 with 语句创建了一个可以写入的 ZipFile 对象。然后对 .iterdir() 的调用会返回一个遍历底层目录中条目的迭代器。</p>
-<p>因为在 source_dir/ 中没有任何子目录，.iterdie() 函数只生成（yield）文件。for 循环遍历文件并将它们写入归档。</p>
-<p>在此示例中，将 file_path.name 传递给 .write() 的第二个参数。此参数名为 arcname，保存着生成的归档中成员文件的名称。到目前为止，以上所有示例都依赖于 arcname 的默认值，即与作为第一个参数传递给 .write() 的文件名相同。</p>
-<p>如果不将 file_path.name 传递给 arcname，那么源目录将作为 ZIP 文件的根目录。根据您的需要，这也可能是有效的结果。</p>
-<p>现在查看工作目录中的 root_dir/ 文件夹。在此例中，您会发现以下结构：</p>
-<pre><code>root_dir/
-│
-├── sub_dir/
-│   └── new_hello.txt
-│
-├── hello.txt
-├── lorem.md
-└── realpython.md
-</code></pre>
-<p>此处有普通文件和一个包含单个文件的子目录。如果想创建一个具有相同内部结构的 ZIP 文件，那么需要一个工具来递归地遍历 root_dir/ 下的目录树。</p>
-<p>以下是如何使用 zipfile 和 pathlib 模块中的Path.rglob() 来 zip 一个像上面那个一样的完整的目录树的方法：</p>
-<pre><code>&gt;&gt;&gt; import pathlib
-&gt;&gt;&gt; import zipfile
-
-&gt;&gt;&gt; directory = pathlib.Path(&quot;root_dir/&quot;)
-
-&gt;&gt;&gt; with zipfile.ZipFile(&quot;directory_tree.zip&quot;, mode=&quot;w&quot;) as archive:
-...     for file_path in directory.rglob(&quot;*&quot;):
-...         archive.write(
-...             file_path,
-...             arcname=file_path.relative_to(directory)
-...         )
-...
-
-&gt;&gt;&gt; with zipfile.ZipFile(&quot;directory_tree.zip&quot;, mode=&quot;r&quot;) as archive:
-...     archive.printdir()
-...
-File Name                                        Modified             Size
-sub_dir/                                  2021-09-09 20:52:14            0
-realpython.md                             2021-09-07 19:50:10          428
-hello.txt                                 2021-09-07 19:50:10           83
-lorem.md                                  2021-09-07 19:50:10         2609
-sub_dir/new_hello.txt                     2021-08-31 17:13:44           13
-</code></pre>
-<p>在此示例中，使用 Path.rglob() 递归遍历 root_dir/ 下的目录树。然后将每个文件和子目录写入目标 ZIP 归档。</p>
-<p>这一次，使用 Path.relative_to() 来获取每个文件的相对路径，然后将其结果传递给 .write() 的第二个参数。这样生成的 ZIP 文件最终具有与源目录相同的内部结构。再一次，如果您希望源目录作为 ZIP 文件的根目录，则可以去掉这个参数。</p>
-<h2 id="压缩文件和目录"><a href="#压缩文件和目录" class="headerlink" title="压缩文件和目录"></a>压缩文件和目录</h2><p>如果您的文件占用了太多磁盘空间，那么可以考虑压缩它们。Python 的 zipfile 支持一些流行的压缩方法。但该模块默认情况下不会压缩文件。如果想让文件更小，那么需要显式地为 ZipFile 提供一种压缩方法。</p>
-<p>通常，术语 stored 指代写入未压缩的 ZIP 文件的成员文件。这就是为什么 ZipFile 的默认压缩方法称为 ZIP_STORED，它实际上是指简单存储在归档中未压缩的成员文件。</p>
-<p>compression 方法是 ZipFile 初始化方法的第三个参数。如果想在文件写入 ZIP 归档时压缩文件，则可以将此参数设置为以下常量之一：</p>
-<p>常量    压缩方法    所需模块<br>zipfile.ZIP_DEFLATED    Deflate    zlib<br>zipfile.ZIP_BZIP2    Bzip2    bz2<br>zipfile.ZIP_LZMA    LZMA    lzma</p>
-<p>这些是您目前可以与 ZipFile 一起使用的压缩方法。除此之外的方法会引发 NotImplementedError。从 Python 3.10 开始，zipfile 没有其他额外可用的压缩方法。</p>
-<p>作为一项附加的 requirement，如果选择其中一种方法，则为其提供支持的压缩模块必须在您的 Python 安装中可用。否则，会得到一个 RuntimeError 异常，然后代码会崩溃。</p>
-<p>在压缩文件时，另一个与 ZipFile 相关的参数是 compresslevel。此参数控制使用的压缩级别。</p>
-<p>使用 Deflate 方法，compresslevel 可以取从 0 到 9 的整数。使用 Bzip2 方法，可以传递从 1 到 9 的整数。在这两种情况下，当压缩级别增加时，压缩率会更高，压缩速度会更慢。</p>
-<p>Note: PNG、JPG、MP3 之类的二进制文件，已经使用了某种压缩方式。因此，将它们添加到 ZIP 文件可能并不会使数据变得更小，因为它已经被压缩到一定程度。</p>
-<p>现在假设您要使用 Deflate 方法来归档和压缩给定目录的内容（这是 ZIP 文件中最常用的方法）。为此可以运行以下代码：</p>
-<pre><code>&gt;&gt;&gt; import pathlib
-&gt;&gt;&gt; from zipfile import ZipFile, ZIP_DEFLATED
-
-&gt;&gt;&gt; directory = pathlib.Path(&quot;source_dir/&quot;)
-
-&gt;&gt;&gt; with ZipFile(&quot;comp_dir.zip&quot;, &quot;w&quot;, ZIP_DEFLATED, compresslevel=9) as archive:
-...     for file_path in directory.rglob(&quot;*&quot;):
-...         archive.write(file_path, arcname=file_path.relative_to(directory))
-...
-</code></pre>
-<p>在此示例中，将 9 传递给 compresslevel 以获得最大压缩。提供此参数时要使用关键字参数。这是因为 compresslevel 并非 ZipFile 初始化时的第四个位置参数。</p>
-<p>Note: ZipFile 的初始化时，接受名为 allowZip64 的第四个参数。这是一个布尔参数，告诉 ZipFile 为大于 4 GB 的文件使用 .zip64 扩展。</p>
-<p>运行此代码后，在当前目录中会出现一个 comp_dir.zip 文件。如果将该文件的大小与原始 sample.zip 文件的进行比较，会发现文件大小显著减小。</p>
-<h2 id="依次创建-ZIP-文件"><a href="#依次创建-ZIP-文件" class="headerlink" title="依次创建 ZIP 文件"></a>依次创建 ZIP 文件</h2><p>依次创建 ZIP 文件可能是日常编程中的另一个常见需求。例如，可能需要创建一个包含或不包含内容的初始 ZIP 文件，然后在新成员文件可用时立即追加它们。在这种情况下，需要多次打开和关闭目标 ZIP 文件。</p>
-<p>为解决这个问题，可以在追加模式（”a”）下使用 ZipFile，像先前那样。此模式允许您安全地将新成员文件追加到 ZIP 归档而不截断其当前内容：</p>
-<pre><code>&gt;&gt;&gt; import zipfile
-
-&gt;&gt;&gt; def append_member(zip_file, member):
-...     with zipfile.ZipFile(zip_file, mode=&quot;a&quot;) as archive:
-...         archive.write(member)
-...
-
-&gt;&gt;&gt; def get_file_from_stream():
-...     &quot;&quot;&quot;Simulate a stream of files.&quot;&quot;&quot;
-...     for file in [&quot;hello.txt&quot;, &quot;lorem.md&quot;, &quot;realpython.md&quot;]:
-...         yield file
-...
-
-&gt;&gt;&gt; for filename in get_file_from_stream():
-...     append_member(&quot;incremental.zip&quot;, filename)
-...
-
-&gt;&gt;&gt; with zipfile.ZipFile(&quot;incremental.zip&quot;, mode=&quot;r&quot;) as archive:
-...     archive.printdir()
-...
-File Name                                        Modified             Size
-hello.txt                                 2021-09-07 19:50:10           83
-lorem.md                                  2021-09-07 19:50:10         2609
-realpython.md                             2021-09-07 19:50:10          428
-</code></pre>
-<p>在此示例中，append_member() 是一个将文件（member）追加到输入 ZIP 归档（zip_file）的函数。要执行此操作，该函数会在每次被调用时打开和关闭目标归档。使用函数来执行此任务可以根据需要多次复用代码。</p>
-<p>get_file_from_stream() 函数是一个生成器函数，用于模拟要处理的文件流。同时，for 循环使用 append_number() 将成员文件依次添加到 incremental.zip 中。如果在运行此代码后检查工作目录，那么您会发现一个 incremental.zip 归档，其中包含传递到循环中的三个文件。</p>
-<h2 id="提取文件和目录"><a href="#提取文件和目录" class="headerlink" title="提取文件和目录"></a>提取文件和目录</h2><p>对 ZIP 文件执行的最常见操作之一是将其内容提取到文件系统中的指定目录中。您已经学习了使用 .extract() 和 .extractall() 从归档中提取一个或所有文件的基础知识。</p>
-<p>再举一个例子，回到 sample.zip 文件。此时归档包含四个不同类型的文件。有两个 .txt 文件和两个 .md 文件。假设只想提取 .md 文件。为此，可以运行以下代码：</p>
-<pre><code>&gt;&gt;&gt; import zipfile
-
-&gt;&gt;&gt; with zipfile.ZipFile(&quot;sample.zip&quot;, mode=&quot;r&quot;) as archive:
-...     for file in archive.namelist():
-...         if file.endswith(&quot;.md&quot;):
-...             archive.extract(file, &quot;output_dir/&quot;)
-...
-&#39;output_dir/lorem.md&#39;
-&#39;output_dir/realpython.md&#39;
-</code></pre>
-<p>with 语句打开 sample.zip 以供读取。循环使用 namelist() 遍历归档中的每个文件，而条件语句检查文件名是否以 .md 扩展名结尾。如果是，则使用 .extract() 将手头的文件解压到目标目录 output_dir/。</p>
-<h1 id="探索-zipfile-的其他类"><a href="#探索-zipfile-的其他类" class="headerlink" title="探索 zipfile 的其他类"></a>探索 zipfile 的其他类</h1><p>到目前为止，您已经了解了 zipfile 中可用的两个类： ZipFile 和 ZipInfo。该模块还提供了另外两个在某些情况下能派上用场的类。它们是 zipfile.Path 和 zipfile.PyZipFile。在以下两节中，您将了解这些类的基础知识及其主要功能。</p>
-<h1 id="在-ZIP-文件中查找-PATH"><a href="#在-ZIP-文件中查找-PATH" class="headerlink" title="在 ZIP 文件中查找 PATH"></a>在 ZIP 文件中查找 PATH</h1><p>当使用您最爱的归档应用程序打开 ZIP 文件时，会看到归档的内部结构。可能在归档的根目录中有文件。也可能有包含更多文件的子目录。归档看起来很像文件系统上的普通目录，每个文件都位于特定路径（PATH）。</p>
-<p>zipfile.Path 类可以构建路径对象以快速创建和管理给定 ZIP 文件中的成员文件和目录的路径。该类接受两个参数：</p>
-<p>root 接受一个 ZIP 文件，可以是 ZipFile 对象，也可以是字符串格式的指向物理 ZIP 文件的路径。<br>at 保存归档中特定成员文件或目录的位置。它默认为空字符串，表示归档的根路径。<br>以老朋友 sample.zip 作为目标，运行以下代码：</p>
-<pre><code>&gt;&gt;&gt; import zipfile
-
-&gt;&gt;&gt; hello_txt = zipfile.Path(&quot;sample.zip&quot;, &quot;hello.txt&quot;)
-
-&gt;&gt;&gt; hello_txt
-Path(&#39;sample.zip&#39;, &#39;hello.txt&#39;)
-
-&gt;&gt;&gt; hello_txt.name
-&#39;hello.txt&#39;
-
-&gt;&gt;&gt; hello_txt.is_file()
-True
-
-&gt;&gt;&gt; hello_txt.exists()
-True
-
-&gt;&gt;&gt; print(hello_txt.read_text())
-Hello, Pythonista!
-
-Welcome to Real Python!
-
-Ready to try Python&#39;s zipfile module?
-</code></pre>
-<p>这段代码展示了 zipfile.Path 实现了与 pathlib.Path 对象相同的几个功能。可以使用 .name 获取文件的名称。可以使用 .is_file() 来检查路径是否指向一个普通文件。可以检查给定文件是否存在于特定 ZIP 文件中，等等。</p>
-<p>Path 还提供了 .open() 方法来使用不同的模式打开成员文件。例如，下面的代码打开 hello.txt 以供读取：</p>
-<pre><code>&gt;&gt;&gt; import zipfile
-
-&gt;&gt;&gt; hello_txt = zipfile.Path(&quot;sample.zip&quot;, &quot;hello.txt&quot;)
-
-&gt;&gt;&gt; with hello_txt.open(mode=&quot;r&quot;) as hello:
-...     for line in hello:
-...         print(line)
-...
-Hello, Pythonista!
-
-Welcome to Real Python!
-
-Ready to try Python&#39;s zipfile module?
-</code></pre>
-<p>使用 Path，可以快速创建指向给定 ZIP 文件中特定成员文件的路径对象，并使用 .open() 立即访问其内容。</p>
-<p>就像使用 pathlib.Path 对象一样，可以通过在 zipfile.Path 对象上调用 .iterdir() 来列出 ZIP 文件的内容：</p>
-<pre><code>&gt;&gt;&gt; import zipfile
-
-&gt;&gt;&gt; root = zipfile.Path(&quot;sample.zip&quot;)
-&gt;&gt;&gt; root
-Path(&#39;sample.zip&#39;, &#39;&#39;)
-
-&gt;&gt;&gt; root.is_dir()
-True
-
-&gt;&gt;&gt; list(root.iterdir())
-[
-    Path(&#39;sample.zip&#39;, &#39;hello.txt&#39;),
-    Path(&#39;sample.zip&#39;, &#39;lorem.md&#39;),
-    Path(&#39;sample.zip&#39;, &#39;realpython.md&#39;)
-]
-</code></pre>
-<p>显然，zipfile.Path 提供了许多实用的功能，您可以使用这些功能快速管理 ZIP 归档中的成员文件。</p>
-<h2 id="使用-PyZipFile-构建可导入的-ZIP-文件"><a href="#使用-PyZipFile-构建可导入的-ZIP-文件" class="headerlink" title="使用 PyZipFile 构建可导入的 ZIP 文件"></a>使用 PyZipFile 构建可导入的 ZIP 文件</h2><p>zipfile 中另一个实用的类是 PyZipFile。这个类与 ZipFile 非常相似，当需要将 Python 模块和包捆绑到 ZIP 文件中时，它特别方便。与 ZipFile 的主要区别在于，PyZipFile 初始化时使用一个名为 optimize 的可选参数，它允许您通过在归档前将 Python 代码编译为字节码来优化 Python 代码。</p>
-<p>PyZipFile 提供与 ZipFile 相同的接口，但增加了 .writepy()。此方法可以接受一个 Python 文件（.py）作为参数，并将其添加到底层 ZIP 文件中。如果 optimize 为 -1（默认值），则 .py 文件会自动编译为 .pyc 文件，然后添加到目标归档中。为什么会这样？</p>
-<p>从 2.3 开始，Python 解释器支持从 ZIP 文件导入 Python 代码，这种功能称为 Zip imports。它可以创建可导入的 ZIP 文件以将模块和包作为单个归档分发。</p>
-<p>Note: 也可以使用 ZIP 文件格式来创建和分发 Python 可执行应用程序（通常称为 Python Zip 应用程序）。要了解如何创建它们，请查看 Python’s zipapp: Build Executable Zip Applications。</p>
-<p>当需要生成可导入的 ZIP 文件时，PyZipFile 很有用。打包 .pyc 文件而不是 .py 文件使得导入过程效率大幅提高，因为它跳过了编译步骤。</p>
-<p>在 python-zipfile/ 目录中，有一个 hello.py 模块，其内容如下：</p>
-<pre><code>&quot;&quot;&quot;Print a greeting message.&quot;&quot;&quot;
-# hello.py
-
-def greet(name=&quot;World&quot;):
-    print(f&quot;Hello, &#123;name&#125;! Welcome to Real Python!&quot;)
-</code></pre>
-<p>这段代码定义了一个名为 greet() 的函数，它接受 name 作为参数并将问候消息打印到屏幕上。现在假设您想将此模块打包成一个 ZIP 以进行分发。为此，可以运行以下代码：</p>
-<pre><code>&gt;&gt;&gt; import zipfile
-
-&gt;&gt;&gt; with zipfile.PyZipFile(&quot;hello.zip&quot;, mode=&quot;w&quot;) as zip_module:
-...     zip_module.writepy(&quot;hello.py&quot;)
-...
-
-&gt;&gt;&gt; with zipfile.PyZipFile(&quot;hello.zip&quot;, mode=&quot;r&quot;) as zip_module:
-...     zip_module.printdir()
-...
-File Name                                        Modified             Size
-hello.pyc                                 2021-09-13 13:25:56          311
-</code></pre>
-<p>在此示例中，对 .writepy() 的调用会自动将 hello.py 编译为 hello.pyc，并将其存储在 hello.zip 中。当使用 printdir() 列出归档的内容时就很明显了。</p>
-<p>将 hello.py 捆绑到一个 ZIP 文件后，可以使用 Python 的 import 系统从其包含的归档中导入此模块：</p>
-<pre><code>&gt;&gt;&gt; import sys
-
-&gt;&gt;&gt; # Insert the archive into sys.path
-&gt;&gt;&gt; sys.path.insert(0, &quot;/home/user/python-zipfile/hello.zip&quot;)
-&gt;&gt;&gt; sys.path[0]
-&#39;/home/user/python-zipfile/hello.zip&#39;
-
-&gt;&gt;&gt; # Import and use the code
-&gt;&gt;&gt; import hello
-
-&gt;&gt;&gt; hello.greet(&quot;Pythonista&quot;)
-Hello, Pythonista! Welcome to Real Python!
-</code></pre>
-<p>从 ZIP 文件导入代码的第一步是使该文件在 sys.path 中可用。此变量包含一个字符串列表，该列表为模块指定 Python 的搜索路径。要向 sys.path 添加新项，可以使用 .insert()。</p>
-<p>为了让这个示例正常工作，需要更改占位符路径并将路径指向您的文件系统上的 hello.zip。一旦可导入 ZIP 文件在此列表中，就可以像使用常规模块一样导入代码。</p>
-<p>最后，考虑一下工作目录中的 hello/ 子目录。它包含一个具有以下结构的小型 Python 包：</p>
-<pre><code>hello/
-|
-├── __init__.py
-└── hello.py
-</code></pre>
-<p><strong>init</strong>.py 模块将 hello/ 目录转换为 Python 包。hello.py 模块与在上一个示例中使用的模块相同。现在假设您想将此包捆绑到一个 ZIP 文件中。这种情况下，可以执行以下操作：</p>
-<pre><code>&gt;&gt;&gt; import zipfile
-
-&gt;&gt;&gt; with zipfile.PyZipFile(&quot;hello.zip&quot;, mode=&quot;w&quot;) as zip_pkg:
-...     zip_pkg.writepy(&quot;hello&quot;)
-...
-
-&gt;&gt;&gt; with zipfile.PyZipFile(&quot;hello.zip&quot;, mode=&quot;r&quot;) as zip_pkg:
-...     zip_pkg.printdir()
-...
-File Name                                        Modified             Size
-hello/__init__.pyc                        2021-09-13 13:39:30          108
-hello/hello.pyc                           2021-09-13 13:39:30          317
-</code></pre>
-<p>对 .writepy() 的调用将 hello 包作为参数，在其中搜索 .py 文件，将它们编译成 .pyc 文件，最后将它们添加到目标 ZIP 文件 hello.zip 中。同样，可以按照之前学习的步骤从该归档中导入代码：</p>
-<pre><code>&gt;&gt;&gt; import sys
-
-&gt;&gt;&gt; sys.path.insert(0, &quot;/home/user/python-zipfile/hello.zip&quot;)
-
-&gt;&gt;&gt; from hello import hello
-
-&gt;&gt;&gt; hello.greet(&quot;Pythonista&quot;)
-Hello, Pythonista! Welcome to Real Python!
-</code></pre>
-<p>因为现在代码在一个包中，需要先从 hello 包中导入 hello 模块。然后就可以正常访问 greet() 函数了。</p>
-<h1 id="从命令行运行-zipfile"><a href="#从命令行运行-zipfile" class="headerlink" title="从命令行运行 zipfile"></a>从命令行运行 zipfile</h1><p>Python 的 zipfile 还提供了一个最小的命令行界面，允许您快速访问模块的主要功能。例如，可以使用 -l 或 –list 选项列出现有 ZIP 文件的内容：</p>
-<pre><code>$ python -m zipfile --list sample.zip
-File Name                                         Modified             Size
-hello.txt                                  2021-09-07 19:50:10           83
-lorem.md                                   2021-09-07 19:50:10         2609
-realpython.md                              2021-09-07 19:50:10          428
-new_hello.txt                              1980-01-01 00:00:00           13
-</code></pre>
-<p>此命令展示与对 sample.zip 归档调用 printdir() 相同的输出。</p>
-<p>现在假设您要创建一个包含多个输入文件的新 ZIP 文件。在这种情况下，可以使用 -c 或者 –creat 选项：</p>
-<pre><code>$ python -m zipfile --create new_sample.zip hello.txt lorem.md realpython.md
-
-$ python -m zipfile -l new_sample.zip
-File Name                                         Modified             Size
-hello.txt                                  2021-09-07 19:50:10           83
-lorem.md                                   2021-09-07 19:50:10         2609
-realpython.md                              2021-09-07 19:50:10          428
-</code></pre>
-<p>此命令创建一个 new_sample.zip 文件，其中包含 hello.txt、 lorem.md、 realpython.md 文件。</p>
-<p>如果需要创建一个 ZIP 文件来归档整个目录怎么办？例如，您可能拥有自己的 source_dir/，其中包含与上例相同的三个文件。 可以使用以下命令从该目录创建 ZIP 文件：</p>
-<pre><code>$ python -m zipfile -c source_dir.zip source_dir/
-
-$ python -m zipfile -l source_dir.zip
-File Name                                         Modified             Size
-source_dir/                                2021-08-31 08:55:58            0
-source_dir/hello.txt                       2021-08-31 08:55:58           83
-source_dir/lorem.md                        2021-08-31 09:01:08         2609
-source_dir/realpython.md                   2021-08-31 09:31:22          428
-</code></pre>
-<p>使用此命令，zipfile 将 source_dir/ 作为生成的 source_dir.zip 文件根目录。像往常一样，可以通过使用 -l 选项运行 zipfile 来列出归档内容。</p>
-<p>Note: 当使用 zipfile 从命令行创建归档时，库在归档文件时隐式使用 Deflate 压缩算法。</p>
-<p>还可以使用命令行中的 -e 或 –extract 选项提取给定 ZIP 文件的所有内容：</p>
-<pre><code>python -m zipfile --extract sample.zip sample/
-</code></pre>
-<p>运行此命令后，工作目录中将有一个新的 sample/ 文件夹。 新文件夹将包含 sample.zip 归档中的当前文件。</p>
-<p>可以在命令行中与 zipfile 一起使用的最后一个参数时 -t 或 –test。该选项测试给定文件是否为有效的 ZIP 文件。来吧，试一试！</p>
-<h1 id="使用其他库处理-ZIP-文件"><a href="#使用其他库处理-ZIP-文件" class="headerlink" title="使用其他库处理 ZIP 文件"></a>使用其他库处理 ZIP 文件</h1><p>Python 标准库中还有一些其他工具可用于在更底层进行归档、压缩和解压缩文件。Python 的 zipfile 在内部使用了其中的几个，主要用于压缩目的。 以下是部分工具的摘要：</p>
-<p>模块    描述<br>zlib    允许使用 zlib 库进行压缩和解压缩<br>bz2    提供使用 Bzip2 压缩算法来压缩和解压数据的接口<br>lzma    提供使用 LZMA 压缩算法压缩和解压缩数据的类和函数<br>不同于 zipfile，其中一些模块支持从内存和数据流中压缩和解压数据，而不是普通文件和归档。</p>
-<p>在 Python 标准库中，可以找到支持 TAR 归档格式的 tarfile。还有一个名为 gzip 的模块，它提供了一个压缩和解压数据的接口，类似于 GNU Gzip 程序的做法。</p>
-<p>例如，可以使用 gzip 创建一个包含一些文本的压缩文件：</p>
-<pre><code>&gt;&gt;&gt; import gzip
-
-&gt;&gt;&gt; with gzip.open(&quot;hello.txt.gz&quot;, mode=&quot;wt&quot;) as gz_file:
-...     gz_file.write(&quot;Hello, World!&quot;)
-...
-</code></pre>
-<p>运行此代码后，当前工作目录中将会有一个 hello.txt.gz 归档，其中包含 hello.txt 的压缩版本。在 hello.txt 中有文本 Hello, World!。</p>
-<p>在不使用 zipfile 的情况下创建 ZIP 文件的一种快速且高级的方法是使用 shutil。该模块可以对文件和文件集合执行多项高级操作。当涉及到归档操作时，有 make_archive()，它可以创建归档，例如 ZIP 或 TAR 文件：</p>
-<pre><code>&gt;&gt;&gt; import shutil
-
-&gt;&gt;&gt; shutil.make_archive(&quot;shutil_sample&quot;, format=&quot;zip&quot;, root_dir=&quot;source_dir/&quot;)
-&#39;/home/user/sample.zip&#39;
-</code></pre>
-<p>此代码在工作目录中创建一个名为 sample.zip 的压缩文件。此 ZIP 文件将包含输入目录 source_dir/ 中的所有文件。当您需要一种快速且高级的方式在 Python 中创建 ZIP 文件时，make_archive() 函数非常方便。</p>
-<h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p>当需要从 ZIP 归档中读取、写入、压缩、解压和提取文件时，Python 的 zipfile 是一个方便的工具。ZIP 文件格式已经成为行业标准，可以打包和压缩数字数据。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-利用Python的zipfile模块批量压缩指定文件夹下子文件夹"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/10/15/%E5%88%A9%E7%94%A8Python%E7%9A%84zipfile%E6%A8%A1%E5%9D%97%E6%89%B9%E9%87%8F%E5%8E%8B%E7%BC%A9%E6%8C%87%E5%AE%9A%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%8B%E5%AD%90%E6%96%87%E4%BB%B6%E5%A4%B9/"
-    >Python删除目录下的所有文件</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/10/15/%E5%88%A9%E7%94%A8Python%E7%9A%84zipfile%E6%A8%A1%E5%9D%97%E6%89%B9%E9%87%8F%E5%8E%8B%E7%BC%A9%E6%8C%87%E5%AE%9A%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%8B%E5%AD%90%E6%96%87%E4%BB%B6%E5%A4%B9/" class="article-date">
-  <time datetime="2023-10-15T02:15:00.000Z" itemprop="datePublished">2023-10-15</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>废话不多说，直接上代码，<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qz_CSDN/article/details/127745062">https://blog.csdn.net/qz_CSDN/article/details/127745062</a></p>
-<pre><code>import zipfile
-import os
-
-
-def zip_folder(dir_path, zip_full_name):
-    &quot;&quot;&quot;
-    压缩文件夹下所有子文件夹和文件
-    :param dirpath: 目标文件夹路径
-    :param zip_full_name: zip文件绝对路径
-    &quot;&quot;&quot;
-    with zipfile.ZipFile(zip_full_name, &#39;w&#39;, zipfile.ZIP_DEFLATD) as zf:
-        for dir_full_path, dir_names, file_names in os.walk(dir_path):
-            # zip压缩包内的相对路径
-            dir_path_inzip = dir_full_path.replace(dirpath, &#39;&#39;)
-            for dir_name in dir_names:
-                zf.write(os.path.join(dir_full_path, dir_name), os.path.join(dir_path_inzip, dir_name))
-            for file_name in file_names:
-                zf.write(os.path.join(dir_full_path, file_name), os.path.join(dir_path_inzip, file_name))
-    zf.close()
-
-
-if __name__ == &#39;__name__&#39;:
-    in_path = u&quot;F:\\测试\\1&quot;
-    out_path = u&quot;F:\\测试\\输出&quot;
-    
-    folder_name_list = os.listdir(in_path)
-    count = 0
-    # 遍历输入路径下所有子文件夹，分别压缩
-    for folder_name in folder_name_list:
-        count += 1
-        zip_file_fullname = os.path.join(out_path, folder_name + &quot;.zip&quot;)
-        print(&quot;&#123;0&#125;、&#123;1&#125;&quot;.format(count, folder_name))
-        print(&quot;    &#123;0&#125;&quot;.format(zip_file_fullname))
-        zip_folder(os.path.join(in_path, folder_name), zip_file_fullname)
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Python删除目录下的所有文件"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/10/14/Python%E5%88%A0%E9%99%A4%E7%9B%AE%E5%BD%95%E4%B8%8B%E7%9A%84%E6%89%80%E6%9C%89%E6%96%87%E4%BB%B6/"
-    >Python删除目录下的所有文件</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/10/14/Python%E5%88%A0%E9%99%A4%E7%9B%AE%E5%BD%95%E4%B8%8B%E7%9A%84%E6%89%80%E6%9C%89%E6%96%87%E4%BB%B6/" class="article-date">
-  <time datetime="2023-10-14T02:14:00.000Z" itemprop="datePublished">2023-10-14</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://www.python100.com/html/4XI33HW03WL0.html">https://www.python100.com/html/4XI33HW03WL0.html</a></p>
-<p>一、Python删除目录及目录下文件</p>
-<pre><code>import shutil
-import os
-
-dir_path = &#39;/path/to/directory&#39;
-
-# 删除目录
-shutil.rmtree(dir_path)
-</code></pre>
-<p>当你想要删除一个目录以及里面所有的文件时，你可以使用shutil模块中的rmtree()函数。该函数可以删除整个目录，包括其所有的文件和子目录。这是最便捷的方法，但是请确保你真的需要这么做。</p>
-<p>二、Python删除目录中所有内容</p>
-<pre><code>import os
-
-dir_path = &#39;/path/to/directory&#39;
-
-# 删除目录中所有的文件
-for filename in os.listdir(dir_path):
-    file_path = os.path.join(dir_path, filename)
-    if os.path.isfile(file_path) or os.path.islink(file_path):
-        os.unlink(file_path)
-    elif os.path.isdir(file_path):
-        shutil.rmtree(file_path)
-
-# 删除目录本身
-os.rmdir(dir_path)
-</code></pre>
-<p>如果你想要删除目录中所有内容，但是保留目录本身，你可以使用os模块中listdir()和unlink()函数来遍历该目录中的所有文件并逐个删除。在删除文件夹之前，必须先删除所有文件和子目录。</p>
-<p>三、Python os删除目录</p>
-<pre><code>import os
-
-dir_path = &#39;/path/to/directory&#39;
-
-# 删除目录
-os.removedirs(dir_path)
-</code></pre>
-<p>os.removedirs()函数可以删除指定的目录。如果该目录是一个空目录，则可以直接删除它。如果该目录不是空目录，则需要递归地删除其所有子目录和文件。</p>
-<p>四、Python删除指定目录下的文件</p>
-<pre><code>import os
-
-dir_path = &#39;/path/to/directory&#39;
-
-# 删除指定格式的文件
-for filename in os.listdir(dir_path):
-    if filename.endswith(&#39;.txt&#39;):
-        os.unlink(os.path.join(dir_path, filename))
-</code></pre>
-<p>如果你只想删除指定格式的文件，你可以使用listdir()和endswith()函数来列出该目录中满足指定格式的所有文件，并逐个删除。</p>
-<p>五、Python删除非空目录</p>
-<pre><code>import shutil
-
-dir_path = &#39;/path/to/directory&#39;
-
-# 删除非空目录
-shutil.rmtree(dir_path)
-</code></pre>
-<p>如果你只想删除非空目录，你可以使用shutil模块的rmtree()函数。请注意，该函数可以删除目录和其中的所有文件和子目录。</p>
-<p>通过上述5种方法，你可以选择最适用于你的需求的方法来删除指定目录下的所有文件。</p>
  
       <!-- reward -->
       
@@ -1471,7 +1561,7 @@ shutil.rmtree(dir_path)
   
   <nav class="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/48/">48</a><a class="extend next" rel="next" href="/page/2/">下一页</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/49/">49</a><a class="extend next" rel="next" href="/page/2/">下一页</a>
   </nav>
   
 </section>
