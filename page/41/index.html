@@ -154,6 +154,431 @@
     
     
     <article
+  id="post-Springboot-Postgresql-FastAutoGenerator-1"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/03/07/Springboot-Postgresql-FastAutoGenerator-1/"
+    >Springboot+Postgresql+FastAutoGenerator（一）</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/03/07/Springboot-Postgresql-FastAutoGenerator-1/" class="article-date">
+  <time datetime="2023-03-07T06:57:38.000Z" itemprop="datePublished">2023-03-07</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>Postgreql默认是public，需要手动指定schema。<br>URL指定schema也不行，必须单独构造一个DataSourceConfig.Builder进行指定。</p>
+<pre><code>package com.goland.gis;
+
+import com.baomidou.mybatisplus.generator.FastAutoGenerator;
+import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
+import com.baomidou.mybatisplus.generator.config.OutputFile;
+import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
+
+import java.util.Collections;
+
+public class CodeGenerator &#123;
+
+    public static void main(String[] args) &#123;
+
+        String url =&quot;jdbc:postgresql://localhost:5432/power?currentSchema=system&quot;;
+        String username = &quot;postgres&quot;;
+        String password = &quot;postgres&quot;;
+
+        String moduleName = &quot;sys&quot;;
+        String mapperLocation = &quot;E:\\Java\\work4\\grid\\gis\\src\\main\\resources\\mapper\\&quot; + moduleName;
+        String tableNames = &quot;sys_user,sys_menu,sys_role,sys_role_menu,sys_user_role&quot;;
+
+        DataSourceConfig.Builder builderOutSide = new DataSourceConfig.Builder(url, username, password);
+        builderOutSide.schema(&quot;system&quot;);
+
+        FastAutoGenerator.create(builderOutSide)
+                .globalConfig(builder -&gt; &#123;
+                    builder.author(&quot;zhangsmile1893&quot;) // 设置作者
+                            //.enableSwagger() // 开启 swagger 模式
+                            //.fileOverride() // 覆盖已生成文件
+                            .outputDir(&quot;E:\\Java\\work4\\grid\\gis\\src\\main\\java&quot;); // 指定输出目录
+                &#125;)
+                .packageConfig(builder -&gt; &#123;
+                    builder.parent(&quot;com.goland.gis&quot;) // 设置父包名
+                            .moduleName(moduleName) // 设置父包模块名
+                            .pathInfo(Collections.singletonMap(OutputFile.xml, mapperLocation)); // 设置mapperXml生成路径
+                &#125;)
+                .strategyConfig(builder -&gt; &#123;
+                    builder.addInclude(tableNames) // 设置需要生成的表名
+                            .addTablePrefix(&quot;sys_&quot;); // 设置过滤表前缀
+                &#125;)
+                .templateEngine(new FreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板
+                .execute();
+    &#125;
+&#125;
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SpringBoot/" rel="tag">SpringBoot</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-关于数据库模式切换问题"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/03/06/%E5%85%B3%E4%BA%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A8%A1%E5%BC%8F%E5%88%87%E6%8D%A2%E9%97%AE%E9%A2%98/"
+    >关于数据库模式切换问题</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/03/06/%E5%85%B3%E4%BA%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A8%A1%E5%BC%8F%E5%88%87%E6%8D%A2%E9%97%AE%E9%A2%98/" class="article-date">
+  <time datetime="2023-03-06T06:27:10.000Z" itemprop="datePublished">2023-03-06</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>现在流行的数据库都有 Schema 的概念，一般作为数据库对象(表，函数，存储过程等)的命名空间。所以在数据库端往往存在实例/数据库/Schema 这样层级划分。对于DB2 和 Oracle 用客户端创建一个新的数据库并非易事，灵活的在数据库中较轻量的划分隔离空间的办法因数据库类型而异。</p>
+<p>MySQL： Mysql 的体系架构是单实例多库，一个用户可以访问多个数据库，然后指定当前数据库写 SQL 的时候就不用带上数据库名，MySQL 中 database 和 schema是一个概念，它靠 database 来隔离数据库对象。创建数据库(create database)，create schema 是 create database 的别名。</p>
+<p>PostgreSQL： create database 创建新的数据库，或在当前数据库下用 create schema 创建 schema。PostgreSQL 的函数或存储过程中对未指定 schema 的数据库对象的访问的规则是在调用时动态绑定到当前会话中的 schema。</p>
+<p>达梦 8： 达梦的体系架构是单库多实例的，也就是没有多个数据库的概念，从 Mysql转到达梦，就需要建多个用户+表空间来对应 Mysql的多个数据库。每个用户有一个默认的同名的模式，访问自己模式下的表、视图等不需要加模式名，访问其他模式下的对象需要加上模式名。</p>
+<p>Oracle： create schema 较麻烦，涉及到 authorization。但可以通过 create user 创建新用户后就有了对应的新 schema。Oracle 中采取用户来隔离数据库对象。</p>
+<p>实际应用过程中研发交付团队可能使用模式来进行租户间的数据隔离或根据业务功能划分不同的模式，这里就涉及一个服务需要同时连接并查询多种模式的问题，<br>一种方案是直接在 sql 中的表名前添加模式名前缀，这种适合一句 sql 需要跨多个模式进行联合查询的场景，属于定制型 sql。<br>一种方案是在会话层面指定模式，这样 sql中的表名不需要指定默认的前缀，对于不在当前模式下的表才需要添加模式前缀，这种适合多模式下相同表名存储数据的切换。</p>
+<p>MySQL 的连接串直接指定具体数据库，其实已经是会话层面的模式切换</p>
+<p>PostgreSQL 的连接串在没有指定当前模式下，例如<br>jdbc:postgresql://localhost:5432/postgresql 默认使用的是 postgresql 数据库的 public模式。</p>
+<p>PostgreSQL 从 9.4 版本开始通过关键字 currentSchema 指定模式<br>jdbc:postgresql://localhost:5432/postgresql?currentSchema=myschema</p>
+<p>旧版本通过 searchpath 指定<br>jdbc:postgresql://localhost:5432/postgresql?searchpath=myschema</p>
+<p>达梦 8 的连接串在没有指定当前模式时，使用的是与用户同名的模式，可通过scheme 指定当前模式，例如：<br>jdbc:dm://localhost:5236?schema=myschema</p>
+<p>————————————————<br>版权声明：本文为CSDN博主「雪影风痕」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_48805880/article/details/128385835">https://blog.csdn.net/m0_48805880/article/details/128385835</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-SpringBoot连接PostgreSQL"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/03/05/SpringBoot%E8%BF%9E%E6%8E%A5PostgreSQL/"
+    >SpringBoot连接PostgreSQL</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/03/05/SpringBoot%E8%BF%9E%E6%8E%A5PostgreSQL/" class="article-date">
+  <time datetime="2023-03-05T09:28:50.000Z" itemprop="datePublished">2023-03-05</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <ul>
+<li><p>1 yml配置</p>
+</li>
+<li><ul>
+<li><p>1.1 不指定schema的情况下，使用公共的schema</p>
+<pre><code> spring:
+   datasource:
+     driver-class-name: org.postgresql.Driver
+     url: jdbc:postgresql://localhost:5432/database
+     username: xxx
+     password: xxx
+ 
+</code></pre>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><p>1.2 指定schema的情况下</p>
+<pre><code> spring:
+   datasource:
+     driver-class-name: org.postgresql.Driver
+     url: jdbc:postgresql://localhost:5432/database?currentSchema=schema
+     username: xxx
+     password: xxx
+ 
+</code></pre>
+</li>
+</ul>
+</li>
+<li><p>2 版本影响 </p>
+</li>
+<li><ul>
+<li><p>postgresql 9.3 及以前的版本指定方式</p>
+<p> spring.datasource.url=jdbc:postgresql://localhost:5432/postgresql?searchpath=newschema</p>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><p>postgresql 9.4 及以后的版本指定方式</p>
+<p> spring.datasource.url=jdbc:postgresql://localhost:5432/postgresql?currentSchema=newschema </p>
+</li>
+</ul>
+</li>
+</ul>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SpringBoot/" rel="tag">SpringBoot</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-QGIS-Environment-variables"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/03/04/QGIS-Environment-variables/"
+    >QGIS Environment variables</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/03/04/QGIS-Environment-variables/" class="article-date">
+  <time datetime="2023-03-04T06:10:15.000Z" itemprop="datePublished">2023-03-04</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>You can configure some aspects of QGIS Server by setting environment variables.</p>
+<p>According to the HTTP server and how you run QGIS Server, there are several ways to define these variables. This is fully described in Apache HTTP Server.</p>
+<p>名称</p>
+<p>Description</p>
+<p>Default</p>
+<p>Services</p>
+<p>QGIS_OPTIONS_PATH</p>
+<p>Specifies the path to the directory with settings. It works the same way as QGIS application –optionspath option. It is looking for settings file in <QGIS_OPTIONS_PATH>/QGIS/QGIS3.ini.</QGIS_OPTIONS_PATH></p>
+<p>‘’</p>
+<p>All</p>
+<p>QGIS_PLUGINPATH</p>
+<p>Useful if you are using Python plugins for the server, this sets the folder that is searched for Python plugins.</p>
+<p>‘’</p>
+<p>All</p>
+<p>QGIS_PROJECT_FILE</p>
+<p>The .qgs or .qgz project file, normally passed as a parameter in the query string (with MAP), you can also set it as an environment variable (for example by using mod_rewrite Apache module).</p>
+<p>Note that you may also indicate a project stored in PostgreSQL, e.g. postgresql://localhost:5432?sslmode=disable&amp;dbname=mydb&amp;schema=myschema&amp;project=myproject.</p>
+<p>‘’</p>
+<p>All</p>
+<p>QGIS_SERVER_API_RESOURCES_DIRECTORY</p>
+<p>Base directory for all OGC API (such as OAPIF/WFS3) static resources (HTML templates, CSS, JS, …)</p>
+<p>depends on packaging</p>
+<p>WFS</p>
+<p>QGIS_SERVER_API_WFS3_MAX_LIMIT</p>
+<p>Maximum value for limit in a features request.</p>
+<p>10000</p>
+<p>WFS</p>
+<p>QGIS_SERVER_CACHE_DIRECTORY</p>
+<p>Specifies the network cache directory on the filesystem.</p>
+<p>cache in profile directory</p>
+<p>All</p>
+<p>QGIS_SERVER_CACHE_SIZE</p>
+<p>Sets the network cache size in MB.</p>
+<p>50 MB</p>
+<p>All</p>
+<p>QGIS_SERVER_DISABLE_GETPRINT</p>
+<p>This is an option at the project level to improve project read time by disabling loading of layouts.</p>
+<p>Activating this option disables the QGIS WMS GetPrint request. Set this QGIS project flag to not load layouts.</p>
+<p>false</p>
+<p>WMS</p>
+<p>QGIS_SERVER_IGNORE_BAD_LAYERS</p>
+<p>“Bad” layers are layers that cannot be loaded. The default behavior of QGIS Server is to consider the project as not available if it contains a bad layer.</p>
+<p>The default behavior can be overridden by setting this variable to 1 or true. In this case, “bad” layers will just be ignored, and the project will be considered valid and available.</p>
+<p>false</p>
+<p>All</p>
+<p>QGIS_SERVER_LANDING_PAGE_PREFIX</p>
+<p>Prefix of the path component of the landing page base URL</p>
+<p>“”</p>
+<p>All</p>
+<p>QGIS_SERVER_LANDING_PAGE_PROJECTS_DIRECTORIES</p>
+<p>Directories used by the landing page service to find .qgs and .qgz projects</p>
+<p>“”</p>
+<p>All</p>
+<p>QGIS_SERVER_LANDING_PAGE_PROJECTS_PG_CONNECTIONS</p>
+<p>PostgreSQL connection strings used by the landing page service to find projects</p>
+<p>“”</p>
+<p>All</p>
+<p>QGIS_SERVER_LOG_FILE</p>
+<p>Specify path and filename. Make sure that server has proper permissions for writing to file. File should be created automatically, just send some requests to server. If it’s not there, check permissions.</p>
+<p>警告</p>
+<p>QGIS_SERVER_LOG_FILE is deprecated since QGIS 3.4, use QGIS_SERVER_LOG_STDERR instead. File logging support will be removed in QGIS 4.0.</p>
+<p>‘’</p>
+<p>All</p>
+<p>QGIS_SERVER_LOG_LEVEL</p>
+<p>Specify desired log level. Available values are:</p>
+<p>0 or INFO (log all requests)</p>
+<p>1 or WARNING</p>
+<p>2 or CRITICAL (log just critical errors, suitable for production purposes)</p>
+<p>0</p>
+<p>All</p>
+<p>QGIS_SERVER_LOG_PROFILE</p>
+<p>Add detailed profile information to the logs, only effective when QGIS_SERVER_LOG_LEVEL=0</p>
+<p>false</p>
+<p>All</p>
+<p>QGIS_SERVER_LOG_STDERR</p>
+<p>Activate logging to stderr. This variable has no effect when QGIS_SERVER_LOG_FILE is set.</p>
+<p>0 or false (case insensitive)</p>
+<p>1 or true (case insensitive)</p>
+<p>false</p>
+<p>All</p>
+<p>QGIS_SERVER_MAX_THREADS</p>
+<p>Number of threads to use when parallel rendering is activated. If value is -1 it uses the number of processor cores.</p>
+<p>-1</p>
+<p>All</p>
+<p>QGIS_SERVER_OVERRIDE_SYSTEM_LOCALE</p>
+<p>Sets LOCALE to be used by QGIS server. The default value is empty (no override).</p>
+<p>Example: de_CH.utf8</p>
+<p>‘’</p>
+<p>All</p>
+<p>QGIS_SERVER_PARALLEL_RENDERING</p>
+<p>Activates parallel rendering for WMS GetMap requests. It’s disabled (false) by default. Available values are:</p>
+<p>0 or false (case insensitive)</p>
+<p>1 or true (case insensitive)</p>
+<p>false</p>
+<p>WMS</p>
+<p>QGIS_SERVER_SHOW_GROUP_SEPARATOR</p>
+<p>Defines whether a group separator (e.g. thousand separator) should be used for numeric values (e.g. in GetFeatureInfo responses). The default value is 0.</p>
+<p>0 or false (case insensitive)</p>
+<p>1 or true (case insensitive)</p>
+<p>false</p>
+<p>WMS</p>
+<p>QGIS_SERVER_TRUST_LAYER_METADATA</p>
+<p>This is an option at the project level to improve project read time by using the vector layer extents defined in the project metadata and disabling the check for PostgreSQL/PostGIS layer primary key uniqueness.</p>
+<p>Trusting layer metadata can be forced by setting this variable to 1 or true. The vector layer’s extent will then be the one defined in the project, and the PostgreSQL/PostGIS layer’s primary key defined in the data source is considered as unique without a check.</p>
+<p>Do not use it if layers’ extent is not fixed during the project’s use.</p>
+<p>false</p>
+<p>All</p>
+<p>QGIS_SERVER_WMS_MAX_HEIGHT / QGIS_SERVER_WMS_MAX_WIDTH</p>
+<p>Maximum height/width for a WMS request. The most conservative between this and the project one is used. If the value is -1, it means that there is no maximum set.</p>
+<p>-1</p>
+<p>WMS</p>
+<p>QUERY_STRING</p>
+<p>The query string, normally passed by the web server. This variable can be useful while testing QGIS server binary from the command line.</p>
+<p>For example for testing a GetCapabilities request on the command line to a project that also requires a PostgreSQL connection defined in a pg_service.conf file:</p>
+<p>PGSERVICEFILE=/etc/pg_service.conf <br>QUERY_STRING=”MAP=/home/projects/world.qgs&amp;SERVICE=WMS&amp;REQUEST=GetCapabilities” <br>/usr/lib/cgi-bin/qgis_mapserv.fcgi<br>The result should be either the content of the GetCapabilities response or, if something is wrong, an error message.</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/QGIS/" rel="tag">QGIS</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-How-QGIS-Serve-a-project"
   class="article article-type-post"
   itemscope
@@ -318,371 +743,13 @@ Errors reported here must be corrected before the service can be started.
 </article>
 
     
-    <article
-  id="post-PostgreSQL-Connection-URIs"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/03/01/PostgreSQL-Connection-URIs/"
-    >PostgreSQL Connection URIs</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/03/01/PostgreSQL-Connection-URIs/" class="article-date">
-  <time datetime="2023-03-01T15:13:43.000Z" itemprop="datePublished">2023-03-01</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>The general form for a connection URI is:</p>
-<pre><code>postgresql://[userspec@][hostspec][/dbname][?paramspec]
-</code></pre>
-<p>where userspec is:</p>
-<pre><code>user[:password]
-</code></pre>
-<p>and hostspec is:</p>
-<pre><code>[host][:port][,...]
-</code></pre>
-<p>and paramspec is:</p>
-<pre><code>name=value[&amp;...]
-</code></pre>
-<p>The URI scheme designator can be either postgresql:// or postgres://. Each of the remaining URI parts is optional. The following examples illustrate valid URI syntax:</p>
-<pre><code>postgresql://
-postgresql://localhost
-postgresql://localhost:5433
-postgresql://localhost/mydb
-postgresql://user@localhost
-postgresql://user:secret@localhost
-postgresql://other@localhost/otherdb?connect_timeout=10&amp;application_name=myapp
-postgresql://host1:123,host2:456/somedb?target_session_attrs=any&amp;application_name=myapp
-</code></pre>
-<p>Values that would normally appear in the hierarchical part of the URI can alternatively be given as named parameters. For example:</p>
-<pre><code>postgresql:///mydb?host=localhost&amp;port=5433
-</code></pre>
-<p>All named parameters must match key words listed in Section 34.1.2, except that for compatibility with JDBC connection URIs, instances of ssl=true are translated into sslmode=require.</p>
-<p>The connection URI needs to be encoded with percent-encoding if it includes symbols with special meaning in any of its parts. Here is an example where the equal sign (=) is replaced with %3D and the space character with %20:</p>
-<pre><code>postgresql://user@localhost:5433/mydb?options=-c%20synchronous_commit%3Doff
-</code></pre>
-<p>The host part may be either a host name or an IP address. To specify an IPv6 address, enclose it in square brackets:</p>
-<pre><code>postgresql://[2001:db8::1234]/database
-</code></pre>
-<p>The host part is interpreted as described for the parameter host. In particular, a Unix-domain socket connection is chosen if the host part is either empty or looks like an absolute path name, otherwise a TCP/IP connection is initiated. Note, however, that the slash is a reserved character in the hierarchical part of the URI. So, to specify a non-standard Unix-domain socket directory, either omit the host part of the URI and specify the host as a named parameter, or percent-encode the path in the host part of the URI:</p>
-<pre><code>postgresql:///dbname?host=/var/lib/postgresql
-postgresql://%2Fvar%2Flib%2Fpostgresql/dbname
-</code></pre>
-<p>It is possible to specify multiple host components, each with an optional port component, in a single URI. A URI of the form postgresql://host1:port1,host2:port2,host3:port3/ is equivalent to a connection string of the form host=host1,host2,host3 port=port1,port2,port3. As further described below, each host will be tried in turn until a connection is successfully established.</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-PostgreSQL-Password-File"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/02/28/PostgreSQL-Password-File/"
-    >PostgreSQL Password File</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/02/28/PostgreSQL-Password-File/" class="article-date">
-  <time datetime="2023-02-28T15:09:41.000Z" itemprop="datePublished">2023-02-28</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>The file .pgpass in a user’s home directory can contain passwords to be used if the connection requires a password (and no password has been specified otherwise). On Microsoft Windows the file is named %APPDATA%\postgresql\pgpass.conf (where %APPDATA% refers to the Application Data subdirectory in the user’s profile). Alternatively, the password file to use can be specified using the connection parameter passfile or the environment variable PGPASSFILE.</p>
-<p>This file should contain lines of the following format:</p>
-<p>hostname:port:database:username:password<br>(You can add a reminder comment to the file by copying the line above and preceding it with #.) Each of the first four fields can be a literal value, or *, which matches anything. The password field from the first line that matches the current connection parameters will be used. (Therefore, put more-specific entries first when you are using wildcards.) If an entry needs to contain : or , escape this character with . The host name field is matched to the host connection parameter if that is specified, otherwise to the hostaddr parameter if that is specified; if neither are given then the host name localhost is searched for. The host name localhost is also searched for when the connection is a Unix-domain socket connection and the host parameter matches libpq’s default socket directory path. In a standby server, a database field of replication matches streaming replication connections made to the primary server. The database field is of limited usefulness otherwise, because users have the same password for all databases in the same cluster.</p>
-<p>On Unix systems, the permissions on a password file must disallow any access to world or group; achieve this by a command such as chmod 0600 ~/.pgpass. If the permissions are less strict than this, the file will be ignored. On Microsoft Windows, it is assumed that the file is stored in a directory that is secure, so no special permissions check is made.</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-PostgreSQL-Parameter-Key-Words"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/02/27/PostgreSQL-Parameter-Key-Words/"
-    >PostgreSQL Parameter Key Words</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/02/27/PostgreSQL-Parameter-Key-Words/" class="article-date">
-  <time datetime="2023-02-27T15:03:50.000Z" itemprop="datePublished">2023-02-27</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>The currently recognized parameter key words are:</p>
-<p>host<br>Name of host to connect to. If a host name looks like an absolute path name, it specifies Unix-domain communication rather than TCP/IP communication; the value is the name of the directory in which the socket file is stored. (On Unix, an absolute path name begins with a slash. On Windows, paths starting with drive letters are also recognized.) If the host name starts with @, it is taken as a Unix-domain socket in the abstract namespace (currently supported on Linux and Windows). The default behavior when host is not specified, or is empty, is to connect to a Unix-domain socket in /tmp (or whatever socket directory was specified when PostgreSQL was built). On Windows and on machines without Unix-domain sockets, the default is to connect to localhost.</p>
-<p>A comma-separated list of host names is also accepted, in which case each host name in the list is tried in order; an empty item in the list selects the default behavior as explained above. See Section 34.1.1.3 for details.</p>
-<p>hostaddr<br>Numeric IP address of host to connect to. This should be in the standard IPv4 address format, e.g., 172.28.40.9. If your machine supports IPv6, you can also use those addresses. TCP/IP communication is always used when a nonempty string is specified for this parameter. If this parameter is not specified, the value of host will be looked up to find the corresponding IP address — or, if host specifies an IP address, that value will be used directly.</p>
-<p>Using hostaddr allows the application to avoid a host name look-up, which might be important in applications with time constraints. However, a host name is required for GSSAPI or SSPI authentication methods, as well as for verify-full SSL certificate verification. The following rules are used:</p>
-<p>If host is specified without hostaddr, a host name lookup occurs. (When using PQconnectPoll, the lookup occurs when PQconnectPoll first considers this host name, and it may cause PQconnectPoll to block for a significant amount of time.)</p>
-<p>If hostaddr is specified without host, the value for hostaddr gives the server network address. The connection attempt will fail if the authentication method requires a host name.</p>
-<p>If both host and hostaddr are specified, the value for hostaddr gives the server network address. The value for host is ignored unless the authentication method requires it, in which case it will be used as the host name.</p>
-<p>Note that authentication is likely to fail if host is not the name of the server at network address hostaddr. Also, when both host and hostaddr are specified, host is used to identify the connection in a password file (see Section 34.16).</p>
-<p>A comma-separated list of hostaddr values is also accepted, in which case each host in the list is tried in order. An empty item in the list causes the corresponding host name to be used, or the default host name if that is empty as well. See Section 34.1.1.3 for details.</p>
-<p>Without either a host name or host address, libpq will connect using a local Unix-domain socket; or on Windows and on machines without Unix-domain sockets, it will attempt to connect to localhost.</p>
-<p>port<br>Port number to connect to at the server host, or socket file name extension for Unix-domain connections. If multiple hosts were given in the host or hostaddr parameters, this parameter may specify a comma-separated list of ports of the same length as the host list, or it may specify a single port number to be used for all hosts. An empty string, or an empty item in a comma-separated list, specifies the default port number established when PostgreSQL was built.</p>
-<p>dbname<br>The database name. Defaults to be the same as the user name. In certain contexts, the value is checked for extended formats; see Section 34.1.1 for more details on those.</p>
-<p>user<br>PostgreSQL user name to connect as. Defaults to be the same as the operating system name of the user running the application.</p>
-<p>password<br>Password to be used if the server demands password authentication.</p>
-<p>passfile<br>Specifies the name of the file used to store passwords (see Section 34.16). Defaults to ~/.pgpass, or %APPDATA%\postgresql\pgpass.conf on Microsoft Windows. (No error is reported if this file does not exist.)</p>
-<p>channel_binding<br>This option controls the client’s use of channel binding. A setting of require means that the connection must employ channel binding, prefer means that the client will choose channel binding if available, and disable prevents the use of channel binding. The default is prefer if PostgreSQL is compiled with SSL support; otherwise the default is disable.</p>
-<p>Channel binding is a method for the server to authenticate itself to the client. It is only supported over SSL connections with PostgreSQL 11 or later servers using the SCRAM authentication method.</p>
-<p>connect_timeout<br>Maximum time to wait while connecting, in seconds (write as a decimal integer, e.g., 10). Zero, negative, or not specified means wait indefinitely. The minimum allowed timeout is 2 seconds, therefore a value of 1 is interpreted as 2. This timeout applies separately to each host name or IP address. For example, if you specify two hosts and connect_timeout is 5, each host will time out if no connection is made within 5 seconds, so the total time spent waiting for a connection might be up to 10 seconds.</p>
-<p>client_encoding<br>This sets the client_encoding configuration parameter for this connection. In addition to the values accepted by the corresponding server option, you can use auto to determine the right encoding from the current locale in the client (LC_CTYPE environment variable on Unix systems).</p>
-<p>options<br>Specifies command-line options to send to the server at connection start. For example, setting this to -c geqo=off sets the session’s value of the geqo parameter to off. Spaces within this string are considered to separate command-line arguments, unless escaped with a backslash (); write \ to represent a literal backslash. For a detailed discussion of the available options, consult Chapter 20.</p>
-<p>application_name<br>Specifies a value for the application_name configuration parameter.</p>
-<p>fallback_application_name<br>Specifies a fallback value for the application_name configuration parameter. This value will be used if no value has been given for application_name via a connection parameter or the PGAPPNAME environment variable. Specifying a fallback name is useful in generic utility programs that wish to set a default application name but allow it to be overridden by the user.</p>
-<p>keepalives<br>Controls whether client-side TCP keepalives are used. The default value is 1, meaning on, but you can change this to 0, meaning off, if keepalives are not wanted. This parameter is ignored for connections made via a Unix-domain socket.</p>
-<p>keepalives_idle<br>Controls the number of seconds of inactivity after which TCP should send a keepalive message to the server. A value of zero uses the system default. This parameter is ignored for connections made via a Unix-domain socket, or if keepalives are disabled. It is only supported on systems where TCP_KEEPIDLE or an equivalent socket option is available, and on Windows; on other systems, it has no effect.</p>
-<p>keepalives_interval<br>Controls the number of seconds after which a TCP keepalive message that is not acknowledged by the server should be retransmitted. A value of zero uses the system default. This parameter is ignored for connections made via a Unix-domain socket, or if keepalives are disabled. It is only supported on systems where TCP_KEEPINTVL or an equivalent socket option is available, and on Windows; on other systems, it has no effect.</p>
-<p>keepalives_count<br>Controls the number of TCP keepalives that can be lost before the client’s connection to the server is considered dead. A value of zero uses the system default. This parameter is ignored for connections made via a Unix-domain socket, or if keepalives are disabled. It is only supported on systems where TCP_KEEPCNT or an equivalent socket option is available; on other systems, it has no effect.</p>
-<p>tcp_user_timeout<br>Controls the number of milliseconds that transmitted data may remain unacknowledged before a connection is forcibly closed. A value of zero uses the system default. This parameter is ignored for connections made via a Unix-domain socket. It is only supported on systems where TCP_USER_TIMEOUT is available; on other systems, it has no effect.</p>
-<p>replication<br>This option determines whether the connection should use the replication protocol instead of the normal protocol. This is what PostgreSQL replication connections as well as tools such as pg_basebackup use internally, but it can also be used by third-party applications. For a description of the replication protocol, consult Section 55.4.</p>
-<p>The following values, which are case-insensitive, are supported:</p>
-<p>true, on, yes, 1<br>The connection goes into physical replication mode.</p>
-<p>database<br>The connection goes into logical replication mode, connecting to the database specified in the dbname parameter.</p>
-<p>false, off, no, 0<br>The connection is a regular one, which is the default behavior.</p>
-<p>In physical or logical replication mode, only the simple query protocol can be used.</p>
-<p>gssencmode<br>This option determines whether or with what priority a secure GSS TCP/IP connection will be negotiated with the server. There are three modes:</p>
-<p>disable<br>only try a non-GSSAPI-encrypted connection</p>
-<p>prefer (default)<br>if there are GSSAPI credentials present (i.e., in a credentials cache), first try a GSSAPI-encrypted connection; if that fails or there are no credentials, try a non-GSSAPI-encrypted connection. This is the default when PostgreSQL has been compiled with GSSAPI support.</p>
-<p>require<br>only try a GSSAPI-encrypted connection</p>
-<p>gssencmode is ignored for Unix domain socket communication. If PostgreSQL is compiled without GSSAPI support, using the require option will cause an error, while prefer will be accepted but libpq will not actually attempt a GSSAPI-encrypted connection.</p>
-<p>sslmode<br>This option determines whether or with what priority a secure SSL TCP/IP connection will be negotiated with the server. There are six modes:</p>
-<p>disable<br>only try a non-SSL connection</p>
-<p>allow<br>first try a non-SSL connection; if that fails, try an SSL connection</p>
-<p>prefer (default)<br>first try an SSL connection; if that fails, try a non-SSL connection</p>
-<p>require<br>only try an SSL connection. If a root CA file is present, verify the certificate in the same way as if verify-ca was specified</p>
-<p>verify-ca<br>only try an SSL connection, and verify that the server certificate is issued by a trusted certificate authority (CA)</p>
-<p>verify-full<br>only try an SSL connection, verify that the server certificate is issued by a trusted CA and that the requested server host name matches that in the certificate</p>
-<p>See Section 34.19 for a detailed description of how these options work.</p>
-<p>sslmode is ignored for Unix domain socket communication. If PostgreSQL is compiled without SSL support, using options require, verify-ca, or verify-full will cause an error, while options allow and prefer will be accepted but libpq will not actually attempt an SSL connection.</p>
-<p>Note that if GSSAPI encryption is possible, that will be used in preference to SSL encryption, regardless of the value of sslmode. To force use of SSL encryption in an environment that has working GSSAPI infrastructure (such as a Kerberos server), also set gssencmode to disable.</p>
-<p>requiressl<br>This option is deprecated in favor of the sslmode setting.</p>
-<p>If set to 1, an SSL connection to the server is required (this is equivalent to sslmode require). libpq will then refuse to connect if the server does not accept an SSL connection. If set to 0 (default), libpq will negotiate the connection type with the server (equivalent to sslmode prefer). This option is only available if PostgreSQL is compiled with SSL support.</p>
-<p>sslcompression<br>If set to 1, data sent over SSL connections will be compressed. If set to 0, compression will be disabled. The default is 0. This parameter is ignored if a connection without SSL is made.</p>
-<p>SSL compression is nowadays considered insecure and its use is no longer recommended. OpenSSL 1.1.0 disables compression by default, and many operating system distributions disable it in prior versions as well, so setting this parameter to on will not have any effect if the server does not accept compression. PostgreSQL 14 disables compression completely in the backend.</p>
-<p>If security is not a primary concern, compression can improve throughput if the network is the bottleneck. Disabling compression can improve response time and throughput if CPU performance is the limiting factor.</p>
-<p>sslcert<br>This parameter specifies the file name of the client SSL certificate, replacing the default ~/.postgresql/postgresql.crt. This parameter is ignored if an SSL connection is not made.</p>
-<p>sslkey<br>This parameter specifies the location for the secret key used for the client certificate. It can either specify a file name that will be used instead of the default ~/.postgresql/postgresql.key, or it can specify a key obtained from an external “engine” (engines are OpenSSL loadable modules). An external engine specification should consist of a colon-separated engine name and an engine-specific key identifier. This parameter is ignored if an SSL connection is not made.</p>
-<p>sslpassword<br>This parameter specifies the password for the secret key specified in sslkey, allowing client certificate private keys to be stored in encrypted form on disk even when interactive passphrase input is not practical.</p>
-<p>Specifying this parameter with any non-empty value suppresses the Enter PEM pass phrase: prompt that OpenSSL will emit by default when an encrypted client certificate key is provided to libpq.</p>
-<p>If the key is not encrypted this parameter is ignored. The parameter has no effect on keys specified by OpenSSL engines unless the engine uses the OpenSSL password callback mechanism for prompts.</p>
-<p>There is no environment variable equivalent to this option, and no facility for looking it up in .pgpass. It can be used in a service file connection definition. Users with more sophisticated uses should consider using OpenSSL engines and tools like PKCS#11 or USB crypto offload devices.</p>
-<p>sslrootcert<br>This parameter specifies the name of a file containing SSL certificate authority (CA) certificate(s). If the file exists, the server’s certificate will be verified to be signed by one of these authorities. The default is ~/.postgresql/root.crt.</p>
-<p>sslcrl<br>This parameter specifies the file name of the SSL server certificate revocation list (CRL). Certificates listed in this file, if it exists, will be rejected while attempting to authenticate the server’s certificate. If neither sslcrl nor sslcrldir is set, this setting is taken as ~/.postgresql/root.crl.</p>
-<p>sslcrldir<br>This parameter specifies the directory name of the SSL server certificate revocation list (CRL). Certificates listed in the files in this directory, if it exists, will be rejected while attempting to authenticate the server’s certificate.</p>
-<p>The directory needs to be prepared with the OpenSSL command openssl rehash or c_rehash. See its documentation for details.</p>
-<p>Both sslcrl and sslcrldir can be specified together.</p>
-<p>sslsni<br>If set to 1 (default), libpq sets the TLS extension “Server Name Indication” (SNI) on SSL-enabled connections. By setting this parameter to 0, this is turned off.</p>
-<p>The Server Name Indication can be used by SSL-aware proxies to route connections without having to decrypt the SSL stream. (Note that this requires a proxy that is aware of the PostgreSQL protocol handshake, not just any SSL proxy.) However, SNI makes the destination host name appear in cleartext in the network traffic, so it might be undesirable in some cases.</p>
-<p>requirepeer<br>This parameter specifies the operating-system user name of the server, for example requirepeer=postgres. When making a Unix-domain socket connection, if this parameter is set, the client checks at the beginning of the connection that the server process is running under the specified user name; if it is not, the connection is aborted with an error. This parameter can be used to provide server authentication similar to that available with SSL certificates on TCP/IP connections. (Note that if the Unix-domain socket is in /tmp or another publicly writable location, any user could start a server listening there. Use this parameter to ensure that you are connected to a server run by a trusted user.) This option is only supported on platforms for which the peer authentication method is implemented; see Section 21.9.</p>
-<p>ssl_min_protocol_version<br>This parameter specifies the minimum SSL/TLS protocol version to allow for the connection. Valid values are TLSv1, TLSv1.1, TLSv1.2 and TLSv1.3. The supported protocols depend on the version of OpenSSL used, older versions not supporting the most modern protocol versions. If not specified, the default is TLSv1.2, which satisfies industry best practices as of this writing.</p>
-<p>ssl_max_protocol_version<br>This parameter specifies the maximum SSL/TLS protocol version to allow for the connection. Valid values are TLSv1, TLSv1.1, TLSv1.2 and TLSv1.3. The supported protocols depend on the version of OpenSSL used, older versions not supporting the most modern protocol versions. If not set, this parameter is ignored and the connection will use the maximum bound defined by the backend, if set. Setting the maximum protocol version is mainly useful for testing or if some component has issues working with a newer protocol.</p>
-<p>krbsrvname<br>Kerberos service name to use when authenticating with GSSAPI. This must match the service name specified in the server configuration for Kerberos authentication to succeed. (See also Section 21.6.) The default value is normally postgres, but that can be changed when building PostgreSQL via the –with-krb-srvnam option of configure. In most environments, this parameter never needs to be changed. Some Kerberos implementations might require a different service name, such as Microsoft Active Directory which requires the service name to be in upper case (POSTGRES).</p>
-<p>gsslib<br>GSS library to use for GSSAPI authentication. Currently this is disregarded except on Windows builds that include both GSSAPI and SSPI support. In that case, set this to gssapi to cause libpq to use the GSSAPI library for authentication instead of the default SSPI.</p>
-<p>service<br>Service name to use for additional parameters. It specifies a service name in pg_service.conf that holds additional connection parameters. This allows applications to specify only a service name so connection parameters can be centrally maintained. See Section 34.17.</p>
-<p>target_session_attrs<br>This option determines whether the session must have certain properties to be acceptable. It’s typically used in combination with multiple host names to select the first acceptable alternative among several hosts. There are six modes:</p>
-<p>any (default)<br>any successful connection is acceptable</p>
-<p>read-write<br>session must accept read-write transactions by default (that is, the server must not be in hot standby mode and the default_transaction_read_only parameter must be off)</p>
-<p>read-only<br>session must not accept read-write transactions by default (the converse)</p>
-<p>primary<br>server must not be in hot standby mode</p>
-<p>standby<br>server must be in hot standby mode</p>
-<p>prefer-standby<br>first try to find a standby server, but if none of the listed hosts is a standby server, try again in any mode</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-PostgreSQL-Service-connection-file"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/02/26/PostgreSQL-Service-connection-file/"
-    >PostgreSQL Service connection file</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/02/26/PostgreSQL-Service-connection-file/" class="article-date">
-  <time datetime="2023-02-26T14:51:48.000Z" itemprop="datePublished">2023-02-26</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>The service connection file allows PostgreSQL connection parameters to be associated with a single service name. That service name can then be specified by a client and the associated settings will be used.</p>
-<p>It’s called .pg_service.conf under *nix systems (GNU/Linux, macOS etc.) and pg_service.conf on Windows.</p>
-<p>The service file can look like this:</p>
-<pre><code>[water_service]
-host=192.168.0.45
-port=5433
-dbname=gisdb
-user=paul
-password=paulspass
-
-[wastewater_service]
-host=dbserver.com
-dbname=water
-user=waterpass
-</code></pre>
-<p>*备注</p>
-<p>There are two services in the above example: water_service and wastewater_service. You can use these to connect from QGIS, pgAdmin, etc. by specifying only the name of the service you want to connect to (without the enclosing brackets). If you want to use the service with psql you need to do something like export PGSERVICE=water_service before doing your psql commands.</p>
-<p>You can find all the PostgreSQL parameters  [here][<a target="_blank" rel="noopener" href="https://www.postgresql.org/docs/current/libpq-connect.html#LIBPQ-PARAMKEYWORDS]">https://www.postgresql.org/docs/current/libpq-connect.html#LIBPQ-PARAMKEYWORDS]</a> </p>
-<p>*备注</p>
-<p>If you don’t want to save the passwords in the service file you can use the [.pg_pass][<a target="_blank" rel="noopener" href="https://www.postgresql.org/docs/current/libpq-pgpass.html]">https://www.postgresql.org/docs/current/libpq-pgpass.html]</a> option.</p>
-<p>On *nix operating systems (GNU/Linux, macOS etc.) you can save the .pg_service.conf file in the user’s home directory and PostgreSQL clients will automatically be aware of it. For example, if the logged user is web, .pg_service.conf should be saved in the /home/web/ directory in order to directly work (without specifying any other environment variables).</p>
-<p>You can specify the location of the service file by creating a PGSERVICEFILE environment variable (e.g. run the export PGSERVICEFILE=/home/web/.pg_service.conf command under your *nix OS to temporarily set the PGSERVICEFILE variable)</p>
-<p>You can also make the service file available system-wide (all users) either by placing the .pg_service.conf file in pg_config –sysconfdir or by adding the PGSYSCONFDIR environment variable to specify the directory containing the service file. If service definitions with the same name exist in the user and the system file, the user file takes precedence.</p>
-<p>*警告</p>
-<p>There are some caveats under Windows:</p>
-<p>The service file should be saved as pg_service.conf and not as .pg_service.conf.</p>
-<p>The service file should be saved in Unix format in order to work. One way to do it is to open it with Notepad++ and Edit ► EOL Conversion ► UNIX Format ► File save.</p>
-<p>You can add environmental variables in various ways; a tested one, known to work reliably, is Control Panel ► System and Security ► System ► Advanced system settings ► Environment Variables adding PGSERVICEFILE with the path - e.g. C:\Users\John\pg_service.conf</p>
-<p>After adding an environment variable you may also need to restart the computer.</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
   </article>
   
 
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/40/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/39/">39</a><a class="page-number" href="/page/40/">40</a><span class="page-number current">41</span><a class="page-number" href="/page/42/">42</a><a class="page-number" href="/page/43/">43</a><span class="space">&hellip;</span><a class="page-number" href="/page/49/">49</a><a class="extend next" rel="next" href="/page/42/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/40/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/39/">39</a><a class="page-number" href="/page/40/">40</a><span class="page-number current">41</span><a class="page-number" href="/page/42/">42</a><a class="page-number" href="/page/43/">43</a><span class="space">&hellip;</span><a class="page-number" href="/page/50/">50</a><a class="extend next" rel="next" href="/page/42/">下一页</a>
   </nav>
   
 </section>
@@ -693,7 +760,7 @@ user=waterpass
     <ul>
       <li>
         Copyrights &copy;
-        2022-2023
+        2022-2024
         <i class="ri-heart-fill heart_icon"></i> paladin1893
       </li>
     </ul>
