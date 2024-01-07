@@ -154,7 +154,7 @@
     
     
     <article
-  id="post-Linux下查看tomcat占用端口"
+  id="post-PyCharm中的文件模版变量"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -165,8 +165,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/02/13/Linux%E4%B8%8B%E6%9F%A5%E7%9C%8Btomcat%E5%8D%A0%E7%94%A8%E7%AB%AF%E5%8F%A3/"
-    >Linux下查看tomcat占用端口</a> 
+  <a class="article-title" href="/2023/02/17/PyCharm%E4%B8%AD%E7%9A%84%E6%96%87%E4%BB%B6%E6%A8%A1%E7%89%88%E5%8F%98%E9%87%8F/"
+    >PyCharm中的文件模版变量</a> 
 </h2>
  
 
@@ -174,28 +174,40 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2023/02/13/Linux%E4%B8%8B%E6%9F%A5%E7%9C%8Btomcat%E5%8D%A0%E7%94%A8%E7%AB%AF%E5%8F%A3/" class="article-date">
-  <time datetime="2023-02-13T01:21:59.000Z" itemprop="datePublished">2023-02-13</time>
+      <a href="/2023/02/17/PyCharm%E4%B8%AD%E7%9A%84%E6%96%87%E4%BB%B6%E6%A8%A1%E7%89%88%E5%8F%98%E9%87%8F/" class="article-date">
+  <time datetime="2023-02-17T01:47:27.000Z" itemprop="datePublished">2023-02-17</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
   </div>
    
     </div>
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>1、先查看tomcat的进程号</p>
-<p>ps -ef | grep tomcat*</p>
-<p>后面带*号，是为了查看多个tomcat，例如tomcat6，tomcat7。</p>
-<p>2、根据进程号查看端口号</p>
-<p>netstat -anop | grep 15161</p>
-<p>可以看到8865、8866、8867端口号被占用</p>
-<p>3、此外，还可以通过端口号，查看其所属的进程号相关信息</p>
-<p>查找到两种方式：</p>
-<p>（1）lsof -i: 8866</p>
-<p>（2）netstat -tunlp|grep 端口号，用于查看指定端口号的进程情况，</p>
-<p>如查看22端口的情况，netstat -tunlp|grep 22</p>
+  <pre><code>$&#123;PROJECT_NAME&#125; - 当前的项目名
+$&#123;NAME&#125; - 在文件创建过程中，新文件对话框的命名
+$&#123;USER&#125; - 当前的登录用户
+$&#123;DATE&#125; - 现在的系统日期
+$&#123;TIME&#125; - 现在的系统时间
+$&#123;YEAR&#125; - 当前年份
+$&#123;MONTH&#125; - 当前月份
+$&#123;DAY&#125; - 当前月份中的第几日
+$&#123;HOUR&#125; - 现在的小时
+$&#123;MINUTE&#125; - 现在的分钟
+$&#123;PRODUCT_NAME&#125; - IDE创建文件的名称
+$&#123;MONTH_NAME_SHORT&#125; - 月份的前三个字母缩写
+$&#123;MONTH_NAME_FULL&#125; - 完整的月份名
+
+ 
+</code></pre>
+<p>示例：</p>
+<pre><code>#-*- coding = utf-8 -*-
+#@Time : $&#123;DATE&#125; $&#123;TIME&#125;
+#@Author : YourName
+#@File : $&#123;NAME&#125;.py
+#@Software : $&#123;PRODUCT_NAME&#125;
+</code></pre>
  
       <!-- reward -->
       
@@ -206,7 +218,7 @@
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tomcat/" rel="tag">tomcat</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PyCharm/" rel="tag">PyCharm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/" rel="tag">Python</a></li></ul>
 
     </footer>
   </div>
@@ -217,7 +229,7 @@
 
     
     <article
-  id="post-Linux下修改tomcat端口号"
+  id="post-查看PostgreSQL序列最后值的方法"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -228,8 +240,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/02/13/Linux%E4%B8%8B%E4%BF%AE%E6%94%B9tomcat%E7%AB%AF%E5%8F%A3%E5%8F%B7/"
-    >Linux下修改tomcat端口号</a> 
+  <a class="article-title" href="/2023/02/16/%E6%9F%A5%E7%9C%8BPostgreSQL%E5%BA%8F%E5%88%97%E6%9C%80%E5%90%8E%E5%80%BC%E7%9A%84%E6%96%B9%E6%B3%95/"
+    >查看PostgreSQL序列最后值的方法</a> 
 </h2>
  
 
@@ -237,8 +249,8 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2023/02/13/Linux%E4%B8%8B%E4%BF%AE%E6%94%B9tomcat%E7%AB%AF%E5%8F%A3%E5%8F%B7/" class="article-date">
-  <time datetime="2023-02-13T01:20:14.000Z" itemprop="datePublished">2023-02-13</time>
+      <a href="/2023/02/16/%E6%9F%A5%E7%9C%8BPostgreSQL%E5%BA%8F%E5%88%97%E6%9C%80%E5%90%8E%E5%80%BC%E7%9A%84%E6%96%B9%E6%B3%95/" class="article-date">
+  <time datetime="2023-02-16T04:18:32.000Z" itemprop="datePublished">2023-02-16</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
@@ -248,33 +260,14 @@
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>1、首先cd进tomcat目录里的conf文件夹，vi打开server.xml配置文件</p>
-<pre><code>[root@localhost soft]# ls
-download redis solrhome tomcat-sina-8081 tomcat-souhu-8082
-jdk redis-3.0.0.gem tomcat tomcat-solr zookeeper-3.4.6
-[root@localhost soft]# cd tomcat-solr/
-[root@localhost tomcat-solr]# cd conf/
-[root@localhost conf]# ls
-Catalina catalina.properties logging.properties tomcat-users.xml
-catalina.policy context.xml server.xml web.xml
-[root@localhost conf]# vim server.xml
+  <pre><code>SELECT SCHEMANAME AS SCHEMA,SEQUENCENAME AS SEQUENCE,LAST_VALUE FROM PG_SEQUENCES
+
+SELECT * FROM ALL_BOU1_4L_GID_SEQ;
+
+SELECT CURRVAL(&#39;ALL_BOU1_4L_GID_SEQ&#39;);
+
+SELECT NEXTVAL(&#39;ALL_BOU1_4L_GID_SEQ&#39;);
 </code></pre>
-<p>2、改动之一<br>8005改成了8885</p>
-<pre><code>&lt;Server port=”8885″ shutdown=”SHUTDOWN”&gt;
-&lt;!– Security listener. Documentation at /docs/config/listeners.html
-&lt;Listener className=”org.apache.catalina.security.SecurityListener” /&gt;
-</code></pre>
-<p>3、改动之二<br>8080改成了8888</p>
-<pre><code>&lt;Connector port=”8888″ protocol=”HTTP/1.1″
-connectionTimeout=”20000″
-redirectPort=”8443″ /&gt;
-</code></pre>
-<p>4、改动之三<br>8009改成了8889</p>
-<pre><code>&lt;!– Define an AJP 1.3 Connector on port 8009 –&gt;
-&lt;Connector port=”8889″ protocol=”AJP/1.3″ redirectPort=”8443″ /&gt;
-</code></pre>
-<p>5、wq保存退出</p>
-<p>6、最后在tomcat的bin目录./startup.sh启动一下试试：OK</p>
  
       <!-- reward -->
       
@@ -285,7 +278,7 @@ redirectPort=”8443″ /&gt;
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tomcat/" rel="tag">tomcat</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li></ul>
 
     </footer>
   </div>
@@ -296,7 +289,7 @@ redirectPort=”8443″ /&gt;
 
     
     <article
-  id="post-Linux下启动tomcat服务"
+  id="post-PostgreSQL备份与恢复"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -307,8 +300,8 @@ redirectPort=”8443″ /&gt;
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/02/13/Linux%E4%B8%8B%E5%90%AF%E5%8A%A8tomcat%E6%9C%8D%E5%8A%A1/"
-    >Linux下启动tomcat服务</a> 
+  <a class="article-title" href="/2023/02/16/PostgreSQL%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D/"
+    >PostgreSQL备份与恢复</a> 
 </h2>
  
 
@@ -316,8 +309,8 @@ redirectPort=”8443″ /&gt;
     </header>
      
     <div class="article-meta">
-      <a href="/2023/02/13/Linux%E4%B8%8B%E5%90%AF%E5%8A%A8tomcat%E6%9C%8D%E5%8A%A1/" class="article-date">
-  <time datetime="2023-02-13T01:18:37.000Z" itemprop="datePublished">2023-02-13</time>
+      <a href="/2023/02/16/PostgreSQL%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D/" class="article-date">
+  <time datetime="2023-02-16T04:17:09.000Z" itemprop="datePublished">2023-02-16</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
@@ -327,7 +320,8 @@ redirectPort=”8443″ /&gt;
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>Linux下tomcat服务的启动、关闭与错误跟踪，使用PuTTy远程连接到服务器以后，通常通过以下几种方式启动关闭tomcat服务：<br>1、切换到tomcat主目录下的bin目录（cd usr/local/tomcat/bin）<br>2，启动tomcat服务<br>方式一：直接启动 ./startup.sh<br>方式二：作为服务启动 nohup ./startup.sh &amp;<br>方式三：控制台动态输出方式启动 ./catalina.sh run 动态地显示tomcat后台的控制台输出信息,Ctrl+C后退出并关闭服务<br>解释：<br>通过方式一、方式三启动的tomcat有个弊端，当客户端连接断开的时候，tomcat服务也会立即停止，通过方式二可以作为linux服务一直运行<br>通过方式一、方式二方式启动的tomcat，其日志会写到相应的日志文件中，而不能动态地查看tomcat控制台的输出信息与错误情况，通过方式三可以以控制台模式启动tomcat服务，<br>直接看到程序运行时后台的控制台输出信息，不必每次都要很麻烦的打开catalina.out日志文件进行查看，这样便于跟踪查阅后台输出信息。tomcat控制台信息包括log4j和System.out.println()等输出的信息。<br>3、关闭tomcat服务<br>./shutdown.sh</p>
+  <p>（一）备份数据库，步骤如下：<br>（1）开始-运行-cmd 弹出dos控制台；然后 在控制台里，进入PostgreSQL安装目录bin下：<br>    cd C:\Program Files\PostgreSQL\9.0\bin<br>    pg_dump -h localhost -U postgres databasename &gt; D:\databasename.bak</p>
+<p>（二）恢复数据库，步骤如下：<br>（1）预先建好数据库databasename，<br>（2）开始-运行-cmd 弹出dos控制台；然后 在控制台里，进入PostgreSQL安装目录bin下：<br>    cd C:\Program Files\PostgreSQL\9.0\bin<br>    psql -h localhost -U postgres -d databasename &lt; D:\databasename.bak</p>
  
       <!-- reward -->
       
@@ -338,7 +332,7 @@ redirectPort=”8443″ /&gt;
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tomcat/" rel="tag">tomcat</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li></ul>
 
     </footer>
   </div>
@@ -349,7 +343,7 @@ redirectPort=”8443″ /&gt;
 
     
     <article
-  id="post-dell笔记本重装系统后耳机插入无声音解决办法"
+  id="post-windows下注册和取消PostgreSQL服务的方法"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -360,8 +354,8 @@ redirectPort=”8443″ /&gt;
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/02/13/dell%E7%AC%94%E8%AE%B0%E6%9C%AC%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E5%90%8E%E8%80%B3%E6%9C%BA%E6%8F%92%E5%85%A5%E6%97%A0%E5%A3%B0%E9%9F%B3%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/"
-    >dell笔记本重装系统后耳机插入无声音解决办法</a> 
+  <a class="article-title" href="/2023/02/16/windows%E4%B8%8B%E6%B3%A8%E5%86%8C%E5%92%8C%E5%8F%96%E6%B6%88PostgreSQL%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%96%B9%E6%B3%95/"
+    >windows下注册和取消PostgreSQL服务的方法</a> 
 </h2>
  
 
@@ -369,8 +363,8 @@ redirectPort=”8443″ /&gt;
     </header>
      
     <div class="article-meta">
-      <a href="/2023/02/13/dell%E7%AC%94%E8%AE%B0%E6%9C%AC%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E5%90%8E%E8%80%B3%E6%9C%BA%E6%8F%92%E5%85%A5%E6%97%A0%E5%A3%B0%E9%9F%B3%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" class="article-date">
-  <time datetime="2023-02-13T01:07:12.000Z" itemprop="datePublished">2023-02-13</time>
+      <a href="/2023/02/16/windows%E4%B8%8B%E6%B3%A8%E5%86%8C%E5%92%8C%E5%8F%96%E6%B6%88PostgreSQL%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%96%B9%E6%B3%95/" class="article-date">
+  <time datetime="2023-02-16T04:16:04.000Z" itemprop="datePublished">2023-02-16</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
@@ -380,9 +374,8 @@ redirectPort=”8443″ /&gt;
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>dell笔记本重装系统后回自动安装驱动，但是声卡是不完全匹配的，会导致耳机插入无声音，解决办法如下：</p>
-<p>从dell官网找到适配笔记本的驱动，再下载声卡驱动Realtek-High-Definition-Audio-Driver-xxxxxxxxxxxxx.exe。<br>手动点击安装，按要求重启电脑。完成安装后，看见Waves MaxxAudioPro即可。</p>
-<p>此时插入耳机一般会有弹框要求选择插入设备类型，选择耳机或耳麦即可。<br>如果没有，则到Waves MaxxAudioPro“回放-高级”，勾选“连接设备弹出选择框”</p>
+  <h1 id="（一）"><a href="#（一）" class="headerlink" title="（一）"></a>（一）</h1><p>pg_ctl register [-N servicename] [-U username] [-P password] [-D datadir] [-w][-t seconds] [-o options]<br>pg_ctl unregister [-N servicename]<br>参数说明如下：<br>-N servicename：要注册的系统服务的名字。这个名字将用于服务名和 显示名。<br>-P password：用于启动服务的密码<br>-U：用于启动服务的用户名。如果是域用户，需要使用“DOMAIN\username”的格式<br>使用举例如下：<br>删除一个服务：<br>pg_ctl unregister -N postgresql-9.2<br>增加一个服务：<br>pg_ctl register -D “C:\Program Files\Postgresql\9.2\data”</p>
+<h1 id="（二）"><a href="#（二）" class="headerlink" title="（二）"></a>（二）</h1><p>重新注册服务，其实比重新安装还简单了；执行命令就可以了，<br>第一步：进入到数据库的安装目录，cd D:\PostgreSQL\bin；<br>第二部：执行服务注册：pg_ctl register -N pg921 -D D:\PostgreSQL\data -S auto -w -t 10 -l D:/PostgreSQL/pg921.log -o “-p 5432”,<br>-N pg921 代表注册服务的名称 ，-D代表数据库文件目录 ，-S代表服务启动方式auto自动，demand手动，-o “-p 5432”指启动服务端口；（可以通过pg_ctl –help命令查看使用方法）<br>第三步：启动服务，net start pg921；<br>通过上面的的方法就成功的注册了服务器，以后每次开机都可以使用数据库了；<br>但是postgresql自带的一个管理工具pgAdmin3还是不能正常使用，需要我们配置，配置方法见下图：<br>注意：服务项不需要填写，主机填写localhost，如果填写真实的ip，必须在数据库配置文件中配置ip权限，否则不能连接；</p>
  
       <!-- reward -->
       
@@ -393,7 +386,7 @@ redirectPort=”8443″ /&gt;
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/DELL/" rel="tag">DELL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/windows/" rel="tag">windows</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li></ul>
 
     </footer>
   </div>
@@ -404,7 +397,7 @@ redirectPort=”8443″ /&gt;
 
     
     <article
-  id="post-笔记本安装FME"
+  id="post-Enabling-PostGIS"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -415,8 +408,8 @@ redirectPort=”8443″ /&gt;
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/02/12/%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%AE%89%E8%A3%85FME/"
-    >笔记本安装FME</a> 
+  <a class="article-title" href="/2023/02/16/Enabling-PostGIS/"
+    >Enabling PostGIS</a> 
 </h2>
  
 
@@ -424,8 +417,8 @@ redirectPort=”8443″ /&gt;
     </header>
      
     <div class="article-meta">
-      <a href="/2023/02/12/%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%AE%89%E8%A3%85FME/" class="article-date">
-  <time datetime="2023-02-12T06:46:10.000Z" itemprop="datePublished">2023-02-12</time>
+      <a href="/2023/02/16/Enabling-PostGIS/" class="article-date">
+  <time datetime="2023-02-16T04:13:35.000Z" itemprop="datePublished">2023-02-16</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
@@ -435,7 +428,41 @@ redirectPort=”8443″ /&gt;
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>首先，笔记本都会出现两个Ethernet Address，然后用引号括起来，用其中一个就好，不需要引号<br>地址后面还要跟端口（27001~27009）<br>详细步骤如下：<br>1、安装软件本体（fme-desktop-b16492-win-x64.msi）及license管理器（fme-flexnet-win-x64.msi）；<br>2、在FlexServer安装目录下打开lmtools.exe打开System Settings选项卡查看信息，安装包文件夹dummy.txt 第一行 SERVER 后面填写计算机名+空格+网卡MAC（如有引号将几个MAC括起来，填写其中一个即可，不要引号）+空格+端口号（27001-27009）；<br>3、完成后运行makekey.bat 生成safe.lic 大小2.几K，如超过5k则信息错误；<br>4、复制safe.lic 至FlexServer安装目录下 ，打开lmtools.exe，Strat/Stop/Reread选项卡，先Stop Server，再Start Server，再ReRead License File；<br>5、打开软件后选Float方式，然后填入计算机名，激活即可</p>
+  <p>PostGIS is an optional extension that must be enabled in EVERY database you want to use it in.</p>
+<pre><code>CREATE EXTENSION postgis;
+-- in PostGIS 3, postgis_raster is a separate extension from postgis
+-- so do this in addition if you are experimenting PostGIS 3+
+CREATE EXTENSION postgis_raster;
+ 
+CREATE EXTENSION postgis_sfcgal;
+CREATE EXTENSION address_standardizer;
+CREATE EXTENSION fuzzystrmatch;
+CREATE EXTENSION postgis_topology;
+CREATE EXTENSION postgis_tiger_geocoder;
+
+-- If you want to use pgrouting, download the respective one for your PostgreSQL
+CREATE EXTENSION pgrouting;
+</code></pre>
+<hr>
+<pre><code>-- Enable PostGIS (as of 3.0 contains just geometry/geography)
+CREATE EXTENSION postgis;
+-- enable raster support (for 3+)
+CREATE EXTENSION postgis_raster;
+-- Enable Topology
+CREATE EXTENSION postgis_topology;
+-- Enable PostGIS Advanced 3D
+-- and other geoprocessing algorithms
+-- sfcgal not available with all distributions
+CREATE EXTENSION postgis_sfcgal;
+-- fuzzy matching needed for Tiger
+CREATE EXTENSION fuzzystrmatch;
+-- rule based standardizer
+CREATE EXTENSION address_standardizer;
+-- example rule data set
+CREATE EXTENSION address_standardizer_data_us;
+-- Enable US Tiger Geocoder
+CREATE EXTENSION postgis_tiger_geocoder;
+</code></pre>
  
       <!-- reward -->
       
@@ -446,7 +473,7 @@ redirectPort=”8443″ /&gt;
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/FME/" rel="tag">FME</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostGIS/" rel="tag">PostGIS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li></ul>
 
     </footer>
   </div>
@@ -457,7 +484,7 @@ redirectPort=”8443″ /&gt;
 
     
     <article
-  id="post-Oracle-RAC建表空间"
+  id="post-Ubuntu20-04安装Idea详细教程"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -468,8 +495,8 @@ redirectPort=”8443″ /&gt;
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/02/12/Oracle-RAC%E5%BB%BA%E8%A1%A8%E7%A9%BA%E9%97%B4/"
-    >Oracle RAC建表空间</a> 
+  <a class="article-title" href="/2023/02/15/Ubuntu20-04%E5%AE%89%E8%A3%85Idea%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/"
+    >Ubuntu20.04安装Idea详细教程</a> 
 </h2>
  
 
@@ -477,8 +504,8 @@ redirectPort=”8443″ /&gt;
     </header>
      
     <div class="article-meta">
-      <a href="/2023/02/12/Oracle-RAC%E5%BB%BA%E8%A1%A8%E7%A9%BA%E9%97%B4/" class="article-date">
-  <time datetime="2023-02-12T06:45:15.000Z" itemprop="datePublished">2023-02-12</time>
+      <a href="/2023/02/15/Ubuntu20-04%E5%AE%89%E8%A3%85Idea%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/" class="article-date">
+  <time datetime="2023-02-15T04:09:34.000Z" itemprop="datePublished">2023-02-15</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
@@ -488,28 +515,10 @@ redirectPort=”8443″ /&gt;
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>一、建表空间</p>
-<p>1、RAC</p>
-<pre><code>create tablespace TS_YYYY datafile size 500M autoextend on next 50M maxsize unlimited;
-</code></pre>
-<p>2、单实例</p>
-<pre><code>create tablespace TS_YYYY datafile ‘/u01/app/oracle/oradata/pmsgeo/yxyk.dbf’ size 500M autoextend on next 50M maxsize unlimited;
-</code></pre>
-<p>二、建用户</p>
-<pre><code>create user yxyk identified by yyyy default tablespace TS_YYYY;
-</code></pre>
-<p>三、赋权限</p>
-<pre><code>grant connect,resource to yyyy;
-grant debug connect session to yyyy;
-grant create any sequence to yyyy;
-grant create any table to yyyy;
-grant delete any table to yyyy;
-grant insert any table to yyyy;
-grant select any table to yyyy;
-grant unlimited tablespace to yyyy;
-grant execute any procedure to yyyy;
-grant update any table to yyyy;
-grant create any view to yyyy;
+  <h1 id="官网下载压缩包"><a href="#官网下载压缩包" class="headerlink" title="官网下载压缩包"></a>官网下载压缩包</h1><p><a target="_blank" rel="noopener" href="https://www.jetbrains.com/idea/">https://www.jetbrains.com/idea/</a> </p>
+<h1 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h1><pre><code>sudo tar -zxvf ideaIU-2020.2.3.tar.gz -C /opt 
+cd idea-IU-202.7660.26/bin/
+./idea.sh 
 </code></pre>
  
       <!-- reward -->
@@ -521,7 +530,7 @@ grant create any view to yyyy;
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Oracle/" rel="tag">Oracle</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Idea/" rel="tag">Idea</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a></li></ul>
 
     </footer>
   </div>
@@ -537,7 +546,7 @@ grant create any view to yyyy;
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/45/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><a class="page-number" href="/page/45/">45</a><span class="page-number current">46</span><a class="page-number" href="/page/47/">47</a><a class="page-number" href="/page/48/">48</a><span class="space">&hellip;</span><a class="page-number" href="/page/50/">50</a><a class="extend next" rel="next" href="/page/47/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/45/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><a class="page-number" href="/page/45/">45</a><span class="page-number current">46</span><a class="page-number" href="/page/47/">47</a><a class="page-number" href="/page/48/">48</a><span class="space">&hellip;</span><a class="page-number" href="/page/52/">52</a><a class="extend next" rel="next" href="/page/47/">下一页</a>
   </nav>
   
 </section>

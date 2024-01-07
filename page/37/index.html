@@ -154,7 +154,7 @@
     
     
     <article
-  id="post-GO入门04：结构体"
+  id="post-GO入门13：结构体、数组、切片"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -165,8 +165,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/03/31/GO%E5%85%A5%E9%97%A804%EF%BC%9A%E7%BB%93%E6%9E%84%E4%BD%93/"
-    >GO入门04：结构体</a> 
+  <a class="article-title" href="/2023/04/10/GO%E5%85%A5%E9%97%A813%EF%BC%9A%E7%BB%93%E6%9E%84%E4%BD%93%E3%80%81%E6%95%B0%E7%BB%84%E3%80%81%E5%88%87%E7%89%87/"
+    >GO入门13：结构体、数组、切片</a> 
 </h2>
  
 
@@ -174,8 +174,8 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2023/03/31/GO%E5%85%A5%E9%97%A804%EF%BC%9A%E7%BB%93%E6%9E%84%E4%BD%93/" class="article-date">
-  <time datetime="2023-03-31T15:09:29.000Z" itemprop="datePublished">2023-03-31</time>
+      <a href="/2023/04/10/GO%E5%85%A5%E9%97%A813%EF%BC%9A%E7%BB%93%E6%9E%84%E4%BD%93%E3%80%81%E6%95%B0%E7%BB%84%E3%80%81%E5%88%87%E7%89%87/" class="article-date">
+  <time datetime="2023-04-10T13:30:05.000Z" itemprop="datePublished">2023-04-10</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -185,406 +185,68 @@
       
     <div class="article-entry" itemprop="articleBody">
        
-  <h1 id="Go-语言结构体"><a href="#Go-语言结构体" class="headerlink" title="Go 语言结构体"></a>Go 语言结构体</h1><p>Go 语言中数组可以存储同一类型的数据，但在结构体中我们可以为不同项定义不同的数据类型。</p>
-<p>结构体是由一系列具有相同类型或不同类型的数据构成的数据集合。</p>
-<p>结构体表示一项记录，比如保存图书馆的书籍记录，每本书有以下属性：</p>
-<pre><code>Title ：标题
-Author ： 作者
-Subject：学科
-ID：书籍ID
-</code></pre>
-<h1 id="定义结构体"><a href="#定义结构体" class="headerlink" title="定义结构体"></a>定义结构体</h1><p>结构体定义需要使用 type 和 struct 语句。struct 语句定义一个新的数据类型，结构体中有一个或多个成员。type 语句设定了结构体的名称。结构体的格式如下：</p>
-<pre><code>type struct_variable_type struct &#123;
-   member definition
-   member definition
-   ...
-   member definition
-&#125;
-</code></pre>
-<p>一旦定义了结构体类型，它就能用于变量的声明，语法格式如下：</p>
-<pre><code>variable_name := structure_variable_type &#123;value1, value2...valuen&#125;
-或
-variable_name := structure_variable_type &#123; key1: value1, key2: value2..., keyn: valuen&#125;
-</code></pre>
-<p>实例如下：</p>
+  <p>数组如作为函数参数，需要转为切片。<br>GO语言的切片等价于其他语言的vector。</p>
 <pre><code>package main
 
 import &quot;fmt&quot;
 
 type Books struct &#123;
-   title string
-   author string
-   subject string
-   book_id int
-&#125;
-
-
-func main() &#123;
-
-    // 创建一个新的结构体
-    fmt.Println(Books&#123;&quot;Go 语言&quot;, &quot;www.runoob.com&quot;, &quot;Go 语言教程&quot;, 6495407&#125;)
-
-    // 也可以使用 key =&gt; value 格式
-    fmt.Println(Books&#123;title: &quot;Go 语言&quot;, author: &quot;www.runoob.com&quot;, subject: &quot;Go 语言教程&quot;, book_id: 6495407&#125;)
-
-    // 忽略的字段为 0 或 空
-   fmt.Println(Books&#123;title: &quot;Go 语言&quot;, author: &quot;www.runoob.com&quot;&#125;)
-&#125;
-</code></pre>
-<p>输出结果为：</p>
-<pre><code>&#123;Go 语言 www.runoob.com Go 语言教程 6495407&#125;
-&#123;Go 语言 www.runoob.com Go 语言教程 6495407&#125;
-&#123;Go 语言 www.runoob.com  0&#125;
-</code></pre>
-<h1 id="访问结构体成员"><a href="#访问结构体成员" class="headerlink" title="访问结构体成员"></a>访问结构体成员</h1><p>如果要访问结构体成员，需要使用点号 . 操作符，格式为：</p>
-<pre><code>结构体.成员名
-</code></pre>
-<p>结构体类型变量使用 struct 关键字定义，实例如下：</p>
-<pre><code>package main
-
-import &quot;fmt&quot;
-
-type Books struct &#123;
-   title string
-   author string
-   subject string
-   book_id int
+    title   string
+    author  string
+    subject string
+    book_id int
 &#125;
 
 func main() &#123;
-   var Book1 Books        /* 声明 Book1 为 Books 类型 */
-   var Book2 Books        /* 声明 Book2 为 Books 类型 */
+    var Book1 Books /* 声明 Book1 为 Books 类型 */
+    var Book2 Books /* 声明 Book2 为 Books 类型 */
 
-   /* book 1 描述 */
-   Book1.title = &quot;Go 语言&quot;
-   Book1.author = &quot;www.runoob.com&quot;
-   Book1.subject = &quot;Go 语言教程&quot;
-   Book1.book_id = 6495407
+    /* book 1 描述 */
+    Book1.title = &quot;Go 语言&quot;
+    Book1.author = &quot;www.runoob.com&quot;
+    Book1.subject = &quot;Go 语言教程&quot;
+    Book1.book_id = 6495407
 
-   /* book 2 描述 */
-   Book2.title = &quot;Python 教程&quot;
-   Book2.author = &quot;www.runoob.com&quot;
-   Book2.subject = &quot;Python 语言教程&quot;
-   Book2.book_id = 6495700
+    /* book 2 描述 */
+    Book2.title = &quot;Python 教程&quot;
+    Book2.author = &quot;www.runoob.com&quot;
+    Book2.subject = &quot;Python 语言教程&quot;
+    Book2.book_id = 6495700
 
-   /* 打印 Book1 信息 */
-   fmt.Printf( &quot;Book 1 title : %s\n&quot;, Book1.title)
-   fmt.Printf( &quot;Book 1 author : %s\n&quot;, Book1.author)
-   fmt.Printf( &quot;Book 1 subject : %s\n&quot;, Book1.subject)
-   fmt.Printf( &quot;Book 1 book_id : %d\n&quot;, Book1.book_id)
+    var BookArr [2]Books
+    BookArr[0] = Book1
+    BookArr[1] = Book2
 
-   /* 打印 Book2 信息 */
-   fmt.Printf( &quot;Book 2 title : %s\n&quot;, Book2.title)
-   fmt.Printf( &quot;Book 2 author : %s\n&quot;, Book2.author)
-   fmt.Printf( &quot;Book 2 subject : %s\n&quot;, Book2.subject)
-   fmt.Printf( &quot;Book 2 book_id : %d\n&quot;, Book2.book_id)
-&#125;
-</code></pre>
-<p>以上实例执行运行结果为：</p>
-<pre><code>Book 1 title : Go 语言
-Book 1 author : www.runoob.com
-Book 1 subject : Go 语言教程
-Book 1 book_id : 6495407
-Book 2 title : Python 教程
-Book 2 author : www.runoob.com
-Book 2 subject : Python 语言教程
-Book 2 book_id : 6495700
-</code></pre>
-<h1 id="结构体作为函数参数"><a href="#结构体作为函数参数" class="headerlink" title="结构体作为函数参数"></a>结构体作为函数参数</h1><p>你可以像其他数据类型一样将结构体类型作为参数传递给函数。并以以上实例的方式访问结构体变量：</p>
-<pre><code>package main
+    var BookSlice []Books
+    BookSlice = append(BookSlice, Book1, Book2)
+    BookSlice = append(BookSlice, Books&#123;&quot;Go++ 语言&quot;, &quot;www.runoob.com&quot;, &quot;Go 语言教程&quot;, 6495407&#125;)
 
-import &quot;fmt&quot;
-
-type Books struct &#123;
-   title string
-   author string
-   subject string
-   book_id int
+    /* 打印 Book1 信息 */
+    printBook(&amp;Book1)
+    printBook(&amp;Book2)
+    printBooks(BookArr[:])
+    printBooks(BookSlice)
 &#125;
 
-func main() &#123;
-   var Book1 Books        /* 声明 Book1 为 Books 类型 */
-   var Book2 Books        /* 声明 Book2 为 Books 类型 */
-
-   /* book 1 描述 */
-   Book1.title = &quot;Go 语言&quot;
-   Book1.author = &quot;www.runoob.com&quot;
-   Book1.subject = &quot;Go 语言教程&quot;
-   Book1.book_id = 6495407
-
-   /* book 2 描述 */
-   Book2.title = &quot;Python 教程&quot;
-   Book2.author = &quot;www.runoob.com&quot;
-   Book2.subject = &quot;Python 语言教程&quot;
-   Book2.book_id = 6495700
-
-   /* 打印 Book1 信息 */
-   printBook(Book1)
-
-   /* 打印 Book2 信息 */
-   printBook(Book2)
+func printBook(book *Books) &#123;
+    fmt.Println(&quot;printBook----&quot;)
+    fmt.Printf(&quot;Book title : %s\n&quot;, book.title)
+    fmt.Printf(&quot;Book author : %s\n&quot;, book.author)
+    fmt.Printf(&quot;Book subject : %s\n&quot;, book.subject)
+    fmt.Printf(&quot;Book book_id : %d\n&quot;, book.book_id)
+    fmt.Println()
 &#125;
 
-func printBook( book Books ) &#123;
-   fmt.Printf( &quot;Book title : %s\n&quot;, book.title)
-   fmt.Printf( &quot;Book author : %s\n&quot;, book.author)
-   fmt.Printf( &quot;Book subject : %s\n&quot;, book.subject)
-   fmt.Printf( &quot;Book book_id : %d\n&quot;, book.book_id)
-&#125;
-</code></pre>
-<p>以上实例执行运行结果为：</p>
-<pre><code>Book title : Go 语言
-Book author : www.runoob.com
-Book subject : Go 语言教程
-Book book_id : 6495407
-Book title : Python 教程
-Book author : www.runoob.com
-Book subject : Python 语言教程
-Book book_id : 6495700
-</code></pre>
-<h1 id="结构体指针"><a href="#结构体指针" class="headerlink" title="结构体指针"></a>结构体指针</h1><p>你可以定义指向结构体的指针类似于其他指针变量，格式如下：</p>
-<pre><code>var struct_pointer *Books
-</code></pre>
-<p>以上定义的指针变量可以存储结构体变量的地址。查看结构体变量地址，可以将 &amp; 符号放置于结构体变量前：</p>
-<pre><code>struct_pointer = &amp;Book1
-</code></pre>
-<p>使用结构体指针访问结构体成员，使用 “.” 操作符：</p>
-<pre><code>struct_pointer.title
-</code></pre>
-<p>接下来让我们使用结构体指针重写以上实例，代码如下：</p>
-<pre><code>package main
-
-import &quot;fmt&quot;
-
-type Books struct &#123;
-   title string
-   author string
-   subject string
-   book_id int
-&#125;
-
-func main() &#123;
-   var Book1 Books        /* 声明 Book1 为 Books 类型 */
-   var Book2 Books        /* 声明 Book2 为 Books 类型 */
-
-   /* book 1 描述 */
-   Book1.title = &quot;Go 语言&quot;
-   Book1.author = &quot;www.runoob.com&quot;
-   Book1.subject = &quot;Go 语言教程&quot;
-   Book1.book_id = 6495407
-
-   /* book 2 描述 */
-   Book2.title = &quot;Python 教程&quot;
-   Book2.author = &quot;www.runoob.com&quot;
-   Book2.subject = &quot;Python 语言教程&quot;
-   Book2.book_id = 6495700
-
-   /* 打印 Book1 信息 */
-   printBook(&amp;Book1)
-
-   /* 打印 Book2 信息 */
-   printBook(&amp;Book2)
-&#125;
-func printBook( book *Books ) &#123;
-   fmt.Printf( &quot;Book title : %s\n&quot;, book.title)
-   fmt.Printf( &quot;Book author : %s\n&quot;, book.author)
-   fmt.Printf( &quot;Book subject : %s\n&quot;, book.subject)
-   fmt.Printf( &quot;Book book_id : %d\n&quot;, book.book_id)
-&#125;
-</code></pre>
-<p>以上实例执行运行结果为：</p>
-<pre><code>Book title : Go 语言
-Book author : www.runoob.com
-Book subject : Go 语言教程
-Book book_id : 6495407
-Book title : Python 教程
-Book author : www.runoob.com
-Book subject : Python 语言教程
-Book book_id : 6495700
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GO/" rel="tag">GO</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-GO入门03：关系运算符"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/03/30/GO%E5%85%A5%E9%97%A803%EF%BC%9A%E5%85%B3%E7%B3%BB%E8%BF%90%E7%AE%97%E7%AC%A6/"
-    >GO入门03：关系运算符</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/03/30/GO%E5%85%A5%E9%97%A803%EF%BC%9A%E5%85%B3%E7%B3%BB%E8%BF%90%E7%AE%97%E7%AC%A6/" class="article-date">
-  <time datetime="2023-03-30T14:54:23.000Z" itemprop="datePublished">2023-03-30</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h1><pre><code>关系运算符
-</code></pre>
-<h1 id="示例代码："><a href="#示例代码：" class="headerlink" title="示例代码："></a>示例代码：</h1><pre><code>package main
-
-import &quot;fmt&quot;
-
-func main() &#123;
-   var a int = 21
-   var b int = 10
-
-   if( a == b ) &#123;
-      fmt.Printf(&quot;第一行 - a 等于 b\n&quot; )
-   &#125; else &#123;
-      fmt.Printf(&quot;第一行 - a 不等于 b\n&quot; )
-   &#125;
-   if ( a &lt; b ) &#123;
-      fmt.Printf(&quot;第二行 - a 小于 b\n&quot; )
-   &#125; else &#123;
-      fmt.Printf(&quot;第二行 - a 不小于 b\n&quot; )
-   &#125;
-   
-   if ( a &gt; b ) &#123;
-      fmt.Printf(&quot;第三行 - a 大于 b\n&quot; )
-   &#125; else &#123;
-      fmt.Printf(&quot;第三行 - a 不大于 b\n&quot; )
-   &#125;
-   /* Lets change value of a and b */
-   a = 5
-   b = 20
-   if ( a &lt;= b ) &#123;
-      fmt.Printf(&quot;第四行 - a 小于等于 b\n&quot; )
-   &#125;
-   if ( b &gt;= a ) &#123;
-      fmt.Printf(&quot;第五行 - b 大于等于 a\n&quot; )
-   &#125;
-&#125;
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GO/" rel="tag">GO</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-GO入门02：for循环"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/03/29/GO%E5%85%A5%E9%97%A802%EF%BC%9Afor%E5%BE%AA%E7%8E%AF/"
-    >GO入门02：for循环</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/03/29/GO%E5%85%A5%E9%97%A802%EF%BC%9Afor%E5%BE%AA%E7%8E%AF/" class="article-date">
-  <time datetime="2023-03-29T14:38:27.000Z" itemprop="datePublished">2023-03-29</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h1><pre><code>for循环
-break
-</code></pre>
-<h1 id="示例代码1："><a href="#示例代码1：" class="headerlink" title="示例代码1："></a>示例代码1：</h1><pre><code>package main
-
-import &quot;fmt&quot;
-
-func main() &#123;
-   strings := []string&#123;&quot;google&quot;, &quot;runoob&quot;&#125;
-   for i, s := range strings &#123;
-      fmt.Println(i, s)
-   &#125;
-&#125;
-</code></pre>
-<h1 id="示例代码2："><a href="#示例代码2：" class="headerlink" title="示例代码2："></a>示例代码2：</h1><pre><code>package main
-
-import &quot;fmt&quot;
-
-func main() &#123;
-    arr := [5]int&#123;1, 2, 3, 4, 5&#125;
-    sum := 0
-    for i := 0; i &lt;= len(arr); i++ &#123;
-        sum += i
+func printBooks(arr []Books) &#123;
+    fmt.Println(&quot;printBooks----&quot;)
+    for i := 0; i &lt; len(arr); i++ &#123;
+        book := arr[i]
+        fmt.Printf(&quot;Book title : %s\n&quot;, book.title)
+        fmt.Printf(&quot;Book author : %s\n&quot;, book.author)
+        fmt.Printf(&quot;Book subject : %s\n&quot;, book.subject)
+        fmt.Printf(&quot;Book book_id : %d\n&quot;, book.book_id)
     &#125;
-    fmt.Println(sum)
-&#125;
-</code></pre>
-<h1 id="示例代码3："><a href="#示例代码3：" class="headerlink" title="示例代码3："></a>示例代码3：</h1><pre><code>package main
-
-import &quot;fmt&quot;
-
-func main() &#123;
-
-   var a int = 10
-   
-   for a &lt; 20 &#123;
-      fmt.Printf(&quot;a = : %d\n&quot;, a);
-      a++;
-      if a &gt; 15 &#123;
-         break;
-      &#125;
-   &#125;
+    fmt.Println()
 &#125;
 </code></pre>
  
@@ -608,7 +270,7 @@ func main() &#123;
 
     
     <article
-  id="post-GO入门01：Hello-World"
+  id="post-GO入门12：字符串替换"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -619,8 +281,8 @@ func main() &#123;
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/03/28/GO%E5%85%A5%E9%97%A801%EF%BC%9AHello-World/"
-    >GO入门01：Hello World!</a> 
+  <a class="article-title" href="/2023/04/09/GO%E5%85%A5%E9%97%A812%EF%BC%9A%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%9B%BF%E6%8D%A2/"
+    >GO入门12：字符串替换</a> 
 </h2>
  
 
@@ -628,8 +290,8 @@ func main() &#123;
     </header>
      
     <div class="article-meta">
-      <a href="/2023/03/28/GO%E5%85%A5%E9%97%A801%EF%BC%9AHello-World/" class="article-date">
-  <time datetime="2023-03-28T14:34:30.000Z" itemprop="datePublished">2023-03-28</time>
+      <a href="/2023/04/09/GO%E5%85%A5%E9%97%A812%EF%BC%9A%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%9B%BF%E6%8D%A2/" class="article-date">
+  <time datetime="2023-04-09T09:10:57.000Z" itemprop="datePublished">2023-04-09</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -639,17 +301,21 @@ func main() &#123;
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>入门示例代码：</p>
-<pre><code>package main
-
-import &quot;fmt&quot;
-
-func main() &#123;
-    fmt.Println(&quot;Hello, World!&quot;)
-&#125;
+  <p>1、引入strings包</p>
+<pre><code>import &quot;strings&quot;
 </code></pre>
-<p>执行命令：</p>
-<pre><code>$ go run hello.go
+<p>2、func Replace</p>
+<pre><code>func Replace(s, old, new string, n int) string
+</code></pre>
+<p>在s字符串中，把old字符串替换为new字符串，n表示替换的次数，小于0表示全部替换</p>
+<pre><code>//替换两次
+fmt.Println(strings.Replace(&quot;oink oink oink&quot;, &quot;k&quot;, &quot;ky&quot;, 2)) 
+//全部替换
+fmt.Println(strings.Replace(&quot;oink oink oink&quot;, &quot;oink&quot;, &quot;moo&quot;, -1))
+
+//输出结果
+oinky oinky oink
+moo moo moo
 </code></pre>
  
       <!-- reward -->
@@ -672,7 +338,7 @@ func main() &#123;
 
     
     <article
-  id="post-java读取JSON文件的多种方式"
+  id="post-Oracle判断字段中是否包含中文及取出中文的方法"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -683,8 +349,8 @@ func main() &#123;
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/03/27/java%E8%AF%BB%E5%8F%96JSON%E6%96%87%E4%BB%B6%E7%9A%84%E5%A4%9A%E7%A7%8D%E6%96%B9%E5%BC%8F/"
-    >java读取JSON文件的多种方式</a> 
+  <a class="article-title" href="/2023/04/08/Oracle%E5%88%A4%E6%96%AD%E5%AD%97%E6%AE%B5%E4%B8%AD%E6%98%AF%E5%90%A6%E5%8C%85%E5%90%AB%E4%B8%AD%E6%96%87%E5%8F%8A%E5%8F%96%E5%87%BA%E4%B8%AD%E6%96%87%E7%9A%84%E6%96%B9%E6%B3%95/"
+    >Oracle判断字段中是否包含中文及取出中文的方法</a> 
 </h2>
  
 
@@ -692,8 +358,8 @@ func main() &#123;
     </header>
      
     <div class="article-meta">
-      <a href="/2023/03/27/java%E8%AF%BB%E5%8F%96JSON%E6%96%87%E4%BB%B6%E7%9A%84%E5%A4%9A%E7%A7%8D%E6%96%B9%E5%BC%8F/" class="article-date">
-  <time datetime="2023-03-27T15:32:06.000Z" itemprop="datePublished">2023-03-27</time>
+      <a href="/2023/04/08/Oracle%E5%88%A4%E6%96%AD%E5%AD%97%E6%AE%B5%E4%B8%AD%E6%98%AF%E5%90%A6%E5%8C%85%E5%90%AB%E4%B8%AD%E6%96%87%E5%8F%8A%E5%8F%96%E5%87%BA%E4%B8%AD%E6%96%87%E7%9A%84%E6%96%B9%E6%B3%95/" class="article-date">
+  <time datetime="2023-04-08T03:31:53.000Z" itemprop="datePublished">2023-04-08</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -703,105 +369,282 @@ func main() &#123;
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>在开发过程中有时会遇到需要读取本地.json文件的需求，通常会自己写Reader代码去读，但是这么做写出来的代码有些繁琐（需要关流、创建StringBuilder对象等操作）。最近发现几个小工具可以让需求代码变得更加简洁。</p>
-<h1 id="准备："><a href="#准备：" class="headerlink" title="准备："></a>准备：</h1><p>json文件：D:\test.json</p>
-<pre><code>&#123;
-    &quot;ID&quot;: 10001,
-    &quot;detail&quot;: &quot;detail&quot;,
-    &quot;json_format_version&quot;: 1.0,
-    &quot;other_info&quot;: &#123;
-        &quot;array_one&quot;: [
-            [855, 410],
-            [854, 411],
-            [847, 411],
-            [846, 410],
-            [845, 410],
-            [844, 409]
-        ],
-        &quot;array_two&quot;: [
-            [832, 303],
-            [829, 303],
-            [828, 302],
-            [825, 302],
-            [824, 301]
-        ],
-        &quot;array_three&quot;: [
-            [1013, 224],
-            [1012, 225],
-            [1010, 225],
-            [1009, 226],
-            [1023, 224]
-        ],
-        &quot;point&quot;: [853, 310],
-        &quot;boolean&quot;: true
+  <h1 id="一、问题说明"><a href="#一、问题说明" class="headerlink" title="一、问题说明"></a>一、问题说明</h1><p>在处理数据的时候，需要判断某个字段字符串中是否有中文，若有则取出中文。</p>
+<h1 id="二、解决办法"><a href="#二、解决办法" class="headerlink" title="二、解决办法"></a>二、解决办法</h1><p>首先如何判断某个字段字符串中是否有中文。这里介绍三种方法：</p>
+<h2 id="1、采用ASCIISTR函数"><a href="#1、采用ASCIISTR函数" class="headerlink" title="1、采用ASCIISTR函数"></a>1、采用ASCIISTR函数</h2><pre><code>--查询字段中含有中文
+SELECT jldw FROM t_tz_sjclgx WHERE ASCIISTR(jldw) LIKE &#39;%\%&#39;
+</code></pre>
+<p>说明：ASCIISTR函数用于返回字符的ASCII形式的字符串；非ASCII的字符被转化为\xxxx的形式。换句话说：如果字符中包含中文，则必定会有\xxxx的字符。</p>
+<p>所以，我们直接利用ASCIISTR函数匹配’&#39;即可判断。</p>
+<h2 id="2、采用length和lengthb的原理"><a href="#2、采用length和lengthb的原理" class="headerlink" title="2、采用length和lengthb的原理"></a>2、采用length和lengthb的原理</h2><pre><code>--查询字段中含有中文
+SELECT jldw FROM t_tz_sjclgx WHERE LENGTHB(jldw)&lt;&gt;LENGTH(jldw)
+</code></pre>
+<p>说明：中文下length返回的是字符个数，中文占1字符，lengthb返回的是字节个数，中文占2字节，根据中文的特性即可解决。</p>
+<h2 id="3、使用CONVERT函数判别"><a href="#3、使用CONVERT函数判别" class="headerlink" title="3、使用CONVERT函数判别"></a>3、使用CONVERT函数判别</h2><pre><code>--查询字段中含有中文
+SELECT jldw FROM t_tz_sjclgx WHERE jldw &lt;&gt; CONVERT(jldw,&#39;ZHS16GBK&#39;,&#39;UTF8&#39;);
+</code></pre>
+<p>说明：CONVERT(要转换的字符串,目标字符集,原字符集)，CONVERT函数用于转换字符串的字符集；所以我们可以利用中文的字符集是utf-8来判断。</p>
+<h1 id="三、提取中文"><a href="#三、提取中文" class="headerlink" title="三、提取中文"></a>三、提取中文</h1><p>上面介绍了如何判断某个字段字符串中是否有中文，在成功判断字段中是否有中文之后；那么该如何取出字段中的中文呢？</p>
+<p>这里介绍一种快速准确的办法：</p>
+<pre><code>create or replace function getCustText(custName varchar2)
+  return varchar2 is
+  Result       varchar2(100); --返回的结果字符串
+  tmp_custName varchar2(100); --临时变量
+  count_str    number; --字符串中字符的个数
+  i            number := 1; --循环变量
+  str_ascii    number; --当前等待判断字符的ascii码
+  current_char varchar2(10); --当前等待判断的字符
+begin
+  select length(custName) into count_str from dual; --取出待处理字符串的长度
+  while i &lt; count_str loop
+    ---根据待处理字符串长度（counts）?，逐个字符判断处理
+    current_char := substr(custName, i, 1);
+    select ASCII(current_char) into str_ascii from dual;
+    if str_ascii &gt; 45216 then
+      tmp_custName := tmp_custName || current_char;
+    end if;
+    i := i + 1;
+  end loop;
+  Result := tmp_custName;
+  return(Result);
+end getCustText;
+</code></pre>
+<p>函数创建成功后，直接传jldw调用就可获取该字符的中文了。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Oracle/" rel="tag">Oracle</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-GO入门11：字符串拼接"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/04/07/GO%E5%85%A5%E9%97%A811%EF%BC%9A%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8B%BC%E6%8E%A5/"
+    >GO入门10：字符串拼接</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/04/07/GO%E5%85%A5%E9%97%A811%EF%BC%9A%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8B%BC%E6%8E%A5/" class="article-date">
+  <time datetime="2023-04-07T08:04:50.000Z" itemprop="datePublished">2023-04-07</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>拼接</p>
+<pre><code>func main() &#123;
+    s1 := &quot;hello&quot;
+    s2 := &quot;word&quot;
+    s3 := s1 + s2
+    fmt.Print(s3) //s3 = &quot;helloword&quot;
+&#125;
+</code></pre>
+<p>Sprintf函数</p>
+<pre><code>s1 := &quot;hello&quot;
+s2 := &quot;word&quot;
+s3 := fmt.Sprintf(&quot;%s%s&quot;, s1, s2) //s3 = &quot;helloword&quot;
+</code></pre>
+<p>Join函数</p>
+<p>使用Join函数我们需要先引入strings包才能调用Join函数。Join函数会先根据字符串数组的内容，计算出一个拼接之后的长度，然后申请对应大小的内存，一个一个字符串填入，在已有一个数组的情况下，这种效率会很高，如果没有的话效率也不高。我一般用来切片转字符串使用。</p>
+<pre><code>s1 := &quot;hello&quot;
+s2 := &quot;word&quot;
+var str []string = []string&#123;s1, s2&#125;
+s3 := strings.Join(str, &quot;&quot;)
+fmt.Print(s3)
+</code></pre>
+<p>buffer.Buildbuffer.WriteString函数</p>
+<pre><code>s1 := &quot;hello&quot;
+s2 := &quot;word&quot;
+var bt bytes.Buffer
+bt.WriteString(s1)
+bt.WriteString(s2)
+s3 := bt.String()
+fmt.Println(s3)
+</code></pre>
+<p>buffer.Builder函数</p>
+<pre><code>s1 := &quot;hello&quot;
+s2 := &quot;word&quot;
+var build strings.Builder
+build.WriteString(s1)
+build.WriteString(s2)
+s3 := build.String()
+fmt.Println(s3)
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GO/" rel="tag">GO</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-GO入门10：移除所有空格"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/04/06/GO%E5%85%A5%E9%97%A810%EF%BC%9A%E7%A7%BB%E9%99%A4%E6%89%80%E6%9C%89%E7%A9%BA%E6%A0%BC/"
+    >GO入门10：移除所有空格</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/04/06/GO%E5%85%A5%E9%97%A810%EF%BC%9A%E7%A7%BB%E9%99%A4%E6%89%80%E6%9C%89%E7%A9%BA%E6%A0%BC/" class="article-date">
+  <time datetime="2023-04-06T07:40:48.000Z" itemprop="datePublished">2023-04-06</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>Golang unicode.IsSpace() Function with Examples<br>Golang | unicode.IsSpace() Function: Here, we are going to learn about the IsSpace() function of the unicode package with its usages, syntax, and examples.<br>Submitted by IncludeHelp, on September 17, 2021<br>unicode.IsSpace()<br>The IsSpace() function is an inbuilt function of the unicode package which is used to check whether the given rune r is a space character as defined by Unicode’s White Space property.</p>
+<p>It accepts one parameter (r rune) and returns true if rune r is a space character; false, otherwise.</p>
+<p>Syntax:</p>
+<pre><code>func IsSpace(r rune) bool
+</code></pre>
+<p>Parameter(s):</p>
+<pre><code>r : Rune type value to be checked whether it is a space character or not.
+</code></pre>
+<p>Return Value:</p>
+<p>The return type of the unicode.IsSpace() function is a bool, it returns true if rune r is a space character; false, otherwise.</p>
+<p>Example 1:</p>
+<pre><code>// Golang program to demonstrate the
+// example of unicode.IsSpace() Function
+
+package main
+
+import (
+    &quot;fmt&quot;
+    &quot;unicode&quot;
+)
+
+func main() &#123;
+    fmt.Println(&quot;unicode.IsSpace(&#39; &#39;):&quot;,
+        unicode.IsSpace(&#39; &#39;))
+    fmt.Println(&quot;unicode.IsSpace(&#39;\\t&#39;):&quot;,
+        unicode.IsSpace(&#39;\t&#39;))
+    fmt.Println(&quot;unicode.IsSpace(&#39;\\v&#39;):&quot;,
+        unicode.IsSpace(&#39;\v&#39;))
+    fmt.Println(&quot;unicode.IsSpace(&#39;\\f&#39;):&quot;,
+        unicode.IsSpace(&#39;\f&#39;))
+    fmt.Println(&quot;unicode.IsSpace(&#39;\\r&#39;)&quot;,
+        unicode.IsSpace(&#39;\r&#39;))
+    fmt.Println(&quot;unicode.IsSpace(&#39;G&#39;):&quot;,
+        unicode.IsSpace(&#39;G&#39;))
+    fmt.Println(&quot;unicode.IsSpace(&#39;\\a&#39;):&quot;,
+        unicode.IsSpace(&#39;\a&#39;))
+&#125;
+</code></pre>
+<p>Output:</p>
+<pre><code>unicode.IsSpace(&#39; &#39;): true
+unicode.IsSpace(&#39;\t&#39;): true
+unicode.IsSpace(&#39;\v&#39;): true
+unicode.IsSpace(&#39;\f&#39;): true
+unicode.IsSpace(&#39;\r&#39;) true
+unicode.IsSpace(&#39;G&#39;): false
+unicode.IsSpace(&#39;\a&#39;): false
+</code></pre>
+<p>Example 2:</p>
+<pre><code>// Golang program to demonstrate the
+// example of unicode.IsSpace() Function
+
+package main
+
+import (
+    &quot;fmt&quot;
+    &quot;unicode&quot;
+)
+
+func main() &#123;
+    var r rune
+    var result bool
+
+    r = &#39; &#39;
+    result = unicode.IsSpace(r)
+    if result == true &#123;
+        fmt.Printf(&quot;%c (%x) is a space character.\n&quot;, r, r)
+    &#125; else &#123;
+        fmt.Printf(&quot;%c (%x) is not a space character.\n&quot;, r, r)
+    &#125;
+
+    r = &#39;A&#39;
+    result = unicode.IsSpace(r)
+    if result == true &#123;
+        fmt.Printf(&quot;%c (%x) is a space character.\n&quot;, r, r)
+    &#125; else &#123;
+        fmt.Printf(&quot;%c (%x) is not a space character.\n&quot;, r, r)
+    &#125;
+
+    r = &#39;\t&#39;
+    result = unicode.IsSpace(r)
+    if result == true &#123;
+        fmt.Printf(&quot;%c (%x) is a space character.\n&quot;, r, r)
+    &#125; else &#123;
+        fmt.Printf(&quot;%c (%x) is not a space character.\n&quot;, r, r)
     &#125;
 &#125;
 </code></pre>
-<h1 id="1-使用FileReader读取json文件"><a href="#1-使用FileReader读取json文件" class="headerlink" title="1.使用FileReader读取json文件"></a>1.使用FileReader读取json文件</h1><h2 id="1-1、添加依赖"><a href="#1-1、添加依赖" class="headerlink" title="1.1、添加依赖"></a>1.1、添加依赖</h2><pre><code>&lt;dependencies&gt;
-    &lt;dependency&gt;
-       &lt;groupId&gt;com.alibaba&lt;/groupId&gt;
-       &lt;artifactId&gt;fastjson&lt;/artifactId&gt;
-       &lt;version&gt;2.0.12&lt;/version&gt;
-    &lt;/dependency&gt;
-&lt;/dependencies&gt;
+<p>Output:</p>
+<pre><code>  (20) is a space character.
+A (41) is not a space character.
+     (9) is a space character.
 </code></pre>
-<h2 id="1-2源代码"><a href="#1-2源代码" class="headerlink" title="1.2源代码"></a>1.2源代码</h2><p>import com.alibaba.fastjson.JSON;</p>
-<p>import java.io.*;</p>
-<p>public class ReadLocalJsonFileDemo {<br>    publicstatic void main(String[] args) throws IOException {<br>        Filefile = new File(“D:\test.json”);<br>       readerMethod(file);</p>
-<pre><code>&#125;
-
-privatestatic void readerMethod(File file) throws IOException &#123;
-   FileReader fileReader = new FileReader(file);
-    Readerreader = new InputStreamReader(new FileInputStream(file), &quot;Utf-8&quot;);
-    int ch= 0;
-   StringBuffer sb = new StringBuffer();
-    while((ch = reader.read()) != -1) &#123;
-       sb.append((char) ch);
-    &#125;
-   fileReader.close();
-   reader.close();
-    StringjsonStr = sb.toString();
-   System.out.println(JSON.parseObject(jsonStr));
-&#125;
-</code></pre>
-<p>}</p>
-<h2 id="1-3-控制台输出"><a href="#1-3-控制台输出" class="headerlink" title="1.3.控制台输出"></a>1.3.控制台输出</h2><p>{“other_info”:{“array_two”:[[832,303],[829,303],[828,302],[825,302],[824,301]],”array_three”:[[1013,224],[1012,225],[1010,225],[1009,226],[1023,224]],”boolean”:true,”array_one”:[[855,410],[854,411],[847,411],[846,410],[845,410],[844,409]],”point”:[853,310]},”ID”:10001,”detail”:”detail”,”json_format_version”:1.0}</p>
-<h1 id="2-使用jacksonAPI读取json文件"><a href="#2-使用jacksonAPI读取json文件" class="headerlink" title="2.使用jacksonAPI读取json文件"></a>2.使用jacksonAPI读取json文件</h1><h2 id="2-1、添加依赖"><a href="#2-1、添加依赖" class="headerlink" title="2.1、添加依赖"></a>2.1、添加依赖</h2><pre><code>&lt;dependencies&gt;
-    &lt;dependency&gt;
-       &lt;groupId&gt;com.fasterxml.jackson.core&lt;/groupId&gt;
-       &lt;artifactId&gt;jackson-databind&lt;/artifactId&gt;
-       &lt;version&gt;2.13.3&lt;/version&gt;
-    &lt;/dependency&gt;
-&lt;/dependencies&gt;
-</code></pre>
-<h2 id="2-2源代码"><a href="#2-2源代码" class="headerlink" title="2.2源代码"></a>2.2源代码</h2><p>import com.fasterxml.jackson.databind.ObjectMapper;</p>
-<p>import java.io.File;<br>import java.io.IOException;<br>import java.util.Map;</p>
-<p>public class ReadLocalJsonFileDemo {<br>    publicstatic void main(String[] args) throws IOException {<br>        Filefile = new File(“D:\test.json”);<br>       jacksonMethod(file);<br>    }</p>
-<pre><code>privatestatic void jacksonMethod(File file) throws IOException &#123;
-   ObjectMapper objectMapper = new ObjectMapper();
-   System.out.println(objectMapper.readValue(file, Map.class));
-&#125;
-</code></pre>
-<p>}</p>
-<h2 id="2-3-控制台输出"><a href="#2-3-控制台输出" class="headerlink" title="2.3.控制台输出"></a>2.3.控制台输出</h2><p>{ID=10001,detail=detail, json_format_version=1.0, other_info={array_one=[[855, 410],[854, 411], [847, 411], [846, 410], [845, 410], [844, 409]], array_two=[[832,303], [829, 303], [828, 302], [825, 302], [824, 301]], array_three=[[1013,224], [1012, 225], [1010, 225], [1009, 226], [1023, 224]], point=[853, 310],boolean=true}}</p>
-<h1 id="3-使用nio读取json文件"><a href="#3-使用nio读取json文件" class="headerlink" title="3.使用nio读取json文件"></a>3.使用nio读取json文件</h1><h2 id="3-1、添加依赖"><a href="#3-1、添加依赖" class="headerlink" title="3.1、添加依赖"></a>3.1、添加依赖</h2><pre><code>&lt;dependencies&gt;
-    &lt;dependency&gt;
-       &lt;groupId&gt;com.alibaba&lt;/groupId&gt;
-       &lt;artifactId&gt;fastjson&lt;/artifactId&gt;
-       &lt;version&gt;2.0.12&lt;/version&gt;
-    &lt;/dependency&gt;
-&lt;/dependencies&gt;
-</code></pre>
-<h2 id="3-2源代码"><a href="#3-2源代码" class="headerlink" title="3.2源代码"></a>3.2源代码</h2><p>import com.alibaba.fastjson.JSONObject;</p>
-<p>import java.io.File;<br>import java.io.IOException;<br>import java.nio.file.Files;<br>import java.nio.file.Paths;</p>
-<p>public class ReadLocalJsonFileDemo {<br>    publicstatic void main(String[] args) throws IOException {<br>        Filefile = new File(“D:\test.json”);<br>       nioMethod(file);<br>    }</p>
-<pre><code>privatestatic void nioMethod(File file) throws IOException &#123;
-    StringjsonString = new String(Files.readAllBytes(Paths.get(file.getPath())));
-   System.out.println(JSONObject.parseObject(jsonString));
-&#125;
-</code></pre>
-<p>}</p>
-<h2 id="3-3-控制台输出"><a href="#3-3-控制台输出" class="headerlink" title="3.3.控制台输出"></a>3.3.控制台输出</h2><p>{“other_info”:{“array_two”:[[832,303],[829,303],[828,302],[825,302],[824,301]],”array_three”:[[1013,224],[1012,225],[1010,225],[1009,226],[1023,224]],”boolean”:true,”array_one”:[[855,410],[854,411],[847,411],[846,410],[845,410],[844,409]],”point”:[853,310]},”ID”:10001,”detail”:”detail”,”json_format_version”:1.0}</p>
  
       <!-- reward -->
       
@@ -812,7 +655,7 @@ privatestatic void readerMethod(File file) throws IOException &#123;
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JSON/" rel="tag">JSON</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GO/" rel="tag">GO</a></li></ul>
 
     </footer>
   </div>
@@ -823,7 +666,7 @@ privatestatic void readerMethod(File file) throws IOException &#123;
 
     
     <article
-  id="post-maven中quickstart与webapp的区别"
+  id="post-GO入门09：HTTP"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -834,8 +677,8 @@ privatestatic void readerMethod(File file) throws IOException &#123;
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/03/26/maven%E4%B8%ADquickstart%E4%B8%8Ewebapp%E7%9A%84%E5%8C%BA%E5%88%AB/"
-    >maven中quickstart与webapp的区别</a> 
+  <a class="article-title" href="/2023/04/05/GO%E5%85%A5%E9%97%A809%EF%BC%9AHTTP/"
+    >GO入门09：HTTP</a> 
 </h2>
  
 
@@ -843,8 +686,8 @@ privatestatic void readerMethod(File file) throws IOException &#123;
     </header>
      
     <div class="article-meta">
-      <a href="/2023/03/26/maven%E4%B8%ADquickstart%E4%B8%8Ewebapp%E7%9A%84%E5%8C%BA%E5%88%AB/" class="article-date">
-  <time datetime="2023-03-26T15:26:19.000Z" itemprop="datePublished">2023-03-26</time>
+      <a href="/2023/04/05/GO%E5%85%A5%E9%97%A809%EF%BC%9AHTTP/" class="article-date">
+  <time datetime="2023-04-05T15:47:46.000Z" itemprop="datePublished">2023-04-05</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -854,18 +697,50 @@ privatestatic void readerMethod(File file) throws IOException &#123;
       
     <div class="article-entry" itemprop="articleBody">
        
-  <h1 id="Archetype"><a href="#Archetype" class="headerlink" title="Archetype"></a>Archetype</h1><p>骨架的意思。简单的说，Archetype是Maven工程的模板工具包。一个Archetype定义了要做的相同类型事情的初始样式或模型。这个名称给我们提供来了一个一致的生成Maven工程的方式。Archetype会帮助作者给用户创建Maven工程模板，并给用户提供生成相关工程模板版本的参数化方法。</p>
-<p>使用Archetype提供的好的方法，是开发者能够使用最佳实践来快速的构建和组织一致化的工程。在Maven工程中，我们努力使用Archetype来尽可能快的给用户提供示例工程，同时也会把Maven的最佳实践介绍给新的用户。一个新的用户可以使用工作中的Maven工作作为跳板来研究更过的Maven中功能。我们也可以使用Archetype的添加机制，这样就意味着允许我们抓取Archetype中项目片段，并把它们添加到既存的工程中。Maven网站的Archetype就是很好的例子。例如，你可以使用“quick start archetype”来生成一个工程，然后就可以通过其中既存的“site archetype”来快速的创建一个网址工程。你能够使用Archetype来做很多这样的事情。</p>
-<p>在你的团队中可能想要标准化的J2EE开发，这需要你提供EJBs、或者是WARs、或者是Web services的原型。一旦在你团队资源库中创建和部署这些原型，它们就可以在你团队内共享使用。</p>
-<h1 id="如何使用Archetype"><a href="#如何使用Archetype" class="headerlink" title="如何使用Archetype"></a>如何使用Archetype</h1><p>要基于Archetype来创建一个新的工程，需要像下面示例这样来调用：</p>
-<p>mvn archetype:generate</p>
-<h1 id="已有的Archetypes"><a href="#已有的Archetypes" class="headerlink" title="已有的Archetypes"></a>已有的Archetypes</h1><p>Archetype ID   说明<br>maven-archetype-archetype  一个样例原型<br>maven-archetype-j2ee-simple    简单的J2EE应用程序样例<br>maven-archetype-mojo    Maven插件样本的示例<br>maven-archetype-plugin    Maven插件样本<br>maven-archetype-plugin-site    Mave插件网站的样例<br>maven-archetype-portlet    JSR-268门户样例<br>maven-archetype-quickstart    Maven工程样例<br>maven-archetype-simple    一个简单的Maven工程<br>maven-archetype-site    Maven网站的样例，它演示了对诸如APT、XDoc和FML等文档类型的支持，并演示了如果把网站国际化（i18n）<br>maven-archetype-site-simple    Maven网站样例<br>maven-archetype-webapp    Maven的Webapp工程样例</p>
-<h1 id="常用Archetype"><a href="#常用Archetype" class="headerlink" title="常用Archetype"></a>常用Archetype</h1><ul>
-<li><p>1，maven-archetype-quickstart<br>默认的Archetype,基本内容包括：<br>一个包含junit依赖声明的pom.xml<br>src/main/java主代码目录及一个名为App的类<br>src/test/java测试代码目录及一个名为AppTest的测试用例</p>
-</li>
-<li><p>2，maven-archetype-webapp<br>一个最简单的Maven war项目模板，当需要快速创建一个Web应用的时候可以使用它。生成的项目内容包括：<br>一个packaging为war且带有junit依赖声明的pom.xml<br>src/main/webapp/目录<br>src/main/webapp/index.jsp文件<br>src/main/webapp/WEB-INF/web.xml文件</p>
-</li>
-</ul>
+  <p>POSTMAN可以看请求的代码实现，GO参考：</p>
+<pre><code>package main
+
+import (
+  &quot;fmt&quot;
+  &quot;strings&quot;
+  &quot;net/http&quot;
+  &quot;io/ioutil&quot;
+)
+
+func main() &#123;
+
+  url := &quot;http://192.168.2.198:27001/server/external&quot;
+  method := &quot;POST&quot;
+
+  payload := strings.NewReader(&quot;sysParams=%7B%22route%22%3A%22DefectController_getDevice%22%2C%22params%22%3A%7B%22deviceType%22%3A%22byq%22%2C%22objId%22%3A%22ffb950f8-3be3-456f-99e1-a5b5f505a80c%22%2C%22auth%22%3A%22all%22%2C%22uploadType%22%3A%22out%22%7D%7D&amp;code=crm&amp;token=0049D6EA-0D13-4890-BD6D-CF53873CD33C&quot;)
+
+  client := &amp;http.Client &#123;
+  &#125;
+  req, err := http.NewRequest(method, url, payload)
+
+  if err != nil &#123;
+    fmt.Println(err)
+    return
+  &#125;
+  req.Header.Add(&quot;Content-Type&quot;, &quot;application/x-www-form-urlencoded&quot;)
+  req.Header.Add(&quot;Cache-Control&quot;, &quot;no-cache&quot;)
+  req.Header.Add(&quot;Postman-Token&quot;, &quot;b2b58722-bac9-4a03-bee8-0e8378d0ec75&quot;)
+
+  res, err := client.Do(req)
+  if err != nil &#123;
+    fmt.Println(err)
+    return
+  &#125;
+  defer res.Body.Close()
+
+  body, err := ioutil.ReadAll(res.Body)
+  if err != nil &#123;
+    fmt.Println(err)
+    return
+  &#125;
+  fmt.Println(string(body))
+&#125;
+</code></pre>
  
       <!-- reward -->
       
@@ -876,7 +751,7 @@ privatestatic void readerMethod(File file) throws IOException &#123;
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MAVEN/" rel="tag">MAVEN</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GO/" rel="tag">GO</a></li></ul>
 
     </footer>
   </div>
@@ -892,7 +767,7 @@ privatestatic void readerMethod(File file) throws IOException &#123;
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/36/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/35/">35</a><a class="page-number" href="/page/36/">36</a><span class="page-number current">37</span><a class="page-number" href="/page/38/">38</a><a class="page-number" href="/page/39/">39</a><span class="space">&hellip;</span><a class="page-number" href="/page/50/">50</a><a class="extend next" rel="next" href="/page/38/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/36/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/35/">35</a><a class="page-number" href="/page/36/">36</a><span class="page-number current">37</span><a class="page-number" href="/page/38/">38</a><a class="page-number" href="/page/39/">39</a><span class="space">&hellip;</span><a class="page-number" href="/page/52/">52</a><a class="extend next" rel="next" href="/page/38/">下一页</a>
   </nav>
   
 </section>
