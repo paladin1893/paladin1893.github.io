@@ -89,7 +89,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">292</span>
+            <span class="post-count">257</span>
         </span>
     </span>
 
@@ -111,51 +111,36 @@
   
     <div class="article-entry" itemprop="articleBody">
        
-  <p>永久开放端口</p>
-<pre><code>firewall-cmd --add-port=18080/tcp --permanent
-</code></pre>
-<p>重新加载生效开放的端口</p>
-<pre><code>firewall-cmd --reload
-</code></pre>
-<p>Centos7默认安装了firewalld，如果没有安装的话，则需要YUM命令安装；firewalld真的用不习惯，与之前的iptable防火墙区别太大。</p>
+  <p>Centos7默认安装了firewalld，如果没有安装的话，则需要YUM命令安装；firewalld与之前的iptable防火墙区别挺大。</p>
 <p>安装Firewall命令：</p>
 <pre><code>yum install firewalld firewalld-config
 </code></pre>
 <p>Firewall开启常见端口命令：</p>
-<pre><code>firewall-cmd --zone=public–add-port=80/tcp --permanent
-
-firewall-cmd --zone=public–add-port=443/tcp --permanent
-
-firewall-cmd --zone=public –add-port=22/tcp--permanent
-
-firewall-cmd --zone=public–add-port=21/tcp --permanent
-
-firewall-cmd --zone=public–add-port=53/udp --permanent
+<pre><code>firewall-cmd --zone=public --add-port=80/tcp --permanent
+firewall-cmd --zone=public --add-port=443/tcp --permanent
+firewall-cmd --zone=public --add-port=22/tcp --permanent
+firewall-cmd --zone=public --add-port=21/tcp --permanent
+firewall-cmd --zone=public --add-port=53/udp --permanent
 </code></pre>
 <p>Firewall关闭常见端口命令：</p>
-<pre><code>firewall-cmd --zone=public–remove-port=80/tcp --permanent
-
-firewall-cmd --zone=public–remove-port=443/tcp --permanent
-
-firewall-cmd --zone=public–remove-port=22/tcp --permanent
-
-firewall-cmd --zone=public–remove-port=21/tcp --permanent
-
-firewall-cmd --zone=public–remove-port=53/udp --permanent
+<pre><code>firewall-cmd --zone=public --remove-port=80/tcp --permanent
+firewall-cmd --zone=public --remove-port=443/tcp --permanent
+firewall-cmd --zone=public --remove-port=22/tcp --permanent
+firewall-cmd --zone=public --remove-port=21/tcp --permanent
+firewall-cmd --zone=public --remove-port=53/udp --permanent
 </code></pre>
 <p>批量添加区间端口</p>
-<pre><code>firewall-cmd --zone=public–add-port=4400-4600/udp --permanent
-
-firewall-cmd --zone=public–add-port=4400-4600/tcp --permanent
-</code></pre>
-<p>开启防火墙命令：</p>
-<pre><code>systemctl start firewalld.service
-</code></pre>
-<p>重启防火墙命令：</p>
-<pre><code>firewall-cmd --reload  或者   service firewalld restart
+<pre><code>firewall-cmd --zone=public --add-port=4400-4600/udp --permanent
+firewall-cmd --zone=public --add-port=4400-4600/tcp --permanent
 </code></pre>
 <p>查看端口列表：</p>
-<pre><code>firewall-cmd --permanent –list-port
+<pre><code>firewall-cmd --permanent --list-port
+</code></pre>
+<p>开启防火墙命令：</p>
+<pre><code>systemctl start firewalld
+</code></pre>
+<p>重启防火墙命令：</p>
+<pre><code>firewall-cmd --reload  或者  service firewalld restart
 </code></pre>
 <p>禁用防火墙</p>
 <pre><code>systemctl stop firewalld
@@ -167,11 +152,7 @@ firewall-cmd --zone=public–add-port=4400-4600/tcp --permanent
 <pre><code>sytemctl disable firewalld
 </code></pre>
 <p>查看状态</p>
-<pre><code>systemctl status firewalld
-
-或者
-
-firewall-cmd –state
+<pre><code>systemctl status firewalld  或者  firewall-cmd --state
 </code></pre>
  
       <!-- reward -->
@@ -237,7 +218,7 @@ firewall-cmd –state
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://paladin1893.github.io/2023/02/06/Redhat-firewall%E5%BC%80%E6%94%BE%E7%AB%AF%E5%8F%A3/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://paladin1893.gitee.io/2023/02/06/Redhat-firewall%E5%BC%80%E6%94%BE%E7%AB%AF%E5%8F%A3/" alt="微信分享二维码">
     </div>
 </div>
 

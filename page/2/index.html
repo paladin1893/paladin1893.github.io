@@ -154,7 +154,7 @@
     
     
     <article
-  id="post-PostgreSQL-Centos7使用rpm离线安装"
+  id="post-CentOS7安装最新版 gcc g++"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -165,8 +165,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/11/04/PostgreSQL-Centos7%E4%BD%BF%E7%94%A8rpm%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85/"
-    >PostgreSQL-Centos7使用rpm离线安装</a> 
+  <a class="article-title" href="/2023/11/18/CentOS7%E5%AE%89%E8%A3%85%E6%9C%80%E6%96%B0%E7%89%88%20gcc%20g++/"
+    >CentOS7安装最新版 gcc g++</a> 
 </h2>
  
 
@@ -174,8 +174,8 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2023/11/04/PostgreSQL-Centos7%E4%BD%BF%E7%94%A8rpm%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85/" class="article-date">
-  <time datetime="2023-11-04T13:28:00.000Z" itemprop="datePublished">2023-11-04</time>
+      <a href="/2023/11/18/CentOS7%E5%AE%89%E8%A3%85%E6%9C%80%E6%96%B0%E7%89%88%20gcc%20g++/" class="article-date">
+  <time datetime="2023-11-18T12:14:23.000Z" itemprop="datePublished">2023-11-18</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
@@ -185,269 +185,168 @@
       
     <div class="article-entry" itemprop="articleBody">
        
-  <h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><p>使用一台能够联网的centos电脑</p>
-<p>安装postgresql源</p>
-<pre><code>yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+  <h1 id="提示"><a href="#提示" class="headerlink" title="提示"></a>提示</h1><p>在使用yum时遇到这个错误</p>
+<pre><code>Another app is currently holding the yum lock; waiting for it to exit…
 </code></pre>
-<p>安装 yumdownloader工具</p>
-<pre><code>yum install yum-utils -y
+<p>运行命令</p>
+<pre><code>rm -f /var/run/yum.pid    //    强制关掉yum进程
 </code></pre>
-<p>Yumdownloader是一款简单，但是却十分有用的命令行工具，<em>它可以一次性下载任何 RPM 软件包及其所有依赖包</em>。</p>
-<h1 id="PostgreSQL"><a href="#PostgreSQL" class="headerlink" title="PostgreSQL"></a>PostgreSQL</h1><h2 id="下载离线包"><a href="#下载离线包" class="headerlink" title="下载离线包"></a>下载离线包</h2><p>postgresql14-server</p>
-<pre><code>yumdownloader --resolve postgresql14-server
+<h1 id="一、第一种方式"><a href="#一、第一种方式" class="headerlink" title="一、第一种方式"></a>一、第一种方式</h1><h2 id="1、先卸载以前的旧版本"><a href="#1、先卸载以前的旧版本" class="headerlink" title="1、先卸载以前的旧版本"></a>1、先卸载以前的旧版本</h2><p>因为centOS默认自带4点几版本的gcc 、g++编译器，是比较老的版本的，所以先把老版本卸载掉。</p>
+<p>1.1、 先获取root权限<br>1.2、 查看当前的安装版本号</p>
+<pre><code>rpm -q gcc
 </code></pre>
-<p>postgresql14</p>
-<pre><code>yumdownloader --resolve postgresql14
+<p>1.3、卸载掉旧版本</p>
+<pre><code>rpm -e [第二步查到的版本号]
 </code></pre>
-<p>这里我们需要的是 postgresql14-server的相关依赖，可看到postgresql14-server的依赖包含了postgresql14客户端的依赖</p>
-<h2 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h2><pre><code>rpm -ivh libicu-50.2-4.el7_7.x86_64.rpm postgresql14-libs-14.10-1PGDG.rhel7.x86_64.rpm postgresql14-14.10-1PGDG.rhel7.x86_64.rpm postgresql14-server-14.10-1PGDG.rhel7.x86_64.rpm 
+<p>1.4、第三步可能会遇到如下错误，卸载失败</p>
+<pre><code>error: Failed dependencies:
+    gcc = 4.4.7-23.el6 is needed by (installed) gcc-c++-4.4.7-23.el6.x86_64
+    gcc = 4.4.4 is needed by (installed) libtool-2.2.6-15.5.el6.x86_64
 </code></pre>
-<h2 id="配置数据库"><a href="#配置数据库" class="headerlink" title="配置数据库"></a>配置数据库</h2><p>默认初始化</p>
-<pre><code># 默认初始化数据库
-sudo /usr/pgsql-14/bin/postgresql-14-setup initdb
+<p>提示要卸载的版本有两个依赖，要先卸载掉这两个依赖（注意：下面要卸载的版本号要和上面提示的两个依赖的版本号一致）</p>
+<pre><code>rpm -e gcc-c++-4.4.7-23.el6.x86_64
+rpm -e libtool-2.2.6-15.5.el6.x86_64
 </code></pre>
-<p>开机启动postgresql数据库</p>
-<pre><code>sudo systemctl enable postgresql-14
+<p>将这两个依赖卸载完成之后再次执行第3步就可卸载成功</p>
+<p>1.5、验证卸载</p>
+<pre><code>[root@123 /]# gcc -v
+-bash: /usr/bin/gcc: No such file or directory
+[root@123 /]# g++ -v
+-bash: /usr/bin/g++: No such file or directory
 </code></pre>
-<p>启动postgresql数据库服务</p>
-<pre><code>sudo systemctl start postgresql-14
+<p>这样即为卸载成功</p>
+<h2 id="2、安装最新版本的gcc-、g"><a href="#2、安装最新版本的gcc-、g" class="headerlink" title="2、安装最新版本的gcc 、g++"></a>2、安装最新版本的gcc 、g++</h2><p>在安装之前，可以先去查询一下目前gcc 、g++的版本以及区别，本文用了第11版</p>
+<p>2.1、在系统中安装存储库</p>
+<pre><code>yum install centos-release-scl
 </code></pre>
-<p>启动成功后，使用lsof -i:5432 可以看见相关进程</p>
-<p>修改初始化数据路径</p>
-<pre><code>mkdir -p /home/pg14/data
-chown -R postgres:postgres /home/pg14/data
+<p>2.2、安装gcc和g++包（注意版本号：11版）</p>
+<pre><code>yum install -y devtoolset-11-gcc devtoolset-11-gcc-c++
 </code></pre>
-<p>这里使用systemctl ：</p>
-<pre><code>systemctl edit postgresql-14.service
+<p>2.3、配置安装好的包（注意版本号：11版）</p>
+<pre><code>scl enable devtoolset-11 bash
 </code></pre>
-<p>在新空白页覆盖原服务配置</p>
-<pre><code>[Service]
-Environment=PGDATA=/home/pg14/data
-</code></pre>
-<p>这个文件默认放在 /etc/systemd/system/postgresql-14.service.d 目录下。<br>里面会有 override.conf 文件。</p>
-<p>停止之前的数据库</p>
-<pre><code>systemctl stop postgresql-14
-</code></pre>
-<p>启动数据库</p>
-<pre><code>sudo /usr/pgsql-14/bin/postgresql-14-setup initdb
-</code></pre>
-<p>查看日志</p>
-<pre><code>more /var/lib/pgsql/14/initdb.log
-</code></pre>
-<p>修改数据位置后，原先默认的配置文件就失效了，配置文件在新的数据文件夹下，这里是/home/pg14/data</p>
-<p>修改默认用户密码</p>
-<pre><code>#登陆postgresql
-sudo -u postgres psql
+<p>2.4、验证安装</p>
+<pre><code>[root@123 /]# gcc -v
+Using built-in specs.
+COLLECT_GCC=gcc
+COLLECT_LTO_WRAPPER=/opt/rh/devtoolset-11/root/usr/libexec/gcc/x86_64-redhat-linux/11/lto-wrapper
+Target: x86_64-redhat-linux
+Configured with: ../configure --enable-bootstrap --enable-languages=c,c++,fortran,lto --prefix=/opt/rh/devtoolset-11/root/usr --mandir=/opt/rh/devtoolset-11/root/usr/share/man --infodir=/opt/rh/devtoolset-11/root/usr/share/info --with-bugurl=http://bugzilla.redhat.com/bugzilla --enable-shared --enable-threads=posix --enable-checking=release --enable-multilib --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-gcc-major-version-only --with-linker-hash-style=gnu --with-default-libstdcxx-abi=gcc4-compatible --enable-plugin --enable-initfini-array --with-isl=/builddir/build/BUILD/gcc-11.2.1-20210728/obj-x86_64-redhat-linux/isl-install --enable-gnu-indirect-function --with-tune=generic --with-arch_32=x86-64 --build=x86_64-redhat-linux
+Thread model: posix
+Supported LTO compression algorithms: zlib
+gcc version 11.2.1 20210728 (Red Hat 11.2.1-1) (GCC)
 
-#修改i登陆postgresql密码
-alter user postgres with password &#39;postgres&#39;;
-
-#查看数据库存储地址
-show data_directory;
+[root@123 /]# g++ -v
+Using built-in specs.
+COLLECT_GCC=g++
+COLLECT_LTO_WRAPPER=/opt/rh/devtoolset-11/root/usr/libexec/gcc/x86_64-redhat-linux/11/lto-wrapper
+Target: x86_64-redhat-linux
+Configured with: ../configure --enable-bootstrap --enable-languages=c,c++,fortran,lto --prefix=/opt/rh/devtoolset-11/root/usr --mandir=/opt/rh/devtoolset-11/root/usr/share/man --infodir=/opt/rh/devtoolset-11/root/usr/share/info --with-bugurl=http://bugzilla.redhat.com/bugzilla --enable-shared --enable-threads=posix --enable-checking=release --enable-multilib --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-gcc-major-version-only --with-linker-hash-style=gnu --with-default-libstdcxx-abi=gcc4-compatible --enable-plugin --enable-initfini-array --with-isl=/builddir/build/BUILD/gcc-11.2.1-20210728/obj-x86_64-redhat-linux/isl-install --enable-gnu-indirect-function --with-tune=generic --with-arch_32=x86-64 --build=x86_64-redhat-linux
+Thread model: posix
+Supported LTO compression algorithms: zlib
+gcc version 11.2.1 20210728 (Red Hat 11.2.1-1) (GCC) 
 </code></pre>
-<p>开启远程访问</p>
-<p>修改数据文件目录的postgresql.conf配置文件，监听全部IP命令</p>
-<pre><code>vi /home/pg14/data/postgresql.conf
-listen_addresses = &#39;*&#39; 
+<p>2.5、配置环境变量</p>
+<p>因为不配置环境变量的话，每打开一个客户端，就需要执行一次上面的第三步配置安装包</p>
+<pre><code>//先查看gcc和g++安装位置
+[root@123 /]# which gcc
+/opt/rh/devtoolset-11/root/usr/bin/gcc
+[root@123 /]# which g++
+/opt/rh/devtoolset-11/root/usr/bin/g++
 </code></pre>
-<p>允许远程访问，修改pg_hba.conf</p>
-<pre><code>vi /home/pg14/data/pg_hba.conf
-
-# TYPE  DATABASE        USER            ADDRESS                 METHOD
-
-# &quot;local&quot; is for Unix domain socket connections only
-local   all             all                                     trust
-# IPv4 local connections:
-host    all             all             127.0.0.1/32            trust
-host    all             all             0.0.0.0/0                 md5
-# IPv6 local connections:
-host    all             all             ::1/128                 trust
-# Allow replication connections from localhost, by a user with the
-# replication privilege.
-local   replication     all                                     trust
-host    replication     all             127.0.0.1/32            trust
-host    replication     all             ::1/128                 trust
+<p>编辑文件</p>
+<pre><code>vim /etc/profile
 </code></pre>
-<p>重启启动postgresql数据库服务</p>
-<pre><code>sudo systemctl restart postgresql-14
+<p>在文件后面添加下面两行内容：</p>
+<pre><code>export GCC_HOME=/opt/rh/devtoolset-11/root/usr
+export PATH=$&#123;GCC_HOME&#125;/bin:$PATH
 </code></pre>
-<h1 id="安裝PostGIS"><a href="#安裝PostGIS" class="headerlink" title="安裝PostGIS"></a>安裝PostGIS</h1><h2 id="下载依赖"><a href="#下载依赖" class="headerlink" title="下载依赖"></a>下载依赖</h2><p>EPEL存储库中有许多依赖项</p>
-<pre><code>yumdownloader --resolve epel-release
-</code></pre>
-<p>下载指定版本的postgis，这里我选用pg14的3.3版本</p>
-<pre><code>yumdownloader --resolve postgis33_14
-</code></pre>
-<p>下载的依赖很多</p>
-<h2 id="安装依赖-1"><a href="#安装依赖-1" class="headerlink" title="安装依赖"></a>安装依赖</h2><pre><code># 安装epel
-rpm -ivh epel-release-7-11.noarch.rpm
-
-# 安装当前目录下的所有rpm包（推荐）
-rpm -Uvh  *.rpm
-
-# 强制安装当前文件夹中所有的rpm包，忽略依赖去安装（这是上一步的备选方案，不推荐）
-rpm -Uvh  *.rpm  --nodeps  --force 
-</code></pre>
-<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><pre><code>-- 创建数据库
-CREATE DATABASE db_test;
--- 切换数据库
-\c db_test;
--- 创建postgis依赖
-CREATE EXTENSION postgis;
-</code></pre>
-<p>创建PostGIS扩展成功后、查看数据库插件</p>
-<pre><code>\dx
-</code></pre>
-<p>本文来自互联网用户投稿，该文观点仅代表作者本人，不代表本站立场。本站仅提供信息存储空间服务，不拥有所有权，不承担相关法律责任。如若转载，请注明出处：<a target="_blank" rel="noopener" href="http://www.bryh.cn/a/16064.html">http://www.bryh.cn/a/16064.html</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostGIS/" rel="tag">PostGIS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Centos7下安装Mysql8"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/11/03/Centos7%E4%B8%8B%E5%AE%89%E8%A3%85Mysql8/"
-    >Centos7下安装Mysql8</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/11/03/Centos7%E4%B8%8B%E5%AE%89%E8%A3%85Mysql8/" class="article-date">
-  <time datetime="2023-11-03T13:28:00.000Z" itemprop="datePublished">2023-11-03</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>MySQL是一个流行的开源关系型数据库管理系统，本教程将向您展示如何在Linux系统上安装MySQL 8.1.0版本。请按照以下步骤进行操作：</p>
-<p>1、下载MySQL安装包</p>
-<p>官方下载地址：<a target="_blank" rel="noopener" href="https://dev.mysql.com/downloads/mysql/">https://dev.mysql.com/downloads/mysql/</a></p>
-<p>首先，从MySQL官方网站或镜像站点下载MySQL 8.1.0的压缩包mysql-8.1.0-linux-glibc2.28-x86_64.tar.xz。确保下载的文件与您的Linux系统架构相匹配。</p>
-<p>2、安装依赖</p>
-<pre><code>sudo yum install libaio
-</code></pre>
-<p>3、上传、解压缩安装包</p>
-<p>使用以下命令解压缩下载的安装包：</p>
-<pre><code>tar -xf mysql-8.1.0-linux-glibc2.28-x86_64.tar.xz
-</code></pre>
-<p>4、移动MySQL目录</p>
-<p>解压缩后，将MySQL目录移动到适当的位置。通常，您可以将其移动到/usr/local目录下：</p>
-<pre><code>sudo mv mysql-8.1.0-linux-glibc2.28-x86_64 /usr/local/mysql
-</code></pre>
-<p>5、编辑my.cnf文件</p>
-<pre><code>vim /etc/my.cnf
-
-[mysqld]
-basedir = /usr/local/mysql
-datadir = /usr/local/mysql/data
-socket = /usr/local/mysql/mysql.sock
-character-set-server=utf8
-port = 3306
-sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
-lower_case_table_names=1
-
-[client]
-socket = /usr/local/mysql/mysql.sock
-default-character-set=utf8
-</code></pre>
-<p>6、初始化MySQL数据目录<br>在安装MySQL之前，需要初始化MySQL数据目录。首先，创建一个用于存储数据的目录，例如：</p>
-<pre><code>sudo mkdir -p /usr/local/mysql/data
-</code></pre>
-<p>7、创建 mysql 用户组和 mysql 用户</p>
-<pre><code>groupadd mysql
-useradd -g mysql mysql
-chown -R mysql.mysql /usr/local/mysql/
-</code></pre>
-<p>接下来，使用mysqld命令初始化MySQL数据目录：</p>
-<pre><code>sudo /usr/local/mysql/bin/mysqld --initialize --user=mysql --basedir=/usr/local/mysql --datadir=/usr/local/mysql/data
-</code></pre>
-<p>记录好自己的临时密码</p>
-<p>8、建立MySQL服务</p>
-<pre><code>cp /usr/local/mysql/support-files/mysql.server /etc/init.d/mysql
-chmod +x /etc/init.d/mysql
-</code></pre>
-<p>9、添加到系统服务</p>
-<pre><code>cp -a /usr/local/mysql/support-files/mysql.server /etc/init.d/mysqld
-chmod +x /etc/rc.d/init.d/mysqld    
-chkconfig --add mysqld
-</code></pre>
-<p>添加到开启启动项</p>
-<pre><code>sudo systemctl enable mysqld
-</code></pre>
-<p>检查服务是否生效</p>
-<pre><code>chkconfig  --list mysqld
-</code></pre>
-<p>10、添加到PATH环境变量</p>
-<p>配置全局环境变量 编辑 / etc/profile 文件</p>
-<pre><code>vi /etc/profile
-</code></pre>
-<p>在 profile 文件底部添加如下两行配置，保存后退出</p>
-<pre><code>export PATH=$PATH:/usr/local/mysql/bin:/usr/local/mysql/lib
-export PATH
-</code></pre>
-<p>设置环境变量立即生效</p>
+<p>重新加载文件</p>
 <pre><code>source /etc/profile
 </code></pre>
-<p>然后，重新加载配置文件或重新启动终端，使更改生效。</p>
-<p>11、启动MySQL服务</p>
-<p>启动MySQL服务：</p>
-<pre><code>systemctl start mysql
+<h1 id="二、第二种方式：使用老版本编译新版本"><a href="#二、第二种方式：使用老版本编译新版本" class="headerlink" title="二、第二种方式：使用老版本编译新版本"></a>二、第二种方式：使用老版本编译新版本</h1><p>1、查看系统中有没有老版本</p>
+<p>centOS自带的是4点几的版本 : gcc -v 、g++ -v 两个命令查看，我的是4.8.5版本，如果有，跳到3、官网下载想要安装的gcc版本</p>
+<p>2、先用yum安装老版本gcc、g++</p>
+<pre><code>sudo yum install -y gcc                //安装gcc
+sudo yum install -y gcc-c++            //安装g++
 </code></pre>
-<p>停止MySQL服务：</p>
-<pre><code>systemctl stop mysql
+<p>3、官网下载想要安装的gcc版本</p>
+<p><a target="_blank" rel="noopener" href="http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/">http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/</a></p>
+<p>4、安装gcc需要的其他库</p>
+<p>mpfr、mpc、gmp三个库 编译之前还需准备以下：</p>
+<p>4.1、安装m4库</p>
+<pre><code>sudo yum install -y m4 //首先安装m4，否则configure gmp库时会报错**
 </code></pre>
-<p>查看MySQL服务状态：</p>
-<pre><code>systemctl status mysql
+<p>4.2、安装以下三个库</p>
+<p><strong>一定要按照这三个顺序安装</strong></p>
+<p>4.2.1、gmp库  </p>
+<p>下载地址：<a target="_blank" rel="noopener" href="https://gmplib.org/download/gmp/gmp-6.2.1.tar.xz">https://gmplib.org/download/gmp/gmp-6.2.1.tar.xz</a></p>
+<pre><code>tar -Jxvf gmp-6.2.1.tar.xz    //解压
+cd gmp-6.2.1                //进入
+./configure --prefix=/usr      //指定编译完后要安装的路径，可以自定，示例用/usr
+make -j4                    //编译
+sudo make install            //安装
 </code></pre>
-<p>这将以后台进程的形式启动MySQL服务器。</p>
-<p>12、设置MySQL root密码</p>
-<p>首次启动MySQL后，您需要设置root用户的密码。使用以下命令进入MySQL命令行：</p>
-<pre><code>mysql -uroot -p
+<p>4.2.2、mpfr库 </p>
+<p>下载地址：<a target="_blank" rel="noopener" href="https://www.mpfr.org/mpfr-current/mpfr-4.2.0.tar.gz">https://www.mpfr.org/mpfr-current/mpfr-4.2.0.tar.gz</a></p>
+<pre><code>tar -zxvf mpfr-4.2.0.tar.gz    //解压
+cd mpfr-4.2.0                //进入
+./configure --prefix=/usr      //指定编译完后要安装的路径，可以自定，示例用/usr
+make -j4                    //编译
+sudo make install            //安装
 </code></pre>
-<p>在MySQL提示符下，运行以下命令设置root密码（将”your_new_password”替换为您想要的实际密码）：</p>
-<pre><code>ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;your_new_password&#39;;
+<p>4.2.3、mpc库 </p>
+<p>下载地址：<a target="_blank" rel="noopener" href="https://mirrors.aliyun.com/gnu/mpc/mpc-1.3.1.tar.gz?spm=a2c6h.25603864.0.0.60dd1a8cVMdT9B">https://mirrors.aliyun.com/gnu/mpc/mpc-1.3.1.tar.gz?spm=a2c6h.25603864.0.0.60dd1a8cVMdT9B</a><br>    tar -zxvf mpc-1.3.1.tar.gz    //解压<br>    cd     mpc-1.3.1                //进入<br>    ./configure –prefix=/usr      //指定编译完后要安装的路径，可以自定，示例用/usr<br>    make -j4                    //编译<br>    sudo make install            //安装</p>
+<p>5、编译安装gcc、g++</p>
+<p>编译gcc时需要cc1，系统中会有，但是编译时会报错找不到</p>
+<p>先到根目录下找：</p>
+<pre><code>cd /
+sudo find -name cc1
 </code></pre>
-<p>13、设置可以远程登录</p>
-<p>先登录mysql，在mysql里操作</p>
-<pre><code>use mysql
-update user set host=&#39;%&#39; where user=&#39;root&#39; limit 1;
+<p>我的cc1在 /usr/libexec/gcc/x86_64-redhat-linux/4.8.2/cc1</p>
+<p>创建软连接到/usr/bin目录下</p>
+<pre><code>sudo ln -s /usr/libexec/gcc/x86_64-redhat-linux/4.8.2/cc1 /usr/bin/cc1
 </code></pre>
-<p>刷新权限</p>
-<pre><code>flush privileges;
+<p>编译过程中可能会遇到这个错误，找不到libmpfr.so.6 这个库，但是系统中会有，所以要先创建一个软连接</p>
+<p>去根目录查找</p>
+<pre><code>cd /
+sudo find -name libmpfr.so.6 
 </code></pre>
-<p>恭喜！您已经在Linux系统上成功安装并初始化了MySQL 8.1.0版本。现在可以开始使用MySQL进行数据库操作。</p>
-<p>————————————————<br>版权声明：本文为CSDN博主「Terence全栈开发」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_39997939/article/details/131993593">https://blog.csdn.net/qq_39997939/article/details/131993593</a></p>
+<p>我的这个文件在/usr/lib目录下</p>
+<p>在编译前先创建一个软连接到/usr/lib64目录下</p>
+<pre><code>//这个软连接一定要创建在/usr/lib64目录下
+sudo ln -s /usr/lib/libmpfr.so.6 /usr/lib64/libmpfr.so.6    
+</code></pre>
+<p>编译安装gcc、g++</p>
+<pre><code>tar -zxvf gcc-12.2.0.tar.gz     //解压
+cd gcc-12.2.0/                    //进入
+sudo ./configure --disable-multilib --prefix=/usr        
+//生成makefile，--prefix指定编译完之后的安装路径
+// /usr表示安装之后的gcc、g++在/usr/bin里面
+//如果路径中有CMakeLists.txt，则也可以使用cmake生成makefile
+//cmake . -G &quot;Unix Makefiles&quot; -DCMAKE_INSTALL_PREFIX=/usr
+//--enable-multilib 允许32位编译，如果系统中有32位的环境，一般不需要
+//--disable-multilib 只使用64位编译
+sudo make -j4                    //编译
+</code></pre>
+<p>在执行sudo make -j4时，我这里出现了一个报错</p>
+<p>这是由于在编译时内存不足造成的，</p>
+<p>5.1、如果是虚拟机，可以扩大虚拟机的内存</p>
+<p>5.2、创建swap分区（推荐）<br>建议看这篇文章<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44796670/article/details/121234446">https://blog.csdn.net/weixin_44796670/article/details/121234446</a><br>之后再执行sudo make -j4<br>编译安装完之后根据链接文章删除swap分区即可</p>
+<p>5.3、或者将sudo make -j4改为sudo make，减少同时进行的任务数量，但是编译时间会更长</p>
+<p>等待编译完成，时间比较长！！！</p>
+<p>6、删除创建的软连接，卸载yum安装的gcc、g++</p>
+<pre><code>//删除创建的软连接
+sudo rm -rf /usr/bin/cc1
+sudo rm -rf /usr/lib64/libmpfr.so.6
+
+//卸载yum安装的gcc、g++
+sudo yum remove gcc gcc-c++
+
+//gcc和g++安装到/usr/bin目录中了
+sudo make install 
+</code></pre>
+<p>————————————————<br>版权声明：本文为CSDN博主「cppbugboy」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_45316173/article/details/122018354">https://blog.csdn.net/qq_45316173/article/details/122018354</a></p>
  
       <!-- reward -->
       
@@ -458,7 +357,7 @@ update user set host=&#39;%&#39; where user=&#39;root&#39; limit 1;
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/g/" rel="tag">g++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gcc/" rel="tag">gcc</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
 
     </footer>
   </div>
@@ -469,7 +368,7 @@ update user set host=&#39;%&#39; where user=&#39;root&#39; limit 1;
 
     
     <article
-  id="post-Centos7开放3306端口"
+  id="post-Centos7下安装Redis5"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -480,8 +379,8 @@ update user set host=&#39;%&#39; where user=&#39;root&#39; limit 1;
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/11/02/Centos7%E5%BC%80%E6%94%BE3306%E7%AB%AF%E5%8F%A3/"
-    >Centos7开放端口</a> 
+  <a class="article-title" href="/2023/11/17/Centos7%E4%B8%8B%E5%AE%89%E8%A3%85Redis5/"
+    >Centos7下安装Redis5</a> 
 </h2>
  
 
@@ -489,8 +388,8 @@ update user set host=&#39;%&#39; where user=&#39;root&#39; limit 1;
     </header>
      
     <div class="article-meta">
-      <a href="/2023/11/02/Centos7%E5%BC%80%E6%94%BE3306%E7%AB%AF%E5%8F%A3/" class="article-date">
-  <time datetime="2023-11-02T13:28:00.000Z" itemprop="datePublished">2023-11-02</time>
+      <a href="/2023/11/17/Centos7%E4%B8%8B%E5%AE%89%E8%A3%85Redis5/" class="article-date">
+  <time datetime="2023-11-17T13:14:23.000Z" itemprop="datePublished">2023-11-17</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
@@ -500,29 +399,109 @@ update user set host=&#39;%&#39; where user=&#39;root&#39; limit 1;
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>CentOS防火墙也可以还原传统的管理方式使用 iptables</p>
-<pre><code>systemctl stop firewalld  
-systemctl mask firewalld  
+  <h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><p>在安装Redis之前，请确保已经使用yum安装了以下基础组件：</p>
+<pre><code>make
+gcc
+gcc-c++
+kernel-devel
 </code></pre>
-<p>安装 iptables-services</p>
-<pre><code>yum install iptables-services  
+<h1 id="Redis的安装"><a href="#Redis的安装" class="headerlink" title="Redis的安装#"></a>Redis的安装#</h1><p>开始下载Redis并进行编译安装：</p>
+<pre><code>cd /usr/local/redis
+wget http://download.redis.io/releases/redis-5.0.14.tar.gz
+tar -zxvf redis-5.0.14.tar.gz
+cd redis-5.0.14
+make &amp;&amp; make PREFIX=/usr/local/redis install
+
+mkdir /usr/local/redis/etc/
+cp redis.conf /usr/local/redis/etc/
+
+cd ..
+mkdir data
+#ln -s /usr/local/redis-5.0.14 /usr/local/redis
 </code></pre>
-<p>设置开机启动</p>
-<pre><code>systemctl enable iptables
+<p>把Redis的sbin目录加入PATH：</p>
+<pre><code># vim /etc/profile
+
+export REDIS_HOME=/usr/local/redis
+export PATH=$PATH:$&#123;REDIS_HOME&#125;/bin
+
+# source /etc/profile
 </code></pre>
-<p>操作命令</p>
-<pre><code>systemctl stop iptables  
-systemctl start iptables  
-systemctl restart iptables  
-systemctl reload iptables 
+<p>至此，Redis已经安装完毕。</p>
+<h1 id="修改redis-conf"><a href="#修改redis-conf" class="headerlink" title="修改redis.conf"></a>修改redis.conf</h1><pre><code>69行：
+#bind 127.0.0.1
+
+88行：
+protected-mode no
+
+136行：
+daemonize yes
+
+171行：
+logfile &quot;/usr/local/redis/data/redis_6379.log&quot;
+
+263行：
+dir /usr/local/redis/data
+
+507行：
+requirepass Your@Password
+
+699行：
+appendonly yes
 </code></pre>
-<p>保存设置</p>
-<pre><code>service iptables save
+<h1 id="启动脚本"><a href="#启动脚本" class="headerlink" title="启动脚本"></a>启动脚本</h1><p>添加服务</p>
+<pre><code>vi /usr/lib/systemd/system/redis.service
 </code></pre>
-<p>开放某个端口<br>在 /etc/sysconfig/iptables 里添加</p>
-<pre><code>-A RH-Firewall-1-INPUT -m state --state NEW -m tcp -p tcp --dport 8080 -j ACCEPT
+<p>配置如下：</p>
+<pre><code># 服务的说明
+[Unit]
+# 描述服务
+Description=redis
+# 描述服务类别
+After=network.target
+
+# 服务运行参数的设置
+[Service]
+# 后台运行的形式
+Type=forking
+# 启动命令
+ExecStart=/usr/local/redis/bin/redis-server /usr/local/redis/etc/redis.conf
+# 停止命令
+ExecStop=/usr/local/redis/bin/redis-cli shutdown
+# 自动重启
+Restart=always
+
+# 服务安装的设置
+[Install]
+# 用户的模式
+WantedBy=multi-user.target
 </code></pre>
-<p>————————————————<br>版权声明：本文为CSDN博主「十&amp;年」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/xubenxismile/article/details/107835931">https://blog.csdn.net/xubenxismile/article/details/107835931</a></p>
+<p>服务启动关停：</p>
+<pre><code>systemctl daemon-reload
+# systemctl enable/disable xxx 指令设置/取消开机启动
+systemctl enable redis
+systemctl start redis
+systemctl stop redis
+systemctl status redis
+</code></pre>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><p>直接</p>
+<pre><code>redis-cli ping
+</code></pre>
+<p>报错如下：</p>
+<pre><code>NOAUTH Authentication required
+</code></pre>
+<p>正确使用：</p>
+<pre><code>redis-cli
+auth Your@Password
+</code></pre>
+<h1 id="启动和停止"><a href="#启动和停止" class="headerlink" title="启动和停止"></a>启动和停止</h1><p>使用</p>
+<pre><code>ps -ef | grep redis
+</code></pre>
+<p>去查看redis的进程号，然后直接</p>
+<pre><code>kill -9 redis的进程号
+</code></pre>
+<p>它就可以停止了</p>
+<p>然后执行redis-server就可以启动了</p>
  
       <!-- reward -->
       
@@ -533,7 +512,7 @@ systemctl reload iptables
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NGINX/" rel="tag">NGINX</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
 
     </footer>
   </div>
@@ -544,7 +523,7 @@ systemctl reload iptables
 
     
     <article
-  id="post-Visual Studio 编译器警告：该文件包含不能在当前代码页（936）中表示的字符"
+  id="post-MQTT网关连接各类工业物联设备，实现数据传输与控制"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -555,8 +534,8 @@ systemctl reload iptables
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/11/01/Visual%20Studio%20%E7%BC%96%E8%AF%91%E5%99%A8%E8%AD%A6%E5%91%8A%EF%BC%9A%E8%AF%A5%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E4%B8%8D%E8%83%BD%E5%9C%A8%E5%BD%93%E5%89%8D%E4%BB%A3%E7%A0%81%E9%A1%B5%EF%BC%88936%EF%BC%89%E4%B8%AD%E8%A1%A8%E7%A4%BA%E7%9A%84%E5%AD%97%E7%AC%A6/"
-    >Visual Studio 编译器警告：该文件包含不能在当前代码页（936）中表示的字符。</a> 
+  <a class="article-title" href="/2023/11/16/MQTT%E7%BD%91%E5%85%B3%E8%BF%9E%E6%8E%A5%E5%90%84%E7%B1%BB%E5%B7%A5%E4%B8%9A%E7%89%A9%E8%81%94%E8%AE%BE%E5%A4%87%EF%BC%8C%E5%AE%9E%E7%8E%B0%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E4%B8%8E%E6%8E%A7%E5%88%B6/"
+    >Homebrew&amp;Linuxbrew镜像使用帮助</a> 
 </h2>
  
 
@@ -564,8 +543,86 @@ systemctl reload iptables
     </header>
      
     <div class="article-meta">
-      <a href="/2023/11/01/Visual%20Studio%20%E7%BC%96%E8%AF%91%E5%99%A8%E8%AD%A6%E5%91%8A%EF%BC%9A%E8%AF%A5%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E4%B8%8D%E8%83%BD%E5%9C%A8%E5%BD%93%E5%89%8D%E4%BB%A3%E7%A0%81%E9%A1%B5%EF%BC%88936%EF%BC%89%E4%B8%AD%E8%A1%A8%E7%A4%BA%E7%9A%84%E5%AD%97%E7%AC%A6/" class="article-date">
-  <time datetime="2023-11-01T13:28:00.000Z" itemprop="datePublished">2023-11-01</time>
+      <a href="/2023/11/16/MQTT%E7%BD%91%E5%85%B3%E8%BF%9E%E6%8E%A5%E5%90%84%E7%B1%BB%E5%B7%A5%E4%B8%9A%E7%89%A9%E8%81%94%E8%AE%BE%E5%A4%87%EF%BC%8C%E5%AE%9E%E7%8E%B0%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E4%B8%8E%E6%8E%A7%E5%88%B6/" class="article-date">
+  <time datetime="2023-11-16T13:14:23.000Z" itemprop="datePublished">2023-11-16</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>MQTT是一种轻量级的发布/订阅消息传输协议，专门为低带宽、高延迟或不稳定的网络环境设计。它支持离线消息存储，使客户端在未连接到服务器时也能接收到消息。MQTT网关是一种采用MQTT协议的网关设备，可以连接不同类型的工业物联设备，实现设备之间的数据传输和控制。随着物联网技术的不断发展，工业物联设备之间的互联互通和数据传输变得越来越重要。MQTT网关作为一种轻量级的发布/订阅消息传输协议，在连接各类工业物联设备、实现数据传输和控制方面具有广泛的应用价值。本文将介绍如何实现MQTT网关连接各类工业物联设备，实现数据传输与控制。</p>
+<h1 id="实现MQTT网关连接各类工业物联设备"><a href="#实现MQTT网关连接各类工业物联设备" class="headerlink" title="实现MQTT网关连接各类工业物联设备"></a>实现MQTT网关连接各类工业物联设备</h1><p>1、选择合适的MQTT网关</p>
+<p>首先，需要选择一款适合的MQTT网关。选择时需要考虑网关的硬件配置、网络接口、扩展接口以及是否支持目标云平台等因素。同时，还需要根据实际应用场景选择合适的网关尺寸、重量和防护等级等参数。</p>
+<p>2、连接设备与MQTT网关</p>
+<p>不同类型的工业物联设备可能有不同的连接方式，需要根据设备的通信协议和接口类型选择合适的连接方式。例如，一些设备可能使用串口或以太网接口进行连接。确保连接的可靠性和稳定性，以便实现设备与MQTT网关之间的数据传输。</p>
+<p>3、配置MQTT网关参数</p>
+<p>根据连接的工业物联设备的类型和数据传输需求，配置MQTT网关的参数。这些参数可能包括主题订阅、消息发布、连接参数等。确保配置的参数能够满足实际需求。</p>
+<p>4、数据传输与控制</p>
+<p>通过MQTT协议，MQTT网关可以与工业物联设备进行数据传输和控制。当设备需要发送数据时，可以将数据发布到特定的主题上，MQTT网关可以订阅这些主题以接收数据。同时，MQTT网关也可以向指定的主题发布命令或控制指令，以实现对设备的远程控制。</p>
+<p>5、数据处理与分析</p>
+<p>通过MQTT网关接收到的数据可以进行进一步的处理和分析。例如，可以解析和处理数据以监控设备运行状况、预测潜在问题、优化生产流程等。同时，也可以自定义生成报表和可视化数据，提高决策效率。</p>
+<p>6、远程控制与调试</p>
+<p>通过MQTT协议，MQTT网关还可以接收来自远程平台的控制指令，实现对设备的远程启停控制、远程编程调试和远程上下载程序等操作。这有助于提高运维效率与管理水平。</p>
+<h1 id="实现数据传输与控制"><a href="#实现数据传输与控制" class="headerlink" title="实现数据传输与控制"></a>实现数据传输与控制</h1><p>数据传输：MQTT网关可以采集各类工业物联设备的数据，并将其传输到云平台或其它应用系统。数据传输可以采用发布/订阅模式，设备或传感器发布数据，MQTT网关订阅数据并传输到目标位置。同时，MQTT网关也可以从云平台或其它应用系统发送数据到设备或传感器。</p>
+<p>数据处理与分析：MQTT网关可以对采集到的数据进行处理和分析，包括数据清洗、数据转换、数据挖掘等操作，以提高数据质量和可用性。同时，也可以自定义生成报表和可视化数据，为决策提供支持。</p>
+<p>控制：MQTT网关可以接收来自云平台或其它应用系统的控制指令，并将其发送到设备或传感器，实现对设备的远程控制。例如，可以控制设备的开关、调整设备的参数等。</p>
+<p>应用案例分析</p>
+<p>以一个智能制造车间为例，说明如何实现MQTT网关连接各类工业物联设备，实现数据传输与控制。在该车间中，传感器负责监测车间的温度、湿度、气压等环境参数；摄像头负责监控车间的生产线上各设备的运行状态；机器人负责执行生产任务。通过MQTT网关将这些设备连接起来，可以实现以下功能：</p>
+<p>数据采集：通过传感器采集车间的环境参数，如温度、湿度、气压等，并将数据发送到云平台进行存储和分析。同时，通过摄像头监控生产线上各设备的运行状态，将视频数据传输到云平台进行实时监控。</p>
+<p>数据传输：将采集到的数据通过MQTT协议发送到云平台上的数据处理系统进行分析和处理。同时，根据需要将数据传输到其他应用系统进行进一步的数据利用和价值挖掘。</p>
+<p>远程控制：通过MQTT协议，可以向设备发送控制指令，实现远程控制。例如，当监测到车间的温度过高时，可以向空调发送控制指令，调整温度至正常范围。同时，也可以根据生产计划自动发送控制指令给机器人，执行相应的生产任务。</p>
+<p>故障预警与诊断：通过分析采集到的数据，可以检测设备的故障或异常状态。当出现故障时，可以向维护人员发送预警信息，及时进行维修和保养。同时，通过对历史数据的分析，可以找出故障的原因和解决方案，提高生产效率。</p>
+<p>优化生产流程：通过对环境参数和设备运行数据的分析，可以优化生产流程。例如，根据车间的温度和湿度数据，可以调整生产线的运行速度和工艺参数，以提高产品质量和生产效率。</p>
+<p>人员管理：通过与人员定位系统结合，可以实时监测车间内员工的位置和活动情况。当出现紧急情况时，可以通过MQTT网关向员工发送紧急通知，引导他们快速疏散或采取必要的防护措施。</p>
+<p>节能减排：通过监测车间的能源消耗数据，可以分析能源浪费的原因并采取相应的节能措施。例如，根据车间的温度和湿度数据，可以调整空调和通风系统的运行参数，降低能源消耗。</p>
+<p>通过实现MQTT网关连接各类工业物联设备，可以实现数据采集、传输、控制等功能，提高生产效率、降低成本、保障人员安全等方面具有重要意义。这不仅有助于提高设备的智能化、远程化管理水平，还为企业的生产管理提供了实时数据支持，优化了生产流程，提高了产量和质量。同时，也有助于实现工业制造的数字化、智能化和绿色化转型。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%80%9A%E4%BF%A1/" rel="tag">通信</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-Homebrew&amp;Linuxbrew镜像使用帮助"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/11/15/Homebrew&Linuxbrew%E9%95%9C%E5%83%8F%E4%BD%BF%E7%94%A8%E5%B8%AE%E5%8A%A9/"
+    >Homebrew&amp;Linuxbrew镜像使用帮助</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/11/15/Homebrew&Linuxbrew%E9%95%9C%E5%83%8F%E4%BD%BF%E7%94%A8%E5%B8%AE%E5%8A%A9/" class="article-date">
+  <time datetime="2023-11-15T13:14:23.000Z" itemprop="datePublished">2023-11-15</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -575,19 +632,133 @@ systemctl reload iptables
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>Visual Studio 编译器警告：该文件包含不能在当前代码页（936）中表示的字符。 以 Unicode 格式保存该文件防止数据丢失。</p>
-<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在利用Visual Studio编译FreeType时，编译器报警告C4819：该文件包含不能在当前代码页（936）中表示的字符。 以 Unicode 格式保存该文件防止数据丢失。一般来说这种警告应该无伤大雅，忽视即可，但按FreeType的开发者们的说法，他们写的代码在编译时应该是一个警告都不会有：</p>
-<p>FreeType is written in industry-standard ANSI C and should compile easily with any compliant C or C++ compiler. We have even taken great care to eliminate all warnings when compiling with popular compilers like gcc, Visual C++, and Borland C++.<br>这勾起了我的好奇心，我想弄清楚如何以一种较为合理（优雅）的方式去消除这个警告。</p>
-<h1 id="分析与解决"><a href="#分析与解决" class="headerlink" title="分析与解决"></a>分析与解决</h1><p>按微软官方文档的说法：</p>
-<p>在不能表示文件中所有字符的代码页的系统上编译 ANSI 源文件时，出现 C4819。<br>C4819 occurs when you compile an ANSI source file on a system using a codepage that can’t represent all characters in the file.<br>代码页（code page）是一类字符的编码方案，编号为936的代码页对应的字符编码为GB2312（参见 Code Page Identifiers - Win32 apps | Microsoft Learn），所以我遇到的问题是：我的编程环境所用的编码是GB2312, 但我编译的源文件中却含有不能用GB2312表示的字符。按官方文档的说法，有如下三种解决方案：</p>
-<h2 id="方案1："><a href="#方案1：" class="headerlink" title="方案1："></a>方案1：</h2><p>将源文件里不能用GB2312表示的字符给删了，因为这种字符往往仅出现在注释中，删掉对编译没有什么影响。这种做法有些许简单粗暴，且仅适合用在不能表示的字符数量较少的情境中，不够优雅。</p>
-<h2 id="方案2："><a href="#方案2：" class="headerlink" title="方案2："></a>方案2：</h2><p>将源文件以Unicode格式保存，具体操作如下：</p>
-<p>在 Visual Studio 中，选择“文件”&gt;“另存为”。 在“将文件另存为”对话框中，选择“保存”按钮旁的下拉菜单，然后选择“保存时使用编码”。 如果保存到同一文件名，可能需要确认要替换该文件。 在“高级保存选项”对话框中，选择可表示该文件中所有字符的编码（例如，Unicode（带签名的 UTF-8）- Codepage 65001，然后选择“确定”。<br>不过我下载的FreeType源码应该本身就是以Unicode格式进行编码的，所以貌似不应该是这种解决方案。事实上这种方案也并没有解决该编译器警告问题。</p>
-<h2 id="方案3："><a href="#方案3：" class="headerlink" title="方案3："></a>方案3：</h2><p>将系统代码页设置为支持源代码使用的字符集，简单来说，就是让我们的Windows系统支持使用Unicode编码的字符。我认为这应该是最优雅的解决方式，毕竟作为程序员，Unicode与UTF-8应该是必须要熟悉与运用的，于情于理要让我们使用的系统支持使用Unicode。</p>
-<p>这里提一嘴Unicode与UTF-8的关系：Unicode标准定义的是一个字符到一个整数的映射关系，也就是将一个字符用一个数字进行唯一的编号；而UTF-8则可以看作Unicode在计算机中的实现，如何将这个整数用一个合适的01序列进行编码并储存在计算机中，就是UTF-8干的事；UTF-16也是Unicode的一种实现，但感觉还是UTF-8的应用更广泛一些。</p>
-<p>设置方法：Windows 设置&gt;时间&amp;语言&gt;区域&gt;管理语言设置&gt;更改系统区域设置，勾选Beta 版：使用 Unicode UTF-8 获取全球语言支持，然后要重启一下电脑，使更改生效。(图示版见封面)</p>
-<p>方案3成功解决了我的问题，不过根据评论区的建议，谨慎采用.</p>
-<h2 id="方案4："><a href="#方案4：" class="headerlink" title="方案4："></a>方案4：</h2><p>编译时，设置VC项目中的C/C++命令行 -&gt;其他选项，增加 /utf-8</p>
+  <p>Homebrew / Linuxbrew 镜像使用帮助</p>
+<p>注：该镜像是 Homebrew / Linuxbrew 源程序以及 formula / cask 索引的镜像（即 brew update 时所更新内容）。本镜像站同时提供相应的二进制预编译包的镜像，请参考 Homebrew bottles 镜像使用帮助</p>
+<p>本站提供了 <a target="_blank" rel="noopener" href="https://github.com/Homebrew">https://github.com/Homebrew</a> 组织下的以下 repo：brew, homebrew-core, homebrew-cask, homebrew-cask-fonts, homebrew-cask-versions, homebrew-command-not-found, homebrew-services, install。</p>
+<p>注：自brew 3.3.0 (2021 年 10 月 25日) 起，Linuxbrew 核心仓库 linuxbrew-core 已被弃用。Linuxbrew 用户应迁移至 homebrew-core，并请依本镜像使用帮助重新设置镜像。具体请参阅本帮助 Linuxbrew 镜像迁移说明 章节。</p>
+<p>注：自brew 4.0.0 (2023 年 2 月 16日) 起，HOMEBREW_INSTALL_FROM_API 会成为默认行为，无需设置。大部分用户无需再克隆 homebrew-core 仓库，故无需设置 HOMEBREW_CORE_GIT_REMOTE 环境变量；但若需要运行 brew 的开发命令或者 brew 安装在非官方支持的默认 prefix 位置，则仍需设置 HOMEBREW_CORE_GIT_REMOTE 环境变量。如果不想通过 API 安装，可以设置 HOMEBREW_NO_INSTALL_FROM_API=1。</p>
+<p>注：自brew 4.0.22 (2023 年 6 月 12 日) 起，homebrew-cask-drivers 已被弃用，所有 cask 合并至 homebrew-cask 仓库。本帮助内已移除克隆 homebrew-cask-drivers 仓库的命令。已克隆用户可选择运行 brew untap homebrew/cask-drivers 命令移除此仓库。</p>
+<h1 id="日常使用"><a href="#日常使用" class="headerlink" title="日常使用"></a>日常使用</h1><p>可设置如下环境变量使用本站提供的 Homebrew 镜像：</p>
+<pre><code>export HOMEBREW_API_DOMAIN=&quot;https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/api&quot;
+export HOMEBREW_BOTTLE_DOMAIN=&quot;https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles&quot;
+export HOMEBREW_BREW_GIT_REMOTE=&quot;https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git&quot;
+export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git&quot;
+export HOMEBREW_PIP_INDEX_URL=&quot;https://pypi.tuna.tsinghua.edu.cn/simple&quot;
+</code></pre>
+<h1 id="首次安装-Homebrew-Linuxbrew"><a href="#首次安装-Homebrew-Linuxbrew" class="headerlink" title="首次安装 Homebrew / Linuxbrew"></a>首次安装 Homebrew / Linuxbrew</h1><p>首先，需要确保系统中安装了 bash、git 和 curl，对于 macOS 用户需额外要求安装 Command Line Tools (CLT) for Xcode。</p>
+<p>对于 macOS 用户，系统自带 bash、git 和 curl，在命令行输入 xcode-select –install 安装 CLT for Xcode 即可。<br>对于 Linux 用户，系统自带 bash，仅需额外安装 git 和 curl。</p>
+<p>接着，在终端输入以下几行命令设置环境变量：</p>
+<pre><code>export HOMEBREW_INSTALL_FROM_API=1
+export HOMEBREW_API_DOMAIN=&quot;https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/api&quot;
+export HOMEBREW_BOTTLE_DOMAIN=&quot;https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles&quot;
+export HOMEBREW_BREW_GIT_REMOTE=&quot;https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git&quot;
+export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git&quot;
+</code></pre>
+<p>注：自 brew 4.0 起，HOMEBREW_INSTALL_FROM_API 会成为默认行为，无需设置；大部分用户无需再克隆 homebrew/core 仓库，故无需设置 HOMEBREW_CORE_GIT_REMOTE 环境变量。但若需要运行 brew 的开发命令或者 brew 安装在非官方支持的默认 prefix 位置，则仍需设置 HOMEBREW_CORE_GIT_REMOTE 环境变量；如果不想通过 API 安装，可以设置 HOMEBREW_NO_INSTALL_FROM_API=1。</p>
+<p>最后，在终端运行以下命令以安装 Homebrew / Linuxbrew：</p>
+<pre><code># 从本镜像下载安装脚本并安装 Homebrew / Linuxbrew
+git clone --depth=1 https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/install.git brew-install
+/bin/bash brew-install/install.sh
+rm -rf brew-install
+
+# 也可从 GitHub 获取官方安装脚本安装 Homebrew / Linuxbrew
+/bin/bash -c &quot;$(curl -fsSL https://github.com/Homebrew/install/raw/master/install.sh)&quot;
+</code></pre>
+<p>这样在首次安装的时候也可以使用镜像。更多信息请参考 Homebrew 官方安装文档。</p>
+<ul>
+<li>安装成功后需将 brew 程序的相关路径加入到环境变量中：</li>
+</ul>
+<p>以下针对基于 Apple Silicon CPU 设备上的 macOS 系统（命令行运行 uname -m 应输出 arm64）上的 Homebrew：</p>
+<pre><code>test -r ~/.bash_profile &amp;&amp; echo &#39;eval &quot;$(/opt/homebrew/bin/brew shellenv)&quot;&#39; &gt;&gt; ~/.bash_profile
+test -r ~/.zprofile &amp;&amp; echo &#39;eval &quot;$(/opt/homebrew/bin/brew shellenv)&quot;&#39; &gt;&gt; ~/.zprofile
+</code></pre>
+<p>对基于 Intel CPU 设备上的 macOS 系统（命令行运行 uname -m 应输出 x86_64）的用户可跳过本步。</p>
+<p>以下针对 Linux 系统上的 Linuxbrew：</p>
+<pre><code>test -d ~/.linuxbrew &amp;&amp; eval &quot;$(~/.linuxbrew/bin/brew shellenv)&quot;
+test -d /home/linuxbrew/.linuxbrew &amp;&amp; eval &quot;$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)&quot;
+test -r ~/.bash_profile &amp;&amp; echo &quot;eval \&quot;\$($(brew --prefix)/bin/brew shellenv)\&quot;&quot; &gt;&gt; ~/.bash_profile
+test -r ~/.profile &amp;&amp; echo &quot;eval \&quot;\$($(brew --prefix)/bin/brew shellenv)\&quot;&quot; &gt;&gt; ~/.profile
+test -r ~/.zprofile &amp;&amp; echo &quot;eval \&quot;\$($(brew --prefix)/bin/brew shellenv)\&quot;&quot; &gt;&gt; ~/.zprofile
+</code></pre>
+<p>参考了 <a target="_blank" rel="noopener" href="https://docs.brew.sh/Homebrew-on-Linux%E3%80%82">https://docs.brew.sh/Homebrew-on-Linux。</a></p>
+<h1 id="替换现有仓库上游"><a href="#替换现有仓库上游" class="headerlink" title="替换现有仓库上游"></a>替换现有仓库上游</h1><p>替换 brew 程序本身的源，Homebrew / Linuxbrew 相同：</p>
+<pre><code>export HOMEBREW_API_DOMAIN=&quot;https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/api&quot;
+export HOMEBREW_BREW_GIT_REMOTE=&quot;https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git&quot;
+brew update
+</code></pre>
+<p>以下针对 macOS 系统上的 Homebrew：</p>
+<pre><code># 手动设置
+export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git&quot;
+
+# 注：自 brew 4.0 起，大部分 Homebrew 用户无需设置 homebrew/core 和 homebrew/cask 镜像，只需设置 HOMEBREW_API_DOMAIN 即可。
+# 如果需要使用 Homebrew 的开发命令 (如 `brew cat &lt;formula&gt;`)，则仍然需要设置 homebrew/core 和 homebrew/cask 镜像。
+# 请按需执行如下两行命令：
+brew tap --custom-remote --force-auto-update homebrew/core https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git
+brew tap --custom-remote --force-auto-update homebrew/cask https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-cask.git
+
+# 除 homebrew/core 和 homebrew/cask 仓库外的 tap 仓库仍然需要设置镜像
+brew tap --custom-remote --force-auto-update homebrew/cask-fonts https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-cask-fonts.git
+brew tap --custom-remote --force-auto-update homebrew/cask-versions https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-cask-versions.git
+brew tap --custom-remote --force-auto-update homebrew/command-not-found https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-command-not-found.git
+brew tap --custom-remote --force-auto-update homebrew/services https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-services.git
+brew update
+
+# 或使用下面的几行命令自动设置
+export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git&quot;
+for tap in core cask&#123;,-fonts,-versions&#125; command-not-found services; do
+    brew tap --custom-remote --force-auto-update &quot;homebrew/$&#123;tap&#125;&quot; &quot;https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-$&#123;tap&#125;.git&quot;
+done
+brew update
+</code></pre>
+<p>以下针对 Linux 系统上的 Linuxbrew：</p>
+<pre><code>export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git&quot;
+
+# 注：自 brew 4.0 起，使用默认 prefix (即 &quot;/home/linuxbrew/.linuxbrew&quot;) 的大部分 Homebrew 用户无需设置 homebrew/core 镜像，只需设置 HOMEBREW_API_DOMAIN 即可。
+# 如果不是默认 prefix 或者需要使用 Homebrew 的开发命令 (如 `brew cat &lt;formula&gt;`)，则仍然需要设置 homebrew/core 镜像。
+# 请按需执行如下命令：
+brew tap --custom-remote --force-auto-update homebrew/core https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git
+
+# 除 homebrew/core 仓库外的 tap 仓库仍然需要设置镜像
+brew tap --custom-remote --force-auto-update homebrew/command-not-found https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-command-not-found.git
+brew tap --custom-remote --force-auto-update homebrew/services https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-services.git
+brew update
+</code></pre>
+<p>注：如果用户设置了环境变量 HOMEBREW_BREW_GIT_REMOTE 和 HOMEBREW_CORE_GIT_REMOTE，则每次执行 brew update 时，brew 程序本身和 Core Tap (homebrew-core) 的远程将被自动设置。推荐用户将这两个环境变量设置加入 shell 的 profile 设置中。</p>
+<pre><code>test -r ~/.bash_profile &amp;&amp; echo &#39;export HOMEBREW_API_DOMAIN=&quot;https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/api&quot;&#39; &gt;&gt; ~/.bash_profile  # bash
+test -r ~/.bash_profile &amp;&amp; echo &#39;export HOMEBREW_BREW_GIT_REMOTE=&quot;https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git&quot;&#39; &gt;&gt; ~/.bash_profile  # bash
+test -r ~/.bash_profile &amp;&amp; echo &#39;export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git&quot;&#39; &gt;&gt; ~/.bash_profile
+test -r ~/.profile &amp;&amp; echo &#39;export HOMEBREW_API_DOMAIN=&quot;https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/api&quot;&#39; &gt;&gt; ~/.profile
+test -r ~/.profile &amp;&amp; echo &#39;export HOMEBREW_BREW_GIT_REMOTE=&quot;https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git&quot;&#39; &gt;&gt; ~/.profile
+test -r ~/.profile &amp;&amp; echo &#39;export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git&quot;&#39; &gt;&gt; ~/.profile
+
+test -r ~/.zprofile &amp;&amp; echo &#39;export HOMEBREW_API_DOMAIN=&quot;https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/api&quot;&#39; &gt;&gt; ~/.zprofile  # zsh
+test -r ~/.zprofile &amp;&amp; echo &#39;export HOMEBREW_BREW_GIT_REMOTE=&quot;https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git&quot;&#39; &gt;&gt; ~/.zprofile  # zsh
+test -r ~/.zprofile &amp;&amp; echo &#39;export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git&quot;&#39; &gt;&gt; ~/.zprofile
+</code></pre>
+<h1 id="Linuxbrew-镜像迁移说明"><a href="#Linuxbrew-镜像迁移说明" class="headerlink" title="Linuxbrew 镜像迁移说明"></a>Linuxbrew 镜像迁移说明</h1><p>Linuxbrew 核心仓库（linuxbrew-core）自 2021 年 10 月 25 日（brew 版本 3.3.0 起）被弃用，Linuxbrew 用户应迁移至 homebrew-core。Linuxbrew 用户请依新版镜像说明重新设置镜像。注意迁移前请先运行 brew update 将 brew 更新至 3.3.0 或以上版本。迁移过程中若出现任何问题，可使用如下命令重新安装 homebrew-core：</p>
+<pre><code>export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git&quot;
+rm -rf &quot;$(brew --repo homebrew/core)&quot;
+brew tap --custom-remote --force-auto-update homebrew/core https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git
+</code></pre>
+<h1 id="复原仓库上游"><a href="#复原仓库上游" class="headerlink" title="复原仓库上游"></a>复原仓库上游</h1><p>(感谢 Snowonion Lee 提供说明)</p>
+<ul>
+<li><p>以下针对 macOS 系统上的 Homebrew</p>
+<h1 id="brew-程序本身，Homebrew-Linuxbrew-相同"><a href="#brew-程序本身，Homebrew-Linuxbrew-相同" class="headerlink" title="brew 程序本身，Homebrew / Linuxbrew 相同"></a>brew 程序本身，Homebrew / Linuxbrew 相同</h1><p>  unset HOMEBREW_BREW_GIT_REMOTE<br>  git -C “$(brew –repo)” remote set-url origin <a target="_blank" rel="noopener" href="https://github.com/Homebrew/brew">https://github.com/Homebrew/brew</a></p>
+<h1 id="以下针对-macOS-系统上的-Homebrew"><a href="#以下针对-macOS-系统上的-Homebrew" class="headerlink" title="以下针对 macOS 系统上的 Homebrew"></a>以下针对 macOS 系统上的 Homebrew</h1><p>  unset HOMEBREW_API_DOMAIN<br>  unset HOMEBREW_CORE_GIT_REMOTE<br>  BREW_TAPS=”$(BREW_TAPS=”$(brew tap 2&gt;/dev/null)”; echo -n “${BREW_TAPS//$’\n’/:}”)”<br>  for tap in core cask{,-fonts,-versions} command-not-found services; do</p>
+<pre><code>  if [[ &quot;:$&#123;BREW_TAPS&#125;:&quot; == *&quot;:homebrew/$&#123;tap&#125;:&quot;* ]]; then  # 只复原已安装的 Tap
+      brew tap --custom-remote &quot;homebrew/$&#123;tap&#125;&quot; &quot;https://github.com/Homebrew/homebrew-$&#123;tap&#125;&quot;
+  fi
+</code></pre>
+<p>  done</p>
+<h1 id="重新拉取远程"><a href="#重新拉取远程" class="headerlink" title="重新拉取远程"></a>重新拉取远程</h1><p>  brew update</p>
+</li>
+<li><p>以下针对 Linux 系统上的 Linuxbrew</p>
+<h1 id="brew-程序本身，Homebrew-Linuxbrew-相同-1"><a href="#brew-程序本身，Homebrew-Linuxbrew-相同-1" class="headerlink" title="brew 程序本身，Homebrew / Linuxbrew 相同"></a>brew 程序本身，Homebrew / Linuxbrew 相同</h1><p>  unset HOMEBREW_BREW_GIT_REMOTE<br>  git -C “$(brew –repo)” remote set-url origin <a target="_blank" rel="noopener" href="https://github.com/Homebrew/brew">https://github.com/Homebrew/brew</a></p>
+<h1 id="以下针对-Linux-系统上的-Linuxbrew"><a href="#以下针对-Linux-系统上的-Linuxbrew" class="headerlink" title="以下针对 Linux 系统上的 Linuxbrew"></a>以下针对 Linux 系统上的 Linuxbrew</h1><p>  unset HOMEBREW_API_DOMAIN<br>  unset HOMEBREW_CORE_GIT_REMOTE<br>  brew tap –custom-remote homebrew/core <a target="_blank" rel="noopener" href="https://github.com/Homebrew/homebrew-core">https://github.com/Homebrew/homebrew-core</a><br>  brew tap –custom-remote homebrew/command-not-found <a target="_blank" rel="noopener" href="https://github.com/Homebrew/homebrew-command-not-found">https://github.com/Homebrew/homebrew-command-not-found</a><br>  brew tap –custom-remote homebrew/services <a target="_blank" rel="noopener" href="https://github.com/Homebrew/homebrew-services">https://github.com/Homebrew/homebrew-services</a></p>
+<h1 id="重新拉取远程-1"><a href="#重新拉取远程-1" class="headerlink" title="重新拉取远程"></a>重新拉取远程</h1><p>  brew update</p>
+</li>
+</ul>
+<p>注：重置回默认远程后，用户应该删除 shell 的 profile 设置中的环境变量 HOMEBREW_BREW_GIT_REMOTE 和 HOMEBREW_CORE_GIT_REMOTE 以免运行 brew update 时远程再次被更换。</p>
  
       <!-- reward -->
       
@@ -598,7 +769,7 @@ systemctl reload iptables
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Visual-Studio/" rel="tag">Visual Studio</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Homebrew/" rel="tag">Homebrew</a></li></ul>
 
     </footer>
   </div>
@@ -609,7 +780,7 @@ systemctl reload iptables
 
     
     <article
-  id="post-终端通讯规约类型"
+  id="post-conda 基本操作"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -620,8 +791,8 @@ systemctl reload iptables
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/10/31/%E7%BB%88%E7%AB%AF%E9%80%9A%E8%AE%AF%E8%A7%84%E7%BA%A6%E7%B1%BB%E5%9E%8B/"
-    >终端通讯规约类型</a> 
+  <a class="article-title" href="/2023/11/14/conda%20%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/"
+    >conda 基本操作</a> 
 </h2>
  
 
@@ -629,24 +800,90 @@ systemctl reload iptables
     </header>
      
     <div class="article-meta">
-      <a href="/2023/10/31/%E7%BB%88%E7%AB%AF%E9%80%9A%E8%AE%AF%E8%A7%84%E7%BA%A6%E7%B1%BB%E5%9E%8B/" class="article-date">
-  <time datetime="2023-10-31T02:28:00.000Z" itemprop="datePublished">2023-10-31</time>
+      <a href="/2023/11/14/conda%20%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" class="article-date">
+  <time datetime="2023-11-14T13:14:23.000Z" itemprop="datePublished">2023-11-14</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
   </div>
    
     </div>
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p><a target="_blank" rel="noopener" href="https://www.techphant.cn/blog/2305.html">https://www.techphant.cn/blog/2305.html</a><br>终端通讯规约类型<br>作者： 技象物联网 / 行业百科 / 通信系统, 通讯规约 / 2023年9月16日 09:45:01</p>
-<p>终端通讯规约类型是一种用来控制和管理计算机网络上的数据传输的标准。它定义了发送和接收方如何在网络上传输数据，以及传输的数据格式、编码和传输时间。终端通讯规约类型可以帮助网络管理员更容易地管理网络，并且可以帮助网络用户更容易地使用网络。</p>
-<p>终端通讯规约类型关键词</p>
-<p>1.信息格式<br>信息格式是指网络上传输的数据的格式，它可以是文本、图像、声音或视频等。网络上的数据传输必须遵循一定的格式，以便发送方和接收方能够正确地识别和处理数据。</p>
-<p>2.编码方式<br>编码方式是指将信息转换成数字或字符码的方式。编码是为了使信息能够被网络传输，使发送方和接收方能够正确地识别和处理信息。</p>
-<p>3.传输时间<br>传输时间是指网络上传输数据的时间。它可以是实时传输，也可以是延迟传输。网络上传输数据的传输时间取决于网络带宽、网络负载和网络延迟等因素。</p>
-<p>总结<br>终端通讯规约类型是一种用来控制和管理计算机网络上的数据传输的标准。它定义了发送和接收方如何在网络上传输数据，以及传输的数据格式、编码和传输时间。终端通讯规约类型包括信息格式、编码方式和传输时间等关键词，它们可以帮助网络管理员更容易地管理网络，并且可以帮助网络用户更容易地使用网络。</p>
+  <h1 id="conda-基本操作"><a href="#conda-基本操作" class="headerlink" title="conda 基本操作"></a>conda 基本操作</h1><p>查看 conda 版本</p>
+<pre><code>conda --version
+</code></pre>
+<p>更新 conda</p>
+<pre><code>conda update conda
+</code></pre>
+<p>查看 conda 环境配置</p>
+<pre><code>conda config --show
+</code></pre>
+<p>设置镜像源</p>
+<pre><code># 设置清华镜像
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/bioconda/
+
+# 设置 bioconda
+conda config --add channels bioconda
+conda config --add channels conda-forge
+
+# 设置搜索时显示通道地址
+conda config --set show_channel_urls yes
+</code></pre>
+<p>查询指定命令的功能</p>
+<p>conda command_name –help</p>
+<h1 id="管理环境"><a href="#管理环境" class="headerlink" title="管理环境"></a>管理环境</h1><p>显示所有虚拟环境</p>
+<pre><code>conda env list
+</code></pre>
+<p>创建虚拟环境</p>
+<pre><code>conda create -n env_name package_name
+</code></pre>
+<p>如果需要指定 package 版本，可直接在 package_name 之后加上 = 号以及 package 版本号，例如：</p>
+<pre><code>conda create -n env_name python=3.x
+</code></pre>
+<p>如果需要安装多个 package ，在 env_name 之后用空格分隔多个 package_name 即可，例如：</p>
+<pre><code>conda create -n python310 python=3.10 numpy pandas
+</code></pre>
+<p>激活环境</p>
+<pre><code>activate env_name
+</code></pre>
+<p>退出环境</p>
+<pre><code>deactivate env_name
+</code></pre>
+<p>删除虚拟环境</p>
+<pre><code>conda env remove -n env_name
+</code></pre>
+<p>导出虚拟环境</p>
+<pre><code>conda env export --name env_name &gt; environment.yml
+</code></pre>
+<p>导入虚拟环境</p>
+<pre><code>conda env create -n env_name -f environment.yml
+</code></pre>
+<h1 id="管理-package"><a href="#管理-package" class="headerlink" title="管理 package"></a>管理 package</h1><p>查看当前环境包含的所有 package</p>
+<pre><code>conda list
+</code></pre>
+<p>更新当前环境包含的所有 package</p>
+<pre><code>conda update --all
+</code></pre>
+<p>更新指定 package</p>
+<pre><code>conda update package_name
+</code></pre>
+<p>安装指定 package</p>
+<pre><code>conda install package_name
+</code></pre>
+<p>安装装多个 package ：</p>
+<pre><code>conda installl package_name_1 package_name_2 package_name_3
+</code></pre>
+<p>安装固定版本的 package ：</p>
+<pre><code>conda install package_name=package_version_number
+</code></pre>
+<p>移除指定 package</p>
+<pre><code>conda remove package_name 
+</code></pre>
  
       <!-- reward -->
       
@@ -657,7 +894,7 @@ systemctl reload iptables
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%80%9A%E4%BF%A1/" rel="tag">通信</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
 
     </footer>
   </div>
@@ -668,7 +905,7 @@ systemctl reload iptables
 
     
     <article
-  id="post-通信规约类型"
+  id="post-Anaconda 镜像使用帮助"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -679,8 +916,8 @@ systemctl reload iptables
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/10/30/%E9%80%9A%E4%BF%A1%E8%A7%84%E7%BA%A6%E7%B1%BB%E5%9E%8B/"
-    >通信规约类型</a> 
+  <a class="article-title" href="/2023/11/13/Anaconda%20%E9%95%9C%E5%83%8F%E4%BD%BF%E7%94%A8%E5%B8%AE%E5%8A%A9/"
+    >Anaconda 镜像使用帮助</a> 
 </h2>
  
 
@@ -688,33 +925,57 @@ systemctl reload iptables
     </header>
      
     <div class="article-meta">
-      <a href="/2023/10/30/%E9%80%9A%E4%BF%A1%E8%A7%84%E7%BA%A6%E7%B1%BB%E5%9E%8B/" class="article-date">
-  <time datetime="2023-10-30T02:28:00.000Z" itemprop="datePublished">2023-10-30</time>
+      <a href="/2023/11/13/Anaconda%20%E9%95%9C%E5%83%8F%E4%BD%BF%E7%94%A8%E5%B8%AE%E5%8A%A9/" class="article-date">
+  <time datetime="2023-11-13T13:14:23.000Z" itemprop="datePublished">2023-11-13</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
   </div>
    
     </div>
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p><a target="_blank" rel="noopener" href="https://www.techphant.cn/blog/29755.html">https://www.techphant.cn/blog/29755.html</a><br>通信规约有哪几种？<br>作者： 技象物联网 / 行业百科 / 通信系统, 通讯规约 / 2023年9月16日 16:06:28</p>
-<p>随着科技的发展，人们对通信技术的需求越来越高，而为了保证通信的顺利进行，必须要有一套完善的通信规约。通信规约是指在通信过程中，双方必须遵守的规则，以确保通信的顺利进行。本文将为您介绍通信规约有哪几种，以及它们之间的区别。</p>
-<h1 id="OSI参考模型"><a href="#OSI参考模型" class="headerlink" title="OSI参考模型"></a>OSI参考模型</h1><p>OSI(Open System Interconnection)参考模型是由国际标准化组织(ISO)提出的一种通用的通信模型。它将通信过程分为7层，分别是物理层、数据链路层、网络层、传输层、会话层、表示层和应用层。每一层都有自己的功能，它们之间的协调可以保证数据在不同的网络系统之间传输的顺利进行。</p>
-<p>物理层<br>物理层是OSI参考模型中的第一层，它主要负责定义通信系统的物理连接，包括电缆、接口设备和电缆连接等。它还负责确定每个节点之间的数据传输方式，以及控制信号的传输速率。</p>
-<p>数据链路层<br>数据链路层是OSI参考模型中的第二层，它主要负责检测和纠正传输中出现的错误，以及确定数据传输的最佳路径。它还负责定义数据帧的格式，以及控制帧的传输顺序。</p>
-<p>网络层<br>网络层是OSI参考模型中的第三层，它主要负责确定数据在网络中的传输路径，以及确定数据包的传输顺序。它还负责确定网络中的数据传输协议，以及管理网络中的路由器和网关等。</p>
-<p>传输层<br>传输层是OSI参考模型中的第四层，它主要负责确保数据在网络中的可靠传输，以及确定数据传输的最佳路径。它还负责确定发送端和接收端之间的连接，以及确定数据传输的协议。</p>
-<p>会话层<br>会话层是OSI参考模型中的第五层，它主要负责管理发送端和接收端之间的会话，以及确定会话的开始和结束。它还负责确定会话的控制信息，以及确定会话中的数据传输方式。</p>
-<p>表示层<br>表示层是OSI参考模型中的第六层，它主要负责将数据转换成可以在网络中传输的格式，以及将传输的数据转换成可读的格式。它还负责确定数据的编码方式，以及将数据进行压缩等。</p>
-<p>应用层<br>应用层是OSI参考模型中的第七层，它主要负责实现用户和网络之间的交互，以及提供网络应用程序所需的服务。它还负责确定应用程序的协议，以及确定应用程序之间的数据传输方式。</p>
-<h1 id="TCP-IP参考模型"><a href="#TCP-IP参考模型" class="headerlink" title="TCP/IP参考模型"></a>TCP/IP参考模型</h1><p>TCP/IP参考模型是由美国国防部提出的一种通用的通信模型。它将通信过程分为4层，分别是应用层、传输层、网络层和数据链路层。每一层都有自己的功能，它们之间的协调可以保证数据在不同的网络系统之间传输的顺利进行。</p>
-<p>应用层<br>应用层是TCP/IP参考模型中的第一层，它主要负责实现用户和网络之间的交互，以及提供网络应用程序所需的服务。它还负责确定应用程序的协议，以及确定应用程序之间的数据传输方式。</p>
-<p>传输层<br>传输层是TCP/IP参考模型中的第二层，它主要负责确保数据在网络中的可靠传输，以及确定数据传输的最佳路径。它还负责确定发送端和接收端之间的连接，以及确定数据传输的协议。</p>
-<p>网络层<br>网络层是TCP/IP参考模型中的第三层，它主要负责确定数据在网络中的传输路径，以及确定数据包的传输顺序。它还负责确定网络中的数据传输协议，以及管理网络中的路由器和网关等。</p>
-<p>数据链路层<br>数据链路层是TCP/IP参考模型中的第四层，它主要负责检测和纠正传输中出现的错误，以及确定数据传输的最佳路径。它还负责定义数据帧的格式，以及控制帧的传输顺序。</p>
-<p>总结<br>通信规约是指在通信过程中，双方必须遵守的规则，以确保通信的顺利进行。OSI参考模型是由国际标准化组织(ISO)提出的一种通用的通信模型，它将通信过程分为7层，TCP/IP参考模型是由美国国防部提出的一种通用的通信模型，它将通信过程分为4层。以上就是有关通信规约有哪几种的介绍，希望</p>
+  <h1 id="Anaconda-镜像使用帮助"><a href="#Anaconda-镜像使用帮助" class="headerlink" title="Anaconda 镜像使用帮助"></a>Anaconda 镜像使用帮助</h1><p>Anaconda 是一个用于科学计算的 Python 发行版，支持 Linux, Mac, Windows, 包含了众多流行的科学计算、数据分析的 Python 包。</p>
+<p>Anaconda 安装包可以到 <a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/">https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/</a> 下载。</p>
+<p>TUNA 还提供了 Anaconda 仓库与第三方源（conda-forge、msys2、pytorch等，查看完整列表，更多第三方源可以前往校园网联合镜像站查看）的镜像，各系统都可以通过修改用户目录下的 .condarc 文件来使用 TUNA 镜像源。</p>
+<h1 id="换源"><a href="#换源" class="headerlink" title="换源"></a>换源</h1><p>Windows 用户无法直接创建名为 .condarc 的文件，可先执行 conda config –set show_channel_urls yes 生成该文件之后再修改。</p>
+<p>注：由于更新过快难以同步，我们不同步pytorch-nightly, pytorch-nightly-cpu, ignite-nightly这三个包。</p>
+<pre><code>channels:
+  - defaults
+show_channel_urls: true
+default_channels:
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/msys2
+custom_channels:
+  conda-forge: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  msys2: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  bioconda: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  menpo: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  pytorch: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  pytorch-lts: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  simpleitk: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  deepmodeling: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/
+</code></pre>
+<p>即可添加 Anaconda Python 免费仓库。</p>
+<p>运行 conda clean -i 清除索引缓存，保证用的是镜像站提供的索引。</p>
+<p>运行 conda create -n myenv numpy 测试一下吧。</p>
+<h1 id="Miniconda-镜像使用帮助"><a href="#Miniconda-镜像使用帮助" class="headerlink" title="Miniconda 镜像使用帮助"></a>Miniconda 镜像使用帮助</h1><p>Miniconda 是一个 Anaconda 的轻量级替代，默认只包含了 python 和 conda，但是可以通过 pip 和 conda 来安装所需要的包。</p>
+<p>Miniconda 安装包可以到 <a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/">https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/</a> 下载。</p>
+<h1 id="其他三方源"><a href="#其他三方源" class="headerlink" title="其他三方源"></a>其他三方源</h1><p>对于conda的其他三方源，如有需要请修改 anaconda.py 文件，并提交pull request，我们会综合考虑多方因素来酌情增减。</p>
+<h1 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h1><p>下载普通包，以numpy为例</p>
+<pre><code>conda install numpy
+</code></pre>
+<p>下载pytorch</p>
+<pre><code>conda install pytorch torchvision torchaudio cpuonly -c pytorch
+</code></pre>
+<p>关键点：</p>
+<p>换源后需要加 -c pytorch 。</p>
+<p>因为我们在.condarc中添加了</p>
+<pre><code>custom_channels:pytorch: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+</code></pre>
+<p>只有使用 -c(hannels) 才会实现使用清华源下载pytorch</p>
  
       <!-- reward -->
       
@@ -725,7 +986,7 @@ systemctl reload iptables
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%80%9A%E4%BF%A1/" rel="tag">通信</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
 
     </footer>
   </div>
@@ -741,7 +1002,7 @@ systemctl reload iptables
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/">上一页</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/52/">52</a><a class="extend next" rel="next" href="/page/3/">下一页</a>
+    <a class="extend prev" rel="prev" href="/">上一页</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/54/">54</a><a class="extend next" rel="next" href="/page/3/">下一页</a>
   </nav>
   
 </section>

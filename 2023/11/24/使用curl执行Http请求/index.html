@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+       
+      <meta name="keywords" content="RS,GPS,GIS,QGIS,Opticks,QT,OpenCV,OSG" />
+       
+      <meta name="description" content="地理信息系统，遥感科学，卫星导航定位技术综合研究。" />
+      
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>使用curl执行Http请求 |  帕拉丁的游鱼</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/favicon.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    <link rel="alternate" href="/atom.xml" title="帕拉丁的游鱼" type="application/atom+xml">
+</head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-使用curl执行Http请求"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  使用curl执行Http请求
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/11/24/%E4%BD%BF%E7%94%A8curl%E6%89%A7%E8%A1%8CHttp%E8%AF%B7%E6%B1%82/" class="article-date">
+  <time datetime="2023-11-24T12:14:23.000Z" itemprop="datePublished">2023-11-24</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">1.4k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">6 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="curl命令"><a href="#curl命令" class="headerlink" title="curl命令"></a>curl命令</h1><p>curl（CommandLine Uniform Resource Locator或CommandLine URL），curl命令是在命令行方式下工作，利用URL的语法进行数据的传输或者文件的传输。是一个利用URL语法在命令行下工作的文件传输工具。curl设计为：在无用户交互下完成工作。</p>
+<p>curl支持的协议包括：DICT、FILE、FTP、FTPS、GOPHER、HTTP、HTTPS、IMAP、IMAPS、LDAP、LDAPS、POP3、POP3S、RTMP、RTSP、SCP、SFTP、SMTP、SMTPS、TELNET、TFTP。</p>
+<h1 id="curl用法"><a href="#curl用法" class="headerlink" title="curl用法"></a>curl用法</h1><pre><code>curl [options…] &lt;url&gt;
+</code></pre>
+<h1 id="curl参数"><a href="#curl参数" class="headerlink" title="curl参数"></a>curl参数</h1><h2 id="请求"><a href="#请求" class="headerlink" title="请求"></a>请求</h2><h3 id="H-“name-value”"><a href="#H-“name-value”" class="headerlink" title="-H “name: value”"></a>-H “name: value”</h3><pre><code>-H &quot;name: value&quot;
+--header &quot;name: value&quot;
+</code></pre>
+<p>(HTTP)添加一个http header(http请求头)</p>
+<h3 id="H-“name-”"><a href="#H-“name-”" class="headerlink" title="-H “name:”"></a>-H “name:”</h3><pre><code>-H &quot;name:&quot;
+--header &quot;name:&quot;
+</code></pre>
+<p>(HTTP)移除一个http header(http请求头)</p>
+<h3 id="A-“string”"><a href="#A-“string”" class="headerlink" title="-A “string”"></a>-A “string”</h3><pre><code>-A &quot;string&quot;
+--user-agent &quot;string&quot;
+</code></pre>
+<p>(HTTP)设置HTTP请求头User-Agent参数<br>服务器通过User-Agent可以判断客户端使用的浏览器名称和操作系统类型，伪造此参数能导致服务器做出错误判断</p>
+<h3 id="e"><a href="#e" class="headerlink" title="-e"></a>-e</h3><pre><code>-e
+--referer
+</code></pre>
+<p>(HTTP)设置访问时的来源页面，告诉http服务从哪个页面进入到此页面<br>例如：-e “aiezu.com”相当于“-H “Referer: <a target="_blank" rel="noopener" href="http://www.qq.com&quot;”;/">www.qq.com&quot;”；</a></p>
+<h3 id="G"><a href="#G" class="headerlink" title="-G"></a>-G</h3><pre><code>-G
+--get
+</code></pre>
+<p>(HTTP)使用HTTP GET方式</p>
+<h3 id="d"><a href="#d" class="headerlink" title="-d"></a>-d</h3><pre><code>-d @file
+-d &quot;string&quot;
+--data &quot;string&quot;
+--data-ascii &quot;string&quot;
+--data-binary &quot;string&quot;
+--data-urlencode &quot;string&quot;
+</code></pre>
+<p>(HTTP)使用HTTP POST方式发送“key/value对”数据<br>相当于（method=”POST”，enctype=”application/x-www-form-urlencoded”）</p>
+<pre><code>-d，--data：HTTP方式POST数据
+--data-ascii：HTTP方式POST ascii数据
+--data-binary：HTTP方式POST二进制数据
+--data-urlencode：HTTP方式POST数据（进行urlencode）
+</code></pre>
+<p>如果数据以“@”开头，后紧跟一个文件，将post文件内的内容；</p>
+<h3 id="F"><a href="#F" class="headerlink" title="-F"></a>-F</h3><pre><code>-F name=@file
+-F name=&lt;file
+-F name=content
+--form name=content
+--form-string &lt;key=value&gt;
+</code></pre>
+<p>(HTTP)使用HTTP POST方式发送类似“表单字段”的多类型数据<br>相当于同时设置浏览器表单属性（method=”POST”，enctype=”multipart/form-data”），可以使用此参数上传二进制文件。<br>如果字段内容以“@”开头，剩下的部分应该是文件名，curl将会上传此文件，如：</p>
+<pre><code>curl -F &quot;pic=@pic.jpg&quot; http://aiezu.com；
+curl -F &quot;page=@a.html;type=text/html&quot; http://aiezu.com
+curl -F &quot;page=@/tmp/a;filename=a.txt&quot; http://aiezu.com
+</code></pre>
+<p>如果字段内容以“&lt;”开头，剩下的部分应该是文件名，curl将从文件中获取作为此字段的值，如：curl -F “text=&lt;text.txt” <a target="_blank" rel="noopener" href="http://aiezu.com;/">http://aiezu.com；</a></p>
+<p>–form-string类似于“–form”，但是“@”、“&lt;”无特殊含义；</p>
+<h3 id="X"><a href="#X" class="headerlink" title="-X "></a>-X <command></h3><pre><code>-X &lt;command&gt;
+--request &lt;command&gt;
+</code></pre>
+<p>(HTTP)指定与服务器通信使用的请求方法<br>如：GET、PUT、POST、DELETE等</p>
+<h2 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h2><h3 id="b-name-data"><a href="#b-name-data" class="headerlink" title="-b name=data"></a>-b name=data</h3><pre><code>-b name=data
+--cookie name=data
+</code></pre>
+<p>(HTTP)发送cookie数据到HTTP服务器<br>数据格式为：”NAME1=VALUE1; NAME2=VALUE2”</p>
+<p>如果行中没有“=”，将把参数值当作cookie文件名</p>
+<p>这个cookie数据可以是由服务器的http响应头“Set-Cookie:”行发送过来的；</p>
+<h3 id="c-filename"><a href="#c-filename" class="headerlink" title="-c filename"></a>-c filename</h3><pre><code>-c filename
+--cookie-jar file name
+</code></pre>
+<p>(HTTP)完成操作后将服务器返回的cookies保存到指定的文件<br>指定参数值为“-”将定向到标准输出“如控制台”</p>
+<h3 id="j"><a href="#j" class="headerlink" title="-j"></a>-j</h3><pre><code>-j
+--junk-session-cookies
+</code></pre>
+<p>(HTTP)告诉curl放弃所有的”session cookies”.相当于重启浏览器</p>
+<h2 id="响应"><a href="#响应" class="headerlink" title="响应"></a>响应</h2><h3 id="I"><a href="#I" class="headerlink" title="-I"></a>-I</h3><pre><code>-I
+--head
+</code></pre>
+<p>(HTTP)只输出HTTP-header，不获取内容(HTTP/FTP/FILE)</p>
+<ol>
+<li>用于HTTP服务时，获取页面的http头,如：curl -I <a target="_blank" rel="noopener" href="http://aiezu.com/">http://aiezu.com</a></li>
+<li>用于FTP/FILE时，将会获取文件大小、最后修改时间，如：curl -I file://test.txt</li>
+</ol>
+<h3 id="i"><a href="#i" class="headerlink" title="-i"></a>-i</h3><pre><code>-i
+--include
+</code></pre>
+<p>(HTTP)输出HTTP头和返回内容</p>
+<h3 id="D"><a href="#D" class="headerlink" title="-D "></a>-D <file></file></h3><pre><code>-D &lt;file&gt;
+--dump-header &lt;file&gt;
+</code></pre>
+<p>(HTTP)转储http响应头到指定文件</p>
+<h1 id="curl举例"><a href="#curl举例" class="headerlink" title="curl举例"></a>curl举例</h1><h2 id="GET请求"><a href="#GET请求" class="headerlink" title="GET请求"></a>GET请求</h2><pre><code>curl &#39;http://127.0.0.1:8888/test&#39;
+curl -G &#39;http://127.0.0.1:8888/test&#39;
+curl --get &#39;http://127.0.0.1:8888/test&#39;
+curl -X GET &#39;http://127.0.0.1:8888/test&#39;
+curl --request GET &#39;http://127.0.0.1:8888/test&#39;
+</code></pre>
+<p>当有参数时，请进行URL编码，否则会可能会出错</p>
+<pre><code>curl -X GET &#39;http://127.0.0.1:8888/test2?date=2022-02-22 11:22:33&amp;bo=1&#39;
+</code></pre>
+<p>报错：HTTP Status 505 – HTTP Version Not Supported（因为参数带空格）</p>
+<p>正确写法(对空格URL编码)</p>
+<pre><code>curl -X GET &#39;http://127.0.0.1:8888/test2?date=2022-02-22%2011:22:33&amp;bo=1&#39;
+</code></pre>
+<h2 id="POST请求"><a href="#POST请求" class="headerlink" title="POST请求"></a>POST请求</h2><pre><code>curl -X POST &#39;http://127.0.0.1:8888/test2?date=2022-02-22%2011:22:33&amp;bo=11&#39;
+curl -X POST &#39;http://127.0.0.1:8888/test2&#39; -d &#39;date=2022-02-22 11:22:33&amp;bo=11&#39;
+curl -X POST &#39;http://127.0.0.1:8888/test2&#39; --data &#39;date=2022-02-22 11:22:33&amp;bo=11&#39;
+curl -X POST &#39;http://127.0.0.1:8888/test2&#39; --data-urlencode &#39;date=2022-02-22 11:22:33&#39; --data-urlencode &#39;bo=11&#39;
+curl -X POST  -H &#39;Content-Type: application/x-www-form-urlencoded&#39; &#39;http://127.0.0.1:8888/test2&#39; --data-urlencode &#39;date=2022-02-22 11:22:33&#39; --data-urlencode &#39;bo=11&#39;
+</code></pre>
+<p>POST请求默认Content-Type: application/x-www-form-urlencoded</p>
+<p>可以多次使用 -d、–data选项来指定多个传输参数，也可以使用一次 -d、–data选项来指定多个参数。当 Content-Type 为 application/x-www-form-urlencoded 时，-X POST 不可缺省。</p>
+<p>POST JSON请求</p>
+<pre><code>curl -X POST &#39;http://127.0.0.1:8888/test8&#39; -H &#39;Content-Type: application/json&#39; -d &#39;&#123;&quot;code&quot;: 123456789,&quot;name&quot;: 1646278385537&#125;&#39;
+curl &#39;http://127.0.0.1:8888/test8&#39; -H &#39;Content-Type: application/json&#39; -d &#39;&#123;&quot;code&quot;: 123456789,&quot;name&quot;: 1646278385537&#125;&#39;
+</code></pre>
+<p>Content-Type：application/json 时，默认以 POST 方式提交，此时 -X POST 可以缺省。</p>
+<p>————————————————<br>版权声明：本文为CSDN博主「骑个小蜗牛」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/jokerljg/article/details/126534526">https://blog.csdn.net/jokerljg/article/details/126534526</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://paladin1893.gitee.io/2023/11/24/%E4%BD%BF%E7%94%A8curl%E6%89%A7%E8%A1%8CHttp%E8%AF%B7%E6%B1%82/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+    
+      <a href="/2023/11/23/Linux%E5%91%BD%E4%BB%A4%EF%BC%9Ass%E5%91%BD%E4%BB%A4/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">Linux命令：ss命令</div>
+      </a>
+    
+  </nav>
+
+  
+   
+    
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2022-2024
+        <i class="ri-heart-fill heart_icon"></i> paladin1893
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="帕拉丁的游鱼"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/friends">友链</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

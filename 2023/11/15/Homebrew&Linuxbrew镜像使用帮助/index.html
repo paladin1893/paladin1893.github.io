@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+       
+      <meta name="keywords" content="RS,GPS,GIS,QGIS,Opticks,QT,OpenCV,OSG" />
+       
+      <meta name="description" content="地理信息系统，遥感科学，卫星导航定位技术综合研究。" />
+      
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>Homebrew&amp;Linuxbrew镜像使用帮助 |  帕拉丁的游鱼</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/favicon.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    <link rel="alternate" href="/atom.xml" title="帕拉丁的游鱼" type="application/atom+xml">
+</head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-Homebrew&amp;Linuxbrew镜像使用帮助"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  Homebrew&amp;Linuxbrew镜像使用帮助
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/11/15/Homebrew&Linuxbrew%E9%95%9C%E5%83%8F%E4%BD%BF%E7%94%A8%E5%B8%AE%E5%8A%A9/" class="article-date">
+  <time datetime="2023-11-15T13:14:23.000Z" itemprop="datePublished">2023-11-15</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">2.3k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">11 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>Homebrew / Linuxbrew 镜像使用帮助</p>
+<p>注：该镜像是 Homebrew / Linuxbrew 源程序以及 formula / cask 索引的镜像（即 brew update 时所更新内容）。本镜像站同时提供相应的二进制预编译包的镜像，请参考 Homebrew bottles 镜像使用帮助</p>
+<p>本站提供了 <a target="_blank" rel="noopener" href="https://github.com/Homebrew">https://github.com/Homebrew</a> 组织下的以下 repo：brew, homebrew-core, homebrew-cask, homebrew-cask-fonts, homebrew-cask-versions, homebrew-command-not-found, homebrew-services, install。</p>
+<p>注：自brew 3.3.0 (2021 年 10 月 25日) 起，Linuxbrew 核心仓库 linuxbrew-core 已被弃用。Linuxbrew 用户应迁移至 homebrew-core，并请依本镜像使用帮助重新设置镜像。具体请参阅本帮助 Linuxbrew 镜像迁移说明 章节。</p>
+<p>注：自brew 4.0.0 (2023 年 2 月 16日) 起，HOMEBREW_INSTALL_FROM_API 会成为默认行为，无需设置。大部分用户无需再克隆 homebrew-core 仓库，故无需设置 HOMEBREW_CORE_GIT_REMOTE 环境变量；但若需要运行 brew 的开发命令或者 brew 安装在非官方支持的默认 prefix 位置，则仍需设置 HOMEBREW_CORE_GIT_REMOTE 环境变量。如果不想通过 API 安装，可以设置 HOMEBREW_NO_INSTALL_FROM_API=1。</p>
+<p>注：自brew 4.0.22 (2023 年 6 月 12 日) 起，homebrew-cask-drivers 已被弃用，所有 cask 合并至 homebrew-cask 仓库。本帮助内已移除克隆 homebrew-cask-drivers 仓库的命令。已克隆用户可选择运行 brew untap homebrew/cask-drivers 命令移除此仓库。</p>
+<h1 id="日常使用"><a href="#日常使用" class="headerlink" title="日常使用"></a>日常使用</h1><p>可设置如下环境变量使用本站提供的 Homebrew 镜像：</p>
+<pre><code>export HOMEBREW_API_DOMAIN=&quot;https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/api&quot;
+export HOMEBREW_BOTTLE_DOMAIN=&quot;https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles&quot;
+export HOMEBREW_BREW_GIT_REMOTE=&quot;https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git&quot;
+export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git&quot;
+export HOMEBREW_PIP_INDEX_URL=&quot;https://pypi.tuna.tsinghua.edu.cn/simple&quot;
+</code></pre>
+<h1 id="首次安装-Homebrew-Linuxbrew"><a href="#首次安装-Homebrew-Linuxbrew" class="headerlink" title="首次安装 Homebrew / Linuxbrew"></a>首次安装 Homebrew / Linuxbrew</h1><p>首先，需要确保系统中安装了 bash、git 和 curl，对于 macOS 用户需额外要求安装 Command Line Tools (CLT) for Xcode。</p>
+<p>对于 macOS 用户，系统自带 bash、git 和 curl，在命令行输入 xcode-select –install 安装 CLT for Xcode 即可。<br>对于 Linux 用户，系统自带 bash，仅需额外安装 git 和 curl。</p>
+<p>接着，在终端输入以下几行命令设置环境变量：</p>
+<pre><code>export HOMEBREW_INSTALL_FROM_API=1
+export HOMEBREW_API_DOMAIN=&quot;https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/api&quot;
+export HOMEBREW_BOTTLE_DOMAIN=&quot;https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles&quot;
+export HOMEBREW_BREW_GIT_REMOTE=&quot;https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git&quot;
+export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git&quot;
+</code></pre>
+<p>注：自 brew 4.0 起，HOMEBREW_INSTALL_FROM_API 会成为默认行为，无需设置；大部分用户无需再克隆 homebrew/core 仓库，故无需设置 HOMEBREW_CORE_GIT_REMOTE 环境变量。但若需要运行 brew 的开发命令或者 brew 安装在非官方支持的默认 prefix 位置，则仍需设置 HOMEBREW_CORE_GIT_REMOTE 环境变量；如果不想通过 API 安装，可以设置 HOMEBREW_NO_INSTALL_FROM_API=1。</p>
+<p>最后，在终端运行以下命令以安装 Homebrew / Linuxbrew：</p>
+<pre><code># 从本镜像下载安装脚本并安装 Homebrew / Linuxbrew
+git clone --depth=1 https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/install.git brew-install
+/bin/bash brew-install/install.sh
+rm -rf brew-install
+
+# 也可从 GitHub 获取官方安装脚本安装 Homebrew / Linuxbrew
+/bin/bash -c &quot;$(curl -fsSL https://github.com/Homebrew/install/raw/master/install.sh)&quot;
+</code></pre>
+<p>这样在首次安装的时候也可以使用镜像。更多信息请参考 Homebrew 官方安装文档。</p>
+<ul>
+<li>安装成功后需将 brew 程序的相关路径加入到环境变量中：</li>
+</ul>
+<p>以下针对基于 Apple Silicon CPU 设备上的 macOS 系统（命令行运行 uname -m 应输出 arm64）上的 Homebrew：</p>
+<pre><code>test -r ~/.bash_profile &amp;&amp; echo &#39;eval &quot;$(/opt/homebrew/bin/brew shellenv)&quot;&#39; &gt;&gt; ~/.bash_profile
+test -r ~/.zprofile &amp;&amp; echo &#39;eval &quot;$(/opt/homebrew/bin/brew shellenv)&quot;&#39; &gt;&gt; ~/.zprofile
+</code></pre>
+<p>对基于 Intel CPU 设备上的 macOS 系统（命令行运行 uname -m 应输出 x86_64）的用户可跳过本步。</p>
+<p>以下针对 Linux 系统上的 Linuxbrew：</p>
+<pre><code>test -d ~/.linuxbrew &amp;&amp; eval &quot;$(~/.linuxbrew/bin/brew shellenv)&quot;
+test -d /home/linuxbrew/.linuxbrew &amp;&amp; eval &quot;$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)&quot;
+test -r ~/.bash_profile &amp;&amp; echo &quot;eval \&quot;\$($(brew --prefix)/bin/brew shellenv)\&quot;&quot; &gt;&gt; ~/.bash_profile
+test -r ~/.profile &amp;&amp; echo &quot;eval \&quot;\$($(brew --prefix)/bin/brew shellenv)\&quot;&quot; &gt;&gt; ~/.profile
+test -r ~/.zprofile &amp;&amp; echo &quot;eval \&quot;\$($(brew --prefix)/bin/brew shellenv)\&quot;&quot; &gt;&gt; ~/.zprofile
+</code></pre>
+<p>参考了 <a target="_blank" rel="noopener" href="https://docs.brew.sh/Homebrew-on-Linux%E3%80%82">https://docs.brew.sh/Homebrew-on-Linux。</a></p>
+<h1 id="替换现有仓库上游"><a href="#替换现有仓库上游" class="headerlink" title="替换现有仓库上游"></a>替换现有仓库上游</h1><p>替换 brew 程序本身的源，Homebrew / Linuxbrew 相同：</p>
+<pre><code>export HOMEBREW_API_DOMAIN=&quot;https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/api&quot;
+export HOMEBREW_BREW_GIT_REMOTE=&quot;https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git&quot;
+brew update
+</code></pre>
+<p>以下针对 macOS 系统上的 Homebrew：</p>
+<pre><code># 手动设置
+export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git&quot;
+
+# 注：自 brew 4.0 起，大部分 Homebrew 用户无需设置 homebrew/core 和 homebrew/cask 镜像，只需设置 HOMEBREW_API_DOMAIN 即可。
+# 如果需要使用 Homebrew 的开发命令 (如 `brew cat &lt;formula&gt;`)，则仍然需要设置 homebrew/core 和 homebrew/cask 镜像。
+# 请按需执行如下两行命令：
+brew tap --custom-remote --force-auto-update homebrew/core https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git
+brew tap --custom-remote --force-auto-update homebrew/cask https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-cask.git
+
+# 除 homebrew/core 和 homebrew/cask 仓库外的 tap 仓库仍然需要设置镜像
+brew tap --custom-remote --force-auto-update homebrew/cask-fonts https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-cask-fonts.git
+brew tap --custom-remote --force-auto-update homebrew/cask-versions https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-cask-versions.git
+brew tap --custom-remote --force-auto-update homebrew/command-not-found https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-command-not-found.git
+brew tap --custom-remote --force-auto-update homebrew/services https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-services.git
+brew update
+
+# 或使用下面的几行命令自动设置
+export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git&quot;
+for tap in core cask&#123;,-fonts,-versions&#125; command-not-found services; do
+    brew tap --custom-remote --force-auto-update &quot;homebrew/$&#123;tap&#125;&quot; &quot;https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-$&#123;tap&#125;.git&quot;
+done
+brew update
+</code></pre>
+<p>以下针对 Linux 系统上的 Linuxbrew：</p>
+<pre><code>export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git&quot;
+
+# 注：自 brew 4.0 起，使用默认 prefix (即 &quot;/home/linuxbrew/.linuxbrew&quot;) 的大部分 Homebrew 用户无需设置 homebrew/core 镜像，只需设置 HOMEBREW_API_DOMAIN 即可。
+# 如果不是默认 prefix 或者需要使用 Homebrew 的开发命令 (如 `brew cat &lt;formula&gt;`)，则仍然需要设置 homebrew/core 镜像。
+# 请按需执行如下命令：
+brew tap --custom-remote --force-auto-update homebrew/core https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git
+
+# 除 homebrew/core 仓库外的 tap 仓库仍然需要设置镜像
+brew tap --custom-remote --force-auto-update homebrew/command-not-found https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-command-not-found.git
+brew tap --custom-remote --force-auto-update homebrew/services https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-services.git
+brew update
+</code></pre>
+<p>注：如果用户设置了环境变量 HOMEBREW_BREW_GIT_REMOTE 和 HOMEBREW_CORE_GIT_REMOTE，则每次执行 brew update 时，brew 程序本身和 Core Tap (homebrew-core) 的远程将被自动设置。推荐用户将这两个环境变量设置加入 shell 的 profile 设置中。</p>
+<pre><code>test -r ~/.bash_profile &amp;&amp; echo &#39;export HOMEBREW_API_DOMAIN=&quot;https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/api&quot;&#39; &gt;&gt; ~/.bash_profile  # bash
+test -r ~/.bash_profile &amp;&amp; echo &#39;export HOMEBREW_BREW_GIT_REMOTE=&quot;https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git&quot;&#39; &gt;&gt; ~/.bash_profile  # bash
+test -r ~/.bash_profile &amp;&amp; echo &#39;export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git&quot;&#39; &gt;&gt; ~/.bash_profile
+test -r ~/.profile &amp;&amp; echo &#39;export HOMEBREW_API_DOMAIN=&quot;https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/api&quot;&#39; &gt;&gt; ~/.profile
+test -r ~/.profile &amp;&amp; echo &#39;export HOMEBREW_BREW_GIT_REMOTE=&quot;https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git&quot;&#39; &gt;&gt; ~/.profile
+test -r ~/.profile &amp;&amp; echo &#39;export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git&quot;&#39; &gt;&gt; ~/.profile
+
+test -r ~/.zprofile &amp;&amp; echo &#39;export HOMEBREW_API_DOMAIN=&quot;https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/api&quot;&#39; &gt;&gt; ~/.zprofile  # zsh
+test -r ~/.zprofile &amp;&amp; echo &#39;export HOMEBREW_BREW_GIT_REMOTE=&quot;https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git&quot;&#39; &gt;&gt; ~/.zprofile  # zsh
+test -r ~/.zprofile &amp;&amp; echo &#39;export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git&quot;&#39; &gt;&gt; ~/.zprofile
+</code></pre>
+<h1 id="Linuxbrew-镜像迁移说明"><a href="#Linuxbrew-镜像迁移说明" class="headerlink" title="Linuxbrew 镜像迁移说明"></a>Linuxbrew 镜像迁移说明</h1><p>Linuxbrew 核心仓库（linuxbrew-core）自 2021 年 10 月 25 日（brew 版本 3.3.0 起）被弃用，Linuxbrew 用户应迁移至 homebrew-core。Linuxbrew 用户请依新版镜像说明重新设置镜像。注意迁移前请先运行 brew update 将 brew 更新至 3.3.0 或以上版本。迁移过程中若出现任何问题，可使用如下命令重新安装 homebrew-core：</p>
+<pre><code>export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git&quot;
+rm -rf &quot;$(brew --repo homebrew/core)&quot;
+brew tap --custom-remote --force-auto-update homebrew/core https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git
+</code></pre>
+<h1 id="复原仓库上游"><a href="#复原仓库上游" class="headerlink" title="复原仓库上游"></a>复原仓库上游</h1><p>(感谢 Snowonion Lee 提供说明)</p>
+<ul>
+<li><p>以下针对 macOS 系统上的 Homebrew</p>
+<h1 id="brew-程序本身，Homebrew-Linuxbrew-相同"><a href="#brew-程序本身，Homebrew-Linuxbrew-相同" class="headerlink" title="brew 程序本身，Homebrew / Linuxbrew 相同"></a>brew 程序本身，Homebrew / Linuxbrew 相同</h1><p>  unset HOMEBREW_BREW_GIT_REMOTE<br>  git -C “$(brew –repo)” remote set-url origin <a target="_blank" rel="noopener" href="https://github.com/Homebrew/brew">https://github.com/Homebrew/brew</a></p>
+<h1 id="以下针对-macOS-系统上的-Homebrew"><a href="#以下针对-macOS-系统上的-Homebrew" class="headerlink" title="以下针对 macOS 系统上的 Homebrew"></a>以下针对 macOS 系统上的 Homebrew</h1><p>  unset HOMEBREW_API_DOMAIN<br>  unset HOMEBREW_CORE_GIT_REMOTE<br>  BREW_TAPS=”$(BREW_TAPS=”$(brew tap 2&gt;/dev/null)”; echo -n “${BREW_TAPS//$’\n’/:}”)”<br>  for tap in core cask{,-fonts,-versions} command-not-found services; do</p>
+<pre><code>  if [[ &quot;:$&#123;BREW_TAPS&#125;:&quot; == *&quot;:homebrew/$&#123;tap&#125;:&quot;* ]]; then  # 只复原已安装的 Tap
+      brew tap --custom-remote &quot;homebrew/$&#123;tap&#125;&quot; &quot;https://github.com/Homebrew/homebrew-$&#123;tap&#125;&quot;
+  fi
+</code></pre>
+<p>  done</p>
+<h1 id="重新拉取远程"><a href="#重新拉取远程" class="headerlink" title="重新拉取远程"></a>重新拉取远程</h1><p>  brew update</p>
+</li>
+<li><p>以下针对 Linux 系统上的 Linuxbrew</p>
+<h1 id="brew-程序本身，Homebrew-Linuxbrew-相同-1"><a href="#brew-程序本身，Homebrew-Linuxbrew-相同-1" class="headerlink" title="brew 程序本身，Homebrew / Linuxbrew 相同"></a>brew 程序本身，Homebrew / Linuxbrew 相同</h1><p>  unset HOMEBREW_BREW_GIT_REMOTE<br>  git -C “$(brew –repo)” remote set-url origin <a target="_blank" rel="noopener" href="https://github.com/Homebrew/brew">https://github.com/Homebrew/brew</a></p>
+<h1 id="以下针对-Linux-系统上的-Linuxbrew"><a href="#以下针对-Linux-系统上的-Linuxbrew" class="headerlink" title="以下针对 Linux 系统上的 Linuxbrew"></a>以下针对 Linux 系统上的 Linuxbrew</h1><p>  unset HOMEBREW_API_DOMAIN<br>  unset HOMEBREW_CORE_GIT_REMOTE<br>  brew tap –custom-remote homebrew/core <a target="_blank" rel="noopener" href="https://github.com/Homebrew/homebrew-core">https://github.com/Homebrew/homebrew-core</a><br>  brew tap –custom-remote homebrew/command-not-found <a target="_blank" rel="noopener" href="https://github.com/Homebrew/homebrew-command-not-found">https://github.com/Homebrew/homebrew-command-not-found</a><br>  brew tap –custom-remote homebrew/services <a target="_blank" rel="noopener" href="https://github.com/Homebrew/homebrew-services">https://github.com/Homebrew/homebrew-services</a></p>
+<h1 id="重新拉取远程-1"><a href="#重新拉取远程-1" class="headerlink" title="重新拉取远程"></a>重新拉取远程</h1><p>  brew update</p>
+</li>
+</ul>
+<p>注：重置回默认远程后，用户应该删除 shell 的 profile 设置中的环境变量 HOMEBREW_BREW_GIT_REMOTE 和 HOMEBREW_CORE_GIT_REMOTE 以免运行 brew update 时远程再次被更换。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://paladin1893.gitee.io/2023/11/15/Homebrew&Linuxbrew%E9%95%9C%E5%83%8F%E4%BD%BF%E7%94%A8%E5%B8%AE%E5%8A%A9/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Homebrew/" rel="tag">Homebrew</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2023/11/16/MQTT%E7%BD%91%E5%85%B3%E8%BF%9E%E6%8E%A5%E5%90%84%E7%B1%BB%E5%B7%A5%E4%B8%9A%E7%89%A9%E8%81%94%E8%AE%BE%E5%A4%87%EF%BC%8C%E5%AE%9E%E7%8E%B0%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E4%B8%8E%E6%8E%A7%E5%88%B6/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            Homebrew&amp;Linuxbrew镜像使用帮助
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2023/11/14/conda%20%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">conda 基本操作</div>
+      </a>
+    
+  </nav>
+
+  
+   
+    
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2022-2024
+        <i class="ri-heart-fill heart_icon"></i> paladin1893
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="帕拉丁的游鱼"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/friends">友链</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

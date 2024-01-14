@@ -154,7 +154,7 @@
     
     
     <article
-  id="post-sanfran-urbansim地图可视化报错解决办法"
+  id="post-Enabling-PostGIS"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -165,8 +165,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/02/11/sanfran-urbansim%E5%9C%B0%E5%9B%BE%E5%8F%AF%E8%A7%86%E5%8C%96%E6%8A%A5%E9%94%99%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/"
-    >sanfran_urbansim地图可视化报错解决办法</a> 
+  <a class="article-title" href="/2023/02/16/Enabling-PostGIS/"
+    >Enabling PostGIS</a> 
 </h2>
  
 
@@ -174,67 +174,8 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2023/02/11/sanfran-urbansim%E5%9C%B0%E5%9B%BE%E5%8F%AF%E8%A7%86%E5%8C%96%E6%8A%A5%E9%94%99%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" class="article-date">
-  <time datetime="2023-02-11T13:38:32.000Z" itemprop="datePublished">2023-02-11</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>装anacond3，urabansim，下载sanfran_urbansim</p>
-<p>命令行ipython notebook启动后，执行Exploration.ipynb调取地图出不了图。</p>
-<p>分析后发现是dframe_explorer.html的问题，</p>
-<p>其中调取angular.min.js改为如下即可。</p>
-<script src="https://cdn.staticfile.org/angular.js/1.0.7/angular.min.js"></script>
-
-<p>过滤条件筛选也会报错，下一步处理。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/urbansim/" rel="tag">urbansim</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Windows下安装Redis"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/02/11/Windows%E4%B8%8B%E5%AE%89%E8%A3%85Redis/"
-    >Windows下安装Redis</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/02/11/Windows%E4%B8%8B%E5%AE%89%E8%A3%85Redis/" class="article-date">
-  <time datetime="2023-02-11T13:26:47.000Z" itemprop="datePublished">2023-02-11</time>
+      <a href="/2023/02/16/Enabling-PostGIS/" class="article-date">
+  <time datetime="2023-02-16T04:13:35.000Z" itemprop="datePublished">2023-02-16</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
@@ -244,11 +185,41 @@
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>微软出品：最新版本3.2.100</p>
-<p><a target="_blank" rel="noopener" href="https://github.com/MSOpenTech/redis">https://github.com/MSOpenTech/redis</a></p>
-<p>其他衍生版本，基于微软出品：最新版本5.0.14</p>
-<p><a target="_blank" rel="noopener" href="https://github.com/tporadowski/redis/releases">https://github.com/tporadowski/redis/releases</a></p>
-<p><a target="_blank" rel="noopener" href="https://github.com/microsoftarchive/redis/releases">https://github.com/microsoftarchive/redis/releases</a></p>
+  <p>PostGIS is an optional extension that must be enabled in EVERY database you want to use it in.</p>
+<pre><code>CREATE EXTENSION postgis;
+-- in PostGIS 3, postgis_raster is a separate extension from postgis
+-- so do this in addition if you are experimenting PostGIS 3+
+CREATE EXTENSION postgis_raster;
+ 
+CREATE EXTENSION postgis_sfcgal;
+CREATE EXTENSION address_standardizer;
+CREATE EXTENSION fuzzystrmatch;
+CREATE EXTENSION postgis_topology;
+CREATE EXTENSION postgis_tiger_geocoder;
+
+-- If you want to use pgrouting, download the respective one for your PostgreSQL
+CREATE EXTENSION pgrouting;
+</code></pre>
+<hr>
+<pre><code>-- Enable PostGIS (as of 3.0 contains just geometry/geography)
+CREATE EXTENSION postgis;
+-- enable raster support (for 3+)
+CREATE EXTENSION postgis_raster;
+-- Enable Topology
+CREATE EXTENSION postgis_topology;
+-- Enable PostGIS Advanced 3D
+-- and other geoprocessing algorithms
+-- sfcgal not available with all distributions
+CREATE EXTENSION postgis_sfcgal;
+-- fuzzy matching needed for Tiger
+CREATE EXTENSION fuzzystrmatch;
+-- rule based standardizer
+CREATE EXTENSION address_standardizer;
+-- example rule data set
+CREATE EXTENSION address_standardizer_data_us;
+-- Enable US Tiger Geocoder
+CREATE EXTENSION postgis_tiger_geocoder;
+</code></pre>
  
       <!-- reward -->
       
@@ -259,7 +230,7 @@
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostGIS/" rel="tag">PostGIS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li></ul>
 
     </footer>
   </div>
@@ -270,7 +241,7 @@
 
     
     <article
-  id="post-三维点云格式"
+  id="post-Ubuntu20-04安装Idea详细教程"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -281,8 +252,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/02/10/%E4%B8%89%E7%BB%B4%E7%82%B9%E4%BA%91%E6%A0%BC%E5%BC%8F/"
-    >三维点云格式</a> 
+  <a class="article-title" href="/2023/02/15/Ubuntu20-04%E5%AE%89%E8%A3%85Idea%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/"
+    >Ubuntu20.04安装Idea详细教程</a> 
 </h2>
  
 
@@ -290,221 +261,215 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2023/02/10/%E4%B8%89%E7%BB%B4%E7%82%B9%E4%BA%91%E6%A0%BC%E5%BC%8F/" class="article-date">
-  <time datetime="2023-02-10T13:34:54.000Z" itemprop="datePublished">2023-02-10</time>
+      <a href="/2023/02/15/Ubuntu20-04%E5%AE%89%E8%A3%85Idea%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/" class="article-date">
+  <time datetime="2023-02-15T04:09:34.000Z" itemprop="datePublished">2023-02-15</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
   </div>
    
     </div>
       
     <div class="article-entry" itemprop="articleBody">
        
-  <ul>
-<li><p>3ds (.3ds)<br>3ds是3ds max通用储存文件格式。使用的范围更宽，可被更多的软件识别使用.</p>
-</li>
-<li><p>amf (.amf)<br>AMF是以目前3D打印机使用的“STL”格式为基础、弥补了其弱点的数据格式，新格式能够记录颜色信息、材料信息及物体内部结构等。AMF标准基于XML（可扩展标记语言）。</p>
-</li>
-<li><p>3mf (.3mf)<br>由微软牵头的3MF联盟，于2015年推出全新的3D打印格式——3MF（3D Manufacturing Format）,相较于STL格式，3MF档案格式能够更完整地描述3D模型，除了几何信息外，还可以保持内部信息、颜色、材料、纹理等其它特征。3MF同样也是一种基于XML的数据格式。</p>
-</li>
-<li><p>assimp &amp; assimp2json (.assimp |.json)<br>Assimp是一个强大的模型加载和转换库，支持多种格式的加载和转换，可通过c++进行调用开发。assimp2json顾名思义就是assimp格式的json格式导出。</p>
-</li>
-<li><p>awd (.awd)<br>AWD是一种用于三维场景的二进制格式，并且通常与AWD引擎一起使用。</p>
-</li>
-<li><p>Babylon (.babylon)<br>微软的基于webgl的开发框架. Babylon.js</p>
-</li>
-<li><p>BVH (.bvh)<br>BVH是BioVision等设备对人体运动进行捕获后产生文件格式的文件扩展名,BVH文件包含角色的骨骼和肢体关节旋转数据。BVH 是一种通用的人体特征动画文件格式,，广泛地被当今流行的各种动画制作软件支持。通常可从记录人类行为运动的运动捕获硬件获得。</p>
-</li>
-<li><p>Collada(.dae |.xml)<br>COLLADA™ 是面向交互式 3D 应用程序的基于 XML 的数字资产交换方案，使 3D 创作应用程序可以自由地交换数字资产而不损失信息 - 使多种DCC和3D处理软件包可以组合成强大的工具链管道。DAE 是纯文本的模型格式，其本质就是一个单纯的xml文件。相比fbx，对dae格式模型的载入我们拥有非常高的自由控制，这也是最复杂的地方。基本上，dae文件内一开始就把数据分成了好几大块。对我们来说最为有用的是VisualScenes(包含场景骨骼节点树)、Nodes(与VisualScenes类似，两者或互为补充)、Geometries（网格数据）、Materials/Effects/Images（材质相关信息）、Controllers（骨骼信息数据）、Animations（动画数据）、AnimationClips（全局的动画信息），其中静态模型一般也就包括VisualScenes和Geometries。(有C++API)</p>
-</li>
-<li><p>OpenCTM (.ctm)<br>OpenCTM格式的3D模型文件,OpenCTM 格式文件是二进制文件，相比于 stl 格式的文件，它将不承载除模型三角面片信息以外的信息,一个 OpenCTM 文件仅包含一个 Mesh,一个文件主要分成Mesh 的顶点信息和Mesh 的面片信息。(有C++API)</p>
-</li>
-<li><p>draco(.drc)<br>Google公司推出的3d模型压缩利器，压缩比甩gzip几条街，100M的.obj压缩后大约5M。</p>
-</li>
-<li><p>FBX(.fbx)<br>FBX 是 FilmBoX 这套软件所使用的格式，后改称 Motionbuilder。因为Motionbuilder扮演的是动作制作的平台，所以在前端的modeling和后端的rendering也都有赖于其它软件的配合,FBX最大的用途是用在诸如在 Max、Maya、Softimage 等软件间进行模型、材质、动作和摄影机信息的互导，这样就可以发挥 Max 和 Maya 等软件的优势。可以说，FBX 方案是非常好的互导方案。</p>
-</li>
-<li><p>GCode(.gcode)<br>GCODE是用于3d打印的文件，存储有3d打印机的运动命令和坐标等。</p>
-</li>
-<li><p>glTF (.gltf)<br>glTF是一种可以减少3D格式中与渲染无关的冗余数据并且在更加适合OpenGL簇加载的一种3D文件格式。glTF 就是三维文件的 JPEG ，三维格式的 MP3。在没有glTF的时候，大家都要花很长的的时间来处理模型的载入。此外，glTF是对近二十年来各种3D格式的总结，使用最优的数据结构，来保证最大的兼容性以及可伸缩性。这就好比是本世纪初xml的提出。glTF使用json格式进行描述，也可以编译成二进制的内容：bglTF。glTF可以包括场景、摄像机、动画等，也可以包括网格、材质、纹理，甚至包括了渲染技术（technique）、着色器以及着色器程序。同时由于json格式的特点，它支持预留一般以及特定供应商的扩展。</p>
-</li>
-<li><p>Clara(.json)<br>Clara.io有可建立于桌面的3D创建工具，它是一个整合性的3D内容创作软件，不仅仅是单一用途的应用程序，还是算图或layout工具，并由许多外挂模块和语法所组成。大多3D artists不需太多适应时间就可熟悉Clara.io，并获得更多的便利功能。由于Clara.io是设计在网络浏览器上运行，所以用户可随时随地接触到它，无需设定、可跨平台使用，自动存储所有的制作步骤，让你可以实时与他人协同作业，以及拥有无限制的云端运算需求。</p>
-</li>
-<li><p>KMZ(.kmz)<br>kmz是谷歌kml语言文件的zip压缩格式，常用于的谷歌地图文件，由kml语言编写，KML是标记语言（Keyhole Markup Language）的缩写，最初由Keyhole公司开发，是一种基于XML 语法与格式的、用于描述和保存地理信息（如点、线、图像、多边形和模型等）的编码规范，可以被 Google Earth 和 Google Maps 识别并显示。</p>
-</li>
-<li><p>LDraw(.mpd)<br>lego的3D模型库</p>
-</li>
-<li><p>LightWave(.lwo)<br>lwoss是LightWave 3D模型美国NewTek公司开发的LightWave 3D是一款高性价比的三维动画制作软件，它的功能非常强大，是业界为数不多的几款重量级三维动画软件之一。</p>
-</li>
-<li><p>MD2 (.md2)<br>MD2文件是QuakeП专用的文件格式，QuakeП中复杂的三维场景就是通过对它的读取产生的。</p>
-</li>
-<li><p>MMD(.pmd + .vmd)<br>MikuMikuDance是日本人樋口优所开发，将VOCALOID2的初音未来等角色制作3D模组的免费软件</p>
-</li>
-<li><p>nrrd (.nrrd)<br>NRRD格式包含了一个单独的头文件和若干个可以被结合在一起或者分开的图像文件。NRRD头文件为科学可视化和图像处理准确地表征了N维光栅信息。常用于医疗设备的多层切片数据。</p>
-</li>
-<li><p>obj (.obj)<br>OBJ文件是Alias|Wavefront公司为它的一套基于工作站的3D建模和动画软件”Advanced Visualizer”开发的一种标准3D模型文件格式，很适合用于3D软件模型之间的互导。目前几乎所有知名的3D软件都支持OBJ文件的读写。OBJ文件是一种文本文件，可以直接用写字板打开进行查看和编辑修改。</p>
-</li>
-<li><p>obj2 (.obj)<br>同上</p>
-</li>
-<li><p>pcd (.pcd)<br>Point Cloud Data即3d点云图像。<br>.pcd格式三维点云都可以用CloudViewer来显示，具体介绍看这里 <a target="_blank" rel="noopener" href="http://nightn.com/cloudviewer/">http://nightn.com/cloudviewer/</a></p>
-</li>
-<li><p>PDB(.pdb)<br>PDB是protein data base 的简写，在生物学软件中，一般把蛋白质的三维结构信息用pdb文件保存。本质是一种ASICLL码文件，可以用普通的文本编辑器编辑，也可以用专业软件编辑。</p>
-</li>
-<li><p>PlayCanvas(.json)<br>PlayCanvas是一款开源游戏引擎，完全基于浏览器；</p>
-</li>
-<li><p>ply (.ply)<br>PLY 是一种电脑档案格式，全名为多边形档案（Polygon File Format）或 斯坦福三角形档案（Stanford Triangle Format）。 该格式主要用以储存立体扫描结果的三维数值，透过多边形片面的集合描述三维物体，与其他格式相较之下这是较为简单的方法。它可以储存的资讯包含颜色、透明度、表面法向量、材质座标与资料可信度，并能对多边形的正反两面设定不同的属性。作为OBJ 格式的升级版！PLY格式受 Wavefront .obj 格式的启发，但改进了Obj格式所缺少的对任意属性及群组的扩充性。因此PLY格式发明了”property”及”element”这两个关键词，来概括“顶点、面、相关资讯、群组”的概念。<br>.ply格式的三维点云，比较常见，显示使用MeshLab，直接搜索即可下载<br>三维点云都可以用CloudViewer来显示，具体介绍看这里 <a target="_blank" rel="noopener" href="http://nightn.com/cloudviewer/">http://nightn.com/cloudviewer/</a></p>
-</li>
-<li><p>prwm(.prwm)<br>Packed Raw WebGL Model 是一种二进制的3d模型文件， 它是为web中的几何外形设计的，主要特点是解析和加载速度特别快，原理是对元素进行索引和数组话操作。 prwm</p>
-</li>
-<li><p>sea3d(.sea3d)<br>sea3d为游戏而生的一种开源的格式与工具，可导出动画, 纹理, 材质, 骨骼 ( Skin ), 顶点动画, 变形, 相机, 光源, 环境和辅助.</p>
-</li>
-<li><p>stl(.stl)<br>STL是用三角网格来表现3D CAD模型。文件格式简单，只能描述三维物体的几何信息，不支持颜色材质等信息，是计算机图形学处理CG、数字几何处理如CAD、 数字几何工业应用, 如三维打印机支持的最常见文件格式。</p>
-</li>
-<li><p>vrm(.vrm)<br>vrm是日本推行的3D虚拟形象的新格式标准，打造3D人形角色行业标准</p>
-</li>
-<li><p>vrml(.vrml)<br>VRML（Virtual Reality Modeling Language）即虚拟现实建模语言。是一种用于建立真实世界的场景模型或人们虚构的三维世界的场景建模语言，也具有平台无关性。它可以做很多事并且支持很多效果.但是事实上它并未得到广泛应用.</p>
-</li>
-<li><p>vtk<br>VTK，全称是Visualization Toolkit，即可视化工具包。是一个开源、跨平台、可自由获取、支持并行处理的图形应用函数库。</p>
-</li>
-<li><p>x<br>.x文件是微软为DX开发提供的一种3D文件.包括顶点\纹理、动作。</p>
-</li>
-<li><p>xyz<br>.xyz格式的三维点云可以用OpenCV生成，显示使用VTK库，需要自己编译，然后用OpenCV viz模块显示，介绍 <a target="_blank" rel="noopener" href="https://blog.csdn.net/stq054188/article/details/104799702">https://blog.csdn.net/stq054188/article/details/104799702</a></p>
-</li>
+  <h1 id="官网下载压缩包"><a href="#官网下载压缩包" class="headerlink" title="官网下载压缩包"></a>官网下载压缩包</h1><p><a target="_blank" rel="noopener" href="https://www.jetbrains.com/idea/">https://www.jetbrains.com/idea/</a> </p>
+<h1 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h1><pre><code>sudo tar -zxvf ideaIU-2020.2.3.tar.gz -C /opt 
+cd idea-IU-202.7660.26/bin/
+./idea.sh 
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Idea/" rel="tag">Idea</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-Geowebcache瓦片的自更新"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/02/15/Geowebcache%E7%93%A6%E7%89%87%E7%9A%84%E8%87%AA%E6%9B%B4%E6%96%B0/"
+    >Geowebcache瓦片的自更新</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/02/15/Geowebcache%E7%93%A6%E7%89%87%E7%9A%84%E8%87%AA%E6%9B%B4%E6%96%B0/" class="article-date">
+  <time datetime="2023-02-15T04:06:39.000Z" itemprop="datePublished">2023-02-15</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u013323965/article/details/71480810">https://blog.csdn.net/u013323965/article/details/71480810</a>  转载</p>
+<p>问题来源<br>如果有一种图层，它的支撑数据是不断变化的，但使用wms加载太慢（gwc/service/wms也一样），影响体验，那么有没有办法，加载事先切好的瓦片，再自更新更换的部分？<br>解决方式<br>geoserver官网上提供的两种方式(guava是自带的，而另一种则需要使用社区封装好的依赖包)，但两种都试过了，貌似都没有什么效果，也可能是我的方法不对，望大神指点</p>
+<p>利用gwc自带的配置进行瓦片时效的调整，用这种方式，本人确实在时长之外感受到了瓦片的变化。</p>
+<p>GWC瓦片配置步骤<br>以防有人不记得所配置的路径，特地介绍了如何找到配置路径，打开geoserver，进入主页，修改地址子路径为gwc(如localhost:8080/geoserver/gwc)。</p>
+<p>在xml中添加需要的图层，结构可自行百度geowebcache.xml，有详细的结构，这里不重复，在<layers>下添加所需的wmsLayer.</layers></p>
+<p>然后在第一步的网址里加子路径demo，选中Reload Configuration，进行配置的重新读取<br>继续下来，要注意的是，配置文件的图层很可能被原来配置的同名图层给顶替掉了，导致结果没有发生变化，这里要删除掉原有图层才能看到GWC图层，如图，图标可以区分，很明显框起来的就是通过配置生成的图层，这个图层可以自更新瓦片。</p>
+<p>注意<br>最大的注意事项就是注意有没有顶替现象</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Geowebcache/" rel="tag">Geowebcache</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%93%A6%E7%89%87%E8%87%AA%E6%9B%B4%E6%96%B0/" rel="tag">瓦片自更新</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-windows系统如何查看端口被占用、杀进程"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/02/14/windows%E7%B3%BB%E7%BB%9F%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E7%AB%AF%E5%8F%A3%E8%A2%AB%E5%8D%A0%E7%94%A8%E3%80%81%E6%9D%80%E8%BF%9B%E7%A8%8B/"
+    >windows系统如何查看端口被占用、杀进程</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/02/14/windows%E7%B3%BB%E7%BB%9F%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E7%AB%AF%E5%8F%A3%E8%A2%AB%E5%8D%A0%E7%94%A8%E3%80%81%E6%9D%80%E8%BF%9B%E7%A8%8B/" class="article-date">
+  <time datetime="2023-02-14T04:04:10.000Z" itemprop="datePublished">2023-02-14</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>1、首先是启动windows的命令窗口，按键盘上的windows+R，然后在输入框中输入cmd，既可以启动命令窗口</p>
+<p>2、进入windows命令窗口之后，输入命令，输入netstat -ano然后回车，就可以看到系统当前所有的端口使用情况。</p>
+<p>3、通过命令查找某一特定端口，在命令窗口中输入命令中输入netstat -ano |findstr “端口号”，然后回车就可以看到这个端口被哪个应用占用。</p>
+<p>4、查看到对应的进程id之后，就可以通过id查找对应的进程名称，使用命令tasklist |findstr “进程id号”</p>
+<p>5、通过命令杀掉进程，或者是直接根据进程的名称杀掉所有的进程，，在命令框中输入如下命令taskkill /f /t /im “进程id或者进程名称”</p>
+<p>6、杀掉对应的进程id或者是进程名称之后，然后再通过查找命令，查找对应的端口，现在就可以看到这个端口没有被其他应用所占用。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/windows/" rel="tag">windows</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-tomcat修改默认访问项目名称和项目发布路径"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/02/14/tomcat%E4%BF%AE%E6%94%B9%E9%BB%98%E8%AE%A4%E8%AE%BF%E9%97%AE%E9%A1%B9%E7%9B%AE%E5%90%8D%E7%A7%B0%E5%92%8C%E9%A1%B9%E7%9B%AE%E5%8F%91%E5%B8%83%E8%B7%AF%E5%BE%84/"
+    >tomcat修改默认访问项目名称和项目发布路径</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/02/14/tomcat%E4%BF%AE%E6%94%B9%E9%BB%98%E8%AE%A4%E8%AE%BF%E9%97%AE%E9%A1%B9%E7%9B%AE%E5%90%8D%E7%A7%B0%E5%92%8C%E9%A1%B9%E7%9B%AE%E5%8F%91%E5%B8%83%E8%B7%AF%E5%BE%84/" class="article-date">
+  <time datetime="2023-02-14T03:59:29.000Z" itemprop="datePublished">2023-02-14</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>Tomcat默认的而发布路径为 tomcat/webapps/目录，如果想修改发布路径，找到tomcat/conf/server.xml文件，有以下两种方式：</p>
+<h1 id="方式一：修改默认appBase"><a href="#方式一：修改默认appBase" class="headerlink" title="方式一：修改默认appBase"></a>方式一：修改默认appBase</h1><p>默认：</p>
+<pre><code>&lt;Host name=&quot;localhost&quot; appBase=&quot;webapps&quot; unpackWARs=&quot;true&quot; autoDeploy=&quot;true&quot;&gt;
+</code></pre>
+<p>webapps存放web应用，这个目录下有一些默认的项目，在tomcat启动的时候会跟着一起加载。<br>如果不想删除这些项目，可以把tomcat发布的路径修改到其他地方。<br>修改里面这一行的appBase为其他路径即可。</p>
+<pre><code>&lt;Host name=&quot;localhost&quot; appBase=&quot;/root/webfile/webapps&quot; unpackWARs=&quot;true&quot; autoDeploy=&quot;true&quot;&gt;
+</code></pre>
+<h1 id="方式二：保持appBase不变，增加其他发布路径"><a href="#方式二：保持appBase不变，增加其他发布路径" class="headerlink" title="方式二：保持appBase不变，增加其他发布路径"></a>方式二：保持appBase不变，增加其他发布路径</h1><p>在<Host>节点下增加<Context>节点,并设置path、docBase、reloadable属性，示例如下。</Context></Host></p>
+<pre><code>&lt;Context path=&quot;&quot; docBase=&quot;/root/webfile/web&quot; reloadable=&quot;true&quot;/&gt;
+&lt;Context docBase=&quot;/root/pismarket-api&quot; path=&quot;/api&quot; debug=&quot;0&quot; reloadable=&quot;true&quot; privileged=&quot;true&quot; /&gt;
+</code></pre>
+<p>各属性说明如下：</p>
+<ul>
+<li>docBase</li>
 </ul>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%9C%B0%E7%90%86%E6%95%B0%E6%8D%AE/" rel="tag">地理数据</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-常用的几种在线地图"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/02/10/%E5%B8%B8%E7%94%A8%E7%9A%84%E5%87%A0%E7%A7%8D%E5%9C%A8%E7%BA%BF%E5%9C%B0%E5%9B%BE/"
-    >常用的几种在线地图</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/02/10/%E5%B8%B8%E7%94%A8%E7%9A%84%E5%87%A0%E7%A7%8D%E5%9C%A8%E7%BA%BF%E5%9C%B0%E5%9B%BE/" class="article-date">
-  <time datetime="2023-02-10T13:33:50.000Z" itemprop="datePublished">2023-02-10</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <ul>
-<li><p>（1）天地图：CGCS2000，2000国家大地坐标系；<br>我们其实很多时候直接用WGS84的坐标来代替CGCS2000坐标。因为CGCS2000的定义与WGS84实质一样。采用的参考椭球非常接近。扁率差异引起椭球面上的纬度和高度变化最大达0.1mm。当前测量精度范围内，可以忽略这点差异。可以说两者相容至cm级水平，但若一点的坐标精度达不到cm水平，则不认为CGCS2000和WGS84的坐标是相容的。</p>
-</li>
-<li><p>（2）百度地图：bd09II坐标。<br>首先了解一下火星坐标，它是在国际标准坐标WGS-84上进行的一次加密，由于国内的电子地图都要至少使用火星坐标进行一次加密，百度直接就任性一些，直接自己又研究了一套加密算法，来了个二次加密，这就是我们所熟知的百度坐标(BD-09)。</p>
-</li>
-<li><p>（3）高德地图：gcj02坐标，也称为火星坐标。<br>火星坐标是国家测绘局为了国家安全在原始坐标的基础上进行偏移得到的坐标，基本国内的电子地图、导航设备都是采用的这一坐标系或在这一坐标的基础上进行二次加密得到的。</p>
-</li>
+<p>就是你部署项目的实际路径。可以指定web应用程序的文档根目录或者war文件的路径名，你可以指定目录或war文件的绝对路径名，也可以指定相对于Host元素的appBase目录的相对路径名。</p>
+<ul>
+<li>path</li>
 </ul>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%9C%B0%E7%90%86%E6%95%B0%E6%8D%AE/" rel="tag">地理数据</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-各种JDK版本大集合"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/02/09/%E5%90%84%E7%A7%8DJDK%E7%89%88%E6%9C%AC%E5%A4%A7%E9%9B%86%E5%90%88/"
-    >各种JDK版本大集合</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/02/09/%E5%90%84%E7%A7%8DJDK%E7%89%88%E6%9C%AC%E5%A4%A7%E9%9B%86%E5%90%88/" class="article-date">
-  <time datetime="2023-02-09T13:31:17.000Z" itemprop="datePublished">2023-02-09</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <ul>
-<li><p>OracleJDK:<br>Oracle公司成立于1977年，是全球最大的企业级软件公司，总部位于美国加利福尼亚州的红木滩。2009年就以7.4B$收购了Sun公司。2013年超越 IBM ，成为 继 Microsoft 后全球第二大软件公司。<br>警告:生产环境中OracleJDK的使用请注意法律风险! <a target="_blank" rel="noopener" href="https://www.oracle.com/java/technologies/javase-downloads.html">https://www.oracle.com/java/technologies/javase-downloads.html</a></p>
-</li>
-<li><p>OpenJDK:<br>OpenJDK原是Sun Microsystems公司为Java平台构建的Java开发环境（JDK）的开源版本，完全自由，开放源码。 Sun Microsystems公司在2006年的JavaOne大会上称将对Java开放源代码，于2009年4月15日正式发布OpenJDK。 甲骨文在2010年收购Sun Microsystem之后接管了这个项目。<a target="_blank" rel="noopener" href="http://openjdk.java.net/">http://openjdk.java.net</a></p>
-</li>
-<li><p>RedHat Open JDK:<br>RedHat开源扛把子红帽出品，值得信赖。仅有windows。Linux请从源里下载。仅更新最新维护版。<a target="_blank" rel="noopener" href="https://developers.redhat.com/products/openjdk/download">https://developers.redhat.com/products/openjdk/download</a></p>
-</li>
-<li><p>AdoptOpenJDK:<br>2017年开始采用OpenJDK.net，建立在多个平台上普遍缺乏一个开放的、可复制的OpenJDK源代码构建和测试系统。 adoptionopenjdk为Java生态系统提供了坚如磐石的OpenJDK二进制文件，还为任何平台上的OpenJDK构建者提供了作为代码的基础设施和构建场。<a target="_blank" rel="noopener" href="https://adoptopenjdk.net/">https://adoptopenjdk.net</a></p>
-</li>
-<li><p>Dragonwell:<br>作为OpenJDK的下游，alibaba Dragonwell是阿里巴巴内部OpenJDK定制版AJDK的开源版本，AJDK为在线电商、金融、物流做了结合业务场景的优化，运行在超大规模的，100,000+ 服务器的阿里巴巴数据中心。<br>国产之光,大家有机会还是尝试下优化的还不错，相对于OpenJDK更省内存和并发更高启动更快，作者测试过 <a target="_blank" rel="noopener" href="https://github.com/alibaba/dragonwell8">https://github.com/alibaba/dragonwell8</a></p>
-</li>
-<li><p>GraalVM:<br>GraalVM是一个通用的虚拟机，用于运行以JavaScript、Pytho n、Ruby、R、JVM等语言编写的应用程序，如Java、Scala、Groovy、Kotlin 、Crojule和基于LLVM的语言，如C和C++。GraalVM消除了编程语言之间的隔离，并在共 享运行时启用互操作性。它可以独立运行，也可 以在OpenJDK、Node.js或Oracle数据库的上下文中运行。<a target="_blank" rel="noopener" href="https://www.graalvm.org/">https://www.graalvm.org</a></p>
-</li>
-<li><p>ZuluJDK:<br>Azul Systems为需要为其面向网络的客 户（旅游、在线零售、游戏、SaaS）提供基于服务器的Java应 用程序的公司提供服务，满足实时业务系统（广告网络、资本市场、通信）的特定 延迟目标，确保对重要应用程序进行及时维护或安全更新，或者为嵌入式和物联网用例提 供基于Java的系统。<a target="_blank" rel="noopener" href="https://www.azul.com/downloads/zulu-community/?&amp;architecture=x86-64-bit&amp;package=jdk#">https://www.azul.com/downloads/zulu-community/?&amp;architecture=x86-64-bit&amp;package=jdk#</a></p>
-</li>
-<li><p>Liberica:<br>Liberica是一个100% 开源Java实现。它是由BellSoft贡献的O penJDK构建的，经过了彻底的测试，并通过了OpenJDK许可下 提供的JCK。Standard为常规用途，full版本包含JavaFX，lite为精简的OpenJDK。文件体积Full &gt; Standard &gt; lite。<br><a target="_blank" rel="noopener" href="https://bell-sw.com/pages/downloads/#/java-14-current">https://bell-sw.com/pages/downloads/#/java-14-current</a></p>
-</li>
-<li><p>SapMachine:<br>SAP SE是一家 德国跨国软件公司，它生产企业软件 来管理业务运营和客户关系。SAP总部位于德国巴登-符腾 堡的沃尔多夫，在180个国家设有区域办事处。SapMachine是OpenJDK 项目的下游版本。它用于为希望使用OpenJDK运行其应用程序的SAP客户和合作伙 伴构建和维护支持SAP的OpenJDK版本。SAP致力于确保Java平台的持续成功。<a target="_blank" rel="noopener" href="https://sap.github.io/SapMachine">https://sap.github.io/SapMachine</a></p>
-</li>
-<li><p>Corretto:<br>Amazon Corretto是一个免费的 、多平台的、面向生产的开放Java开发工具包（OpenJDK） 发行版。Corretto提供长期支持，包括性能增强和安全修复。亚马逊在数 个生产服务上运行Corretto，并且Corretto被证明与Java SE标准兼容。使用Corretto，您 可以在流行的操作系统（包括Linux、Windows和macOS）上开发和运行Java应用程序。<a target="_blank" rel="noopener" href="https://amazonaws-china.com/cn/corretto">https://amazonaws-china.com/cn/corretto</a></p>
-</li>
+<p>就是你要访问的相对路径，或者叫web应用的上下文路径。</p>
+<ul>
+<li>reloadable</li>
 </ul>
+<p>热部署。如果设置为true，则tomcat服务器在运行时，会监视WEB-INF/classes和WEB-INF/lib目录下类的改变，如果发现有类被更新，tomcat服务器将自动重新加载该web应用程序。这个特性在应用程序的开发阶段非常有用，但是它需要额外的运行时开销，所以在产品发布时不建议使用。该属性的默认值是false</p>
  
       <!-- reward -->
       
@@ -515,7 +480,7 @@
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JDK/" rel="tag">JDK</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tomcat/" rel="tag">tomcat</a></li></ul>
 
     </footer>
   </div>
@@ -526,7 +491,7 @@
 
     
     <article
-  id="post-node-sass-npm-ERR-command-failed-解决方法"
+  id="post-windows命令行查看文件的MD5、SHA1、SHA256"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -537,8 +502,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/02/09/node-sass-npm-ERR-command-failed-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/"
-    >node-sass npm ERR! command failed 解决方法</a> 
+  <a class="article-title" href="/2023/02/14/windows%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E7%9A%84MD5%E3%80%81SHA1%E3%80%81SHA256/"
+    >windows命令行查看文件的MD5、SHA1、SHA256</a> 
 </h2>
  
 
@@ -546,21 +511,23 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2023/02/09/node-sass-npm-ERR-command-failed-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" class="article-date">
-  <time datetime="2023-02-09T13:28:42.000Z" itemprop="datePublished">2023-02-09</time>
+      <a href="/2023/02/14/windows%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E7%9A%84MD5%E3%80%81SHA1%E3%80%81SHA256/" class="article-date">
+  <time datetime="2023-02-14T02:47:52.000Z" itemprop="datePublished">2023-02-14</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
   </div>
    
     </div>
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>直接去 GitHub 上下载 node-sass 的二进制文件，然后设置环境变量：</p>
-<p>下载 node-sass 二进制 <a target="_blank" rel="noopener" href="https://github.com/sass/node-sass">https://github.com/sass/node-sass</a><br>下载时，需要注意以下你的 node 版本以及对应的 NODE_MODULE_VERSION 版本，版本映射查看说明文件。</p>
-<p>设置环境变量<br>    export SASS_BINARY_PATH=/yourPath/linux-x64-93_binding.node</p>
-<p>执行依赖安装<br>    npm i</p>
+  <p>win10打开Powershell，命令格式certutil -hashfile  &lt;文件名&gt;  &lt;hash类型&gt;</p>
+<p>样例：</p>
+<pre><code>certutil -hashfile D:\test.txt MD5
+certutil -hashfile D:\test.txt SHA1
+certutil -hashfile D:\test.txt SHA256
+</code></pre>
  
       <!-- reward -->
       
@@ -571,7 +538,7 @@
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nodejs/" rel="tag">nodejs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/" rel="tag">软件开发</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MD5/" rel="tag">MD5</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SHA1/" rel="tag">SHA1</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SHA256/" rel="tag">SHA256</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/windows/" rel="tag">windows</a></li></ul>
 
     </footer>
   </div>
@@ -587,7 +554,7 @@
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/48/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/47/">47</a><a class="page-number" href="/page/48/">48</a><span class="page-number current">49</span><a class="page-number" href="/page/50/">50</a><a class="page-number" href="/page/51/">51</a><a class="page-number" href="/page/52/">52</a><a class="extend next" rel="next" href="/page/50/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/48/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/47/">47</a><a class="page-number" href="/page/48/">48</a><span class="page-number current">49</span><a class="page-number" href="/page/50/">50</a><a class="page-number" href="/page/51/">51</a><span class="space">&hellip;</span><a class="page-number" href="/page/54/">54</a><a class="extend next" rel="next" href="/page/50/">下一页</a>
   </nav>
   
 </section>

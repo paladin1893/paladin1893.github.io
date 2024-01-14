@@ -154,7 +154,7 @@
     
     
     <article
-  id="post-macOS程序破解提示文件提示损坏解决办法"
+  id="post-使用curl执行Http请求"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -165,8 +165,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/11/10/macOS%E7%A8%8B%E5%BA%8F%E7%A0%B4%E8%A7%A3%E6%8F%90%E7%A4%BA%E6%96%87%E4%BB%B6%E6%8F%90%E7%A4%BA%E6%8D%9F%E5%9D%8F%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/"
-    >macOS程序破解提示文件提示损坏解决办法</a> 
+  <a class="article-title" href="/2023/11/24/%E4%BD%BF%E7%94%A8curl%E6%89%A7%E8%A1%8CHttp%E8%AF%B7%E6%B1%82/"
+    >使用curl执行Http请求</a> 
 </h2>
  
 
@@ -174,8 +174,8 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2023/11/10/macOS%E7%A8%8B%E5%BA%8F%E7%A0%B4%E8%A7%A3%E6%8F%90%E7%A4%BA%E6%96%87%E4%BB%B6%E6%8F%90%E7%A4%BA%E6%8D%9F%E5%9D%8F%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" class="article-date">
-  <time datetime="2023-11-10T13:14:23.000Z" itemprop="datePublished">2023-11-10</time>
+      <a href="/2023/11/24/%E4%BD%BF%E7%94%A8curl%E6%89%A7%E8%A1%8CHttp%E8%AF%B7%E6%B1%82/" class="article-date">
+  <time datetime="2023-11-24T12:14:23.000Z" itemprop="datePublished">2023-11-24</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
@@ -185,486 +185,118 @@
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>文件提示损坏解决办法</p>
-<h1 id="方案一"><a href="#方案一" class="headerlink" title="方案一"></a>方案一</h1><p>解除隔离，绕过签名</p>
-<p>启动终端实用程序，使用命令：</p>
-<pre><code>sudo xattr -r -d com.apple.quarantine 
+  <h1 id="curl命令"><a href="#curl命令" class="headerlink" title="curl命令"></a>curl命令</h1><p>curl（CommandLine Uniform Resource Locator或CommandLine URL），curl命令是在命令行方式下工作，利用URL的语法进行数据的传输或者文件的传输。是一个利用URL语法在命令行下工作的文件传输工具。curl设计为：在无用户交互下完成工作。</p>
+<p>curl支持的协议包括：DICT、FILE、FTP、FTPS、GOPHER、HTTP、HTTPS、IMAP、IMAPS、LDAP、LDAPS、POP3、POP3S、RTMP、RTSP、SCP、SFTP、SMTP、SMTPS、TELNET、TFTP。</p>
+<h1 id="curl用法"><a href="#curl用法" class="headerlink" title="curl用法"></a>curl用法</h1><pre><code>curl [options…] &lt;url&gt;
 </code></pre>
-<p>输入一个空格，然后将损坏的程序拖到终端窗口中。团队将添加它。</p>
-<h1 id="方案二"><a href="#方案二" class="headerlink" title="方案二"></a>方案二</h1><p>禁用 Gatekeeper：</p>
-<p>启动终端实用程序并运行命令</p>
-<p>对于 macOS 10.12 – 10.15.7，执行如下命令：</p>
-<pre><code>sudo spctl --master-disable
+<h1 id="curl参数"><a href="#curl参数" class="headerlink" title="curl参数"></a>curl参数</h1><h2 id="请求"><a href="#请求" class="headerlink" title="请求"></a>请求</h2><h3 id="H-“name-value”"><a href="#H-“name-value”" class="headerlink" title="-H “name: value”"></a>-H “name: value”</h3><pre><code>-H &quot;name: value&quot;
+--header &quot;name: value&quot;
 </code></pre>
-<p>对于 macOS 11 及更高版本，执行如下命令：</p>
-<pre><code>sudo spctl --global-disable
+<p>(HTTP)添加一个http header(http请求头)</p>
+<h3 id="H-“name-”"><a href="#H-“name-”" class="headerlink" title="-H “name:”"></a>-H “name:”</h3><pre><code>-H &quot;name:&quot;
+--header &quot;name:&quot;
 </code></pre>
-<p>无需将任何内容拖到终端中。要启用 Gatekeeper，请将“disable”替换为“enable”。</p>
-<h1 id="方案三"><a href="#方案三" class="headerlink" title="方案三"></a>方案三</h1><p>应用签名方法</p>
-<p>先安装Command Line Tools 工具，打开终端工具输入如下命令：</p>
-<pre><code>xcode-select --install
+<p>(HTTP)移除一个http header(http请求头)</p>
+<h3 id="A-“string”"><a href="#A-“string”" class="headerlink" title="-A “string”"></a>-A “string”</h3><pre><code>-A &quot;string&quot;
+--user-agent &quot;string&quot;
 </code></pre>
-<p>弹出安装窗口后选择继续安装，安装过程需要几分钟，请耐心等待。</p>
-<p>打开终端工具输入并执行如下命令对应用签名：</p>
-<pre><code>sudo codesign --force --deep --sign - (应用路径)
+<p>(HTTP)设置HTTP请求头User-Agent参数<br>服务器通过User-Agent可以判断客户端使用的浏览器名称和操作系统类型，伪造此参数能导致服务器做出错误判断</p>
+<h3 id="e"><a href="#e" class="headerlink" title="-e"></a>-e</h3><pre><code>-e
+--referer
 </code></pre>
-<p>注意：应用路径是「访达（Finder）-&gt;应用程序」找到应用将其拖进终端命令 – 的后面，然后按下回车键，输入macOS的密码然后按回车(输入过程中密码是不显示的，输入完密码直接按回车键即可！)<br>出现 「replacing existing signature」 提示即成功！</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/macOS/" rel="tag">macOS</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-macOS命令添加用户、删除用户"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/11/09/macOS%E5%91%BD%E4%BB%A4%E6%B7%BB%E5%8A%A0%E7%94%A8%E6%88%B7%E3%80%81%E5%88%A0%E9%99%A4%E7%94%A8%E6%88%B7/"
-    >macOS命令添加用户、删除用户</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/11/09/macOS%E5%91%BD%E4%BB%A4%E6%B7%BB%E5%8A%A0%E7%94%A8%E6%88%B7%E3%80%81%E5%88%A0%E9%99%A4%E7%94%A8%E6%88%B7/" class="article-date">
-  <time datetime="2023-11-09T13:14:23.000Z" itemprop="datePublished">2023-11-09</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>使用dscl命令，以postgres用户为例</p>
-<h1 id="新增用户"><a href="#新增用户" class="headerlink" title="新增用户"></a>新增用户</h1><pre><code># 创建用户并指定Shell
-sudo dscl . -create /Users/postgres UserShell /bin/bash
-
-# 设置用户ID（需要唯一）、显示名称
-sudo dscl . -create /Users/postgres UniqueID &quot;5001&quot;
-sudo dscl . -create /Users/postgres RealName &quot;postgres&quot;
-
-# 将用户设置为管理员
-sudo dscl . -create /Users/postgres PrimaryGroupID 80
-
-# 修改密码
-sudo dscl . -passwd /Users/postgres 1024
+<p>(HTTP)设置访问时的来源页面，告诉http服务从哪个页面进入到此页面<br>例如：-e “aiezu.com”相当于“-H “Referer: <a target="_blank" rel="noopener" href="http://www.qq.com&quot;”;/">www.qq.com&quot;”；</a></p>
+<h3 id="G"><a href="#G" class="headerlink" title="-G"></a>-G</h3><pre><code>-G
+--get
 </code></pre>
-<h1 id="删除用户"><a href="#删除用户" class="headerlink" title="删除用户"></a>删除用户</h1><pre><code># 删除用户
-sudo dscl . -delete /Users/postgres
-
-# 删除用户主目录
-sudo rm -r /Users/postgres
+<p>(HTTP)使用HTTP GET方式</p>
+<h3 id="d"><a href="#d" class="headerlink" title="-d"></a>-d</h3><pre><code>-d @file
+-d &quot;string&quot;
+--data &quot;string&quot;
+--data-ascii &quot;string&quot;
+--data-binary &quot;string&quot;
+--data-urlencode &quot;string&quot;
 </code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/macOS/" rel="tag">macOS</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-OpenCPN + Ubuntu 18.04 源码编译 + Codeblocks 调试 + wxFormBuilder 安装"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/11/08/OpenCPN%20+%20Ubuntu%2018.04%20%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91%20+%20Codeblocks%20%E8%B0%83%E8%AF%95%20+%20wxFormBuilder%20%E5%AE%89%E8%A3%85/"
-    >OpenCPN + Ubuntu 18.04 源码编译 + Codeblocks 调试 + wxFormBuilder 安装</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/11/08/OpenCPN%20+%20Ubuntu%2018.04%20%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91%20+%20Codeblocks%20%E8%B0%83%E8%AF%95%20+%20wxFormBuilder%20%E5%AE%89%E8%A3%85/" class="article-date">
-  <time datetime="2023-11-08T12:16:38.000Z" itemprop="datePublished">2023-11-08</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="一、参考资料"><a href="#一、参考资料" class="headerlink" title="一、参考资料"></a>一、参考资料</h1><p>OpenCPN - linux 编译参考链接。<br>wxFormBuilder-github 链接</p>
-<h1 id="二、源码编译流程"><a href="#二、源码编译流程" class="headerlink" title="二、源码编译流程"></a>二、源码编译流程</h1><p>安装依赖，没有报错。</p>
-<pre><code>sudo apt-get install build-essential cmake gettext git-core gpsd gpsd-clients libgps-dev wx-common libwxgtk3.0-dev libglu1-mesa-dev libgtk2.0-dev wx3.0-headers libbz2-dev libtinyxml-dev libportaudio2 portaudio19-dev libcurl4-openssl-dev libexpat1-dev libcairo2-dev libarchive-dev liblzma-dev libexif-dev libelf-dev libsqlite3-dev
+<p>(HTTP)使用HTTP POST方式发送“key/value对”数据<br>相当于（method=”POST”，enctype=”application/x-www-form-urlencoded”）</p>
+<pre><code>-d，--data：HTTP方式POST数据
+--data-ascii：HTTP方式POST ascii数据
+--data-binary：HTTP方式POST二进制数据
+--data-urlencode：HTTP方式POST数据（进行urlencode）
 </code></pre>
-<p>下载源码，使用码云加速。</p>
-<pre><code>cd xxx #进入你想存放 opencpn 的文件夹
-git clone https://gitee.com/xxx/OpenCPN.git  #注意更换自己的码云仓库名 xxx
+<p>如果数据以“@”开头，后紧跟一个文件，将post文件内的内容；</p>
+<h3 id="F"><a href="#F" class="headerlink" title="-F"></a>-F</h3><pre><code>-F name=@file
+-F name=&lt;file
+-F name=content
+--form name=content
+--form-string &lt;key=value&gt;
 </code></pre>
-<p>下载速度极慢，使用码云克隆加速github。</p>
-<p>注册码云，右上角新建仓库加号，选择从 Github/Gitlab 导入仓库菜单。<br>Git 仓库 URL填入想 clone的 Github仓库，这里就是<a target="_blank" rel="noopener" href="https://github.com/OpenCPN/OpenCPN%EF%BC%8C%E7%82%B9%E5%87%BB%E5%AF%BC%E5%85%A5%EF%BC%8C%E5%90%8E%E5%8F%B0%E5%A4%84%E7%90%86%E4%B8%80%E6%AE%B5%E6%97%B6%E9%97%B4%E5%90%8E%E9%A1%B5%E9%9D%A2%E8%87%AA%E5%8A%A8%E5%88%B7%E6%96%B0%E4%BC%9A%E5%87%BA%E7%8E%B0%E4%B8%80%E6%A8%A1%E4%B8%80%E6%A0%B7%E7%9A%84%E4%BB%93%E5%BA%93%E3%80%82">https://github.com/OpenCPN/OpenCPN，点击导入，后台处理一段时间后页面自动刷新会出现一模一样的仓库。</a><br>利用码云进行 git clone，因为这里我建立的是私有仓库，需要输入我的账户名和密码，输入后下载速度很快，直接达到带宽上限。<br>编译源码，cmake ../无问题，显示 Configuring done和 Generating done，继续 make。</p>
-<pre><code>cd OpenCPN  
-mkdir build &amp;&amp; cd build
-cmake ..  
-make
+<p>(HTTP)使用HTTP POST方式发送类似“表单字段”的多类型数据<br>相当于同时设置浏览器表单属性（method=”POST”，enctype=”multipart/form-data”），可以使用此参数上传二进制文件。<br>如果字段内容以“@”开头，剩下的部分应该是文件名，curl将会上传此文件，如：</p>
+<pre><code>curl -F &quot;pic=@pic.jpg&quot; http://aiezu.com；
+curl -F &quot;page=@a.html;type=text/html&quot; http://aiezu.com
+curl -F &quot;page=@/tmp/a;filename=a.txt&quot; http://aiezu.com
 </code></pre>
-<p>没有问题，编译成功，测试以下能否直接运行编译好的可执行文件，运行成功，没有问题。</p>
-<pre><code>./opencpn
+<p>如果字段内容以“&lt;”开头，剩下的部分应该是文件名，curl将从文件中获取作为此字段的值，如：curl -F “text=&lt;text.txt” <a target="_blank" rel="noopener" href="http://aiezu.com;/">http://aiezu.com；</a></p>
+<p>–form-string类似于“–form”，但是“@”、“&lt;”无特殊含义；</p>
+<h3 id="X"><a href="#X" class="headerlink" title="-X "></a>-X <command></h3><pre><code>-X &lt;command&gt;
+--request &lt;command&gt;
 </code></pre>
-<h1 id="三、利用-IDE-编译"><a href="#三、利用-IDE-编译" class="headerlink" title="三、利用 IDE 编译"></a>三、利用 IDE 编译</h1><p>官方推荐了四个 IDE ( Code::Blocks / KDevelop / Eclipse / CDT )，我们按照官方命令，生成项目文件，使用 codeblocks 首先测试：</p>
-<pre><code>cmake -G &quot;CodeBlocks - Unix Makefiles&quot; ../
+<p>(HTTP)指定与服务器通信使用的请求方法<br>如：GET、PUT、POST、DELETE等</p>
+<h2 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h2><h3 id="b-name-data"><a href="#b-name-data" class="headerlink" title="-b name=data"></a>-b name=data</h3><pre><code>-b name=data
+--cookie name=data
 </code></pre>
-<p>此时查看 build 文件夹下已经有了 OpenCPN.cbp 文件，这是 codeblocks 的工程文件。</p>
-<p>打开 codeblocks ，选择 File - open 找到刚才的 build 文件夹，选择 OpenCPN.cbp。</p>
-<p>如果系统未安装该 IDE，可以直接从源安装：</p>
-<pre><code>sudo apt-get install codeblocks
+<p>(HTTP)发送cookie数据到HTTP服务器<br>数据格式为：”NAME1=VALUE1; NAME2=VALUE2”</p>
+<p>如果行中没有“=”，将把参数值当作cookie文件名</p>
+<p>这个cookie数据可以是由服务器的http响应头“Set-Cookie:”行发送过来的；</p>
+<h3 id="c-filename"><a href="#c-filename" class="headerlink" title="-c filename"></a>-c filename</h3><pre><code>-c filename
+--cookie-jar file name
 </code></pre>
-<p>此时右侧项目是 all 的状态，点击菜单栏上的 build 黄色小齿轮进行编译，这里提示没有错误，准备运行 opencpn。</p>
-<p>Process terminated with status 0 (0 minute(s), 1 second(s))<br>0 error(s), 0 warning(s) (0 minute(s), 1 second(s))</p>
-<p>在右侧的下拉菜单中将 all 改选为 opencpn ，继续点击绿色三角 run 运行，可能弹出是否用 safe mode 运行，我选择了 yes 。</p>
-<p>出现 opencpn 界面，编译运行无问题。</p>
-<h1 id="四、利用-IDE-调试"><a href="#四、利用-IDE-调试" class="headerlink" title="四、利用 IDE 调试"></a>四、利用 IDE 调试</h1><p>利用 IDE 进行 debug ，我们选择航线相关的源文件 Route.cpp ，随便将断点加在某行，我这里加在了 92 行构造函数的末尾，想看一看新建航线时断点能否进入。此时，加好断点，点击菜单栏中的红色三角 Debug 进行调试运行。</p>
-<p>出现 opencpn 海图界面后，随便找个地方，右键选择 New Route… 新建航线， 成功进入断点。</p>
-<p>实际上，官方在这里补充了一段说明。大致的意思是如果要在不安装的情况下直接在 IDE 中运行 opencpn ，需要进行一些拷贝操作，我将其简单分段如下，前三个操作只是复制，非常好理解，最后一个暂时没找到正确的位置设置，但是好像不影响调试。</p>
-<p>In order to be able to run OpenCPN from inside the IDE without having it installed, you must:</p>
-<p>copy the following folders from the data subfolder of the source tree to your build folder: gshhs, s57data, tcdata.<br>You also must create a subfolder uidata in the build folder and copy the following files from src/bitmaps into it: styles.xml, toolicons_journeyman_flat.png, toolicons_journeyman.png, toolicons_traditional.png, plus.svg.<br>You should also copy authors.html and license.html from /data to your ‘build’ folder.<br>Then to ensure that your ‘build’ folder is used as the ‘source’ for the run/debug session you need to ensure that OpenCPN is started with ‘-p’ as a parameter. This sets OpenCPN into ‘portable’ mode and therefore looks in the location the ‘opencpn’ executable is run from, i.e. your ‘build’ directory.</p>
-<p>我把上面几句话写成了三句命令，首先 cd 进入你的 opencpn 源码路径下，执行如下命令即可。这些操作不做也可以进行编译调试，为了避免后面出现问题，最好还是按照官方指导来进行。</p>
-<pre><code>cp -r ./data/s57data ./data/gshhs ./data/tcdata  ./build/
-mkdir ./build/uidata &amp;&amp; cp ./src/bitmaps/styles.xml ./src/bitmaps/toolicons_journeyman_flat.png ./src/bitmaps/toolicons_journeyman.png ./src/bitmaps/toolicons_traditional.png ./src/bitmaps/plus.svg ./build/uidata 
-cp ./data/authors.html ./data/license.html ./build/
+<p>(HTTP)完成操作后将服务器返回的cookies保存到指定的文件<br>指定参数值为“-”将定向到标准输出“如控制台”</p>
+<h3 id="j"><a href="#j" class="headerlink" title="-j"></a>-j</h3><pre><code>-j
+--junk-session-cookies
 </code></pre>
-<p>四、测试界面开发工具<br>官方推荐使用 wxFormBuilder-github 来开发 GUI 。</p>
-<p>编译这个东西，按照它作者提供的编译指南，先安装依赖，然后克隆源码，最后编译运行。</p>
-<pre><code>sudo apt install libwxgtk3.0-gtk3-dev libwxgtk-media3.0-gtk3-dev meson
-git clone --recursive --depth=1 https://github.com/wxFormBuilder/wxFormBuilder
-cd wxFormBuilder
-meson _build --prefix $PWD/_install --buildtype=release
-ninja -C _build install
-./_install/bin/wxformbuilder
+<p>(HTTP)告诉curl放弃所有的”session cookies”.相当于重启浏览器</p>
+<h2 id="响应"><a href="#响应" class="headerlink" title="响应"></a>响应</h2><h3 id="I"><a href="#I" class="headerlink" title="-I"></a>-I</h3><pre><code>-I
+--head
 </code></pre>
-<p>运行到 ninja 编译，未通过，报错如下：</p>
-<pre><code>/usr/bin/ld: cannot find -lwx_gtk2u_media-3.0
-/usr/bin/ld: cannot find -lwx_gtk2u_media-3.0
-collect2: error: ld returned 1 exit status
-[61/67] Compiling C++ object &#39;additional@sha/plugins_additional_additional.cpp.o&#39;.
-ninja: build stopped: subcommand failed.
+<p>(HTTP)只输出HTTP-header，不获取内容(HTTP/FTP/FILE)</p>
+<ol>
+<li>用于HTTP服务时，获取页面的http头,如：curl -I <a target="_blank" rel="noopener" href="http://aiezu.com/">http://aiezu.com</a></li>
+<li>用于FTP/FILE时，将会获取文件大小、最后修改时间，如：curl -I file://test.txt</li>
+</ol>
+<h3 id="i"><a href="#i" class="headerlink" title="-i"></a>-i</h3><pre><code>-i
+--include
 </code></pre>
-<p>缺少库，安装对应的库：</p>
-<p>sudo apt-get install libwxgtk-media3.0-dev</p>
-<p>最后执行编译好的可执行文件</p>
-<pre><code>./_install/bin/wxformbuilder
+<p>(HTTP)输出HTTP头和返回内容</p>
+<h3 id="D"><a href="#D" class="headerlink" title="-D "></a>-D <file></file></h3><pre><code>-D &lt;file&gt;
+--dump-header &lt;file&gt;
 </code></pre>
-<p>报错，提示，经过查找 issues 发现有人提到了这个问题 #524，解决方案如下，注意替换路径，我是安装在我自建的Software文件夹：</p>
-<pre><code>cd ~/Software/wxFormBuilder/_install/lib/x86_64-linux-gnu
-cp -r wxformbuilder ../ 
-cd ~/Software/wxFormBuilder/_install/bin
-./wxformbuilder
+<p>(HTTP)转储http响应头到指定文件</p>
+<h1 id="curl举例"><a href="#curl举例" class="headerlink" title="curl举例"></a>curl举例</h1><h2 id="GET请求"><a href="#GET请求" class="headerlink" title="GET请求"></a>GET请求</h2><pre><code>curl &#39;http://127.0.0.1:8888/test&#39;
+curl -G &#39;http://127.0.0.1:8888/test&#39;
+curl --get &#39;http://127.0.0.1:8888/test&#39;
+curl -X GET &#39;http://127.0.0.1:8888/test&#39;
+curl --request GET &#39;http://127.0.0.1:8888/test&#39;
 </code></pre>
-<p>成功解决，完事了，wxFormBuilder 的具体使用方法请自行探索。<br>————————————————<br>版权声明：本文为CSDN博主「银时大魔王」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/sinat_25923849/article/details/110232728">https://blog.csdn.net/sinat_25923849/article/details/110232728</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OpenCPN/" rel="tag">OpenCPN</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-【小沐学GIS】电子海图OpenCPN源代码编译和运行（VS2017 + Win10）"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/11/07/%E3%80%90%E5%B0%8F%E6%B2%90%E5%AD%A6GIS%E3%80%91%E7%94%B5%E5%AD%90%E6%B5%B7%E5%9B%BEOpenCPN%E6%BA%90%E4%BB%A3%E7%A0%81%E7%BC%96%E8%AF%91%E5%92%8C%E8%BF%90%E8%A1%8C%EF%BC%88VS2017%20+%20Win10%EF%BC%89/"
-    >【小沐学GIS】电子海图OpenCPN源代码编译和运行（VS2017 + Win10）</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/11/07/%E3%80%90%E5%B0%8F%E6%B2%90%E5%AD%A6GIS%E3%80%91%E7%94%B5%E5%AD%90%E6%B5%B7%E5%9B%BEOpenCPN%E6%BA%90%E4%BB%A3%E7%A0%81%E7%BC%96%E8%AF%91%E5%92%8C%E8%BF%90%E8%A1%8C%EF%BC%88VS2017%20+%20Win10%EF%BC%89/" class="article-date">
-  <time datetime="2023-11-07T12:16:38.000Z" itemprop="datePublished">2023-11-07</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>1、简介<br>免费的开源海图仪和船用GPS导航软件</p>
-<p><a target="_blank" rel="noopener" href="https://opencpn.org/">https://opencpn.org/</a></p>
-<p>1.1 OpenCPN概述<br>OpenCPN是一款自由软件（GPLv2），用于创建简洁的海图绘图仪和导航软件，可以在航行过程中使用或者作为计划工具。<br>OpenCPN提供大量免费海图下载，支持航线设计、航行监控，能接入GPS、AIS数据，能叠加雷达图像，还满足气象导航方面的要求，还有众多插件可供选择，且一直持续改进更新中。<br>OpenCPN由C++编写，遵从GPLv2协议，其源代码可以轻易的从github获取。</p>
-<p>1.2 OpenCPN功能</p>
-<p>2、下载和编译<br>OpenCPN由C++编写，遵从GPLv2协议，其源代码可以轻易的从github获取。在windows下编译方法windows下编译方法如下：<br><a target="_blank" rel="noopener" href="https://opencpn.org/wiki/dokuwiki/doku.php?id=opencpn:developer_manual:developer_guide:compiling_windows">https://opencpn.org/wiki/dokuwiki/doku.php?id=opencpn:developer_manual:developer_guide:compiling_windows</a></p>
-<p>2.1 Visual Studio 2017<br>安装Visual Studio 2017，添加C++及Windows XP C++功能。</p>
-<p>下载<br><a target="_blank" rel="noopener" href="https://visualstudio.microsoft.com/zh-hans/vs/older-downloads/">https://visualstudio.microsoft.com/zh-hans/vs/older-downloads/</a></p>
-<p>2.2 Git<br>安装Git:<br><a target="_blank" rel="noopener" href="https://git-scm.com/downloads">https://git-scm.com/downloads</a></p>
-<p>2.3 CMake<br>安装CMake:<br><a target="_blank" rel="noopener" href="https://cmake.org/download/">https://cmake.org/download/</a></p>
-<p>2.4 POedit<br>安装POedit，<br><a target="_blank" rel="noopener" href="https://poedit.net/">https://poedit.net/</a></p>
-<p>配置系统环境变量，在PATH中添加:</p>
-<pre><code>C:\Program Files (x86)\Poedit\GettextTools\bin
+<p>当有参数时，请进行URL编码，否则会可能会出错</p>
+<pre><code>curl -X GET &#39;http://127.0.0.1:8888/test2?date=2022-02-22 11:22:33&amp;bo=1&#39;
 </code></pre>
-<p>2.5 wxWidgets<br>（1）方法一：源代码编译<br>获取wxWidgets 3.1.2源码并生成，使用VS2017 x86 Native Tools下的命令行，运行如下命令：</p>
-<pre><code>cd C:\Users\tomcat\Desktop\test         //修改成自己的目录
-git clone -b v3.1.2 https://github.com/wxWidgets/wxWidgets
-cd wxWidgets
-git submodule init
-git submodule update
-
-cd build\msw
-nmake /f makefile.vc BUILD=release SHARED=1 CXXFLAGS=/D_USING_V141_SDK71_ CFLAGS=/D_USING_V141_SDK71_ LDFLAGS=/SUBSYSTEM:WINDOWS,5.01
-nmake /f makefile.vc BUILD=debug SHARED=1 CXXFLAGS=/D_USING_V141_SDK71_ CFLAGS=/D_USING_V141_SDK71_ LDFLAGS=/SUBSYSTEM:WINDOWS,5.01
-
-cd wxWidgets
-git submodule init
-git submodule update
+<p>报错：HTTP Status 505 – HTTP Version Not Supported（因为参数带空格）</p>
+<p>正确写法(对空格URL编码)</p>
+<pre><code>curl -X GET &#39;http://127.0.0.1:8888/test2?date=2022-02-22%2011:22:33&amp;bo=1&#39;
 </code></pre>
-<p>设置环境变量wxWIDGETS_ROOT_DIR为wxWidgets 3.1.2源代码目录<br>将wxWidgets源代码目录下的路径lib\vc_dll\添加进系统变量。</p>
-<p>（2）方法二：使用二进制文件<br><a target="_blank" rel="noopener" href="https://github.com/wxWidgets/wxWidgets/releases?page=1">https://github.com/wxWidgets/wxWidgets/releases?page=1</a></p>
-<p>下载头文件</p>
-<p>下载库文件</p>
-<p>设置环境变量</p>
-<p>wxWIDGETS_ROOT_DIR：</p>
-<pre><code>wxWIDGETS_ROOT_DIR=C:/Users/tomcat/Desktop/test/wxWidgets-3.1.2
+<h2 id="POST请求"><a href="#POST请求" class="headerlink" title="POST请求"></a>POST请求</h2><pre><code>curl -X POST &#39;http://127.0.0.1:8888/test2?date=2022-02-22%2011:22:33&amp;bo=11&#39;
+curl -X POST &#39;http://127.0.0.1:8888/test2&#39; -d &#39;date=2022-02-22 11:22:33&amp;bo=11&#39;
+curl -X POST &#39;http://127.0.0.1:8888/test2&#39; --data &#39;date=2022-02-22 11:22:33&amp;bo=11&#39;
+curl -X POST &#39;http://127.0.0.1:8888/test2&#39; --data-urlencode &#39;date=2022-02-22 11:22:33&#39; --data-urlencode &#39;bo=11&#39;
+curl -X POST  -H &#39;Content-Type: application/x-www-form-urlencoded&#39; &#39;http://127.0.0.1:8888/test2&#39; --data-urlencode &#39;date=2022-02-22 11:22:33&#39; --data-urlencode &#39;bo=11&#39;
 </code></pre>
-<p>wxWidgets_LIBRARIES：</p>
-<pre><code>wxWidgets_LIBRARIES=C:\Users\tomcat\Desktop\test\wxMSW-3.1.2_vc141_Dev\lib\vc141_dll
+<p>POST请求默认Content-Type: application/x-www-form-urlencoded</p>
+<p>可以多次使用 -d、–data选项来指定多个传输参数，也可以使用一次 -d、–data选项来指定多个参数。当 Content-Type 为 application/x-www-form-urlencoded 时，-X POST 不可缺省。</p>
+<p>POST JSON请求</p>
+<pre><code>curl -X POST &#39;http://127.0.0.1:8888/test8&#39; -H &#39;Content-Type: application/json&#39; -d &#39;&#123;&quot;code&quot;: 123456789,&quot;name&quot;: 1646278385537&#125;&#39;
+curl &#39;http://127.0.0.1:8888/test8&#39; -H &#39;Content-Type: application/json&#39; -d &#39;&#123;&quot;code&quot;: 123456789,&quot;name&quot;: 1646278385537&#125;&#39;
 </code></pre>
-<p>2.6 OpenCPN<br>下载 OpenCPN源码：<br><a target="_blank" rel="noopener" href="https://github.com/OpenCPN/OpenCPN/releases?q=5.0.0&amp;expanded=true">https://github.com/OpenCPN/OpenCPN/releases?q=5.0.0&amp;expanded=true</a></p>
-<p>解压之后：</p>
-<p>下载 预编译Windows依赖 - OpenCPN_buildwin-4.99a.7z，<br><a target="_blank" rel="noopener" href="https://download.opencpn.org/s/oibxM3kzfzKcSc3/download">https://download.opencpn.org/s/oibxM3kzfzKcSc3/download</a><br>然后解压到C:\Users\tomcat\Desktop\test\OpenCPN-5.0.0\buildwin目录下。</p>
-<pre><code>cd C:\Users\tomcat\Desktop\test\OpenCPN-5.0.0
-mkdir build
-cd build
-cmake -G &quot;Visual Studio 15 2017&quot; -T v141_xp ..
-cmake --build .
-cmake --build . --config release
-cmake --build . --config release --target package
-</code></pre>
-<p>编译过程中，会出现一些错误。例如“正体字”改成“zhengti”即可等。<br>下载 Copyfiles.bat.doc，并删去后缀名 .doc移动到\xx\OpenCPN\下面后执行copyfiles.bat（这步不做可能还是会缺几个dll）。<br><a target="_blank" rel="noopener" href="https://opencpn.org/wiki/dokuwiki/lib/exe/fetch.php?media=opencpn:dev:copyfiles.bat.doc">https://opencpn.org/wiki/dokuwiki/lib/exe/fetch.php?media=opencpn:dev:copyfiles.bat.doc</a></p>
-<pre><code>C:\Users\tomcat\Desktop\test\OpenCPN-5.0.0\Copyfiles.bat
-</code></pre>
-<p>鼠标双击它，直接运行如下：</p>
-<p>打开文件夹“C:\Users\tomcat\Desktop\test\OpenCPN-5.0.0\build\Debug”，发现OpenCPN编译成功。</p>
-<p>3、运行<br>3.1 主界面<br>直接运行opencpn.exe。</p>
-<p>3.2 绘制路线（Route）<br>鼠标右键选择菜单“New Route…”，开始创建路线操作；</p>
-<p>创建多段路线如下：</p>
-<p>3.3 切换地图底色</p>
-<p>3.4 距离测量<br>鼠标右键选择菜单“Measure”，开始距离测量操作；</p>
-<p>鼠标右键选择菜单“Measure Off”，结束距离测量操作；</p>
-<p>3.5 添加图表<br>将下载好的图表数据放在文件夹里“D:\Program Files (x86)\OpenCPN\data”：</p>
-<p>然后通过界面更新按钮“Prepare all ENC Charts”。</p>
-<p>更新过程中如下：</p>
-<p>更新完成如下：</p>
-<p>————————————————<br>版权声明：本文为CSDN博主「爱看书的小沐」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/hhy321/article/details/134486900">https://blog.csdn.net/hhy321/article/details/134486900</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OpenCPN/" rel="tag">OpenCPN</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-省市区数据采集"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/11/06/%E7%9C%81%E5%B8%82%E5%8C%BA%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/"
-    >省市区数据分享</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/11/06/%E7%9C%81%E5%B8%82%E5%8C%BA%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/" class="article-date">
-  <time datetime="2023-11-06T12:16:38.000Z" itemprop="datePublished">2023-11-06</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>省市区数据采集并标注拼音、坐标和边界范围<br>【在线测试和预览】省市区乡镇四级行政区划数据：支持在线生成JSON、多级联动js；<br>【在线测试和预览】ECharts Map四级下钻在线测试和预览+代码生成：坐标边界范围在线测试和预览；<br>【转换工具】AreaCity-Geo格式转换工具软件：csv文件导入数据库，坐标、边界范围转换（支持转成sql、shp、geojson）；<br>【查询工具】AreaCity-Query-Geometry（Gitee镜像库）：高性能的坐标数据、边界数据查询工具，Java开源程序、带http查询接口，内存占用低（1秒可查1万个以上坐标对应的城市信息）。</p>
-<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/xiangyuecn/p/17101051.html">https://www.cnblogs.com/xiangyuecn/p/17101051.html</a><br><a target="_blank" rel="noopener" href="https://gitee.com/xiangyuecn/AreaCity-JsSpider-StatsGov">https://gitee.com/xiangyuecn/AreaCity-JsSpider-StatsGov</a></p>
-<h1 id="数据说明"><a href="#数据说明" class="headerlink" title="数据说明"></a>数据说明</h1><p>当前最新版本：2023.230831.231211版，更新于2023-12-11，整合了 统计局2023-09-11、民政部2023-04-23、腾讯地图行政区划2023-08-31、高德地图行政区划采集当天 数据。</p>
-<p>【区划三级】省市区 三级行政区划 数据<br>【区划四级】省市区乡镇 四级行政区划 数据</p>
-<ul>
-<li>支持在线预览，在线生成JSON、多级联动js代码</li>
-<li>可用转换工具导入数据库、转成sql    线路一 / 线路二<br>【边界三级】省市区 坐标和边界 数据，解压后130M+</li>
-<li>支持在线预览，可用转换工具转成shp、geojson、sql格式、转换坐标系</li>
-<li>使用本库开源的高性能查询工具，1秒可查1万个以上坐标对应的城市信息    线路一 / 线路二<br>边界四级】乡镇级 坐标和边界 数据，导出后300M+</li>
-<li>付费数据、广告、闭源，支持在线预览，提供了部分免费数据供测试    点此下载<br>如果上面线路一和线路二都无法下载：可以到 Gitee Releases 下载，或到 GitHub Releases 下载最新发布数据文件。</li>
-</ul>
-<p>csv纯文本文件可以非常方便解析成其他格式；如果在使用csv文件过程中出现乱码、错乱等情况，需自行调对utf-8（带BOM）编码，文本限定符为”。</p>
-<p>通过本库提供的 AreaCity-Geo格式转换工具 可快速方便的将行政区划、坐标、边界范围csv文件导入数据库，并且提供格式转换功能（shp、geojson、sql），欢迎下载使用。边界导出成geojson后可通过 AreaCity-Query-Geometry Java开源程序进行高性能的坐标数据、边界数据查询。</p>
-<h1 id="Git仓库和存档"><a href="#Git仓库和存档" class="headerlink" title="Git仓库和存档"></a>Git仓库和存档</h1><p>由于仓库内的历史记录数据可能会很大，可以加上–depth 1提取最新版的数据即可。</p>
-<pre><code>//Gitee镜像仓库: 速度快
-git clone --depth 1 https://gitee.com/xiangyuecn/AreaCity-JsSpider-StatsGov.git
-
-//源GitHub仓库: 可能比较慢或无法访问
-git clone --depth 1 https://github.com/xiangyuecn/AreaCity-JsSpider-StatsGov.git
-</code></pre>
-<p>每当仓库增长到一定大小后，本仓库将会进行存档处理，同时将历史记录中的大文件进行清理，这将导致一些文件之前的历史丢失，请到存档仓库查阅更早的历史记录</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%9C%B0%E7%90%86%E6%95%B0%E6%8D%AE/" rel="tag">地理数据</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-CentOS最小安装"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/11/05/CentOS%E6%9C%80%E5%B0%8F%E5%AE%89%E8%A3%85/"
-    >CentOS最小安装</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/11/05/CentOS%E6%9C%80%E5%B0%8F%E5%AE%89%E8%A3%85/" class="article-date">
-  <time datetime="2023-11-05T13:28:00.000Z" itemprop="datePublished">2023-11-05</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>1、将安装光盘插入服务器，开机时会读取系统安装程序，选择Install CentOS 7</p>
-<p>2、安装过程是图形界面,可以选择熟悉的语言执行安装程序</p>
-<p>3、选择SECURITY POLICY(安全策略)将其关闭</p>
-<p>4、把KDUMP(内核崩溃转储机制)也进行关闭</p>
-<p>5、接着配置网络,服务器的网线是已经连接好的</p>
-<p>打开以太网连接</p>
-<p>将IPv6设置 忽略</p>
-<p>配置好地址,搜索域是这台主机的网络地址.</p>
-<p>主机名也是网络标识,修改一下.</p>
-<p>可以打开新的TTY终端,进行网络的连通性测试.</p>
-<p>6、硬盘分区</p>
-<p>boot引导到分区根据系统进行配置,swap分区根据内存大小而定.</p>
-<p>7、时间配置</p>
-<p>选择时区,可以将网络时间打开.</p>
-<p>8、选择所安装的系统类型</p>
-<p>选择最小安装,将一些开发工具勾选.</p>
-<p>9、开始安装</p>
-<p>安装前配置好了,选择开始安装.</p>
-<p>10、给ROOT配置密码</p>
-<p>11、安装完成</p>
-<p>安装成功,重启进入系统.</p>
+<p>Content-Type：application/json 时，默认以 POST 方式提交，此时 -X POST 可以缺省。</p>
+<p>————————————————<br>版权声明：本文为CSDN博主「骑个小蜗牛」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/jokerljg/article/details/126534526">https://blog.csdn.net/jokerljg/article/details/126534526</a></p>
  
       <!-- reward -->
       
@@ -685,13 +317,543 @@ git clone --depth 1 https://github.com/xiangyuecn/AreaCity-JsSpider-StatsGov.git
 </article>
 
     
+    <article
+  id="post-Linux命令：ss命令"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/11/23/Linux%E5%91%BD%E4%BB%A4%EF%BC%9Ass%E5%91%BD%E4%BB%A4/"
+    >Linux命令：ss命令</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/11/23/Linux%E5%91%BD%E4%BB%A4%EF%BC%9Ass%E5%91%BD%E4%BB%A4/" class="article-date">
+  <time datetime="2023-11-23T12:14:23.000Z" itemprop="datePublished">2023-11-23</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>ss功能：</p>
+<p>用来显示套接字信息的，类似于netstat，可以显示更多的信息，用于替代netstat。</p>
+<p>ss常用选项</p>
+<pre><code>-t：tcp协议的连接
+-u：udp协议的链接
+-w：裸套接字相关
+-x：unix sock相关
+-l：listen监听状态的连接
+-a：所有状态的连接
+-e：显示扩展信息
+-m：显示套接连接使用的内存信息
+-p：进程及UDP
+-n：数字格式显示
+-o：计时器信息
+</code></pre>
+<p>常用组合：</p>
+<pre><code>-tan, -tanl, -tanlp, -uan
+</code></pre>
+<p>TCP常见状态：</p>
+<p>LISTEN：监听</p>
+<pre><code>ESTABLISHED：已建立连接
+FIN_WAIT_1
+FIN_WAIT_2
+SYN_SENT
+SYN_RECV
+CLOSED
+</code></pre>
+<p>其他用法：</p>
+<pre><code>ss -l 显示本地打开的所有端口
+ss -pl 显示每个进程具体打开的socket
+ss -t -a 显示所有tcp socket
+ss -u -a 显示所有的UDP Socekt
+ss -o state established &#39;( dport = :ssh or sport = :ssh )&#39; 显示所有已建立的ssh连接
+ss -o state established &#39;( dport = :http or sport = :http )&#39; 显示所有已建立的HTTP连接
+ss -s 列出当前socket详细信息
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-CentOS系统安装JDK1.8 详细教程"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/11/22/CentOS%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85JDK1.8%20%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/"
+    >CentOS系统安装JDK1.8 详细教程</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/11/22/CentOS%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85JDK1.8%20%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/" class="article-date">
+  <time datetime="2023-11-22T12:14:23.000Z" itemprop="datePublished">2023-11-22</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>1、下载jdk</p>
+<pre><code>wget https://repo.huaweicloud.com/java/jdk/8u202-b08/jdk-8u241-linux-x64.tar.gz
+</code></pre>
+<p>2、创建安装目录</p>
+<pre><code>mkdir /usr/local/java/
+</code></pre>
+<p>3、解压至安装目录</p>
+<pre><code>tar -zxvf jdk-8u241-linux-x64.tar.gz -C /usr/local/java
+</code></pre>
+<p>4、配置环境变量</p>
+<pre><code>vim /etc/profile
+</code></pre>
+<p>在文本末尾添加</p>
+<pre><code>export JAVA_HOME=/usr/local/java/jdk1.8.0_241
+export JRE_HOME=$&#123;JAVA_HOME&#125;/jre
+export CLASSPATH=.:$&#123;JAVA_HOME&#125;/lib:$&#123;JRE_HOME&#125;/lib
+export PATH=$&#123;JAVA_HOME&#125;/bin:$PATH
+</code></pre>
+<p>5、保存并退出、按esc键、输入以下内容、按Enter键</p>
+<pre><code>:wq
+</code></pre>
+<p>6、使环境变量生效</p>
+<pre><code>source /etc/profile
+</code></pre>
+<p>7、添加软链接</p>
+<pre><code>ln -s /usr/local/java/jdk1.8.0_241/bin/java /usr/bin/java
+</code></pre>
+<p>8、检查jdk是否安装成功</p>
+<pre><code>java -version
+</code></pre>
+<p>执行结果：</p>
+<pre><code>java version &quot;1.8.0_241&quot;
+Java(TM) SE Runtime Environment (build 1.8.0_241-b07)
+Java HotSpot(TM) 64-Bit Server VM (build 25.241-b07, mixed mode)
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JDK/" rel="tag">JDK</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-CentOS 安装 nginx"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/11/21/CentOS%20%E5%AE%89%E8%A3%85%20nginx/"
+    >CentOS 安装 activeMq</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/11/21/CentOS%20%E5%AE%89%E8%A3%85%20nginx/" class="article-date">
+  <time datetime="2023-11-21T12:14:23.000Z" itemprop="datePublished">2023-11-21</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h1><p>安装依赖库</p>
+<pre><code>yum -y install make zlib zlib-devel gcc-c++ libtool  openssl openssl-devel pcre pcre-devel 
+</code></pre>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><pre><code>cd /usr/local/nginx
+
+#创建nginx安装目录
+mkdir nginx
+
+#解压
+tar -zxvf nginx-1.24.0.tar.gz
+
+#进入解压文件夹
+cd nginx-1.24.0
+
+#添加www用户
+useradd -s /sbin/nologin -M www
+
+#指定配置
+./configure --prefix=/usr/local/nginx/nginx --user=www --group=www --with-http_ssl_module --with-http_stub_status_module
+
+#编译
+make &amp;&amp; make install
+</code></pre>
+<h1 id="nginx常用命令"><a href="#nginx常用命令" class="headerlink" title="nginx常用命令"></a>nginx常用命令</h1><pre><code># 启动。默认监听80端口，启动成功之后可以浏览器访问ip:80，出现4.2中图表示centos服务器上nginx启动成功
+/usr/local/nginx/nginx/sbin/nginx
+# 重新载入配置文件
+/usr/local/nginx/nginx/sbin/nginx -s reload           
+# 重启 Nginx
+/usr/local/nginx/nginx/sbin/nginx -s reopen
+# 强制停止 Nginx
+/usr/local/nginx/nginx/sbin/nginx -s stop      
+# 优雅停止 Nginx，在退出前完成已经接受的连接请求
+/usr/local/nginx/nginx/sbin/nginx -s quit 
+# 检查nginx.conf文件正确性
+/usr/local/nginx/nginx/sbin/nginx -t 
+# 显示版本信息；
+/usr/local/nginx/nginx/sbin/nginx -v
+</code></pre>
+<h1 id="服务配置"><a href="#服务配置" class="headerlink" title="服务配置"></a>服务配置</h1><p>添加到系统服务：</p>
+<pre><code>#vim /usr/lib/systemd/system/nginx.service
+
+[Unit]
+Description=nginx web service
+Documentation=http://nginx.org/en/docs/
+After=network.target
+ 
+[Service]
+Type=forking
+PIDFile=/usr/local/nginx/nginx/logs/nginx.pid
+ExecStartPre=/usr/local/nginx/nginx/sbin/nginx -t -c /usr/local/nginx/nginx/conf/nginx.conf
+ExecStart=/usr/local/nginx/nginx/sbin/nginx
+ExecReload=/usr/local/nginx/nginx/sbin/nginx -s reload
+ExecStop=/usr/local/nginx/nginx/sbin/nginx -s stop
+PrivateTmp=true
+ 
+[Install]
+WantedBy=default.target
+</code></pre>
+<p>启动关停命令</p>
+<pre><code>#重新加载系统服务
+systemctl daemon-reload
+
+#启动: 
+systemctl start nginx
+
+#停止: 
+systemctl stop nginx
+
+#重启: 
+systemctl restart nginx
+
+#重新加载配置文件: 
+systemctl reload nginx.service
+
+#查看nginx状态: 
+systemctl status nginx
+
+#开机启动: 
+systemctl enable nginx
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/activeMq/" rel="tag">activeMq</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-CentOS 安装 activeMq"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/11/20/CentOS%20%E5%AE%89%E8%A3%85%20activeMq/"
+    >CentOS 安装 activeMq</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/11/20/CentOS%20%E5%AE%89%E8%A3%85%20activeMq/" class="article-date">
+  <time datetime="2023-11-20T12:14:23.000Z" itemprop="datePublished">2023-11-20</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>Apache ActiveMQ是一个免费的开源消息代理和集成模式服务器。它支持来自JAVA、c++、C、Python、Perl、PHP等多种语言的客户端和协议。它提供了许多功能，如消息组、虚拟目的地、通配符和组合目的地等。它可以很容易地集成到spring应用程序中。</p>
+<p>工欲善其事必先利其器，那么再使用这个mq之前，我们得先安装activemq，那么我们就来看一下如何安装activemq。由于activemq是基于java开发的，所以环境上必须得安装jdk。</p>
+<h1 id="activeMq的安装"><a href="#activeMq的安装" class="headerlink" title="activeMq的安装"></a>activeMq的安装</h1><p>ActiveMQ为Unix系统提供了预先编译的二进制文件，可以直接使用。唯一需要的依赖项是在系统中安装JAVA。由于我们已经安装了JAVA，我们可以进一步下载ActiveMQ。您总是可以从Apache ActiveMQ的官方发布页面获得最新的稳定版本。</p>
+<h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><p>本次安装的版本是5.15.5.使用以下命令进行下载。</p>
+<p>wget <a target="_blank" rel="noopener" href="http://archive.apache.org/dist/activemq/5.15.5/apache-activemq-5.15.5-bin.tar.gz">http://archive.apache.org/dist/activemq/5.15.5/apache-activemq-5.15.5-bin.tar.gz</a></p>
+<p>下载完成之后，我们接着进行解压，把该压缩包解压到/opt目录下。</p>
+<pre><code>sudo tar -zvxf apache-activemq-5.15.12-bin.tar.gz -C /opt
+</code></pre>
+<p>接着为了方便起见，您可以创建一个与版本无关的软链接，指向当前Apache ActiveMQ版本所在的目录。这种做法对以后的更新很有帮助。这样的话，后续进行安装新的版本的话，只需要修改一下软连接对应的版本，就不要每次都把升级的文件全部移动到指定的文件夹下。</p>
+<pre><code>sudo ln -s /opt/apache-activemq-5.15.12/  /opt/activemq
+</code></pre>
+<p>接着创建完软连接之后，我们进入到对应的/opt/activemq目录下，进行启动mq。并且查看启动状态，以及如何停止mq。</p>
+<p>虽然可以使用上面的命令轻松运行ActiveMQ，但建议使用systemd服务来管理ActiveMQ进程。使用Systemd服务将确保ActiveMQ在启动时和故障时自动启动。</p>
+<h2 id="创建系统服务进行启动"><a href="#创建系统服务进行启动" class="headerlink" title="创建系统服务进行启动"></a>创建系统服务进行启动</h2><p>通过以下命令来创建系统服务，在/usr/lib/systemd/system/创建一个activemq.service的文件。</p>
+<pre><code>sudo vi /usr/lib/systemd/system/activemq.service
+</code></pre>
+<p>输入以下内容到文件中。</p>
+<pre><code>[Unit]
+Description=activemq message queue
+After=network.target
+
+[Service]
+PIDFile=/opt/activemq/data/activemq.pid
+ExecStart=/opt/activemq/bin/activemq start
+ExecStop=/opt/activemq/bin/activemq stop
+User=root
+Group=root
+Restart=always
+RestartSec=9
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=activemq
+ 
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+<p>保存完毕，接着我们来检验一下启动是否能够成功，并且是否能够停止。</p>
+<p>sudo systemctl enable activemq<br>sudo systemctl start activemq<br>sudo systemctl status activemq<br>sudo systemctl stop activemq</p>
+<p>6，配置通过web进行展示</p>
+<p>安装完成之后，启动mq，接着我们可以通过web来访问mq的控制面板，在浏览器的地址栏输入：<a target="_blank" rel="noopener" href="http://xxxxxx:8161/admin.%E5%9C%A8%E8%AE%BF%E9%97%AE%E4%B9%8B%E5%89%8D%E5%BE%97%E6%89%93%E5%BC%80%E4%B8%80%E4%B8%8B%E7%AB%AF%E5%8F%A3%E3%80%82%E9%80%9A%E8%BF%87%E4%BB%A5%E4%B8%8B%E5%91%BD%E4%BB%A4%E3%80%82">http://xxxxxx:8161/admin.在访问之前得打开一下端口。通过以下命令。</a></p>
+<p>sudo firewall-cmd –zone=public –permanent –add-port=8161/tcp<br>sudo firewall-cmd –reload</p>
+<p>接着我们通过浏览器来访问一下。默认用户名密码是admin，进入之后可以修改。</p>
+<p>最后，听过以上步骤已经安装完成activemq。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/activeMq/" rel="tag">activeMq</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-CentOS 搭建 ElasticSearch"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/11/19/CentOS%20%E6%90%AD%E5%BB%BA%20ElasticSearch/"
+    >CentOS 搭建 ElasticSearch</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/11/19/CentOS%20%E6%90%AD%E5%BB%BA%20ElasticSearch/" class="article-date">
+  <time datetime="2023-11-19T12:14:23.000Z" itemprop="datePublished">2023-11-19</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>安装单机版 Elasticsearch</p>
+<p>进入 /usr/local</p>
+<h1 id="创建目录"><a href="#创建目录" class="headerlink" title="创建目录"></a>创建目录</h1><pre><code>mkdir elasticsearch
+</code></pre>
+<h1 id="安装包下载"><a href="#安装包下载" class="headerlink" title="安装包下载"></a>安装包下载</h1><p>下载地址：<a target="_blank" rel="noopener" href="https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.8.0.tar.gz">https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.8.0.tar.gz</a></p>
+<h1 id="进入elasticsearch，上传刚才下载的安装包，接着解压"><a href="#进入elasticsearch，上传刚才下载的安装包，接着解压" class="headerlink" title="进入elasticsearch，上传刚才下载的安装包，接着解压"></a>进入elasticsearch，上传刚才下载的安装包，接着解压</h1><pre><code>cd elasticsearch
+tar -zxvf elasticsearch-7.8.0.tar.gz
+</code></pre>
+<h1 id="进入elasticsearch-7-8-0目录，创建两个data和logs文件夹"><a href="#进入elasticsearch-7-8-0目录，创建两个data和logs文件夹" class="headerlink" title="进入elasticsearch-7.8.0目录，创建两个data和logs文件夹"></a>进入elasticsearch-7.8.0目录，创建两个data和logs文件夹</h1><pre><code>cd elasticsearch-7.8.0
+mkdir data
+mkdir logs
+</code></pre>
+<h1 id="修改config-elasticsearch-yml配置项"><a href="#修改config-elasticsearch-yml配置项" class="headerlink" title="修改config\elasticsearch.yml配置项"></a>修改config\elasticsearch.yml配置项</h1><p>在末尾添加如下：</p>
+<pre><code>cluster.name: elasticsearch
+node.name: node-1
+network.host: 0.0.0.0
+http.port: 9200
+cluster.initial_master_nodes: [&quot;node-1&quot;]
+</code></pre>
+<h1 id="修改-jvm-options配置项"><a href="#修改-jvm-options配置项" class="headerlink" title="修改\jvm.options配置项"></a>修改\jvm.options配置项</h1><p>第22行起，修改为如下：</p>
+<pre><code>-Xms4096m
+-Xmx4096m
+</code></pre>
+<h1 id="修改bin-elasticsearch-env，使用内置jdk"><a href="#修改bin-elasticsearch-env，使用内置jdk" class="headerlink" title="修改bin\elasticsearch-env，使用内置jdk"></a>修改bin\elasticsearch-env，使用内置jdk</h1><p>第38行起，修改为如下： </p>
+<pre><code># now set the path to java
+#if [ ! -z &quot;$JAVA_HOME&quot; ]; then
+#  JAVA=&quot;$JAVA_HOME/bin/java&quot;
+#  JAVA_TYPE=&quot;JAVA_HOME&quot;
+#else
+  if [ &quot;$(uname -s)&quot; = &quot;Darwin&quot; ]; then
+    # macOS has a different structure
+    JAVA=&quot;$ES_HOME/jdk.app/Contents/Home/bin/java&quot;
+  else
+    JAVA=&quot;$ES_HOME/jdk/bin/java&quot;
+  fi
+  JAVA_TYPE=&quot;bundled jdk&quot;
+#fi
+</code></pre>
+<h1 id="配置linux系统环境，命令：vi-etc-security-limits-conf"><a href="#配置linux系统环境，命令：vi-etc-security-limits-conf" class="headerlink" title="配置linux系统环境，命令：vi /etc/security/limits.conf"></a>配置linux系统环境，命令：vi /etc/security/limits.conf</h1><p>在末尾添加如下：</p>
+<pre><code>* soft nofile 65536
+* hard nofile 131072
+* soft nproc 2048
+* hard nproc 4096
+</code></pre>
+<h1 id="修改配置sysctl-conf，命令：vi-etc-sysctl-conf"><a href="#修改配置sysctl-conf，命令：vi-etc-sysctl-conf" class="headerlink" title="修改配置sysctl.conf，命令：vi /etc/sysctl.conf"></a>修改配置sysctl.conf，命令：vi /etc/sysctl.conf</h1><p>添加下面配置：</p>
+<pre><code>vm.max_map_count=655360
+</code></pre>
+<p>并执行命令：sysctl -p</p>
+<p>注意：elasticsearch不能用root用户启动，需要创建一个普通用户去启动</p>
+<h1 id="创建普通用户，给es用户授权，以便访问elasticsearch目录"><a href="#创建普通用户，给es用户授权，以便访问elasticsearch目录" class="headerlink" title="创建普通用户，给es用户授权，以便访问elasticsearch目录"></a>创建普通用户，给es用户授权，以便访问elasticsearch目录</h1><pre><code># 创建用户
+adduser es 或者 useradd es
+# 给用户设置密码 
+passwd es
+# 文件件所有者
+chown -R es:es /usr/local/elasticsearch
+# 如果错了，可以删除在加
+userdel -r es
+</code></pre>
+<p>注意：修改密码会有复杂性检查，不必理会，输入两遍密码就会成功</p>
+<h1 id="切换到es用户，启动elasticsearch"><a href="#切换到es用户，启动elasticsearch" class="headerlink" title="切换到es用户，启动elasticsearch"></a>切换到es用户，启动elasticsearch</h1><pre><code># su es
+# bin/elasticsearch -d
+</code></pre>
+<p>注意：切换到es用户，需要属于密码，属于刚才创建的es密码，然后执行启动命令：bin/elasticsearch，看到如下启动成功</p>
+<h1 id="测试elasticsearch"><a href="#测试elasticsearch" class="headerlink" title="测试elasticsearch"></a>测试elasticsearch</h1><pre><code>curl http://localhost:9200
+</code></pre>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><p>elasticsearch可以以下面这种方式启动：</p>
+<pre><code>bin/elasticsearch
+</code></pre>
+<p>在linux系统，这个命令将在前台启动进程。</p>
+<p>我们也可以在后台运行，以守护进程的方式，加上-d参数</p>
+<pre><code>bin/elasticsearch -d
+</code></pre>
+<p>在启动的时候可以指定es 进程pid写入的文件，这样可以方便的kill进程</p>
+<pre><code>bin/elasticsearch -d -p pid     pid是文件
+kill `cat pid`   杀死指定文件中pid的 es进程
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ElasticSearch/" rel="tag">ElasticSearch</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
   </article>
   
 
   
   <nav class="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/52/">52</a><a class="extend next" rel="next" href="/page/2/">下一页</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/54/">54</a><a class="extend next" rel="next" href="/page/2/">下一页</a>
   </nav>
   
 </section>

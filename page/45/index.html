@@ -154,7 +154,7 @@
     
     
     <article
-  id="post-PostgreSQL的所有环境变量"
+  id="post-Springboot-Postgresql-FastAutoGenerator-1"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -165,8 +165,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/02/21/PostgreSQL%E7%9A%84%E6%89%80%E6%9C%89%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/"
-    >PostgreSQL的所有环境变量</a> 
+  <a class="article-title" href="/2023/03/07/Springboot-Postgresql-FastAutoGenerator-1/"
+    >Springboot+Postgresql+FastAutoGenerator（一）</a> 
 </h2>
  
 
@@ -174,8 +174,106 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2023/02/21/PostgreSQL%E7%9A%84%E6%89%80%E6%9C%89%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/" class="article-date">
-  <time datetime="2023-02-21T04:56:24.000Z" itemprop="datePublished">2023-02-21</time>
+      <a href="/2023/03/07/Springboot-Postgresql-FastAutoGenerator-1/" class="article-date">
+  <time datetime="2023-03-07T06:57:38.000Z" itemprop="datePublished">2023-03-07</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>Postgreql默认是public，需要手动指定schema。<br>URL指定schema也不行，必须单独构造一个DataSourceConfig.Builder进行指定。</p>
+<pre><code>package com.goland.gis;
+
+import com.baomidou.mybatisplus.generator.FastAutoGenerator;
+import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
+import com.baomidou.mybatisplus.generator.config.OutputFile;
+import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
+
+import java.util.Collections;
+
+public class CodeGenerator &#123;
+
+    public static void main(String[] args) &#123;
+
+        String url =&quot;jdbc:postgresql://localhost:5432/power?currentSchema=system&quot;;
+        String username = &quot;postgres&quot;;
+        String password = &quot;postgres&quot;;
+
+        String moduleName = &quot;sys&quot;;
+        String mapperLocation = &quot;E:\\Java\\work4\\grid\\gis\\src\\main\\resources\\mapper\\&quot; + moduleName;
+        String tableNames = &quot;sys_user,sys_menu,sys_role,sys_role_menu,sys_user_role&quot;;
+
+        DataSourceConfig.Builder builderOutSide = new DataSourceConfig.Builder(url, username, password);
+        builderOutSide.schema(&quot;system&quot;);
+
+        FastAutoGenerator.create(builderOutSide)
+                .globalConfig(builder -&gt; &#123;
+                    builder.author(&quot;zhangsmile1893&quot;) // 设置作者
+                            //.enableSwagger() // 开启 swagger 模式
+                            //.fileOverride() // 覆盖已生成文件
+                            .outputDir(&quot;E:\\Java\\work4\\grid\\gis\\src\\main\\java&quot;); // 指定输出目录
+                &#125;)
+                .packageConfig(builder -&gt; &#123;
+                    builder.parent(&quot;com.goland.gis&quot;) // 设置父包名
+                            .moduleName(moduleName) // 设置父包模块名
+                            .pathInfo(Collections.singletonMap(OutputFile.xml, mapperLocation)); // 设置mapperXml生成路径
+                &#125;)
+                .strategyConfig(builder -&gt; &#123;
+                    builder.addInclude(tableNames) // 设置需要生成的表名
+                            .addTablePrefix(&quot;sys_&quot;); // 设置过滤表前缀
+                &#125;)
+                .templateEngine(new FreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板
+                .execute();
+    &#125;
+&#125;
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SpringBoot/" rel="tag">SpringBoot</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-关于数据库模式切换问题"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/03/06/%E5%85%B3%E4%BA%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A8%A1%E5%BC%8F%E5%88%87%E6%8D%A2%E9%97%AE%E9%A2%98/"
+    >关于数据库模式切换问题</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/03/06/%E5%85%B3%E4%BA%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A8%A1%E5%BC%8F%E5%88%87%E6%8D%A2%E9%97%AE%E9%A2%98/" class="article-date">
+  <time datetime="2023-03-06T06:27:10.000Z" itemprop="datePublished">2023-03-06</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
@@ -185,10 +283,18 @@
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>下列环境变量能被用于选择默认的连接参数值，如果调用代码没有直接指定值，它们将被用于PQconnectdb, PQsetdbLogin 和 PQsetdb。<br>例如，这些有助于防止数据库连接信息被硬编码到简单的客户端应用中。<br>PGHOST的行为和host连接参数相同。<br>PGHOSTADDR的行为和hostaddr连接参数相同。可以设置它来替代或者作为PGHOST的补充来防止 DNS 查找负担。<br>PGPORT的行为和port连接参数相同。<br>PGDATABASE的行为和dbname连接参数相同。<br>PGUSER的行为和user连接参数相同。 PGPASSWORD的行为和password连接参数相同。出于安全原因，我们不推荐使用这个环境变量，因为某些操作系统允许非根用户通过ps看到进程的环境变量。可以考虑使用一个口令文件（见第 33.15 节）。<br>PGPASSFILE的行为和passfile连接参数相同。<br>PGCHANNELBINDING 的行为和 channel_binding 连接参数相同.<br>PGSERVICE的行为和service连接参数相同。<br>PGSERVICEFILE指定针对每个用户的连接服务文件名。如果没有设置，默认为~/.pg_service.conf（见第 33.16 节）。<br>PGOPTIONS的行为和options连接参数相同。<br>PGAPPNAME的行为和application_name连接参数相同。<br>PGSSLMODE的行为和sslmode连接参数相同。 PGREQUIRESSL的行为和requiressl连接参数相同。为了支持PGSSLMODE变量，这个环境变量已被废弃。同时设置两个变量会抑制这一个的效果。 PGSSLCOMPRESSION的行为和sslcompression连接参数相同。<br>PGSSLCERT的行为和sslcert连接参数相同。<br>PGSSLKEY的行为和sslkey连接参数相同。<br>PGSSLROOTCERT的行为和sslrootcert连接参数相同。<br>PGSSLCRL的行为和sslcrl连接参数相同。<br>PGREQUIREPEER的行为和requirepeer连接参数相同。<br>PGSSLMINPROTOCOLVERSION 的行为和 ssl_min_protocol_version 连接参数相同。<br>PGSSLMAXPROTOCOLVERSION 行为和 ssl_min_protocol_version 连接参数相同。<br>PGGSSENCMODE 的行为和 gssencmode连接参数相同。<br>PGKRBSRVNAME的行为和krbsrvname连接参数相同。<br>PGGSSLIB的行为和gsslib连接参数相同。<br>PGCONNECT_TIMEOUT的行为和connect_timeout连接参数相同。<br>PGCLIENTENCODING的行为和client_encoding连接参数相同。<br>PGTARGETSESSIONATTRS的行为和target_session_attrs连接参数相同。 </p>
-<p>下面的环境变量可用来为每一个PostgreSQL会话指定默认行为（为每一个用户或每一个数据库设置默认行为的方法还可见ALTER ROLE和ALTER DATABASE命令）。<br>PGDATESTYLE设置日期/时间表示的默认风格（等同于SET datestyle TO …）。 PGTZ设置默认的时区（等同于SET timezone TO …）。<br>PGGEQO为遗传查询优化器设置默认模式（等同于SET geqo TO …）。 这些环境变量的正确值可参考SQL 命令 SET。 </p>
-<p>下面的环境变量决定libpq的内部行为，它们会覆盖编译在程序中的默认值。 PGSYSCONFDIR设置包含pg_service.conf文件以及未来版本中可能出现的其他系统范围配置文件的目录。 PGLOCALEDIR设置包含用于消息本地化的locale文件的目录。</p>
-<p>————————————————<br>版权声明：本文为「小麦苗DBA宝典(<a target="_blank" rel="noopener" href="http://www.xmmup.com)」的原创文章,遵循cc/">www.xmmup.com)」的原创文章，遵循CC</a> 4.0 BY -SA版权协议，转载请附上原文出处链接及本声明。<br>转载请保留原文链接: <a target="_blank" rel="noopener" href="https://www.xmmup.com/pgdesuoyouhuanjingbianliang.html">https://www.xmmup.com/pgdesuoyouhuanjingbianliang.html</a></p>
+  <p>现在流行的数据库都有 Schema 的概念，一般作为数据库对象(表，函数，存储过程等)的命名空间。所以在数据库端往往存在实例/数据库/Schema 这样层级划分。对于DB2 和 Oracle 用客户端创建一个新的数据库并非易事，灵活的在数据库中较轻量的划分隔离空间的办法因数据库类型而异。</p>
+<p>MySQL： Mysql 的体系架构是单实例多库，一个用户可以访问多个数据库，然后指定当前数据库写 SQL 的时候就不用带上数据库名，MySQL 中 database 和 schema是一个概念，它靠 database 来隔离数据库对象。创建数据库(create database)，create schema 是 create database 的别名。</p>
+<p>PostgreSQL： create database 创建新的数据库，或在当前数据库下用 create schema 创建 schema。PostgreSQL 的函数或存储过程中对未指定 schema 的数据库对象的访问的规则是在调用时动态绑定到当前会话中的 schema。</p>
+<p>达梦 8： 达梦的体系架构是单库多实例的，也就是没有多个数据库的概念，从 Mysql转到达梦，就需要建多个用户+表空间来对应 Mysql的多个数据库。每个用户有一个默认的同名的模式，访问自己模式下的表、视图等不需要加模式名，访问其他模式下的对象需要加上模式名。</p>
+<p>Oracle： create schema 较麻烦，涉及到 authorization。但可以通过 create user 创建新用户后就有了对应的新 schema。Oracle 中采取用户来隔离数据库对象。</p>
+<p>实际应用过程中研发交付团队可能使用模式来进行租户间的数据隔离或根据业务功能划分不同的模式，这里就涉及一个服务需要同时连接并查询多种模式的问题，<br>一种方案是直接在 sql 中的表名前添加模式名前缀，这种适合一句 sql 需要跨多个模式进行联合查询的场景，属于定制型 sql。<br>一种方案是在会话层面指定模式，这样 sql中的表名不需要指定默认的前缀，对于不在当前模式下的表才需要添加模式前缀，这种适合多模式下相同表名存储数据的切换。</p>
+<p>MySQL 的连接串直接指定具体数据库，其实已经是会话层面的模式切换</p>
+<p>PostgreSQL 的连接串在没有指定当前模式下，例如<br>jdbc:postgresql://localhost:5432/postgresql 默认使用的是 postgresql 数据库的 public模式。</p>
+<p>PostgreSQL 从 9.4 版本开始通过关键字 currentSchema 指定模式<br>jdbc:postgresql://localhost:5432/postgresql?currentSchema=myschema</p>
+<p>旧版本通过 searchpath 指定<br>jdbc:postgresql://localhost:5432/postgresql?searchpath=myschema</p>
+<p>达梦 8 的连接串在没有指定当前模式时，使用的是与用户同名的模式，可通过scheme 指定当前模式，例如：<br>jdbc:dm://localhost:5236?schema=myschema</p>
+<p>————————————————<br>版权声明：本文为CSDN博主「雪影风痕」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_48805880/article/details/128385835">https://blog.csdn.net/m0_48805880/article/details/128385835</a></p>
  
       <!-- reward -->
       
@@ -199,7 +305,7 @@
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a></li></ul>
 
     </footer>
   </div>
@@ -210,7 +316,7 @@
 
     
     <article
-  id="post-Qt播放视频报错"
+  id="post-SpringBoot连接PostgreSQL"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -221,8 +327,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/02/20/Qt%E6%92%AD%E6%94%BE%E8%A7%86%E9%A2%91%E6%8A%A5%E9%94%99/"
-    >Qt播放视频报错</a> 
+  <a class="article-title" href="/2023/03/05/SpringBoot%E8%BF%9E%E6%8E%A5PostgreSQL/"
+    >SpringBoot连接PostgreSQL</a> 
 </h2>
  
 
@@ -230,8 +336,8 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2023/02/20/Qt%E6%92%AD%E6%94%BE%E8%A7%86%E9%A2%91%E6%8A%A5%E9%94%99/" class="article-date">
-  <time datetime="2023-02-20T07:05:41.000Z" itemprop="datePublished">2023-02-20</time>
+      <a href="/2023/03/05/SpringBoot%E8%BF%9E%E6%8E%A5PostgreSQL/" class="article-date">
+  <time datetime="2023-03-05T09:28:50.000Z" itemprop="datePublished">2023-03-05</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -241,11 +347,50 @@
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>首先，对于这个问题，编译也能通过，但是运行就会出错：</p>
-<p>DirectShowPlayerService::doRender: Unresolved error code 0x80040266</p>
-<p>原因：Qt 中的多媒体播放，底层是使用 DirectShowPlayerService，所以安装一个 DirectShow 解码器，例如 LAV Filters，就可以解决运行出错问题。</p>
-<p>下载并安装 LAVFilters：<a target="_blank" rel="noopener" href="https://github.com/Nevcairiel/LAVFilters/releases">https://github.com/Nevcairiel/LAVFilters/releases</a></p>
-<p>installer 方式直接按步骤安装<br>压缩包方式解压右键以管理员运行 install_video.bat 文件<br>最后，重启电脑<br>————————————————<br>版权声明：本文为CSDN博主「tianyvHon」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44916154/article/details/121755328">https://blog.csdn.net/weixin_44916154/article/details/121755328</a></p>
+  <ul>
+<li><p>1 yml配置</p>
+</li>
+<li><ul>
+<li><p>1.1 不指定schema的情况下，使用公共的schema</p>
+<pre><code> spring:
+   datasource:
+     driver-class-name: org.postgresql.Driver
+     url: jdbc:postgresql://localhost:5432/database
+     username: xxx
+     password: xxx
+ 
+</code></pre>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><p>1.2 指定schema的情况下</p>
+<pre><code> spring:
+   datasource:
+     driver-class-name: org.postgresql.Driver
+     url: jdbc:postgresql://localhost:5432/database?currentSchema=schema
+     username: xxx
+     password: xxx
+ 
+</code></pre>
+</li>
+</ul>
+</li>
+<li><p>2 版本影响 </p>
+</li>
+<li><ul>
+<li><p>postgresql 9.3 及以前的版本指定方式</p>
+<p> spring.datasource.url=jdbc:postgresql://localhost:5432/postgresql?searchpath=newschema</p>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><p>postgresql 9.4 及以后的版本指定方式</p>
+<p> spring.datasource.url=jdbc:postgresql://localhost:5432/postgresql?currentSchema=newschema </p>
+</li>
+</ul>
+</li>
+</ul>
  
       <!-- reward -->
       
@@ -256,7 +401,7 @@
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Qt/" rel="tag">Qt</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BE%9D%E8%B5%96%E9%85%8D%E7%BD%AE/" rel="tag">依赖配置</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SpringBoot/" rel="tag">SpringBoot</a></li></ul>
 
     </footer>
   </div>
@@ -267,7 +412,7 @@
 
     
     <article
-  id="post-PostgreSQL数据库免密登录配置"
+  id="post-QGIS-Environment-variables"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -278,8 +423,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/02/19/PostgreSQL%E6%95%B0%E6%8D%AE%E5%BA%93%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95%E9%85%8D%E7%BD%AE/"
-    >PostgreSQL数据库免密登录配置</a> 
+  <a class="article-title" href="/2023/03/04/QGIS-Environment-variables/"
+    >QGIS Environment variables</a> 
 </h2>
  
 
@@ -287,8 +432,8 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2023/02/19/PostgreSQL%E6%95%B0%E6%8D%AE%E5%BA%93%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95%E9%85%8D%E7%BD%AE/" class="article-date">
-  <time datetime="2023-02-19T03:45:56.000Z" itemprop="datePublished">2023-02-19</time>
+      <a href="/2023/03/04/QGIS-Environment-variables/" class="article-date">
+  <time datetime="2023-03-04T06:10:15.000Z" itemprop="datePublished">2023-03-04</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
@@ -298,122 +443,121 @@
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>PG数据库在登录的时候，需要显示输入密码，因此在很多维护操作中都不方便，比如：定时的VACUUM脚本、定时备份脚本等。PG不能像MySQL那样可以在命令中直接输入密码。</p>
-<p>本文梳理了以下几种PG配置免密的方法。</p>
-<h1 id="具体方法"><a href="#具体方法" class="headerlink" title="具体方法"></a>具体方法</h1><ul>
-<li>方法一：设置pg_hab.conf 认证方式为trust</li>
-</ul>
-<p>示例：</p>
-<pre><code>#Type database user address method
-host all postgres 127.0.0.1/32 trust
-</code></pre>
-<p>该方式最不安全，导致通过指定IP连接数据库的连接都可以任意登录数据，毫无安全保障。禁止在生产环境使用。</p>
-<ul>
-<li>方法二：设置PG环境变量PGPASSWORD</li>
-</ul>
-<p>PGPASSWORD是PostgreSQL系统环境变量，在客户端设置后再远程连接数据库时，将优先使用这个密码。</p>
-<p>示例：</p>
-<pre><code>[postgres@PG-1 ~]$ export PGPASSWORD=root
-[postgres@PG-1 ~]$ psql -U postgres -h 127.0.0.1 -p 5432
-Timing is on.
-Border style is 2.
-Null display is &quot;NULL&quot;.
-psql (13.2)
-Type &quot;help&quot; for help.
-</code></pre>
-<p>此时数据库登录时，不在提示输入用户密码</p>
-<ul>
-<li>方法三：设置环境变量PGSERVICE</li>
-</ul>
-<p>pg_service.conf 通过定义服务文件的方式，可以对多个数据库进行免密登录。</p>
-<p>示例：</p>
-<pre><code>vi /home/postgres/.pg_service.conf
-[backup]
-hostaddr=127.0.0.1
-port=5432
-user=postgres
-dbname=postgres
-password=root
-connect_timeout=10
-[postgres@PG-1 ~]$ export PGSERVICE=backup
-[postgres@PG-1 ~]$ psql -h 127.0.0.1 -p 5432 -U postgres
-Timing is on.
-Border style is 2.
-Null display is &quot;NULL&quot;.
-psql (13.2)
-Type &quot;help&quot; for help.
-</code></pre>
-<p>定义pg_service.conf文件，该文件可以包含多个模块，每个模块代表一个连接。</p>
-<ul>
-<li>方法四：设置.pgpass文件</li>
-</ul>
-<p>该文件默认在/home/postgres/，且该文件的权限要为600，如果文件权限不对，则在登录会有相应的告警输出，并要求输入用户密码。</p>
-<pre><code>WARNING: password file &quot;/home/postgres/.pgpass&quot; has group or world access; permissions should be u=rw (0600) or less
-Password for user postgres:
-</code></pre>
-<p>内容格式：</p>
-<pre><code>host:port:dbname:username:password
-</code></pre>
-<p>示例：</p>
-<pre><code>[postgres@PG-1 ~]$ cat .pgpass
-127.0.0.1:5432:postgres:postgres:root
-localhost:5432:postgres:postgres:root
-</code></pre>
-<p>文件权限：</p>
-<pre><code>[postgres@PG-1 ~]$ ll -h .pgpass
--rw------- 1 postgres postgres 76 2月 24 19:26 .pgpass
-</code></pre>
-<p>登录：</p>
-<pre><code>[postgres@PG-1 ~]$ psql -U postgres -h 127.0.0.1 -p 5432
-Timing is on.
-Border style is 2.
-Null display is &quot;NULL&quot;.
-psql (13.2)
-Type &quot;help&quot; for help.
-</code></pre>
-<p>以上的几种免密方式，在使用pg_basebackup进行备份时都可适用。以下是相关验证：</p>
-<h1 id="相关验证"><a href="#相关验证" class="headerlink" title="相关验证"></a>相关验证</h1><ul>
-<li><ol>
-<li>使用PGSERVICE环境变量</li>
-</ol>
-</li>
-</ul>
-<p>示例：</p>
-<pre><code>export PGSERVICE=backup
-pg_basebackup -D /data/aa -Fp -X stream -R -P -c fast
-</code></pre>
-<ul>
-<li><ol start="2">
-<li>使用PGPASSWORD环境变量</li>
-</ol>
-</li>
-</ul>
-<p>示例：</p>
-<pre><code>export PGPASSWORD=password
-pg_basebackup -D /data/bb -Fp -X stream -R -P -c fast -h 127.0.0.1 -p 5432 -U postgres
-</code></pre>
-<ul>
-<li><ol start="3">
-<li>使用.pgpass方式</li>
-</ol>
-</li>
-</ul>
-<p>示例：</p>
-<pre><code>vi /home/postgres/.pgpass
-127.0.0.1:5432:postgres:postgres:root
-chmod 600 .pgpass
-pg_basebackup -D /data/bb -Fp -X stream -R -P -c fast -h 127.0.0.1 -p 5432 -U postgres
-</code></pre>
-<ul>
-<li><ol start="4">
-<li>pg_basebackup备份使用-d参数，在连接字符串中配置连接信息</li>
-</ol>
-</li>
-</ul>
-<p>示例：</p>
-<pre><code>pg_basebackup   -D /data/pgdata/ -F p -R -X stream -c fast  -U replic -d host=192.168.28.169 port=5432 password=replic dbname=postgres
-</code></pre>
-<p>转载自<a target="_blank" rel="noopener" href="https://www.ucloud.cn/yun/129860.html">https://www.ucloud.cn/yun/129860.html</a></p>
+  <p>You can configure some aspects of QGIS Server by setting environment variables.</p>
+<p>According to the HTTP server and how you run QGIS Server, there are several ways to define these variables. This is fully described in Apache HTTP Server.</p>
+<p>名称</p>
+<p>Description</p>
+<p>Default</p>
+<p>Services</p>
+<p>QGIS_OPTIONS_PATH</p>
+<p>Specifies the path to the directory with settings. It works the same way as QGIS application –optionspath option. It is looking for settings file in <QGIS_OPTIONS_PATH>/QGIS/QGIS3.ini.</QGIS_OPTIONS_PATH></p>
+<p>‘’</p>
+<p>All</p>
+<p>QGIS_PLUGINPATH</p>
+<p>Useful if you are using Python plugins for the server, this sets the folder that is searched for Python plugins.</p>
+<p>‘’</p>
+<p>All</p>
+<p>QGIS_PROJECT_FILE</p>
+<p>The .qgs or .qgz project file, normally passed as a parameter in the query string (with MAP), you can also set it as an environment variable (for example by using mod_rewrite Apache module).</p>
+<p>Note that you may also indicate a project stored in PostgreSQL, e.g. postgresql://localhost:5432?sslmode=disable&amp;dbname=mydb&amp;schema=myschema&amp;project=myproject.</p>
+<p>‘’</p>
+<p>All</p>
+<p>QGIS_SERVER_API_RESOURCES_DIRECTORY</p>
+<p>Base directory for all OGC API (such as OAPIF/WFS3) static resources (HTML templates, CSS, JS, …)</p>
+<p>depends on packaging</p>
+<p>WFS</p>
+<p>QGIS_SERVER_API_WFS3_MAX_LIMIT</p>
+<p>Maximum value for limit in a features request.</p>
+<p>10000</p>
+<p>WFS</p>
+<p>QGIS_SERVER_CACHE_DIRECTORY</p>
+<p>Specifies the network cache directory on the filesystem.</p>
+<p>cache in profile directory</p>
+<p>All</p>
+<p>QGIS_SERVER_CACHE_SIZE</p>
+<p>Sets the network cache size in MB.</p>
+<p>50 MB</p>
+<p>All</p>
+<p>QGIS_SERVER_DISABLE_GETPRINT</p>
+<p>This is an option at the project level to improve project read time by disabling loading of layouts.</p>
+<p>Activating this option disables the QGIS WMS GetPrint request. Set this QGIS project flag to not load layouts.</p>
+<p>false</p>
+<p>WMS</p>
+<p>QGIS_SERVER_IGNORE_BAD_LAYERS</p>
+<p>“Bad” layers are layers that cannot be loaded. The default behavior of QGIS Server is to consider the project as not available if it contains a bad layer.</p>
+<p>The default behavior can be overridden by setting this variable to 1 or true. In this case, “bad” layers will just be ignored, and the project will be considered valid and available.</p>
+<p>false</p>
+<p>All</p>
+<p>QGIS_SERVER_LANDING_PAGE_PREFIX</p>
+<p>Prefix of the path component of the landing page base URL</p>
+<p>“”</p>
+<p>All</p>
+<p>QGIS_SERVER_LANDING_PAGE_PROJECTS_DIRECTORIES</p>
+<p>Directories used by the landing page service to find .qgs and .qgz projects</p>
+<p>“”</p>
+<p>All</p>
+<p>QGIS_SERVER_LANDING_PAGE_PROJECTS_PG_CONNECTIONS</p>
+<p>PostgreSQL connection strings used by the landing page service to find projects</p>
+<p>“”</p>
+<p>All</p>
+<p>QGIS_SERVER_LOG_FILE</p>
+<p>Specify path and filename. Make sure that server has proper permissions for writing to file. File should be created automatically, just send some requests to server. If it’s not there, check permissions.</p>
+<p>警告</p>
+<p>QGIS_SERVER_LOG_FILE is deprecated since QGIS 3.4, use QGIS_SERVER_LOG_STDERR instead. File logging support will be removed in QGIS 4.0.</p>
+<p>‘’</p>
+<p>All</p>
+<p>QGIS_SERVER_LOG_LEVEL</p>
+<p>Specify desired log level. Available values are:</p>
+<p>0 or INFO (log all requests)</p>
+<p>1 or WARNING</p>
+<p>2 or CRITICAL (log just critical errors, suitable for production purposes)</p>
+<p>0</p>
+<p>All</p>
+<p>QGIS_SERVER_LOG_PROFILE</p>
+<p>Add detailed profile information to the logs, only effective when QGIS_SERVER_LOG_LEVEL=0</p>
+<p>false</p>
+<p>All</p>
+<p>QGIS_SERVER_LOG_STDERR</p>
+<p>Activate logging to stderr. This variable has no effect when QGIS_SERVER_LOG_FILE is set.</p>
+<p>0 or false (case insensitive)</p>
+<p>1 or true (case insensitive)</p>
+<p>false</p>
+<p>All</p>
+<p>QGIS_SERVER_MAX_THREADS</p>
+<p>Number of threads to use when parallel rendering is activated. If value is -1 it uses the number of processor cores.</p>
+<p>-1</p>
+<p>All</p>
+<p>QGIS_SERVER_OVERRIDE_SYSTEM_LOCALE</p>
+<p>Sets LOCALE to be used by QGIS server. The default value is empty (no override).</p>
+<p>Example: de_CH.utf8</p>
+<p>‘’</p>
+<p>All</p>
+<p>QGIS_SERVER_PARALLEL_RENDERING</p>
+<p>Activates parallel rendering for WMS GetMap requests. It’s disabled (false) by default. Available values are:</p>
+<p>0 or false (case insensitive)</p>
+<p>1 or true (case insensitive)</p>
+<p>false</p>
+<p>WMS</p>
+<p>QGIS_SERVER_SHOW_GROUP_SEPARATOR</p>
+<p>Defines whether a group separator (e.g. thousand separator) should be used for numeric values (e.g. in GetFeatureInfo responses). The default value is 0.</p>
+<p>0 or false (case insensitive)</p>
+<p>1 or true (case insensitive)</p>
+<p>false</p>
+<p>WMS</p>
+<p>QGIS_SERVER_TRUST_LAYER_METADATA</p>
+<p>This is an option at the project level to improve project read time by using the vector layer extents defined in the project metadata and disabling the check for PostgreSQL/PostGIS layer primary key uniqueness.</p>
+<p>Trusting layer metadata can be forced by setting this variable to 1 or true. The vector layer’s extent will then be the one defined in the project, and the PostgreSQL/PostGIS layer’s primary key defined in the data source is considered as unique without a check.</p>
+<p>Do not use it if layers’ extent is not fixed during the project’s use.</p>
+<p>false</p>
+<p>All</p>
+<p>QGIS_SERVER_WMS_MAX_HEIGHT / QGIS_SERVER_WMS_MAX_WIDTH</p>
+<p>Maximum height/width for a WMS request. The most conservative between this and the project one is used. If the value is -1, it means that there is no maximum set.</p>
+<p>-1</p>
+<p>WMS</p>
+<p>QUERY_STRING</p>
+<p>The query string, normally passed by the web server. This variable can be useful while testing QGIS server binary from the command line.</p>
+<p>For example for testing a GetCapabilities request on the command line to a project that also requires a PostgreSQL connection defined in a pg_service.conf file:</p>
+<p>PGSERVICEFILE=/etc/pg_service.conf <br>QUERY_STRING=”MAP=/home/projects/world.qgs&amp;SERVICE=WMS&amp;REQUEST=GetCapabilities” <br>/usr/lib/cgi-bin/qgis_mapserv.fcgi<br>The result should be either the content of the GetCapabilities response or, if something is wrong, an error message.</p>
  
       <!-- reward -->
       
@@ -424,7 +568,7 @@ pg_basebackup -D /data/bb -Fp -X stream -R -P -c fast -h 127.0.0.1 -p 5432 -U po
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/QGIS/" rel="tag">QGIS</a></li></ul>
 
     </footer>
   </div>
@@ -435,7 +579,7 @@ pg_basebackup -D /data/bb -Fp -X stream -R -P -c fast -h 127.0.0.1 -p 5432 -U po
 
     
     <article
-  id="post-Notepad-正则表达式"
+  id="post-How-QGIS-Serve-a-project"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -446,8 +590,8 @@ pg_basebackup -D /data/bb -Fp -X stream -R -P -c fast -h 127.0.0.1 -p 5432 -U po
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/02/18/Notepad-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"
-    >Notepad++正则表达式</a> 
+  <a class="article-title" href="/2023/03/03/How-QGIS-Serve-a-project/"
+    >How QGIS Serve a project</a> 
 </h2>
  
 
@@ -455,91 +599,38 @@ pg_basebackup -D /data/bb -Fp -X stream -R -P -c fast -h 127.0.0.1 -p 5432 -U po
     </header>
      
     <div class="article-meta">
-      <a href="/2023/02/18/Notepad-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="article-date">
-  <time datetime="2023-02-18T01:59:10.000Z" itemprop="datePublished">2023-02-18</time>
+      <a href="/2023/03/03/How-QGIS-Serve-a-project/" class="article-date">
+  <time datetime="2023-03-03T06:07:30.000Z" itemprop="datePublished">2023-03-03</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
   </div>
    
     </div>
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>则表达式是一个查询的字符串，它包含一般的字符和一些特殊的字符，特殊字符可以扩展查找字符串的能力，正则表达式在查找和替换字符串的作用不可忽视，它 能很好提高工作效率。</p>
-<p>EditPlus的查找，替换，文件中查找支持以下的正则表达式：</p>
-<p>表达式 说明<br>/t 制表符.<br>/n 新行.<br>. 匹配任意字符.<br>| 匹配表达式左边和右边的字符. 例如, “ab|bc” 匹配 “ab” 或者 “bc”.<br>[] 匹配列表之中的任何单个字符. 例如, “[ab]” 匹配 “a” 或者 “b”. “[0-9]” 匹配任意数字.<br>[^] 匹配列表之外的任何单个字符. 例如, “[^ab]” 匹配 “a” 和 “b” 以外的字符. “[^0-9]” 匹配任意非数字字符.</p>
-<ul>
-<li>其左边的字符被匹配任意次(0次，或者多次). 例如 “be*” 匹配 “b”, “be” 或者 “bee”.</li>
-</ul>
-<ul>
-<li>其左边的字符被匹配至少一次(1次，或者多次). 例如 “be+” 匹配 “be” 或者 “bee” 但是不匹配 “b”.<br>? 其左边的字符被匹配0次或者1次. 例如 “be?” 匹配 “b” 或者 “be” 但是不匹配 “bee”.<br>^ 其右边的表达式被匹配在一行的开始. 例如 “^A” 仅仅匹配以 “A” 开头的行.<br>$ 其左边的表达式被匹配在一行的结尾. 例如 “e$” 仅仅匹配以 “e” 结尾的行.<br>() 影响表达式匹配的顺序，并且用作表达式的分组标记.<br>/ 转义字符. 如果你要使用 “/“ 本身, 则应该使用 “//“.</li>
-</ul>
-<p>例子：</p>
-<p>原始串<br>str[1]abc[991];<br>str[2]abc[992];<br>str[11]abc[993];<br>str[22]abc[994];<br>str[111]abc[995];<br>str[222]abc[996];<br>str[1111]abc[997];<br>str[2222]abc[999];</p>
-<p>目标串：<br>abc[1];<br>abc[2];<br>abc[11];<br>abc[22];<br>abc[111];<br>abc[222];<br>abc[1111];<br>abc[2222];</p>
-<p>处理：<br>查找串：str/[([0-9]+)/]abc/[[0-9]+/]<br>替换串：abc[/1]</p>
-<p>一、包含“hello word”的行</p>
-<p>^.<em>hello word.</em>$</p>
-<p>二、以“hello word”开始的行</p>
-<p>^hello word.*$</p>
-<p>三、以“hello word”结尾的行</p>
-<p>.*hello word$</p>
-<p>查找目标\n([a-zA-Z0-9])</p>
-<p>或者\r([a-zA-Z0-9])</p>
-<p>替换目标$1(http前面的换行变成 ‘,’ ,然后再加其他的)</p>
-<p>【1】正则表达式应用——替换指定内容到行尾<br>原始文本如下面两行<br>abc aaaaa<br>123 abc 444</p>
-<p>希望每次遇到“abc”，则替换“abc”以及其后到行尾的内容为“abc efg”<br>即上面的文本最终替换为：<br>abc efg<br>123 abc efg</p>
-<p>解决：<br>① 在替换对话框，查找内容里输入“abc.<em>”<br>② 同时勾选“正则表达式”复选框，然后点击“全部替换”按钮<br>其中，符号的含义如下：<br>“.” ＝匹配任意字符<br>“</em>” ＝匹配0次或更多</p>
-<p>注意：其实就是正则表达式替换，这里只是把一些曾经提出的问题加以整理，单纯从正则表达式本身来说，就可以引申出成千上万种特例。</p>
-<p>【2】正则表达式应用——数字替换<br>希望把<br>asdadas123asdasdas456asdasdasd789asdasd<br>替换为:<br>asdadas[123]asdasdas[456]asdasdasd[789]asdasd</p>
-<p>在替换对话框里面，勾选“正则表达式”复选框；<br>在查找内容里面输入“[0-9][0-9][0-9]”，不含引号<br>“替换为:”里面输入“[/0/1/2]”，不含引号<br>范围为你所操作的范围，然后选择替换即可。</p>
-<p>实际上这也是正则表达式的使用特例，“[0-9]”表示匹配0～9之间的任何特例，同样“[a-z]”就表示匹配a～z之间的任何特例<br>上面重复使用了“[0-9]”，表示连续出现的三个数字<br>“/0”代表第一个“[0-9]”对应的原型，“/1”代表第二个“[0-9]”对应的原型，依此类推<br>“[”、“]”为单纯的字符，表示添加“[”或“]”，如果输入“其它/0/1/2其它”，则替换结果为：</p>
-<p>asdadas其它123其它asdasdas其它456其它asdasdasd其它789其它asdasd</p>
-<p>功能增强（by jiuk2k）：<br>如果将查找内容“[0-9][0-9][0-9]”改为“[0-9]*[0-9]”，对应1 或 123 或 12345 或 …<br>大家根据需要定制</p>
-<p>相关内容还有很多，可以自己参考正则表达式的语法仔细研究一下</p>
-<p>【3】正则表达式应用——删除每一行行尾的指定字符<br>因为这几个字符在行中也是出现的,所以肯定不能用简单的替换实现<br>比如<br>12345 1265345<br>2345<br>需要删除每行末尾的“345”<br>这个也算正则表达式的用法，其实仔细看正则表达式应该比较简单，不过既然有这个问题提出，说明对正则表达式还得有个认识过程，解决方法如下<br>解决：<br>在替换对话框中，启用“正则表达式”复选框<br>在查找内容里面输入“345$”<br>这里“$”表示从行尾匹配</p>
-<p>如果从行首匹配，可以用“^”来实现，不过 EditPlus 有另一个功能可以很简单的删除行首的字符串<br>a. 选择要操作的行<br>b. 编辑－格式－删除行注释<br>c. 在弹出对话框里面输入要清除的行首字符，确定</p>
-<p>【4】正则表达式应用——替换带有半角括号的多行<br>几百个网页中都有下面一段代码：<br>/n<br>在替换对话框启用“正则表达式”选项，这时就可以完成替换了</p>
-<p>【5】正则表达式应用——删除空行<br>启动EditPlus，打开待处理的文本类型文件。<br>①、选择“查找”菜单的“替换”命令，弹出文本替换对话框。选中“正则表达式”复选框，表明我们要在查找、替换中使用正则表达式。然后，选中“替换范围” 中的“当前文件”，表明对当前文件操作。<br>②、单击“查找内容”组合框右侧的按钮，出现下拉菜单。<br>③、下面的操作添加正则表达式，该表达式代表待查找的空行。（技巧提示：空行仅包括空格符、制表符、回车符，且必须以这三个符号之一作为一行的开头，并且 以回车符结尾，查找空行的关键是构造代表空行的正则表达式）。<br>直接在”查找”中输入正则表达式“^[ /t]<em>/n”，注意/t前有空格符。<br>（1）选择“从行首开始匹配”，“查找内容”组合框中出现字符“^”，表示待查找字符串必须出现在文本中一行的行首。<br>（2）选择“字符在范围中”，那么在“^”后会增加一对括号“[]”，当前插入点在括号中。括号在正则表达式中表示，文本中的字符匹配括号中任意一个字符 即符合查找条件。<br>（3）按一下空格键，添加空格符。空格符是空行的一个组成成分。<br>（4）选择“制表符”，添加代表制表符的“/t”。<br>（5）移动光标，将当前插入点移到“]”之后，然后选择“匹配 0 次或更多”，该操作会添加星号字符“</em>”。星号表示，其前面的括号“[]”内的空格符或制表符，在一行中出现0个或多个。<br>（6）选择“换行符”，插入“/n”，表示回车符。<br>④、“替换为”组合框保持空，表示删除查找到的内容。单击“替换”按钮逐个行删除空行，或单击“全部替换”按钮删除全部空行（注意：EditPlus有时 存在“全部替换”不能一次性完全删除空行的问题，可能是程序BUG，需要多按几次按钮）。</p>
-<p>1.在汉化的时候，是否经常碰到这样的语句需要翻译：</p>
-<p>Code:<br>“Error adding the post!”;<br>“Error adding the comment!”;<br>“Error adding the user!”;</p>
-<p>如果有很多类似的文件一个一个翻译显然很累而且感觉很无聊。</p>
-<p>其实可以这样处理，在Editplus里面用 替换 功能，在替换对话框选中“正则表达式”复选框：<br>查找原文件：</p>
-<p>Code:<br>“Error adding ([^!|”|;]*)</p>
-<p>替换成：</p>
-<p>Code:<br>“在增加/1时发生错误</p>
-<p>这样替换之后发生了什么？结果是：</p>
-<p>Code:<br>“在增加the post时发生错误!”;<br>“在增加the comment时发生错误!”;<br>“在增加the user时发生错误!”;</p>
-<p>ok，接下来你会怎么做？当然再替换一次把the post、the comment、the user替换成你要翻译的词。得到最后的结果：</p>
-<p>Code:<br>“在增加帖子时发生错误!”;<br>“在增加评论时发生错误!”;<br>“在增加用户时发生错误!”;</p>
-<p>2.要提取的单词在中间，比如：</p>
-<p>Code:<br>can not be deleted because<br>can not be added because<br>can not be updating because</p>
-<p>可以用这种方式：<br>在Editplus里面用 替换 功能，在替换对话框选中“正则表达式”复选框：<br>查找原文件：</p>
-<p>Code:<br>can not be ([^ ]*) because</p>
-<p>替换成：</p>
-<p>Code:<br>无法被/1因为</p>
-<p>这样替换之后发生了什么？结果是：</p>
-<p>Code:<br>无法被deleted因为<br>无法被added因为<br>无法被updating因为</p>
-<p>其余步骤如上。</p>
-<p>在汉化量很大而且句式比较单调的情况下对效率的提高很明显！</p>
-<p>解释一下：([^!|”|;]*) 的意思是 不等于 ! 和 ” 和 ; 中的任何一个，意思就是这3个字符之外的所有字符将被选中（替换区域）；<br>/1 即被选中的替换区域所在的新位置（复制到这个新位置）。</p>
-<p>3.经常手工清理一行一行地删除文本文件里面的空白行，其实可以交给Editplus更好的完成，在Editplus里面用替换功能，在替换对话框选中 “正则表达式”复选框：<br>查找原文件：</p>
-<p>Code:<br>^[ /t]*/n</p>
-<p>替换部分为空就可以删除空白行了，执行一下看看：）</p>
-<p>abandon[2’’b9nd2n]v.抛弃，放弃<br>abandonment[2’’b9nd2nm2nt]n.放弃<br>abbreviation[2bri:vi’’ei62n]n.缩写<br>abeyance[2’’bei2ns]n.缓办，中止<br>abide[2’’baid]v.遵守<br>ability[2’’biliti]n.能力<br>able[‘’eibl]adj.有能力的，能干的<br>abnormal[9b’’n0:m2l]adj.反常的，变态的<br>aboard[2’’b0:d]adv.船(车)上</p>
-<p>1.<br>查找: (^[a-zA-Z0-0/-]+)(/[<em>.</em>/]+)(.*)<br>替换: @@@@@”/1″,”/2″,”/3″,<br>效果:<br>@@@@@”abandon”,”[2’’b9nd2n]“,”v.抛弃，放弃”,<br>@@@@@”abandonment”,”[2’’b9nd2nm2nt]“,”n.放弃”,<br>@@@@@”abbreviation”,”[2bri:vi’’ei62n]“,”n.缩写”,<br>@@@@@”abeyance”,”[2’’bei2ns]“,”n.缓办，中止”,<br>@@@@@”abide”,”[2’’baid]“,”v.遵守”,<br>@@@@@”ability”,”[2’’biliti]“,”n.能力”,<br>@@@@@”able”,”[‘’eibl]“,”adj.有能力的，能干的”,<br>@@@@@”abnormal”,”[9b’’n0:m2l]“,”adj.反常的，变态的”,<br>@@@@@”aboard”,”[2’’b0:d]“,”adv.船(车)上”,</p>
-<p>2.<br>查找: /n<br>替换:<br>注: 要次替换内容为空<br>效果:<br>@@@@@”abandon”,”[2’’b9nd2n]“,”v.抛弃，放弃 ”,@@@@@”abandonment”,”[2’’b9nd2nm2nt]“,”n.放弃 ”,@@@@@”abbreviation”,”[2bri:vi’’ei62n]“,”n.缩写 ”,@@@@@”abeyance”,”[2’’bei2ns]“,”n.缓办，中止”,@@@@@”abide”,”[2’’baid]“,”v.遵守 ”,@@@@@”ability”,”[2’’biliti]“,”n.能力”,@@@@@”able”,”[‘’eibl]“,”adj.有能力的，能 干的 ”,@@@@@”abnormal”,”[9b’’n0:m2l]“,”adj.反常的，变态的 ”,@@@@@”aboard”,”[2’’b0:d]“,”adv.船(车)上”,@@@@@”abolish”,”[2’’b0li6]“,”v.废 除，取消”,@@@@@”abolition”,”[9b2’’li62n]“,”n.废除，取消”</p>
-<p>3.<br>查找: @@@@@<br>替换: /n<br>效果:<br>“abandon”,”[2’’b9nd2n]“,”v.抛弃，放弃”,<br>“abandonment”,”[2’’b9nd2nm2nt]“,”n.放弃”,<br>“abbreviation”,”[2bri:vi’’ei62n]“,”n.缩写”,<br>“abeyance”,”[2’’bei2ns]“,”n.缓办，中止”,<br>“abide”,”[2’’baid]“,”v.遵守”,<br>“ability”,”[2’’biliti]“,”n.能力”,<br>“able”,”[‘’eibl]“,”adj.有能力的，能干的”,<br>“abnormal”,”[9b’’n0:m2l]“,”adj.反常的，变态的”,<br>“aboard”,”[2’’b0:d]“,”adv.船(车)上”,<br>“abolish”,”[2’’b0li6]“,”v.废除，取消”,</p>
-<ol start="4">
-<li>任务完成</li>
-</ol>
-<p>一、删除空行（不包括有空格类符号的空行）<br>1、\r\n转义符替换<br>按ctrl+h，跳出搜索替换框，把查找模式定义为扩展（\n，\r…）<br>查找目标：\r\n\r\n<br>替换为：\r\n</p>
-<p>有编程基础的读者应该知道是什么意思了。</p>
-<p>2、Textfx插件<br>先选中要删部分文本内容，如果是整个文件那就全选Ctrl+A，然后使用Notepad++自带的Textfx插件，在长长的列表中找到Delete Blank Lines，点击即可。</p>
-<p>注意Notepad++的正则表达式与转义符等之间不兼容，所以局限性较大，不可以直接用正则表达式替换。</p>
-<p>二、删除有空格的空行<br>1、先删除空格，后删除空行<br>如何删除只有空格行的空格？<br>在菜单编辑中找到Blank Operations（行编辑），点击移除行尾空白，再用上面的方法删除空行。</p>
-<p>2、使用正则表达式删除空格行空格<br>替换中查找模式选择正则表达式^ +$，替换为空（就是什么都不填），再用上面的方法删除空行。</p>
+  <p>Now that QGIS Server is installed and running, we just have to use it.</p>
+<p>Obviously, we need a QGIS project to work on. Of course, you can fully customize your project by defining contact information, precise some restrictions on CRS or even exclude some layers. Everything you need to know about that is described later in Configure your project.</p>
+<p>But for now, we are going to use a simple project already configured and previously downloaded in /home/qgis/projects/world.qgs, as described above.</p>
+<p>By opening the project and taking a quick look on layers, we know that 4 layers are currently available:</p>
+<p>airports<br>places<br>countries<br>countries_shapeburst</p>
+<p>You don’t have to understand the full request for now but you may retrieve a map with some of the previous layers thanks to QGIS Server by doing something like this in your web browser to retrieve the countries layer:</p>
+<pre><code>http://qgis.demo/qgisserver?
+  MAP=/home/qgis/projects/world.qgs&amp;
+  LAYERS=countries&amp;
+  SERVICE=WMS&amp;
+  VERSION=1.3.0&amp;
+  REQUEST=GetMap&amp;
+  CRS=EPSG:4326&amp;
+  WIDTH=400&amp;
+  HEIGHT=200&amp;
+  BBOX=-90,-180,90,180
+</code></pre>
+<p>If you obtain the next image, then QGIS Server is running correctly:</p>
+<p>Note that you may define QGIS_PROJECT_FILE environment variable to use a project by default instead of giving a MAP parameter (see Environment variables).</p>
+<p>For example with spawn-fcgi:</p>
+<p>export QGIS_PROJECT_FILE=/home/qgis/projects/world.qgs<br>spawn-fcgi -f /usr/lib/bin/cgi-bin/qgis_mapserv.fcgi <br>           -s /var/run/qgisserver.socket <br>           -U www-data -G www-data -n</p>
  
       <!-- reward -->
       
@@ -550,7 +641,7 @@ pg_basebackup -D /data/bb -Fp -X stream -R -P -c fast -h 127.0.0.1 -p 5432 -U po
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/QGIS/" rel="tag">QGIS</a></li></ul>
 
     </footer>
   </div>
@@ -561,7 +652,7 @@ pg_basebackup -D /data/bb -Fp -X stream -R -P -c fast -h 127.0.0.1 -p 5432 -U po
 
     
     <article
-  id="post-如何查看雷电模拟器里的sqilte数据"
+  id="post-QGIS-Server-Installation-on-Windows"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -572,8 +663,8 @@ pg_basebackup -D /data/bb -Fp -X stream -R -P -c fast -h 127.0.0.1 -p 5432 -U po
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/02/18/%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E9%9B%B7%E7%94%B5%E6%A8%A1%E6%8B%9F%E5%99%A8%E9%87%8C%E7%9A%84sqilte%E6%95%B0%E6%8D%AE/"
-    >如何查看雷电模拟器里的sqilte数据</a> 
+  <a class="article-title" href="/2023/03/02/QGIS-Server-Installation-on-Windows/"
+    >QGIS Server Installation on Windows</a> 
 </h2>
  
 
@@ -581,38 +672,57 @@ pg_basebackup -D /data/bb -Fp -X stream -R -P -c fast -h 127.0.0.1 -p 5432 -U po
     </header>
      
     <div class="article-meta">
-      <a href="/2023/02/18/%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E9%9B%B7%E7%94%B5%E6%A8%A1%E6%8B%9F%E5%99%A8%E9%87%8C%E7%9A%84sqilte%E6%95%B0%E6%8D%AE/" class="article-date">
-  <time datetime="2023-02-18T01:54:10.000Z" itemprop="datePublished">2023-02-18</time>
+      <a href="/2023/03/02/QGIS-Server-Installation-on-Windows/" class="article-date">
+  <time datetime="2023-03-02T15:40:52.000Z" itemprop="datePublished">2023-03-02</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
   </div>
    
     </div>
       
     <div class="article-entry" itemprop="articleBody">
        
-  <pre><code>C:\Users\zhang&gt;
-
-d:
-D:\&gt;
-
-cd D:\DevTools\LeiDian\LDPlayer64
-D:\DevTools\LeiDian\LDPlayer64&gt;
-
-adb shell
-
-aosp:/ # cd /data/media/0/Android/data/io.dcloud.HBuilder/apps/HBuilder/doc
-cd /data/media/0/Android/data/io.dcloud.HBuilder/apps/HBuilder/doc
-
-aosp:/data/media/0/Android/data/io.dcloud.HBuilder/apps/HBuilder/doc #
-sqlite3 test.db
-
-sqlite3 test.db
-SQLite version 3.9.2 2017-07-21 07:45:23
-Enter &quot;.help&quot; for usage hints.
-sqlite&gt;
+  <p>QGIS Server can also be installed on Windows systems using the 64 bit version of the OSGeo4W network installer (<a target="_blank" rel="noopener" href="https://qgis.org/en/site/forusers/download.html">https://qgis.org/en/site/forusers/download.html</a>).</p>
+<h1 id="A-simple-procedure-is-the-following"><a href="#A-simple-procedure-is-the-following" class="headerlink" title="A simple procedure is the following:"></a>A simple procedure is the following:</h1><ul>
+<li><p>Download and run the OSGeo4W installer</p>
+</li>
+<li><p>Follow the “Advanced Install” and install the QGIS Desktop, QGIS Server apache and mod_fcgid packages.</p>
+</li>
+<li><p>Apache is not directly installed as a service on Windows. You need to:</p>
+</li>
+</ul>
+<p>** Right-click the OSGeo4W.bat file at the root of the C:\OSGeo4W64\ folder (if the default installation paths have been used) and select Run as administrator</p>
+<p>** In the console, run apache-install.bat, which will output</p>
+<pre><code>&gt; apache-install.bat
+Installing the &#39;Apache OSGeo4W Web Server&#39; service
+The &#39;Apache OSGeo4W Web Server&#39; service is successfully installed.
+Testing httpd.conf....
+Errors reported here must be corrected before the service can be started.
+...
 </code></pre>
+<p>The service is started as you can notice in the report. But the server may fail to run due to missing custom configuration.</p>
+<ul>
+<li>Edit the C:\OSGeo4w64\apps\apache\conf\httpd.conf file with the following changes (various other combinations are possible):</li>
+</ul>
+<p>** (Optional) Customize the address to listen to using an IP and/or port, You can and add as many entries as you wish.</p>
+<p>*** Existing config<br>    Listen ${SRVPORT}</p>
+<p>*** Replacement<br>    Listen localhost:8080</p>
+<p>** Indicate where to find the script files<br>*** Existing config<br>    ScriptAlias /cgi-bin/ “${SRVROOT}/cgi-bin/“</p>
+<p>*** Replacement<br>    ScriptAlias /cgi-bin/ “C:/OSGeo4W64/apps/qgis/bin/“</p>
+<p>** Provide permissions on the script folder<br>*** Existing config<br>&lt;Directory “${SRVROOT}/cgi-bin”&gt;<br>    AllowOverride None<br>    Options None<br>    Require all granted<br></p>
+<p>*** Replacement<br>&lt;Directory “C:/OSGeo4W64/apps/qgis/bin”&gt;<br>    SetHandler cgi-script<br>    AllowOverride None<br>    Options ExecCGI<br>    Require all granted<br></p>
+<p>** Enable file extensions to use for script files. Uncomment and complete<br>*** Existing config<br>    #AddHandler cgi-script .cgi<br>*** Replacement<br>    AddHandler cgi-script .cgi .exe</p>
+<p>** Add more OSGeo4W custom configuration variables</p>
+<p>*** Existing config<br>    # parse OSGeo4W apache conf files<br>    IncludeOptional “C:/OSGeo4W64/httpd.d/httpd_*.conf”<br>*** Replacement<br>    # parse OSGeo4W apache conf files<br>    IncludeOptional “C:/OSGeo4W64/httpd.d/httpd_*.conf”<br>    SetEnv GDAL_DATA “C:/OSGeo4W64/share/gdal”<br>    SetEnv QGIS_AUTH_DB_DIR_PATH “C:/OSGeo4W64/apps/qgis/resources”</p>
+<p>** Restart the Apache web server</p>
+<pre><code>&gt; apache-restart.bat
+</code></pre>
+<ul>
+<li>Open browser window to testing a GetCapabilities request to QGIS Server. Replace localhost:8080 with the IP and port you set to listen.</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="http://localhost:8080/cgi-bin/qgis_mapserv.fcgi.exe?SERVICE=WMS&amp;VERSION=1.3.0&amp;REQUEST=GetCapabilities">http://localhost:8080/cgi-bin/qgis_mapserv.fcgi.exe?SERVICE=WMS&amp;VERSION=1.3.0&amp;REQUEST=GetCapabilities</a></p>
+<p>A XML file with the capabilities should be returned. Your server is ready to use.</p>
  
       <!-- reward -->
       
@@ -623,66 +733,7 @@ sqlite&gt;
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/APP/" rel="tag">APP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sqilte/" rel="tag">sqilte</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9B%B7%E7%94%B5%E6%A8%A1%E6%8B%9F%E5%99%A8/" rel="tag">雷电模拟器</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-maven镜像库最佳配置"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/02/17/maven%E9%95%9C%E5%83%8F%E5%BA%93%E6%9C%80%E4%BD%B3%E9%85%8D%E7%BD%AE/"
-    >maven镜像库最佳配置</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/02/17/maven%E9%95%9C%E5%83%8F%E5%BA%93%E6%9C%80%E4%BD%B3%E9%85%8D%E7%BD%AE/" class="article-date">
-  <time datetime="2023-02-17T01:50:59.000Z" itemprop="datePublished">2023-02-17</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <pre><code>&lt;mirror&gt;
-    &lt;id&gt;aliyunmaven&lt;/id&gt;
-    &lt;mirrorOf&gt;central&lt;/mirrorOf&gt;
-    &lt;name&gt;阿里云公共仓库&lt;/name&gt;
-    &lt;url&gt;https://maven.aliyun.com/repository/public&lt;/url&gt;
-&lt;/mirror&gt;
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MAVEN/" rel="tag">MAVEN</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OJDBC/" rel="tag">OJDBC</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/QGIS/" rel="tag">QGIS</a></li></ul>
 
     </footer>
   </div>
@@ -698,7 +749,7 @@ sqlite&gt;
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/44/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/43/">43</a><a class="page-number" href="/page/44/">44</a><span class="page-number current">45</span><a class="page-number" href="/page/46/">46</a><a class="page-number" href="/page/47/">47</a><span class="space">&hellip;</span><a class="page-number" href="/page/52/">52</a><a class="extend next" rel="next" href="/page/46/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/44/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/43/">43</a><a class="page-number" href="/page/44/">44</a><span class="page-number current">45</span><a class="page-number" href="/page/46/">46</a><a class="page-number" href="/page/47/">47</a><span class="space">&hellip;</span><a class="page-number" href="/page/54/">54</a><a class="extend next" rel="next" href="/page/46/">下一页</a>
   </nav>
   
 </section>

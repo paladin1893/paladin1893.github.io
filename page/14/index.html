@@ -154,7 +154,7 @@
     
     
     <article
-  id="post-flask实用入门案例07"
+  id="post-Vue2传值方式详解07"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -165,8 +165,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/08/24/flask%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B07/"
-    >flask实用入门案例07--jsonify</a> 
+  <a class="article-title" href="/2023/09/07/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A307/"
+    >Vue2传值方式详解07-sessionStorage传值</a> 
 </h2>
  
 
@@ -174,8 +174,8 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2023/08/24/flask%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B07/" class="article-date">
-  <time datetime="2023-08-24T05:32:49.000Z" itemprop="datePublished">2023-08-24</time>
+      <a href="/2023/09/07/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A307/" class="article-date">
+  <time datetime="2023-09-07T12:20:20.000Z" itemprop="datePublished">2023-09-07</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -185,169 +185,27 @@
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>jsonify：Python中处理JSON数据的工具</p>
-<h1 id="一、jsonify函数"><a href="#一、jsonify函数" class="headerlink" title="一、jsonify函数"></a>一、jsonify函数</h1><p>jsonify函数是Flask框架中的一个函数，用于返回一个包含JSON数据的响应体(Response Body)，其主要作用是将Python任意的数据类型转换为JSON格式的数据并返回给前端。jsonify函数将数据序列化为JSON格式的字符串，并设置响应的Content-Type为application/json。</p>
-<pre><code>from flask import jsonify
-
-@app.route(&#39;/json/&#39;)
-def get_json():
-    data = &#123;&#39;name&#39;: &#39;小明&#39;, &#39;age&#39;: 18, &#39;sex&#39;: &#39;male&#39;&#125;
-    return jsonify(data)
-</code></pre>
-<p>在实际开发中，我们会将数据从数据库中查询出来，然后通过jsonify函数将数据转换为JSON格式的字符串，并返回给前端使用。</p>
-<h1 id="二、jsonify-flask"><a href="#二、jsonify-flask" class="headerlink" title="二、jsonify flask"></a>二、jsonify flask</h1><p>jsonify函数是Flask框架中的一个函数，用于返回一个包含JSON数据的响应体(Response Body)。一般情况下，我们会将数据从数据库中查询出来，然后通过jsonify函数将数据转换为JSON格式的字符串，并返回给前端使用。</p>
-<p>举个例子：假设我们要查询数据库中用户信息，并返回JSON格式数据，那么代码如下：</p>
-<pre><code>from flask import Flask, jsonify
-
-app = Flask(__name__)
-
-@app.route(&#39;/user/&#39;)
-def get_user():
-    user = &#123;&#39;name&#39;: &#39;小明&#39;, &#39;age&#39;: 18, &#39;sex&#39;: &#39;male&#39;&#125;
-    return jsonify(user)
-
-if __name__ == &#39;__main__&#39;:
-    app.run()
-</code></pre>
-<h1 id="三、jsonify怎么读"><a href="#三、jsonify怎么读" class="headerlink" title="三、jsonify怎么读"></a>三、jsonify怎么读</h1><p>jsonify函数的读音为[juh-son-if-ahy]，其中juh-son代表JSON，if代表format，ahy代表-y。</p>
-<h1 id="四、jsonify怎么用"><a href="#四、jsonify怎么用" class="headerlink" title="四、jsonify怎么用"></a>四、jsonify怎么用</h1><p>jsonify函数非常容易使用，只需要将数据作为参数传递给该函数，函数会自动将数据转换为JSON格式的字符串，并返回给前端。</p>
-<p>使用示例：</p>
-<pre><code>from flask import jsonify
-
-data = &#123;&#39;name&#39;: &#39;小明&#39;, &#39;age&#39;: 18, &#39;sex&#39;: &#39;male&#39;&#125;
-json_str = jsonify(data)
-
-print(json_str)
-</code></pre>
-<h1 id="五、jsonify是什么"><a href="#五、jsonify是什么" class="headerlink" title="五、jsonify是什么"></a>五、jsonify是什么</h1><p>jsonify是Flask框架中的一个函数，用于返回一个包含JSON数据的响应体(Response Body)，其主要作用是将Python任意的数据类型转换为JSON格式的数据并返回给前端。jsonify函数将数据序列化为JSON格式的字符串，并设置响应的Content-Type为application/json。</p>
-<h1 id="六、jsonify多转义"><a href="#六、jsonify多转义" class="headerlink" title="六、jsonify多转义"></a>六、jsonify多转义</h1><p>由于JSON中有些特殊字符需要进行转义处理，如双引号、反斜杠等。当我们使用json.dumps()将Python数据类型转换成JSON格式字符串时，JSON字符串中的特殊字符已经被转义，但使用jsonify()函数时，需要手动进行转义。</p>
-<p>举个例子：</p>
-<pre><code>from flask import jsonify
-
-data = &#123;&#39;name&#39;: &#39;小明&#39;, &#39;age&#39;: 18, &#39;sex&#39;: &#39;male&#39;, &#39;info&#39;: &#39;I\&#39;m a good student.&quot;&#39;&#125;
-json_str = jsonify(data)
-print(json_str)
-</code></pre>
-<h1 id="七、json格式"><a href="#七、json格式" class="headerlink" title="七、json格式"></a>七、json格式</h1><p>JSON（JavaScript Object Notation，JavaScript 对象表示法）是一种轻量级的数据交换格式。JSON格式的数据由两部分组成：键和值，键值之间使用冒号：分隔。</p>
-<p>举个例子：</p>
-<pre><code>&#123;
-    &quot;name&quot;: &quot;小明&quot;,
-    &quot;age&quot;: 18,
-    &quot;sex&quot;: &quot;male&quot;
-&#125;
-</code></pre>
-<h1 id="八、json解析"><a href="#八、json解析" class="headerlink" title="八、json解析"></a>八、json解析</h1><p>JSON解析是将JSON格式的字符串转换为Python数据类型的过程。</p>
-<p>举个例子：</p>
-<pre><code>import json
-
-json_str = &#39;&#123;&quot;name&quot;: &quot;小明&quot;, &quot;age&quot;: 18, &quot;sex&quot;: &quot;male&quot;&#125;&#39;
-data = json.loads(json_str)
-print(data)
-</code></pre>
-<p>上面的代码将JSON格式的字符串解析为Python数据类型，输出结果为：</p>
-<pre><code>&#123;&#39;name&#39;: &#39;小明&#39;, &#39;age&#39;: 18, &#39;sex&#39;: &#39;male&#39;&#125;
-</code></pre>
-<h1 id="九、json数据格式"><a href="#九、json数据格式" class="headerlink" title="九、json数据格式"></a>九、json数据格式</h1><p>JSON数据格式是一种轻量级的数据交换格式，由键和值以及逗号分隔组成。JSON数据格式支持包括数字、字符串、布尔值、数组、对象等多种数据类型。</p>
-<p>举个例子：</p>
-<pre><code>&#123;
-    &quot;name&quot;: &quot;小明&quot;,
-    &quot;age&quot;: 18,
-    &quot;sex&quot;: &quot;male&quot;,
-    &quot;hobbies&quot;: [&quot;basketball&quot;, &quot;football&quot;],
-    &quot;family&quot;: &#123;
-        &quot;father&quot;: &quot;张三&quot;,
-        &quot;mother&quot;: &quot;李四&quot;
-    &#125;
-&#125;
-</code></pre>
-<h1 id="十、json文件是干什么的"><a href="#十、json文件是干什么的" class="headerlink" title="十、json文件是干什么的"></a>十、json文件是干什么的</h1><p>JSON文件用于存储和交换数据，它是一种轻量级的数据交换格式。与其他数据存储格式相比，JSON文件更加简洁、易读、易解析，并且具有跨语言、跨平台的特性，因此被广泛应用于Web开发、移动端开发等领域。</p>
-<p>举个例子：假设我们要存储用户信息，可以将用户信息以JSON格式保存到文件中，代码如下：</p>
-<pre><code>import json
-
-data = &#123;&#39;name&#39;: &#39;小明&#39;, &#39;age&#39;: 18, &#39;sex&#39;: &#39;male&#39;&#125;
-with open(&#39;user.json&#39;, &#39;w&#39;, encoding=&#39;utf-8&#39;) as f:
-    json.dump(data, f)
-</code></pre>
-<p>上面的代码将用户信息以JSON格式保存到文件中。</p>
+  <p>sessionStorage 是浏览器的全局对象，存在它里面的数据会在页面关闭时清除 。运用这个特性，我们可以在所有页面共享一份数据。<br>代码示例：</p>
+<pre><code>// 保存数据到 sessionStorage
+sessionStorage.setItem(&#39;key&#39;, &#39;value&#39;);
  
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flask/" rel="tag">flask</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-el-form表单重置resetForm()不生效问题"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/08/23/el-form%E8%A1%A8%E5%8D%95%E9%87%8D%E7%BD%AEresetForm()%E4%B8%8D%E7%94%9F%E6%95%88%E9%97%AE%E9%A2%98/"
-    >el-form表单重置resetForm()不生效问题</a> 
-</h2>
+// 从 sessionStorage 获取数据
+let data = sessionStorage.getItem(&#39;key&#39;);
  
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/08/23/el-form%E8%A1%A8%E5%8D%95%E9%87%8D%E7%BD%AEresetForm()%E4%B8%8D%E7%94%9F%E6%95%88%E9%97%AE%E9%A2%98/" class="article-date">
-  <time datetime="2023-08-23T13:09:58.000Z" itemprop="datePublished">2023-08-23</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>字段不清空 或者完全没效果<br>检查：</p>
-<p>1、el-form 是否绑定model,带有ref,并且绑定的是同一数组。</p>
-<pre><code>&lt;el-form :rules=&quot;rules&quot; ref=&quot;form&quot; :model=&quot;form&quot;&gt;
-</code></pre>
-<p>2、el-form-item绑定prop,且名称要与v-model绑定的参数一致。</p>
-<el-form-item label="商品状态" prop="enabled">
-    <el-radio-group v-model="form.enabled">
-        <el-radio label="true">上架</el-radio>
-        <el-radio label="false">下架</el-radio>
-    </el-radio-group>
-</el-form-item>
-
-<pre><code>&lt;el-form-item label=&quot;商品名称&quot; prop=&quot;name&quot;&gt;
-    &lt;el-input v-model=&quot;form.name&quot; placeholder=&quot;请输入商品名称&quot;&gt;&lt;/el-input&gt;
-&lt;/el-form-item&gt;
-</code></pre>
-<p>然后使用校验</p>
-<pre><code>this.$refs[form].resetFields();
-</code></pre>
-<p>3、如果是在el-dialog里，检查el-dialog的关闭弹窗事件与取消事件是否相同</p>
-<p>4、还不生效可以使用$nextTick</p>
-<pre><code>this.$nextTick(() =&gt; &#123;
-    this.$refs[form].resetFields();
-&#125;);
+// 从 sessionStorage 删除保存的数据
+sessionStorage.removeItem(&#39;key&#39;);
  
+// 从 sessionStorage 删除所有保存的数据
+sessionStorage.clear();
 </code></pre>
-<p>————————————————<br>版权声明：本文为CSDN博主「qfCSDN」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qfCSDN/article/details/120505846">https://blog.csdn.net/qfCSDN/article/details/120505846</a></p>
+<p>注意：里面存的是键值对，只能是字符串类型，如果要存对象的话，需要使用 let objStr = JSON.stringify(obj) 转成字符串然后再存储（使用的时候 let obj = JSON.parse(objStr) 解析为对象）。<br>推荐一个库 good-storage ，它封装了sessionStorage ，可以直接用它的API存对象</p>
+<pre><code>//localStorage
+ storage.set(key,val) 
+ storage.get(key, def)
+//sessionStorage
+ storage.session.set(key, val)
+</code></pre>
+<p>————————————————<br>版权声明：本文为CSDN博主「小毕学习代码」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_70703397/article/details/132201160">https://blog.csdn.net/qq_70703397/article/details/132201160</a></p>
  
       <!-- reward -->
       
@@ -369,7 +227,7 @@ with open(&#39;user.json&#39;, &#39;w&#39;, encoding=&#39;utf-8&#39;) as f:
 
     
     <article
-  id="post-Vue中Vue.prototype使用详解"
+  id="post-Vue2传值方式详解06"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -380,8 +238,8 @@ with open(&#39;user.json&#39;, &#39;w&#39;, encoding=&#39;utf-8&#39;) as f:
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/08/22/Vue%E4%B8%ADVue.prototype%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/"
-    >Vue中Vue.prototype使用详解</a> 
+  <a class="article-title" href="/2023/09/06/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A306/"
+    >Vue2传值方式详解06-$parent</a> 
 </h2>
  
 
@@ -389,8 +247,8 @@ with open(&#39;user.json&#39;, &#39;w&#39;, encoding=&#39;utf-8&#39;) as f:
     </header>
      
     <div class="article-meta">
-      <a href="/2023/08/22/Vue%E4%B8%ADVue.prototype%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/" class="article-date">
-  <time datetime="2023-08-22T12:25:10.000Z" itemprop="datePublished">2023-08-22</time>
+      <a href="/2023/09/06/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A306/" class="article-date">
+  <time datetime="2023-09-06T05:13:13.000Z" itemprop="datePublished">2023-09-06</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -400,167 +258,292 @@ with open(&#39;user.json&#39;, &#39;w&#39;, encoding=&#39;utf-8&#39;) as f:
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>我们可能会在很多组件里用到数据/实用工具，但是不想污染全局作用域。这种情况下，可以通过在原型上定义它们使其在每个 Vue 的实例中可用。</p>
-<h1 id="1-基本示例"><a href="#1-基本示例" class="headerlink" title="1. 基本示例"></a>1. 基本示例</h1><p>在main.js中添加一个变量到 Vue.prototype</p>
-<pre><code>Vue.prototype.$appName = &#39;My App&#39;
-</code></pre>
-<p>这样 $appName 就在所有的 Vue 实例中可用了，甚至在实例被创建之前就可以</p>
-<pre><code>new Vue(&#123;
-  beforeCreate: function () &#123;
-    console.log(this.$appName)
-  &#125;
-&#125;)
-</code></pre>
-<p>控制台会打印出 My App，就这么简单！</p>
-<h1 id="2-为实例prototype设置作用域"><a href="#2-为实例prototype设置作用域" class="headerlink" title="2. 为实例prototype设置作用域"></a>2. 为实例prototype设置作用域</h1><p>为什么 appName 要以$开头？这很重要吗？这里没有什么魔法。<br>$是在 Vue 所有实例中都可用的 property 的一个简单约定。这样做会避免和已被定义的数据、方法、计算属性产生冲突。<br>如果我们设置：</p>
-<pre><code>Vue.prototype.appName = &#39;My App&#39;
-</code></pre>
-<p>那么如下的代码输出什么：</p>
-<pre><code>new Vue(&#123;
-  data: &#123;
-    // 啊哦，`appName` 也是一个我们定义的实例 property 名！
-    appName: &#39;The name of some other app&#39;
-  &#125;,
-  beforeCreate: function () &#123;
-    console.log(this.appName)
-  &#125;,
-  created: function () &#123;
-    console.log(this.appName)
-  &#125;
-&#125;)
-</code></pre>
-<p>日志中会先出现 “My App”，然后出现 “The name of some other app”，因为 this.appName 在实例被创建之后被 data 覆写了。我们通过 为实例property设置作用域来避免这种事情发生。你还可以根据你的喜好使用自己的约定，诸如为实例 property 设置作用域来避免这种事情发生。 </p>
-<p>你还可以根据你的喜好使用自己的约定，诸如为实例property设置作用域来避免这种事情发生。你还可以根据你的喜好使用自己的约定，诸如_appName 或 ΩappName，来避免和插件或未来的插件相冲突。</p>
-<h1 id="3-注册和使用全局变量"><a href="#3-注册和使用全局变量" class="headerlink" title="3. 注册和使用全局变量"></a>3. 注册和使用全局变量</h1><p>每个组件都是一个vue实例，Vue.prototype加一个变量，只是给每个组件加了一个属性，这个属性的值并不具有全局性。<br>比如以下例子：</p>
-<pre><code>// main.js
-import Vue from &#39;vue&#39;
-import App from &#39;./App&#39;
-import router from &#39;./router&#39;
-import store from &#39;./store&#39;
+  <p>通过parent可以获父组件实例 ，然 后通过这个实例就可以访问父组件的属 性和方法 ，它还有一个兄弟parent可以获父组件实例，然后通过这个实例就可以访问父组件的属性和方法，它还有一个兄弟parent可以获父组件实例，然后通过这个实例就可以访问父组件的属性和方法，它还有一个兄弟root，可以获取根组件实例。</p>
+<p>代码示例：</p>
+<pre><code>// 获父组件的数据
+this.$parent.foo
  
-Vue.config.productionTip = false
-Vue.prototype.$appName = &#39;main&#39;
+// 写入父组件的数据
+this.$parent.foo = 2
  
-new Vue(&#123;
-    el: &#39;#app&#39;,
-    store,
-    router,
-    components: &#123; App &#125;,
-    template: &#39;&lt;App/&gt;&#39;,
-&#125;)
+// 访问父组件的计算属性
+this.$parent.bar
  
-// 给所有组件注册了一个属性 $appName，赋予初始值 &#39;main&#39; ，所有组件都可以用 this.$appName 访问此变量;
-// 如果组件中没有赋值，初始值都是&#39;main&#39;
+// 调用父组件的方法
+this.$parent.baz()
+ 
+//在子组件传给父组件例子中，可以使用this.$parent.getNum(100)传值给父组件。
+</code></pre>
+<p>————————————————<br>版权声明：本文为CSDN博主「小毕学习代码」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_70703397/article/details/132201160">https://blog.csdn.net/qq_70703397/article/details/132201160</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
 
-// home.vue
-&lt;template&gt;
-  &lt;div&gt;
-    &lt;div @click=&quot;changeName&quot;&gt;change name&lt;/div&gt;
-    &lt;div @click=&quot;gotoTest2&quot;&gt;goto test2&lt;/div&gt;
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-Vue2传值方式详解05"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/09/05/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A305/"
+    >Vue2传值方式详解05-Vuex通信</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/09/05/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A305/" class="article-date">
+  <time datetime="2023-09-05T04:12:12.000Z" itemprop="datePublished">2023-09-05</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>组件通过 dispatch 到 actions，actions 是异步操作，再 actions中通过 commit 到 mutations，mutations 再通过逻辑操作改变 state，从而同步到组件，更新其数据状态</p>
+<p>代码示例：</p>
+<p>父组件</p>
+<pre><code>//父组件
+template&gt;
+  &lt;div id=&quot;app&quot;&gt;
+    &lt;ChildA/&gt;
+    &lt;ChildB/&gt;
   &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+  import ChildA from &#39;./ChildA&#39; // 导入A组件
+  import ChildB from &#39;./ChildB&#39; // 导入B组件
+  export default &#123;
+    components: &#123;ChildA, ChildB&#125; // 注册组件
+  &#125;
+&lt;/script&gt;
+</code></pre>
+<p>子组件A</p>
+<pre><code>//子组件A
+&lt;template&gt;
+ &lt;div id=&quot;childA&quot;&gt;
+   &lt;h1&gt;我是A组件&lt;/h1&gt;
+   &lt;button @click=&quot;transform&quot;&gt;点我让B组件接收到数据&lt;/button&gt;
+   &lt;p&gt;因为点了B，所以信息发生了变化：&#123;&#123;BMessage&#125;&#125;&lt;/p&gt;
+ &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+ export default &#123;
+   data() &#123;
+     return &#123;
+       AMessage: &#39;Hello，B组件，我是A组件&#39;
+     &#125;
+   &#125;,
+   computed: &#123;
+     BMessage() &#123;
+       // 这里存储从store里获取的B组件的数据
+       return this.$store.state.BMsg
+     &#125;
+   &#125;,
+   methods: &#123;
+     transform() &#123;
+       // 触发receiveAMsg，将A组件的数据存放到store里去
+       this.$store.commit(&#39;receiveAMsg&#39;, &#123;
+         AMsg: this.AMessage
+       &#125;)
+     &#125;
+   &#125;
+ &#125;
+&lt;/script&gt;
+</code></pre>
+<p>子组件B</p>
+<pre><code>//子组件B
+&lt;template&gt;
+ &lt;div id=&quot;childB&quot;&gt;
+   &lt;h1&gt;我是B组件&lt;/h1&gt;
+   &lt;button @click=&quot;transform&quot;&gt;点我让A组件接收到数据&lt;/button&gt;
+   &lt;p&gt;点了A，我的信息发生了变化：&#123;&#123;AMessage&#125;&#125;&lt;/p&gt;
+ &lt;/div&gt;
 &lt;/template&gt;
  
 &lt;script&gt;
-export default &#123;
-  methods:&#123;
-    changeName()&#123;
-      this.$appName = &quot;test1&quot;
-    &#125;,
-    gotoTest2()&#123;
-      this.$router.push(&#39;/about&#39;)
-    &#125; 
-  &#125;
-&#125;
+ export default &#123;
+   data() &#123;
+     return &#123;
+       BMessage: &#39;Hello，A组件，我是B组件&#39;
+     &#125;
+   &#125;,
+   computed: &#123;
+     AMessage() &#123;
+       // 这里存储从store里获取的A组件的数据
+       return this.$store.state.AMsg
+     &#125;
+   &#125;,
+   methods: &#123;
+     transform() &#123;
+       // 触发receiveBMsg，将B组件的数据存放到store里去
+       this.$store.commit(&#39;receiveBMsg&#39;, &#123;
+         BMsg: this.BMessage
+       &#125;)
+     &#125;
+   &#125;
+ &#125;
 &lt;/script&gt;
+</code></pre>
+<p>vuex</p>
+<pre><code>//vuex
+import Vue from &#39;vue&#39;
+ import Vuex from &#39;vuex&#39;
+ Vue.use(Vuex)
+ const state = &#123;
+   AMsg: &#39;&#39;,
+   BMsg: &#39;&#39;
+ &#125;
+ 
+ const mutations = &#123;
+   receiveAMsg(state, payload) &#123;
+     // 将A组件的数据存放于state
+     state.AMsg = payload.AMsg
+   &#125;,
+   receiveBMsg(state, payload) &#123;
+     // 将B组件的数据存放于state
+     state.BMsg = payload.BMsg
+   &#125;
+ &#125;
+ 
+ export default new Vuex.Store(&#123;
+   state,
+   mutations
+ &#125;)
+</code></pre>
+<p>————————————————<br>版权声明：本文为CSDN博主「小毕学习代码」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_70703397/article/details/132201160">https://blog.csdn.net/qq_70703397/article/details/132201160</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
 
-// about.vue
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-Vue2传值方式详解04"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/09/04/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A304/"
+    >Vue2传值方式详解04-ref/refs（父子组件通信）</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/09/04/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A304/" class="article-date">
+  <time datetime="2023-09-04T13:21:21.000Z" itemprop="datePublished">2023-09-04</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>（1）ref 如果在普通的 DOM 元素上使用，引用指向的就是 DOM 元素；如果用在子组件上，引用就指向组件实例，<br>（2）可以通过实例直接调用组件的方法或访问数据。也算是子组件向父组件传值的一种</p>
+<p>代码示例：</p>
+<p>父组件</p>
+<pre><code>//父组件
 &lt;template&gt;
   &lt;div&gt;
-    &lt;div&gt;&#123;&#123;this.$appName&#125;&#125; in test2&lt;/div&gt;
+    &lt;button @click=&quot;sayHello&quot;&gt;sayHello&lt;/button&gt;
+    &lt;child ref=&quot;childForRef&quot;&gt;&lt;/child&gt;
   &lt;/div&gt;
 &lt;/template&gt;
-</code></pre>
-<p>点击 home 中的 change name 再跳转about，about里面还是显示 main in test2<br>如果要实现全局变量的功能，需要把属性变为引用类型</p>
-<pre><code>Vue.prototype.$appName = &#123; name: &#39;main&#39; &#125;
-</code></pre>
-<p>后面使用 this.$appName.name 改变和引用相应的值<br>这进入 about 后显示 test1 in test2</p>
-<h1 id="4-原型方法的上下文"><a href="#4-原型方法的上下文" class="headerlink" title="4. 原型方法的上下文"></a>4. 原型方法的上下文</h1><p>在 JavaScript 中一个原型的方法会获得该实例的上下文,也就是说可以使用 this 访问：数据、计算属性、方法或其它任何定义在实例上的东西。<br>让我们将其用在一个名为 $reverseText 的方法上：</p>
-<pre><code>// main.js
-Vue.prototype.$reverseText = function (propertyName) &#123;
-  this[propertyName] = this[propertyName]
-    .split(&#39;&#39;)
-    .reverse()
-    .join(&#39;&#39;)
-&#125;
-
-// 相应组件
 &lt;script&gt;
-export default &#123;
-  data() &#123;
-    return&#123;
-      message: &#39;Hello&#39;
-    &#125;
-  &#125;,
-  created() &#123;
-    console.log(this.message) // =&gt; &quot;Hello&quot;
-    this.$reverseText(&#39;message&#39;)
-    console.log(this.message) // =&gt; &quot;olleH&quot;
-  &#125;
-&#125;
-&lt;/script&gt;
-</code></pre>
-<h1 id="5-应用示例"><a href="#5-应用示例" class="headerlink" title="5. 应用示例"></a>5. 应用示例</h1><h2 id="5-1-引入-axios"><a href="#5-1-引入-axios" class="headerlink" title="5.1 引入 axios"></a>5.1 引入 axios</h2><p>安装</p>
-<pre><code>npm install vue-axios --save
-npm install qs.js --save//它的作用是能把json格式的直接转成data所需的格式
-</code></pre>
-<p>代码</p>
-<pre><code>// mian.js
-import Vue from &#39;vue&#39;
-import axios from &#39;axios&#39;
-import qs from &#39;qs&#39;
- 
-Vue.prototype.$axios = axios    //全局注册，使用方法为:this.$axios
-Vue.prototype.qs = qs           //全局注册，使用方法为:this.qs
- 
-// 相应组件
-&lt;script&gt;
-  export default&#123;
-    data()&#123;
-      return&#123;
-        userId:666,
-        token:&#39;&#39;,
+import child from &#39;./child.vue&#39;
+  export default &#123;
+    components: &#123; child &#125;,
+    data () &#123;
+      return &#123;
+        childForRef: null,
       &#125;
     &#125;,
-    created()&#123;
-      this.$axios(&#123;
-        method:&#39;post&#39;,
-        url:&#39;api&#39;,
-        data:this.qs.stringify(&#123;    //这里是发送给后台的数据
-          userId:this.userId,
-          token:this.token,
-        &#125;)
-      &#125;).then((response) =&gt;&#123;          //这里使用了ES6的语法
-        console.log(response)       //请求成功返回的数据
-      &#125;).catch((error) =&gt;&#123;
-        console.log(error)       //请求失败返回的数据
-      &#125;)
+    mounted() &#123;
+      this.childForRef = this.$refs.childForRef;
+      console.log(this.childForRef.name);
+    &#125;,
+    methods: &#123;
+      sayHello() &#123;
+        this.childForRef.sayHello()
+      &#125;
     &#125;
   &#125;
 &lt;/script&gt;
 </code></pre>
-<h1 id="6、Vue-prototype、Vue-component和Vue-use区别"><a href="#6、Vue-prototype、Vue-component和Vue-use区别" class="headerlink" title="6、Vue.prototype、Vue.component和Vue.use区别"></a>6、Vue.prototype、Vue.component和Vue.use区别</h1><h2 id="1、Vue-prototype"><a href="#1、Vue-prototype" class="headerlink" title="1、Vue.prototype"></a>1、Vue.prototype</h2><p>在多个地方都需要使用但不想污染全局作用域的情况下，这样定义，在每个 Vue 实例中都可用。<br>参考：<a target="_blank" rel="noopener" href="https://cn.vuejs.org/v2/cookbook/adding-instance-properties.html">https://cn.vuejs.org/v2/cookbook/adding-instance-properties.html</a><br>$ 表示这是一个在 Vue 所有实例中都可用的属性<br>常用于方法、变量等</p>
-<pre><code>import echarts from &#39;echarts&#39;
-Vue.prototype.$echarts = echarts 
+<p>子组件</p>
+<pre><code>//子组件
+&lt;template&gt;
+  &lt;div&gt;child 的内容&lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+export default &#123;
+  data () &#123;
+    return &#123;
+      name: &#39;我是 child&#39;,
+    &#125;
+  &#125;,
+  methods: &#123;
+    sayHello () &#123;
+      console.log(&#39;hello&#39;);
+      alert(&#39;hello&#39;);
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
 </code></pre>
-<h2 id="2、vue-component"><a href="#2、vue-component" class="headerlink" title="2、vue.component"></a>2、vue.component</h2><p>全局注册组件，<br>第一个参数是调用组件时写的组件名<br>第二个参数是引入组件时写的名称<br>可用于注册自定义组件</p>
-<pre><code>import myLoading from &#39;base/loading&#39;
-Vue.component(&#39;myLoading&#39;,myLoading);
-</code></pre>
-<h2 id="3、Vue-use"><a href="#3、Vue-use" class="headerlink" title="3、Vue.use"></a>3、Vue.use</h2><p>同样是全局注册，和component的区别是接收的参数必须有install方法<br>常用于注册第三方插件</p>
-<pre><code>import ElementUI from &#39;element-ui&#39;;
-Vue.use(ElementUI);
-</code></pre>
-<p>到此这篇关于Vue中 Vue.prototype使用详解的文章就介绍到这了</p>
+<p>————————————————<br>版权声明：本文为CSDN博主「小毕学习代码」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_70703397/article/details/132201160">https://blog.csdn.net/qq_70703397/article/details/132201160</a></p>
  
       <!-- reward -->
       
@@ -582,7 +565,7 @@ Vue.use(ElementUI);
 
     
     <article
-  id="post-Flex 布局教程"
+  id="post-Vue2传值方式详解03"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -593,8 +576,8 @@ Vue.use(ElementUI);
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/08/21/Flex%20%E5%B8%83%E5%B1%80%E6%95%99%E7%A8%8B/"
-    >Flex 布局教程</a> 
+  <a class="article-title" href="/2023/09/03/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A303/"
+    >Vue2传值方式详解03-兄弟组件通信（bus总线）</a> 
 </h2>
  
 
@@ -602,8 +585,8 @@ Vue.use(ElementUI);
     </header>
      
     <div class="article-meta">
-      <a href="/2023/08/21/Flex%20%E5%B8%83%E5%B1%80%E6%95%99%E7%A8%8B/" class="article-date">
-  <time datetime="2023-08-21T11:47:36.000Z" itemprop="datePublished">2023-08-21</time>
+      <a href="/2023/09/03/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A303/" class="article-date">
+  <time datetime="2023-09-03T11:19:19.000Z" itemprop="datePublished">2023-09-03</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -613,253 +596,58 @@ Vue.use(ElementUI);
       
     <div class="article-entry" itemprop="articleBody">
        
-  <h1 id="什么是弹性布局？"><a href="#什么是弹性布局？" class="headerlink" title="什么是弹性布局？"></a>什么是弹性布局？</h1><p>弹性布局（Flex布局）是一种现代的CSS布局方式，通过使用display: flex属性来创建一个弹性容器，并在其中使用灵活的盒子模型来进行元素的排列和定位。</p>
-<h1 id="弹性布局的特点？"><a href="#弹性布局的特点？" class="headerlink" title="弹性布局的特点？"></a>弹性布局的特点？</h1><p>弹性布局具有以下特点：</p>
-<p>*主轴与交叉轴：<br>弹性容器具有主轴（main axis）和交叉轴（cross axis）。默认情况下，主轴是水平方向，交叉轴是垂直方向。</p>
-<p>*弹性容器：<br>通过将父元素的display属性设置为flex或inline-flex来创建弹性容器。</p>
-<p>*子元素的弹性项目：<br>弹性容器中的每个子元素都成为弹性项目。子元素可以指定各自在主轴和交叉轴上的大小、顺序以及对齐方式等。</p>
-<p>*主轴对齐：<br>弹性项目可以在主轴上按照一定比例分配空间，也可以使用justify-content属性定义主轴的对齐方式。</p>
-<p>*交叉轴对齐：<br>弹性项目可以在交叉轴上进行对齐，包括顶部对齐、底部对齐、居中对齐等，使用align-items属性定义交叉轴对齐方式。</p>
-<p>*换行与自动调整：<br>可控制弹性项目是否换行，并且具备自动调整元素大小的能力。<br>弹性布局简化了网页布局的开发过程，提供了更灵活、响应式的布局方式。它适用于各种屏幕尺寸和设备类型，并能够快速适应不同的布局需求。</p>
-<h1 id="容器的属性"><a href="#容器的属性" class="headerlink" title="容器的属性"></a>容器的属性</h1><h2 id="justify-content"><a href="#justify-content" class="headerlink" title="justify-content"></a>justify-content</h2><p>justify-content属性定义了项目在主轴上的对齐方式。</p>
-<pre><code>.box &#123;
-  justify-content: flex-start | flex-end | center | space-between | space-around;
-&#125;
-</code></pre>
-<p>它可能取5个值，具体对齐方式与轴的方向有关。下面假设主轴为从左到右。</p>
-<pre><code>flex-start（默认值）：左对齐
-flex-end：右对齐
-center： 居中
-space-between：两端对齐，项目之间的间隔都相等。
-space-around：每个项目两侧的间隔相等。所以，项目之间的间隔比项目与边框的间隔大一倍。
-</code></pre>
-<h2 id="align-items"><a href="#align-items" class="headerlink" title="align-items"></a>align-items</h2><p>align-items属性定义项目在交叉轴上如何对齐。</p>
-<pre><code>.box &#123;
-  align-items: flex-start | flex-end | center | baseline | stretch;
-&#125;
-</code></pre>
-<p>它可能取5个值。具体的对齐方式与交叉轴的方向有关，下面假设交叉轴从上到下。</p>
-<pre><code>flex-start：交叉轴的起点对齐。
-flex-end：交叉轴的终点对齐。
-center：交叉轴的中点对齐。
-baseline: 项目的第一行文字的基线对齐。
-stretch（默认值）：如果项目未设置高度或设为auto，将占满整个容器的高度。
-</code></pre>
-<h2 id="flex-direction"><a href="#flex-direction" class="headerlink" title="flex-direction"></a>flex-direction</h2><p>决定主轴的方向，水平或者垂直</p>
-<pre><code>.box &#123;
-  flex-direction: row | row-reverse | column | column-reverse;
-&#125;
+  <p>main.js</p>
+<pre><code>// main.js 文件
+import Vue from &#39;vue&#39;
+import App from &#39;./App.vue&#39;
 
-row（默认值）：主轴为水平方向，起点在左端。
-row-reverse：主轴为水平方向，起点在右端。
-column：主轴为垂直方向，起点在上沿。
-column-reverse：主轴为垂直方向，起点在下沿。
-</code></pre>
-<h2 id="flex-wrap"><a href="#flex-wrap" class="headerlink" title="flex-wrap"></a>flex-wrap</h2><p>换行不换行以及换行的方向</p>
-<pre><code>.box&#123;
-  flex-wrap: nowrap | wrap | wrap-reverse;
-&#125;
+Vue.config.productionTip = false
 
-nowrap（默认）：不换行
-wrap：换行，第一行在上方。
-wrap-reverse：换行，第一行在下方。
+new Vue(&#123;
+  render: h =&gt; h(App),
+  beforeCreate() &#123;
+    // 需要在全局添加一个属性
+    Vue.prototype.$bus = this
+  &#125;
+&#125;).$mount(&#39;#app&#39;)
 </code></pre>
-<h2 id="flex-flow"><a href="#flex-flow" class="headerlink" title="flex-flow"></a>flex-flow</h2><p>以上两种的简写方式</p>
-<pre><code>.box &#123;
-  flex-flow: &lt;flex-direction&gt; || &lt;flex-wrap&gt;;
-&#125;
-</code></pre>
-<h2 id="align-content"><a href="#align-content" class="headerlink" title="align-content"></a>align-content</h2><p>align-content属性定义了多根轴线的对齐方式。如果项目只有一根轴线，该属性不起作用。</p>
-<pre><code>.box &#123;
-  align-content: flex-start | flex-end | center | space-between | space-around | stretch;
-&#125;
-
-flex-start：与交叉轴的起点对齐。
-flex-end：与交叉轴的终点对齐。
-center：与交叉轴的中点对齐。
-space-between：与交叉轴两端对齐，轴线之间的间隔平均分布。
-space-around：每根轴线两侧的间隔都相等。所以，轴线之间的间隔比轴线与边框的间隔大一倍。
-stretch（默认值）：轴线占满整个交叉轴。
-</code></pre>
-<h2 id="order属性"><a href="#order属性" class="headerlink" title="order属性"></a>order属性</h2><p>order属性定义项目的排列顺序。数值越小，排列越靠前，默认为0。</p>
-<pre><code>.item &#123;
-  order: &lt;integer&gt;;
-&#125;
-</code></pre>
-<h2 id="flex-grow属性"><a href="#flex-grow属性" class="headerlink" title="flex-grow属性"></a>flex-grow属性</h2><p>flex-grow属性定义项目的放大比例，默认为0，即如果存在剩余空间，也不放大。</p>
-<pre><code>.item &#123;
-  flex-grow: &lt;number&gt;; /* default 0 */
-&#125;
-</code></pre>
-<p>如果所有项目的flex-grow属性都为1，则它们将等分剩余空间（如果有的话）。如果一个项目的flex-grow属性为2，其他项目都为1，则前者占据的剩余空间将比其他项多一倍。</p>
-<h2 id="flex-shrink属性"><a href="#flex-shrink属性" class="headerlink" title="flex-shrink属性"></a>flex-shrink属性</h2><p>flex-shrink属性定义了项目的缩小比例，默认为1，即如果空间不足，该项目将缩小。</p>
-<pre><code>.item &#123;
-  flex-shrink: &lt;number&gt;; /* default 1 */
-&#125;
-</code></pre>
-<p>如果所有项目的flex-shrink属性都为1，当空间不足时，都将等比例缩小。如果一个项目的flex-shrink属性为0，其他项目都为1，则空间不足时，前者不缩小。</p>
-<p>负值对该属性无效。</p>
-<h2 id="flex-basis属性"><a href="#flex-basis属性" class="headerlink" title="flex-basis属性"></a>flex-basis属性</h2><p>flex-basis属性定义了在分配多余空间之前，项目占据的主轴空间（main size）。浏览器根据这个属性，计算主轴是否有多余空间。它的默认值为auto，即项目的本来大小。</p>
-<pre><code>.item &#123;
-  flex-basis: &lt;length&gt; | auto; /* default auto */
-&#125;
-</code></pre>
-<p>它可以设为跟width或height属性一样的值（比如350px），则项目将占据固定空间。</p>
-<h2 id="flex属性"><a href="#flex属性" class="headerlink" title="flex属性"></a>flex属性</h2><p>flex属性是flex-grow, flex-shrink 和 flex-basis的简写，默认值为0 1 auto。后两个属性可选。</p>
-<pre><code>.item &#123;
-  flex: none | [ &lt;&#39;flex-grow&#39;&gt; &lt;&#39;flex-shrink&#39;&gt;? || &lt;&#39;flex-basis&#39;&gt; ]
-&#125;
-</code></pre>
-<p>该属性有两个快捷值：auto (1 1 auto) 和 none (0 0 auto)。</p>
-<p>建议优先使用这个属性，而不是单独写三个分离的属性，因为浏览器会推算相关值。</p>
-<h2 id="align-self属性"><a href="#align-self属性" class="headerlink" title="align-self属性"></a>align-self属性</h2><p>align-self属性允许单个项目有与其他项目不一样的对齐方式，可覆盖align-items属性。默认值为auto，表示继承父元素的align-items属性，如果没有父元素，则等同于stretch。</p>
-<pre><code>.item &#123;
-  align-self: auto | flex-start | flex-end | center | baseline | stretch;
-&#125;
-</code></pre>
-<p>该属性可能取6个值，除了auto，其他都与align-items属性完全一致。</p>
-<p>————————————————<br>版权声明：本文为CSDN博主「奶糖 肥晨」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_48998573/article/details/131240067">https://blog.csdn.net/weixin_48998573/article/details/131240067</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Vue按钮居中居左居右"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/08/20/Vue%E6%8C%89%E9%92%AE%E5%B1%85%E4%B8%AD%E5%B1%85%E5%B7%A6%E5%B1%85%E5%8F%B3/"
-    >Vue按钮居中居左居右</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/08/20/Vue%E6%8C%89%E9%92%AE%E5%B1%85%E4%B8%AD%E5%B1%85%E5%B7%A6%E5%B1%85%E5%8F%B3/" class="article-date">
-  <time datetime="2023-08-20T10:59:58.000Z" itemprop="datePublished">2023-08-20</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>在 Vue 中,如果需要将按钮居中显示,可以使用 CSS 中的 <code>text-align: center</code> 属性来实现。</p>
-<h1 id="一、按钮居中"><a href="#一、按钮居中" class="headerlink" title="一、按钮居中"></a>一、按钮居中</h1><p>在 Vue 中，如果需要将按钮居中显示，可以使用 CSS 中的 <code>text-align: center</code> 属性来实现。</p>
-<p>例如，可以在按钮所在的容器元素上添加 <code>text-align: center</code> 样式：</p>
-<pre><code>&lt;template&gt;
-  &lt;div class=&quot;button-container&quot;&gt;
-    &lt;el-button type=&quot;primary&quot;&gt;提交&lt;/el-button&gt;
-    &lt;el-button&gt;取消&lt;/el-button&gt;
+<p>Father.vue</p>
+<pre><code>// Father.vue 文件
+&lt;template&gt;
+  &lt;div id=&quot;father&quot;&gt;
+    &lt;button @click=&quot;btn&quot;&gt;我要给 Brother 组件传数据&lt;/button&gt;
   &lt;/div&gt;
 &lt;/template&gt;
-  
-&lt;style&gt;
-.button-container &#123;
-  text-align: center;
-&#125;
-&lt;/style&gt;
+
+&lt;script&gt;
+export default &#123;
+  name: &quot;Father&quot;,
+  methods: &#123;
+    btn() &#123;
+      this.$bus.$emit(&quot;change&quot;, 66666);
+    &#125;,
+  &#125;,
+&#125;;
+&lt;/script&gt;
 </code></pre>
-<p>上面的代码中，我们在按钮所在的容器元素上添加了 <code>text-align: center</code> 样式，来实现按钮居中显示。</p>
-<p>另外，还可以使用 Flex 布局来实现。例如，将按钮所在的容器元素设置为 Flex 容器，并使用 <code>justify-content: center</code> 属性来实现水平居中显示。示例如下：</p>
-<pre><code>&lt;template&gt;
-  &lt;div class=&quot;button-container&quot;&gt;
-    &lt;el-button type=&quot;primary&quot;&gt;提交&lt;/el-button&gt;
-    &lt;el-button&gt;取消&lt;/el-button&gt;
-  &lt;/div&gt;
+<p>Brother.vue</p>
+<pre><code>// Brother.vue 文件
+&lt;template&gt;
+  &lt;div id=&quot;brother&quot;&gt;&lt;/div&gt;
 &lt;/template&gt;
-  
-&lt;style&gt;
-.button-container &#123;
-  display: flex;
-  justify-content: center;
-&#125;
-&lt;/style&gt;
-</code></pre>
-<p>上面的代码中，我们将按钮所在的容器元素设置为 Flex 容器，并使用 <code>justify-content: center</code> 属性来实现水平居中显示。</p>
-<h1 id="二、按钮居右"><a href="#二、按钮居右" class="headerlink" title="二、按钮居右"></a>二、按钮居右</h1><p>在 Vue 中，可以使用 flex 布局来实现按钮居右的效果。具体步骤如下：</p>
-<p>在按钮父元素上添加 display: flex; justify-content: flex-end; 样式，将子元素沿着横轴方向向右对齐。</p>
-<pre><code>&lt;div class=&quot;button-wrapper&quot;&gt;
-  &lt;button&gt;按钮&lt;/button&gt;
-&lt;/div&gt;
 
-.button-wrapper &#123;
-  display: flex;
-  justify-content: flex-end;
-&#125;
+&lt;script&gt;
+export default &#123;
+  name: &quot;Brother&quot;,
+  mounted() &#123;
+    this.$bus.$on(&quot;change&quot;, (msg) =&gt; &#123;
+      console.log(msg);
+    &#125;);
+  &#125;,
+&#125;;
+&lt;/script&gt;
 </code></pre>
-<p>在按钮上添加 margin-left 样式，控制按钮与其左边兄弟元素之间的距离。</p>
-<pre><code>&lt;div class=&quot;button-wrapper&quot;&gt;
-  &lt;span&gt;左边的元素&lt;/span&gt;
-  &lt;button class=&quot;right-btn&quot;&gt;按钮&lt;/button&gt;
-&lt;/div&gt;
-
-.button-wrapper &#123;
-  display: flex;
-  justify-content: flex-end;
-&#125;
-.right-btn &#123;
-  margin-left: 10px; /* 调整按钮与左边元素之间的距离 */
-&#125;
-</code></pre>
-<p>这样就可以将按钮居右了。如果有多个元素需要靠右对齐，只需要将它们包裹在一个父元素中，并且在父元素上应用 display: flex; justify-content: flex-end; 样式即可。</p>
-<h1 id="三、按钮居左"><a href="#三、按钮居左" class="headerlink" title="三、按钮居左"></a>三、按钮居左</h1><p>1、方法1<br>在 Vue 中，可以使用 flex 布局来实现按钮居左的效果。具体步骤如下：</p>
-<p>在按钮父元素上添加 display: flex; 样式，启用 flex 布局。</p>
-<pre><code>&lt;div class=&quot;button-wrapper&quot;&gt;
-  &lt;button class=&quot;left-btn&quot;&gt;按钮&lt;/button&gt;
-&lt;/div&gt;
-
-.button-wrapper &#123;
-  display: flex;
-&#125;
-</code></pre>
-<p>在按钮上添加 margin-right 样式，控制按钮与其右边兄弟元素之间的距离。</p>
-<pre><code>&lt;div class=&quot;button-wrapper&quot;&gt;
-  &lt;button class=&quot;left-btn&quot;&gt;按钮&lt;/button&gt;
-  &lt;span&gt;右边的元素&lt;/span&gt;
-&lt;/div&gt;
-
-.button-wrapper &#123;
-  display: flex;
-&#125;
-.left-btn &#123;
-  margin-right: 10px; /* 调整按钮与右边的元素之间的距离 */
-&#125;
-</code></pre>
-<p>这样就可以将按钮居左了。如果有多个元素需要靠左对齐，只需要将它们包裹在一个父元素中，并且在父元素上应用 display: flex; 样式即可。使用 flex 布局时，元素的位置由 order 属性控制，而子元素的位置是由它们在父元素中出现的顺序决定的，因此靠前的元素会出现在靠左的位置。如果需要调整元素的位置，只需要在它的样式中添加 order 属性即可。</p>
-<p>2、方法2<br>在 Vue 中，可以通过给按钮元素添加 float: left; 样式来实现按钮居左的效果。具体步骤如下：</p>
-<pre><code>&lt;div class=&quot;button-container&quot;&gt;
-  &lt;button class=&quot;left-btn&quot;&gt;按钮&lt;/button&gt;
-&lt;/div&gt;
-</code></pre>
-<p>这样就可以将按钮居左了。如果按钮元素的父元素中还有其它元素，为避免按钮影响其他元素的布局，可以在父元素上添加 overflow: auto; 样式，使其包含浮动元素的布局上下文，从而避免对其它元素造成影响。</p>
+<p>————————————————<br>版权声明：本文为CSDN博主「codeCat!」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_60547084/article/details/124408513">https://blog.csdn.net/weixin_60547084/article/details/124408513</a></p>
  
       <!-- reward -->
       
@@ -881,7 +669,7 @@ stretch（默认值）：轴线占满整个交叉轴。
 
     
     <article
-  id="post-Pandas实用入门案例03"
+  id="post-Vue2传值方式详解02"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -892,8 +680,8 @@ stretch（默认值）：轴线占满整个交叉轴。
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/08/19/Pandas%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B03/"
-    >Pandas实用入门案例03</a> 
+  <a class="article-title" href="/2023/09/02/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A302/"
+    >Vue2传值方式详解02-子传父传递</a> 
 </h2>
  
 
@@ -901,8 +689,8 @@ stretch（默认值）：轴线占满整个交叉轴。
     </header>
      
     <div class="article-meta">
-      <a href="/2023/08/19/Pandas%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B03/" class="article-date">
-  <time datetime="2023-08-19T11:56:48.000Z" itemprop="datePublished">2023-08-19</time>
+      <a href="/2023/09/02/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A302/" class="article-date">
+  <time datetime="2023-09-02T12:34:26.000Z" itemprop="datePublished">2023-09-02</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -912,235 +700,53 @@ stretch（默认值）：轴线占满整个交叉轴。
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>Python之Pandas的常用技能【索引的增、删、改、查】</p>
-<p>1、索引简介<br>索引（index）是数据处理中非常重要的工具。索引主要用来：</p>
-<p>1）标记数据；2）快速检索数据；</p>
-<p>Pandas中的索引，有两种：1）index（行索引）；2）columns（列索引）；</p>
-<p>数据准备</p>
-<pre><code>import pandas as pd
-#读取数据
-df = pd.read_excel(r&#39;C:\Users\XXXXXX\Desktop\pandas练习文档.xlsx&#39;,sheet_name=3)
-print(df)
+  <p>（1）在父组件的子组件标签上自定义一个事件，然后调用需要的方法<br>（2）在子组件的方法中通过 this.$emit(“事件”)来触发在父组件中定义的事件，数据是以参数的形式进行传递的</p>
+<p>代码示例：</p>
+<p>父组件</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;i&gt;父组件&lt;/i&gt;
+    &lt;!--页面使用--&gt;
+    &lt;son @lcclick=&quot;lcclick&quot;&gt;&lt;/son&gt;//自定义一个事件
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+import son from &quot;./son.vue&quot;; //导入父组件
+export default &#123;
+  components: &#123; son &#125;, //注册组件
+  name: &quot;父组件&quot;,
+  data() &#123;
+    return &#123;&#125;;
+  &#125;,
+  methods: &#123;
+    lcclick()&#123;
+      alert(&#39;子传父&#39;)
+    &#125;
+  &#125;,
+&#125;;
+&lt;/script&gt;
 </code></pre>
-<p>2、设置索引的常用方法<br>2.1 读取数据时设置索引</p>
-<pre><code>import pandas as pd
-#读取数据，同时，使用index_col选取第一列作为索引列。
-df = pd.read_excel(r&#39;C:\Users\XXXXXX\Desktop\pandas练习文档.xlsx&#39;,sheet_name=3,index_col=0)
-print(df)
+<p>子组件</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;button @click=&quot;lcalter&quot;&gt;点我&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+export default &#123;
+components: &#123; &#125;,
+  name: &#39;子组件&#39;,
+  methods: &#123;
+    lcalter()&#123;
+      this.$emit(&#39;lcclick&#39;)//通过emit来触发事件
+    &#125;
+  &#125;,
+&#125;;
+&lt;/script&gt;
 </code></pre>
-<p>2.2 查看索引相关信息<br>2.2.1 df.index</p>
-<pre><code>import pandas as pd
-#读取数据时，设置了index
-df = pd.read_excel(r&#39;C:\Users\XXXXXX\Desktop\pandas练习文档.xlsx&#39;,sheet_name=3,index_col=1)
-print(df)
-print(&#39;\n&#39;)
-print(df.index)
-</code></pre>
-<p>2.3 设置索引列的名称<br>2.3.1 df.rename_axis()</p>
-<pre><code>import pandas as pd
-#读取数据
-df = pd.read_excel(r&#39;C:\Users\XXXXXX\Desktop\pandas练习文档.xlsx&#39;,sheet_name=3)
-print(df)
-print(&#39;\n&#39;)
-df = df.rename_axis(&#39;index_col&#39;)
-print(df)
-</code></pre>
-<p>2.3.2 df.index.name</p>
-<pre><code>import pandas as pd
-#读取数据
-df = pd.read_excel(r&#39;C:\Users\XXXXXX\Desktop\pandas练习文档.xlsx&#39;,sheet_name=3)
-print(df)
-print(&#39;\n&#39;)
-df.index.name = &#39;index_col&#39;
-print(df)
-</code></pre>
-<p>2.3.3 df.index.names = []</p>
-<pre><code>import pandas as pd
-#读取数据
-df = pd.read_excel(r&#39;C:\Users\XXXXXX\Desktop\pandas练习文档.xlsx&#39;,sheet_name=3)
-#set_index()是设置索引列，reset_index()可以将索引列变成数据列。
-df = df.set_index(keys=[&#39;id&#39;,&#39;name&#39;],drop=True,append=True)
-df_new = df.reset_index(level=1,drop=False)
-print(df_new)
-print(&#39;\n&#39;)
-df_new.index.names = [&#39;x&#39;,&#39;y&#39;]
-print(df_new)
-</code></pre>
-<p>2.3.4 df.columns=values</p>
-<pre><code>import pandas as pd
-#先设置多级别index
-index = pd.MultiIndex.from_tuples([(&#39;girl&#39;,&#39;Lucy&#39;),
-                                    (&#39;girl&#39;,&#39;Rose&#39;),
-                                    (&#39;boy&#39;,&#39;Tom&#39;),
-                                   (&#39;boy&#39;,&#39;Jack&#39;),
-
-                                   ],
-                                  names=[&#39;gender&#39;,&#39;name&#39;])
-#设置columns，一列一个元组，如果是多级别，在一个元组内。
-columns = pd.MultiIndex.from_tuples([(&#39;math&#39;,),
-                                     (&#39;english&#39;,)])
-#构造数据。
-df = pd.DataFrame([
-    (99,78),
-    (87,32),
-    (23,89),
-    (28,81)
-],
-index=index,
-columns=columns)
-print(df)
-df.columns=[&#39;数学&#39;,&#39;英语&#39;]
-print(&#39;\n&#39;)
-print(df)
-</code></pre>
-<p>2.4 重置索引：df.index=values<br>使用赋值的方法。</p>
-<p>【注：重置索引后，不会将原来的索引列作为新的一列保留。】</p>
-<pre><code>import pandas as pd
-#读取数据,同时，使用index_col选取第一列作为索引列。
-df = pd.read_excel(r&#39;C:\Users\XXXXXX\Desktop\pandas练习文档.xlsx&#39;,sheet_name=3,index_col=0)
-df.index = range(len(df))
-print(df)
-</code></pre>
-<p>2.5 重置索引：df.reset_index()<br>2.5.1 df.reset_index()参数详情</p>
-<pre><code>df.reset_index(
-level=None, #如果索引有多个层级，仅从索引中删除level指定的列。默认为删除所有的列。
-drop=False, #重置索引后，是否将原来的索引列作为新的一列保留。默认为False，即保留。
-col_level=0, #如果列有多个级别，确定将这一索引列插入到哪一个级别。默认情况为0，即插入到第一级别。
-col_fill=&#39;&#39; ,#确定如何命名其他级别。
-inplace=False#是否要用新的DataFrame替换原来的DataFrame，一般默认为False。
-)
-</code></pre>
-<p>2.5.2 修改索引，并保留原来的索引列为新的一列</p>
-<pre><code>import pandas as pd
-#读取数据
-df = pd.read_excel(r&#39;C:\Users\XXXXXX\Desktop\pandas练习文档.xlsx&#39;,sheet_name=3,index_col=0)
-#重置索引,会将原来的索引列，变成新的一列。
-df_new = df.reset_index()
-print(df,df_new,sep=&#39;\n&#39;)
-</code></pre>
-<p>2.5.3 删除索引：将索引的列的第二列，变成数据列的第二列</p>
-<pre><code>import pandas as pd
-#读取数据
-df = pd.read_excel(r&#39;C:\Users\XXXXXX\Desktop\pandas练习文档.xlsx&#39;,sheet_name=3)
-#先用set_index()增加几个索引
-df = df.set_index(keys=[&#39;id&#39;,&#39;name&#39;],drop=True,append=True)
-print(df)
-</code></pre>
-<p>使用df.reset_index（）将id列变成数据列</p>
-<pre><code>import pandas as pd
-#读取数据
-df = pd.read_excel(r&#39;C:\Users\XXXXXX\Desktop\pandas练习文档.xlsx&#39;,sheet_name=3)
-#set_index()是设置索引列，reset_index()可以将索引列变成数据列。
-df = df.set_index(keys=[&#39;id&#39;,&#39;name&#39;],drop=True,append=True)
-df_new = df.reset_index(level=1,drop=False)
-print(df,df_new,sep=&#39;\n&#39;)
-</code></pre>
-<p>2.5.4 多级别索引的处理</p>
-<p>1）使用MultiIndex构造多级别索引</p>
-<pre><code>import pandas as pd
-#先设置多级别index
-index = pd.MultiIndex.from_tuples([(&#39;girl&#39;,&#39;Lucy&#39;),
-                                    (&#39;girl&#39;,&#39;Rose&#39;),
-                                    (&#39;boy&#39;,&#39;Tom&#39;),
-                                   (&#39;boy&#39;,&#39;Jack&#39;),
-
-                                   ],
-                                  names=[&#39;gender&#39;,&#39;name&#39;])
-#设置columns，一列一个元组，如果是多级别，在一个元组内。
-columns = pd.MultiIndex.from_tuples([(&#39;math&#39;,),
-                                     (&#39;english&#39;,)])
-#构造数据。
-df = pd.DataFrame([
-    (99,78),
-    (87,32),
-    (23,89),
-    (28,81)
-],
-index=index,
-columns=columns)
-print(df)
-</code></pre>
-<p>将索引”gender”当成数据列。</p>
-<pre><code>df = df.reset_index(level=&#39;gender&#39;)
-print(df)
-</code></pre>
-<p>2.6 重置索引：df.set_index()<br>2.6.1 df.set_index()参数详解</p>
-<pre><code>df.set_index(
-keys, #要设置索引的列名。
-drop=True, #将设置索引的列删除，默认为True，即不保留。
-append=False, #是否保留原索引。默认为False。
-inplace=False, #是否在替换原来的DataFrame。默认为False。
-verify_integrity=False#是否检查索引有无重复，默认为False。
-)
-
-
-import pandas as pd
-#读取数据
-df = pd.read_excel(r&#39;C:\Users\XXXXXX\Desktop\pandas练习文档.xlsx&#39;,sheet_name=3)
-#先用set_index()增加几个索引
-df = df.set_index(keys=[&#39;id&#39;,&#39;name&#39;],drop=False,append=True)
-print(df)
-</code></pre>
-<p>2.7 重置索引：df.reindex()<br>2.7.1 df.reindex()参数详解</p>
-<p>【注：这个参数对其中某些值如method，即使按照官网上的操作，还是报错。我也没弄特别清楚】</p>
-<pre><code>pandas.DataFrame.reindex &amp;#8212; pandas 1.5.2 documentation
-
-df.reindex(
-keywords for axes, #列标签，行标签。即index=,columns等。
-method=None, #默认为None。针对填入的数据是向前，向后，向左，还是向右。&#123;None， &#39;backfill&#39;/&#39;bfill&#39;， &#39;pad&#39;/&#39;ffill&#39;， &#39;nearest&#39;&#125;
-copy=True, 
-level=None, #多级别索引时使用。
-fill_value=nan, #一般默认填入NaN。可以设置。
-limit=None, #向前或向后填入的最大连续数。
-tolerance=None
-</code></pre>
-<p>2.7.2 基本用法</p>
-<pre><code>import pandas as pd
-df = pd.DataFrame([
-    (99,78),
-    (87,32),
-    (23,89),
-    (28,81)
-])
-print(df)
-
-print(&#39;\n&#39;)
-#使用df.reindex()重新赋值索引。
-df = df.reindex([0,&#39;B&#39;,3,&#39;D&#39;])
-print(df)
-
-fill_value的使用
-
-import pandas as pd
-df = pd.DataFrame([
-    (99,78),
-    (87,32),
-    (23,89),
-    (28,81)
-])
-print(df)
-
-print(&#39;\n&#39;)
-#使用df.reindex()重新赋值索引。
-df = df.reindex([0,&#39;B&#39;,3,&#39;D&#39;],fill_value=&#39;--&#39;)
-print(df)
-</code></pre>
-<p>修改columns</p>
-<pre><code>import pandas as pd
-df = pd.DataFrame([
-    (99,78),
-    (87,32),
-    (23,89),
-    (28,81)
-],columns=[&#39;math&#39;,&#39;english&#39;])
-print(df)
-
-print(&#39;\n&#39;)
-#使用df.reindex()重新赋值索引。
-df = df.reindex(columns=[&#39;math&#39;,&#39;english&#39;,&#39;music&#39;],fill_value=&#39;100&#39;)
-#或者使用
-print(df)
-</code></pre>
+<p>————————————————<br>版权声明：本文为CSDN博主「小毕学习代码」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_70703397/article/details/132201160">https://blog.csdn.net/qq_70703397/article/details/132201160</a></p>
  
       <!-- reward -->
       
@@ -1151,7 +757,7 @@ print(df)
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pandas/" rel="tag">pandas</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
 
     </footer>
   </div>
@@ -1167,7 +773,7 @@ print(df)
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/13/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/52/">52</a><a class="extend next" rel="next" href="/page/15/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/13/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/54/">54</a><a class="extend next" rel="next" href="/page/15/">下一页</a>
   </nav>
   
 </section>
