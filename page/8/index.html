@@ -154,6 +154,1171 @@
     
     
     <article
+  id="post-AttributeError module ‘backend_interagg‘ has no attribute ‘FigureCanvas‘的解决办法"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/10/18/AttributeError%20module%20%E2%80%98backend_interagg%E2%80%98%20has%20no%20attribute%20%E2%80%98FigureCanvas%E2%80%98%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/"
+    >AttributeError module ‘backend_interagg‘ has no attribute ‘FigureCanvas‘的解决办法</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/10/18/AttributeError%20module%20%E2%80%98backend_interagg%E2%80%98%20has%20no%20attribute%20%E2%80%98FigureCanvas%E2%80%98%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" class="article-date">
+  <time datetime="2023-10-18T02:18:00.000Z" itemprop="datePublished">2023-10-18</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h1><p>一开始我还以为是我的matoltlib和我的python版本不匹配后面发现真正原因其实是matplotlib 的 backend的默认渲染器是agg，agg是一个没有图形显示界面的终端，如果要图像正常显示，则需要切换为图形界面显示的终端TkAgg</p>
+<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>修改 backend 配置：</p>
+<pre><code>matplotlib.use(‘TkAgg’)
+</code></pre>
+<h1 id="原代码和修改后代码对比"><a href="#原代码和修改后代码对比" class="headerlink" title="原代码和修改后代码对比"></a>原代码和修改后代码对比</h1><h2 id="原代码："><a href="#原代码：" class="headerlink" title="原代码："></a>原代码：</h2><pre><code>import numpy as np
+
+import matplotlib.pyplot as plt
+
+x=np.linspace(0.0001,3,100)
+y=x**x
+plt.plot(x,y,&#39;r-&#39;,linewidth=3)
+plt.show()`
+</code></pre>
+<p>错误提示：</p>
+<pre><code>AttributeError: module &#39;backend_interagg&#39; has no attribute &#39;FigureCanvas&#39;. Did you mean: &#39;FigureCanvasAgg&#39;?
+</code></pre>
+<h2 id="修改后代码："><a href="#修改后代码：" class="headerlink" title="修改后代码："></a>修改后代码：</h2><pre><code>import numpy as np
+import matplotlib
+matplotlib.use(&#39;TkAgg&#39;)
+import matplotlib.pyplot as plt
+
+x=np.linspace(0.0001,3,100)
+y=x**x
+plt.plot(x,y,&#39;r-&#39;,linewidth=3)
+plt.show()
+</code></pre>
+<p>————————————————<br>版权声明：本文为CSDN博主「倚剑策马笑西风」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_51763547/article/details/126918669">https://blog.csdn.net/qq_51763547/article/details/126918669</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-“matplotlib.use(‘agg‘)“语句的作用机理"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/10/17/%E2%80%9Cmatplotlib.use(%E2%80%98agg%E2%80%98)%E2%80%9C%E8%AF%AD%E5%8F%A5%E7%9A%84%E4%BD%9C%E7%94%A8%E6%9C%BA%E7%90%86/"
+    >“matplotlib.use(‘agg‘)“语句的作用机理</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/10/17/%E2%80%9Cmatplotlib.use(%E2%80%98agg%E2%80%98)%E2%80%9C%E8%AF%AD%E5%8F%A5%E7%9A%84%E4%BD%9C%E7%94%A8%E6%9C%BA%E7%90%86/" class="article-date">
+  <time datetime="2023-10-17T02:17:00.000Z" itemprop="datePublished">2023-10-17</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><p>在很多使用 matplotlib 库的代码中出现了 matplotlib.use(‘agg’) 的语句。有些博客认为1，在导入matplotlib库后，且在matplotlib.pyplot库被导入前加“matplotlib.use(‘agg’)”语句的作用是在PyCharm中不显示绘图。例如1：</p>
+<pre><code>import numpy as np
+import matplotlib
+matplotlib.use(&#39;agg&#39;) 
+import matplotlib.pyplot as plt # matplotlib.use(&#39;agg&#39;)必须在本句执行前运行
+x = np.arange(0, 2*np.pi, 0.001) 
+y = np.sin(2 * np.pi * x) 
+plt.clf() 
+plt.plot(x,y) 
+l = plt.axhline(linewidth=1, color=&#39;black&#39;) 
+l = plt.axvline(linewidth=1, color=&#39;black&#39;) 
+plt.show()
+</code></pre>
+<p>在Pycharm里面运行就不会显示图。</p>
+<h1 id="原理分析"><a href="#原理分析" class="headerlink" title="原理分析"></a>原理分析</h1><p>实际上，这样的理解是表面的，这个语句确实会使得在Pycharm运行时无法显示图，但是必须注意，这是其原理导致的，而这个语句并不是设置Pycharm不显示图的语句，其实前述的代码中，删掉 plt.show() ，也不会显示图片。</p>
+<p>matplotlib的use()命令其实是用来配置matplotlib的backend （后端）的命令。所谓后端，就是一个渲染器，用于将前端代码渲染成我们想要的图像2。后端详细的解释可以参考博客： matplotlib中什么是后端 。</p>
+<p>对于用户接口，典型的渲染器是Agg，它是使用Anti-Grain Geometry C++库来产生光栅(像素)图。</p>
+<p>那么为什么这样设置Pycharm会导致其不显示图片呢？</p>
+<p>可以查看一下目前的后端设置。方法是执行下面代码。</p>
+<pre><code>import matplotlib
+matplotlib.get_backend()
+</code></pre>
+<p>在Pycharm的Terminal 里面输入该项命令，可以看到，Pycharm运行的时候，默认的后端是Qt5Agg。</p>
+<p>实际上，Agg 渲染器是非交互式的后端，没有GUI界面，所以不显示图片，它是用来生成图像文件。Qt5Agg 是意思是Agg渲染器输出到Qt5绘图面板，它是交互式的后端，拥有在屏幕上展示的能力3。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-Python的zipfile入门教程"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/10/16/Python%E7%9A%84zipfile%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/"
+    >Python的zipfile入门教程</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/10/16/Python%E7%9A%84zipfile%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/" class="article-date">
+  <time datetime="2023-10-16T02:16:00.000Z" itemprop="datePublished">2023-10-16</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>来源如下，<br><a target="_blank" rel="noopener" href="https://muzing.top/posts/4797762a/">https://muzing.top/posts/4797762a/</a><br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/480329034">https://zhuanlan.zhihu.com/p/480329034</a></p>
+<p>本文做摘选，原文见上述地址。</p>
+<h1 id="Python-能处理-ZIP-文件吗？"><a href="#Python-能处理-ZIP-文件吗？" class="headerlink" title="Python 能处理 ZIP 文件吗？"></a>Python 能处理 ZIP 文件吗？</h1><p>是的！Python 有几个工具可以让您操作 ZIP 文件。其中一些工具在 Python 标准库 中可用。它们包括用于使用特定压缩算法（例如 zlib 、bz2 、lzma 和其他）压缩和解压缩数据的低级库。</p>
+<p>Python 还提供了一个名为“zipfile”的高级模块，专门用于创建、读取、写入、提取和列出 ZIP 文件的内容。<br>Python 的 zipfile 提供了便于使用的类和函数，允许创建、读取、写入、提取和列出 ZIP 文件包含的内容。</p>
+<p>zipfile 支持的一些附加功能：</p>
+<pre><code>大于 4 GiB 的 ZIP 文件（ZIP64 files）
+数据解密
+多种压缩算法，例如 Deflate、 Bzip2 与 LZMA
+使用 CRC32 进行信息完整性检查
+</code></pre>
+<p>请注意，zipfile 确实有一些局限性。例如，当前的数据解密功能可能非常慢，因为它使用纯 Python 代码。该模块无法处理加密 ZIP 文件的创建。最后，也不支持使用多磁盘（multi-disk） ZIP 文件。尽管有这些局限性，zipfile 仍然是一个很棒且实用的工具。</p>
+<h1 id="使用-Python-的-zipfile-操纵已存在的-ZIP-文件"><a href="#使用-Python-的-zipfile-操纵已存在的-ZIP-文件" class="headerlink" title="使用 Python 的 zipfile 操纵已存在的 ZIP 文件"></a>使用 Python 的 zipfile 操纵已存在的 ZIP 文件</h1><h2 id="打开-ZIP-文件进行读写"><a href="#打开-ZIP-文件进行读写" class="headerlink" title="打开 ZIP 文件进行读写"></a>打开 ZIP 文件进行读写</h2><p>在 zipfile 模块中，您会找到 ZipFile 类。这个类的工作方式很像 Python 内置的 open() 函数，允许使用不同的模式打开 ZIP 文件。读取模式（”r”）为默认值。也可以使用写入（”w”）、追加（”a”）和独占（”x”）模式。稍后您将详细学习其中每一项。</p>
+<p>zipfile 实现了上下文管理器协议，以便于在一个 with 语句中使用该类。此特性允许您快速打开和使用 ZIP 文件，而无需担心在完成工作后关闭文件。</p>
+<p>在编写任何代码之前，请确保您拥有将要使用的文件和归档的副本：</p>
+<p>要获取您将用于编写本教程中的示例的文件和存档，请查看本文 附A：材料下载 一节。</p>
+<p>请将下载的资源移入您的家目录（home folder）下名为 python-zipfile/ 的目录中，以准备好工作环境。将文件放在正确的位置后，移动至新创建的目录并在那里启动 Python 交互式会话。</p>
+<p>译者注：对于 Windows 10/11 用户，可以在任意路径创建该目录。在文件资源管理器中进入目录后，按住 Shift 键的同时鼠标右键单击空白处，然后选择“在此处打开 Powershell 窗口”，输入 python 命令即可。</p>
+<p>首先从读取名为 sample.zip 的 ZIP 文件开始热身。为此，可以在读取模式下使用 ZipFile ：</p>
+<pre><code>&gt;&gt;&gt; import zipfile
+
+&gt;&gt;&gt; with zipfile.ZipFile(&quot;sample.zip&quot;, mode=&quot;r&quot;) as archive:
+...     archive.printdir()
+...
+File Name                                        Modified             Size
+hello.txt                                 2021-09-07 19:50:10           83
+lorem.md                                  2021-09-07 19:50:10         2609
+realpython.md                             2021-09-07 19:50:10          428
+</code></pre>
+<p>ZipFile 初始化的第一个参数可以是一个字符串，表示需要打开的 ZIP 文件的路径。这个参数也可以接受文件对象和路径类对象。在此示例中，使用了基于字符串的路径。</p>
+<p>ZipFile 的第二个参数是一个单字母的字符串，表示用于打开文件的模式。正如您在本节开头所了解的，根据需求，ZipFile 可以接受四种可能的模式。mode 位置参数默认为 “r”，所以如果想以只读模式打开归档，可以省略它。</p>
+<p>在 with 语句中，在 archive 上调用 .printdir()。archive 变量现在包含 ZipFile 本身的实例。此函数提供了一种在屏幕上显示底层 ZIP 文件内容的快捷方法。其输出为易读的表格形式，有三列信息：</p>
+<p>File Name<br>Modified<br>Size<br>如果您想在尝试打开之前确保目标为有效的 ZIP 文件，那么可以将 ZipFile 包装在 try … except 语句中，并捕获任何 BadZipFile 异常：</p>
+<pre><code>&gt;&gt;&gt; import zipfile
+
+&gt;&gt;&gt; try:
+...     with zipfile.ZipFile(&quot;sample.zip&quot;) as archive:
+...         archive.printdir()
+... except zipfile.BadZipFile as error:
+...     print(error)
+...
+File Name                                        Modified             Size
+hello.txt                                 2021-09-07 19:50:10           83
+lorem.md                                  2021-09-07 19:50:10         2609
+realpython.md                             2021-09-07 19:50:10          428
+
+&gt;&gt;&gt; try:
+...     with zipfile.ZipFile(&quot;bad_sample.zip&quot;) as archive:
+...         archive.printdir()
+... except zipfile.BadZipFile as error:
+...     print(error)
+...
+File is not a zip file
+</code></pre>
+<p>第一个示例成功打开 sample.zip 而不引发 BadZipFile 异常。那是因为 sample.zip 具有有效的 ZIP 格式。另一方面，第二个示例无法成功打开 bad_sample.zip ，因为该文件不是有效的 ZIP 文件。</p>
+<p>为检查 ZIP 文件的有消息，您还可以使用 is_zipfile() 函数：</p>
+<pre><code>&gt;&gt;&gt; import zipfile
+
+&gt;&gt;&gt; if zipfile.is_zipfile(&quot;sample.zip&quot;):
+...     with zipfile.ZipFile(&quot;sample.zip&quot;, &quot;r&quot;) as archive:
+...         archive.printdir()
+... else:
+...     print(&quot;File is not a zip file&quot;)
+...
+File Name                                        Modified             Size
+hello.txt                                 2021-09-07 19:50:10           83
+lorem.md                                  2021-09-07 19:50:10         2609
+realpython.md                             2021-09-07 19:50:10          428
+
+&gt;&gt;&gt; if zipfile.is_zipfile(&quot;bad_sample.zip&quot;):
+...     with zipfile.ZipFile(&quot;bad_sample.zip&quot;, &quot;r&quot;) as archive:
+...         archive.printdir()
+... else:
+...     print(&quot;File is not a zip file&quot;)
+...
+File is not a zip file
+</code></pre>
+<p>在这些示例中，使用一个 is_zipfile() 作为条件的条件语句。该函数接受一个保存文件系统中 ZIP 文件的路径的 filename 参数。此参数可以接受字符串、类文件或类路径对象。如果 filename 是有效的 ZIP 文件，则该函数返回 True。否则返回 False。</p>
+<p>现在假设您想使用 ZipFile 将 hello.txt 添加到 hello.zip 归档中。为此，可以使用写入模式（”w”）。该模式打开一个 ZIP 文件进行写入。如果目标 ZIP 文件存在，则 “w” 模式会截断它并写入您传入的任何新内容。</p>
+<p>Note: 如果您使用 ZipFile 处理现有文件，那么应该小心使用 “w” 模式。您可能截断 ZIP 文件并丢失所有原有内容。</p>
+<p>如果目标 ZIP 文件不存在，则 ZipFile 会在您关闭归档时为您创建它：</p>
+<pre><code>&gt;&gt;&gt; import zipfile
+
+&gt;&gt;&gt; with zipfile.ZipFile(&quot;hello.zip&quot;, mode=&quot;w&quot;) as archive:
+...     archive.write(&quot;hello.txt&quot;)
+...
+</code></pre>
+<p>运行此代码后，python-zipfile/ 目录中将有一个 hello.zip 文件。如果使用 .printdir() 列出文件内容，那么 hello.txt 会在那里。在此示例中，可用在 ZipFile 对象上调用 .write()。此方法允许您将成员文件写入 ZIP 归档。注意 .write() 的参数应是已存在的文件。</p>
+<p>Note: 当您在写模式下使用类且目标归档不存在时， ZipFile 足够智能，可以创建一个新的归档。然而，如果这些目录尚不存在，则该类不会在目标 ZIP 文件的路径中创建新目录。</p>
+<p>这就解释了为何如下代码无法工作：</p>
+<pre><code>&gt;&gt;&gt; import zipfile
+
+&gt;&gt;&gt; with zipfile.ZipFile(&quot;missing/hello.zip&quot;, mode=&quot;w&quot;) as archive:
+...     archive.write(&quot;hello.txt&quot;)
+...
+Traceback (most recent call last):
+    ...
+FileNotFoundError: [Errno 2] No such file or directory: &#39;missing/hello.zip&#39;
+</code></pre>
+<p>因为目标 hello.zip 文件路径中的 missing/ 目录不存在，所以会出现 FileNotFoundError 异常。</p>
+<p>追加模式（”a”）允许您将新的成员文件追加到现有 ZIP 文件。此模式不会截断归档，故其原始内容是安全的。如果目标 ZIP 文件不存在，则 “a” 模式会为您创建一个新文件，然后追加作为参数传入 .write() 的任何文件。</p>
+<p>为尝试 “a” 模式，更进一步添加 new_hello.txt 文件到新创建的 hello.zip 归档中：</p>
+<pre><code>&gt;&gt;&gt; import zipfile
+
+&gt;&gt;&gt; with zipfile.ZipFile(&quot;hello.zip&quot;, mode=&quot;a&quot;) as archive:
+...     archive.write(&quot;new_hello.txt&quot;)
+...
+
+&gt;&gt;&gt; with zipfile.ZipFile(&quot;hello.zip&quot;) as archive:
+...     archive.printdir()
+...
+File Name                                        Modified             Size
+hello.txt                                 2021-09-07 19:50:10           83
+new_hello.txt                             2021-08-31 17:13:44           13
+</code></pre>
+<p>此处，使用追加模式将 new_hello.txt 添加到 hello.zip 文件中。然后运行 .printdir() 以确认新文件已存在于 ZIP 文件中。</p>
+<p>ZipFile 还支持独占模式（”x”）。 此模式允许您独占地创建新的 ZIP 文件并将新的成员文件写入其中。 当想要创建一个新的 ZIP 文件而不覆盖现有文件时，使用独占模式。 如果目标文件已存在，则会得到 FileExistsError。</p>
+<p>最后，如果您使用 “w”、”a” 或 “x” 模式创建一个 ZIP 文件，然后在不添加任何成员文件的情况下关闭归档，则 ZipFile 会创建一个具有适当 ZIP 格式的空归档。</p>
+<h2 id="从-ZIP-文件中读取元数据"><a href="#从-ZIP-文件中读取元数据" class="headerlink" title="从 ZIP 文件中读取元数据"></a>从 ZIP 文件中读取元数据</h2><p>您已将 .printdir() 付诸实践。这是一种实用的方法，可用于快速列出 ZIP 文件包含的内容。与 .printdir() 一道，ZipFile 类提供了几种从现有 ZIP 文件中提取元数据的便捷方法。</p>
+<p>以下是这些方法的摘要：</p>
+<p>方法    描述<br>.getinfo(filename)    返回一个关于 filename 提供的成员文件的信息的 ZipInfo 对象。注意 filename 必须包含底层 ZIP 文件中目标文件的路径。<br>.infolist()    返回一个 ZipInfo 对象列表，每个文件占一项。<br>.namelist()    返回一个包含底层归档中所有成员文件名的列表。该列表中的名称是 .getinfo() 的有效参数。<br>使用这三个工具，您可以检索许多关于 ZIP 文件内容的实用信息。例如，下面的例子使用了 .getinfo()：</p>
+<pre><code>&gt;&gt;&gt; import zipfile
+
+&gt;&gt;&gt; with zipfile.ZipFile(&quot;sample.zip&quot;, mode=&quot;r&quot;) as archive:
+...     info = archive.getinfo(&quot;hello.txt&quot;)
+...
+
+&gt;&gt;&gt; info.file_size
+83
+&gt;&gt;&gt; import datetime
+&gt;&gt;&gt; import zipfile
+
+&gt;&gt;&gt; with zipfile.ZipFile(&quot;sample.zip&quot;, mode=&quot;r&quot;) as archive:
+...     for info in archive.infolist():
+...         print(f&quot;Filename: &#123;info.filename&#125;&quot;)
+...         print(f&quot;Modified: &#123;datetime.datetime(*info.date_time)&#125;&quot;)
+...         print(f&quot;Normal size: &#123;info.file_size&#125; bytes&quot;)
+...         print(f&quot;Compressed size: &#123;info.compress_size&#125; bytes&quot;)
+...         print(&quot;-&quot; * 20)
+...
+Filename: hello.txt
+Modified: 2021-09-07 19:50:10
+Normal size: 83 bytes
+Compressed size: 83 bytes
+--------------------
+Filename: lorem.md
+Modified: 2021-09-07 19:50:10
+Normal size: 2609 bytes
+Compressed size: 2609 bytes
+--------------------
+Filename: realpython.md
+Modified: 2021-09-07 19:50:10
+Normal size: 428 bytes
+Compressed size: 428 bytes
+--------------------
+
+&gt;&gt;&gt; info.compress_size
+83
+
+&gt;&gt;&gt; info.filename
+&#39;hello.txt&#39;
+
+&gt;&gt;&gt; info.date_time
+(2021, 9, 7, 19, 50, 10)
+</code></pre>
+<p>正如您在上表中所了解到的，.getinfo() 将成员文件作为参数，并返回一个包含关于其信息的 ZipInfo 对象。</p>
+<p>Note: ZipInfo 并不想要被直接实例化。.getinfo() 和 .infolist() 方法在被调用时会自动返回 ZipInfo 对象。然而，ZipInfo 包含一个名为 .from_file() 的类方法，它允许您在需要时显式地实例化该类。</p>
+<p>ZipInfo 对象有一些属性，可以检索有关目标成员文件的实用信息。例如，.file_size 和 .compress_size 分别保存未压缩原始文件和压缩后文件的大小（以字节为单位）。该类还有一些其他实用的属性，例如 .filename 和 .date_time ，它们返回文件名和最后修改日期。</p>
+<p>Note: 默认情况下，ZipFile 不会压缩输入文件以将其添加到最终归档中。这就是上例中 size 和 compressed size 大小相同的原因。您将在下面的 压缩文件和目录 部分了解有关此话题的更多信息。</p>
+<p>使用 .infolist() ，您可以从指定归档中提取所有文件信息。以下是一个使用此方法生成最小报告的示例，其中包含有关 sample.zip 归档中所有成员文件的信息：</p>
+<pre><code>&gt;&gt;&gt; import datetime
+&gt;&gt;&gt; import zipfile
+
+&gt;&gt;&gt; with zipfile.ZipFile(&quot;sample.zip&quot;, mode=&quot;r&quot;) as archive:
+...     for info in archive.infolist():
+...         print(f&quot;Filename: &#123;info.filename&#125;&quot;)
+...         print(f&quot;Modified: &#123;datetime.datetime(*info.date_time)&#125;&quot;)
+...         print(f&quot;Normal size: &#123;info.file_size&#125; bytes&quot;)
+...         print(f&quot;Compressed size: &#123;info.compress_size&#125; bytes&quot;)
+...         print(&quot;-&quot; * 20)
+...
+Filename: hello.txt
+Modified: 2021-09-07 19:50:10
+Normal size: 83 bytes
+Compressed size: 83 bytes
+--------------------
+Filename: lorem.md
+Modified: 2021-09-07 19:50:10
+Normal size: 2609 bytes
+Compressed size: 2609 bytes
+--------------------
+Filename: realpython.md
+Modified: 2021-09-07 19:50:10
+Normal size: 428 bytes
+Compressed size: 428 bytes
+--------------------
+</code></pre>
+<p>for 循环迭代来自 .infolist() 的 ZipInfo 对象，检索文件名、最后修改日期、未压缩大小 ，以及每个成员文件的压缩后大小。在此示例中，使用 datetime 以人类易读的方式格式化日期。</p>
+<p>Note: 上面的例子改编自zipfile — ZIP Archive Access。</p>
+<p>如果只需要对 ZIP 文件执行快速检查并列出其成员文件的名称，那么可以使用 .namelist()：</p>
+<pre><code>&gt;&gt;&gt; import zipfile
+
+&gt;&gt;&gt; with zipfile.ZipFile(&quot;sample.zip&quot;, mode=&quot;r&quot;) as archive:
+...     for filename in archive.namelist():
+...         print(filename)
+...
+hello.txt
+lorem.md
+realpython.md
+</code></pre>
+<p>因为此输出中的文件名是 .getinfo() 的有效参数，所以可以结合这两种方法来仅检索关于特定成员文件的信息。</p>
+<p>例如，可能有一个 ZIP 文件，其中包含不同类型的成员文件（.docx、.xlsx、.txt 等）。但并不需要使用 .infolist() 获取完整信息，只需获取有关 .docx 文件的信息。那么可以按扩展名过滤文件并仅在 .docx 文件上调用 .getinfo() 。 来试一试吧！</p>
+<h2 id="读写成员文件"><a href="#读写成员文件" class="headerlink" title="读写成员文件"></a>读写成员文件</h2><p>有时需要在不解压一个 ZIP 文件的情况下读取指定成员文件。为此，可以使用 .read()。此方法接收一个成员文件的 name 并将该文件的内容作为字节返回：</p>
+<pre><code>&gt;&gt;&gt; import zipfile
+
+&gt;&gt;&gt; with zipfile.ZipFile(&quot;sample.zip&quot;, mode=&quot;r&quot;) as archive:
+...     for line in archive.read(&quot;hello.txt&quot;).split(b&quot;\n&quot;):
+...         print(line)
+...
+b&#39;Hello, Pythonista!&#39;
+b&#39;&#39;
+b&#39;Welcome to Real Python!&#39;
+b&#39;&#39;
+b&quot;Ready to try Python&#39;s zipfile module?&quot;
+b&#39;&#39;
+</code></pre>
+<p>为使用 .read()，需要以读取或追加模式打开 ZIP 文件。注意 .read() 以字节流的形式返回目标文件的内容。在此示例中，以换行符 “\n” 作为分隔符，使用 .split() 将流拆分为行。因为 .split() 正在在一个字节对象上进行操作，所以需要在字符串前添加前导 b 作为参数</p>
+<p>ZipFile.read() 还接受名为 pwd 的第二个位置参数。此参数允许您提供用以读取加密文件的密码。要尝试此功能，您可以使用随本教程材料下载的 sample_pwd.zip 文件：</p>
+<pre><code>&gt;&gt;&gt; import zipfile
+
+&gt;&gt;&gt; with zipfile.ZipFile(&quot;sample_pwd.zip&quot;, mode=&quot;r&quot;) as archive:
+...     for line in archive.read(&quot;hello.txt&quot;, pwd=b&quot;secret&quot;).split(b&quot;\n&quot;):
+...         print(line)
+...
+b&#39;Hello, Pythonista!&#39;
+b&#39;&#39;
+b&#39;Welcome to Real Python!&#39;
+b&#39;&#39;
+b&quot;Ready to try Python&#39;s zipfile module?&quot;
+b&#39;&#39;
+
+&gt;&gt;&gt; with zipfile.ZipFile(&quot;sample_pwd.zip&quot;, mode=&quot;r&quot;) as archive:
+...     for line in archive.read(&quot;hello.txt&quot;).split(b&quot;\n&quot;):
+...         print(line)
+...
+Traceback (most recent call last):
+    ...
+RuntimeError: File &#39;hello.txt&#39; is encrypted, password required for extraction
+</code></pre>
+<p>在第一个例子中，提供密码 secret 来读取加密文件。pwd 参数接受字节类型的值。如果在未提供所需密码的情况下对加密文件使用 .read() ，则会得到 RuntimeError，如第二个示例所示。</p>
+<p>Note: Python 的 zipfile 支持解密。但是它不支持创建加密 ZIP 文件。这就是需要使用外部文件归档工具来加密文件的原因。</p>
+<p>一些流行的文件归档工具包括 Windows 上的 7z 和 WinRAR，Linux 上的 Ark 和 GNOME Archive Manager，macOC 上的 Archiver。</p>
+<p>对于大型加密 ZIP 文件，请留意解密操作可能会非常慢，因为它是在纯 Python 中实现的。在这种情况下，请考虑使用专门的程序来处理您的归档而不是使用 zipfile。</p>
+<p>如果经常使用加密文件，那么可能希望避免每次调用 .read() 或其他接受 pwd 参数的方法时提供密码。如果是这种情况，可以使用 ZipFile.setpassword() 设置一个全局密码：</p>
+<pre><code>&gt;&gt;&gt; import zipfile
+
+&gt;&gt;&gt; with zipfile.ZipFile(&quot;sample_pwd.zip&quot;, mode=&quot;r&quot;) as archive:
+...     archive.setpassword(b&quot;secret&quot;)
+...     for file in archive.namelist():
+...         print(file)
+...         print(&quot;-&quot; * 20)
+...         for line in archive.read(file).split(b&quot;\n&quot;):
+...             print(line)
+...
+hello.txt
+--------------------
+b&#39;Hello, Pythonista!&#39;
+b&#39;&#39;
+b&#39;Welcome to Real Python!&#39;
+b&#39;&#39;
+b&quot;Ready to try Python&#39;s zipfile module?&quot;
+b&#39;&#39;
+lorem.md
+--------------------
+b&#39;# Lorem Ipsum&#39;
+b&#39;&#39;
+b&#39;Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+    ...
+</code></pre>
+<p>使用 .setpassword()，只需要提供一次密码。ZipFile 使用该唯一密码来解密所有成员文件。</p>
+<p>相反，如果您的 ZIP 文件的各个成员文件具有不同的密码，那么需要使用 .read() 的 pwd 参数为每个文件提供特定的密码：</p>
+<pre><code>&gt;&gt;&gt; import zipfile
+
+&gt;&gt;&gt; with zipfile.ZipFile(&quot;sample_file_pwd.zip&quot;, mode=&quot;r&quot;) as archive:
+...     for line in archive.read(&quot;hello.txt&quot;, pwd=b&quot;secret1&quot;).split(b&quot;\n&quot;):
+...         print(line)
+...
+b&#39;Hello, Pythonista!&#39;
+b&#39;&#39;
+b&#39;Welcome to Real Python!&#39;
+b&#39;&#39;
+b&quot;Ready to try Python&#39;s zipfile module?&quot;
+b&#39;&#39;
+
+&gt;&gt;&gt; with zipfile.ZipFile(&quot;sample_file_pwd.zip&quot;, mode=&quot;r&quot;) as archive:
+...     for line in archive.read(&quot;lorem.md&quot;, pwd=b&quot;secret2&quot;).split(b&quot;\n&quot;):
+...         print(line)
+...
+b&#39;# Lorem Ipsum&#39;
+b&#39;&#39;
+b&#39;Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+    ...
+</code></pre>
+<p>在这个例子中，使用 secret1 作为读取 hello.txt 的密码，secret2 作为读取 lorem.md 的。最后一个需要考虑的细节是，当使用 pwd 参数时，会覆盖可能已经通过 .setpassword() 设置的任何归档级密码。</p>
+<p>Note: 在使用不支持的压缩算法的 ZIP 文件上调用 .read() 会引发 NotImplementedError。如果所需的压缩模块在您的 Python 安装中不可用，也会收到错误信息。</p>
+<p>如果您正在寻找一种更灵活的方式来读取成员文件并创建和添加新的成员文件到归档中，那么 ZipFile.open() 适合您。与内置的 open() 函数一样，该方法实现了上下文管理器协议，因此它支持 with 语句：</p>
+<pre><code>&gt;&gt;&gt; import zipfile
+
+&gt;&gt;&gt; with zipfile.ZipFile(&quot;sample.zip&quot;, mode=&quot;r&quot;) as archive:
+...     with archive.open(&quot;hello.txt&quot;, mode=&quot;r&quot;) as hello:
+...         for line in hello:
+...             print(line)
+...
+b&#39;Hello, Pythonista!\n&#39;
+b&#39;\n&#39;
+b&#39;Welcome to Real Python!\n&#39;
+b&#39;\n&#39;
+b&quot;Ready to try Python&#39;s zipfile module?\n&quot;
+</code></pre>
+<p>在本例中，打开 hello.txt 以读取。open() 的第一个参数是 name ，表示要打开的成员文件。第二个参数是模式，像往常一样默认为 “r”。ZipFile.open() 还接受一个用于打开加密文件的 pwd 参数。此参数与 .read() 中的同名参数作用相同。</p>
+<p>您还可以将 .open() 与 “w” 模式组合使用。此模式允许创建一个新的成员文件，向其中写入内容，最后将该文件附加到底层归档，应以追加模式打开：</p>
+<pre><code>&gt;&gt;&gt; import zipfile
+
+&gt;&gt;&gt; with zipfile.ZipFile(&quot;sample.zip&quot;, mode=&quot;a&quot;) as archive:
+...     with archive.open(&quot;new_hello.txt&quot;, &quot;w&quot;) as new_hello:
+...         new_hello.write(b&quot;Hello, World!&quot;)
+...
+13
+
+&gt;&gt;&gt; with zipfile.ZipFile(&quot;sample.zip&quot;, mode=&quot;r&quot;) as archive:
+...     archive.printdir()
+...     print(&quot;------&quot;)
+...     archive.read(&quot;new_hello.txt&quot;)
+...
+File Name                                        Modified             Size
+hello.txt                                 2021-09-07 19:50:10           83
+lorem.md                                  2021-09-07 19:50:10         2609
+realpython.md                             2021-09-07 19:50:10          428
+new_hello.txt                             1980-01-01 00:00:00           13
+------
+b&#39;Hello, World!&#39;
+</code></pre>
+<p>在第一个代码片段中，以追加模式（”a”）打开 sample.zip 。然后通过以 “w” 模式调用 .open() 创建 new_hello.txt。此函数返回一个支持 .write() 的类文件对象，它允许您将字节写入新创建的文件。</p>
+<p>Note: 需要为 .open() 提供一个非现有的文件名。如果使用底层归档中已经存在的文件名，那么会最终得到一个重复的文件和一个 UserWarning 异常。</p>
+<p>在此示例中，将 b’Hello, World!’ 写入 new_hello.txt。当执行流退出内部 with 语句时，Python 将输入字节写入成员文件。当外部 with 语句退出时，Python 会将 new_hello.txt 写入底层 ZIP 文件 sample.zip。</p>
+<p>第二个代码片段证实了 new_hello.txt 现在是 sample.zip 的成员文件。在这个示例的输出中需要注意的一个细节是，.write() 将新添加的文件的 Modified 日期设置为 1980-01-01 00:00:00。这是一个奇怪的行为，使用此方法时应牢记。</p>
+<h2 id="将成员文件的内容作为文本读取"><a href="#将成员文件的内容作为文本读取" class="headerlink" title="将成员文件的内容作为文本读取"></a>将成员文件的内容作为文本读取</h2><p>正如您在上一节中所了解的，可以使用 .read() 和 .write() 方法来实现不从 ZIP 归档中提取而直接读写成员文件。这两种方法都仅适用于字节。</p>
+<p>然而，当您有一个包含文本文件的 ZIP 归档时，可能希望将其内容作为文本而不是字节来读取。至少有两种方法可以做到这一点。可以使用：</p>
+<p>bytes.decode()<br>io.TextIOWrapper<br>因为 ZipFile.read() 以字节形式返回目标成员文件的内容，故 .decode() 可以直接对这些字节进行操作。.decode() 方法使用给定的字符编码格式将 bytes 对象解码为字符串。</p>
+<p>以下为如何使用 .decode() 以从 sample.zip 归档中的 hello.txt 文件中读取文本：</p>
+<pre><code>&gt;&gt;&gt; import zipfile
+
+&gt;&gt;&gt;  with zipfile.ZipFile(&quot;sample.zip&quot;, mode=&quot;r&quot;) as archive:
+...     text = archive.read(&quot;hello.txt&quot;).decode(encoding=&quot;utf-8&quot;)
+...
+
+&gt;&gt;&gt; print(text)
+Hello, Pythonista!
+
+Welcome to Real Python!
+
+Ready to try Python&#39;s zipfile module?
+</code></pre>
+<p>在此示例中，将 hello.txt 的内容作为字节读取。然后调用 .decode() 来将字节解码为使用 UTF-8 作为编码的字符串。为设置 encoding 参数，使用 “utf-8” 字符串。然而，可以使用任何其他有效编码，例如 UTF-16 或 cp1252，用不区分大小写的字符串表示它们。注意 “utf-8” 是 .decode() 的 encoding 参数的默认值。</p>
+<p>时刻注意，您需要事先知道要使用 .decode() 处理的任何成员文件的字符编码格式。如果使用了错误的字符编码，那么代码将无法将底层字节正确解码为文本，最终可能会得到大量无法辨认的字符。</p>
+<p>译者注：对于简体中文读者，最常见的一个乱码错误是，中文文本文件使用 Windows 默认的 GB2312 编码保存，而此处被以默认的 UTF-8 解码。因此见到许多“烫烫烫的锟斤拷”时不必惊慌，指定使用 GB2312 再尝试读取一次，很可能便解决了问题。</p>
+<p>从成员文件中读取文本的第二个选项是使用 io.TextIOWrapper 对象，它提供具有缓冲的文字流。这次需要使用 .open() 而不是 .read()。以下是一个使用 io.TextIOWrapper 将 hello.txt 成员文件作为文字流读取的示例：</p>
+<pre><code>&gt;&gt;&gt; import io
+&gt;&gt;&gt; import zipfile
+
+&gt;&gt;&gt; with zipfile.ZipFile(&quot;sample.zip&quot;, mode=&quot;r&quot;) as archive:
+...     with archive.open(&quot;hello.txt&quot;, mode=&quot;r&quot;) as hello:
+...         for line in io.TextIOWrapper(hello, encoding=&quot;utf-8&quot;):
+...             print(line.strip())
+...
+Hello, Pythonista!
+
+Welcome to Real Python!
+
+Ready to try Python&#39;s zipfile module?
+</code></pre>
+<p>在本例的内层 with 语句中，从 sample.zip 归档中打开成员文件 hello.txt。然后将生成的二进制类文件对象 hello 作为参数传递给 io.TextIOWrapper。这通过使用 UTF-8 字符编码格式解码 hello 的内容来创建有缓冲的文字流。因此，可以直接从目标成员文件中获得文字流。</p>
+<p>就像 .encode() 一样，io.TextIOWrapper 类接受一个 encoding 参数。您应该始终为此参数指定一个值，因为默认文本编码取决于运行代码的操作系统，并且可能并非尝试解码的文件的正确值。</p>
+<h2 id="从您的-ZIP-归档中提取成员文件"><a href="#从您的-ZIP-归档中提取成员文件" class="headerlink" title="从您的 ZIP 归档中提取成员文件"></a>从您的 ZIP 归档中提取成员文件</h2><p>提取给定归档的内容是对 ZIP 文件执行的最常见操作之一。根据您的需要，可能希望一次提取一个文件，或一次提取所有文件。</p>
+<p>ZipFile.extract() 可以完成第一个任务。此方法接受一个 member 成员文件的名称，并将其提取到由 path 指定的目录。目标 path 默认为当前目录：</p>
+<pre><code>&gt;&gt;&gt; import zipfile
+
+&gt;&gt;&gt; with zipfile.ZipFile(&quot;sample.zip&quot;, mode=&quot;r&quot;) as archive:
+...     archive.extract(&quot;new_hello.txt&quot;, path=&quot;output_dir/&quot;)
+...
+&#39;output_dir/new_hello.txt&#39;
+</code></pre>
+<p>现在 new_hello.txt 将会出现在 output_dir/ 目录中。如果目标文件名已存在于输出目录中，则 .extract() 将不经请求确认直接覆盖它。如果输出目录不存在，则 .extract() 会为您创建它。注意 .extract() 返回提取文件的路径。</p>
+<p>成员文件的名称必须是 .namelist() 返回的文件全名。它也可以是一个包含文件信息的 ZipInfo 对象。</p>
+<p>您还可以将 .extract() 用于加密文件。在这种情况下，需要提供所需的 pwd 参数或使用 .setpassword() 设置归档级密码。</p>
+<p>当涉及到从归档中提取所有成员文件时，可以使用 .extractall()。顾名思义，此方法将所有成员文件提取到目标路径（默认为当前目录）：</p>
+<pre><code>&gt;&gt;&gt; import zipfile
+
+&gt;&gt;&gt; with zipfile.ZipFile(&quot;sample.zip&quot;, mode=&quot;r&quot;) as archive:
+...     archive.extractall(&quot;output_dir/&quot;)
+...
+</code></pre>
+<p>运行此代码后，sample.zip 中的所有当前内容将出现在 out_dir/ 目录中。如果将一个不存在的目录传递给 .extractall()，那么该方法会自动创建这个目录。最后，如果目标目录中已经存在任何成员文件，那么 .extractall() 将不经请求确认直接覆盖掉它们，所以要小心。</p>
+<p>如果只需要从给定归档中提取一些成员文件，则可以使用 members 参数。此参数接受成员文件列表，即手头归档中全部文件列表的子集。最后，就像 .extract() 一样，.extractall() 方法也接受 pwd 参数来提取加密文件。</p>
+<h2 id="使用后关闭-ZIP-文件"><a href="#使用后关闭-ZIP-文件" class="headerlink" title="使用后关闭 ZIP 文件"></a>使用后关闭 ZIP 文件</h2><p>有时候，不使用 with 语句可以便捷地打开一个给定的 ZIP 文件。在这些情况下，需要在使用后手动关闭归档以完成所有写入操作并释放获取的资源。</p>
+<p>为此，可以在 ZipFile 对象上调用 .close()：</p>
+<pre><code>&gt;&gt;&gt; import zipfile
+
+&gt;&gt;&gt; archive = zipfile.ZipFile(&quot;sample.zip&quot;, mode=&quot;r&quot;)
+
+&gt;&gt;&gt; # 在代码的不同部分使用归档
+&gt;&gt;&gt; archive.printdir()
+File Name                                        Modified             Size
+hello.txt                                 2021-09-07 19:50:10           83
+lorem.md                                  2021-09-07 19:50:10         2609
+realpython.md                             2021-09-07 19:50:10          428
+new_hello.txt                             1980-01-01 00:00:00           13
+
+&gt;&gt;&gt; # 完成后关闭归档
+&gt;&gt;&gt; archive.close()
+&gt;&gt;&gt; archive
+&lt;zipfile.ZipFile [closed]&gt;
+</code></pre>
+<p>调用 .close() 会关闭 archive 。在退出程序之前，必须调用 .close()。否则可能无法执行某些写入操作。例如，如果打开一个 ZIP 文件追加（”a”）新的成员文件，则需要关闭归档以写入文件。</p>
+<h1 id="创建、填充和提取您自己的-ZIP-文件"><a href="#创建、填充和提取您自己的-ZIP-文件" class="headerlink" title="创建、填充和提取您自己的 ZIP 文件"></a>创建、填充和提取您自己的 ZIP 文件</h1><p>到目前为止，您已经学会了如何操纵现有的 ZIP 文件。您已经学会了使用 ZipFile 的不同模式来读取、写入和追加成员文件。您还学习了如何读取相关元数据以及如何提取给定 ZIP 文件的内容。</p>
+<p>在本节中，您将编写一些练习示例，帮助您学习如何使用 zipfile 和其他 Python 工具从多个输入文件和整个目录创建 ZIP 文件。您还将学习如何使用 zipfile 进行文件压缩等。</p>
+<h2 id="从多个常规文件创建-ZIP-文件"><a href="#从多个常规文件创建-ZIP-文件" class="headerlink" title="从多个常规文件创建 ZIP 文件"></a>从多个常规文件创建 ZIP 文件</h2><p>有时您需要从多个相关的文件创建 ZIP 归档。这样将所有的文件放在一个容器中，以便通过计算机网络分发或与朋友同事分享。为此可以创建目标文件列表并使用 ZipFile 和循环将它们写入归档：</p>
+<pre><code>&gt;&gt;&gt; import zipfile
+
+&gt;&gt;&gt; filenames = [&quot;hello.txt&quot;, &quot;lorem.md&quot;, &quot;realpython.md&quot;]
+
+&gt;&gt;&gt; with zipfile.ZipFile(&quot;multiple_files.zip&quot;, mode=&quot;w&quot;) as archive:
+...     for filename in filenames:
+...         archive.write(filename)
+...
+</code></pre>
+<p>此处，创建了一个 ZipFile 对象，并将所需的归档名称作为其第一个参数。”w” 模式允许您将成员文件写入最终的 ZIP 文件。</p>
+<p>for() 循环遍历您输入的文件列表，并使用 .write() 将它们写入底层 ZIP 文件。一旦程序流退出 with 语句，ZipFile 会自动关闭归档，保存更改。现在获得了一个包含原始文件列表中所有文件的 multiple_files.zip 归档。</p>
+<h2 id="从目录创建-ZIP-文件"><a href="#从目录创建-ZIP-文件" class="headerlink" title="从目录创建 ZIP 文件"></a>从目录创建 ZIP 文件</h2><p>将一个目录中的内容打包到单个归档中是 ZIP 文件的另一个日常用法。Python 有几个工具可以与 zipfile 一起使用来完成这项任务。例如，可以使用 pathlib 读取给定目录的内容。有了这些信息，可以使用 ZipFile 创建一个容器归档。</p>
+<p>在 python-zipfile/ 目录中，有一个名为 source_dir/ 的子目录，内容如下：</p>
+<pre><code>source_dir/
+│
+├── hello.txt
+├── lorem.md
+└── realpython.md
+</code></pre>
+<p>在 source_dir/ 中，只有三个普通文件。因为目录不包含子目录，所以可以使用 pathlib.Path.iterdir() 直接迭代其内容。按照这个思路，以下是从 source_dir/ 的内容构建 ZIP 文件的方法：</p>
+<pre><code>&gt;&gt;&gt; import pathlib
+&gt;&gt;&gt; import zipfile
+
+&gt;&gt;&gt; directory = pathlib.Path(&quot;source_dir/&quot;)
+
+&gt;&gt;&gt; with zipfile.ZipFile(&quot;directory.zip&quot;, mode=&quot;w&quot;) as archive:
+...    for file_path in directory.iterdir():
+...        archive.write(file_path, arcname=file_path.name)
+...
+
+&gt;&gt;&gt; with zipfile.ZipFile(&quot;directory.zip&quot;, mode=&quot;r&quot;) as archive:
+...     archive.printdir()
+...
+File Name                                        Modified             Size
+realpython.md                             2021-09-07 19:50:10          428
+hello.txt                                 2021-09-07 19:50:10           83
+lorem.md                                  2021-09-07 19:50:10         2609
+</code></pre>
+<p>在此示例中，从源目录创建一个 pathlib.Path 对象。第一个 with 语句创建了一个可以写入的 ZipFile 对象。然后对 .iterdir() 的调用会返回一个遍历底层目录中条目的迭代器。</p>
+<p>因为在 source_dir/ 中没有任何子目录，.iterdie() 函数只生成（yield）文件。for 循环遍历文件并将它们写入归档。</p>
+<p>在此示例中，将 file_path.name 传递给 .write() 的第二个参数。此参数名为 arcname，保存着生成的归档中成员文件的名称。到目前为止，以上所有示例都依赖于 arcname 的默认值，即与作为第一个参数传递给 .write() 的文件名相同。</p>
+<p>如果不将 file_path.name 传递给 arcname，那么源目录将作为 ZIP 文件的根目录。根据您的需要，这也可能是有效的结果。</p>
+<p>现在查看工作目录中的 root_dir/ 文件夹。在此例中，您会发现以下结构：</p>
+<pre><code>root_dir/
+│
+├── sub_dir/
+│   └── new_hello.txt
+│
+├── hello.txt
+├── lorem.md
+└── realpython.md
+</code></pre>
+<p>此处有普通文件和一个包含单个文件的子目录。如果想创建一个具有相同内部结构的 ZIP 文件，那么需要一个工具来递归地遍历 root_dir/ 下的目录树。</p>
+<p>以下是如何使用 zipfile 和 pathlib 模块中的Path.rglob() 来 zip 一个像上面那个一样的完整的目录树的方法：</p>
+<pre><code>&gt;&gt;&gt; import pathlib
+&gt;&gt;&gt; import zipfile
+
+&gt;&gt;&gt; directory = pathlib.Path(&quot;root_dir/&quot;)
+
+&gt;&gt;&gt; with zipfile.ZipFile(&quot;directory_tree.zip&quot;, mode=&quot;w&quot;) as archive:
+...     for file_path in directory.rglob(&quot;*&quot;):
+...         archive.write(
+...             file_path,
+...             arcname=file_path.relative_to(directory)
+...         )
+...
+
+&gt;&gt;&gt; with zipfile.ZipFile(&quot;directory_tree.zip&quot;, mode=&quot;r&quot;) as archive:
+...     archive.printdir()
+...
+File Name                                        Modified             Size
+sub_dir/                                  2021-09-09 20:52:14            0
+realpython.md                             2021-09-07 19:50:10          428
+hello.txt                                 2021-09-07 19:50:10           83
+lorem.md                                  2021-09-07 19:50:10         2609
+sub_dir/new_hello.txt                     2021-08-31 17:13:44           13
+</code></pre>
+<p>在此示例中，使用 Path.rglob() 递归遍历 root_dir/ 下的目录树。然后将每个文件和子目录写入目标 ZIP 归档。</p>
+<p>这一次，使用 Path.relative_to() 来获取每个文件的相对路径，然后将其结果传递给 .write() 的第二个参数。这样生成的 ZIP 文件最终具有与源目录相同的内部结构。再一次，如果您希望源目录作为 ZIP 文件的根目录，则可以去掉这个参数。</p>
+<h2 id="压缩文件和目录"><a href="#压缩文件和目录" class="headerlink" title="压缩文件和目录"></a>压缩文件和目录</h2><p>如果您的文件占用了太多磁盘空间，那么可以考虑压缩它们。Python 的 zipfile 支持一些流行的压缩方法。但该模块默认情况下不会压缩文件。如果想让文件更小，那么需要显式地为 ZipFile 提供一种压缩方法。</p>
+<p>通常，术语 stored 指代写入未压缩的 ZIP 文件的成员文件。这就是为什么 ZipFile 的默认压缩方法称为 ZIP_STORED，它实际上是指简单存储在归档中未压缩的成员文件。</p>
+<p>compression 方法是 ZipFile 初始化方法的第三个参数。如果想在文件写入 ZIP 归档时压缩文件，则可以将此参数设置为以下常量之一：</p>
+<p>常量    压缩方法    所需模块<br>zipfile.ZIP_DEFLATED    Deflate    zlib<br>zipfile.ZIP_BZIP2    Bzip2    bz2<br>zipfile.ZIP_LZMA    LZMA    lzma</p>
+<p>这些是您目前可以与 ZipFile 一起使用的压缩方法。除此之外的方法会引发 NotImplementedError。从 Python 3.10 开始，zipfile 没有其他额外可用的压缩方法。</p>
+<p>作为一项附加的 requirement，如果选择其中一种方法，则为其提供支持的压缩模块必须在您的 Python 安装中可用。否则，会得到一个 RuntimeError 异常，然后代码会崩溃。</p>
+<p>在压缩文件时，另一个与 ZipFile 相关的参数是 compresslevel。此参数控制使用的压缩级别。</p>
+<p>使用 Deflate 方法，compresslevel 可以取从 0 到 9 的整数。使用 Bzip2 方法，可以传递从 1 到 9 的整数。在这两种情况下，当压缩级别增加时，压缩率会更高，压缩速度会更慢。</p>
+<p>Note: PNG、JPG、MP3 之类的二进制文件，已经使用了某种压缩方式。因此，将它们添加到 ZIP 文件可能并不会使数据变得更小，因为它已经被压缩到一定程度。</p>
+<p>现在假设您要使用 Deflate 方法来归档和压缩给定目录的内容（这是 ZIP 文件中最常用的方法）。为此可以运行以下代码：</p>
+<pre><code>&gt;&gt;&gt; import pathlib
+&gt;&gt;&gt; from zipfile import ZipFile, ZIP_DEFLATED
+
+&gt;&gt;&gt; directory = pathlib.Path(&quot;source_dir/&quot;)
+
+&gt;&gt;&gt; with ZipFile(&quot;comp_dir.zip&quot;, &quot;w&quot;, ZIP_DEFLATED, compresslevel=9) as archive:
+...     for file_path in directory.rglob(&quot;*&quot;):
+...         archive.write(file_path, arcname=file_path.relative_to(directory))
+...
+</code></pre>
+<p>在此示例中，将 9 传递给 compresslevel 以获得最大压缩。提供此参数时要使用关键字参数。这是因为 compresslevel 并非 ZipFile 初始化时的第四个位置参数。</p>
+<p>Note: ZipFile 的初始化时，接受名为 allowZip64 的第四个参数。这是一个布尔参数，告诉 ZipFile 为大于 4 GB 的文件使用 .zip64 扩展。</p>
+<p>运行此代码后，在当前目录中会出现一个 comp_dir.zip 文件。如果将该文件的大小与原始 sample.zip 文件的进行比较，会发现文件大小显著减小。</p>
+<h2 id="依次创建-ZIP-文件"><a href="#依次创建-ZIP-文件" class="headerlink" title="依次创建 ZIP 文件"></a>依次创建 ZIP 文件</h2><p>依次创建 ZIP 文件可能是日常编程中的另一个常见需求。例如，可能需要创建一个包含或不包含内容的初始 ZIP 文件，然后在新成员文件可用时立即追加它们。在这种情况下，需要多次打开和关闭目标 ZIP 文件。</p>
+<p>为解决这个问题，可以在追加模式（”a”）下使用 ZipFile，像先前那样。此模式允许您安全地将新成员文件追加到 ZIP 归档而不截断其当前内容：</p>
+<pre><code>&gt;&gt;&gt; import zipfile
+
+&gt;&gt;&gt; def append_member(zip_file, member):
+...     with zipfile.ZipFile(zip_file, mode=&quot;a&quot;) as archive:
+...         archive.write(member)
+...
+
+&gt;&gt;&gt; def get_file_from_stream():
+...     &quot;&quot;&quot;Simulate a stream of files.&quot;&quot;&quot;
+...     for file in [&quot;hello.txt&quot;, &quot;lorem.md&quot;, &quot;realpython.md&quot;]:
+...         yield file
+...
+
+&gt;&gt;&gt; for filename in get_file_from_stream():
+...     append_member(&quot;incremental.zip&quot;, filename)
+...
+
+&gt;&gt;&gt; with zipfile.ZipFile(&quot;incremental.zip&quot;, mode=&quot;r&quot;) as archive:
+...     archive.printdir()
+...
+File Name                                        Modified             Size
+hello.txt                                 2021-09-07 19:50:10           83
+lorem.md                                  2021-09-07 19:50:10         2609
+realpython.md                             2021-09-07 19:50:10          428
+</code></pre>
+<p>在此示例中，append_member() 是一个将文件（member）追加到输入 ZIP 归档（zip_file）的函数。要执行此操作，该函数会在每次被调用时打开和关闭目标归档。使用函数来执行此任务可以根据需要多次复用代码。</p>
+<p>get_file_from_stream() 函数是一个生成器函数，用于模拟要处理的文件流。同时，for 循环使用 append_number() 将成员文件依次添加到 incremental.zip 中。如果在运行此代码后检查工作目录，那么您会发现一个 incremental.zip 归档，其中包含传递到循环中的三个文件。</p>
+<h2 id="提取文件和目录"><a href="#提取文件和目录" class="headerlink" title="提取文件和目录"></a>提取文件和目录</h2><p>对 ZIP 文件执行的最常见操作之一是将其内容提取到文件系统中的指定目录中。您已经学习了使用 .extract() 和 .extractall() 从归档中提取一个或所有文件的基础知识。</p>
+<p>再举一个例子，回到 sample.zip 文件。此时归档包含四个不同类型的文件。有两个 .txt 文件和两个 .md 文件。假设只想提取 .md 文件。为此，可以运行以下代码：</p>
+<pre><code>&gt;&gt;&gt; import zipfile
+
+&gt;&gt;&gt; with zipfile.ZipFile(&quot;sample.zip&quot;, mode=&quot;r&quot;) as archive:
+...     for file in archive.namelist():
+...         if file.endswith(&quot;.md&quot;):
+...             archive.extract(file, &quot;output_dir/&quot;)
+...
+&#39;output_dir/lorem.md&#39;
+&#39;output_dir/realpython.md&#39;
+</code></pre>
+<p>with 语句打开 sample.zip 以供读取。循环使用 namelist() 遍历归档中的每个文件，而条件语句检查文件名是否以 .md 扩展名结尾。如果是，则使用 .extract() 将手头的文件解压到目标目录 output_dir/。</p>
+<h1 id="探索-zipfile-的其他类"><a href="#探索-zipfile-的其他类" class="headerlink" title="探索 zipfile 的其他类"></a>探索 zipfile 的其他类</h1><p>到目前为止，您已经了解了 zipfile 中可用的两个类： ZipFile 和 ZipInfo。该模块还提供了另外两个在某些情况下能派上用场的类。它们是 zipfile.Path 和 zipfile.PyZipFile。在以下两节中，您将了解这些类的基础知识及其主要功能。</p>
+<h1 id="在-ZIP-文件中查找-PATH"><a href="#在-ZIP-文件中查找-PATH" class="headerlink" title="在 ZIP 文件中查找 PATH"></a>在 ZIP 文件中查找 PATH</h1><p>当使用您最爱的归档应用程序打开 ZIP 文件时，会看到归档的内部结构。可能在归档的根目录中有文件。也可能有包含更多文件的子目录。归档看起来很像文件系统上的普通目录，每个文件都位于特定路径（PATH）。</p>
+<p>zipfile.Path 类可以构建路径对象以快速创建和管理给定 ZIP 文件中的成员文件和目录的路径。该类接受两个参数：</p>
+<p>root 接受一个 ZIP 文件，可以是 ZipFile 对象，也可以是字符串格式的指向物理 ZIP 文件的路径。<br>at 保存归档中特定成员文件或目录的位置。它默认为空字符串，表示归档的根路径。<br>以老朋友 sample.zip 作为目标，运行以下代码：</p>
+<pre><code>&gt;&gt;&gt; import zipfile
+
+&gt;&gt;&gt; hello_txt = zipfile.Path(&quot;sample.zip&quot;, &quot;hello.txt&quot;)
+
+&gt;&gt;&gt; hello_txt
+Path(&#39;sample.zip&#39;, &#39;hello.txt&#39;)
+
+&gt;&gt;&gt; hello_txt.name
+&#39;hello.txt&#39;
+
+&gt;&gt;&gt; hello_txt.is_file()
+True
+
+&gt;&gt;&gt; hello_txt.exists()
+True
+
+&gt;&gt;&gt; print(hello_txt.read_text())
+Hello, Pythonista!
+
+Welcome to Real Python!
+
+Ready to try Python&#39;s zipfile module?
+</code></pre>
+<p>这段代码展示了 zipfile.Path 实现了与 pathlib.Path 对象相同的几个功能。可以使用 .name 获取文件的名称。可以使用 .is_file() 来检查路径是否指向一个普通文件。可以检查给定文件是否存在于特定 ZIP 文件中，等等。</p>
+<p>Path 还提供了 .open() 方法来使用不同的模式打开成员文件。例如，下面的代码打开 hello.txt 以供读取：</p>
+<pre><code>&gt;&gt;&gt; import zipfile
+
+&gt;&gt;&gt; hello_txt = zipfile.Path(&quot;sample.zip&quot;, &quot;hello.txt&quot;)
+
+&gt;&gt;&gt; with hello_txt.open(mode=&quot;r&quot;) as hello:
+...     for line in hello:
+...         print(line)
+...
+Hello, Pythonista!
+
+Welcome to Real Python!
+
+Ready to try Python&#39;s zipfile module?
+</code></pre>
+<p>使用 Path，可以快速创建指向给定 ZIP 文件中特定成员文件的路径对象，并使用 .open() 立即访问其内容。</p>
+<p>就像使用 pathlib.Path 对象一样，可以通过在 zipfile.Path 对象上调用 .iterdir() 来列出 ZIP 文件的内容：</p>
+<pre><code>&gt;&gt;&gt; import zipfile
+
+&gt;&gt;&gt; root = zipfile.Path(&quot;sample.zip&quot;)
+&gt;&gt;&gt; root
+Path(&#39;sample.zip&#39;, &#39;&#39;)
+
+&gt;&gt;&gt; root.is_dir()
+True
+
+&gt;&gt;&gt; list(root.iterdir())
+[
+    Path(&#39;sample.zip&#39;, &#39;hello.txt&#39;),
+    Path(&#39;sample.zip&#39;, &#39;lorem.md&#39;),
+    Path(&#39;sample.zip&#39;, &#39;realpython.md&#39;)
+]
+</code></pre>
+<p>显然，zipfile.Path 提供了许多实用的功能，您可以使用这些功能快速管理 ZIP 归档中的成员文件。</p>
+<h2 id="使用-PyZipFile-构建可导入的-ZIP-文件"><a href="#使用-PyZipFile-构建可导入的-ZIP-文件" class="headerlink" title="使用 PyZipFile 构建可导入的 ZIP 文件"></a>使用 PyZipFile 构建可导入的 ZIP 文件</h2><p>zipfile 中另一个实用的类是 PyZipFile。这个类与 ZipFile 非常相似，当需要将 Python 模块和包捆绑到 ZIP 文件中时，它特别方便。与 ZipFile 的主要区别在于，PyZipFile 初始化时使用一个名为 optimize 的可选参数，它允许您通过在归档前将 Python 代码编译为字节码来优化 Python 代码。</p>
+<p>PyZipFile 提供与 ZipFile 相同的接口，但增加了 .writepy()。此方法可以接受一个 Python 文件（.py）作为参数，并将其添加到底层 ZIP 文件中。如果 optimize 为 -1（默认值），则 .py 文件会自动编译为 .pyc 文件，然后添加到目标归档中。为什么会这样？</p>
+<p>从 2.3 开始，Python 解释器支持从 ZIP 文件导入 Python 代码，这种功能称为 Zip imports。它可以创建可导入的 ZIP 文件以将模块和包作为单个归档分发。</p>
+<p>Note: 也可以使用 ZIP 文件格式来创建和分发 Python 可执行应用程序（通常称为 Python Zip 应用程序）。要了解如何创建它们，请查看 Python’s zipapp: Build Executable Zip Applications。</p>
+<p>当需要生成可导入的 ZIP 文件时，PyZipFile 很有用。打包 .pyc 文件而不是 .py 文件使得导入过程效率大幅提高，因为它跳过了编译步骤。</p>
+<p>在 python-zipfile/ 目录中，有一个 hello.py 模块，其内容如下：</p>
+<pre><code>&quot;&quot;&quot;Print a greeting message.&quot;&quot;&quot;
+# hello.py
+
+def greet(name=&quot;World&quot;):
+    print(f&quot;Hello, &#123;name&#125;! Welcome to Real Python!&quot;)
+</code></pre>
+<p>这段代码定义了一个名为 greet() 的函数，它接受 name 作为参数并将问候消息打印到屏幕上。现在假设您想将此模块打包成一个 ZIP 以进行分发。为此，可以运行以下代码：</p>
+<pre><code>&gt;&gt;&gt; import zipfile
+
+&gt;&gt;&gt; with zipfile.PyZipFile(&quot;hello.zip&quot;, mode=&quot;w&quot;) as zip_module:
+...     zip_module.writepy(&quot;hello.py&quot;)
+...
+
+&gt;&gt;&gt; with zipfile.PyZipFile(&quot;hello.zip&quot;, mode=&quot;r&quot;) as zip_module:
+...     zip_module.printdir()
+...
+File Name                                        Modified             Size
+hello.pyc                                 2021-09-13 13:25:56          311
+</code></pre>
+<p>在此示例中，对 .writepy() 的调用会自动将 hello.py 编译为 hello.pyc，并将其存储在 hello.zip 中。当使用 printdir() 列出归档的内容时就很明显了。</p>
+<p>将 hello.py 捆绑到一个 ZIP 文件后，可以使用 Python 的 import 系统从其包含的归档中导入此模块：</p>
+<pre><code>&gt;&gt;&gt; import sys
+
+&gt;&gt;&gt; # Insert the archive into sys.path
+&gt;&gt;&gt; sys.path.insert(0, &quot;/home/user/python-zipfile/hello.zip&quot;)
+&gt;&gt;&gt; sys.path[0]
+&#39;/home/user/python-zipfile/hello.zip&#39;
+
+&gt;&gt;&gt; # Import and use the code
+&gt;&gt;&gt; import hello
+
+&gt;&gt;&gt; hello.greet(&quot;Pythonista&quot;)
+Hello, Pythonista! Welcome to Real Python!
+</code></pre>
+<p>从 ZIP 文件导入代码的第一步是使该文件在 sys.path 中可用。此变量包含一个字符串列表，该列表为模块指定 Python 的搜索路径。要向 sys.path 添加新项，可以使用 .insert()。</p>
+<p>为了让这个示例正常工作，需要更改占位符路径并将路径指向您的文件系统上的 hello.zip。一旦可导入 ZIP 文件在此列表中，就可以像使用常规模块一样导入代码。</p>
+<p>最后，考虑一下工作目录中的 hello/ 子目录。它包含一个具有以下结构的小型 Python 包：</p>
+<pre><code>hello/
+|
+├── __init__.py
+└── hello.py
+</code></pre>
+<p><strong>init</strong>.py 模块将 hello/ 目录转换为 Python 包。hello.py 模块与在上一个示例中使用的模块相同。现在假设您想将此包捆绑到一个 ZIP 文件中。这种情况下，可以执行以下操作：</p>
+<pre><code>&gt;&gt;&gt; import zipfile
+
+&gt;&gt;&gt; with zipfile.PyZipFile(&quot;hello.zip&quot;, mode=&quot;w&quot;) as zip_pkg:
+...     zip_pkg.writepy(&quot;hello&quot;)
+...
+
+&gt;&gt;&gt; with zipfile.PyZipFile(&quot;hello.zip&quot;, mode=&quot;r&quot;) as zip_pkg:
+...     zip_pkg.printdir()
+...
+File Name                                        Modified             Size
+hello/__init__.pyc                        2021-09-13 13:39:30          108
+hello/hello.pyc                           2021-09-13 13:39:30          317
+</code></pre>
+<p>对 .writepy() 的调用将 hello 包作为参数，在其中搜索 .py 文件，将它们编译成 .pyc 文件，最后将它们添加到目标 ZIP 文件 hello.zip 中。同样，可以按照之前学习的步骤从该归档中导入代码：</p>
+<pre><code>&gt;&gt;&gt; import sys
+
+&gt;&gt;&gt; sys.path.insert(0, &quot;/home/user/python-zipfile/hello.zip&quot;)
+
+&gt;&gt;&gt; from hello import hello
+
+&gt;&gt;&gt; hello.greet(&quot;Pythonista&quot;)
+Hello, Pythonista! Welcome to Real Python!
+</code></pre>
+<p>因为现在代码在一个包中，需要先从 hello 包中导入 hello 模块。然后就可以正常访问 greet() 函数了。</p>
+<h1 id="从命令行运行-zipfile"><a href="#从命令行运行-zipfile" class="headerlink" title="从命令行运行 zipfile"></a>从命令行运行 zipfile</h1><p>Python 的 zipfile 还提供了一个最小的命令行界面，允许您快速访问模块的主要功能。例如，可以使用 -l 或 –list 选项列出现有 ZIP 文件的内容：</p>
+<pre><code>$ python -m zipfile --list sample.zip
+File Name                                         Modified             Size
+hello.txt                                  2021-09-07 19:50:10           83
+lorem.md                                   2021-09-07 19:50:10         2609
+realpython.md                              2021-09-07 19:50:10          428
+new_hello.txt                              1980-01-01 00:00:00           13
+</code></pre>
+<p>此命令展示与对 sample.zip 归档调用 printdir() 相同的输出。</p>
+<p>现在假设您要创建一个包含多个输入文件的新 ZIP 文件。在这种情况下，可以使用 -c 或者 –creat 选项：</p>
+<pre><code>$ python -m zipfile --create new_sample.zip hello.txt lorem.md realpython.md
+
+$ python -m zipfile -l new_sample.zip
+File Name                                         Modified             Size
+hello.txt                                  2021-09-07 19:50:10           83
+lorem.md                                   2021-09-07 19:50:10         2609
+realpython.md                              2021-09-07 19:50:10          428
+</code></pre>
+<p>此命令创建一个 new_sample.zip 文件，其中包含 hello.txt、 lorem.md、 realpython.md 文件。</p>
+<p>如果需要创建一个 ZIP 文件来归档整个目录怎么办？例如，您可能拥有自己的 source_dir/，其中包含与上例相同的三个文件。 可以使用以下命令从该目录创建 ZIP 文件：</p>
+<pre><code>$ python -m zipfile -c source_dir.zip source_dir/
+
+$ python -m zipfile -l source_dir.zip
+File Name                                         Modified             Size
+source_dir/                                2021-08-31 08:55:58            0
+source_dir/hello.txt                       2021-08-31 08:55:58           83
+source_dir/lorem.md                        2021-08-31 09:01:08         2609
+source_dir/realpython.md                   2021-08-31 09:31:22          428
+</code></pre>
+<p>使用此命令，zipfile 将 source_dir/ 作为生成的 source_dir.zip 文件根目录。像往常一样，可以通过使用 -l 选项运行 zipfile 来列出归档内容。</p>
+<p>Note: 当使用 zipfile 从命令行创建归档时，库在归档文件时隐式使用 Deflate 压缩算法。</p>
+<p>还可以使用命令行中的 -e 或 –extract 选项提取给定 ZIP 文件的所有内容：</p>
+<pre><code>python -m zipfile --extract sample.zip sample/
+</code></pre>
+<p>运行此命令后，工作目录中将有一个新的 sample/ 文件夹。 新文件夹将包含 sample.zip 归档中的当前文件。</p>
+<p>可以在命令行中与 zipfile 一起使用的最后一个参数时 -t 或 –test。该选项测试给定文件是否为有效的 ZIP 文件。来吧，试一试！</p>
+<h1 id="使用其他库处理-ZIP-文件"><a href="#使用其他库处理-ZIP-文件" class="headerlink" title="使用其他库处理 ZIP 文件"></a>使用其他库处理 ZIP 文件</h1><p>Python 标准库中还有一些其他工具可用于在更底层进行归档、压缩和解压缩文件。Python 的 zipfile 在内部使用了其中的几个，主要用于压缩目的。 以下是部分工具的摘要：</p>
+<p>模块    描述<br>zlib    允许使用 zlib 库进行压缩和解压缩<br>bz2    提供使用 Bzip2 压缩算法来压缩和解压数据的接口<br>lzma    提供使用 LZMA 压缩算法压缩和解压缩数据的类和函数<br>不同于 zipfile，其中一些模块支持从内存和数据流中压缩和解压数据，而不是普通文件和归档。</p>
+<p>在 Python 标准库中，可以找到支持 TAR 归档格式的 tarfile。还有一个名为 gzip 的模块，它提供了一个压缩和解压数据的接口，类似于 GNU Gzip 程序的做法。</p>
+<p>例如，可以使用 gzip 创建一个包含一些文本的压缩文件：</p>
+<pre><code>&gt;&gt;&gt; import gzip
+
+&gt;&gt;&gt; with gzip.open(&quot;hello.txt.gz&quot;, mode=&quot;wt&quot;) as gz_file:
+...     gz_file.write(&quot;Hello, World!&quot;)
+...
+</code></pre>
+<p>运行此代码后，当前工作目录中将会有一个 hello.txt.gz 归档，其中包含 hello.txt 的压缩版本。在 hello.txt 中有文本 Hello, World!。</p>
+<p>在不使用 zipfile 的情况下创建 ZIP 文件的一种快速且高级的方法是使用 shutil。该模块可以对文件和文件集合执行多项高级操作。当涉及到归档操作时，有 make_archive()，它可以创建归档，例如 ZIP 或 TAR 文件：</p>
+<pre><code>&gt;&gt;&gt; import shutil
+
+&gt;&gt;&gt; shutil.make_archive(&quot;shutil_sample&quot;, format=&quot;zip&quot;, root_dir=&quot;source_dir/&quot;)
+&#39;/home/user/sample.zip&#39;
+</code></pre>
+<p>此代码在工作目录中创建一个名为 sample.zip 的压缩文件。此 ZIP 文件将包含输入目录 source_dir/ 中的所有文件。当您需要一种快速且高级的方式在 Python 中创建 ZIP 文件时，make_archive() 函数非常方便。</p>
+<h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p>当需要从 ZIP 归档中读取、写入、压缩、解压和提取文件时，Python 的 zipfile 是一个方便的工具。ZIP 文件格式已经成为行业标准，可以打包和压缩数字数据。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-利用Python的zipfile模块批量压缩指定文件夹下子文件夹"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/10/15/%E5%88%A9%E7%94%A8Python%E7%9A%84zipfile%E6%A8%A1%E5%9D%97%E6%89%B9%E9%87%8F%E5%8E%8B%E7%BC%A9%E6%8C%87%E5%AE%9A%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%8B%E5%AD%90%E6%96%87%E4%BB%B6%E5%A4%B9/"
+    >Python删除目录下的所有文件</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/10/15/%E5%88%A9%E7%94%A8Python%E7%9A%84zipfile%E6%A8%A1%E5%9D%97%E6%89%B9%E9%87%8F%E5%8E%8B%E7%BC%A9%E6%8C%87%E5%AE%9A%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%8B%E5%AD%90%E6%96%87%E4%BB%B6%E5%A4%B9/" class="article-date">
+  <time datetime="2023-10-15T02:15:00.000Z" itemprop="datePublished">2023-10-15</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>废话不多说，直接上代码，<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qz_CSDN/article/details/127745062">https://blog.csdn.net/qz_CSDN/article/details/127745062</a></p>
+<pre><code>import zipfile
+import os
+
+
+def zip_folder(dir_path, zip_full_name):
+    &quot;&quot;&quot;
+    压缩文件夹下所有子文件夹和文件
+    :param dirpath: 目标文件夹路径
+    :param zip_full_name: zip文件绝对路径
+    &quot;&quot;&quot;
+    with zipfile.ZipFile(zip_full_name, &#39;w&#39;, zipfile.ZIP_DEFLATD) as zf:
+        for dir_full_path, dir_names, file_names in os.walk(dir_path):
+            # zip压缩包内的相对路径
+            dir_path_inzip = dir_full_path.replace(dirpath, &#39;&#39;)
+            for dir_name in dir_names:
+                zf.write(os.path.join(dir_full_path, dir_name), os.path.join(dir_path_inzip, dir_name))
+            for file_name in file_names:
+                zf.write(os.path.join(dir_full_path, file_name), os.path.join(dir_path_inzip, file_name))
+    zf.close()
+
+
+if __name__ == &#39;__name__&#39;:
+    in_path = u&quot;F:\\测试\\1&quot;
+    out_path = u&quot;F:\\测试\\输出&quot;
+    
+    folder_name_list = os.listdir(in_path)
+    count = 0
+    # 遍历输入路径下所有子文件夹，分别压缩
+    for folder_name in folder_name_list:
+        count += 1
+        zip_file_fullname = os.path.join(out_path, folder_name + &quot;.zip&quot;)
+        print(&quot;&#123;0&#125;、&#123;1&#125;&quot;.format(count, folder_name))
+        print(&quot;    &#123;0&#125;&quot;.format(zip_file_fullname))
+        zip_folder(os.path.join(in_path, folder_name), zip_file_fullname)
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-Python删除目录下的所有文件"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/10/14/Python%E5%88%A0%E9%99%A4%E7%9B%AE%E5%BD%95%E4%B8%8B%E7%9A%84%E6%89%80%E6%9C%89%E6%96%87%E4%BB%B6/"
+    >Python删除目录下的所有文件</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/10/14/Python%E5%88%A0%E9%99%A4%E7%9B%AE%E5%BD%95%E4%B8%8B%E7%9A%84%E6%89%80%E6%9C%89%E6%96%87%E4%BB%B6/" class="article-date">
+  <time datetime="2023-10-14T02:14:00.000Z" itemprop="datePublished">2023-10-14</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p><a target="_blank" rel="noopener" href="https://www.python100.com/html/4XI33HW03WL0.html">https://www.python100.com/html/4XI33HW03WL0.html</a></p>
+<p>一、Python删除目录及目录下文件</p>
+<pre><code>import shutil
+import os
+
+dir_path = &#39;/path/to/directory&#39;
+
+# 删除目录
+shutil.rmtree(dir_path)
+</code></pre>
+<p>当你想要删除一个目录以及里面所有的文件时，你可以使用shutil模块中的rmtree()函数。该函数可以删除整个目录，包括其所有的文件和子目录。这是最便捷的方法，但是请确保你真的需要这么做。</p>
+<p>二、Python删除目录中所有内容</p>
+<pre><code>import os
+
+dir_path = &#39;/path/to/directory&#39;
+
+# 删除目录中所有的文件
+for filename in os.listdir(dir_path):
+    file_path = os.path.join(dir_path, filename)
+    if os.path.isfile(file_path) or os.path.islink(file_path):
+        os.unlink(file_path)
+    elif os.path.isdir(file_path):
+        shutil.rmtree(file_path)
+
+# 删除目录本身
+os.rmdir(dir_path)
+</code></pre>
+<p>如果你想要删除目录中所有内容，但是保留目录本身，你可以使用os模块中listdir()和unlink()函数来遍历该目录中的所有文件并逐个删除。在删除文件夹之前，必须先删除所有文件和子目录。</p>
+<p>三、Python os删除目录</p>
+<pre><code>import os
+
+dir_path = &#39;/path/to/directory&#39;
+
+# 删除目录
+os.removedirs(dir_path)
+</code></pre>
+<p>os.removedirs()函数可以删除指定的目录。如果该目录是一个空目录，则可以直接删除它。如果该目录不是空目录，则需要递归地删除其所有子目录和文件。</p>
+<p>四、Python删除指定目录下的文件</p>
+<pre><code>import os
+
+dir_path = &#39;/path/to/directory&#39;
+
+# 删除指定格式的文件
+for filename in os.listdir(dir_path):
+    if filename.endswith(&#39;.txt&#39;):
+        os.unlink(os.path.join(dir_path, filename))
+</code></pre>
+<p>如果你只想删除指定格式的文件，你可以使用listdir()和endswith()函数来列出该目录中满足指定格式的所有文件，并逐个删除。</p>
+<p>五、Python删除非空目录</p>
+<pre><code>import shutil
+
+dir_path = &#39;/path/to/directory&#39;
+
+# 删除非空目录
+shutil.rmtree(dir_path)
+</code></pre>
+<p>如果你只想删除非空目录，你可以使用shutil模块的rmtree()函数。请注意，该函数可以删除目录和其中的所有文件和子目录。</p>
+<p>通过上述5种方法，你可以选择最适用于你的需求的方法来删除指定目录下的所有文件。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-Python判断文件是否存在并且删除"
   class="article article-type-post"
   itemscope
@@ -268,473 +1433,13 @@ for file in glob.glob(&quot;*.txt&quot;):
 </article>
 
     
-    <article
-  id="post-Python中查找文件是否存在"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/10/12/Python%E4%B8%AD%E6%9F%A5%E6%89%BE%E6%96%87%E4%BB%B6%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8/"
-    >Python中查找文件是否存在</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/10/12/Python%E4%B8%AD%E6%9F%A5%E6%89%BE%E6%96%87%E4%BB%B6%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8/" class="article-date">
-  <time datetime="2023-10-12T02:12:00.000Z" itemprop="datePublished">2023-10-12</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://www.python100.com/html/14E0N1LV1S5V.html">https://www.python100.com/html/14E0N1LV1S5V.html</a></p>
-<p>在Python编程中，我们经常需要查找文件是否存在。这个功能在文件处理、数据分析、系统管理等各个领域都非常有用。在本文中，我们将以Python作为中心，详细介绍如何使用Python来查找文件是否存在。</p>
-<p>一、使用os模块的方法</p>
-<p>Python的标准库中的os模块提供了一些方法来操作文件和目录。其中，os.path模块提供了一些判断文件或目录是否存在的函数。</p>
-<pre><code>import os
-
-# 检查文件是否存在
-def file_exists(path):
-    return os.path.exists(path)
-
-# 检查目录是否存在
-def directory_exists(path):
-    return os.path.isdir(path)
-</code></pre>
-<p>使用os.path.exists函数可以判断文件是否存在，返回值为True或False。如果文件存在，则返回True；如果文件不存在，则返回False。</p>
-<p>使用os.path.isdir函数可以判断目录是否存在，返回值同样为True或False。如果目录存在，则返回True；如果目录不存在，则返回False。</p>
-<p>二、使用glob模块的方法</p>
-<p>除了os模块，Python还提供了一个强大的文件和目录操作模块glob。glob模块可以使用通配符来查找文件。</p>
-<pre><code>import glob
-
-# 查找指定目录下的所有文件
-def find_files(directory, pattern):
-    return glob.glob(os.path.join(directory, pattern))
-
-# 判断文件是否存在
-def file_exists(path):
-    return len(find_files(os.path.dirname(path), os.path.basename(path))) &gt; 0
-</code></pre>
-<p>使用glob.glob函数可以根据通配符模式查找符合条件的文件。在find_files函数中，我们使用os.path.join函数将目录和文件名拼接在一起，然后使用glob.glob函数查找匹配的文件。</p>
-<p>在file_exists函数中，我们调用find_files函数查找指定文件并返回匹配到的文件列表，然后用len函数来判断文件列表的长度。如果长度大于0，则表示文件存在；如果长度等于0，则表示文件不存在。</p>
-<p>三、使用pathlib模块的方法</p>
-<p>Python 3.4及以上版本引入的pathlib模块提供了一种更简洁的方式来查找文件。</p>
-<pre><code>from pathlib import Path
-
-# 检查文件是否存在
-def file_exists(path):
-    return Path(path).is_file()
-
-# 检查目录是否存在
-def directory_exists(path):
-    return Path(path).is_dir()
-</code></pre>
-<p>在pathlib模块中，我们可以使用Path类的is_file方法来判断文件是否存在，使用is_dir方法来判断目录是否存在。这些方法返回值同样为True或False。</p>
-<p>四、其他注意事项<br>在使用Python查找文件是否存在时，还有一些注意事项需要注意：</p>
-<ol>
-<li><p>文件路径的表示：在使用文件路径时，我们需要注意使用不同的表示方式，如绝对路径、相对路径、转义字符等。</p>
-</li>
-<li><p>文件权限的问题：有时候文件存在，但是由于权限问题，我们无法操作或读取该文件。</p>
-</li>
-<li><p>文件名和文件后缀：有时候文件名或文件后缀的大小写问题可能导致文件找不到。</p>
-</li>
-</ol>
-<p>总结来说，使用Python查找文件是否存在需要借助os模块、glob模块或pathlib模块，根据具体的需求选择合适的方法。同时，在使用过程中还需注意文件路径、文件权限和文件名后缀等问题。</p>
-<p>希望本文对你理解Python中查找文件是否存在有所帮助！</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-pyqt界面美化笔记"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/10/11/pyqt%E7%95%8C%E9%9D%A2%E7%BE%8E%E5%8C%96%E7%AC%94%E8%AE%B0/"
-    >pyqt界面美化笔记</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/10/11/pyqt%E7%95%8C%E9%9D%A2%E7%BE%8E%E5%8C%96%E7%AC%94%E8%AE%B0/" class="article-date">
-  <time datetime="2023-10-11T02:11:00.000Z" itemprop="datePublished">2023-10-11</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1VY4y1p7it/?spm_id_from=333.999.0.0">https://www.bilibili.com/video/BV1VY4y1p7it/?spm_id_from=333.999.0.0</a></p>
-<p>1、窗体用label贴图或配色，做背景</p>
-<pre><code>background-color: rgba(16,30,41,240);
-border-radius:10px;
-</code></pre>
-<p>2、lineedit配色及调样式</p>
-<pre><code>background-color: rgba(0, 0, 0,0);
-border:1px solid rgba(0,0,0,0);
-border-bottom-color:rgba(255,255,255,200);
-padding-bottom:7px;
-</code></pre>
-<p>3、pushbutton配色及调样式</p>
-<pre><code>QPushButton#pushButton&#123;
-background-color:rgba(2,65,118,255);
-color:rgba(255,255,255,200);
-border-radius:5px;
-&#125;
-QPushButton#pushButton:hover&#123;
-background-color:rgba(2,65,118,150);
-color:rgba(255,255,255,200);
-border-radius:5px;
-&#125;
-QPushButton#pushButton:pressed&#123;
-padding-left:5px;
-padding-top:5px;
-background-color:rgba(2,65,118,100);
-&#125;
-</code></pre>
-<p>4、隐藏框：</p>
-<pre><code>MainWindow.setWindowFlags(QtCore.Qt.FramelessWindowHint)
-MainWindow.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-</code></pre>
-<p>5、main函数</p>
-<pre><code>import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow
-import login
-if __name__ == &#39;__main__&#39;:
-    app = QApplication(sys.argv)
-    win = QMainWindow()
-    ui = login.Ui_MainWindow()
-    ui.setupUi(win)
-    win.show()
-    sys.exit(app.exec_())
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-pyqt5的打包exe软件"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/10/10/pyqt5%E7%9A%84%E6%89%93%E5%8C%85exe%E8%BD%AF%E4%BB%B6/"
-    >pyqt5的打包exe软件</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/10/10/pyqt5%E7%9A%84%E6%89%93%E5%8C%85exe%E8%BD%AF%E4%BB%B6/" class="article-date">
-  <time datetime="2023-10-10T02:10:00.000Z" itemprop="datePublished">2023-10-10</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="安装命令："><a href="#安装命令：" class="headerlink" title="安装命令："></a>安装命令：</h1><pre><code>pip install pyinstaller
-</code></pre>
-<h1 id="更新命令："><a href="#更新命令：" class="headerlink" title="更新命令："></a>更新命令：</h1><pre><code>pip install –upgrade pyinstaller
-</code></pre>
-<h1 id="打包命令："><a href="#打包命令：" class="headerlink" title="打包命令："></a>打包命令：</h1><p>通过下述命令可以打包出带有指定图标的exe，注意必须是真实的ico格式图标，不能是改后名的。</p>
-<pre><code>pyinstaller main.py -y -w -i &quot;D:\workspace\mytool\ui\icons\mytool.ico&quot;
-</code></pre>
-<h1 id="打包命令常用选项。"><a href="#打包命令常用选项。" class="headerlink" title="打包命令常用选项。"></a>打包命令常用选项。</h1><pre><code>-y 表示自动覆盖现有的 build 和 dist 文件夹
--h，–help    查看该模块的帮助信息
--F，-onefile    产生单个的可执行文件
--D，–onedir    产生一个目录（包含多个文件）作为可执行程序
--a，–ascii    不包含 Unicode 字符集支持
--d，–debug    产生 debug 版本的可执行文件
--w，–windowed，–noconsolc    指定程序运行时不显示命令行窗口（仅对 Windows 有效）
--c，–nowindowed，–console    指定使用命令行窗口运行程序（仅对 Windows 有效）
--o DIR，–out=DIR    指定 spec 文件的生成目录。如果没有指定，则默认使用当前目录来生成 spec 文件
--p DIR，–path=DIR    设置 Python 导入模块的路径（和设置 PYTHONPATH 环境变量的作用相似）。也可使用路径分隔符（Windows 使用分号，Linux 使用冒号）来分隔多个路径
--n NAME，–name=NAME    指定项目（产生的 spec）名字。如果省略该选项，那么第一个脚本的主文件名将作为 spec 的名字
---distpath：指定输出目录
---clean：在打包之前清除临时文件夹日志
---log-level：设置日志级别，供调试嵌入其他文件
---add-data：将data文件夹嵌入到生成的可执行文件中
---add-binary：将binary文件与其他文件一起嵌入到可执行文件中
---hidden-import：打包特定的Python库，例如--hidden-import=PIL
---version：显示版本信息
---help：显示帮助信息
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-PyCharm安装PyQt5及工具（Qt Designer、PyUIC、PyRcc）详细教程"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/10/09/PyCharm%E5%AE%89%E8%A3%85PyQt5%E5%8F%8A%E5%B7%A5%E5%85%B7%EF%BC%88Qt%20Designer%E3%80%81PyUIC%E3%80%81PyRcc%EF%BC%89%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/"
-    >PyCharm安装PyQt5及工具（Qt Designer、PyUIC、PyRcc）详细教程</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/10/09/PyCharm%E5%AE%89%E8%A3%85PyQt5%E5%8F%8A%E5%B7%A5%E5%85%B7%EF%BC%88Qt%20Designer%E3%80%81PyUIC%E3%80%81PyRcc%EF%BC%89%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/" class="article-date">
-  <time datetime="2023-10-09T02:09:00.000Z" itemprop="datePublished">2023-10-09</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>需要安装PyQt5，pyqt5-tools</p>
-<pre><code>pip install PyQt5 -i https://pypi.tuna.tsinghua.edu.cn/simple
-pip install pyqt5-tools -i https://pypi.tuna.tsinghua.edu.cn/simple
-
-# 如有需要安装PyQtWebEngine
-pip install PyQtWebEngine -i https://pypi.tuna.tsinghua.edu.cn/simple
-</code></pre>
-<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><p>PyCharm点击菜单栏“File”，弹出下拉框，选择“Setting”，弹出设置界面。在设置界面中选择“Tools”→“External Tools”，</p>
-<h2 id="Qt-Designer"><a href="#Qt-Designer" class="headerlink" title="Qt Designer"></a>Qt Designer</h2><p>在“Name”一栏填写“Qt-Designer”；在“Program”一栏填写designer.exe文件位置</p>
-<h2 id="PyUIC"><a href="#PyUIC" class="headerlink" title="PyUIC"></a>PyUIC</h2><p>1、在“Name”一栏填写“PyUIC”；</p>
-<p>2、Program中填写pyuic5.exe这个程序的文件路径，一般在“Python环境目录\Scripts\pyuic5.exe”（此处需根据实际情况修改）</p>
-<p>3、在Arguments中内容填写如下：</p>
-<pre><code>$FileName$ -o $FileNameWithoutExtension$.py
-</code></pre>
-<p>4、Working directory内容填写如下：</p>
-<pre><code>$FileDir$
-</code></pre>
-<p>5、完成填写后，点击“OK”，以上步骤参考图片中的步骤。</p>
-<h2 id="PyRCC"><a href="#PyRCC" class="headerlink" title="PyRCC"></a>PyRCC</h2><p>1、在“Name”一栏填写“PyRCC”；</p>
-<p>2、Program中填写pyrcc5.exe这个程序的文件路径，一般在“Python环境目录\Scripts\pyrcc5.exe”（此处需根据实际情况修改），也可以点击右侧的文件夹选择按钮浏览文件夹选中该位置；</p>
-<p>3、在Arguments中内容填写如下：</p>
-<pre><code>$FileName$ -o $FileNameWithoutExtension$_rc.py
-</code></pre>
-<p>4、Working directory内容填写如下：</p>
-<pre><code>$FileDir$
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-MyBatis-Plus 通用IService使用时的一些方法"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/10/08/MyBatis-Plus%20%E9%80%9A%E7%94%A8IService%E4%BD%BF%E7%94%A8%E6%97%B6%E7%9A%84%E4%B8%80%E4%BA%9B%E6%96%B9%E6%B3%95/"
-    >MyBatis-Plus 通用IService使用时的一些方法</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/10/08/MyBatis-Plus%20%E9%80%9A%E7%94%A8IService%E4%BD%BF%E7%94%A8%E6%97%B6%E7%9A%84%E4%B8%80%E4%BA%9B%E6%96%B9%E6%B3%95/" class="article-date">
-  <time datetime="2023-10-08T02:08:00.000Z" itemprop="datePublished">2023-10-08</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="普通方法"><a href="#普通方法" class="headerlink" title="普通方法:"></a>普通方法:</h1><pre><code>//查询所有
-userService .list();
-//根据查询条件查询一个返回实体类对象
-userService.getOne(lambdaQueryWrapper);
-//分页查询所有
-userService.page(pageInfo,lambdaQueryWrapper);
-//查询数量
-userService .count();
-//根据ID查list集合
-userService .listByIds();
-//根据ID删除
-userService .removeById();
-userService .removeByIds();
-//修改
-userService .update();
-userMapper.updateById(实体类);
-//新增
-userService .save();
-userMapper.insert(实体类);
-//批量新增
-userService .saveBatch(集合);
-</code></pre>
-<h1 id="getOne"><a href="#getOne" class="headerlink" title="getOne()"></a>getOne()</h1><p>这个是方法返回结果不止一条则会抛出异常，如果想默认取第一条结果，可以给这方法传第二个参数为false。</p>
-<pre><code>User one = userService.getOne(Wrappers.&lt;User&gt;lambdaQuery().eq(User::getAge, 11),false);
-</code></pre>
-<h1 id="saveOrUpdateBatch"><a href="#saveOrUpdateBatch" class="headerlink" title="saveOrUpdateBatch()"></a>saveOrUpdateBatch()</h1><p>批量新增或者修改方法,判断ID是否存在，如果ID不存在执行新增，如果ID存在先执行查询语句，查询结果为空新增，否则修改。</p>
-<pre><code>boolean b = userService.saveOrUpdateBatch(users);
-</code></pre>
-<h1 id="传值为null的时候不查询"><a href="#传值为null的时候不查询" class="headerlink" title="传值为null的时候不查询"></a>传值为null的时候不查询</h1><p>如果传值为null的时候不查询，有值才查询怎么做？<br>这里用到了hutool的ObjectUtil.isNotEmpty来判非空</p>
-<pre><code>//查询时间范围
-LambdaQueryWrapper&lt;ProductKhtm&gt; productKhtmLambdaQueryWrapper = new LambdaQueryWrapper&lt;&gt;();
-productKhtmLambdaQueryWrapper.between(
-ObjectUtil.isNotEmpty(productKhtmhz.getParams().get(&quot;endDbilldate&quot;)),
-ProductKhtm::getDbilldate,
-productKhtmhz.getParams().get(&quot;beginDbilldate&quot;),
-productKhtmhz.getParams().get(&quot;endDbilldate&quot;)
-);
-
-productKhtmService.list(productKhtmLambdaQueryWrapper);
-</code></pre>
-<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><p>如果sql语句后面想补充一句sql语句应该怎么办？用last</p>
-<pre><code>lambdaQueryWrapper.last(&quot;OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY&quot;);
-</code></pre>
-<p>注意这个自定义慎用，会有sql注入的风险</p>
-<p>如果sql查询条件全部都想自定义怎么办？</p>
-<pre><code>lambdaQueryWrapper.apply(&quot;YEAR(tijiao_time) = &#123;0&#125;&quot;,year);
-</code></pre>
-<p>注意这个自定义慎用，会有sql注入的风险</p>
-<p>————————————————<br>版权声明：本文为CSDN博主「z子豪」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/a864034462/article/details/123980761">https://blog.csdn.net/a864034462/article/details/123980761</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
   </article>
   
 
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/7/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/54/">54</a><a class="extend next" rel="next" href="/page/9/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/7/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/55/">55</a><a class="extend next" rel="next" href="/page/9/">下一页</a>
   </nav>
   
 </section>

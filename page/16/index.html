@@ -154,6 +154,1004 @@
     
     
     <article
+  id="post-Pandas实用入门案例04"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/08/31/Pandas%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B04/"
+    >Pandas实用入门案例04</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/08/31/Pandas%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B04/" class="article-date">
+  <time datetime="2023-08-31T14:00:48.000Z" itemprop="datePublished">2023-08-31</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>首先先介绍一下什么是Pandas ？</p>
+<p>Pandas 是基于NumPy 的一种工具，该工具是为了解决数据分析任务而创建的。<br>Pandas 纳入了大量库和一些标准的数据模型，提供了高效地操作大型数据集所需的工具。<br>pandas提供了大量能使我们快速便捷地处理数据的函数和方法。你很快就会发现，它是使Python成为强大而高效的数据分析环境的重要因素之一。</p>
+<p>首先引入相关模块：</p>
+<pre><code>import numpy as np
+import pandas as pd
+</code></pre>
+<h1 id="DataFrame"><a href="#DataFrame" class="headerlink" title="DataFrame"></a>DataFrame</h1><h2 id="第一章-DataFrame"><a href="#第一章-DataFrame" class="headerlink" title="第一章 DataFrame"></a>第一章 DataFrame</h2><h3 id="1-1-创建Series"><a href="#1-1-创建Series" class="headerlink" title="1.1 创建Series"></a>1.1 创建Series</h3><p>index不指定则从0开始编号</p>
+<pre><code>s = pd.Series([1, 2, 3, np.nan], index=[&#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;D&#39;])
+print s
+</code></pre>
+<p>输出</p>
+<pre><code>A 1.0
+B 2.0
+C 3.0
+D NaN
+dtype: float64
+</code></pre>
+<h3 id="1-2-创建时间序列"><a href="#1-2-创建时间序列" class="headerlink" title="1.2 创建时间序列"></a>1.2 创建时间序列</h3><p>必须指定start、end、periods中的两个参数值</p>
+<pre><code>dates = pd.date_range(&#39;20180101&#39;, periods=5)
+print dates
+</code></pre>
+<p>输出</p>
+<pre><code>DatetimeIndex([‘2018-01-01’, ‘2018-01-02’, 
+‘2018-01-03’, ‘2018-01-04’,‘2018-01-05’],
+dtype=’datetime64[ns]’, freq=’D’)
+</code></pre>
+<h3 id="1-3-创建DataFrame"><a href="#1-3-创建DataFrame" class="headerlink" title="1.3 创建DataFrame"></a>1.3 创建DataFrame</h3><p>必须指定start、end、periods中的两个参数值</p>
+<pre><code>df = pd.DataFrame(np.random.rand(3,4),columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
+print df
+</code></pre>
+<p>输出</p>
+<pre><code>a b c d
+0 0.233310 0.170256 0.036988 0.697916
+1 0.159580 0.287814 0.528123 0.956051
+2 0.815038 0.438103 0.143477 0.769143
+</code></pre>
+<p>通过字典创建（key为列名）：</p>
+<pre><code>df = pd.DataFrame(&#123;&#39;A&#39;: 1,
+                   &#39;B&#39;: pd.Timestamp(&#39;20171208&#39;),
+                   &#39;C&#39;: pd.Series(np.arange(4)),
+                   &#39;D&#39;: pd.Categorical([&#39;test&#39;, &#39;train&#39;, &#39;test&#39;, &#39;train&#39;])&#125;)
+print df
+</code></pre>
+<p>输出</p>
+<pre><code>A B C D
+0 1 2017-12-08 0 test
+1 1 2017-12-08 1 train
+2 1 2017-12-08 2 test
+3 1 2017-12-08 3 train
+</code></pre>
+<h3 id="1-4-DataFrame属性"><a href="#1-4-DataFrame属性" class="headerlink" title="1.4 DataFrame属性"></a>1.4 DataFrame属性</h3><pre><code>df = pd.DataFrame(&#123;&#39;A&#39;: 1,
+                   &#39;B&#39;: pd.Timestamp(&#39;20171208&#39;),
+                   &#39;C&#39;: pd.Series(np.arange(4)),
+                   &#39;D&#39;: pd.Categorical([&#39;test&#39;, &#39;train&#39;, &#39;test&#39;, &#39;train&#39;])&#125;)
+</code></pre>
+<p>查看每列数据类型</p>
+<pre><code>print df.dtypes
+</code></pre>
+<p>输出</p>
+<pre><code>A int64
+B datetime64[ns]
+C int32
+D category
+dtype: object
+</code></pre>
+<p>查看索引</p>
+<pre><code>print df.index  
+</code></pre>
+<p>输出</p>
+<pre><code>RangeIndex(start=0, stop=4, step=1)
+</code></pre>
+<p>查看列名</p>
+<pre><code>print df.columns
+</code></pre>
+<p>输出</p>
+<pre><code>Index([u’A’, u’B’, u’C’, u’D’], dtype=’object’)
+</code></pre>
+<p>查看数据</p>
+<pre><code>print df.values  
+</code></pre>
+<p>输出</p>
+<pre><code>[[1L Timestamp(‘2017-12-08 00:00:00’) 0 ‘test’]
+[1L Timestamp(‘2017-12-08 00:00:00’) 1 ‘train’]
+[1L Timestamp(‘2017-12-08 00:00:00’) 2 ‘test’]
+[1L Timestamp(‘2017-12-08 00:00:00’) 3 ‘train’]]
+</code></pre>
+<p>DataFrame统计信息</p>
+<pre><code>print df.describe()
+</code></pre>
+<p>输出</p>
+<pre><code>A C
+count 4.0 4.000000
+mean 1.0 1.500000
+std 0.0 1.290994
+min 1.0 0.000000
+25% 1.0 0.750000
+50% 1.0 1.500000
+75% 1.0 2.250000
+max 1.0 3.000000
+</code></pre>
+<h3 id="1-5-DataFrame常用操作"><a href="#1-5-DataFrame常用操作" class="headerlink" title="1.5 DataFrame常用操作"></a>1.5 DataFrame常用操作</h3><p>转置</p>
+<pre><code>df = pd.DataFrame(np.arange(12).reshape((3,4)),columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
+print df.T
+</code></pre>
+<p>输出</p>
+<pre><code>0 1 2
+a 0 4 8
+b 1 5 9
+c 2 6 10
+d 3 7 11
+</code></pre>
+<p>按index排序</p>
+<pre><code>df = pd.DataFrame(np.arange(12).reshape((3, 4)), columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
+print df.sort_index(axis=1, ascending=False)
+</code></pre>
+<p>输出</p>
+<pre><code>d c b a
+0 3 2 1 0
+1 7 6 5 4
+2 11 10 9 8
+</code></pre>
+<p>按值排序</p>
+<pre><code>df = pd.DataFrame(np.arange(12).reshape((3, 4)), columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
+print df.sort_values(by=&#39;b&#39;, ascending=False)
+</code></pre>
+<p>输出</p>
+<pre><code>a b c d
+2 8 9 10 11
+1 4 5 6 7
+0 0 1 2 3
+</code></pre>
+<p>数据选择</p>
+<p>创建如下dataframe：</p>
+<pre><code>dates = pd.date_range(&#39;20180101&#39;, periods=3)
+df = pd.DataFrame(np.arange(12).reshape((3, 4)),
+                  index=dates, columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
+print df
+</code></pre>
+<p>输出</p>
+<pre><code>a b c d
+2018-01-01 0 1 2 3
+2018-01-02 4 5 6 7
+2018-01-03 8 9 10 11
+</code></pre>
+<h2 id="第二章-数据选择"><a href="#第二章-数据选择" class="headerlink" title="第二章 数据选择"></a>第二章 数据选择</h2><h3 id="2-1-选择列"><a href="#2-1-选择列" class="headerlink" title="2.1 选择列"></a>2.1 选择列</h3><pre><code>print df[&#39;a&#39;]  # print df.a
+</code></pre>
+<p>输出</p>
+<pre><code>2018-01-01 0
+2018-01-02 4
+2018-01-03 8
+</code></pre>
+<h3 id="2-2-选择行"><a href="#2-2-选择行" class="headerlink" title="2.2 选择行"></a>2.2 选择行</h3><pre><code>print df[0:2]  # print df[&#39;20180101&#39;:&#39;20180102&#39;]
+</code></pre>
+<p>输出</p>
+<pre><code>a b c d
+2018-01-01 0 1 2 3
+2018-01-02 4 5 6 7
+</code></pre>
+<h3 id="2-3-标签选择：loc"><a href="#2-3-标签选择：loc" class="headerlink" title="2.3 标签选择：loc"></a>2.3 标签选择：loc</h3><p>1</p>
+<pre><code>print df.loc[:,[&#39;a&#39;, &#39;b&#39;]] 
+</code></pre>
+<p>输出</p>
+<pre><code>a b
+2018-01-01 0 1
+2018-01-02 4 5
+2018-01-03 8 9
+</code></pre>
+<p>2</p>
+<pre><code>print df.loc[&#39;20180102&#39;]
+</code></pre>
+<p>输出</p>
+<pre><code>a 4
+b 5
+c 6
+d 7
+Name: 2018-01-02 00:00:00, dtype: int32
+</code></pre>
+<h3 id="2-4-位置选择：iloc"><a href="#2-4-位置选择：iloc" class="headerlink" title="2.4 位置选择：iloc"></a>2.4 位置选择：iloc</h3><pre><code>print df.iloc[[0, 2], 2:4]
+</code></pre>
+<p>输出</p>
+<pre><code>c d
+2018-01-01 2 3
+2018-01-03 10 11
+</code></pre>
+<h3 id="2-5-混合标签与位置：ix"><a href="#2-5-混合标签与位置：ix" class="headerlink" title="2.5 混合标签与位置：ix"></a>2.5 混合标签与位置：ix</h3><pre><code>print df.ix[:2, [&#39;c&#39;, &#39;d&#39;]]
+</code></pre>
+<p>输出</p>
+<pre><code>c d
+2018-01-01 2 3
+2018-01-02 6 7
+</code></pre>
+<h3 id="2-6-Boolean选择"><a href="#2-6-Boolean选择" class="headerlink" title="2.6 Boolean选择"></a>2.6 Boolean选择</h3><pre><code>print df[df.a &lt; 5]
+</code></pre>
+<p>输出</p>
+<pre><code>a b c d
+2018-01-01 0 1 2 3
+2018-01-02 4 5 6 7
+</code></pre>
+<p>处理NaN数据</p>
+<p>首先创建包含NaN的dataframe：</p>
+<pre><code>dates = pd.date_range(&#39;20180101&#39;, periods=3)
+df = pd.DataFrame(np.arange(12).reshape((3, 4)),
+                  index=dates, columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
+df.iloc[1, 1], df.iloc[2, 2] = np.nan, np.nan
+print df
+</code></pre>
+<p>输出</p>
+<pre><code>a b c d
+2018-01-01 0 1.0 2.0 3
+2018-01-02 4 NaN 6.0 7
+2018-01-03 8 9.0 NaN 11
+</code></pre>
+<h2 id="第三章-处理NaN数据"><a href="#第三章-处理NaN数据" class="headerlink" title="第三章 处理NaN数据"></a>第三章 处理NaN数据</h2><h3 id="3-1-删除NaN数据"><a href="#3-1-删除NaN数据" class="headerlink" title="3.1 删除NaN数据"></a>3.1 删除NaN数据</h3><pre><code>print df.dropna(axis=1)  # how = [&#39;any&#39;, &#39;all&#39;]
+</code></pre>
+<p>输出</p>
+<pre><code>a d
+2018-01-01 0 3
+2018-01-02 4 7
+2018-01-03 8 11
+</code></pre>
+<h3 id="3-2-填充NaN数据"><a href="#3-2-填充NaN数据" class="headerlink" title="3.2 填充NaN数据"></a>3.2 填充NaN数据</h3><pre><code>print df.fillna(value=&#39;*&#39;)
+</code></pre>
+<p>输出</p>
+<pre><code>a b c d
+2018-01-01 0 1 2 3
+2018-01-02 4 * 6 7
+2018-01-03 8 9 * 11
+</code></pre>
+<h3 id="3-3-检查是否存在NaN数据"><a href="#3-3-检查是否存在NaN数据" class="headerlink" title="3.3 检查是否存在NaN数据"></a>3.3 检查是否存在NaN数据</h3><pre><code>print df.isnull()
+</code></pre>
+<p>输出</p>
+<pre><code>a b c d
+2018-01-01 False False False False
+2018-01-02 False True False False
+2018-01-03 False False True False
+</code></pre>
+<h2 id="第四章-导入与导出"><a href="#第四章-导入与导出" class="headerlink" title="第四章 导入与导出"></a>第四章 导入与导出</h2><pre><code>导入函数    导出函数功能
+read_csv    to_csv
+read_excel    to_excel
+read_sql    to_sql
+read_json    to_json
+read_msgpack    to_msgpack
+read_html    to_html
+read_gbq    to_gbq
+read_stata    to_stata
+read_sas    to_sas
+read_clipboard    to_clipboard
+read_pickle    to_pickle
+</code></pre>
+<p>以下面这个test.txt为例：</p>
+<pre><code>A B
+Tom 21
+Joe 26
+Sam 55
+Kerry 27
+</code></pre>
+<p>忽略第一行，并设置列名分别为‘name’和‘age’</p>
+<pre><code>data = pd.read_csv(&#39;test.txt&#39;, sep=&#39; &#39;, skiprows=1, names=[&#39;name&#39;,&#39;age&#39;])
+print data
+</code></pre>
+<p>输出</p>
+<pre><code>name age
+0 Tom 21
+1 Joe 26
+2 Sam 55
+3 Kerry 27
+</code></pre>
+<h2 id="第五章-合并DataFrame"><a href="#第五章-合并DataFrame" class="headerlink" title="第五章 合并DataFrame"></a>第五章 合并DataFrame</h2><h3 id="5-1-concat函数"><a href="#5-1-concat函数" class="headerlink" title="5.1 concat函数"></a>5.1 concat函数</h3><pre><code>df1 = pd.DataFrame(np.ones((3, 4))*0, columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
+df2 = pd.DataFrame(np.ones((3, 4))*1, columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
+df3 = pd.DataFrame(np.ones((3, 4))*2, columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
+# ignore_index=True将重新对index排序
+print pd.concat([df1, df2, df3], axis=0, ignore_index=True)
+</code></pre>
+<p>输出</p>
+<pre><code>a b c d
+0 0.0 0.0 0.0 0.0
+1 0.0 0.0 0.0 0.0
+2 0.0 0.0 0.0 0.0
+3 1.0 1.0 1.0 1.0
+4 1.0 1.0 1.0 1.0
+5 1.0 1.0 1.0 1.0
+6 2.0 2.0 2.0 2.0
+7 2.0 2.0 2.0 2.0
+8 2.0 2.0 2.0 2.0
+</code></pre>
+<p>join参数用法</p>
+<pre><code>df1 = pd.DataFrame(np.ones((3, 4))*0, columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;], index=[1,2,3])
+df2 = pd.DataFrame(np.ones((3, 4))*1, columns=[&#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;], index=[2,3,4])
+# join默认为&#39;outer&#39;，不共有的列用NaN填充
+print pd.concat([df1, df2], join=&#39;outer&#39;) 
+# join=&#39;inner&#39;只合并共有的列
+print pd.concat([df1, df2], join=&#39;inner&#39;)
+</code></pre>
+<p>输出 1</p>
+<pre><code>a b c d e
+1 0.0 0.0 0.0 0.0 NaN
+2 0.0 0.0 0.0 0.0 NaN
+3 0.0 0.0 0.0 0.0 NaN
+2 NaN 1.0 1.0 1.0 1.0
+3 NaN 1.0 1.0 1.0 1.0
+4 NaN 1.0 1.0 1.0 1.0
+</code></pre>
+<p>输出 2</p>
+<pre><code>b c d
+1 0.0 0.0 0.0
+2 0.0 0.0 0.0
+3 0.0 0.0 0.0
+2 1.0 1.0 1.0
+3 1.0 1.0 1.0
+4 1.0 1.0 1.0
+</code></pre>
+<p>join_axes参数用法</p>
+<pre><code>df1 = pd.DataFrame(np.ones((3, 4))*0, columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;], index=[1, 2, 3])
+df2 = pd.DataFrame(np.ones((3, 4))*1, columns=[&#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;], index=[2, 3, 4])
+# 按照df1的index进行合并
+print pd.concat([df1, df2], axis=1, join_axes=[df1.index])
+</code></pre>
+<p>输出</p>
+<pre><code>a b c d b c d e
+1 0.0 0.0 0.0 0.0 NaN NaN NaN NaN
+2 0.0 0.0 0.0 0.0 1.0 1.0 1.0 1.0
+3 0.0 0.0 0.0 0.0 1.0 1.0 1.0 1.0
+</code></pre>
+<h3 id="5-2-append函数"><a href="#5-2-append函数" class="headerlink" title="5.2 append函数"></a>5.2 append函数</h3><p>append多个DataFrame</p>
+<pre><code>df1 = pd.DataFrame(np.ones((3, 4))*0, columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
+df2 = pd.DataFrame(np.ones((3, 4))*1, columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
+
+print df1.append(df2, ignore_index=True)
+</code></pre>
+<p>输出</p>
+<pre><code>a b c d
+0 0.0 0.0 0.0 0.0
+1 0.0 0.0 0.0 0.0
+2 0.0 0.0 0.0 0.0
+3 1.0 1.0 1.0 1.0
+4 1.0 1.0 1.0 1.0
+5 1.0 1.0 1.0 1.0
+</code></pre>
+<p>append一组数据</p>
+<pre><code>df1 = pd.DataFrame(np.ones((3, 4))*0, columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
+s = pd.Series([4, 4, 4, 4], index=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
+
+print df1.append(s, ignore_index=True)
+</code></pre>
+<p>输出</p>
+<pre><code>a b c d
+0 0.0 0.0 0.0 0.0
+1 0.0 0.0 0.0 0.0
+2 0.0 0.0 0.0 0.0
+3 4.0 4.0 4.0 4.0
+</code></pre>
+<h3 id="5-3-merge函数"><a href="#5-3-merge函数" class="headerlink" title="5.3 merge函数"></a>5.3 merge函数</h3><p>基于某一列进行合并</p>
+<pre><code>df1 = pd.DataFrame(&#123;&#39;A&#39;: [&#39;A1&#39;, &#39;A2&#39;, &#39;A3&#39;],
+                    &#39;B&#39;: [&#39;B1&#39;, &#39;B2&#39;, &#39;B3&#39;],
+                   &#39;KEY&#39;: [&#39;K1&#39;, &#39;K2&#39;, &#39;K3&#39;]&#125;)
+df2 = pd.DataFrame(&#123;&#39;C&#39;: [&#39;C1&#39;, &#39;C2&#39;, &#39;C3&#39;],
+                    &#39;D&#39;: [&#39;D1&#39;, &#39;D2&#39;, &#39;D3&#39;],
+                   &#39;KEY&#39;: [&#39;K1&#39;, &#39;K2&#39;, &#39;K3&#39;]&#125;)
+
+print pd.merge(df1, df2, on=&#39;KEY&#39;)
+</code></pre>
+<p>输出</p>
+<pre><code>A B KEY C D
+0 A1 B1 K1 C1 D1
+1 A2 B2 K2 C2 D2
+2 A3 B3 K3 C3 D3
+</code></pre>
+<p>基于某两列进行合并</p>
+<pre><code>df1 = pd.DataFrame(&#123;&#39;A&#39;: [&#39;A1&#39;, &#39;A2&#39;, &#39;A3&#39;],
+                    &#39;B&#39;: [&#39;B1&#39;, &#39;B2&#39;, &#39;B3&#39;],
+                    &#39;KEY1&#39;: [&#39;K1&#39;, &#39;K2&#39;, &#39;K0&#39;],
+                    &#39;KEY2&#39;: [&#39;K0&#39;, &#39;K1&#39;, &#39;K3&#39;]&#125;)
+df2 = pd.DataFrame(&#123;&#39;C&#39;: [&#39;C1&#39;, &#39;C2&#39;, &#39;C3&#39;],
+                    &#39;D&#39;: [&#39;D1&#39;, &#39;D2&#39;, &#39;D3&#39;],
+                    &#39;KEY1&#39;: [&#39;K0&#39;, &#39;K2&#39;, &#39;K1&#39;],
+                    &#39;KEY2&#39;: [&#39;K1&#39;, &#39;K1&#39;, &#39;K0&#39;]&#125;)
+# how:[&#39;left&#39;,&#39;right&#39;,&#39;outer&#39;,&#39;inner&#39;]
+print pd.merge(df1, df2, on=[&#39;KEY1&#39;, &#39;KEY2&#39;], how=&#39;inner&#39;)
+</code></pre>
+<p>输出</p>
+<pre><code>A B KEY1 KEY2 C D
+0 A1 B1 K1 K0 C3 D3
+1 A2 B2 K2 K1 C2 D2
+</code></pre>
+<p>按index合并</p>
+<pre><code>df1 = pd.DataFrame(&#123;&#39;A&#39;: [&#39;A1&#39;, &#39;A2&#39;, &#39;A3&#39;],
+                    &#39;B&#39;: [&#39;B1&#39;, &#39;B2&#39;, &#39;B3&#39;]&#125;,
+                   index=[&#39;K0&#39;, &#39;K1&#39;, &#39;K2&#39;])
+df2 = pd.DataFrame(&#123;&#39;C&#39;: [&#39;C1&#39;, &#39;C2&#39;, &#39;C3&#39;],
+                    &#39;D&#39;: [&#39;D1&#39;, &#39;D2&#39;, &#39;D3&#39;]&#125;,
+                   index=[&#39;K0&#39;, &#39;K1&#39;, &#39;K3&#39;])
+
+print pd.merge(df1, df2, left_index=True, right_index=True, how=&#39;outer&#39;)
+</code></pre>
+<p>输出</p>
+<pre><code>A B C D
+K0 A1 B1 C1 D1
+K1 A2 B2 C2 D2
+K2 A3 B3 NaN NaN
+K3 NaN NaN C3 D3
+</code></pre>
+<p>为列加后缀</p>
+<pre><code>df_boys = pd.DataFrame(&#123;&#39;id&#39;: [&#39;1&#39;, &#39;2&#39;, &#39;3&#39;],
+                        &#39;age&#39;: [&#39;23&#39;, &#39;25&#39;, &#39;18&#39;]&#125;)
+df_girls = pd.DataFrame(&#123;&#39;id&#39;: [&#39;1&#39;, &#39;2&#39;, &#39;3&#39;],
+                        &#39;age&#39;: [&#39;18&#39;, &#39;18&#39;, &#39;18&#39;]&#125;)
+
+print pd.merge(df_boys, df_girls, on=&#39;id&#39;, suffixes=[&#39;_boys&#39;, &#39;_girls&#39;])
+</code></pre>
+<p>输出</p>
+<pre><code>age_boys id age_girls
+0 23 1 18
+1 25 2 18
+2 18 3 18
+</code></pre>
+<h1 id="绘图"><a href="#绘图" class="headerlink" title="绘图"></a>绘图</h1><p>引入相应模块</p>
+<pre><code>import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+</code></pre>
+<p>绘制Series</p>
+<pre><code>data = pd.Series(np.random.randn(1000))
+data = data.cumsum()
+
+data.plot()
+plt.show()
+</code></pre>
+<h2 id="–本文完–"><a href="#–本文完–" class="headerlink" title="–本文完–"></a>–本文完–</h2><p>©著作权归作者所有：来自51CTO博客作者程序员小猿的原创作品，请联系作者获取转载授权，否则将追究法律责任<br>全网最全的Pandas入门教程（精简版）<br><a target="_blank" rel="noopener" href="https://blog.51cto.com/u_13294304/3386462">https://blog.51cto.com/u_13294304/3386462</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pandas/" rel="tag">pandas</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-vue循环遍历对象、数组和字符串"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/08/30/vue%E5%BE%AA%E7%8E%AF%E9%81%8D%E5%8E%86%E5%AF%B9%E8%B1%A1%E3%80%81%E6%95%B0%E7%BB%84%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2/"
+    >vue循环遍历对象、数组和字符串</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/08/30/vue%E5%BE%AA%E7%8E%AF%E9%81%8D%E5%8E%86%E5%AF%B9%E8%B1%A1%E3%80%81%E6%95%B0%E7%BB%84%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2/" class="article-date">
+  <time datetime="2023-08-30T09:00:11.000Z" itemprop="datePublished">2023-08-30</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="1-循环遍历对象"><a href="#1-循环遍历对象" class="headerlink" title="1.循环遍历对象"></a>1.循环遍历对象</h1><h2 id="1-1vue-在html里面循环遍历对象"><a href="#1-1vue-在html里面循环遍历对象" class="headerlink" title="1.1vue 在html里面循环遍历对象"></a>1.1vue 在html里面循环遍历对象</h2><pre><code>v-for=&quot; (val, key , i) in dimItemMap&quot; :key=&quot;key&quot;
+
+val-每一项
+key -key值
+i-第几个
+
+&lt;el-table-column prop=&quot;score&quot; label=&quot;评分&quot; :show-overflow-tooltip=&quot;true&quot; align=&quot;center&quot;&gt;
+    &lt;template slot-scope=&quot;scope&quot;&gt;
+    &lt;span&gt;
+        &lt;span v-for=&quot; (val, key , i) in scope.row.dimItemMap&quot; :key=&quot;key&quot;&gt;
+        &#123;&#123;val.score&#125;&#125;//score为键，val.score为值
+        &lt;/span&gt;
+    &lt;/span&gt;
+    &lt;/template&gt;
+&lt;/el-table-column&gt;
+</code></pre>
+<h2 id="1-2-在js里面forin遍历对象"><a href="#1-2-在js里面forin遍历对象" class="headerlink" title="1.2 在js里面forin遍历对象"></a>1.2 在js里面forin遍历对象</h2><p>for…in 循环主要是为了遍历对象而生，不适用于遍历数组</p>
+<pre><code>let data = [&#123; wiun2dvi: 232, wiun3dvi: 55, wiu4ndvi: 33, wiun1dvi: 24432 &#125;];
+    data.forEach((item,index)=&gt;&#123;
+      for (const key in item) &#123;
+        console.log(&quot;item[key]&quot;,item[key]);//值
+        console.log(&quot;key&quot;,key);//键
+      &#125;
+    &#125;)
+</code></pre>
+<h1 id="2-循环遍历数组"><a href="#2-循环遍历数组" class="headerlink" title="2.循环遍历数组"></a>2.循环遍历数组</h1><h2 id="2-1-vue-在html里面循环遍历数组"><a href="#2-1-vue-在html里面循环遍历数组" class="headerlink" title="2.1 vue 在html里面循环遍历数组"></a>2.1 vue 在html里面循环遍历数组</h2><pre><code>&lt;el-table-column v-for=&quot;item in tableCol&quot; :key=&quot;item.id&quot; :prop=&quot;item.id&quot; :label=&quot;item.name&quot; :show-overflow-tooltip=&quot;true&quot; align=&quot;center&quot;&gt;
+    &lt;template slot-scope=&quot;scope&quot;&gt;
+        &lt;span&gt;&#123;&#123;scope.row.dimItemMap?scope.row.dimItemMap[item.id].name:""&#125;&#125;&lt;/span&gt;
+    &lt;/template&gt;
+&lt;/el-table-column&gt;
+
+&lt;el-table-column prop=&quot;score&quot; label=&quot;评分&quot; :show-overflow-tooltip=&quot;true&quot; align=&quot;center&quot;&gt;
+    &lt;template slot-scope=&quot;scope&quot;&gt;
+        &lt;span&gt;
+            &lt;span v-for=&quot; (item, index) in scope.row.dimItemMap&quot; :key=&quot;index&quot;&gt;
+                &#123;&#123;item.score&#125;&#125;
+            &lt;/span&gt;
+        &lt;/span&gt;
+    &lt;/template&gt;
+&lt;/el-table-column&gt;
+</code></pre>
+<h2 id="2-2-在js里面for遍历数组"><a href="#2-2-在js里面for遍历数组" class="headerlink" title="2.2 在js里面for遍历数组"></a>2.2 在js里面for遍历数组</h2><pre><code>let id = 1524466
+for (let i = 0; i &lt; list.length; i++) &#123;
+    let a = list[i];
+    if (a.id === id) &#123;
+        return a.name;
+    &#125; 
+&#125;
+</code></pre>
+<h2 id="2-3-在js里面forof遍历数组"><a href="#2-3-在js里面forof遍历数组" class="headerlink" title="2.3 在js里面forof遍历数组"></a>2.3 在js里面forof遍历数组</h2><p>   let arr = [{<br>        name: 12,<br>        hello: “wsdfnioq”,<br>    }, {<br>        name: 12,<br>        hello: “wsdfnioq”,<br>    }, {<br>        name: 12,<br>        hello: “wsdfnioq”,<br>    }]</p>
+<pre><code>for (const i of arr) &#123;
+    console.log(&quot;i&quot;, i);
+&#125;
+        
+//i &#123;name: 12, hello: &#39;wsdfnioq&#39;&#125;
+//i &#123;name: 12, hello: &#39;wsdfnioq&#39;&#125;
+//i &#123;name: 12, hello: &#39;wsdfnioq&#39;&#125;
+
+let arr = [
+    [&#39;name&#39;, &quot;张三&quot;],
+    [&#39;地址&#39;, &#39;北京&#39;],
+    [&#39;手机&#39;, &#39;123&#39;]
+]
+for (const [value0, value1] of arr) &#123;
+    console.log(&#39;k&#39;, value0, value1);
+&#125;
+// k name 张三
+// k 地址 北京
+// k 手机 123
+</code></pre>
+<h2 id="2-4-for-in，不推荐对数组进行遍历"><a href="#2-4-for-in，不推荐对数组进行遍历" class="headerlink" title="2.4 for in，不推荐对数组进行遍历"></a>2.4 for in，不推荐对数组进行遍历</h2><pre><code>let arr = [&quot;lsadnkol&quot;, &quot;klsmvaod&quot;, &quot;lpsaojfoas&quot;]
+for (const key in arr) &#123;
+    console.log(&quot;arr&quot;, key, typeof key, arr[key]);
+&#125;
+// 0 string lsadnkol
+// 1 string klsmvaod
+// 2 string lpsaojfoas
+</code></pre>
+<h2 id="2-5-forEach-函数遍历数组"><a href="#2-5-forEach-函数遍历数组" class="headerlink" title="2.5 forEach() 函数遍历数组"></a>2.5 forEach() 函数遍历数组</h2><p>①无任何返回，可改变原来数组中的内容</p>
+<p>②循环次数：数组的长度</p>
+<p>③不支持return，不需要return语句</p>
+<p>如下案例：给每个对象中添加age属性</p>
+<pre><code>let forArr = [&#123;name:&#39;tom&#39;,sex:&#39;man&#39;&#125;,&#123;name:&#39;linda&#39;,sex:&#39;woman&#39;&#125;,]
+ forArr.forEach((item,index) =&gt; &#123;
+    console.log(&quot;forEach循环==index==&quot;,index,item);
+     item.age = 27
+&#125;)
+console.log(&quot;forArr==遍历后===&quot;,forArr)
+// forArr ----&gt;[&#123;name:&#39;tom&#39;,sex:&#39;man&#39;,age:27&#125;,&#123;name:&#39;linda&#39;,sex:&#39;woman&#39;,age:27&#125;]
+</code></pre>
+<h1 id="vue循环遍历-指令v-for"><a href="#vue循环遍历-指令v-for" class="headerlink" title="vue循环遍历,指令v-for"></a>vue循环遍历,指令v-for</h1><h2 id="1-循环遍历"><a href="#1-循环遍历" class="headerlink" title="1.循环遍历"></a>1.循环遍历</h2><p>vue的循环遍历用v-for，语法类似于js中的for循环</p>
+<p>当我们有一组数据需要进行渲染时，我们就可以使用v-for来完成。</p>
+<p>v-for使用格式：</p>
+<p>格式为：v-for = item in items</p>
+<p> (遍历items中的数据)</p>
+<h2 id="2-v-for遍历数组"><a href="#2-v-for遍历数组" class="headerlink" title="2.v-for遍历数组"></a>2.v-for遍历数组</h2><p>用v-for指令基于一个数组来渲染一个列表。</p>
+<p>v-for 指令使用item in items形式的语法，其中items是源数据数组， 而item则是被迭代的数组元素。</p>
+<ul>
+<li>如果v-for遍历数组中的数组值</li>
+</ul>
+<p>语法格式：v-for=”movie in movies”<br>依次从movies中取出movie，并且在元素的内容中，我们可以使用Mustache语法，来使用movie</p>
+<pre><code>&lt;li v-for=&quot;movie in movies&quot;&gt; &#123;&#123;movie&#125;&#125; &lt;/li&gt;
+ 
+</code></pre>
+<ul>
+<li>如果v-for遍历数组中的数组值、索引值</li>
+</ul>
+<p>语法格式：v-for=(item, index) in items<br>v-for中使用二个参数，即当前项和当前项的索引</p>
+<pre><code>&lt;li v-for=&quot;(item, index) in items&quot;&gt;&#123;&#123;index&#125;&#125;. &#123;&#123;item&#125;&#125;&lt;/li&gt;
+</code></pre>
+<p>样例：</p>
+<pre><code>&lt;div id=&quot;app&quot;&gt;
+  &lt;ul&gt;
+    &lt;li v-for=&quot;name in names&quot;&gt;&#123;&#123;name&#125;&#125;&lt;/li&gt;
+  &lt;/ul&gt;
+   //v-for遍历过程中，遍历数组中值,并显示
+  &lt;ul&gt;
+    &lt;li v-for=&quot;(name,index) in names&quot;&gt;&#123;&#123;index&#125;&#125;. &#123;&#123;name&#125;&#125;&lt;/li&gt;
+  &lt;/ul&gt;
+   //遍历过程中，遍历数组中值、索引值，并显示
+&lt;/div&gt;
+
+&lt;script&gt;
+  const app = new Vue(&#123;
+    el:&quot;#app&quot;,
+    data:&#123;
+      names:[&quot;刘富楠&quot;,&quot;科比&quot;,&quot;詹姆斯&quot;,&quot;库里&quot;]
+    &#125;
+  &#125;)
+&lt;/script&gt;
+</code></pre>
+<h2 id="3-v-for遍历对象"><a href="#3-v-for遍历对象" class="headerlink" title="3.v-for遍历对象"></a>3.v-for遍历对象</h2><p>1.遍历对象属性 用value值<br>2.遍历对象属性和属性值 用value值和key<br>3.遍历对象属性和属性值和索引 用value值、key和index</p>
+<pre><code>&lt;div id=&quot;app&quot;&gt;
+    //展示出所有信息
+    &lt;ul&gt;
+        &lt;li &gt;&#123;&#123;info.name&#125;&#125;&lt;/li&gt;
+        &lt;li &gt;&#123;&#123;info.age&#125;&#125;&lt;/li&gt;
+        &lt;li &gt;&#123;&#123;info.height&#125;&#125;&lt;/li&gt;
+    &lt;/ul&gt;
+    //方法1.一个个写出来
+    &lt;ul&gt;
+        &lt;li v-for=&quot;item in info&quot;&gt;&#123;&#123;item&#125;&#125;&lt;/li&gt;
+    &lt;/ul&gt;
+    //方法2.用v-for遍历对象的value值。(属性)
+    &lt;ul&gt;
+        &lt;li v-for=&quot;(value,key) in info&quot;&gt;&#123;&#123;value&#125;&#125;--&#123;&#123;key&#125;&#125;&lt;/li&gt;
+    &lt;/ul&gt;
+    //方法3.用v-for遍历对象的value值和key，value在前面。(属性和属性值)
+    &lt;ul&gt;
+        &lt;li v-for=&quot;(value,key,index) in info&quot;&gt;&#123;&#123;value&#125;&#125;--&#123;&#123;key&#125;&#125;--&#123;&#123;index&#125;&#125;&lt;/li&gt;
+    &lt;/ul&gt;
+    //方法4.用v-for遍历对象的value值、key和index。(属性和属性值和索引)
+&lt;/div&gt;
+
+&lt;script&gt;
+    const app = new Vue(&#123;
+        el:&quot;#app&quot;,
+        data:&#123;
+            info:&#123;
+                name:&quot;lfn&quot;,
+                age :18,
+                height:180
+            &#125;
+        &#125;
+    &#125;)
+&lt;/script&gt;    
+</code></pre>
+<h2 id="4-v-for使用中添加key"><a href="#4-v-for使用中添加key" class="headerlink" title="4.v-for使用中添加key"></a>4.v-for使用中添加key</h2><p>在遍历数组时可以在元素中绑定一个key，key=数组值</p>
+<p>绑定key的作用 ：主要是为了高效的更新虚拟DOM。(vue内部；让性能高一点)</p>
+<ul>
+<li><p>当某一层有很多相同的节点时，也就是列表节点时，我们希望插入一个新的节点，</p>
+<p> 则Diff算法默认执行起来是比较复杂的。(一个个重新替换)</p>
+</li>
+<li><p>但绑定key后，可以使用key来给每个节点做一个唯一标识</p>
+<p> Diff算法就可以正确的识别此节点，找到正确的位置区插入新的节点。</p>
+  <div id="app">
+    <ul>
+      <li v-for="item in letters" :key="item"></li>
+    </ul>
+  </div>
+
+  <script>
+    const app = new Vue({
+      el:"#app",
+      data:{
+        letters:["A","B","C","D","E"]
+      }
+    })
+  </script></li>
+</ul>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-vue遍历对象的几种方式"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/08/29/vue%E9%81%8D%E5%8E%86%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/"
+    >vue遍历对象的几种方式</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/08/29/vue%E9%81%8D%E5%8E%86%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/" class="article-date">
+  <time datetime="2023-08-29T08:33:22.000Z" itemprop="datePublished">2023-08-29</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>在vue项目开发中，我们需要对对象进行处理等问题，这里简单记录遍历对象的几种方法</p>
+<p>一、for in 这是遍历对象的基本方法，其中key代表键，值可以通过Object[key]进行获取，</p>
+<pre><code>let obj1 = &#123;
+    name: &#39;张三&#39;,
+    age: &#39;18&#39;,
+    height: &#39;180&#39;
+&#125;
+for (let key in obj2) &#123;
+    console.log(&#39;key&#39;, key)
+    console.log(&#39;value&#39;, obj1[key])
+&#125;
+        
+</code></pre>
+<p>衍生：obj2中部分key与obj1相同，这是需要将obj1与obj2中key相同的进行赋值，代码如下</p>
+<pre><code>let obj2 = &#123;
+    name: &#39;&#39;,
+    age: &#39;&#39;,
+&#125;
+let obj1 = &#123;
+    name: &#39;张三&#39;,
+    age: &#39;18&#39;,
+    height: &#39;180&#39;
+&#125;
+for (let key in obj2) &#123;
+    obj2[key] = obj1[key]
+&#125;
+console.log(obj2)
+        
+</code></pre>
+<p>二、Object.keys(),ES5新增的对象方法，该方法会返回自身属性名组成的数组</p>
+<pre><code>let obj1 = &#123;
+    name: &#39;张三&#39;,
+    age: &#39;18&#39;,
+    height: &#39;180&#39;
+&#125;
+let a = Object.keys(obj1)
+console.log(a) //输出[&#39;name&#39;, &#39;age&#39;, &#39;height&#39;]
+        
+</code></pre>
+<p>衍生：obj2中部分key与obj1相同，这是需要将obj1与obj2中key相同的进行赋值，代码如下</p>
+<pre><code>let obj2 = &#123;
+    name: &#39;&#39;,
+    age: &#39;&#39;,
+&#125;
+let obj1 = &#123;
+    name: &#39;张三&#39;,
+    age: &#39;18&#39;,
+    height: &#39;180&#39;
+&#125;
+Object.keys(obj2).forEach(item =&gt; &#123;
+    obj2[item] = obj1[item]
+&#125;)
+console.log(obj2) //输出&#123;name: &#39;张三&#39;, age: &#39;18&#39;&#125;
+        
+</code></pre>
+<p>三、Object.getOwnPropertyNames()，该方法也是ES5新增的，返回一个自身属性名的数组，包括不可枚举的属性</p>
+<pre><code>let obj1 = &#123;
+    name: &#39;张三&#39;,
+    age: &#39;18&#39;,
+    height: &#39;180&#39;
+&#125;
+let a = Object.getOwnPropertyNames(obj1)
+console.log(a) //[&#39;name&#39;, &#39;age&#39;, &#39;height&#39;]
+        
+</code></pre>
+<p>————————————————<br>版权声明：本文为CSDN博主「Maidangchen」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/A1123352950/article/details/132687113">https://blog.csdn.net/A1123352950/article/details/132687113</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-Vue使用RegExp"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/08/28/Vue%E4%BD%BF%E7%94%A8RegExp/"
+    >Vue使用RegExp</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/08/28/Vue%E4%BD%BF%E7%94%A8RegExp/" class="article-date">
+  <time datetime="2023-08-28T07:44:55.000Z" itemprop="datePublished">2023-08-28</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>vue 把字符串的所有=替换成&amp;&amp;&amp;的方法</p>
+<pre><code>//把字符串中所有=换成&amp;&amp;&amp;
+let reg=new RegExp(&#39;=&#39;,&#39;g&#39;)//g代表全部
+let newMsg=JSON.stringify(msg).replace(reg,&#39;&amp;&amp;&amp;&#39;);
+console.log(newMsg)
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-CSS样式的书写顺序及规范"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/08/27/CSS%E6%A0%B7%E5%BC%8F%E7%9A%84%E4%B9%A6%E5%86%99%E9%A1%BA%E5%BA%8F%E5%8F%8A%E8%A7%84%E8%8C%83/"
+    >CSS样式的书写顺序及规范</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/08/27/CSS%E6%A0%B7%E5%BC%8F%E7%9A%84%E4%B9%A6%E5%86%99%E9%A1%BA%E5%BA%8F%E5%8F%8A%E8%A7%84%E8%8C%83/" class="article-date">
+  <time datetime="2023-08-27T06:09:36.000Z" itemprop="datePublished">2023-08-27</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="CSS样式的书写顺序及规范"><a href="#CSS样式的书写顺序及规范" class="headerlink" title="CSS样式的书写顺序及规范"></a>CSS样式的书写顺序及规范</h1><p>CSS样式属性有很多，开发过程中书写顺序对于浏览器渲染其实至关重要。规范化编码有利于程序的后期维护，并且别人也容易理解其中意思。</p>
+<h1 id="书写顺序"><a href="#书写顺序" class="headerlink" title="书写顺序"></a>书写顺序</h1><h2 id="布局定位属性"><a href="#布局定位属性" class="headerlink" title="布局定位属性"></a>布局定位属性</h2><p>display    置元素是否被视为块或者内联元素以及用于子元素的布局，例如流式布局、网格布局或弹性布局。<br>visibility    指定一个元素是否是可见的。<br>list-style    在一个声明中设置所有的列表属性。<br>list-style-type    设置列表项标记的类型。<br>list-style-position    指示如何相对于对象的内容绘制列表项标记。<br>list-style-image    使用图像来替换列表项的标记。<br>position    指定一个元素（静态的，相对的，绝对或固定）的定位方法的类型。<br>top    定义了一个定位元素的上外边距边界与其包含块上边界之间的偏移。<br>right    定义了定位元素右外边距边界与其包含块右边界之间的偏移。<br>bottom    定义了定位元素下外边距边界与其包含块下边界之间的偏移。<br>left    定义了定位元素左外边距边界与其包含块左边界之间的偏移。<br>z-index    指定一个元素的堆叠顺序。<br>clear    指定段落的左侧或右侧不允许浮动的元素。<br>float    指定一个盒子（元素）是否应该浮动。</p>
+<h2 id="自身属性"><a href="#自身属性" class="headerlink" title="自身属性"></a>自身属性</h2><p>width    设置元素的宽度。<br>max-width    设置元素的最大宽度。<br>min-width    设置元素的最小宽度。<br>height    设置元素的高度。<br>max-height    设置元素的最大高度。<br>min-height    设置元素的最低高度。<br>overflow    指定如果内容溢出一个元素的框，会发生什么。<br>clip    定义及使用说明如果图像大于包含它的元素,会发生什么?<br>margin    一个声明中设置所有外边距属性。<br>margin-top    设置元素的上部边距。<br>margin-right    设置元素的右边距。<br>margin-bottom    设置元素的下边距。<br>margin-left    设置元素的左边距。<br>padding    在一个声明中设置所有填充属性。<br>padding-top    设置一个元素的顶部填充（空格）。<br>padding-right    设置一个元素的右填充（空格）。<br>padding-bottom    设置一个元素的底部填充（空格）。<br>padding-left    设置一个元素的左填充（空格）。<br>outline    在一个声明中设置所有的轮廓属性。<br>outline-color    指定轮廓颜色。<br>outline-style    指定outline的样式。<br>outline-width    指定轮廓的宽度。<br>border    用于指定元素边框的样式、宽度和颜色。<br>background    在一个声明中设置所有的背景属性。<br>background-color    指定要使用的背景颜色。<br>background-image    指定要使用的一个或多个背景图像。<br>background-repeat    指定如何重复背景图像。<br>background-attachment    设置背景图像是否固定或者随着页面的其余部分滚动。<br>background-position    指定背景图像的位置。</p>
+<h2 id="文本属性"><a href="#文本属性" class="headerlink" title="文本属性"></a>文本属性</h2><p>color    指定文本的颜色。<br>font    在一个声明中设置所有字体属性。<br>font-style    规定字体样式<br>font-variant    规定字体异体。<br>font-weight    规定字体粗细。<br>font-size    规定字体尺寸。<br>line-height    规定字体行高。<br>font-family    规定字体系列。<br>caption    定义被标题控件（比如按钮、下拉列表等）使用的字体。<br>icon    定义被图标标记使用的字体。<br>menu    定义被下拉列表使用的字体。<br>message-box    定义被对话框使用的字体。<br>small-caption    caption 字体的小型版本。<br>status-bar    定义被窗口状态栏使用的字体。<br>text-overflow    指定当文本溢出包含它的元素时，应该如何显示。<br>text-align    指定元素文本的水平对齐方式。<br>text-indent    规定文本块中首行文本的缩进。<br>white-space    指定元素内的空白怎样处理。<br>vertical-align    设置一个元素的垂直对齐方式。</p>
+<h2 id="其他属性"><a href="#其他属性" class="headerlink" title="其他属性"></a>其他属性</h2><p>cursor    设置鼠标指针(光标)在元素上面时的显示样式<br>animation    通过关键帧@keyframes来实现更为复杂的动画效果。<br>transition    设置元素当过渡效果，</p>
+<h1 id="CSS3浏览器私有前缀写法"><a href="#CSS3浏览器私有前缀写法" class="headerlink" title="CSS3浏览器私有前缀写法"></a>CSS3浏览器私有前缀写法</h1><p>CSS3 浏览器私有前缀在前，标准前缀在后</p>
+<pre><code>-webkit-border-radius: 10px;
+-moz-border-radius: 10px;
+-o-border-radius: 10px;
+-ms-border-radius: 10px;
+border-radius: 10px;
+</code></pre>
+<h1 id="浏览器的渲染流程"><a href="#浏览器的渲染流程" class="headerlink" title="浏览器的渲染流程"></a>浏览器的渲染流程</h1><p>1、解析html构建dom树，解析css构建css树：将html解析成树形的数据结构，将css解析成树形的数据结构布局<br>2、构建render树：DOM树和CSS树合并以后造成的render树。<br>3、布局render树：有了render树，浏览器已经知道那些网页中有哪些节点，各个节点的css定义和以及它们的从属关系，从而计算出每一个节点在屏幕中的位置。<br>4、绘制render树：按照计算出来的规则，经过显卡把内容画在屏幕上。</p>
+<p>css样式解析到显示至浏览器屏幕上就发生在②③④步骤，可见浏览器并非一获取到css样式就立马开始解析而是根据css样式的书写顺序将之按照dom树的结构分布render样式，完成第②步，而后开始遍历每一个树结点的css样式进行解析，此时的css样式的遍历顺序彻底是按照以前的书写顺序。在解析过程当中，一旦浏览器发现某个元素的定位变化影响布局，则须要倒回去从新渲染.</p>
+<ul>
+<li><p>例如<br>按照这样的书写书序：</p>
+<p> width: 100px;<br> height: 100px;<br> background-color: red;<br> position: absolute;</p>
+</li>
+</ul>
+<p>当浏览器解析到position的时候忽然发现该元素是绝对定位元素须要脱离文档流，而以前倒是按照普通元素进行解析的，因此不得不从新渲染，解除该元素在文档中所占位置，然而因为该元素的占位发生变化，其余元素也可能会受到它回流的影响而从新排位。最终致使③步骤花费的时间过久而影响到④步骤的显示，影响了用户体验。</p>
+<p>因此规范的的css书写顺序对于文档渲染来讲必定是事半功倍的！</p>
+<h1 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h1><p>回流必将引起重绘, 重绘不一定引起回流。</p>
+<ul>
+<li>reflow（回流）:<br>会引起元素位置变化的就会reflow(回流),窗口大小改变、字体大小改变、以及元素位置改变，都会引起周围的元素改变他们以前的位置。</li>
+</ul>
+<p>*repaint（重绘）：<br>改变某个元素的背景色、文字颜色、边框颜色等等不影响它周围或内部布局的属性时，屏幕的一部分要重画，可是元素的几何尺寸没有变。</p>
+<h1 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h1><p>a.render树的结构不等同于DOM树的结构，一些设置display:none的节点不会被放在render树中，但会在dom树中。</p>
+<p>b.有些状况，好比修改了元素的样式，浏览器并不会理科reflow或repaint，而是把这些操做积攒一批，而后作一次reflow，这也叫作异步reflow.但在有些状况下，好比改变窗口，改变页面默认的字体等，对于这些状况，浏览器会立刻进行reflow.</p>
+<p>c.为了更好的用户体验，渲染引擎将会尽量早的将内容呈现到屏幕上，并不会等到全部的html都解析完成以后再去构建和布局render树。它是解析完一部份内容就显示一部份内容，同时，可能还在经过网络下载其他内容。</p>
+<h1 id="布局流程"><a href="#布局流程" class="headerlink" title="布局流程"></a>布局流程</h1><p>必须确定页面的版心(可视区),我们测量可知<br>分析页面中的行模块,以及每个行模块中的列模块,其实页面布局就是一行行罗列而成<br>制作html结构,我们还是遵循,现有结构后有样式的原则,结构永远最重要<br>然后开始运用盒子模型的原理,通过div+css布局来控制网页的各个模块</p>
+<h1 id="顺序书写的优点"><a href="#顺序书写的优点" class="headerlink" title="顺序书写的优点"></a>顺序书写的优点</h1><p>正确的样式顺序有利于查看维护。<br>减小浏览器reflow（回流）与repaint（重绘），提高浏览器渲染dom的性能<br>利于网页加载代码，加快代码加载顺序。<br>正确的样式顺序也是css样式优化的一种方式。</p>
+<h1 id="命名规范"><a href="#命名规范" class="headerlink" title="命名规范"></a>命名规范</h1><h2 id="css文件命名规范"><a href="#css文件命名规范" class="headerlink" title="css文件命名规范"></a>css文件命名规范</h2><p>文件名    说明<br>reset.css    重置样式，重置元素默认样式<br>global.css    全局样式，全站公用，定义页面基础样式<br>themes.css    主题样式，用于实现换肤功能<br>module.css    模块样式，用于模块的样式<br>print.css    打印样式，用于打印的样式<br>master.css    主要样式<br>themes.css    主体样式<br>font.css    文字样式<br>layout.css    布局样式<br>columns.css    专栏<br>forms.css    表单<br>mend.css    补丁样式</p>
+<h2 id="id和class命名"><a href="#id和class命名" class="headerlink" title="id和class命名"></a>id和class命名</h2><p>骆驼峰命名法，例如topMain、 subLeftMenu。<br>中划线命名法，例如top-main、sub-left-menu。<br>下划线命名法，例如top_ main、sub_ Jeft_ menu。</p>
+<h2 id="id和class命名规范"><a href="#id和class命名规范" class="headerlink" title="id和class命名规范"></a>id和class命名规范</h2><p>网页部分    命名<br>最外层    wrapper<br>头部    header<br>容器    container<br>内容    content<br>导航条    nav<br>主导航    mainnav<br>子导航    subnav<br>顶导航    topnav<br>边导航、侧栏    sidebar<br>左导航    leftsidebar<br>右导航    rightsidebar<br>主体    main<br>左侧    main-left<br>右侧    main-right<br>底部    footer<br>左    left<br>中    right<br>右    center<br>栏目    column<br>菜单    menu<br>子菜单    submenu<br>登录条    loginbar<br>登录    login<br>注册    register<br>标志    logo<br>功能区    shop<br>按钮    btn<br>当前的    current<br>图标    icon<br>注释    note<br>搜索    search<br>滚动    scroll<br>标签    tags<br>标籤页    tab<br>状态    status<br>提示信息    msg<br>小技巧    tips<br>栏目标题    title<br>摘要    summary<br>下载    download<br>链接    link<br>友情链接    friendlink<br>加入我们    joinus<br>版权    copyright<br>服务    service<br>新闻    news<br>文章列表    list<br>广告    banner<br>热点    hot<br>加入    joinus<br>指南    guide<br>投票    vote<br>合作伙伴    partner</p>
+<h2 id="规范命名的优点"><a href="#规范命名的优点" class="headerlink" title="规范命名的优点"></a>规范命名的优点</h2><p>把样式文件划分为多个文件，按照功能模块划分CSS文件，是为了方便在开发阶段进行开发和修改。<br>好的元素id和class的命名，方便阅读、方便维护。</p>
+<h2 id="CSS书写规范"><a href="#CSS书写规范" class="headerlink" title="CSS书写规范"></a>CSS书写规范</h2><p>*使用CSS缩写属性</p>
+<p>CSS有些属性是可以缩写的，比如padding,margin,font等等，这样精简代码同时又能提高用户的阅读体验。</p>
+<p>*不要随意使用id</p>
+<p>id在JS是唯一的，不能多次使用，而使用class类选择器却可以重复使用，另外id的优先级优先与class，所以id应该按需使用，而不能滥用。</p>
+<p>*为选择器添加状态前缀</p>
+<p>有时候可以给选择器添加一个表示状态的前缀，让语义更明了。<br>为了避免class命名的重复，命名时- -般取父元素的class名作为前缀，例如:</p>
+<pre><code>&lt;div class=&quot;column&quot;&gt;
+  &lt;h3 class=&quot;column-title&quot;&gt;&lt;/h3&gt;
+  &lt;div class=&quot;column-content&quot;&gt;&lt;/div&gt;.
+&lt;/div&gt;
+</code></pre>
+<h2 id="id和class命名统一规范"><a href="#id和class命名统一规范" class="headerlink" title="id和class命名统一规范"></a>id和class命名统一规范</h2><p>id和class命名一律小写，尽量用英文，尽量不缩写，除非一看就明白的单词。<br>尽量不要出现一个用中划线命名，而另外一个用下划线命名的情况。虽然下划线和中划线都可以，但是建议使用中划线，可参见各大型网站。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>为了长远发展考虑，建议大家应该重视这些编码习惯。当然，本文所述内容并不完全是绝对正确的指导，但学会了这些内容，你就学会了最基本的CSS编码规范。可参考本文内容，结合您自己的部分编码习惯，编写适合您的优秀、规范代码。<br>————————————————<br>版权声明：本文为CSDN博主「song-yl」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_42367460/article/details/131042969">https://blog.csdn.net/weixin_42367460/article/details/131042969</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/css/" rel="tag">css</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-一份 CSS 书写顺序、命名规则的指南"
   class="article article-type-post"
   itemscope
@@ -408,705 +1406,13 @@
 </article>
 
     
-    <article
-  id="post-flask实用入门案例08"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/08/25/flask%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B08/"
-    >flask实用入门案例08--json.dumps()和jsonify()</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/08/25/flask%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B08/" class="article-date">
-  <time datetime="2023-08-25T13:01:49.000Z" itemprop="datePublished">2023-08-25</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>json.dumps()和jsonify()的区别</p>
-<h1 id="一、来源不同"><a href="#一、来源不同" class="headerlink" title="一、来源不同"></a>一、来源不同</h1><p>dumps和loads方法，来自json模块，而json模块是python中的，可以直接导入：</p>
-<pre><code>import json
-</code></pre>
-<p>而jsonify是flask封装的扩展包</p>
-<p>from flask import jsonify</p>
-<h1 id="二、作用"><a href="#二、作用" class="headerlink" title="二、作用"></a>二、作用</h1><p>1、dumps()和loads()</p>
-<p>json.dumps()：把字典转成json字符串，</p>
-<p>json.loads()：把json字符串转成字典</p>
-<p>他们操作的都是变量（变量是存储在内存中的）。</p>
-<p>2、jsonify</p>
-<p>字典转成json字符串</p>
-<h1 id="三、效果不同"><a href="#三、效果不同" class="headerlink" title="三、效果不同"></a>三、效果不同</h1><p>1、json.dumps()</p>
-<p>@app.route(‘/‘)<br>def index():<br>    data = {<br>        ‘name’:’lili’,<br>        ‘age’:’18’<br>    }<br>    # return data # 不能返回字典<br>    return json.dumps(data)</p>
-<p>查看响应信息（Content-Type：响应内容的类型）：</p>
-<p>json.dumps() 返回的是： Content-Type:text/html </p>
-<p>2、jsonify</p>
-<pre><code>@app.route(&#39;/&#39;)
-def index():
-    data = &#123;
-        &#39;name&#39;:&#39;lili&#39;,
-        &#39;age&#39;:&#39;18&#39;
-    &#125;
-    # jsonify的作用，就是把字典转成json字符串。
-    return jsonify(data)
-</code></pre>
-<p>查看响应信息：</p>
-<p>jsonify() 返回的是：Content-Type: application/json</p>
-<p>都是返回的json字符串（内容本质没有发生变化，只是外层包装不同），而json.dumps()就显得有些言不符实了。</p>
-<h1 id="四、补充"><a href="#四、补充" class="headerlink" title="四、补充"></a>四、补充</h1><p>json：基于键值对的字符串，本质是字符串，但不是数据类型。</p>
-<p>另外，python的json模块还有dump()和load()两个方法，他们作用相同，但又与dumps和loads有些区别：</p>
-<p>json.dump()和json.load()，操作的是文件对象(具有read和write方法的对象，存在硬盘中)</p>
-<h1 id="附：完整代码供测试"><a href="#附：完整代码供测试" class="headerlink" title="附：完整代码供测试"></a>附：完整代码供测试</h1><pre><code>from flask import Flask,jsonify
-import json
- 
- 
-app = Flask(__name__)
- 
-@app.route(&#39;/&#39;)
-def index():
-    data = &#123;
-        &#39;name&#39;:&#39;lili&#39;,
-        &#39;age&#39;:&#39;18&#39;
-    &#125;
-    # return data # 不能返回字典
-    
-    # return json.dumps(data)
-    return jsonify(data)
- 
- 
-if __name__ == &#39;__main__&#39;:
-    app.run(debug=True)
-</code></pre>
-<p>————————————————<br>版权声明：本文为CSDN博主「高岩_deal」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/mydistance/article/details/83960333">https://blog.csdn.net/mydistance/article/details/83960333</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flask/" rel="tag">flask</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-flask实用入门案例07"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/08/24/flask%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B07/"
-    >flask实用入门案例07--jsonify</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/08/24/flask%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B07/" class="article-date">
-  <time datetime="2023-08-24T05:32:49.000Z" itemprop="datePublished">2023-08-24</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>jsonify：Python中处理JSON数据的工具</p>
-<h1 id="一、jsonify函数"><a href="#一、jsonify函数" class="headerlink" title="一、jsonify函数"></a>一、jsonify函数</h1><p>jsonify函数是Flask框架中的一个函数，用于返回一个包含JSON数据的响应体(Response Body)，其主要作用是将Python任意的数据类型转换为JSON格式的数据并返回给前端。jsonify函数将数据序列化为JSON格式的字符串，并设置响应的Content-Type为application/json。</p>
-<pre><code>from flask import jsonify
-
-@app.route(&#39;/json/&#39;)
-def get_json():
-    data = &#123;&#39;name&#39;: &#39;小明&#39;, &#39;age&#39;: 18, &#39;sex&#39;: &#39;male&#39;&#125;
-    return jsonify(data)
-</code></pre>
-<p>在实际开发中，我们会将数据从数据库中查询出来，然后通过jsonify函数将数据转换为JSON格式的字符串，并返回给前端使用。</p>
-<h1 id="二、jsonify-flask"><a href="#二、jsonify-flask" class="headerlink" title="二、jsonify flask"></a>二、jsonify flask</h1><p>jsonify函数是Flask框架中的一个函数，用于返回一个包含JSON数据的响应体(Response Body)。一般情况下，我们会将数据从数据库中查询出来，然后通过jsonify函数将数据转换为JSON格式的字符串，并返回给前端使用。</p>
-<p>举个例子：假设我们要查询数据库中用户信息，并返回JSON格式数据，那么代码如下：</p>
-<pre><code>from flask import Flask, jsonify
-
-app = Flask(__name__)
-
-@app.route(&#39;/user/&#39;)
-def get_user():
-    user = &#123;&#39;name&#39;: &#39;小明&#39;, &#39;age&#39;: 18, &#39;sex&#39;: &#39;male&#39;&#125;
-    return jsonify(user)
-
-if __name__ == &#39;__main__&#39;:
-    app.run()
-</code></pre>
-<h1 id="三、jsonify怎么读"><a href="#三、jsonify怎么读" class="headerlink" title="三、jsonify怎么读"></a>三、jsonify怎么读</h1><p>jsonify函数的读音为[juh-son-if-ahy]，其中juh-son代表JSON，if代表format，ahy代表-y。</p>
-<h1 id="四、jsonify怎么用"><a href="#四、jsonify怎么用" class="headerlink" title="四、jsonify怎么用"></a>四、jsonify怎么用</h1><p>jsonify函数非常容易使用，只需要将数据作为参数传递给该函数，函数会自动将数据转换为JSON格式的字符串，并返回给前端。</p>
-<p>使用示例：</p>
-<pre><code>from flask import jsonify
-
-data = &#123;&#39;name&#39;: &#39;小明&#39;, &#39;age&#39;: 18, &#39;sex&#39;: &#39;male&#39;&#125;
-json_str = jsonify(data)
-
-print(json_str)
-</code></pre>
-<h1 id="五、jsonify是什么"><a href="#五、jsonify是什么" class="headerlink" title="五、jsonify是什么"></a>五、jsonify是什么</h1><p>jsonify是Flask框架中的一个函数，用于返回一个包含JSON数据的响应体(Response Body)，其主要作用是将Python任意的数据类型转换为JSON格式的数据并返回给前端。jsonify函数将数据序列化为JSON格式的字符串，并设置响应的Content-Type为application/json。</p>
-<h1 id="六、jsonify多转义"><a href="#六、jsonify多转义" class="headerlink" title="六、jsonify多转义"></a>六、jsonify多转义</h1><p>由于JSON中有些特殊字符需要进行转义处理，如双引号、反斜杠等。当我们使用json.dumps()将Python数据类型转换成JSON格式字符串时，JSON字符串中的特殊字符已经被转义，但使用jsonify()函数时，需要手动进行转义。</p>
-<p>举个例子：</p>
-<pre><code>from flask import jsonify
-
-data = &#123;&#39;name&#39;: &#39;小明&#39;, &#39;age&#39;: 18, &#39;sex&#39;: &#39;male&#39;, &#39;info&#39;: &#39;I\&#39;m a good student.&quot;&#39;&#125;
-json_str = jsonify(data)
-print(json_str)
-</code></pre>
-<h1 id="七、json格式"><a href="#七、json格式" class="headerlink" title="七、json格式"></a>七、json格式</h1><p>JSON（JavaScript Object Notation，JavaScript 对象表示法）是一种轻量级的数据交换格式。JSON格式的数据由两部分组成：键和值，键值之间使用冒号：分隔。</p>
-<p>举个例子：</p>
-<pre><code>&#123;
-    &quot;name&quot;: &quot;小明&quot;,
-    &quot;age&quot;: 18,
-    &quot;sex&quot;: &quot;male&quot;
-&#125;
-</code></pre>
-<h1 id="八、json解析"><a href="#八、json解析" class="headerlink" title="八、json解析"></a>八、json解析</h1><p>JSON解析是将JSON格式的字符串转换为Python数据类型的过程。</p>
-<p>举个例子：</p>
-<pre><code>import json
-
-json_str = &#39;&#123;&quot;name&quot;: &quot;小明&quot;, &quot;age&quot;: 18, &quot;sex&quot;: &quot;male&quot;&#125;&#39;
-data = json.loads(json_str)
-print(data)
-</code></pre>
-<p>上面的代码将JSON格式的字符串解析为Python数据类型，输出结果为：</p>
-<pre><code>&#123;&#39;name&#39;: &#39;小明&#39;, &#39;age&#39;: 18, &#39;sex&#39;: &#39;male&#39;&#125;
-</code></pre>
-<h1 id="九、json数据格式"><a href="#九、json数据格式" class="headerlink" title="九、json数据格式"></a>九、json数据格式</h1><p>JSON数据格式是一种轻量级的数据交换格式，由键和值以及逗号分隔组成。JSON数据格式支持包括数字、字符串、布尔值、数组、对象等多种数据类型。</p>
-<p>举个例子：</p>
-<pre><code>&#123;
-    &quot;name&quot;: &quot;小明&quot;,
-    &quot;age&quot;: 18,
-    &quot;sex&quot;: &quot;male&quot;,
-    &quot;hobbies&quot;: [&quot;basketball&quot;, &quot;football&quot;],
-    &quot;family&quot;: &#123;
-        &quot;father&quot;: &quot;张三&quot;,
-        &quot;mother&quot;: &quot;李四&quot;
-    &#125;
-&#125;
-</code></pre>
-<h1 id="十、json文件是干什么的"><a href="#十、json文件是干什么的" class="headerlink" title="十、json文件是干什么的"></a>十、json文件是干什么的</h1><p>JSON文件用于存储和交换数据，它是一种轻量级的数据交换格式。与其他数据存储格式相比，JSON文件更加简洁、易读、易解析，并且具有跨语言、跨平台的特性，因此被广泛应用于Web开发、移动端开发等领域。</p>
-<p>举个例子：假设我们要存储用户信息，可以将用户信息以JSON格式保存到文件中，代码如下：</p>
-<pre><code>import json
-
-data = &#123;&#39;name&#39;: &#39;小明&#39;, &#39;age&#39;: 18, &#39;sex&#39;: &#39;male&#39;&#125;
-with open(&#39;user.json&#39;, &#39;w&#39;, encoding=&#39;utf-8&#39;) as f:
-    json.dump(data, f)
-</code></pre>
-<p>上面的代码将用户信息以JSON格式保存到文件中。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flask/" rel="tag">flask</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-el-form表单重置resetForm()不生效问题"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/08/23/el-form%E8%A1%A8%E5%8D%95%E9%87%8D%E7%BD%AEresetForm()%E4%B8%8D%E7%94%9F%E6%95%88%E9%97%AE%E9%A2%98/"
-    >el-form表单重置resetForm()不生效问题</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/08/23/el-form%E8%A1%A8%E5%8D%95%E9%87%8D%E7%BD%AEresetForm()%E4%B8%8D%E7%94%9F%E6%95%88%E9%97%AE%E9%A2%98/" class="article-date">
-  <time datetime="2023-08-23T13:09:58.000Z" itemprop="datePublished">2023-08-23</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>字段不清空 或者完全没效果<br>检查：</p>
-<p>1、el-form 是否绑定model,带有ref,并且绑定的是同一数组。</p>
-<pre><code>&lt;el-form :rules=&quot;rules&quot; ref=&quot;form&quot; :model=&quot;form&quot;&gt;
-</code></pre>
-<p>2、el-form-item绑定prop,且名称要与v-model绑定的参数一致。</p>
-<el-form-item label="商品状态" prop="enabled">
-    <el-radio-group v-model="form.enabled">
-        <el-radio label="true">上架</el-radio>
-        <el-radio label="false">下架</el-radio>
-    </el-radio-group>
-</el-form-item>
-
-<pre><code>&lt;el-form-item label=&quot;商品名称&quot; prop=&quot;name&quot;&gt;
-    &lt;el-input v-model=&quot;form.name&quot; placeholder=&quot;请输入商品名称&quot;&gt;&lt;/el-input&gt;
-&lt;/el-form-item&gt;
-</code></pre>
-<p>然后使用校验</p>
-<pre><code>this.$refs[form].resetFields();
-</code></pre>
-<p>3、如果是在el-dialog里，检查el-dialog的关闭弹窗事件与取消事件是否相同</p>
-<p>4、还不生效可以使用$nextTick</p>
-<pre><code>this.$nextTick(() =&gt; &#123;
-    this.$refs[form].resetFields();
-&#125;);
- 
-</code></pre>
-<p>————————————————<br>版权声明：本文为CSDN博主「qfCSDN」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qfCSDN/article/details/120505846">https://blog.csdn.net/qfCSDN/article/details/120505846</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Vue中Vue.prototype使用详解"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/08/22/Vue%E4%B8%ADVue.prototype%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/"
-    >Vue中Vue.prototype使用详解</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/08/22/Vue%E4%B8%ADVue.prototype%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/" class="article-date">
-  <time datetime="2023-08-22T12:25:10.000Z" itemprop="datePublished">2023-08-22</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>我们可能会在很多组件里用到数据/实用工具，但是不想污染全局作用域。这种情况下，可以通过在原型上定义它们使其在每个 Vue 的实例中可用。</p>
-<h1 id="1-基本示例"><a href="#1-基本示例" class="headerlink" title="1. 基本示例"></a>1. 基本示例</h1><p>在main.js中添加一个变量到 Vue.prototype</p>
-<pre><code>Vue.prototype.$appName = &#39;My App&#39;
-</code></pre>
-<p>这样 $appName 就在所有的 Vue 实例中可用了，甚至在实例被创建之前就可以</p>
-<pre><code>new Vue(&#123;
-  beforeCreate: function () &#123;
-    console.log(this.$appName)
-  &#125;
-&#125;)
-</code></pre>
-<p>控制台会打印出 My App，就这么简单！</p>
-<h1 id="2-为实例prototype设置作用域"><a href="#2-为实例prototype设置作用域" class="headerlink" title="2. 为实例prototype设置作用域"></a>2. 为实例prototype设置作用域</h1><p>为什么 appName 要以$开头？这很重要吗？这里没有什么魔法。<br>$是在 Vue 所有实例中都可用的 property 的一个简单约定。这样做会避免和已被定义的数据、方法、计算属性产生冲突。<br>如果我们设置：</p>
-<pre><code>Vue.prototype.appName = &#39;My App&#39;
-</code></pre>
-<p>那么如下的代码输出什么：</p>
-<pre><code>new Vue(&#123;
-  data: &#123;
-    // 啊哦，`appName` 也是一个我们定义的实例 property 名！
-    appName: &#39;The name of some other app&#39;
-  &#125;,
-  beforeCreate: function () &#123;
-    console.log(this.appName)
-  &#125;,
-  created: function () &#123;
-    console.log(this.appName)
-  &#125;
-&#125;)
-</code></pre>
-<p>日志中会先出现 “My App”，然后出现 “The name of some other app”，因为 this.appName 在实例被创建之后被 data 覆写了。我们通过 为实例property设置作用域来避免这种事情发生。你还可以根据你的喜好使用自己的约定，诸如为实例 property 设置作用域来避免这种事情发生。 </p>
-<p>你还可以根据你的喜好使用自己的约定，诸如为实例property设置作用域来避免这种事情发生。你还可以根据你的喜好使用自己的约定，诸如_appName 或 ΩappName，来避免和插件或未来的插件相冲突。</p>
-<h1 id="3-注册和使用全局变量"><a href="#3-注册和使用全局变量" class="headerlink" title="3. 注册和使用全局变量"></a>3. 注册和使用全局变量</h1><p>每个组件都是一个vue实例，Vue.prototype加一个变量，只是给每个组件加了一个属性，这个属性的值并不具有全局性。<br>比如以下例子：</p>
-<pre><code>// main.js
-import Vue from &#39;vue&#39;
-import App from &#39;./App&#39;
-import router from &#39;./router&#39;
-import store from &#39;./store&#39;
- 
-Vue.config.productionTip = false
-Vue.prototype.$appName = &#39;main&#39;
- 
-new Vue(&#123;
-    el: &#39;#app&#39;,
-    store,
-    router,
-    components: &#123; App &#125;,
-    template: &#39;&lt;App/&gt;&#39;,
-&#125;)
- 
-// 给所有组件注册了一个属性 $appName，赋予初始值 &#39;main&#39; ，所有组件都可以用 this.$appName 访问此变量;
-// 如果组件中没有赋值，初始值都是&#39;main&#39;
-
-// home.vue
-&lt;template&gt;
-  &lt;div&gt;
-    &lt;div @click=&quot;changeName&quot;&gt;change name&lt;/div&gt;
-    &lt;div @click=&quot;gotoTest2&quot;&gt;goto test2&lt;/div&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-export default &#123;
-  methods:&#123;
-    changeName()&#123;
-      this.$appName = &quot;test1&quot;
-    &#125;,
-    gotoTest2()&#123;
-      this.$router.push(&#39;/about&#39;)
-    &#125; 
-  &#125;
-&#125;
-&lt;/script&gt;
-
-// about.vue
-&lt;template&gt;
-  &lt;div&gt;
-    &lt;div&gt;&#123;&#123;this.$appName&#125;&#125; in test2&lt;/div&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-</code></pre>
-<p>点击 home 中的 change name 再跳转about，about里面还是显示 main in test2<br>如果要实现全局变量的功能，需要把属性变为引用类型</p>
-<pre><code>Vue.prototype.$appName = &#123; name: &#39;main&#39; &#125;
-</code></pre>
-<p>后面使用 this.$appName.name 改变和引用相应的值<br>这进入 about 后显示 test1 in test2</p>
-<h1 id="4-原型方法的上下文"><a href="#4-原型方法的上下文" class="headerlink" title="4. 原型方法的上下文"></a>4. 原型方法的上下文</h1><p>在 JavaScript 中一个原型的方法会获得该实例的上下文,也就是说可以使用 this 访问：数据、计算属性、方法或其它任何定义在实例上的东西。<br>让我们将其用在一个名为 $reverseText 的方法上：</p>
-<pre><code>// main.js
-Vue.prototype.$reverseText = function (propertyName) &#123;
-  this[propertyName] = this[propertyName]
-    .split(&#39;&#39;)
-    .reverse()
-    .join(&#39;&#39;)
-&#125;
-
-// 相应组件
-&lt;script&gt;
-export default &#123;
-  data() &#123;
-    return&#123;
-      message: &#39;Hello&#39;
-    &#125;
-  &#125;,
-  created() &#123;
-    console.log(this.message) // =&gt; &quot;Hello&quot;
-    this.$reverseText(&#39;message&#39;)
-    console.log(this.message) // =&gt; &quot;olleH&quot;
-  &#125;
-&#125;
-&lt;/script&gt;
-</code></pre>
-<h1 id="5-应用示例"><a href="#5-应用示例" class="headerlink" title="5. 应用示例"></a>5. 应用示例</h1><h2 id="5-1-引入-axios"><a href="#5-1-引入-axios" class="headerlink" title="5.1 引入 axios"></a>5.1 引入 axios</h2><p>安装</p>
-<pre><code>npm install vue-axios --save
-npm install qs.js --save//它的作用是能把json格式的直接转成data所需的格式
-</code></pre>
-<p>代码</p>
-<pre><code>// mian.js
-import Vue from &#39;vue&#39;
-import axios from &#39;axios&#39;
-import qs from &#39;qs&#39;
- 
-Vue.prototype.$axios = axios    //全局注册，使用方法为:this.$axios
-Vue.prototype.qs = qs           //全局注册，使用方法为:this.qs
- 
-// 相应组件
-&lt;script&gt;
-  export default&#123;
-    data()&#123;
-      return&#123;
-        userId:666,
-        token:&#39;&#39;,
-      &#125;
-    &#125;,
-    created()&#123;
-      this.$axios(&#123;
-        method:&#39;post&#39;,
-        url:&#39;api&#39;,
-        data:this.qs.stringify(&#123;    //这里是发送给后台的数据
-          userId:this.userId,
-          token:this.token,
-        &#125;)
-      &#125;).then((response) =&gt;&#123;          //这里使用了ES6的语法
-        console.log(response)       //请求成功返回的数据
-      &#125;).catch((error) =&gt;&#123;
-        console.log(error)       //请求失败返回的数据
-      &#125;)
-    &#125;
-  &#125;
-&lt;/script&gt;
-</code></pre>
-<h1 id="6、Vue-prototype、Vue-component和Vue-use区别"><a href="#6、Vue-prototype、Vue-component和Vue-use区别" class="headerlink" title="6、Vue.prototype、Vue.component和Vue.use区别"></a>6、Vue.prototype、Vue.component和Vue.use区别</h1><h2 id="1、Vue-prototype"><a href="#1、Vue-prototype" class="headerlink" title="1、Vue.prototype"></a>1、Vue.prototype</h2><p>在多个地方都需要使用但不想污染全局作用域的情况下，这样定义，在每个 Vue 实例中都可用。<br>参考：<a target="_blank" rel="noopener" href="https://cn.vuejs.org/v2/cookbook/adding-instance-properties.html">https://cn.vuejs.org/v2/cookbook/adding-instance-properties.html</a><br>$ 表示这是一个在 Vue 所有实例中都可用的属性<br>常用于方法、变量等</p>
-<pre><code>import echarts from &#39;echarts&#39;
-Vue.prototype.$echarts = echarts 
-</code></pre>
-<h2 id="2、vue-component"><a href="#2、vue-component" class="headerlink" title="2、vue.component"></a>2、vue.component</h2><p>全局注册组件，<br>第一个参数是调用组件时写的组件名<br>第二个参数是引入组件时写的名称<br>可用于注册自定义组件</p>
-<pre><code>import myLoading from &#39;base/loading&#39;
-Vue.component(&#39;myLoading&#39;,myLoading);
-</code></pre>
-<h2 id="3、Vue-use"><a href="#3、Vue-use" class="headerlink" title="3、Vue.use"></a>3、Vue.use</h2><p>同样是全局注册，和component的区别是接收的参数必须有install方法<br>常用于注册第三方插件</p>
-<pre><code>import ElementUI from &#39;element-ui&#39;;
-Vue.use(ElementUI);
-</code></pre>
-<p>到此这篇关于Vue中 Vue.prototype使用详解的文章就介绍到这了</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Flex 布局教程"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/08/21/Flex%20%E5%B8%83%E5%B1%80%E6%95%99%E7%A8%8B/"
-    >Flex 布局教程</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/08/21/Flex%20%E5%B8%83%E5%B1%80%E6%95%99%E7%A8%8B/" class="article-date">
-  <time datetime="2023-08-21T11:47:36.000Z" itemprop="datePublished">2023-08-21</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="什么是弹性布局？"><a href="#什么是弹性布局？" class="headerlink" title="什么是弹性布局？"></a>什么是弹性布局？</h1><p>弹性布局（Flex布局）是一种现代的CSS布局方式，通过使用display: flex属性来创建一个弹性容器，并在其中使用灵活的盒子模型来进行元素的排列和定位。</p>
-<h1 id="弹性布局的特点？"><a href="#弹性布局的特点？" class="headerlink" title="弹性布局的特点？"></a>弹性布局的特点？</h1><p>弹性布局具有以下特点：</p>
-<p>*主轴与交叉轴：<br>弹性容器具有主轴（main axis）和交叉轴（cross axis）。默认情况下，主轴是水平方向，交叉轴是垂直方向。</p>
-<p>*弹性容器：<br>通过将父元素的display属性设置为flex或inline-flex来创建弹性容器。</p>
-<p>*子元素的弹性项目：<br>弹性容器中的每个子元素都成为弹性项目。子元素可以指定各自在主轴和交叉轴上的大小、顺序以及对齐方式等。</p>
-<p>*主轴对齐：<br>弹性项目可以在主轴上按照一定比例分配空间，也可以使用justify-content属性定义主轴的对齐方式。</p>
-<p>*交叉轴对齐：<br>弹性项目可以在交叉轴上进行对齐，包括顶部对齐、底部对齐、居中对齐等，使用align-items属性定义交叉轴对齐方式。</p>
-<p>*换行与自动调整：<br>可控制弹性项目是否换行，并且具备自动调整元素大小的能力。<br>弹性布局简化了网页布局的开发过程，提供了更灵活、响应式的布局方式。它适用于各种屏幕尺寸和设备类型，并能够快速适应不同的布局需求。</p>
-<h1 id="容器的属性"><a href="#容器的属性" class="headerlink" title="容器的属性"></a>容器的属性</h1><h2 id="justify-content"><a href="#justify-content" class="headerlink" title="justify-content"></a>justify-content</h2><p>justify-content属性定义了项目在主轴上的对齐方式。</p>
-<pre><code>.box &#123;
-  justify-content: flex-start | flex-end | center | space-between | space-around;
-&#125;
-</code></pre>
-<p>它可能取5个值，具体对齐方式与轴的方向有关。下面假设主轴为从左到右。</p>
-<pre><code>flex-start（默认值）：左对齐
-flex-end：右对齐
-center： 居中
-space-between：两端对齐，项目之间的间隔都相等。
-space-around：每个项目两侧的间隔相等。所以，项目之间的间隔比项目与边框的间隔大一倍。
-</code></pre>
-<h2 id="align-items"><a href="#align-items" class="headerlink" title="align-items"></a>align-items</h2><p>align-items属性定义项目在交叉轴上如何对齐。</p>
-<pre><code>.box &#123;
-  align-items: flex-start | flex-end | center | baseline | stretch;
-&#125;
-</code></pre>
-<p>它可能取5个值。具体的对齐方式与交叉轴的方向有关，下面假设交叉轴从上到下。</p>
-<pre><code>flex-start：交叉轴的起点对齐。
-flex-end：交叉轴的终点对齐。
-center：交叉轴的中点对齐。
-baseline: 项目的第一行文字的基线对齐。
-stretch（默认值）：如果项目未设置高度或设为auto，将占满整个容器的高度。
-</code></pre>
-<h2 id="flex-direction"><a href="#flex-direction" class="headerlink" title="flex-direction"></a>flex-direction</h2><p>决定主轴的方向，水平或者垂直</p>
-<pre><code>.box &#123;
-  flex-direction: row | row-reverse | column | column-reverse;
-&#125;
-
-row（默认值）：主轴为水平方向，起点在左端。
-row-reverse：主轴为水平方向，起点在右端。
-column：主轴为垂直方向，起点在上沿。
-column-reverse：主轴为垂直方向，起点在下沿。
-</code></pre>
-<h2 id="flex-wrap"><a href="#flex-wrap" class="headerlink" title="flex-wrap"></a>flex-wrap</h2><p>换行不换行以及换行的方向</p>
-<pre><code>.box&#123;
-  flex-wrap: nowrap | wrap | wrap-reverse;
-&#125;
-
-nowrap（默认）：不换行
-wrap：换行，第一行在上方。
-wrap-reverse：换行，第一行在下方。
-</code></pre>
-<h2 id="flex-flow"><a href="#flex-flow" class="headerlink" title="flex-flow"></a>flex-flow</h2><p>以上两种的简写方式</p>
-<pre><code>.box &#123;
-  flex-flow: &lt;flex-direction&gt; || &lt;flex-wrap&gt;;
-&#125;
-</code></pre>
-<h2 id="align-content"><a href="#align-content" class="headerlink" title="align-content"></a>align-content</h2><p>align-content属性定义了多根轴线的对齐方式。如果项目只有一根轴线，该属性不起作用。</p>
-<pre><code>.box &#123;
-  align-content: flex-start | flex-end | center | space-between | space-around | stretch;
-&#125;
-
-flex-start：与交叉轴的起点对齐。
-flex-end：与交叉轴的终点对齐。
-center：与交叉轴的中点对齐。
-space-between：与交叉轴两端对齐，轴线之间的间隔平均分布。
-space-around：每根轴线两侧的间隔都相等。所以，轴线之间的间隔比轴线与边框的间隔大一倍。
-stretch（默认值）：轴线占满整个交叉轴。
-</code></pre>
-<h2 id="order属性"><a href="#order属性" class="headerlink" title="order属性"></a>order属性</h2><p>order属性定义项目的排列顺序。数值越小，排列越靠前，默认为0。</p>
-<pre><code>.item &#123;
-  order: &lt;integer&gt;;
-&#125;
-</code></pre>
-<h2 id="flex-grow属性"><a href="#flex-grow属性" class="headerlink" title="flex-grow属性"></a>flex-grow属性</h2><p>flex-grow属性定义项目的放大比例，默认为0，即如果存在剩余空间，也不放大。</p>
-<pre><code>.item &#123;
-  flex-grow: &lt;number&gt;; /* default 0 */
-&#125;
-</code></pre>
-<p>如果所有项目的flex-grow属性都为1，则它们将等分剩余空间（如果有的话）。如果一个项目的flex-grow属性为2，其他项目都为1，则前者占据的剩余空间将比其他项多一倍。</p>
-<h2 id="flex-shrink属性"><a href="#flex-shrink属性" class="headerlink" title="flex-shrink属性"></a>flex-shrink属性</h2><p>flex-shrink属性定义了项目的缩小比例，默认为1，即如果空间不足，该项目将缩小。</p>
-<pre><code>.item &#123;
-  flex-shrink: &lt;number&gt;; /* default 1 */
-&#125;
-</code></pre>
-<p>如果所有项目的flex-shrink属性都为1，当空间不足时，都将等比例缩小。如果一个项目的flex-shrink属性为0，其他项目都为1，则空间不足时，前者不缩小。</p>
-<p>负值对该属性无效。</p>
-<h2 id="flex-basis属性"><a href="#flex-basis属性" class="headerlink" title="flex-basis属性"></a>flex-basis属性</h2><p>flex-basis属性定义了在分配多余空间之前，项目占据的主轴空间（main size）。浏览器根据这个属性，计算主轴是否有多余空间。它的默认值为auto，即项目的本来大小。</p>
-<pre><code>.item &#123;
-  flex-basis: &lt;length&gt; | auto; /* default auto */
-&#125;
-</code></pre>
-<p>它可以设为跟width或height属性一样的值（比如350px），则项目将占据固定空间。</p>
-<h2 id="flex属性"><a href="#flex属性" class="headerlink" title="flex属性"></a>flex属性</h2><p>flex属性是flex-grow, flex-shrink 和 flex-basis的简写，默认值为0 1 auto。后两个属性可选。</p>
-<pre><code>.item &#123;
-  flex: none | [ &lt;&#39;flex-grow&#39;&gt; &lt;&#39;flex-shrink&#39;&gt;? || &lt;&#39;flex-basis&#39;&gt; ]
-&#125;
-</code></pre>
-<p>该属性有两个快捷值：auto (1 1 auto) 和 none (0 0 auto)。</p>
-<p>建议优先使用这个属性，而不是单独写三个分离的属性，因为浏览器会推算相关值。</p>
-<h2 id="align-self属性"><a href="#align-self属性" class="headerlink" title="align-self属性"></a>align-self属性</h2><p>align-self属性允许单个项目有与其他项目不一样的对齐方式，可覆盖align-items属性。默认值为auto，表示继承父元素的align-items属性，如果没有父元素，则等同于stretch。</p>
-<pre><code>.item &#123;
-  align-self: auto | flex-start | flex-end | center | baseline | stretch;
-&#125;
-</code></pre>
-<p>该属性可能取6个值，除了auto，其他都与align-items属性完全一致。</p>
-<p>————————————————<br>版权声明：本文为CSDN博主「奶糖 肥晨」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_48998573/article/details/131240067">https://blog.csdn.net/weixin_48998573/article/details/131240067</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
   </article>
   
 
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/15/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="page-number" href="/page/15/">15</a><span class="page-number current">16</span><a class="page-number" href="/page/17/">17</a><a class="page-number" href="/page/18/">18</a><span class="space">&hellip;</span><a class="page-number" href="/page/54/">54</a><a class="extend next" rel="next" href="/page/17/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/15/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="page-number" href="/page/15/">15</a><span class="page-number current">16</span><a class="page-number" href="/page/17/">17</a><a class="page-number" href="/page/18/">18</a><span class="space">&hellip;</span><a class="page-number" href="/page/55/">55</a><a class="extend next" rel="next" href="/page/17/">下一页</a>
   </nav>
   
 </section>

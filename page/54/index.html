@@ -154,6 +154,418 @@
     
     
     <article
+  id="post-Redhat7-5挂载iso镜像配置本地yum源安装nginx"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/02/06/Redhat7-5%E6%8C%82%E8%BD%BDiso%E9%95%9C%E5%83%8F%E9%85%8D%E7%BD%AE%E6%9C%AC%E5%9C%B0yum%E6%BA%90%E5%AE%89%E8%A3%85nginx/"
+    >Redhat7.5挂载iso镜像配置本地yum源安装nginx</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/02/06/Redhat7-5%E6%8C%82%E8%BD%BDiso%E9%95%9C%E5%83%8F%E9%85%8D%E7%BD%AE%E6%9C%AC%E5%9C%B0yum%E6%BA%90%E5%AE%89%E8%A3%85nginx/" class="article-date">
+  <time datetime="2023-02-06T13:15:47.000Z" itemprop="datePublished">2023-02-06</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>1、将iso镜像拷贝到电脑上</p>
+<pre><code>mkdir /rhel #创建ios镜像存放目录，并将iso存放到该目录下
+mkdir /mnt/rhel #创建ios镜像挂载目录
+</code></pre>
+<p>2、修改yum源的配置文件</p>
+<pre><code>vi /etc/yum.repos.d/yum.repo #后缀必须为 ‘ .repo ‘否则系统无法识别
+
+[rhel7.5]
+name=rhel7.5
+baseurl=file:///mnt/rhel #挂载目录
+gpgcheck=0
+gpgkey=file:///mnt/rhel/RPM-GPG-KEY-redhat-release #这行可以不用写
+</code></pre>
+<p>然后退出保存</p>
+<p>3、挂载镜像</p>
+<pre><code>mount /rhel/rhel-server-7.5-x86_64-dvd.iso /mnt/rhel/
+</code></pre>
+<p>挂载完成后使用</p>
+<pre><code>df -h
+</code></pre>
+<p>可以看到ios已经成功挂载</p>
+<p>然后我们清空本地yum的缓存</p>
+<pre><code>yum clean all
+</code></pre>
+<p>再查看是否安装成功，列出全部yum源软件包</p>
+<pre><code>yum repolist
+</code></pre>
+<p>可是这样的挂载只是临时的，如果关机重启后还得重新挂载<br>如何可以重启以后自动挂载呢？</p>
+<p>4、修改开机引导配置文件<br>编辑/etc/fstab最后一行添加</p>
+<pre><code>vi /etc/fstab
+/rhel/rhel-server-7.5-x86_64-dvd.iso /mnt/rhel iso9660 loop 0 0 #切忌镜像名称不可以拼错
+</code></pre>
+<p>5、安装编译器</p>
+<pre><code>yum install gcc
+
+yum install gcc-c++
+
+yum install pcre-devel
+
+yum install zlib-devel
+</code></pre>
+<p>6、安装nginx</p>
+<p>解压安装包 tar zxvf /nginx-1.18.0.tar.gz</p>
+<p>进入安装目录 cd /nginx-1.18.0</p>
+<p>执行./configure</p>
+<p>执行 make</p>
+<p>执行 make install</p>
+<p>7、添加软连接</p>
+<p>cd /lib64</p>
+<p>ln -s libpcre.so.0.0.1 libpcre.so.1</p>
+<p>8、nginx常用命令</p>
+<p>启动：/usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf</p>
+<p>重启：/usr/local/nginx/sbin/nginx -s reload</p>
+<p>停止：/usr/local/nginx/sbin/nginx -s stop</p>
+<p>端口在/usr/local/nginx/conf/nginx.conf中修改</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NGINX/" rel="tag">NGINX</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redhat/" rel="tag">Redhat</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-Linux查看Redis安装目录"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/02/06/Linux%E6%9F%A5%E7%9C%8BRedis%E5%AE%89%E8%A3%85%E7%9B%AE%E5%BD%95/"
+    >Linux查看Redis安装目录</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/02/06/Linux%E6%9F%A5%E7%9C%8BRedis%E5%AE%89%E8%A3%85%E7%9B%AE%E5%BD%95/" class="article-date">
+  <time datetime="2023-02-06T13:11:30.000Z" itemprop="datePublished">2023-02-06</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>如果命令 which 和whereis 都找不到安装目录，可使用以下办法</p>
+<pre><code>ps -ef|grep redis
+</code></pre>
+<p>得到了进程号 xxxx，然后</p>
+<pre><code>ls -l /proc/xxxx/cwd
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" rel="tag">服务器</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-腾讯云服务器安装jdk"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/02/06/%E8%85%BE%E8%AE%AF%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%89%E8%A3%85jdk/"
+    >腾讯云服务器安装jdk</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/02/06/%E8%85%BE%E8%AE%AF%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%89%E8%A3%85jdk/" class="article-date">
+  <time datetime="2023-02-06T13:07:09.000Z" itemprop="datePublished">2023-02-06</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>官方地址，可下载JDK历史版本及当前最新版本。</p>
+<p><a target="_blank" rel="noopener" href="https://www.oracle.com/java/technologies/oracle-java-archive-downloads.html">https://www.oracle.com/java/technologies/oracle-java-archive-downloads.html</a></p>
+<hr>
+<p>1、先查询是否安装了Java</p>
+<pre><code>[root@VM_0_16_centos ~]# java
+-bash: java: command not found
+</code></pre>
+<p>2、假如有，就删除</p>
+<pre><code>[root@VM_0_16_centos ~]# yum remove *openjdk*
+</code></pre>
+<p>3、下载JDK，官方下载是很慢的，可以通过国内云镜像进行下载，比如华为、网易的镜像。</p>
+<p>创建下载目录，并通过华为云镜像下载</p>
+<pre><code>[root@VM_0_16_centos ~]# mkdir /usr/lib/java
+[root@VM_0_16_centos ~]# cd /usr/lib/java
+[root@VM_0_16_centos ~]# wget https://repo.huaweicloud.com/java/jdk/8u202-b08/jdk-8u202-linux-x64.tar.gz
+</code></pre>
+<p>4、然后解压</p>
+<pre><code>[root@VM_0_16_centos java]# tar -zxvf jdk-8u202-linux-x64.tar.gz
+</code></pre>
+<p>5、创建软链接，方便管理</p>
+<pre><code>[root@VM_0_16_centos java]# ln -s /usr/lib/java/jdk1.8.0_202/ /usr/jdk
+</code></pre>
+<p>6、配置java环境变量，并加入下面的内容，更新配置信息</p>
+<pre><code>[root@VM_0_16_centos java]# vi /etc/profile
+
+JAVA_HOME=/usr/jdk
+CLASSPATH=$JAVA_HOME/lib/
+PATH=$PATH:$JAVA_HOME/bin
+export PATH JAVA_HOME CLASSPATH
+
+[root@VM_0_16_centos java]# source /etc/profile
+</code></pre>
+<p>7、检查java是否安装正常</p>
+<pre><code>[root@VM_0_16_centos java]# java -version
+java version “1.8.0_202”
+Java(TM) SE Runtime Environment (build 1.8.0_202-b08)
+Java HotSpot(TM) 64-Bit Server VM (build 25.202-b08, mixed mode)
+[root@VM_0_16_centos java]# javac -version
+javac 1.8.0_202
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JDK/" rel="tag">JDK</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%85%BE%E8%AE%AF%E4%BA%91/" rel="tag">腾讯云</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-QGIS二次开发：QGIS3-28-0编译"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/02/05/QGIS%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91%EF%BC%9AQGIS3-28-0%E7%BC%96%E8%AF%91/"
+    >QGIS二次开发：QGIS3.28.0编译</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/02/05/QGIS%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91%EF%BC%9AQGIS3-28-0%E7%BC%96%E8%AF%91/" class="article-date">
+  <time datetime="2023-02-05T08:02:08.000Z" itemprop="datePublished">2023-02-05</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>qgis二次编译的方式越来越简单，下面是最新的编译配置步骤：</p>
+<p>环境要求：</p>
+<ul>
+<li>Visual Studio 2022</li>
+<li>cmake-3.22.6-windows-x86_64</li>
+<li>cygwin</li>
+</ul>
+<p>1、新建一个批处理文件OSGeo4W-dev-2022.bat，内容如下，qgis路径请调整为本机真实路径。</p>
+<pre><code>@echo off
+call E:\QGIS\3.28.0\qgis-3.28.0\qgis\ms-windows\osgeo4w\msvc-env-2022.bat x86_64
+@cmd
+</code></pre>
+<p>2、复制一份ms-windows\osgeo4w\msvc-env.bat，重命名为msvc-env-2022.bat。对其修改如下：</p>
+<p><img src="https://c2.im5i.com/2023/02/05/nfV95.png" alt="msvc-env-2022.bat修改内容"></p>
+<p>3、运行OSGeo4W-dev-2022.bat，命令行调用cmake-gui.exe，配置如下：</p>
+<p><img src="https://c2.im5i.com/2023/02/05/nfK1G.png" alt="cmake依赖配置"></p>
+<p>4、configure，generate，得到vs的工程文件。即可开始编译。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CMAKE/" rel="tag">CMAKE</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/QGIS/" rel="tag">QGIS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BE%9D%E8%B5%96%E9%85%8D%E7%BD%AE/" rel="tag">依赖配置</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-QGIS二次开发：打开POSTGIS图层"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/02/04/QGIS%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91%EF%BC%9A%E6%89%93%E5%BC%80POSTGIS%E5%9B%BE%E5%B1%82/"
+    >QGIS二次开发：打开POSTGIS图层</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/02/04/QGIS%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91%EF%BC%9A%E6%89%93%E5%BC%80POSTGIS%E5%9B%BE%E5%B1%82/" class="article-date">
+  <time datetime="2023-02-04T13:51:13.000Z" itemprop="datePublished">2023-02-04</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>核心代码如下：</p>
+<pre><code>QString service = QStringLiteral(&quot;&quot;);
+QString host = QStringLiteral(&quot;localhost&quot;);
+QString port = QStringLiteral(&quot;5432&quot;);
+QString database = QStringLiteral(&quot;postgis_25_sample&quot;);
+
+bool useEstimatedMetadata = false;
+QgsDataSourceUri::SslMode sslmode = QgsDataSourceUri::SslMode::SslDisable;
+
+QString username = QStringLiteral(&quot;postgres&quot;);
+QString password = QStringLiteral(&quot;geostar&quot;);
+QString authcfg = QStringLiteral(&quot;&quot;);
+
+QgsDataSourceUri uri;
+uri.setConnection(host, port, database, username, password, sslmode, authcfg);
+
+QString schema = QStringLiteral(&quot;china&quot;);
+QString tablename = QStringLiteral(&quot;bou2_4p&quot;);
+QString geometrycol = QStringLiteral(&quot;geom&quot;);
+
+uri.setDataSource(schema, tablename, geometrycol);
+
+QgsVectorLayer::LayerOptions options;
+options.loadDefaultStyle = false;
+
+QgsVectorLayer *vectorLayer = new QgsVectorLayer(uri.uri(false), uri.table(), &quot;postgres&quot;, options);
+QgsProject::instance()-&gt;addMapLayer(vectorLayer);
+m_layers.append(vectorLayer);
+
+m_mapCanvas-&gt;setLayers(m_layers);
+m_mapCanvas-&gt;setVisible(true);
+m_mapCanvas-&gt;zoomToFullExtent();
+m_mapCanvas-&gt;freeze(false);
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostGIS/" rel="tag">PostGIS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/QGIS/" rel="tag">QGIS</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-QGIS二次开发：依赖下载配置"
   class="article article-type-post"
   itemscope
@@ -213,328 +625,13 @@
 </article>
 
     
-    <article
-  id="post-QGIS二次开发：QGIS3-0-2编译"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/02/02/QGIS%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91%EF%BC%9AQGIS3-0-2%E7%BC%96%E8%AF%91/"
-    >QGIS二次开发：QGIS3.0.2编译</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/02/02/QGIS%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91%EF%BC%9AQGIS3-0-2%E7%BC%96%E8%AF%91/" class="article-date">
-  <time datetime="2023-02-02T14:26:48.000Z" itemprop="datePublished">2023-02-02</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>这也是很久以前整理的一个技术资料，在这里翻出来，作为存档。</p>
-<h1 id="1、下载源码"><a href="#1、下载源码" class="headerlink" title="1、下载源码"></a>1、下载源码</h1><p><a target="_blank" rel="noopener" href="https://qgis.org/downloads/qgis-3.2.2.tar.bz2">https://qgis.org/downloads/qgis-3.2.2.tar.bz2</a></p>
-<h1 id="2、开发环境和依赖库"><a href="#2、开发环境和依赖库" class="headerlink" title="2、开发环境和依赖库"></a>2、开发环境和依赖库</h1><p>解压代码，查看INSTALL，根据4.1. Building with Microsoft Visual Studio中的说明准备开发环境和依赖库。</p>
-<h2 id="2-1开发环境"><a href="#2-1开发环境" class="headerlink" title="2.1开发环境"></a>2.1开发环境</h2><p>安装如下软件</p>
-<pre><code>VS2015：社区版、专业版、旗舰版都可以
-QT：选择msvc2015 32bit
-http://download.qt.io/official_releases/qt/5.11/5.11.2/qt-opensource-windows-x86-5.9.2.exe
-qt-vsaddin：http://download.qt.io/official_releases/vsaddin/qt-vsaddin-msvc2015-2.2.1.vsix
-CMake ：https://cmake.org/files/v3.7/cmake-3.7.2-win64-x64.msi
-win_flex_bison-latest.zip ：https://sourceforge.net/projects/winflexbison/files/win_flex_bison-2.4.12.zip/download
-OSGeo4W：http://download.osgeo.org/osgeo4w/osgeo4w-setup-x86.exe
-Ninja：https://github.com/ninja-build/ninja/releases/download/v1.7.2/ninja-win.zip
-Python：https://www.python.org/ftp/python/3.6.0/python-3.6.0.exe
-</code></pre>
-<h2 id="2-2依赖库"><a href="#2-2依赖库" class="headerlink" title="2.2依赖库"></a>2.2依赖库</h2><p>点击osgeo4w，选择下载qgis-rel-deps。假定安装目录是E:\OpenSource\QGIS\qgis-rel-deps</p>
-<h2 id="2-3调整配置"><a href="#2-3调整配置" class="headerlink" title="2.3调整配置"></a>2.3调整配置</h2><p>（1）VS2015→qt vs tool→Qt Options→Qt versions，配置msvc2015.<br>（2）安装pyqt5，打开cmd<br>pip install PyQt5==5.9.2<br>（3）环境变量增加E:\QGIS\qgis-3.0.2-deps\apps\Python36，或者安装Python时选择设置环境变量。</p>
-<h1 id="3、CMAKE"><a href="#3、CMAKE" class="headerlink" title="3、CMAKE"></a>3、CMAKE</h1><h2 id="3-1批处理文件"><a href="#3-1批处理文件" class="headerlink" title="3.1批处理文件"></a>3.1批处理文件</h2><p>创建一个bat批处理文件，下述内容根据实际情况修改，</p>
-<pre><code>@echo off
-set OSGEO4W_ROOT=E:\OpenSource\QGIS\qgis-rel-deps
-call “%OSGEO4W_ROOT%\bin\o4w_env.bat”
-call “%OSGEO4W_ROOT%\bin\py3_env.bat”
-call “%OSGEO4W_ROOT%\bin\qt5_env.bat”
-
-set O4W_ROOT=%OSGEO4W_ROOT:\=/%
-set LIB_DIR=%O4W_ROOT%
-
-call “C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat” x86
-path %path%;C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin
-
-path %PATH%;E:\BaseTools\cmake-3.7.2-win32-x86\bin;
-
-@set GRASS_PREFIX=E:/QGIS/qgis-3.0.2-deps/apps/grass/grass-7.4.0
-@set INCLUDE=%INCLUDE%;%OSGEO4W_ROOT%\include
-@set LIB=%LIB%;%OSGEO4W_ROOT%\lib;%OSGEO4W_ROOT%\lib
-
-set LIB=%LIB%;%OSGEO4W_ROOT%\apps\Qt5\lib;%OSGEO4W_ROOT%\lib
-set INCLUDE=%INCLUDE%;%OSGEO4W_ROOT%\apps\Qt5\include;%OSGEO4W_ROOT%\include
-
-@cmd
-</code></pre>
-<h2 id="3-2运行cmake-gui"><a href="#3-2运行cmake-gui" class="headerlink" title="3.2运行cmake-gui"></a>3.2运行cmake-gui</h2><p>启动VS2015的x86命令行工具，运行cmake-gui，点configure，根据提示修改依赖库的路径。注意：建议不要勾选下图中蓝色方框标志项目，涉及测试程序的代码覆盖率的工具，配置较繁琐。<br>多次configure后，generate得到工程文件。</p>
-<p><img src="https://c2.im5i.com/2023/02/03/nqni3.png" alt="QGIS编译配置" title="QGIS编译配置"></p>
-<h1 id="4、编译"><a href="#4、编译" class="headerlink" title="4、编译"></a>4、编译</h1><p>编译的时候，会出现很多该类错误<br>warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失<br>解决办法：</p>
-<ul>
-<li>4.1点击错误提示，打开报错的文件。</li>
-<li>4.2用鼠标左键单击一下该报错文件位于编辑区的文件标签卡：</li>
-<li>4.3点“文件”–&gt;“高级保存”</li>
-<li>4.4根据错误提示，选择正确的格式保存。</li>
-</ul>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CMAKE/" rel="tag">CMAKE</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/QGIS/" rel="tag">QGIS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BE%9D%E8%B5%96%E9%85%8D%E7%BD%AE/" rel="tag">依赖配置</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Opticks依赖库的手动下载"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/02/02/Opticks%E4%BE%9D%E8%B5%96%E5%BA%93%E7%9A%84%E6%89%8B%E5%8A%A8%E4%B8%8B%E8%BD%BD/"
-    >Opticks依赖库的手动下载</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/02/02/Opticks%E4%BE%9D%E8%B5%96%E5%BA%93%E7%9A%84%E6%89%8B%E5%8A%A8%E4%B8%8B%E8%BD%BD/" class="article-date">
-  <time datetime="2023-02-02T13:58:35.000Z" itemprop="datePublished">2023-02-02</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>这是很久以前整理的一个技术资料，估计接触的人不多了。在这里翻出来，作为存档。</p>
-<p>下载Opticks的代码编译，如果用其自带的retrieve-dependencies.bat下载依赖库，提示缺少模块。</p>
-<p>可以采用下面的方式，手动下载整理依赖库。</p>
-<p>一、找到如下配置文件：</p>
-<p><a target="_blank" rel="noopener" href="https://opticks.org/downloads/ivy-repo/opticks/opticks-deps/4.12.0/opticks-deps-ivy.xml">https://opticks.org/downloads/ivy-repo/opticks/opticks-deps/4.12.0/opticks-deps-ivy.xml</a></p>
-<p>打开文件，查看如下内容：</p>
-<pre><code>&lt;dependency org=&quot;opticks&quot; name=&quot;boost&quot; rev=&quot;1.0.2″/&gt;
-&lt;dependency org=&quot;opticks&quot; name=&quot;boost-binaries&quot; rev=&quot;1.0.2″/&gt;
-&lt;dependency org=&quot;opticks&quot; name=&quot;cfitsio&quot; rev=&quot;1.0.0″/&gt;
-&lt;dependency org=&quot;opticks&quot; name=&quot;cg&quot; rev=&quot;1.0.0″/&gt;
-&lt;dependency org=&quot;opticks&quot; name=&quot;curl&quot; rev=&quot;1.0.1″/&gt;
-&lt;dependency org=&quot;opticks&quot; name=&quot;doxygen&quot; rev=&quot;1.0.0″/&gt;
-&lt;dependency org=&quot;opticks&quot; name=&quot;ehs&quot; rev=&quot;1.0.6″/&gt;
-&lt;dependency org=&quot;opticks&quot; name=&quot;expat&quot; rev=&quot;1.0.0″/&gt;
-&lt;dependency org=&quot;opticks&quot; name=&quot;ffmpeg&quot; rev=&quot;1.0.3″/&gt;
-&lt;dependency org=&quot;opticks&quot; name=&quot;gdal&quot; rev=&quot;1.0.2″/&gt;
-&lt;dependency org=&quot;opticks&quot; name=&quot;glew&quot; rev=&quot;1.1.0″/&gt;
-&lt;dependency org=&quot;opticks&quot; name=&quot;graphviz&quot; rev=&quot;1.0.1″/&gt;
-&lt;dependency org=&quot;opticks&quot; name=&quot;hdf4″ rev=&quot;1.0.1″/&gt;
-&lt;dependency org=&quot;opticks&quot; name=&quot;hdf5″ rev=&quot;1.1.0″/&gt;
-&lt;dependency org=&quot;opticks&quot; name=&quot;jpeg&quot; rev=&quot;1.0.0″/&gt;
-&lt;dependency org=&quot;opticks&quot; name=&quot;libgeotiff&quot; rev=&quot;1.0.1″/&gt;
-&lt;dependency org=&quot;opticks&quot; name=&quot;liblas&quot; rev=&quot;1.0.2″/&gt;
-&lt;dependency org=&quot;opticks&quot; name=&quot;libproj&quot; rev=&quot;1.0.1″/&gt;
-&lt;dependency org=&quot;opticks&quot; name=&quot;libtiff&quot; rev=&quot;1.0.1″/&gt;
-&lt;dependency org=&quot;opticks&quot; name=&quot;minizip&quot; rev=&quot;1.0.1″/&gt;
-&lt;dependency org=&quot;opticks&quot; name=&quot;opencollada&quot; rev=&quot;1.0.3″/&gt;
-&lt;dependency org=&quot;opticks&quot; name=&quot;opencv&quot; rev=&quot;1.0.1″/&gt;
-&lt;dependency org=&quot;opticks&quot; name=&quot;openjpeg&quot; rev=&quot;1.0.4″/&gt;
-&lt;dependency org=&quot;opticks&quot; name=&quot;ossim&quot; rev=&quot;1.0.4″/&gt;
-&lt;dependency org=&quot;opticks&quot; name=&quot;pcre&quot; rev=&quot;1.0.2″/&gt;
-&lt;dependency org=&quot;opticks&quot; name=&quot;pthreads&quot; rev=&quot;1.0.0″/&gt;
-&lt;dependency org=&quot;opticks&quot; name=&quot;qt&quot; rev=&quot;1.0.2″/&gt;
-&lt;dependency org=&quot;opticks&quot; name=&quot;qwt&quot; rev=&quot;1.0.2″/&gt;
-&lt;dependency org=&quot;opticks&quot; name=&quot;raptor&quot; rev=&quot;1.0.1″/&gt;
-&lt;dependency org=&quot;opticks&quot; name=&quot;shapelib&quot; rev=&quot;1.0.1″/&gt;
-&lt;dependency org=&quot;opticks&quot; name=&quot;szip&quot; rev=&quot;1.0.1″/&gt;
-&lt;dependency org=&quot;opticks&quot; name=&quot;tbb&quot; rev=&quot;1.0.1″/&gt;
-&lt;dependency org=&quot;opticks&quot; name=&quot;xerces&quot; rev=&quot;1.0.1″/&gt;
-&lt;dependency org=&quot;opticks&quot; name=&quot;xqilla&quot; rev=&quot;1.0.2″/&gt;
-&lt;dependency org=&quot;opticks&quot; name=&quot;yaml-cpp&quot; rev=&quot;1.0.0″/&gt;
-&lt;dependency org=&quot;opticks&quot; name=&quot;zlib&quot; rev=&quot;1.0.0″/&gt;
-</code></pre>
-<p>这些就是opticks编译所需的依赖库，这些依赖库的地址在如下地址可以找到</p>
-<pre><code>https://opticks.org/downloads/ivy-repo/opticks/
-</code></pre>
-<p>二、把配置文件里的依赖库名称和版本号加上上面这个地址，组合出所有依赖库的下载路径如下：</p>
-<pre><code>https://opticks.org/downloads/ivy-repo/opticks/boost/1.0.2/
-https://opticks.org/downloads/ivy-repo/opticks/boost-binaries/1.0.2/
-https://opticks.org/downloads/ivy-repo/opticks/cfitsio/1.0.0/
-https://opticks.org/downloads/ivy-repo/opticks/cg/1.0.0/
-https://opticks.org/downloads/ivy-repo/opticks/curl/1.0.1/
-https://opticks.org/downloads/ivy-repo/opticks/doxygen/1.0.0/
-https://opticks.org/downloads/ivy-repo/opticks/ehs/1.0.6/
-https://opticks.org/downloads/ivy-repo/opticks/expat/1.0.0/
-https://opticks.org/downloads/ivy-repo/opticks/ffmpeg/1.0.3/
-https://opticks.org/downloads/ivy-repo/opticks/gdal/1.0.2/
-https://opticks.org/downloads/ivy-repo/opticks/glew/1.1.0/
-https://opticks.org/downloads/ivy-repo/opticks/graphviz/1.0.1/
-https://opticks.org/downloads/ivy-repo/opticks/hdf4/1.0.1/
-https://opticks.org/downloads/ivy-repo/opticks/hdf5/1.1.0/
-https://opticks.org/downloads/ivy-repo/opticks/jpeg/1.0.0/
-https://opticks.org/downloads/ivy-repo/opticks/libgeotiff/1.0.1/
-https://opticks.org/downloads/ivy-repo/opticks/liblas/1.0.2/
-https://opticks.org/downloads/ivy-repo/opticks/libproj/1.0.1/
-https://opticks.org/downloads/ivy-repo/opticks/libtiff/1.0.1/
-https://opticks.org/downloads/ivy-repo/opticks/minizip/1.0.1/
-https://opticks.org/downloads/ivy-repo/opticks/opencollada/1.0.3/
-https://opticks.org/downloads/ivy-repo/opticks/opencv/1.0.1/
-https://opticks.org/downloads/ivy-repo/opticks/openjpeg/1.0.4/
-https://opticks.org/downloads/ivy-repo/opticks/ossim/1.0.4/
-https://opticks.org/downloads/ivy-repo/opticks/pcre/1.0.2/
-https://opticks.org/downloads/ivy-repo/opticks/pthreads/1.0.0/
-https://opticks.org/downloads/ivy-repo/opticks/qt/1.0.2/
-https://opticks.org/downloads/ivy-repo/opticks/qwt/1.0.2/
-https://opticks.org/downloads/ivy-repo/opticks/raptor/1.0.1/
-https://opticks.org/downloads/ivy-repo/opticks/shapelib/1.0.1/
-https://opticks.org/downloads/ivy-repo/opticks/szip/1.0.1/
-https://opticks.org/downloads/ivy-repo/opticks/tbb/1.0.1/
-https://opticks.org/downloads/ivy-repo/opticks/xerces/1.0.1/
-https://opticks.org/downloads/ivy-repo/opticks/xqilla/1.0.2/
-https://opticks.org/downloads/ivy-repo/opticks/yaml-cpp/1.0.0/
-https://opticks.org/downloads/ivy-repo/opticks/zlib/1.0.0/
-</code></pre>
-<p>将上述目录下的文件下载到本地。</p>
-<p>三、本地建一个目录，存放解压后的依赖库，并在系统环境变量中添加一条配置，OPTICKSDEPENDENCIES，指向这个目录。</p>
-<p>四、在这个目录下再建两个文件夹，名称分别为32和64，Win32和x64的内容分别解压到这两个目录，分别形成include，lib和bin三个下一级目录。</p>
-<p>五、接着打开工程Opticks.sln，即可开始编译了。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Opticks/" rel="tag">Opticks</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BE%9D%E8%B5%96%E9%85%8D%E7%BD%AE/" rel="tag">依赖配置</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-兔年大吉，开工大吉"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/02/01/%E5%85%94%E5%B9%B4%E5%A4%A7%E5%90%89%EF%BC%8C%E5%BC%80%E5%B7%A5%E5%A4%A7%E5%90%89/"
-    >兔年大吉，开工大吉</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/02/01/%E5%85%94%E5%B9%B4%E5%A4%A7%E5%90%89%EF%BC%8C%E5%BC%80%E5%B7%A5%E5%A4%A7%E5%90%89/" class="article-date">
-  <time datetime="2023-02-01T11:09:16.000Z" itemprop="datePublished">2023-02-01</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E5%91%A2%E5%96%83%E7%BB%86%E8%AF%AD/">呢喃细语</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="开篇"><a href="#开篇" class="headerlink" title="开篇"></a>开篇</h1><p>2023年2月1日，新的一个工作年度算是完完全全的开始了。</p>
-<p>过去的2022年，发生了许多事情，但是2022年度本身，可以说是彻彻底底的结束了。</p>
-<p>新的年度既已来到，那就要定下目标，严格执行。</p>
-<h1 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h1><h2 id="1、工作"><a href="#1、工作" class="headerlink" title="1、工作"></a>1、工作</h2><p>找到一份工作，年薪在12W-20W之间，岗位以技术岗为主，程序员或技术经理均可。</p>
-<h2 id="2、技能提升"><a href="#2、技能提升" class="headerlink" title="2、技能提升"></a>2、技能提升</h2><h3 id="2-1-开发能力"><a href="#2-1-开发能力" class="headerlink" title="2.1 开发能力"></a>2.1 开发能力</h3><p>利用B站及各种网络资源，以自学方式，提升以下几种开发语言的开发能力：</p>
-<ul>
-<li><p>C++\QT</p>
-</li>
-<li><p>Java\SpringBoot</p>
-</li>
-<li><p>Vue\Openlayer\leaflet</p>
-</li>
-<li><p>Python</p>
-</li>
-</ul>
-<h3 id="2-2-项目管理能力"><a href="#2-2-项目管理能力" class="headerlink" title="2.2 项目管理能力"></a>2.2 项目管理能力</h3><p>利用B站及各种网络资源，以自学方式，获取以下几种资格证书：</p>
-<ul>
-<li>信息系统项目管理师<br>（切记：时刻关注报名登记消息，不要忘了）</li>
-<li>注册测绘师</li>
-</ul>
-<h3 id="2-3-驾照"><a href="#2-3-驾照" class="headerlink" title="2.3 驾照"></a>2.3 驾照</h3><p>争取上半年通过驾考剩余科目考试，拿到驾照，下半年通过租车方式提升车感及熟练度，能在来年春节期间驾车拜亲访友、郊游出行。</p>
-<h2 id="3、锻炼身体"><a href="#3、锻炼身体" class="headerlink" title="3、锻炼身体"></a>3、锻炼身体</h2><p>参照抖音各类减肥健身视频，工作日以室内锻炼为主，周末外出有氧运动为主，减去大肚囊。</p>
-<h1 id="执行"><a href="#执行" class="headerlink" title="执行"></a>执行</h1><h2 id="做好时间规划"><a href="#做好时间规划" class="headerlink" title="做好时间规划"></a>做好时间规划</h2><h2 id="早睡早起"><a href="#早睡早起" class="headerlink" title="早睡早起"></a>早睡早起</h2><h2 id="每日做好记录"><a href="#每日做好记录" class="headerlink" title="每日做好记录"></a>每日做好记录</h2> 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B9%B4%E5%BA%A6%E8%AE%A1%E5%88%92/" rel="tag">年度计划</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%96%B0%E5%B9%B4%E7%A5%9D%E7%A6%8F/" rel="tag">新年祝福</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
   </article>
   
 
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/53/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/52/">52</a><a class="page-number" href="/page/53/">53</a><span class="page-number current">54</span>
+    <a class="extend prev" rel="prev" href="/page/53/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/52/">52</a><a class="page-number" href="/page/53/">53</a><span class="page-number current">54</span><a class="page-number" href="/page/55/">55</a><a class="extend next" rel="next" href="/page/55/">下一页</a>
   </nav>
   
 </section>

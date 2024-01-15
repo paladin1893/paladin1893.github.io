@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+       
+      <meta name="keywords" content="RS,GPS,GIS,QGIS,Opticks,QT,OpenCV,OSG" />
+       
+      <meta name="description" content="地理信息系统，遥感科学，卫星导航定位技术综合研究。" />
+      
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>物联网网关，原来是这么回事，感谢！ |  帕拉丁的游鱼</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/favicon.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    <link rel="alternate" href="/atom.xml" title="帕拉丁的游鱼" type="application/atom+xml">
+</head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-物联网网关，原来是这么回事，感谢！"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  物联网网关，原来是这么回事，感谢！
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/11/29/%E7%89%A9%E8%81%94%E7%BD%91%E7%BD%91%E5%85%B3%EF%BC%8C%E5%8E%9F%E6%9D%A5%E6%98%AF%E8%BF%99%E4%B9%88%E5%9B%9E%E4%BA%8B%EF%BC%8C%E6%84%9F%E8%B0%A2%EF%BC%81/" class="article-date">
+  <time datetime="2023-11-29T12:14:23.000Z" itemprop="datePublished">2023-11-29</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">4.2k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">14 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>物联网网关，原来是这么回事，感谢！<br>千手修罗</p>
+<h1 id="物联网网关是什么？"><a href="#物联网网关是什么？" class="headerlink" title="物联网网关是什么？"></a>物联网网关是什么？</h1><p>物联网网关是连接物联网设备和互联网的重要桥梁，它负责将物联网设备采集到的数据进行处理、存储和转发，使其能够与云端或其他设备进行通信。物联网网关的作用是实现物联网设备与云端的无缝连接和数据交换。</p>
+<h1 id="为什么要搞物联网网关？"><a href="#为什么要搞物联网网关？" class="headerlink" title="为什么要搞物联网网关？"></a>为什么要搞物联网网关？</h1><p>不要物联网网关行不行？直接使用设备连接云平台不行吗？</p>
+<h2 id="以下是一些情况下应该使用物联网网关："><a href="#以下是一些情况下应该使用物联网网关：" class="headerlink" title="以下是一些情况下应该使用物联网网关："></a>以下是一些情况下应该使用物联网网关：</h2><p>物联网网关通常用于连接不同类型的设备和协议，以便它们可以相互通信和交换数据，并不是所有设备都能直接联网。</p>
+<p>设备和协议多样性：当需要连接多种不同类型的设备和协议时，物联网网关可以充分发挥作用，帮助设备进行互操作和数据交换。<br>安全性要求高：在需要更高安全性的环境中，物联网网关可以控制访问和加密数据传输。<br>本地过滤和分析：物联网网关可以进行本地数据过滤和分析，从而减少云上数据的传输量和延迟。<br>离线设备管理：当需要管理离线设备时，物联网网关可以作为离线设备的代理，帮助设备进行远程管理和数据上传。</p>
+<h2 id="以下是一些情况下不应该使用物联网网关："><a href="#以下是一些情况下不应该使用物联网网关：" class="headerlink" title="以下是一些情况下不应该使用物联网网关："></a>以下是一些情况下不应该使用物联网网关：</h2><p>单种设备和协议：当只需要连接单一类型的设备和协议时，物联网网关的使用会增加成本和复杂性。<br>网络通信无需过滤和加密：当通信网络已经具备足够的安全性和过滤功能时，物联网网关的使用则会增加不必要的成本。</p>
+<h1 id="物联网网关作用？"><a href="#物联网网关作用？" class="headerlink" title="物联网网关作用？"></a>物联网网关作用？</h1><p>物联网网关是作为物联网系统中的中间件，连接低功耗、低带宽、短距离的设备与云端服务器之间的通信，并提供对接云服务的接口和协议转换等功能。其作用如下：</p>
+<p>支持多种物联网通信协议，如Zigbee、Z-Wave、BLE、WiFi等，实现设备间的相互通信和互联互通。<br>支持数据预处理和压缩，减少数据传输量和传输时间，提高整个系统的效率。<br>实现本地离线计算和云端计算的切换，能够在断网环境下进行设备之间的控制和操作。<br>提供通用API，支持对接各类物联网云平台，避免不同设备对接不同云平台的麻烦。<br>因此，物联网网关是实现物联网系统的重要一环，将设备的通信、数据的传输、云服务之间的对接等聚合在一起，使得整个系统更加高效、稳定、安全。如果设备直接连接云平台，将无法处理大量的设备数据、协议转换和设备的控制等问题，会导致系统处理能力差、易发生故障等问题。</p>
+<h1 id="物联网网关技术原理"><a href="#物联网网关技术原理" class="headerlink" title="物联网网关技术原理"></a>物联网网关技术原理</h1><p>物联网网关主要由硬件和软件两部分组成。硬件方面，网关通常搭载高性能的处理器、内存、存储和各种通信接口，如Wi-Fi、以太网、蓝牙等。软件方面，网关需要运行基于Linux或Windows等操作系统的应用程序，同时还需要支持各种通信协议，如MQTT、HTTP等，以及安全性考虑。</p>
+<h1 id="物联网网关的数据处理流程一般分为三步："><a href="#物联网网关的数据处理流程一般分为三步：" class="headerlink" title="物联网网关的数据处理流程一般分为三步："></a>物联网网关的数据处理流程一般分为三步：</h1><p>设备采集；<br>数据格式化；<br>网络传输；</p>
+<p>首先，网关通过各种接口和传感器从物联网设备中采集数据，随后对数据进行格式化和处理，最终通过网络将数据传输到云服务平台或其他设备。</p>
+<p>如上图所示：</p>
+<p>北向接口与南向接口：物联网网关需要提供北向接口和南向接口。北向接口连接云端，用于将数据上传到云端，提供数据分析、处理、存储、管理等服务。南向接口连接设备端，用于实现与终端设备的通信。<br>存储：物联网网关可以存储设备和传感器的数据，并对数据进行处理和分析，以便提供实时监测和控制。<br>协议转换：不同设备和传感器可能使用不同的通信协议，物联网网关可以实现协议转换，将不同协议之间的数据转换为统一的与云台交互的协议，从而实现设备的互联互通。<br>设备管理：物联网网关可以对连接的终端设备进行管理，包括设备的配置、参数设置、故障处理等。<br>操作系统：物联网网关需要搭载操作系统才能运行，一般采用嵌入式操作系统，如Linux、Windows Embedded等。<br>硬件：物联网网关需要运行软件和驱动程序来支持其各项功能。硬件方面，通常采用ARM等处理器，具有较高的计算能力和低功耗特性。<br>物联网网关需要具备较高的安全性，以保障物联网系统的可靠运行。一般来说，物联网网关需要实现以下安全措施：</p>
+<p>认证和授权：实现用户身份认证，避免未经授权的用户对系统进行操作。<br>加密通信：使用加密算法对数据进行加密，从而保证数据传输的安全性。<br>安全协议：使用各种安全协议，如TLS/SSL等，保障数据传输的完整性和机密性。<br>防火墙：设置防火墙来保障系统的安全性。<br>安全审计：监测系统的操作记录，及时发现和应对安全事件。<br>网关配置和升级：</p>
+<p>物联网网关的配置和升级是系统运行的关键环节，具备以下特点：</p>
+<p>灵活性：支持配置自由灵活，能够快速根据不同场景进行调整。<br>易用性：操作简单易懂，方便用户进行设置和管理。<br>实时性：支持实时配置，可在系统运行时进行快速响应。<br>可靠性：升级过程需要保证数据的完整性和一致性，防止数据丢失或损坏。<br>物联网网关升级一般分为在线升级和离线升级两种模式，离线升级需要手动传输升级包进行升级，而在线升级则可以通过网络直接进行下载和更新，是更为智能化和自动化的升级方式。在升级之前，需要提前进行备份和恢复操作，以防止数据丢失或者出现其他异常情况。同时，网关升级需要根据实际情况选择合适的升级方案，保障系统的平稳运行。</p>
+<h1 id="物联网网关实战开发"><a href="#物联网网关实战开发" class="headerlink" title="物联网网关实战开发"></a>物联网网关实战开发</h1><p>物联网网关的开发主要包括硬件和软件方面的工作。在硬件方面，需要选择合适的处理器、内存和通信接口等组件，以及进行电路设计和装配等工作。在软件方面，需要编写应用程序，包括驱动程序、数据处理模块和通信模块等。</p>
+<p>物联网网关的开发流程一般包括设备接入、数据处理和连接云平台等步骤。首先，需要通过各种接口将物联网设备连接到网关，随后对采集到的数据进行格式化和处理。最后，通过各种通信协议将数据上传到云服务平台，实现与云端的数据交换。</p>
+<p>我们可以选择使用现有的开源网关框架进行开发，例如Eclipse Kura或者Node-RED等等，或者直接使用编程语言和通信协议来设计自己的网关。 下面结合Python代码进行一个基于MQTT协议的物联网网关实战开发的简单示例：</p>
+<p>安装必要的库和依赖项 我们需要安装paho-mqtt库来支持使用Python语言来连接MQTT服务器和客户端。</p>
+<pre><code>pip install paho-mqtt
+</code></pre>
+<p>设计网关的基本业务逻辑 本示例中，我们的网关需要订阅来自传感器的数据，并将其传送到云平台上。我们还将实现一个简单的转换逻辑，将来自不同设备的数据进行处理，例如传感器类型、数据格式等信息的解析和分离。</p>
+<pre><code>import paho.mqtt.client as mqtt
+
+# MQTT服务器地址和端口号
+MQTT_HOST = &quot;localhost&quot;
+MQTT_PORT = 1883
+
+# 定义MQTT客户端回调函数
+def on_connect(client, userdata, flags, rc):
+    print(&quot;Connected with result code &quot; + str(rc))
+    # 订阅传感器数据
+    client.subscribe(&quot;sensors/#&quot;)
+
+# 处理传感器数据
+def process_sensor_data(topic, payload):
+    # 解析传感器ID和数据
+    sensor_id = topic.strip().split(&quot;/&quot;)[-1]
+    data_type, data_value = payload.strip().split(&quot;:&quot;)
+    # 打印传感器数据
+    print(&quot;Received data from sensor &#123;&#125; : &#123;&#125; = &#123;&#125;&quot;.format(sensor_id, data_type, data_value))
+    # TODO：数据转换和上传到云平台等操作
+
+# 定义MQTT客户端消息回调函数
+def on_message(client, userdata, msg):
+    print(&quot;Received message: &quot; + msg.payload.decode())
+    process_sensor_data(msg.topic, msg.payload.decode())
+
+# 连接MQTT服务器并开始循环监听传感器数据
+client = mqtt.Client()
+client.on_connect = on_connect
+client.on_message = on_message
+client.connect(MQTT_HOST, MQTT_PORT, 60)
+client.loop_forever()
+</code></pre>
+<p>编写传感器模拟程序来模拟传感器数据的发送 为了测试我们的物联网网关，我们需要编写一个模拟程序来模拟传感器数据的发送。这可以用Python的MQTT客户端模块来实现。</p>
+<pre><code>import paho.mqtt.client as mqtt
+import time
+from random import randint
+
+# MQTT服务器地址和端口号
+MQTT_HOST = &quot;localhost&quot;
+MQTT_PORT = 1883
+
+def simulate_sensor():
+    # 模拟传感器数据
+    sensor_id = &quot;sensor-&quot; + str(randint(1, 10))
+    temperature = str(randint(20, 30))
+    humidity = str(randint(30, 50))
+
+    # 发布传感器数据
+    client = mqtt.Client()
+    client.connect(MQTT_HOST, MQTT_PORT, 60)
+    client.publish(&quot;sensors/&quot; + sensor_id, &quot;temperature:&quot; + temperature, qos=1)
+    client.publish(&quot;sensors/&quot; + sensor_id, &quot;humidity:&quot; + humidity, qos=1)
+    client.disconnect()
+    print(&quot;Published sensor data from &quot; + sensor_id)
+
+if __name__ == &#39;__main__&#39;:
+    while True:
+        simulate_sensor()
+        time.sleep(5)
+    
+</code></pre>
+<p>以上就是一个简单的物联网网关实战开发示例，用Python语言实现了基于MQTT协议的数据传输和处理功能。实际的物联网网关开发使用的技术和工具非常多样化，需要根据具体的需求和应用场景来选择最适合的解决方案。</p>
+<h1 id="边缘计算与物联网网关的碰撞"><a href="#边缘计算与物联网网关的碰撞" class="headerlink" title="边缘计算与物联网网关的碰撞"></a>边缘计算与物联网网关的碰撞</h1><p>边缘计算的理解</p>
+<p>边缘计算是一种分布式计算模式，它将计算和数据处理部分从传统的中央服务器转移到与数据源最近的边缘计算节点上。这些边缘计算节点包括网络边缘、物联网网关、交换机以及其他物联设备和传感器。</p>
+<p>边缘计算的目标是在提供更高的数据响应速度的同时降低传输带宽和存储需求。与传统的云计算不同，边缘计算侧重于通过将嵌入式设备和传感器之类的物联网设备的计算能力转移到这些设备附近的边缘设备上来提高数据处理效率，从而降低响应时间和延迟。</p>
+<p>边缘计算提供了以下优点：</p>
+<p>更高的数据响应速度：边缘计算能够在更靠近数据来源的地方处理数据，因此可以更快地响应数据请求。<br>降低带宽需求：边缘计算可以在边缘设备上处理数据，从而避免将大量数据传输到中央服务器带来的带宽需求。<br>提高安全性：由于边缘设备通常是在企业或组织的边缘处，因此对于潜在的攻击者来说，它们被认为是难以访问的。<br>提高系统可靠性：除了更快的响应速度和更低的带宽需求外，边缘计算还可以从独立的边缘设备中恢复系统，从而提高基于物联网的系统的可靠性。</p>
+<p>边缘计算的目的是将计算任务尽可能地靠近用户，从而减少网络延迟和带宽，提高应用的性能和用户体验。在上图中，当用户设备需要进行一些计算任务时，这些任务可以通过边缘设备进行处理，而边缘设备可以将一部分数据传输到云端设备进行处理，再将处理后的结果返回给用户设备。这种分布式计算模式可以适用于各种场景，例如智能家居、智能交通等。<br>物联网网关结合边缘计算<br>在物联网网关中使用边缘计算，需要考虑以下设计原则：</p>
+<p>选择合适的边缘设备。边缘设备应该具备足够的计算能力、存储空间和通信能力，能够完成数据处理、存储和传输等任务。<br>定义合理的边缘计算模型。物联网网关应该根据具体业务需求，采用适当的边缘计算模型，如Spark、Flink、TensorFlow等，来处理数据和生成智能决策。<br>建立安全的通信和存储机制。物联网网关需要建立安全的通信和数据存储机制，保证传输过程中的数据安全和完整性，同时防止攻击者通过网关获取敏感信息或控制物联网设备。</p>
+<p>相较于传统的物联网网关，基于边缘计算的物联网网关多了以下内容：</p>
+<p>更强的数据处理能力。边缘计算将数据处理推向了设备端，可以更快地处理和分析海量数据。<br>更高的实时性和响应速度。边缘计算可以在设备端进行实时的数据分析和决策，减少了数据在传输过程中的延迟。<br>更好的可扩展性和灵活性。边缘计算可以灵活地根据业务需求选择不同的计算和存储模型，并且可以根据需求进行扩展和优化。<br>更高的安全性和可靠性。边缘计算可以将一部分敏感数据存储在设备端，减少了数据泄露的风险，同时也提高了系统的可靠性。<br>物联网网关可以利用边缘计算来处理和分析设备产生的数据，实现以下几个方面的功能：</p>
+<p>实时数据处理：通过在网关上运行轻量级的边缘计算资源，可以快速地对设备产生的实时数据进行处理，如数据的过滤、聚合、转换等操作，从而减少数据传输和存储的开销，提高数据处理和分析的实时性和准确性。<br>数据存储和管理：通过在网关上部署数据库等相关服务，可以将设备产生的数据在本地进行存储和管理，避免了对云端数据中心的依赖，从而提高数据的可靠性和安全性。同时，还可以根据需求在本地对数据进行查询、分析和可视化展示。<br>边缘智能化：通过在网关上部署人工智能等相关技术，可以实现对设备产生的数据的智能化分析和处理，如机器学习、图像识别、自然语言处理等技术。这样可以进一步提供更加智能化和个性化的设备服务和管理。 总的来说，物联网网关利用边缘计算可以实现更加高效和智能化的设备数据处理和管理，从而提高物联网系统的实时性、可靠性、安全性和智能化程度。<br>如果想整体学习高并发知识，请看《高并发系统实战派》这本书–人人都懂，人人都会，《高并发系统实战派》–这里获取<br>总之，边缘计算实现的关键是要依靠物联网技术和计算资源将数据和计算移到离用户更近的边缘设备上，从而实现数据处理的快速、高效和安全。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://paladin1893.gitee.io/2023/11/29/%E7%89%A9%E8%81%94%E7%BD%91%E7%BD%91%E5%85%B3%EF%BC%8C%E5%8E%9F%E6%9D%A5%E6%98%AF%E8%BF%99%E4%B9%88%E5%9B%9E%E4%BA%8B%EF%BC%8C%E6%84%9F%E8%B0%A2%EF%BC%81/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%80%9A%E4%BF%A1/" rel="tag">通信</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+    
+      <a href="/2023/11/28/Modbus%20RTU%20%E5%8D%8F%E8%AE%AE%E6%A6%82%E8%BF%B0/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">Modbus RTU 协议概述</div>
+      </a>
+    
+  </nav>
+
+  
+   
+    
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2022-2024
+        <i class="ri-heart-fill heart_icon"></i> paladin1893
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="帕拉丁的游鱼"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/friends">友链</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

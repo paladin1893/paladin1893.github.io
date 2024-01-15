@@ -154,6 +154,874 @@
     
     
     <article
+  id="post-Oracle内存信息查询"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/06/16/Oracle%E5%86%85%E5%AD%98%E4%BF%A1%E6%81%AF%E6%9F%A5%E8%AF%A2/"
+    >Oracle内存信息查询</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/06/16/Oracle%E5%86%85%E5%AD%98%E4%BF%A1%E6%81%AF%E6%9F%A5%E8%AF%A2/" class="article-date">
+  <time datetime="2023-06-16T10:33:11.000Z" itemprop="datePublished">2023-06-16</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>SGA是系统全局区，是Oracle中可以共享的内存。</p>
+<p>1、关联业务表</p>
+<pre><code>select * from v$sga; 
+select * from v$sgainfo;
+select * from v$memory_dynamic_components;
+select * from v$sgastat
+</code></pre>
+<p>Fixed Size 是固定区域，用于存储SGA各组件的信息。固定区域的大小随平台和版本而变化。<br>Variable Size  是可变区域，包括共享池、Java池、大池。<br>Database Buffers 是数据库高速缓冲区。<br>Redo Buffers 是重做日志缓冲区。</p>
+<p>2、关联查询</p>
+<p>2.1、查看高速缓冲区（Database Buffer Cache）的实际大小</p>
+<pre><code>select name,bytes/1024/1024 || &#39;M&#39; from v$sgainfo 
+    where name = &#39;Buffer Cache Size&#39;;
+</code></pre>
+<p>2.2、查看共享池(Shared Pool)的实际大小</p>
+<pre><code>select name,bytes/1024/1024 || &#39;M&#39; from v$sgainfo
+    where name = &#39;Shared Pool Size&#39;;
+
+select component,(current_size/1024/1024) || &#39;M&#39; from v$memory_dynamic_components
+    where component =&#39;shared pool&#39;;
+</code></pre>
+<p>2.3、查看JAVA池的实际大小</p>
+<pre><code>select name,bytes/1024/1024 || &#39;M&#39; from v$sgainfo
+    where name = &#39;Java Pool Size&#39;;
+ 
+select component,(current_size/1024/1024) || &#39;M&#39; from v$memory_dynamic_components
+    where component =&#39;java pool&#39;;
+</code></pre>
+<p>2.4、查看大池的实际大小</p>
+<pre><code>select name,bytes/1024/1024 || &#39;M&#39; from v$sgainfo
+    where name = &#39;Large Pool Size&#39;;
+ 
+select component,(current_size/1024/1024) || &#39;M&#39; from v$memory_dynamic_components
+    where component =&#39;large pool&#39;;
+</code></pre>
+<p>2.5、查看 共享池、JAVA池、大池的剩余空间</p>
+<pre><code>---共享池的剩余空间
+select * from v$sgastat where name = &#39;free memory&#39; and Pool = &#39;shared pool&#39;;
+ 
+---JAVA池的剩余空间
+select * from v$sgastat where name = &#39;free memory&#39; and Pool = &#39;java pool&#39;;
+ 
+---大池的剩余空间
+select * from v$sgastat where name = &#39;free memory&#39; and Pool = &#39;large pool&#39;;
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Oracle/" rel="tag">Oracle</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-关于oracle数据库性能监控指标（二）"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/06/15/%E5%85%B3%E4%BA%8Eoracle%E6%95%B0%E6%8D%AE%E5%BA%93%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7%E6%8C%87%E6%A0%87%EF%BC%88%E4%BA%8C%EF%BC%89/"
+    >关于oracle数据库性能监控指标（二）</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/06/15/%E5%85%B3%E4%BA%8Eoracle%E6%95%B0%E6%8D%AE%E5%BA%93%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7%E6%8C%87%E6%A0%87%EF%BC%88%E4%BA%8C%EF%BC%89/" class="article-date">
+  <time datetime="2023-06-15T06:59:08.000Z" itemprop="datePublished">2023-06-15</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>1、查看版本号</p>
+<pre><code>SELECT * FROM v$version;
+</code></pre>
+<p>2、查看进程信息</p>
+<pre><code>--查看系统当前进程的连接数
+select count(*) from v$process;
+--查看当前系统允许的进程连接数
+select value from v$parameter where name = &#39;processes&#39;;
+</code></pre>
+<p>3、当前连接会话数以及当前并发连接个数</p>
+<pre><code>--查看系统当前会话的连接数
+select count(*) from v$session;
+--查看当前系统的并发连接数
+select count(*) from v$session where status=&#39;ACTIVE&#39;;
+--当前活跃用户会话数
+Select count(*)from v$session where status=&#39;ACTIVE&#39; and USERNAME is not null;
+--当前活跃系统会话数
+Select count(*)from v$session where USER#=0;
+--当前非活跃会话数
+Select count(*)from v$session where status=&#39;INACTIVE&#39;;
+</code></pre>
+<p>4、数据库实例上次重启时间</p>
+<pre><code>select instance_name, to_char(startup_time,&#39;mm/dd/yyyy hh24:mi:ss&#39;) as startup_time from v$instance;
+
+SELECT * FROM v$instance;
+</code></pre>
+<p>5、查询表空间使用率</p>
+<pre><code>--查看数据文件大小
+select file_name, bytes / 1024 / 1024 || &#39;M&#39; &quot;size&quot; from dba_data_files;
+select name, bytes / 1024 / 1024 as M from v$datafile;
+select * from dba_data_files;
+
+select a.tablespace_name, total, free, (total - free) as usage
+  from (select tablespace_name, sum(bytes) / 1024 / 1024 as total
+          from dba_data_files
+         group by tablespace_name) a,
+       (select tablespace_name, sum(bytes) / 1024 / 1024 as free
+          from dba_free_space
+         group by tablespace_name) b
+ where a.tablespace_name = b.tablespace_name
+ ORDER BY 1;
+
+SELECT UPPER(F.TABLESPACE_NAME) &quot;表空间名&quot;,
+       D.TOT_GROOTTE_MB &quot;表空间大小(M)&quot;,
+       D.TOT_GROOTTE_MB - F.TOTAL_BYTES &quot;已使用空间(M)&quot;,
+       TO_CHAR(ROUND((D.TOT_GROOTTE_MB - F.TOTAL_BYTES) / D.TOT_GROOTTE_MB * 100,
+                     2),
+               &#39;990.99&#39;) || &#39;%&#39; &quot;使用比&quot;,
+       F.TOTAL_BYTES &quot;空闲空间(M)&quot;,
+       F.MAX_BYTES &quot;最大块(M)&quot;
+  FROM (SELECT TABLESPACE_NAME,
+               ROUND(SUM(BYTES) / (1024 * 1024), 2) TOTAL_BYTES,
+               ROUND(MAX(BYTES) / (1024 * 1024), 2) MAX_BYTES
+          FROM SYS.DBA_FREE_SPACE
+         GROUP BY TABLESPACE_NAME) F,
+       (SELECT DD.TABLESPACE_NAME,
+               ROUND(SUM(DD.BYTES) / (1024 * 1024), 2) TOT_GROOTTE_MB
+          FROM SYS.DBA_DATA_FILES DD
+         GROUP BY DD.TABLESPACE_NAME) D
+ WHERE D.TABLESPACE_NAME = F.TABLESPACE_NAME
+ ORDER BY 1;
+</code></pre>
+<p>6、查看总消耗时间最多的前10条SQL语句</p>
+<pre><code>select *
+  from (select v.sql_id,
+               v.child_number,
+               v.sql_text,
+               v.elapsed_time,
+               v.cpu_time,
+               v.disk_reads,
+               rank() over(order by v.elapsed_time desc) elapsed_rank
+          from v$sql v) a
+ where elapsed_rank &lt;= 10;
+</code></pre>
+<p>7、查看CPU消耗时间最多的前10条SQL语句</p>
+<pre><code>select *
+  from (select v.sql_id,
+               v.child_number,
+               v.sql_text,
+               v.elapsed_time,
+               v.cpu_time,
+               v.disk_reads,
+               rank() over(order by v.cpu_time desc) elapsed_rank
+          from v$sql v) a
+ where elapsed_rank &lt;= 10;
+</code></pre>
+<p>8、查看消耗磁盘读取最多的前10条SQL语句</p>
+<pre><code>select *
+  from (select v.sql_id,
+               v.child_number,
+               v.sql_text,
+               v.elapsed_time,
+               v.cpu_time,
+               v.disk_reads,
+               rank() over(order by v.disk_reads desc) elapsed_rank
+          from v$sql v) a
+ where elapsed_rank &lt;= 10;
+</code></pre>
+<p>9、IOps和IO吞吐量 （oracle 11g）</p>
+<pre><code>select sum(decode(name,
+                  &#39;physical read IO requests&#39;,
+                  value,
+                  &#39;physical write IO requests&#39;,
+                  value,
+                  0)) as iops,
+       sum(decode(name,
+                  &#39;physical read bytes&#39;,
+                  value,
+                  &#39;physical write bytes&#39;,
+                  value,
+                  0)) / 1024 / 1024 as mbps
+  from v$sysstat
+ where name in (&#39;physical read IO requests&#39;,
+                &#39;physical write IO requests&#39;,
+                &#39;physical read bytes&#39;,
+                &#39;physical read total bytes&#39;,
+                &#39;physical write bytes&#39;,
+                &#39;physical write total bytes&#39;,
+                &#39;physical read total IO requests&#39;,
+                &#39;physical write total IO requests&#39;);
+
+SELECT sum(decode(name,
+                  &#39;physical read IO requests&#39;,
+                  value,
+                  &#39;physical write lO requests&#39;,
+                  value,
+                  0)) AS iops,
+       sum(decode(name,
+                  &#39;physical read bytes&#39;,
+                  value,
+                  &#39;physical write bytes&#39;,
+                  value,
+                  0)) / 1024 / 1024 AS mbps
+  FROM v$sysstat
+ WHERE name IN (&#39;physical read IO requests&#39;,
+                &#39;physical write IO requests&#39;,
+                &#39;physical read bytes&#39;,
+                &#39;physical read total bytes&#39;,
+                &#39;physical write bytes&#39;,
+                &#39;physical write total bytes&#39;,
+                &#39;physical read total IO requests&#39;,
+                &#39;physical write total IO requests&#39;);
+ 
+</code></pre>
+<p>10、内存使用情况</p>
+<p>SGA / PGA 使用情况<br>– pctused: 使用率</p>
+<pre><code>select name,
+       total,
+       round(total - free, 2) used,
+       round(free, 2) free,
+       round((total - free) / total * 100, 2) pctused
+  from (select &#39;SGA&#39; name,
+               (select sum(value / 1024 / 1024) from v$sga) total,
+               (select sum(bytes / 1024 / 1024)
+                  from v$sgastat
+                 where name = &#39;free memory&#39;) free
+          from dual)
+union
+select name,
+       total,
+       round(used, 2) used,
+       round(total - used, 2) free,
+       round(used / total * 100, 2) pctused
+  from (select &#39;PGA&#39; name,
+               (select value / 1024 / 1024 total
+                  from v$pgastat
+                 where name = &#39;aggregate PGA target parameter&#39;) total,
+               (select value / 1024 / 1024 used
+                  from v$pgastat
+                 where name = &#39;total PGA allocated&#39;) used
+          from dual);
+</code></pre>
+<p>11、查询执行最慢的sql</p>
+<pre><code>select *
+  from (select sa.SQL_TEXT,
+               sa.SQL_FULLTEXT,
+               sa.EXECUTIONS &quot;执行次数&quot;,
+               round(sa.ELAPSED_TIME / 1000000, 2) &quot;总执行时间&quot;,
+               round(sa.ELAPSED_TIME / 1000000 / sa.EXECUTIONS, 2) &quot;平均执行时间&quot;,
+               sa.COMMAND_TYPE,
+               sa.PARSING_USER_ID &quot;用户ID&quot;,
+               u.USERNAME &quot;用户名&quot;,
+               sa.HASH_VALUE
+          from v$sqlarea sa
+          left join all_users u
+            on sa.PARSING_USER_ID = u.user_id
+         where sa.EXECUTIONS &gt; 0
+         order by sa.ELAPSED_TIME / sa.EXECUTIONS desc)
+ where rownum &lt;= 50;
+</code></pre>
+<p>12、查询次数最多的sql</p>
+<pre><code>select *
+ from (select s.SQL_TEXT,
+        s.EXECUTIONS &quot;执行次数&quot;,
+        s.PARSING_USER_ID &quot;用户名&quot;,
+        rank() over(order by EXECUTIONS desc) EXEC_RANK
+     from v$sql s
+     left join all_users u
+      on u.USER_ID = s.PARSING_USER_ID) t
+ where exec_rank &lt;= 100;
+</code></pre>
+<p>13、Oracl查询SQL语句执行的耗时</p>
+<pre><code>select a.sql_text SQL语句,
+       b.etime 执行耗时,
+       c.user_id 用户ID,
+       c.SAMPLE_TIME 执行时间,
+       c.INSTANCE_NUMBER 实例数,
+       u.username 用户名, a.sql_id SQL编号
+  from dba_hist_sqltext a,
+       (select sql_id, ELAPSED_TIME_DELTA / 1000000 as etime
+          from dba_hist_sqlstat
+         where ELAPSED_TIME_DELTA / 1000000 &gt;= 1) b,
+       dba_hist_active_sess_history c,
+       dba_users u
+ where a.sql_id = b.sql_id
+   and u.username = &#39;SYNC_PLUS_1_20190109&#39;
+   and c.user_id = u.user_id
+   and b.sql_id = c.sql_id
+  -- and a.sql_text like &#39;%insert into GK_ZWVCH_HSC_NEW      select  %&#39;
+ order by  SAMPLE_TIME desc,
+  b.etime desc;
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Oracle/" rel="tag">Oracle</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-关于oracle数据库性能监控指标（一）"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/06/14/%E5%85%B3%E4%BA%8Eoracle%E6%95%B0%E6%8D%AE%E5%BA%93%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7%E6%8C%87%E6%A0%87%EF%BC%88%E4%B8%80%EF%BC%89/"
+    >关于oracle数据库性能监控指标（一）</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/06/14/%E5%85%B3%E4%BA%8Eoracle%E6%95%B0%E6%8D%AE%E5%BA%93%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7%E6%8C%87%E6%A0%87%EF%BC%88%E4%B8%80%EF%BC%89/" class="article-date">
+  <time datetime="2023-06-14T06:34:56.000Z" itemprop="datePublished">2023-06-14</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>1、当前连接会话数以及当前并发连接个数</p>
+<pre><code>-- 当前活跃用户会话数
+Select count(*) from v$session where status=&#39;ACTIVE&#39; and USERNAME is not null;
+-- 当前活跃系统会话数
+Select count(*) from v$session where USER# = 0;
+-- 当前非活跃会话数
+Select count(*) from v$session where status=&#39;INACTIVE&#39;
+</code></pre>
+<p>2、表空间利用率(各个表空间的大小以及使用情况)</p>
+<pre><code>SELECT UPPER(F.TABLESPACE_NAME) &quot;表空间名&quot;,
+       D.TOT_GROOTTE_MB &quot;表空间大小(M)&quot;,
+       D.TOT_GROOTTE_MB - F.TOTAL_BYTES &quot;已使用空间(M)&quot;,
+       TO_CHAR(ROUND((D.TOT_GROOTTE_MB - F.TOTAL_BYTES) / D.TOT_GROOTTE_MB * 100,
+                     2),
+               &#39;990.99&#39;) || &#39;%&#39; &quot;使用比&quot;,
+       F.TOTAL_BYTES &quot;空闲空间(M)&quot;,
+       F.MAX_BYTES &quot;最大块(M)&quot;
+  FROM (SELECT TABLESPACE_NAME,
+               ROUND(SUM(BYTES) / (1024 * 1024), 2) TOTAL_BYTES,
+               ROUND(MAX(BYTES) / (1024 * 1024), 2) MAX_BYTES
+          FROM SYS.DBA_FREE_SPACE
+         GROUP BY TABLESPACE_NAME) F,
+       (SELECT DD.TABLESPACE_NAME,
+               ROUND(SUM(DD.BYTES) / (1024 * 1024), 2) TOT_GROOTTE_MB
+          FROM SYS.DBA_DATA_FILES DD
+         GROUP BY DD.TABLESPACE_NAME) D
+ WHERE D.TABLESPACE_NAME = F.TABLESPACE_NAME
+ ORDER BY 1;
+</code></pre>
+<p>3、Oracle IOPS(每秒的IO)和吞吐量</p>
+<p>网上给出的答案是这样的。我对这个答案有一些疑惑，如果是物理io请求，那么这样得到的是io的总数，而不是每秒的io啊，另一个方法请看第 18 条。</p>
+<pre><code>SELECT sum(decode(name,
+                  &#39;physical read IO requests&#39;,
+                  value,
+                  &#39;physical write IO requests&#39;,
+                  value,
+                  0)) AS iops,
+       sum(decode(name,
+                  &#39;physical read bytes&#39;,
+                  value,
+                  &#39;physical write bytes&#39;,
+                  value,
+                  0)) / 1024 / 1024 AS mbps
+  FROM v$sysstat
+ WHERE name IN (&#39;physical read IO requests&#39;,
+                &#39;physical write IO requests&#39;,
+                &#39;physical read bytes&#39;,
+                &#39;physical read total bytes&#39;,
+                &#39;physical write bytes&#39;,
+                &#39;physical write total bytes&#39;,
+                &#39;physical read total IO requests&#39;,
+                &#39;physical write total IO requests&#39;);
+</code></pre>
+<p>4、碎片程度</p>
+<pre><code>SELECT tablespace_name,
+       round(sqrt(max(blocks) / sum(blocks)) *
+             (100 / sqrt(sqrt(count(blocks)))),
+             2) FSFI
+  FROM dba_free_space
+ GROUP BY tablespace_name
+ ORDER BY 1;
+</code></pre>
+<p>5、高速缓存命中率</p>
+<pre><code>-- 高速缓存命中率
+SELECT NAME,
+       PHYSICAL_READS,
+       DB_BLOCK_GETS,
+       CONSISTENT_GETS,
+       1 - (PHYSICAL_READS / (DB_BLOCK_GETS + CONSISTENT_GETS)) &quot;Hit Ratio&quot;
+  FROM V$BUFFER_POOL_STATISTICS
+ WHERE NAME = &#39;DEFAULT&#39;;
+-- 或者
+SELECT physical_reads,
+       db_block_gets,
+       consistent_gets,
+       NAME,
+       100 * (1 - (physical_reads /
+       (consistent_gets + db_block_gets - physical_reads))) &quot;Data Buffer Hit Ratio&quot;
+  FROM v$buffer_pool_statistics;
+
+-- 共享池命中率
+select sum(pinhits - reloads) / sum(pins) * 100 &quot;hit radio&quot;
+  from v$librarycache;
+
+-- 共享区字典缓冲区命中率
+select sum(gets - getmisses - usage - fixed) / sum(gets) from v$rowcache;
+
+-- 共享区缓存命中率
+select sum(pins - reloads) / sum(pins) from v$librarycache;
+</code></pre>
+<p>6、库高速缓存命中率</p>
+<pre><code>SELECT TO_CHAR(ROUND((1 - SUM(getmisses) / SUM(gets)) * 100, 1)) || &#39;%&#39; &quot;Dictionary Cache Hit Ratio&quot;
+  FROM v$rowcache;
+</code></pre>
+<p>7、字典缓存命中率</p>
+<pre><code>SELECT sum(gets - getmisses - usage - fixed) / sum(gets) FROM v$rowcache;
+</code></pre>
+<p>8、空闲的共享池内存</p>
+<pre><code>SELECT *
+  FROM V$SGASTAT
+ WHERE NAME = &#39;free memory&#39;
+   AND POOL = &#39;shared pool&#39;;
+</code></pre>
+<p>9、共享池使用率</p>
+<pre><code>SELECT (1 - ROUND(BYTES / (select sum(value) &quot;total sga MB&quot; from v$sga), 2)) * 100 || &#39;%&#39;
+  FROM V$SGASTAT
+ WHERE NAME = &#39;free memory&#39;
+   AND POOL = &#39;shared pool&#39;;
+</code></pre>
+<p>10、数据库服务启动时间</p>
+<pre><code>select * from sys.v_$instance;
+</code></pre>
+<p>11、共享缓冲池中重做日志命中率</p>
+<pre><code>SELECT name,
+       gets,
+       misses,
+       immediate_gets,
+       immediate_misses,
+       Decode(gets, 0, 0, misses / gets * 100) ratio1,
+       Decode(immediate_gets + immediate_misses,
+              0,
+              0,
+              immediate_misses / (immediate_gets + immediate_misses) * 100) ratio2
+  FROM v$latch
+ WHERE name IN (&#39;redo allocation&#39;, &#39;redo copy&#39;);
+</code></pre>
+<p>12、当前oracle所有进程执行进度</p>
+<pre><code>--当前进程的数量
+select count(*) from v$process;
+
+SELECT A.USERNAME,
+       A.TARGET,
+       A.SID,
+       a.SERIAL#,
+       A.OPNAME,
+       ROUND(A.SOFAR * 100 / A.TOTALWORK, 0) || &#39;%&#39; AS &quot;执行进度&quot;,
+       A.TIME_REMAINING &quot;剩余秒数&quot;,
+       TRUNC(A.TIME_REMAINING / 60, 2) &quot;剩余分钟&quot;,
+       TRUNC(A.TIME_REMAINING / 60 / 60, 2) &quot;剩余小时&quot;,
+       B.SQL_TEXT &quot;执行SQL&quot;,
+       B.LAST_ACTIVE_TIME &quot;开始时间&quot;
+  FROM V$SESSION_LONGOPS A, V$SQLAREA B
+ WHERE A.TIME_REMAINING &lt;&gt; 0
+   AND A.SQL_ADDRESS = B.ADDRESS
+   AND A.SQL_HASH_VALUE = B.HASH_VALUE
+</code></pre>
+<p>13a、查询SGA和PGA的使用情况</p>
+<pre><code>select name,
+       round(total, 2),
+       round(total - free, 2) used,
+       round(free, 2) free,
+       round((total - free) / total * 100, 2) pctused
+  from (select &#39;SGA&#39; name,
+               (select sum(value / 1024 / 1024) from v$sga) total,
+               (select sum(bytes / 1024 / 1024)
+                  from v$sgastat
+                 where name = &#39;free memory&#39;) free
+          from dual)
+union
+select name,
+       round(total, 2),
+       round(used, 2) used,
+       round(total - used, 2) free,
+       round(used / total * 100, 2) pctused
+  from (select &#39;PGA&#39; name,
+               (select value / 1024 / 1024 total
+                  from v$pgastat
+                 where name = &#39;aggregate PGA target parameter&#39;) total,
+               (select value / 1024 / 1024 used
+                  from v$pgastat
+                 where name = &#39;total PGA allocated&#39;) used
+          from dual);
+</code></pre>
+<p>13b、查看会话的内存占用情况</p>
+<pre><code>SELECT server &quot;连接类型&quot;,
+       s.username &quot;用户名&quot;,
+       OSUSEr &quot;系统用户&quot;,
+       NAME,
+       round(VALUE / 1024 / 1024, 2) &quot;占用内存(M)&quot;,
+       s.SID &quot;会话ID&quot;,
+       s.serial# 会话序列号,
+       spid &quot;系统进程ID&quot;,
+       p.PGA_USED_MEM,
+       p.PGA_ALLOC_MEM,
+       p.PGA_FREEABLE_MEM,
+       p.PGA_MAX_MEM
+  FROM v$session s, v$sesstat st, v$statname sn, v$process p
+ WHERE st.SID = s.SID
+   AND st.statistic# = sn.statistic#
+   AND sn.NAME LIKE &#39;session pga memory&#39;
+   AND p.addr = s.paddr
+ ORDER BY VALUE DESC;
+</code></pre>
+<p>14、查询耗时最长的10条sql</p>
+<pre><code>select *
+  from (select v.sql_id,
+               v.child_number,
+               v.sql_text,
+               v.elapsed_time,
+               v.cpu_time,
+               v.disk_reads,
+               rank() over(order by v.elapsed_time desc) elapsed_rank
+          from v$sql v) a
+ where elapsed_rank &lt;= 10;
+</code></pre>
+<p>15、MTS</p>
+<pre><code>select busy / (busy + idle) shared_servers_busy from v$dispatcher;
+</code></pre>
+<p>16、表级锁</p>
+<pre><code>select sess.sid,
+       sess.serial#,
+       lo.oracle_username,
+       lo.os_user_name,
+       ao.object_name,
+       lo.locked_mode
+  from v$locked_object lo, dba_objects ao, v$session sess
+ where ao.object_id = lo.object_id
+   and lo.session_id = sess.sid;
+</code></pre>
+<p>17、正在等待锁的所有会话</p>
+<pre><code>SELECT * FROM DBA_WAITERS;
+</code></pre>
+<p>18、TPS,QPS,MBPS</p>
+<pre><code>SELECT &#39;Qps|&#39; AS begin1,
+       (SELECT sum(value)
+          FROM gv$sysmetric
+         WHERE metric_name = &#39;I/O Requests per Second&#39;) AS b1,
+       &#39;|&#39; AS end1,
+       &#39;Tps|&#39; AS begin2,
+       (SELECT sum(value)
+          FROM gv$sysmetric
+         WHERE metric_name = &#39;User Transaction Per Sec&#39;) AS b2,
+       &#39;|&#39; AS end2,
+       &#39;Mbps|&#39; AS begin3,
+       (SELECT sum(value)
+          FROM gv$sysmetric
+         WHERE metric_name = &#39;I/O Megabytes per Second&#39;) AS b3,
+       &#39;|&#39; AS end3
+  FROM dual;
+</code></pre>
+<p>19、数据库容量大小（GB）以及数据库各个表空间大小</p>
+<pre><code>-- 数据库总大小
+SELECT ROUND(SUM(BYTES) / 1024 / 1024 / 1024, 2) || &#39;GB&#39;
+  FROM DBA_DATA_FILES;
+-- 数据库各个表空间大小
+select tablespace_name, sum(bytes) / 1024 / 1024 as MB
+  from dba_data_files
+ group by tablespace_name;
+</code></pre>
+<p>20、审计信息</p>
+<pre><code>-- 具体的审计信息
+select * from dba_audit_trail;
+--是否打开审计功能 (默认是未开启，NONE表示未开启，其他的应该就是开启，比如 DB_EXTENDED)
+SELECT * from v$parameter WHERE name = &#39;audit_trail&#39;;
+</code></pre>
+<p>21、当前数据库的版本信息</p>
+<pre><code>SELECT * from v$version;
+</code></pre>
+<p>22、获取不用用户不同操作的审计执行频率</p>
+<pre><code>SELECT username, action_name, count(*) c
+  FROM dba_audit_trail
+ GROUP BY username, action_name
+ ORDER BY c DESC;
+</code></pre>
+<p>23、查询不同用户的连接数</p>
+<pre><code>SELECT username, count(username)
+  FROM v$session
+ WHERE username IS NOT NULL
+ GROUP BY username;
+</code></pre>
+<p>24、被锁定或者已经过期的用户</p>
+<pre><code>select username, lock_date
+  from dba_users
+ WHERE ACCOUNT_STATUS in (&#39;LOCKED&#39;, &#39;EXPIRED &amp; LOCKED&#39;)
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Oracle/" rel="tag">Oracle</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-Oracle的SGA、PGA是什么？有什么用？"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/06/13/Oracle%E7%9A%84SGA%E3%80%81PGA%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F%E6%9C%89%E4%BB%80%E4%B9%88%E7%94%A8%EF%BC%9F/"
+    >Oracle的SGA、PGA是什么？有什么用？</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/06/13/Oracle%E7%9A%84SGA%E3%80%81PGA%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F%E6%9C%89%E4%BB%80%E4%B9%88%E7%94%A8%EF%BC%9F/" class="article-date">
+  <time datetime="2023-06-13T03:31:44.000Z" itemprop="datePublished">2023-06-13</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>PGA(程序缓存区)与SGA(系统全局区)类似，都是Oracle数据库系统为会话在服务器内存中分配的区域。不过两者的作用不同，共享程度也不同。</p>
+<p>SGA系统全局区顾名思义，是对系统内的所有进程都是共享的。当多个用户同时连接到一个例程时，所有的用户进程、服务进程都可以共享使用这个SGA区。为此这个SGA的主要用途就是为不同用户之间的进程与服务进程提供一个交流的平台。除了这个作用，另外有一个重要的作用就是各种数据库的操作主要就是在这个SGA区内完成。</p>
+<p>而PGA程序缓冲区则主要是为了某个用户进程所服务的。这个内存区不是共享的，只有这个用户的服务进程本身才能够访问它自己的PGA区。做个形象的比喻，SGA就好像是操作系统上的一个共享文件夹，不同用户可以以此为平台进行数据方面的交流。而PGA就好像是操作系统上的一个私有文件夹，只有这个文件夹的所有者才能够进行访问，其他用户都不能够访问。虽然程序缓存区不像其他用户的进程开放，但是这个内存区仍然肩负着一些重要的使命，如数据排序、权限控制等等都离不开这个内存区。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Oracle/" rel="tag">Oracle</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-Oracle查看表空间使用情况"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/06/12/Oracle%E6%9F%A5%E7%9C%8B%E8%A1%A8%E7%A9%BA%E9%97%B4%E4%BD%BF%E7%94%A8%E6%83%85%E5%86%B5/"
+    >Oracle查看表空间使用情况</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/06/12/Oracle%E6%9F%A5%E7%9C%8B%E8%A1%A8%E7%A9%BA%E9%97%B4%E4%BD%BF%E7%94%A8%E6%83%85%E5%86%B5/" class="article-date">
+  <time datetime="2023-06-12T12:47:21.000Z" itemprop="datePublished">2023-06-12</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="Part1"><a href="#Part1" class="headerlink" title="Part1"></a>Part1</h1><p>1、查看所有表空间大小</p>
+<pre><code>select tablespace_name,sum(bytes)/1024/1024 from dba_data_files group by tablespace_name;
+</code></pre>
+<p>2、未使用的表空间大小</p>
+<pre><code>select tablespace_name,sum(bytes)/1024/1024 from dba_free_space   
+group by tablespace_name;   
+</code></pre>
+<p>3、所以使用空间可以这样计算</p>
+<pre><code>select a.tablespace_name,total,free,total-free used from   
+( select tablespace_name,sum(bytes)/1024/1024 total from dba_data_files   
+group by tablespace_name) a,   
+( select tablespace_name,sum(bytes)/1024/1024 free from dba_free_space   
+group by tablespace_name) b   
+where a.tablespace_name=b.tablespace_name;   
+</code></pre>
+<p>4、还有在命令行情况下如何将结果放到一个文件里。</p>
+<pre><code>SQL&gt; spool out.txt   
+SQL&gt; select * from v$database;   
+SQL&gt; spool off
+</code></pre>
+<p>5、查询所有的表空间</p>
+<pre><code>select tablespace_name from dba_tablespaces  
+</code></pre>
+<p>6、查看表空间中分布的用户信息</p>
+<pre><code>select tablespace_name, owner,sum(bytes) from dba_segments   
+group by tablespace_name, owner   
+</code></pre>
+<h1 id="Part2"><a href="#Part2" class="headerlink" title="Part2"></a>Part2</h1><p>查看Oracle数据库表空间大小，是否需要增加表空间的数据文件<br>在数据库管理中，磁盘空间不足是DBA都会遇到的问题，问题比较常见。</p>
+<p>1、查看表空间已经使用的百分比</p>
+<pre><code>select a.tablespace_name,a.bytes/1024/1024 &quot;Sum MB&quot;,(a.bytes-b.bytes)/1024/1024 &quot;used MB&quot;,b.bytes/1024/1024 &quot;free MB&quot;,round(((a.bytes-b.bytes)/a.bytes)*100,2) &quot;percent_used&quot;  
+from  
+(select tablespace_name,sum(bytes) bytes from dba_data_files group by tablespace_name) a,   
+(select tablespace_name,sum(bytes) bytes,max(bytes) largest from dba_free_space group by tablespace_name) b   
+where a.tablespace_name=b.tablespace_name   
+order by ((a.bytes-b.bytes)/a.bytes) desc  
+</code></pre>
+<p>“Sum MB”表示表空间所有的数据文件总共在操作系统占用磁盘空间的大小<br>比如：test表空间有2个数据文件，datafile1为300MB，datafile2为400MB，那么test表空间的“Sum MB”就是700MB<br>“userd MB”表示表空间已经使用了多少<br>“free MB”表示表空间剩余多少<br>“percent_user”表示已经使用的百分比</p>
+<p>2、比如从1中查看到MLOG_NORM_SPACE表空间已使用百分比达到90%以上，可以查看该表空间总共有几个数</p>
+<p>据文件，每个数据文件是否自动扩展，可以自动扩展的最大值。</p>
+<pre><code>select file_name,tablespace_name,bytes/1024/1024 &quot;bytes MB&quot;,maxbytes/1024/1024 &quot;maxbytes MB&quot; from dba_data_files  
+  where tablespace_name=&#39;MLOG_NORM_SPACE&#39;;   
+</code></pre>
+<p>2.1、查看 xxx 表空间是否为自动扩展</p>
+<pre><code>select file_id,file_name,tablespace_name,autoextensible,increment_by from dba_data_files order by file_id desc;  
+select file_id,file_name,tablespace_name,autoextensible,increment_by from dba_data_files order by file_id desc;
+</code></pre>
+<p>3、比如MLOG_NORM_SPACE表空间目前的大小为19GB，但最大每个数据文件只能为20GB，数据文件快要写满，可以增加表空间的数据文件<br>用操作系统UNIX、Linux中的df -g命令(查看下可以使用的磁盘空间大小)<br>获取创建表空间的语句：</p>
+<pre><code>select    dbms_metadata.get_ddl(&#39;TABLESPACE&#39;,&#39;MLOG_NORM_SPACE&#39;)   from    dual;  
+select dbms_metadata.get_ddl(&#39;TABLESPACE&#39;,&#39;MLOG_NORM_SPACE&#39;) from dual;
+</code></pre>
+<p>4、确认磁盘空间足够，增加一个数据文件</p>
+<pre><code>alter    tablespace    MLOG_NORM_SPACE   
+add    datafile   &#39;/oracle/oms/oradata/mlog/Mlog_Norm_data001.dbf&#39;  
+size    10M    autoextend   on    maxsize    20G 
+</code></pre>
+<p>5、验证已经增加的数据文件</p>
+<pre><code>select    file_name,file_id,tablespace_name   from    dba_data_files   
+where    tablespace_name=&#39;MLOG_NORM_SPACE&#39; 
+</code></pre>
+<p>6、如果删除表空间数据文件，如下：</p>
+<pre><code>alter    tablespace    MLOG_NORM_SPACE   
+drop     datafile &#39;/oracle/oms/oradata/mlog/Mlog_Norm_data001.dbf&#39;  
+</code></pre>
+<p>转自<a target="_blank" rel="noopener" href="http://space.itpub.net/12778571/viewspace-582695">http://space.itpub.net/12778571/viewspace-582695</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Oracle/" rel="tag">Oracle</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-Oracle监控的关键指标"
   class="article article-type-post"
   itemscope
@@ -378,364 +1246,13 @@ where c.statistic#=12 and c.sid=a.sid and a.paddr=b.addr order by value desc
 </article>
 
     
-    <article
-  id="post-REST模式：POST，GET，PUT，DELETE，PATCH的含义与区别"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/06/10/REST%E6%A8%A1%E5%BC%8F%EF%BC%9APOST%EF%BC%8CGET%EF%BC%8CPUT%EF%BC%8CDELETE%EF%BC%8CPATCH%E7%9A%84%E5%90%AB%E4%B9%89%E4%B8%8E%E5%8C%BA%E5%88%AB/"
-    >REST模式：POST，GET，PUT，DELETE，PATCH的含义与区别</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/06/10/REST%E6%A8%A1%E5%BC%8F%EF%BC%9APOST%EF%BC%8CGET%EF%BC%8CPUT%EF%BC%8CDELETE%EF%BC%8CPATCH%E7%9A%84%E5%90%AB%E4%B9%89%E4%B8%8E%E5%8C%BA%E5%88%AB/" class="article-date">
-  <time datetime="2023-06-10T02:15:20.000Z" itemprop="datePublished">2023-06-10</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>根据HTTP规范:</p>
-<ol>
-<li><p>GET 用于信息获取，而且是安全的和幂等的<br>GET请求是安全的。所谓安全是指不管进行多少次操作，资源的状态都不会改变。该请求就像数据库的select操作一样，只是用来查询一下数据，不会修改、增加数据，不会影响资源的内容，即该请求不会产生副作用。无论进行多少次操作，结果都是一样的。</p>
-</li>
-<li><p>POST 用于创建数据，不是安全和幂等的<br>POST请求既不是安全的，也不是幂等的，比如常见的POST重复加载问题：当我们多次发出同样的POST请求后，其结果是创建出了若干的资源。</p>
-</li>
-<li><p>PUT 用于创建或完整更新数据，而且是安全和幂等的<br>PUT请求是向服务器端发送数据的，从而改变信息，该请求就像数据库的update操作一样，用来修改完整的数据内容，但是不会增加数据的种类等，也就是说无论进行多少次PUT操作，其结果并没有不同。</p>
-</li>
-<li><p>DELETE 用于删除数据，而且是安全和幂等的<br>DELETE请求顾名思义，就是用来删除某一个资源的，该请求就像数据库的delete操作，无论进行多少次DELETE操作，其结果并没有不同。</p>
-</li>
-<li><p>PATCH 用于更新部分数据，不是安全和幂等的<br>PATCH请求是对PUT请求的补充，一般用来对已知资源部分更新，是后来新出的标准，GitHub Api也开始使用。</p>
-</li>
-</ol>
-<p>更多详细的介绍可以参考RESTful[<a target="_blank" rel="noopener" href="http://sofish.github.io/restcookbook/]%E6%89%8B%E5%86%8C">http://sofish.github.io/restcookbook/]手册</a></p>
-<p>————————————————<br>版权声明：本文为CSDN博主「Marsin_csdn」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/Marsin_csdn/article/details/123956033">https://blog.csdn.net/Marsin_csdn/article/details/123956033</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTTP/" rel="tag">HTTP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/REST/" rel="tag">REST</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-政策再加码，国办发文让充电更方便"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/06/09/%E6%94%BF%E7%AD%96%E5%86%8D%E5%8A%A0%E7%A0%81%EF%BC%8C%E5%9B%BD%E5%8A%9E%E5%8F%91%E6%96%87%E8%AE%A9%E5%85%85%E7%94%B5%E6%9B%B4%E6%96%B9%E4%BE%BF/"
-    >政策再加码，国办发文让充电更方便</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/06/09/%E6%94%BF%E7%AD%96%E5%86%8D%E5%8A%A0%E7%A0%81%EF%BC%8C%E5%9B%BD%E5%8A%9E%E5%8F%91%E6%96%87%E8%AE%A9%E5%85%85%E7%94%B5%E6%9B%B4%E6%96%B9%E4%BE%BF/" class="article-date">
-  <time datetime="2023-06-09T06:54:40.000Z" itemprop="datePublished">2023-06-09</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>充电桩是新能源汽车快速发展不可或缺的一环，对于新能源汽车车主及观望者来说，充电问题始终是最大的关注点之一。近日，国务院办公厅印发《关于进一步构建高质量充电基础设施体系的指导意见》（以下简称《指导意见》），对充电基础设施建设作出具体部署。</p>
-<p>截至2022年底，全国新能源汽车保有量达1310万辆，其中纯电动汽车保有量为1045万辆，而全国充电基础设施累计数量为521万台。全国新能源汽车保有量与全国累计建成充电桩数量的比例约为2.5:1。当前充电桩数量并不能完全满足新能源汽车的充电需求，如何让充电变得更方便，也是《指导意见》关注的重点。</p>
-<p>《指导意见》为新能源汽车充电基础设施建设指出发展目标——到2030年，基本建成覆盖广泛、规模适度、结构合理、功能完善的高质量充电基础设施体系，有力支撑新能源汽车产业发展，有效满足人民群众出行充电需求。</p>
-<p>西南大学经济管理学院教授、博士生导师刘自敏在接受人民网“强观察”栏目记者采访时表示，在“双碳”目标的大背景下，能源结构转型势在必行，而新能源汽车革命正是大势所趋。高质量的充电基础设施建立之后，新能源汽车的普及率会进一步提高，刺激消费市场的同时，也将更好地推动“双碳”目标的实现。</p>
-<p>在城市充电网络方面，《指导意见》指出，以“两区”（居住区、办公区）、“三中心”（商业中心、工业中心、休闲中心）为重点，推动城市充电网络从中心城区向城区边缘、从优先发展区域向其他区域有序延伸。</p>
-<p>“在一定程度上能够解决城市居民高峰期充电难的问题。”刘自敏表示，《指导意见》提出在居住区积极推广智能有序慢充为主、应急快充为辅的充电基础设施，在办公区和“三中心”等城市专用和公用区域因地制宜布局建设快慢结合的公共充电基础设施，主要是从空间上有效调节上班族人群充电难的问题。</p>
-<p>他还提到，充电高峰期也应与电价相关联。有些地市在凌晨时段电价降低，如果能从这方面引导消费者，让充电高峰期不仅仅局限于集中时段，而是更加均匀地分布，充电难的问题也能得到有效解决。</p>
-<p>此外，《指导意见》多项举措都涉及到农村充电设施的布局，提出要建设有效覆盖农村地区的充电网络。</p>
-<p>记者梳理发现，近期，国家频频出台政策促进农村地区充换电设施发展。</p>
-<p>5月5日，国常会部署加快建设充电基础设施，更好支持新能源汽车下乡和乡村振兴；5月17日，国家发展改革委、国家能源局印发《关于加快推进充电基础设施建设更好支持新能源汽车下乡和乡村振兴的实施意见》，支持农村地区购买使用新能源汽车。</p>
-<p>在刘自敏看来，自2020年国家开展新能源汽车下乡活动以来，新能源汽车在农村销量不断增加，但充电设施基础薄弱。“新能源汽车在乡村市场具有比城市更大的普及潜力，但只有基础设施得到较好保障的情况下，农村新能源汽车的潜在需求才会转化为更大的消费需求和真正的购买行为。”</p>
-<p>“《指导意见》提出的积极推动在县级城市城区建设公共直流快充站是个亮点。”刘自敏表示，农村地区的人口密度不同于城市，在物流或资金流相对密集的区域去布局充电基础设施，能够起到有效推动城镇化发展和经济聚集的作用。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%94%B5%E5%8A%9B/" rel="tag">电力</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-k8s监控指标及原因"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/06/08/k8s%E7%9B%91%E6%8E%A7%E6%8C%87%E6%A0%87%E5%8F%8A%E5%8E%9F%E5%9B%A0/"
-    >k8s监控指标及原因</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/06/08/k8s%E7%9B%91%E6%8E%A7%E6%8C%87%E6%A0%87%E5%8F%8A%E5%8E%9F%E5%9B%A0/" class="article-date">
-  <time datetime="2023-06-08T03:38:25.000Z" itemprop="datePublished">2023-06-08</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>Kubernetes 每天可以生成数百万个新指标。监控集群健康状况最具挑战性的方面之一是筛选哪些指标是重要的，需要收集和关注。</p>
-<p>在本文中，我将定义应该监控和创建警报的 16 个关键 Kubernetes 指标。公司组织的列表可能略有不同，但在制定组织的 Kubernetes 监控策略时，这 16 个是了解k8s集群监控状态最好的指标。</p>
-<p>原文链接：<a target="_blank" rel="noopener" href="https://www.circonus.com/2020/12/12-critical-kubernetes-health-conditions-you-need-to-monitor-and-why/">https://www.circonus.com/2020/12/12-critical-kubernetes-health-conditions-you-need-to-monitor-and-why/</a><br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/439374032">https://zhuanlan.zhihu.com/p/439374032</a></p>
-<h1 id="1、Crash-Loops"><a href="#1、Crash-Loops" class="headerlink" title="1、Crash Loops"></a>1、Crash Loops</h1><p>crash loops是指 pod 启动、崩溃，然后不断尝试重新启动但不能（它在循环中不断崩溃和重新启动）。当发生这种情况时，应用程序将无法运行。</p>
-<p>可能是由 pod 中的应用程序崩溃引起的<br>可能是由 pod 或部署过程中的错误配置引起的<br>当发生crash loops时，需要查看日志来解决问题。<br>可以使用开源组件kube-eventer来推送事件。</p>
-<h1 id="2、CPU-Utilization"><a href="#2、CPU-Utilization" class="headerlink" title="2、CPU Utilization"></a>2、CPU Utilization</h1><p>CPU 使用率就是节点正在使用的 CPU 的使用率。出于两个原因进行监控很重要：</p>
-<p>应用程序不能使用完应用程序分配的cpu。如果应用程序受 CPU 限制，则需要增加 CPU 分配或者增加pod数量。最终需要增加服务器来解决。<br>你不希望你的 CPU 坐在那里闲置。如果服务器 CPU 使用率一直很低，可能过度分配了资源并可能浪费金钱。</p>
-<h1 id="3、Disk-Pressure"><a href="#3、Disk-Pressure" class="headerlink" title="3、Disk Pressure"></a>3、Disk Pressure</h1><p>根据 Kubernetes 配置中设置的阈值，磁盘压力是指示节点使用过多磁盘空间或使用磁盘空间过快的条件。</p>
-<p>如果应用程序合法地需要更多空间，这可能意味着需要添加更多磁盘空间。<br>应用程序行为异常并以意外的方式过早地填满了磁盘。</p>
-<h1 id="4、Memory-Pressure"><a href="#4、Memory-Pressure" class="headerlink" title="4、Memory Pressure"></a>4、Memory Pressure</h1><p>Memory Pressure是另一种资源状况，表明节点内存不足。</p>
-<p>需要注意这种情况，因为这可能意味应用程序中存在内存泄漏。</p>
-<h1 id="5、PID-Pressure"><a href="#5、PID-Pressure" class="headerlink" title="5、PID Pressure"></a>5、PID Pressure</h1><p>PID 压力是一种罕见的情况，即 Pod 或容器产生过多进程并使节点缺乏可用进程 ID。</p>
-<p>每个节点都有有限数量的进程 ID 来分配给正在运行的进程；<br>如果 ID 用完，则无法启动其他进程。<br>Kubernetes 允许为 pod 设置 PID 阈值以限制它们执行失控进程生成的能力，而 PID 压力条件意味着一个或多个 pod 正在用完分配的 PID，需要进行检查。</p>
-<h1 id="6、Network-Unavailable"><a href="#6、Network-Unavailable" class="headerlink" title="6、Network Unavailable"></a>6、Network Unavailable</h1><p>所有节点都需要网络连接，Network Unavailable此状态表明节点的网络连接有问题。</p>
-<p>要么设置不正确（由于路由耗尽或配置错误），要么与硬件的网络连接存在物理问题。<br>可以使用开源组件KubeNurse进行集群网络监控</p>
-<h1 id="7、Job-Failures"><a href="#7、Job-Failures" class="headerlink" title="7、Job Failures"></a>7、Job Failures</h1><p>作业旨在在有限的时间内运行 Pod，并在完成预期功能后将其释放。</p>
-<p>如果作业因节点崩溃或重新启动或资源耗尽而未能成功完成，需要要知道作业失败。<br>通常并不意味着您的应用程序无法访问，但如果不加以修复，它可能会导致以后会出现问题。<br>可以使用开源组件kube-eventer来推送事件。</p>
-<h1 id="8、Persistent-Volume-Failures"><a href="#8、Persistent-Volume-Failures" class="headerlink" title="8、Persistent Volume Failures"></a>8、Persistent Volume Failures</h1><p>持久卷是在集群上指定的存储资源，可用作任何请求它的 Pod 的持久存储。在它们的生命周期中，它们被绑定到一个 Pod，然后在该 Pod 不再需要时回收。</p>
-<p>如果该回收因任何原因失败，需要知道的持久存储有问题。</p>
-<h1 id="9、Pod-Pending-Delays"><a href="#9、Pod-Pending-Delays" class="headerlink" title="9、Pod Pending Delays"></a>9、Pod Pending Delays</h1><p>在 pod 的生命周期中，如果它正在等待在节点上进行调度，则其状态为“pending”。如果它停留在“pending”状态，通常意味着没有足够的资源来安排和部署 pod。</p>
-<p>将需要更新 CPU 和内存分配、删除 Pod 或向集群添加更多节点。<br>可以使用开源组件kube-eventer来推送事件。</p>
-<h1 id="10、Deployment-Glitches"><a href="#10、Deployment-Glitches" class="headerlink" title="10、Deployment Glitches"></a>10、Deployment Glitches</h1><p>Deployment Glitches部署用于管理无状态应用程序——其中 Pod 是可互换的，不需要能够访问任何特定的单个 Pod，而只需访问特定类型的 Pod。</p>
-<p>需要密切关注部署以确保它们正确完成。最好的方法是确保观察到的部署数量与所需的部署数量相匹配。如果不匹配，则一个或多个部署失败。</p>
-<h1 id="11、StatefulSets-Not-Ready"><a href="#11、StatefulSets-Not-Ready" class="headerlink" title="11、StatefulSets Not Ready"></a>11、StatefulSets Not Ready</h1><p>StatefulSets 用于管理有状态的应用程序，其中 Pod 具有特定的角色，需要访问其他特定的 Pod；而不是像部署那样只需要特定类型的 pod。</p>
-<p>确保观察到的 StatefulSet 的数量与所需的 StatefulSet 的数量相匹配。如果不匹配，则一个或多个 StatefulSet 失败。<br>可以使用开源组件kube-eventer来推送事件。</p>
-<h1 id="12、DaemonSets-Not-Ready"><a href="#12、DaemonSets-Not-Ready" class="headerlink" title="12、DaemonSets Not Ready"></a>12、DaemonSets Not Ready</h1><p>DaemonSets 用于管理需要在集群中的所有节点上运行的服务或应用程序。每个节点上运行日志收集守护进程（filebeat）或监控服务，需要使用 DaemonSet。</p>
-<p>确保观察到的 DaemonSet 数量与所需的 DaemonSet 数量相匹配。如果不匹配，则一个或多个 DaemonSet 失败。<br>可以使用开源组件kube-eventer来推送事件。</p>
-<h1 id="13、etcd-Leaders"><a href="#13、etcd-Leaders" class="headerlink" title="13、etcd Leaders"></a>13、etcd Leaders</h1><p>etcd 集群应该总是有一个领导者（除了在改变领导者的过程中，这应该很少发生）。</p>
-<p>etcd_server_has_leader，etcd中是否有leader。<br>leader的改变次数etcd_server_leader_changes_seen_total，则可能表明 etcd 集群中存在连接或资源问题。</p>
-<h1 id="14、Scheduler-Problems"><a href="#14、Scheduler-Problems" class="headerlink" title="14、Scheduler Problems"></a>14、Scheduler Problems</h1><p>调度器有两个方面值得关注。</p>
-<p>应该进行监控，scheduler_schedule_attempts_total{result:unschedulable}因为不可调度 Pod 的增加可能意味着您的集群存在资源问题。<br>其次，应该使用上述延迟指标之一密切关注调度程序延迟。Pod 调度延迟的增加可能会导致其他问题，也可能表明集群中存在资源问题。</p>
-<h1 id="15、Events"><a href="#15、Events" class="headerlink" title="15、Events"></a>15、Events</h1><p>除了从 Kubernetes 集群收集数字指标之外，从集群收集和跟踪事件也很有用。集群事件能监控 pod 生命周期并观察重大的 pod 故障，并且观察从集群流出的事件速率可以是一个很好的早期预警指标。如果事件发生率突然或显着变化，则可能表明出现问题。</p>
-<p>可以使用开源组件kube-eventer来推送事件。</p>
-<h1 id="16、Application-Metrics"><a href="#16、Application-Metrics" class="headerlink" title="16、Application Metrics"></a>16、Application Metrics</h1><p>与我们上面检查的其他指标和事件不同，应用程序指标不是从 Kubernetes 本身发出的，而是从集群运行的工作负载发出的。从应用程序的角度来看，这种遥测可以是重要的任何内容：错误响应、请求延迟、处理时间等。关于如何收集应用程序指标有两种哲学。</p>
-<p>第一个（直到最近才被广泛采用）是指标应该从应用程序“推送”到收集端点。<br>第二个指标收集理念（越来越广泛采用）是指标应该由收集代理从应用程序中“拉取”。这使得应用程序更容易编写，因为他们所要做的就是适当地发布他们的指标，但应用程序不必担心如何提取或抓取这些指标。这就是 OpenMetrics 的工作方式，也是收集 Kubernetes 集群指标的方式。当此技术与收集代理的服务发现相结合时，它创建了一种强大的方法，可以从集群应用程序中收集您需要的任何类型的指标。</p>
-<h1 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h1><p>与 Kubernetes 的大多数方面一样，监控 Kubernetes 运行状况可能是一个复杂且具有挑战性的过程。很容易不知所措。通过了解最需要关注的高价值的指标，至少可以开始制定一项策略，能够过滤掉集群产生的大量数据噪音，并更有信心解决最重要的问题，以确保良好的体验。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%80%A7%E8%83%BD/" rel="tag">服务器性能</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%9B%91%E6%8E%A7%E6%8C%87%E6%A0%87/" rel="tag">监控指标</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-服务器性能监控及其指标介绍"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/06/07/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7%E5%8F%8A%E5%85%B6%E6%8C%87%E6%A0%87%E4%BB%8B%E7%BB%8D/"
-    >服务器性能监控及其指标介绍</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/06/07/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7%E5%8F%8A%E5%85%B6%E6%8C%87%E6%A0%87%E4%BB%8B%E7%BB%8D/" class="article-date">
-  <time datetime="2023-06-07T03:07:01.000Z" itemprop="datePublished">2023-06-07</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>服务器的性能监控，在历史的长河里，随时计算机的发展也在进行着变化。从最开始的手动登录服务器检查问题，包括有哪些人登录到服务器，打开日志，运行过哪些命令，慢慢地变为现在的专业监控软件，集成化的监测性能指标，智能关联分析，使服务器的性能监控更加全完更加完善。那么针对服务器的性能我们需要了解具体哪些性能点，才能更好的判断服务器的运行状态呢？ 以下介绍一些较重要的性能汇总要点和软件。</p>
-<h1 id="性能汇总要点"><a href="#性能汇总要点" class="headerlink" title="性能汇总要点"></a>性能汇总要点</h1><h2 id="CPU使用率"><a href="#CPU使用率" class="headerlink" title="CPU使用率"></a>CPU使用率</h2><p>检查CPU使用情况，查看正在处理器使用的百分比。根据具体需求，你可能需要了解CPU总体使用情况以及按流程或用户划分的细节，查看流程和用户的额外颗粒度，在问题出现时更容易进行故障排除。</p>
-<h2 id="内存使用情况"><a href="#内存使用情况" class="headerlink" title="内存使用情况"></a>内存使用情况</h2><p>总共用了多少内存以及单个进程和用户进和。根据需要，可以按百分比和/或GB/MB监控内存之使用情况。</p>
-<h2 id="磁盘使用情况"><a href="#磁盘使用情况" class="headerlink" title="磁盘使用情况"></a>磁盘使用情况</h2><p>使用了多少磁盘空间。与内存使用情况类似，可以按百分比或空间来监控磁盘使用情况。还应该跟踪inode的使用情况，Inode用于存储系统中文件系统对象的信息。耗尽inode不常见，但还是要检查一下，如果你碰巧知道服务器上运行的应用程序往往有很多小文件，就像一些CI/CD工具那样。</p>
-<h2 id="运行时间"><a href="#运行时间" class="headerlink" title="运行时间"></a>运行时间</h2><p>对于虚拟服务器，正常运行时间是服务器运行的时间。监控主要是为了查看服务器是否经历了意外重启。</p>
-<h2 id="网络活动"><a href="#网络活动" class="headerlink" title="网络活动"></a>网络活动</h2><p>监控网络流量需要哪些精确度，取决于服务器托管的内容。在通常情况下，即使运行静态站点但未主动访问的服务器也会看到运行在其上的其他进程的I/O，服务器网络不应该降到0。</p>
-<h2 id="Swap使用"><a href="#Swap使用" class="headerlink" title="Swap使用"></a>Swap使用</h2><p>Swap交换空间是保留的磁盘空间，是在可用内存不足时补充内存使用量。你的系统如何积极地使用交换空间取决于如何在1（低）到100（高）的范围内配置它的“swappiness”。如果要在系统内出现内存问题时允许进行一些交换而不完全禁用它（为0），使用10或更小的值是一个常态。当查看“交换空间使用情况”时，我们通常会看交换空间使用情况是否显著上升。如果真是如此，需要查内存和其他资源，看看自己是否可以挖掘到原因。</p>
-<h1 id="Linux下相关命令"><a href="#Linux下相关命令" class="headerlink" title="Linux下相关命令"></a>Linux下相关命令</h1><h2 id="top"><a href="#top" class="headerlink" title="top"></a>top</h2><p>一个很方便的工具，允许我们查看正常运行时间，内存使用情况，CPU使用情况以及交换空间等内容。我们还可以查看其它信息：包括其它正在运行的进程，用于运行该进程的命令等。通过按q键退出top命令行。</p>
-<h2 id="htop"><a href="#htop" class="headerlink" title="htop"></a>htop</h2><p>htop是Linux系统中的一个互动的进程查看器，一个文本模式的应用程序(在控制台或者X终端中)，需要ncurses。与传统的top相比，htop更加人性化。它可让用户交互式操作，支持颜色主题，可横向或纵向滚动浏览进程列表，并支持鼠标操作。与top相比，htop有如下的优点：</p>
-<p>可以横向或纵向滚动浏览进程列表，以便看到所有的进程和完整的命令行。</p>
-<p>在启动上，比top 更快。杀进程时不需要输入进程号。htop 支持鼠标操作。</p>
-<h2 id="tcpdump"><a href="#tcpdump" class="headerlink" title="tcpdump"></a>tcpdump</h2><p>这是一个监控网络数据包的强大工具。例如，我们可以使用它来侦听服务器实例上的所有网络流量，或限制为仅侦听来自特定源和/或目标端口的流量。可以使用ctrl + C退出。</p>
-<h2 id="netstat"><a href="#netstat" class="headerlink" title="netstat"></a>netstat</h2><p>允许我们查看服务器上的网络连接的内容和方式，包括将表信息路由为TCP/UDP连接及其进程。后者的常见组合是-tlnpu。如果你需要，还可以使用-c运行命令以进行连续监控。</p>
-<h2 id="nmon"><a href="#nmon" class="headerlink" title="nmon"></a>nmon</h2><p>a.k.a. Nigel的监控器，允许我们查看有关服务器的更详细的信息。与htop命令类似，nmon也是交互式的，因此需要通过一系列菜单来查看有关CPU处理器，磁盘等的信息。退出时，请使用q或ctrl + C。</p>
-<h2 id="uptime"><a href="#uptime" class="headerlink" title="uptime"></a>uptime</h2><p>查看服务器运行时间的简便方法。如果你希望查看持续时间的正常运行时间而不是服务器启动的时间戳，请使用 -pretty参数。</p>
-<h2 id="proc-meminfo"><a href="#proc-meminfo" class="headerlink" title="/proc/meminfo"></a>/proc/meminfo</h2><p>可以使用自己喜欢的编辑器来查看此文件，能够深入了解当前的活动/可用内存的使用情况。</p>
-<h2 id="free"><a href="#free" class="headerlink" title="free"></a>free</h2><p>要查看没有进程信息的空闲与已用内存，请使用free命令。默认情况下，这些值以字节为单位，如果你希望以兆字节或千兆字节的形式查看输出，建议附加-h 参数。</p>
-<h2 id="df"><a href="#df" class="headerlink" title="df"></a>df</h2><p>允许管理员查看系统上安装的所有卷的总磁盘使用情况。默认为1K块大小，建议附加-h以查看兆字节和/或千兆字节的输出结果 df -h。</p>
-<h2 id="du"><a href="#du" class="headerlink" title="du"></a>du</h2><p>以指定目录中的所有对象（文件，目录）递归打印文件系统对象的磁盘使用情况。要注意：如果没有指定目录，则使用root根目录（/），结果很快超过你的终端！如果只想查看目录中项目使用了多少磁盘，请使用-sh。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%80%A7%E8%83%BD/" rel="tag">服务器性能</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%9B%91%E6%8E%A7%E6%8C%87%E6%A0%87/" rel="tag">监控指标</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-2022年中国新能源汽车保有量达1310万辆，同比增长67-13"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/06/06/2022%E5%B9%B4%E4%B8%AD%E5%9B%BD%E6%96%B0%E8%83%BD%E6%BA%90%E6%B1%BD%E8%BD%A6%E4%BF%9D%E6%9C%89%E9%87%8F%E8%BE%BE1310%E4%B8%87%E8%BE%86%EF%BC%8C%E5%90%8C%E6%AF%94%E5%A2%9E%E9%95%BF67-13/"
-    >2022年中国新能源汽车保有量达1310万辆，同比增长67.13%</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/06/06/2022%E5%B9%B4%E4%B8%AD%E5%9B%BD%E6%96%B0%E8%83%BD%E6%BA%90%E6%B1%BD%E8%BD%A6%E4%BF%9D%E6%9C%89%E9%87%8F%E8%BE%BE1310%E4%B8%87%E8%BE%86%EF%BC%8C%E5%90%8C%E6%AF%94%E5%A2%9E%E9%95%BF67-13/" class="article-date">
-  <time datetime="2023-06-06T01:43:15.000Z" itemprop="datePublished">2023-06-06</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>中新社北京1月11日电 (记者 郭超凯)记者11日从中国公安部获悉，据统计，2022年全国机动车保有量达4.17亿辆，机动车驾驶人达5.02亿人；全国新能源汽车保有量达1310万辆，同比增长67.13%。</p>
-<p>截至2022年底，全国机动车保有量达4.17亿辆，扣除报废注销量比2021年增加2129万辆，增长5.39%，2022年全国新注册登记机动车3478万辆。汽车保有量达3.19亿辆，占机动车总量76.59%，比2021年增加1752万辆，增长5.81%，全国新注册登记汽车2323万辆。摩托车保有量达8072万辆，占机动车总量19.38%，比2021年增加513万辆，增长6.79%，全国新注册登记摩托车1130万辆。</p>
-<p>全国有84个城市的汽车保有量超过百万辆，同比增加5个城市，39个城市超200万辆，21个城市超300万辆。其中，北京、成都、重庆、上海超过500万辆，苏州、郑州、西安、武汉超过400万辆。</p>
-<p>据知，截至2022年底，全国新能源汽车保有量达1310万辆，占汽车总量的4.10%，扣除报废注销量比2021年增加526万辆，增长67.13%。其中，纯电动汽车保有量1045万辆，占新能源汽车总量的79.78%。</p>
-<p>2022年全国新注册登记新能源汽车535万辆，占新注册登记汽车总量的23.05%，与上年相比增加240万辆，增长81.48%。新注册登记新能源汽车数量从2018年的107万辆到2022年的535万辆，呈高速增长态势。</p>
-<p>汽车转让登记数量持续增长，二手车交易市场活跃。截至2022年底，全国公安交管部门共办理机动车转让登记业务3027万笔。其中，汽车转移登记业务2869万笔，占94.80%。近五年，二手汽车转让登记与汽车新车注册登记数量的比例由0.77上升至1.24，超过汽车新车注册登记量。</p>
-<p>2022年，公安部会同商务部等部门推出系列便利二手车交易登记改革新措施，全面实行经销二手车“单独签注、核发临牌”，异地直接办理交易登记的二手小客车310万辆，更好促进二手车流通。</p>
-<p>据介绍，截至2022年底，全国机动车驾驶人数量达5.02亿人，其中汽车驾驶人4.64亿人，占驾驶人总数92.54%。2022年，全国新领证驾驶人2923万人。</p>
-<p>2022年4月1日起实施的《机动车驾驶证申领和使用规定》(公安部令第162号)新增“轻型牵引挂车”准驾车型(C6)，目前已取得C6准驾车型驾驶人数量达44万人，更好满足民众驾驶小型旅居挂车出行需求，促进房车旅游新业态发展。(完)</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%94%B5%E5%8A%9B/" rel="tag">电力</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
   </article>
   
 
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/28/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/27/">27</a><a class="page-number" href="/page/28/">28</a><span class="page-number current">29</span><a class="page-number" href="/page/30/">30</a><a class="page-number" href="/page/31/">31</a><span class="space">&hellip;</span><a class="page-number" href="/page/54/">54</a><a class="extend next" rel="next" href="/page/30/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/28/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/27/">27</a><a class="page-number" href="/page/28/">28</a><span class="page-number current">29</span><a class="page-number" href="/page/30/">30</a><a class="page-number" href="/page/31/">31</a><span class="space">&hellip;</span><a class="page-number" href="/page/55/">55</a><a class="extend next" rel="next" href="/page/30/">下一页</a>
   </nav>
   
 </section>

@@ -154,6 +154,470 @@
     
     
     <article
+  id="post-GO入门03：关系运算符"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/03/30/GO%E5%85%A5%E9%97%A803%EF%BC%9A%E5%85%B3%E7%B3%BB%E8%BF%90%E7%AE%97%E7%AC%A6/"
+    >GO入门03：关系运算符</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/03/30/GO%E5%85%A5%E9%97%A803%EF%BC%9A%E5%85%B3%E7%B3%BB%E8%BF%90%E7%AE%97%E7%AC%A6/" class="article-date">
+  <time datetime="2023-03-30T14:54:23.000Z" itemprop="datePublished">2023-03-30</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h1><pre><code>关系运算符
+</code></pre>
+<h1 id="示例代码："><a href="#示例代码：" class="headerlink" title="示例代码："></a>示例代码：</h1><pre><code>package main
+
+import &quot;fmt&quot;
+
+func main() &#123;
+   var a int = 21
+   var b int = 10
+
+   if( a == b ) &#123;
+      fmt.Printf(&quot;第一行 - a 等于 b\n&quot; )
+   &#125; else &#123;
+      fmt.Printf(&quot;第一行 - a 不等于 b\n&quot; )
+   &#125;
+   if ( a &lt; b ) &#123;
+      fmt.Printf(&quot;第二行 - a 小于 b\n&quot; )
+   &#125; else &#123;
+      fmt.Printf(&quot;第二行 - a 不小于 b\n&quot; )
+   &#125;
+   
+   if ( a &gt; b ) &#123;
+      fmt.Printf(&quot;第三行 - a 大于 b\n&quot; )
+   &#125; else &#123;
+      fmt.Printf(&quot;第三行 - a 不大于 b\n&quot; )
+   &#125;
+   /* Lets change value of a and b */
+   a = 5
+   b = 20
+   if ( a &lt;= b ) &#123;
+      fmt.Printf(&quot;第四行 - a 小于等于 b\n&quot; )
+   &#125;
+   if ( b &gt;= a ) &#123;
+      fmt.Printf(&quot;第五行 - b 大于等于 a\n&quot; )
+   &#125;
+&#125;
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GO/" rel="tag">GO</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-GO入门02：for循环"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/03/29/GO%E5%85%A5%E9%97%A802%EF%BC%9Afor%E5%BE%AA%E7%8E%AF/"
+    >GO入门02：for循环</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/03/29/GO%E5%85%A5%E9%97%A802%EF%BC%9Afor%E5%BE%AA%E7%8E%AF/" class="article-date">
+  <time datetime="2023-03-29T14:38:27.000Z" itemprop="datePublished">2023-03-29</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h1><pre><code>for循环
+break
+</code></pre>
+<h1 id="示例代码1："><a href="#示例代码1：" class="headerlink" title="示例代码1："></a>示例代码1：</h1><pre><code>package main
+
+import &quot;fmt&quot;
+
+func main() &#123;
+   strings := []string&#123;&quot;google&quot;, &quot;runoob&quot;&#125;
+   for i, s := range strings &#123;
+      fmt.Println(i, s)
+   &#125;
+&#125;
+</code></pre>
+<h1 id="示例代码2："><a href="#示例代码2：" class="headerlink" title="示例代码2："></a>示例代码2：</h1><pre><code>package main
+
+import &quot;fmt&quot;
+
+func main() &#123;
+    arr := [5]int&#123;1, 2, 3, 4, 5&#125;
+    sum := 0
+    for i := 0; i &lt;= len(arr); i++ &#123;
+        sum += i
+    &#125;
+    fmt.Println(sum)
+&#125;
+</code></pre>
+<h1 id="示例代码3："><a href="#示例代码3：" class="headerlink" title="示例代码3："></a>示例代码3：</h1><pre><code>package main
+
+import &quot;fmt&quot;
+
+func main() &#123;
+
+   var a int = 10
+   
+   for a &lt; 20 &#123;
+      fmt.Printf(&quot;a = : %d\n&quot;, a);
+      a++;
+      if a &gt; 15 &#123;
+         break;
+      &#125;
+   &#125;
+&#125;
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GO/" rel="tag">GO</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-GO入门01：Hello-World"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/03/28/GO%E5%85%A5%E9%97%A801%EF%BC%9AHello-World/"
+    >GO入门01：Hello World!</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/03/28/GO%E5%85%A5%E9%97%A801%EF%BC%9AHello-World/" class="article-date">
+  <time datetime="2023-03-28T14:34:30.000Z" itemprop="datePublished">2023-03-28</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>入门示例代码：</p>
+<pre><code>package main
+
+import &quot;fmt&quot;
+
+func main() &#123;
+    fmt.Println(&quot;Hello, World!&quot;)
+&#125;
+</code></pre>
+<p>执行命令：</p>
+<pre><code>$ go run hello.go
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GO/" rel="tag">GO</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-java读取JSON文件的多种方式"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/03/27/java%E8%AF%BB%E5%8F%96JSON%E6%96%87%E4%BB%B6%E7%9A%84%E5%A4%9A%E7%A7%8D%E6%96%B9%E5%BC%8F/"
+    >java读取JSON文件的多种方式</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/03/27/java%E8%AF%BB%E5%8F%96JSON%E6%96%87%E4%BB%B6%E7%9A%84%E5%A4%9A%E7%A7%8D%E6%96%B9%E5%BC%8F/" class="article-date">
+  <time datetime="2023-03-27T15:32:06.000Z" itemprop="datePublished">2023-03-27</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>在开发过程中有时会遇到需要读取本地.json文件的需求，通常会自己写Reader代码去读，但是这么做写出来的代码有些繁琐（需要关流、创建StringBuilder对象等操作）。最近发现几个小工具可以让需求代码变得更加简洁。</p>
+<h1 id="准备："><a href="#准备：" class="headerlink" title="准备："></a>准备：</h1><p>json文件：D:\test.json</p>
+<pre><code>&#123;
+    &quot;ID&quot;: 10001,
+    &quot;detail&quot;: &quot;detail&quot;,
+    &quot;json_format_version&quot;: 1.0,
+    &quot;other_info&quot;: &#123;
+        &quot;array_one&quot;: [
+            [855, 410],
+            [854, 411],
+            [847, 411],
+            [846, 410],
+            [845, 410],
+            [844, 409]
+        ],
+        &quot;array_two&quot;: [
+            [832, 303],
+            [829, 303],
+            [828, 302],
+            [825, 302],
+            [824, 301]
+        ],
+        &quot;array_three&quot;: [
+            [1013, 224],
+            [1012, 225],
+            [1010, 225],
+            [1009, 226],
+            [1023, 224]
+        ],
+        &quot;point&quot;: [853, 310],
+        &quot;boolean&quot;: true
+    &#125;
+&#125;
+</code></pre>
+<h1 id="1-使用FileReader读取json文件"><a href="#1-使用FileReader读取json文件" class="headerlink" title="1.使用FileReader读取json文件"></a>1.使用FileReader读取json文件</h1><h2 id="1-1、添加依赖"><a href="#1-1、添加依赖" class="headerlink" title="1.1、添加依赖"></a>1.1、添加依赖</h2><pre><code>&lt;dependencies&gt;
+    &lt;dependency&gt;
+       &lt;groupId&gt;com.alibaba&lt;/groupId&gt;
+       &lt;artifactId&gt;fastjson&lt;/artifactId&gt;
+       &lt;version&gt;2.0.12&lt;/version&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;
+</code></pre>
+<h2 id="1-2源代码"><a href="#1-2源代码" class="headerlink" title="1.2源代码"></a>1.2源代码</h2><p>import com.alibaba.fastjson.JSON;</p>
+<p>import java.io.*;</p>
+<p>public class ReadLocalJsonFileDemo {<br>    publicstatic void main(String[] args) throws IOException {<br>        Filefile = new File(“D:\test.json”);<br>       readerMethod(file);</p>
+<pre><code>&#125;
+
+privatestatic void readerMethod(File file) throws IOException &#123;
+   FileReader fileReader = new FileReader(file);
+    Readerreader = new InputStreamReader(new FileInputStream(file), &quot;Utf-8&quot;);
+    int ch= 0;
+   StringBuffer sb = new StringBuffer();
+    while((ch = reader.read()) != -1) &#123;
+       sb.append((char) ch);
+    &#125;
+   fileReader.close();
+   reader.close();
+    StringjsonStr = sb.toString();
+   System.out.println(JSON.parseObject(jsonStr));
+&#125;
+</code></pre>
+<p>}</p>
+<h2 id="1-3-控制台输出"><a href="#1-3-控制台输出" class="headerlink" title="1.3.控制台输出"></a>1.3.控制台输出</h2><p>{“other_info”:{“array_two”:[[832,303],[829,303],[828,302],[825,302],[824,301]],”array_three”:[[1013,224],[1012,225],[1010,225],[1009,226],[1023,224]],”boolean”:true,”array_one”:[[855,410],[854,411],[847,411],[846,410],[845,410],[844,409]],”point”:[853,310]},”ID”:10001,”detail”:”detail”,”json_format_version”:1.0}</p>
+<h1 id="2-使用jacksonAPI读取json文件"><a href="#2-使用jacksonAPI读取json文件" class="headerlink" title="2.使用jacksonAPI读取json文件"></a>2.使用jacksonAPI读取json文件</h1><h2 id="2-1、添加依赖"><a href="#2-1、添加依赖" class="headerlink" title="2.1、添加依赖"></a>2.1、添加依赖</h2><pre><code>&lt;dependencies&gt;
+    &lt;dependency&gt;
+       &lt;groupId&gt;com.fasterxml.jackson.core&lt;/groupId&gt;
+       &lt;artifactId&gt;jackson-databind&lt;/artifactId&gt;
+       &lt;version&gt;2.13.3&lt;/version&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;
+</code></pre>
+<h2 id="2-2源代码"><a href="#2-2源代码" class="headerlink" title="2.2源代码"></a>2.2源代码</h2><p>import com.fasterxml.jackson.databind.ObjectMapper;</p>
+<p>import java.io.File;<br>import java.io.IOException;<br>import java.util.Map;</p>
+<p>public class ReadLocalJsonFileDemo {<br>    publicstatic void main(String[] args) throws IOException {<br>        Filefile = new File(“D:\test.json”);<br>       jacksonMethod(file);<br>    }</p>
+<pre><code>privatestatic void jacksonMethod(File file) throws IOException &#123;
+   ObjectMapper objectMapper = new ObjectMapper();
+   System.out.println(objectMapper.readValue(file, Map.class));
+&#125;
+</code></pre>
+<p>}</p>
+<h2 id="2-3-控制台输出"><a href="#2-3-控制台输出" class="headerlink" title="2.3.控制台输出"></a>2.3.控制台输出</h2><p>{ID=10001,detail=detail, json_format_version=1.0, other_info={array_one=[[855, 410],[854, 411], [847, 411], [846, 410], [845, 410], [844, 409]], array_two=[[832,303], [829, 303], [828, 302], [825, 302], [824, 301]], array_three=[[1013,224], [1012, 225], [1010, 225], [1009, 226], [1023, 224]], point=[853, 310],boolean=true}}</p>
+<h1 id="3-使用nio读取json文件"><a href="#3-使用nio读取json文件" class="headerlink" title="3.使用nio读取json文件"></a>3.使用nio读取json文件</h1><h2 id="3-1、添加依赖"><a href="#3-1、添加依赖" class="headerlink" title="3.1、添加依赖"></a>3.1、添加依赖</h2><pre><code>&lt;dependencies&gt;
+    &lt;dependency&gt;
+       &lt;groupId&gt;com.alibaba&lt;/groupId&gt;
+       &lt;artifactId&gt;fastjson&lt;/artifactId&gt;
+       &lt;version&gt;2.0.12&lt;/version&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;
+</code></pre>
+<h2 id="3-2源代码"><a href="#3-2源代码" class="headerlink" title="3.2源代码"></a>3.2源代码</h2><p>import com.alibaba.fastjson.JSONObject;</p>
+<p>import java.io.File;<br>import java.io.IOException;<br>import java.nio.file.Files;<br>import java.nio.file.Paths;</p>
+<p>public class ReadLocalJsonFileDemo {<br>    publicstatic void main(String[] args) throws IOException {<br>        Filefile = new File(“D:\test.json”);<br>       nioMethod(file);<br>    }</p>
+<pre><code>privatestatic void nioMethod(File file) throws IOException &#123;
+    StringjsonString = new String(Files.readAllBytes(Paths.get(file.getPath())));
+   System.out.println(JSONObject.parseObject(jsonString));
+&#125;
+</code></pre>
+<p>}</p>
+<h2 id="3-3-控制台输出"><a href="#3-3-控制台输出" class="headerlink" title="3.3.控制台输出"></a>3.3.控制台输出</h2><p>{“other_info”:{“array_two”:[[832,303],[829,303],[828,302],[825,302],[824,301]],”array_three”:[[1013,224],[1012,225],[1010,225],[1009,226],[1023,224]],”boolean”:true,”array_one”:[[855,410],[854,411],[847,411],[846,410],[845,410],[844,409]],”point”:[853,310]},”ID”:10001,”detail”:”detail”,”json_format_version”:1.0}</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JSON/" rel="tag">JSON</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-maven中quickstart与webapp的区别"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/03/26/maven%E4%B8%ADquickstart%E4%B8%8Ewebapp%E7%9A%84%E5%8C%BA%E5%88%AB/"
+    >maven中quickstart与webapp的区别</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/03/26/maven%E4%B8%ADquickstart%E4%B8%8Ewebapp%E7%9A%84%E5%8C%BA%E5%88%AB/" class="article-date">
+  <time datetime="2023-03-26T15:26:19.000Z" itemprop="datePublished">2023-03-26</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="Archetype"><a href="#Archetype" class="headerlink" title="Archetype"></a>Archetype</h1><p>骨架的意思。简单的说，Archetype是Maven工程的模板工具包。一个Archetype定义了要做的相同类型事情的初始样式或模型。这个名称给我们提供来了一个一致的生成Maven工程的方式。Archetype会帮助作者给用户创建Maven工程模板，并给用户提供生成相关工程模板版本的参数化方法。</p>
+<p>使用Archetype提供的好的方法，是开发者能够使用最佳实践来快速的构建和组织一致化的工程。在Maven工程中，我们努力使用Archetype来尽可能快的给用户提供示例工程，同时也会把Maven的最佳实践介绍给新的用户。一个新的用户可以使用工作中的Maven工作作为跳板来研究更过的Maven中功能。我们也可以使用Archetype的添加机制，这样就意味着允许我们抓取Archetype中项目片段，并把它们添加到既存的工程中。Maven网站的Archetype就是很好的例子。例如，你可以使用“quick start archetype”来生成一个工程，然后就可以通过其中既存的“site archetype”来快速的创建一个网址工程。你能够使用Archetype来做很多这样的事情。</p>
+<p>在你的团队中可能想要标准化的J2EE开发，这需要你提供EJBs、或者是WARs、或者是Web services的原型。一旦在你团队资源库中创建和部署这些原型，它们就可以在你团队内共享使用。</p>
+<h1 id="如何使用Archetype"><a href="#如何使用Archetype" class="headerlink" title="如何使用Archetype"></a>如何使用Archetype</h1><p>要基于Archetype来创建一个新的工程，需要像下面示例这样来调用：</p>
+<p>mvn archetype:generate</p>
+<h1 id="已有的Archetypes"><a href="#已有的Archetypes" class="headerlink" title="已有的Archetypes"></a>已有的Archetypes</h1><p>Archetype ID   说明<br>maven-archetype-archetype  一个样例原型<br>maven-archetype-j2ee-simple    简单的J2EE应用程序样例<br>maven-archetype-mojo    Maven插件样本的示例<br>maven-archetype-plugin    Maven插件样本<br>maven-archetype-plugin-site    Mave插件网站的样例<br>maven-archetype-portlet    JSR-268门户样例<br>maven-archetype-quickstart    Maven工程样例<br>maven-archetype-simple    一个简单的Maven工程<br>maven-archetype-site    Maven网站的样例，它演示了对诸如APT、XDoc和FML等文档类型的支持，并演示了如果把网站国际化（i18n）<br>maven-archetype-site-simple    Maven网站样例<br>maven-archetype-webapp    Maven的Webapp工程样例</p>
+<h1 id="常用Archetype"><a href="#常用Archetype" class="headerlink" title="常用Archetype"></a>常用Archetype</h1><ul>
+<li><p>1，maven-archetype-quickstart<br>默认的Archetype,基本内容包括：<br>一个包含junit依赖声明的pom.xml<br>src/main/java主代码目录及一个名为App的类<br>src/test/java测试代码目录及一个名为AppTest的测试用例</p>
+</li>
+<li><p>2，maven-archetype-webapp<br>一个最简单的Maven war项目模板，当需要快速创建一个Web应用的时候可以使用它。生成的项目内容包括：<br>一个packaging为war且带有junit依赖声明的pom.xml<br>src/main/webapp/目录<br>src/main/webapp/index.jsp文件<br>src/main/webapp/WEB-INF/web.xml文件</p>
+</li>
+</ul>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MAVEN/" rel="tag">MAVEN</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-Notepad-免安装版注册右键菜单"
   class="article article-type-post"
   itemscope
@@ -208,349 +672,13 @@
 </article>
 
     
-    <article
-  id="post-JAVA中最方便的Unicode转换方法"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/03/24/JAVA%E4%B8%AD%E6%9C%80%E6%96%B9%E4%BE%BF%E7%9A%84Unicode%E8%BD%AC%E6%8D%A2%E6%96%B9%E6%B3%95/"
-    >JAVA中最方便的Unicode转换方法</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/03/24/JAVA%E4%B8%AD%E6%9C%80%E6%96%B9%E4%BE%BF%E7%9A%84Unicode%E8%BD%AC%E6%8D%A2%E6%96%B9%E6%B3%95/" class="article-date">
-  <time datetime="2023-03-24T15:43:36.000Z" itemprop="datePublished">2023-03-24</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="在命令行界面用native2ascii工具"><a href="#在命令行界面用native2ascii工具" class="headerlink" title="在命令行界面用native2ascii工具"></a>在命令行界面用native2ascii工具</h1><ul>
-<li><p>1.将汉字转为Unicode:<br>C:\Program   Files\Java\jdk1.5.0_04\bin&gt;native2ascii<br>测试<br>\u6d4b\u8bd5  </p>
-</li>
-<li><p>2.将Unicode转换为汉字:<br>C:\Program   Files\Java\jdk1.5.0_04\bin&gt;native2ascii   -reverse<br>\u6d4b\u8bd5<br>测试</p>
-</li>
-</ul>
-<h1 id="native2ascii深入"><a href="#native2ascii深入" class="headerlink" title="native2ascii深入"></a>native2ascii深入</h1><p>java 自带的一个native2ascii.exe是一个很好的转码工具，在bin目录下。如果你的properties中有汉字，需要转成unicode . 则把含有汉字的properties拷贝到bin 目录下， 然后在cmd里面进入bin目录，输入：native2ascii -encoding  utf-8  Language-ext_zh_CN.properties.native Language-ext_zh_CN.properties就ok了。Language-ext_zh_CN.properties是转码后的文件。</p>
-<p>在做Java开发的时候，常常会出现一些乱码，或者无法正确识别或读取的文件，比如常见的validator验 证用的消息资源 （properties） 文件就需要进行Unicode重新编码。<br>原因是java默认的编码方式为Unicode，而我们的计算机系统编码 常常是GBK等编码。需要将系统的编码转换为java正确识别的编码问题就解决了。</p>
-<ul>
-<li><p>1、native2ascii简介<br>native2ascii 是sun java sdk提供的一个工具。用来将别的文本类文件（比如*.txt,<em>.ini,</em>.properties,*.java等等）编码转为Unicode编码。 为什么要进行转码，原因在于程序的国际化。Unicode编码的定义：Unicode（统一码、万国码、单一码）是一种在计算机上使用的字符编码。它为每 种语言中的每个字符设定了统一并且唯一的二进制编码，以满足跨语言、跨平台进行文本转换、处理的要求。1990年开始研发，1994年正式公布。随着计算 机工作能力的增强，Unicode也在面世以来的十多年里得到普及。（声明：Unicode编码定义来自互联网）。</p>
-</li>
-<li><p>2、获取native2ascii<br>安装了jdk后，假如你是在windows上安装，那么在jdk的安装目录下，会有一个bin目录，其中native2ascii.exe正是。</p>
-</li>
-<li><p>3、native2ascii的命令行的命名格式：</p>
-</li>
-</ul>
-<p>native2ascii -[options] [inputfile [outputfile]]</p>
-<p>说明：<br>-[options]：表示命令开关，有两个选项可供选择<br>-reverse：将Unicode编码转为本地或者指定编码，不指定编码情况下，将转为本地编码。<br>-encoding encoding_name：转换为指定编码，encoding_name为编码名称。<br>[inputfile [outputfile]]<br>inputfile：表示输入文件全名。<br>outputfile：输出文件名。如果缺少此参数，将输出到控制台。</p>
-<ul>
-<li>4、最佳实践<br>首先将JDK的bin目录加入系统变量path。在盘下建立一个test目录，在test目录里建立一个zh.txt文件，文件内容为：“熔岩”，打开“命令行提示符”，并进入C:\test目录下。下面就可以按照说明一步一步来操作，注意观察其中编码的变化。</li>
-</ul>
-<p>** 1)将zh.txt转换为Unicode编码，输出文件到u.txt<br>native2ascii zh.txt u.txt<br>打开u.txt，内容为“\u7194\u5ca9”。</p>
-<p>** 2)将zh.txt转换为Unicode编码，输出到控制台<br>C:\test&gt;native2ascii zh.txt<br>\u7194\u5ca9<br>可以看到，控制台输出了“\u7194\u5ca9”。</p>
-<p>** 3)将zh.txt转换为ISO8859-1编码，输出文件到i.txt<br>native2ascii -encoding ISO8859-1 zh.txt i.txt<br>打开i.txt文件，内容为“\u00c8\u00db\u00d1\u00d2”。</p>
-<p>** 4)将u.txt转换为本地编码，输出到文件u_nv.txt<br>native2ascii -reverse u.txt u_nv.txt<br>打开u_nv.txt文件，内容为“熔岩”。</p>
-<p>** 5)将u.txt转换为本地编码，输出到控制台<br>C:\test&gt;native2ascii -reverse u.txt<br>熔岩<br>可以看到，控制台输出了“熔岩”。</p>
-<p>** 6)将i.txt转换为本地编码，输出到i_nv.txt<br>native2ascii -reverse i.txt i_nv.txt<br>打开i_nv.txt文件，内容为“\u00c8\u00db\u00d1\u00d2”。发现转码前后完全一样的。也就是说，等于没有转，或者说思想糊涂，对命名没有理解。。</p>
-<p>** 7)将i.txt转换为GBK编码，输出到i_gbk.txt<br>native2ascii -reverse -encoding GBK i.txt i_gbk.txt<br>打开i_gbk.txt文件，内容为“\u00c8\u00db\u00d1\u00d2”。发现转码前后完全一样的。也就是说，等于没有转，或者说思想糊涂，对命名没有理解。</p>
-<p>** 8)将u_nv.txt转码到本地编码GBK，输出到控制台<br>C:\test&gt;native2ascii -reverse -encoding ISO8859-1 i.txt<br>熔岩<br>从这个结果看，目标达到到了，编码i.txt为ISO8859-1，转为本地编码后内容为“熔岩”。从这里应该意识到，native2ascii -reverse命令中-encoding指定的编码为源文件的编码格式。而在native2ascii 命令中-encoding指定的编码为（生成的)目标文件的编码格式。这一点非常的重要！切记！！<br>继续探索，新建文件12a.txt，内容“12axyz”。看看纯字母数字的编码又如何。</p>
-<p>** 9)将纯字母数字的文本文件12a.txt转换为Unicode编码<br>native2ascii 12a.txt 12a_nv.txt<br>打开12a_nv.txt文件，内容为“12axyz”。<br>继续测试，转为ISO8859-1编码看看<br>C:\test&gt;native2ascii -encoding ISO8859-1 12a.txt<br>12axyz<br>结果还是没有转码。</p>
-<p>从结果可以得出结论：对于纯数字和字母的文本类型件，转码前后的内容是一样的。</p>
-<ul>
-<li>5、总结<br>native2ascii 是一个非常的好转码工具，并且转码是可逆的！而其真正的含义并非本地编码——&gt;转码为ASCII码，而是一个通用的文本文件编码转换工具。在做编码 转换的时候有两类指定编码的情形，分别指输出文件编码和输入文件编码，具体可以看看最佳实践部分。</li>
-</ul>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-黑果小兵github"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/03/23/%E9%BB%91%E6%9E%9C%E5%B0%8F%E5%85%B5github/"
-    >黑果小兵github</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/03/23/%E9%BB%91%E6%9E%9C%E5%B0%8F%E5%85%B5github/" class="article-date">
-  <time datetime="2023-03-23T08:07:01.000Z" itemprop="datePublished">2023-03-23</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://github.com/daliansky">https://github.com/daliansky</a><br><a target="_blank" rel="noopener" href="https://blog.daliansky.net/">https://blog.daliansky.net</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/macOS/" rel="tag">macOS</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-nacos2-2-1版本及以后开启了默认鉴权"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/03/22/nacos2-2-1%E7%89%88%E6%9C%AC%E5%8F%8A%E4%BB%A5%E5%90%8E%E5%BC%80%E5%90%AF%E4%BA%86%E9%BB%98%E8%AE%A4%E9%89%B4%E6%9D%83/"
-    >nacos2.2.1版本及以后开启了默认鉴权</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/03/22/nacos2-2-1%E7%89%88%E6%9C%AC%E5%8F%8A%E4%BB%A5%E5%90%8E%E5%BC%80%E5%90%AF%E4%BA%86%E9%BB%98%E8%AE%A4%E9%89%B4%E6%9D%83/" class="article-date">
-  <time datetime="2023-03-22T02:26:25.000Z" itemprop="datePublished">2023-03-22</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>nacos 2.2.1版本及以后开启了默认鉴权，需要填写jwt key，不填写key后果，启动报错</p>
-<pre><code>org.springframework.context.ApplicationContextException: Unable to start web server; nested exception is org.springframework.boot.web.server.WebServerException: Unable to start embedded Tomcat
-</code></pre>
-<p>参照 <a target="_blank" rel="noopener" href="https://nacos.io/zh-cn/docs/v2/guide/user/auth.html">nacos鉴权文档</a> 说明，修改application.properties中secret.key配置，即可本地单机正常启动。</p>
-<pre><code>### 2.1.0 版本后
-nacos.core.auth.plugin.nacos.token.secret.key=VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nacos/" rel="tag">nacos</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-cargo基础命令"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/03/21/cargo%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/"
-    >cargo基础命令</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/03/21/cargo%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/" class="article-date">
-  <time datetime="2023-03-21T14:48:38.000Z" itemprop="datePublished">2023-03-21</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <pre><code># 查看cargo版本
-cargo --version
-
-# 新建项目
-cargo new &lt;project_name&gt;
-
-# 构建项目
-cargo build
-
-# 运行项目
-cargo run
-
-# 检查项目
-cargo check
-
-# 查看帮助
-cargo -h
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rust/" rel="tag">rust</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-rust配置cargo国内镜像"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/03/20/rust%E9%85%8D%E7%BD%AEcargo%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F/"
-    >rust配置cargo国内镜像</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/03/20/rust%E9%85%8D%E7%BD%AEcargo%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F/" class="article-date">
-  <time datetime="2023-03-20T14:45:41.000Z" itemprop="datePublished">2023-03-20</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>在用户主目录的 .cargo 目录下新建一个文件，命名为 config（没有扩展名），并输入以下内容：</p>
-<pre><code>[source.crates-io]
-registry = &quot;https://github.com/rust-lang/crates.io-index&quot;
-replace-with = &#39;ustc&#39;
-
-## 二选择一
-## replace-with = &#39;XXX&#39; 选择配置
-
-# 中国科学技术大学
-[source.ustc]
-registry = &quot;git://mirrors.ustc.edu.cn/crates.io-index&quot;
-
-# 清华大学
-[source.tuna]
-registry = &quot;https://mirrors.tuna.tsinghua.edu.cn/git/crates.io-index.git&quot;
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rust/" rel="tag">rust</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
   </article>
   
 
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/41/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/40/">40</a><a class="page-number" href="/page/41/">41</a><span class="page-number current">42</span><a class="page-number" href="/page/43/">43</a><a class="page-number" href="/page/44/">44</a><span class="space">&hellip;</span><a class="page-number" href="/page/54/">54</a><a class="extend next" rel="next" href="/page/43/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/41/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/40/">40</a><a class="page-number" href="/page/41/">41</a><span class="page-number current">42</span><a class="page-number" href="/page/43/">43</a><a class="page-number" href="/page/44/">44</a><span class="space">&hellip;</span><a class="page-number" href="/page/55/">55</a><a class="extend next" rel="next" href="/page/43/">下一页</a>
   </nav>
   
 </section>

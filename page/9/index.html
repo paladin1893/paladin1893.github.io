@@ -154,6 +154,466 @@
     
     
     <article
+  id="post-Python中查找文件是否存在"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/10/12/Python%E4%B8%AD%E6%9F%A5%E6%89%BE%E6%96%87%E4%BB%B6%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8/"
+    >Python中查找文件是否存在</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/10/12/Python%E4%B8%AD%E6%9F%A5%E6%89%BE%E6%96%87%E4%BB%B6%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8/" class="article-date">
+  <time datetime="2023-10-12T02:12:00.000Z" itemprop="datePublished">2023-10-12</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p><a target="_blank" rel="noopener" href="https://www.python100.com/html/14E0N1LV1S5V.html">https://www.python100.com/html/14E0N1LV1S5V.html</a></p>
+<p>在Python编程中，我们经常需要查找文件是否存在。这个功能在文件处理、数据分析、系统管理等各个领域都非常有用。在本文中，我们将以Python作为中心，详细介绍如何使用Python来查找文件是否存在。</p>
+<p>一、使用os模块的方法</p>
+<p>Python的标准库中的os模块提供了一些方法来操作文件和目录。其中，os.path模块提供了一些判断文件或目录是否存在的函数。</p>
+<pre><code>import os
+
+# 检查文件是否存在
+def file_exists(path):
+    return os.path.exists(path)
+
+# 检查目录是否存在
+def directory_exists(path):
+    return os.path.isdir(path)
+</code></pre>
+<p>使用os.path.exists函数可以判断文件是否存在，返回值为True或False。如果文件存在，则返回True；如果文件不存在，则返回False。</p>
+<p>使用os.path.isdir函数可以判断目录是否存在，返回值同样为True或False。如果目录存在，则返回True；如果目录不存在，则返回False。</p>
+<p>二、使用glob模块的方法</p>
+<p>除了os模块，Python还提供了一个强大的文件和目录操作模块glob。glob模块可以使用通配符来查找文件。</p>
+<pre><code>import glob
+
+# 查找指定目录下的所有文件
+def find_files(directory, pattern):
+    return glob.glob(os.path.join(directory, pattern))
+
+# 判断文件是否存在
+def file_exists(path):
+    return len(find_files(os.path.dirname(path), os.path.basename(path))) &gt; 0
+</code></pre>
+<p>使用glob.glob函数可以根据通配符模式查找符合条件的文件。在find_files函数中，我们使用os.path.join函数将目录和文件名拼接在一起，然后使用glob.glob函数查找匹配的文件。</p>
+<p>在file_exists函数中，我们调用find_files函数查找指定文件并返回匹配到的文件列表，然后用len函数来判断文件列表的长度。如果长度大于0，则表示文件存在；如果长度等于0，则表示文件不存在。</p>
+<p>三、使用pathlib模块的方法</p>
+<p>Python 3.4及以上版本引入的pathlib模块提供了一种更简洁的方式来查找文件。</p>
+<pre><code>from pathlib import Path
+
+# 检查文件是否存在
+def file_exists(path):
+    return Path(path).is_file()
+
+# 检查目录是否存在
+def directory_exists(path):
+    return Path(path).is_dir()
+</code></pre>
+<p>在pathlib模块中，我们可以使用Path类的is_file方法来判断文件是否存在，使用is_dir方法来判断目录是否存在。这些方法返回值同样为True或False。</p>
+<p>四、其他注意事项<br>在使用Python查找文件是否存在时，还有一些注意事项需要注意：</p>
+<ol>
+<li><p>文件路径的表示：在使用文件路径时，我们需要注意使用不同的表示方式，如绝对路径、相对路径、转义字符等。</p>
+</li>
+<li><p>文件权限的问题：有时候文件存在，但是由于权限问题，我们无法操作或读取该文件。</p>
+</li>
+<li><p>文件名和文件后缀：有时候文件名或文件后缀的大小写问题可能导致文件找不到。</p>
+</li>
+</ol>
+<p>总结来说，使用Python查找文件是否存在需要借助os模块、glob模块或pathlib模块，根据具体的需求选择合适的方法。同时，在使用过程中还需注意文件路径、文件权限和文件名后缀等问题。</p>
+<p>希望本文对你理解Python中查找文件是否存在有所帮助！</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-pyqt界面美化笔记"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/10/11/pyqt%E7%95%8C%E9%9D%A2%E7%BE%8E%E5%8C%96%E7%AC%94%E8%AE%B0/"
+    >pyqt界面美化笔记</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/10/11/pyqt%E7%95%8C%E9%9D%A2%E7%BE%8E%E5%8C%96%E7%AC%94%E8%AE%B0/" class="article-date">
+  <time datetime="2023-10-11T02:11:00.000Z" itemprop="datePublished">2023-10-11</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1VY4y1p7it/?spm_id_from=333.999.0.0">https://www.bilibili.com/video/BV1VY4y1p7it/?spm_id_from=333.999.0.0</a></p>
+<p>1、窗体用label贴图或配色，做背景</p>
+<pre><code>background-color: rgba(16,30,41,240);
+border-radius:10px;
+</code></pre>
+<p>2、lineedit配色及调样式</p>
+<pre><code>background-color: rgba(0, 0, 0,0);
+border:1px solid rgba(0,0,0,0);
+border-bottom-color:rgba(255,255,255,200);
+padding-bottom:7px;
+</code></pre>
+<p>3、pushbutton配色及调样式</p>
+<pre><code>QPushButton#pushButton&#123;
+background-color:rgba(2,65,118,255);
+color:rgba(255,255,255,200);
+border-radius:5px;
+&#125;
+QPushButton#pushButton:hover&#123;
+background-color:rgba(2,65,118,150);
+color:rgba(255,255,255,200);
+border-radius:5px;
+&#125;
+QPushButton#pushButton:pressed&#123;
+padding-left:5px;
+padding-top:5px;
+background-color:rgba(2,65,118,100);
+&#125;
+</code></pre>
+<p>4、隐藏框：</p>
+<pre><code>MainWindow.setWindowFlags(QtCore.Qt.FramelessWindowHint)
+MainWindow.setAttribute(QtCore.Qt.WA_TranslucentBackground)
+</code></pre>
+<p>5、main函数</p>
+<pre><code>import sys
+from PyQt5.QtWidgets import QApplication, QMainWindow
+import login
+if __name__ == &#39;__main__&#39;:
+    app = QApplication(sys.argv)
+    win = QMainWindow()
+    ui = login.Ui_MainWindow()
+    ui.setupUi(win)
+    win.show()
+    sys.exit(app.exec_())
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-pyqt5的打包exe软件"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/10/10/pyqt5%E7%9A%84%E6%89%93%E5%8C%85exe%E8%BD%AF%E4%BB%B6/"
+    >pyqt5的打包exe软件</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/10/10/pyqt5%E7%9A%84%E6%89%93%E5%8C%85exe%E8%BD%AF%E4%BB%B6/" class="article-date">
+  <time datetime="2023-10-10T02:10:00.000Z" itemprop="datePublished">2023-10-10</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="安装命令："><a href="#安装命令：" class="headerlink" title="安装命令："></a>安装命令：</h1><pre><code>pip install pyinstaller
+</code></pre>
+<h1 id="更新命令："><a href="#更新命令：" class="headerlink" title="更新命令："></a>更新命令：</h1><pre><code>pip install –upgrade pyinstaller
+</code></pre>
+<h1 id="打包命令："><a href="#打包命令：" class="headerlink" title="打包命令："></a>打包命令：</h1><p>通过下述命令可以打包出带有指定图标的exe，注意必须是真实的ico格式图标，不能是改后名的。</p>
+<pre><code>pyinstaller main.py -y -w -i &quot;D:\workspace\mytool\ui\icons\mytool.ico&quot;
+</code></pre>
+<h1 id="打包命令常用选项。"><a href="#打包命令常用选项。" class="headerlink" title="打包命令常用选项。"></a>打包命令常用选项。</h1><pre><code>-y 表示自动覆盖现有的 build 和 dist 文件夹
+-h，–help    查看该模块的帮助信息
+-F，-onefile    产生单个的可执行文件
+-D，–onedir    产生一个目录（包含多个文件）作为可执行程序
+-a，–ascii    不包含 Unicode 字符集支持
+-d，–debug    产生 debug 版本的可执行文件
+-w，–windowed，–noconsolc    指定程序运行时不显示命令行窗口（仅对 Windows 有效）
+-c，–nowindowed，–console    指定使用命令行窗口运行程序（仅对 Windows 有效）
+-o DIR，–out=DIR    指定 spec 文件的生成目录。如果没有指定，则默认使用当前目录来生成 spec 文件
+-p DIR，–path=DIR    设置 Python 导入模块的路径（和设置 PYTHONPATH 环境变量的作用相似）。也可使用路径分隔符（Windows 使用分号，Linux 使用冒号）来分隔多个路径
+-n NAME，–name=NAME    指定项目（产生的 spec）名字。如果省略该选项，那么第一个脚本的主文件名将作为 spec 的名字
+--distpath：指定输出目录
+--clean：在打包之前清除临时文件夹日志
+--log-level：设置日志级别，供调试嵌入其他文件
+--add-data：将data文件夹嵌入到生成的可执行文件中
+--add-binary：将binary文件与其他文件一起嵌入到可执行文件中
+--hidden-import：打包特定的Python库，例如--hidden-import=PIL
+--version：显示版本信息
+--help：显示帮助信息
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-PyCharm安装PyQt5及工具（Qt Designer、PyUIC、PyRcc）详细教程"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/10/09/PyCharm%E5%AE%89%E8%A3%85PyQt5%E5%8F%8A%E5%B7%A5%E5%85%B7%EF%BC%88Qt%20Designer%E3%80%81PyUIC%E3%80%81PyRcc%EF%BC%89%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/"
+    >PyCharm安装PyQt5及工具（Qt Designer、PyUIC、PyRcc）详细教程</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/10/09/PyCharm%E5%AE%89%E8%A3%85PyQt5%E5%8F%8A%E5%B7%A5%E5%85%B7%EF%BC%88Qt%20Designer%E3%80%81PyUIC%E3%80%81PyRcc%EF%BC%89%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/" class="article-date">
+  <time datetime="2023-10-09T02:09:00.000Z" itemprop="datePublished">2023-10-09</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>需要安装PyQt5，pyqt5-tools</p>
+<pre><code>pip install PyQt5 -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install pyqt5-tools -i https://pypi.tuna.tsinghua.edu.cn/simple
+
+# 如有需要安装PyQtWebEngine
+pip install PyQtWebEngine -i https://pypi.tuna.tsinghua.edu.cn/simple
+</code></pre>
+<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><p>PyCharm点击菜单栏“File”，弹出下拉框，选择“Setting”，弹出设置界面。在设置界面中选择“Tools”→“External Tools”，</p>
+<h2 id="Qt-Designer"><a href="#Qt-Designer" class="headerlink" title="Qt Designer"></a>Qt Designer</h2><p>在“Name”一栏填写“Qt-Designer”；在“Program”一栏填写designer.exe文件位置</p>
+<h2 id="PyUIC"><a href="#PyUIC" class="headerlink" title="PyUIC"></a>PyUIC</h2><p>1、在“Name”一栏填写“PyUIC”；</p>
+<p>2、Program中填写pyuic5.exe这个程序的文件路径，一般在“Python环境目录\Scripts\pyuic5.exe”（此处需根据实际情况修改）</p>
+<p>3、在Arguments中内容填写如下：</p>
+<pre><code>$FileName$ -o $FileNameWithoutExtension$.py
+</code></pre>
+<p>4、Working directory内容填写如下：</p>
+<pre><code>$FileDir$
+</code></pre>
+<p>5、完成填写后，点击“OK”，以上步骤参考图片中的步骤。</p>
+<h2 id="PyRCC"><a href="#PyRCC" class="headerlink" title="PyRCC"></a>PyRCC</h2><p>1、在“Name”一栏填写“PyRCC”；</p>
+<p>2、Program中填写pyrcc5.exe这个程序的文件路径，一般在“Python环境目录\Scripts\pyrcc5.exe”（此处需根据实际情况修改），也可以点击右侧的文件夹选择按钮浏览文件夹选中该位置；</p>
+<p>3、在Arguments中内容填写如下：</p>
+<pre><code>$FileName$ -o $FileNameWithoutExtension$_rc.py
+</code></pre>
+<p>4、Working directory内容填写如下：</p>
+<pre><code>$FileDir$
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-MyBatis-Plus 通用IService使用时的一些方法"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/10/08/MyBatis-Plus%20%E9%80%9A%E7%94%A8IService%E4%BD%BF%E7%94%A8%E6%97%B6%E7%9A%84%E4%B8%80%E4%BA%9B%E6%96%B9%E6%B3%95/"
+    >MyBatis-Plus 通用IService使用时的一些方法</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/10/08/MyBatis-Plus%20%E9%80%9A%E7%94%A8IService%E4%BD%BF%E7%94%A8%E6%97%B6%E7%9A%84%E4%B8%80%E4%BA%9B%E6%96%B9%E6%B3%95/" class="article-date">
+  <time datetime="2023-10-08T02:08:00.000Z" itemprop="datePublished">2023-10-08</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="普通方法"><a href="#普通方法" class="headerlink" title="普通方法:"></a>普通方法:</h1><pre><code>//查询所有
+userService .list();
+//根据查询条件查询一个返回实体类对象
+userService.getOne(lambdaQueryWrapper);
+//分页查询所有
+userService.page(pageInfo,lambdaQueryWrapper);
+//查询数量
+userService .count();
+//根据ID查list集合
+userService .listByIds();
+//根据ID删除
+userService .removeById();
+userService .removeByIds();
+//修改
+userService .update();
+userMapper.updateById(实体类);
+//新增
+userService .save();
+userMapper.insert(实体类);
+//批量新增
+userService .saveBatch(集合);
+</code></pre>
+<h1 id="getOne"><a href="#getOne" class="headerlink" title="getOne()"></a>getOne()</h1><p>这个是方法返回结果不止一条则会抛出异常，如果想默认取第一条结果，可以给这方法传第二个参数为false。</p>
+<pre><code>User one = userService.getOne(Wrappers.&lt;User&gt;lambdaQuery().eq(User::getAge, 11),false);
+</code></pre>
+<h1 id="saveOrUpdateBatch"><a href="#saveOrUpdateBatch" class="headerlink" title="saveOrUpdateBatch()"></a>saveOrUpdateBatch()</h1><p>批量新增或者修改方法,判断ID是否存在，如果ID不存在执行新增，如果ID存在先执行查询语句，查询结果为空新增，否则修改。</p>
+<pre><code>boolean b = userService.saveOrUpdateBatch(users);
+</code></pre>
+<h1 id="传值为null的时候不查询"><a href="#传值为null的时候不查询" class="headerlink" title="传值为null的时候不查询"></a>传值为null的时候不查询</h1><p>如果传值为null的时候不查询，有值才查询怎么做？<br>这里用到了hutool的ObjectUtil.isNotEmpty来判非空</p>
+<pre><code>//查询时间范围
+LambdaQueryWrapper&lt;ProductKhtm&gt; productKhtmLambdaQueryWrapper = new LambdaQueryWrapper&lt;&gt;();
+productKhtmLambdaQueryWrapper.between(
+ObjectUtil.isNotEmpty(productKhtmhz.getParams().get(&quot;endDbilldate&quot;)),
+ProductKhtm::getDbilldate,
+productKhtmhz.getParams().get(&quot;beginDbilldate&quot;),
+productKhtmhz.getParams().get(&quot;endDbilldate&quot;)
+);
+
+productKhtmService.list(productKhtmLambdaQueryWrapper);
+</code></pre>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><p>如果sql语句后面想补充一句sql语句应该怎么办？用last</p>
+<pre><code>lambdaQueryWrapper.last(&quot;OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY&quot;);
+</code></pre>
+<p>注意这个自定义慎用，会有sql注入的风险</p>
+<p>如果sql查询条件全部都想自定义怎么办？</p>
+<pre><code>lambdaQueryWrapper.apply(&quot;YEAR(tijiao_time) = &#123;0&#125;&quot;,year);
+</code></pre>
+<p>注意这个自定义慎用，会有sql注入的风险</p>
+<p>————————————————<br>版权声明：本文为CSDN博主「z子豪」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/a864034462/article/details/123980761">https://blog.csdn.net/a864034462/article/details/123980761</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-LambdaUpdateWrapper和LambdaQueryWrapper的区别"
   class="article article-type-post"
   itemscope
@@ -233,1144 +693,13 @@ public void test99()&#123;
 </article>
 
     
-    <article
-  id="post-LambdaQueryWrapper如何正确使用or或者and"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/10/06/LambdaQueryWrapper%E5%A6%82%E4%BD%95%E6%AD%A3%E7%A1%AE%E4%BD%BF%E7%94%A8or%E6%88%96%E8%80%85and/"
-    >LambdaQueryWrapper如何正确使用or或者and</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/10/06/LambdaQueryWrapper%E5%A6%82%E4%BD%95%E6%AD%A3%E7%A1%AE%E4%BD%BF%E7%94%A8or%E6%88%96%E8%80%85and/" class="article-date">
-  <time datetime="2023-10-06T02:06:00.000Z" itemprop="datePublished">2023-10-06</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="例子1"><a href="#例子1" class="headerlink" title="例子1:"></a>例子1:</h1><pre><code>LambdaQueryWrapper&lt;SysUser&gt; lambdaQueryWrapper = new LambdaQueryWrapper&lt;&gt;();
-lambdaQueryWrapper.or((wrapper)-&gt;&#123;
-    wrapper.eq(SysUser::getUserName, idUserPayBalUserName).or();
-    wrapper.eq(SysUser::getPhonenumber, idUserPayBalUserName);
-    &#125;);
-lambdaQueryWrapper.and((wrapper)-&gt;&#123;
-    wrapper.eq(SysUser::getNickName, idUserPayBalName);
-        &#125;
-            );
-SysUser one = userService.getOne(lambdaQueryWrapper);
-</code></pre>
-<p>sql语句为</p>
-<pre><code>SELECT *
- FROM sys_user
- WHERE ((user_name = &#39;15666666669&#39; OR phonenumber = &#39;15666666669&#39;) AND (nick_name = &#39;15666666669&#39;));
-</code></pre>
-<p>也就是说,使用or()包裹的代码执行后是在sql语句的括号内,再次使用or()或者and()则另起一个括号.</p>
-<h1 id="例子2"><a href="#例子2" class="headerlink" title="例子2:"></a>例子2:</h1><pre><code>LambdaQueryWrapper&lt;SysUser&gt; lambdaQueryWrapper = new LambdaQueryWrapper&lt;&gt;();
-    lambdaQueryWrapper.eq(SysUser::getUserName, idUserPayBalUserName).or();
-    lambdaQueryWrapper.eq(SysUser::getPhonenumber, idUserPayBalUserName);
-    lambdaQueryWrapper.eq(SysUser::getNickName, idUserPayBalName);
-    SysUser one = userService.getOne(lambdaQueryWrapper);
-</code></pre>
-<p>sql语句为</p>
-<pre><code>SELECT *
- FROM sys_user
- WHERE (user_name = &#39;15666666669&#39; OR phonenumber = &#39;15666666669&#39; AND nick_name = &#39;123&#39;);
-</code></pre>
-<p>可以理解为如下这个语句👇,所以这个sql和上面的例子的sql执行后的结果是完全不一样的.</p>
-<pre><code>SELECT *
- FROM sys_user
- WHERE (user_name = &#39;15666666669&#39; OR (phonenumber = &#39;15666666669&#39; AND nick_name = &#39;123&#39;));
-</code></pre>
-<p>————————————————<br>版权声明：本文为CSDN博主「z子豪」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/a864034462/article/details/123980761">https://blog.csdn.net/a864034462/article/details/123980761</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Mybatis-Plus高级查询LambdaQueryWrapper&amp;QueryWrapper"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/10/05/Mybatis-Plus%E9%AB%98%E7%BA%A7%E6%9F%A5%E8%AF%A2LambdaQueryWrapper&QueryWrapper/"
-    >Mybatis-Plus高级查询LambdaQueryWrapper&amp;QueryWrapper</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/10/05/Mybatis-Plus%E9%AB%98%E7%BA%A7%E6%9F%A5%E8%AF%A2LambdaQueryWrapper&QueryWrapper/" class="article-date">
-  <time datetime="2023-10-05T02:05:00.000Z" itemprop="datePublished">2023-10-05</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="LambdaQueryWrapper"><a href="#LambdaQueryWrapper" class="headerlink" title="LambdaQueryWrapper"></a>LambdaQueryWrapper</h1><p>LambdaQueryWrapper使用lambda表达式可以直接通过实体类get()属性，而QueryWrapper必须要与数据库的中表名一致，由于表名可能会很复杂，这时候相较而言LambdaQueryWrapper会比QueryWrapper便捷不少</p>
-<h1 id="Wrapper"><a href="#Wrapper" class="headerlink" title="Wrapper"></a>Wrapper</h1><p>查询构造器</p>
-<pre><code>条件    说明
-allEq    基于 map 的比较
-eq    等于 =
-ne    不等于 &lt;&gt; 或者 !=
-gt    大于 &gt;
-ge    大于等于 &gt;=
-lt    小于 &lt;
-le    小于等于 &lt;
-between    BETWEEN 值1 AND 值2
-notBetween    NOT BETWEEN 值1 AND 值2
-like    LIKE ‘%值%’
-notLike    NOT LIKE ‘%值%’
-likeLeft    LIKE ‘%值’
-likeRight    LIKE ‘值%’
-isNull    字段 IS NULL
-isNotNull    字段 IS NOT NULL
-in    字段 IN (value1, value2, …)
-notIn    字段 NOT IN (value1, value2, …)
-inSql    字段 IN (sql 语句)
-inSql(“age”, “1,2,3”) -&gt; age in (1,2,3)
-inSql(“id”, “select id from student where id &lt; 3”) -&gt; id in (select id from student where id &lt; 3)
-notInSql    字段 NOT IN (sql 语句)
-groupBy    GROUP BY 字段
-orderByAsc    升序 ORDER BY 字段, … ASC
-orderByDesc    降序 ORDER BY 字段, … DESC
-orderBy    自定义字段排序
-orderBy(true, true, “id”, “name”) -&gt; order by id ASC, name ASC
-having    条件分组
-or    OR 语句，拼接 + OR 字段=值
-and    AND 语句，拼接 + AND 字段=值
-apply    拼接 sql
-last    在 sql 语句后拼接自定义条件
-exists    拼接 EXISTS(sql语句)
-exists(“selece id from student where age = 1”) -&gt; exists(selece id from student where age = 1)
-notExists    拼接 NOT EXISTS(sql语句)
-nested    正常嵌套 不带 AND 或者 OR
-</code></pre>
-<h1 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h1><h2 id="创建一个数据库-mybatisplus"><a href="#创建一个数据库-mybatisplus" class="headerlink" title="创建一个数据库 mybatisplus"></a>创建一个数据库 mybatisplus</h2><h2 id="创建-user-表"><a href="#创建-user-表" class="headerlink" title="创建 user 表"></a>创建 user 表</h2><pre><code>CREATE TABLE `user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(30) DEFAULT NULL,
-  `age` int(11) DEFAULT NULL,
-  `email` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-);
-</code></pre>
-<h2 id="创建-springboot-工程"><a href="#创建-springboot-工程" class="headerlink" title="创建 springboot 工程"></a>创建 springboot 工程</h2><h2 id="导入对应-maven-坐标"><a href="#导入对应-maven-坐标" class="headerlink" title="导入对应 maven 坐标"></a>导入对应 maven 坐标</h2><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
-         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
-    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
-    &lt;parent&gt;
-        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-        &lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;
-        &lt;version&gt;2.5.3&lt;/version&gt;
-        &lt;relativePath/&gt; &lt;!-- lookup parent from repository --&gt;
-    &lt;/parent&gt;
-    &lt;groupId&gt;com.cmy&lt;/groupId&gt;
-    &lt;artifactId&gt;mybatis_plus&lt;/artifactId&gt;
-    &lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;
-    &lt;name&gt;mybatis_plus&lt;/name&gt;
-    &lt;description&gt;Demo project for Spring Boot&lt;/description&gt;
-    &lt;properties&gt;
-        &lt;java.version&gt;1.8&lt;/java.version&gt;
-    &lt;/properties&gt;
-    &lt;dependencies&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-boot-starter&lt;/artifactId&gt;
-        &lt;/dependency&gt;
- 
-        &lt;!-- mybatis-plus --&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;com.baomidou&lt;/groupId&gt;
-            &lt;artifactId&gt;mybatis-plus-boot-starter&lt;/artifactId&gt;
-            &lt;version&gt;3.4.0&lt;/version&gt;
-        &lt;/dependency&gt;
- 
-        &lt;!-- mysql --&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;mysql&lt;/groupId&gt;
-            &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
-            &lt;scope&gt;runtime&lt;/scope&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;
-            &lt;scope&gt;test&lt;/scope&gt;
-        &lt;/dependency&gt;
-    &lt;/dependencies&gt;
- 
-    &lt;build&gt;
-        &lt;plugins&gt;
-            &lt;plugin&gt;
-                &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-                &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;
-            &lt;/plugin&gt;
-        &lt;/plugins&gt;
-    &lt;/build&gt;
- 
-&lt;/project&gt;
-</code></pre>
-<h2 id="mysql数据库相关配置"><a href="#mysql数据库相关配置" class="headerlink" title="mysql数据库相关配置"></a>mysql数据库相关配置</h2><pre><code>spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1/mybatisplus?useUnicode=true&amp;characterEncoding=utf-8
-    username: root
-    password: root
-mybatis-plus 日志信息配置
-mybatis-plus:
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-</code></pre>
-<h2 id="创建实体类-User"><a href="#创建实体类-User" class="headerlink" title="创建实体类 User"></a>创建实体类 User</h2><pre><code>package com.cmy.mybatis_plus.entity;
- 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
- 
-/**
- * 实体类 user
- */
-public class User &#123;
-    /**
-     * 指定主键id生成的方式
-     * value 是主键字段的名称，如果是id，可以不用写
-     * type 指定主键的类型，主键的值如何生成。idType.AUTO 自动增长
-     */
-    @TableId(
-            value = &quot;id&quot;,
-            type = IdType.AUTO
-    )
-    private Long id;
-    private String name;
-    private String email;
-    private Integer age;
- 
-    public Long getId() &#123;
-        return id;
-    &#125;
- 
-    public void setId(Long id) &#123;
-        this.id = id;
-    &#125;
- 
-    public String getName() &#123;
-        return name;
-    &#125;
- 
-    public void setName(String name) &#123;
-        this.name = name;
-    &#125;
- 
-    public String getEmail() &#123;
-        return email;
-    &#125;
- 
-    public void setEmail(String email) &#123;
-        this.email = email;
-    &#125;
- 
-    public Integer getAge() &#123;
-        return age;
-    &#125;
- 
-    public void setAge(Integer age) &#123;
-        this.age = age;
-    &#125;
- 
-    @Override
-    public String toString() &#123;
-        return &quot;User&#123;&quot; +
-                &quot;id=&quot; + id +
-                &quot;, name=&#39;&quot; + name + &#39;\&#39;&#39; +
-                &quot;, email=&#39;&quot; + email + &#39;\&#39;&#39; +
-                &quot;, age=&quot; + age +
-                &#39;&#125;&#39;;
-    &#125;
-&#125;
-</code></pre>
-<h2 id="自定义-User-的-Mapper-接口"><a href="#自定义-User-的-Mapper-接口" class="headerlink" title="自定义 User 的 Mapper 接口"></a>自定义 User 的 Mapper 接口</h2><pre><code>package com.cmy.mybatis_plus.mapper;
- 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.cmy.mybatis_plus.entity.User;
- 
-/**
- * 自定义 Mapper 接口，就是 dao 接口
- * 1. 实现BaseMapper
- * 2. 指定实体类（泛型）
- *
- * BaseMapper 是 MP 框架中的对象，定义了 17 个操作方法（CRUD）
- */
-public interface UserMapper extends BaseMapper&lt;User&gt; &#123;
-&#125;
-</code></pre>
-<h1 id="查询条件"><a href="#查询条件" class="headerlink" title="查询条件"></a>查询条件</h1><h2 id="allEq"><a href="#allEq" class="headerlink" title="allEq"></a>allEq</h2><p>条件用 Map 进行封装</p>
-<pre><code>“name” -&gt; “张三”
-“age” -&gt; 20
-
-public void testAllEq() &#123;
-    QueryWrapper&lt;User&gt; queryWrapper = new QueryWrapper&lt;&gt;();
-    // 封装条件
-    Map&lt;String, Object&gt; hashMap = new HashMap&lt;&gt;();
-    hashMap.put(&quot;name&quot;, &quot;张三&quot;);
-    hashMap.put(&quot;age&quot;, 20);
- 
-    queryWrapper.allEq(hashMap);
- 
-    List&lt;User&gt; userList = userMapper.selectList(queryWrapper);
-    userList.forEach(user -&gt; &#123;
-        System.out.println(user);
-    &#125;);
-&#125;
-</code></pre>
-<h2 id="eq"><a href="#eq" class="headerlink" title="eq"></a>eq</h2><p>eq(“列名”, 值) -&gt; 列名 = 值</p>
-<pre><code>public List&lt;Dict&gt; listByDictCode(DictCode dictCode) &#123;
-    LambdaQueryWrapper&lt;Dict&gt; wrapper = Wrappers.lambdaQuery();
-    wrapper.eq(Dict::getDictCode, dictCode.getCode())
-           .eq(Dict::getEnabled, DictEnableEnum.VALID.getType());
-    return this.baseMapper.selectList(wrapper);
-&#125;
-</code></pre>
-<h2 id="ne"><a href="#ne" class="headerlink" title="ne"></a>ne</h2><p>ne(“列名”, 值) -&gt; 列名 != 值</p>
-<pre><code>public List&lt;Dict&gt; listByDictCode(DictCode dictCode) &#123;
-    LambdaQueryWrapper&lt;Dict&gt; wrapper = Wrappers.lambdaQuery();
-    wrapper.ne(Dict::getDictCode, dictCode.getCode())
-           .ne(Dict::getEnabled, DictEnableEnum.VALID.getType());
-    return this.baseMapper.selectList(wrapper);
-&#125;
-</code></pre>
-<h2 id="gt"><a href="#gt" class="headerlink" title="gt"></a>gt</h2><p>gt(“age”, 20) -&gt; age &gt; 20</p>
-<pre><code>public List&lt;User&gt; userList() &#123;
-    LambdaQueryWrapper&lt;User&gt; wrapper = Wrappers.lambdaQuery();
-    wrapper.gt(User::getAge, 20);            
-    return this.baseMapper.selectList(wrapper);
-&#125;
-</code></pre>
-<h2 id="ge"><a href="#ge" class="headerlink" title="ge"></a>ge</h2><p>ge(“age”, 20) -&gt; age &gt;= 20</p>
-<pre><code>public List&lt;User&gt; userList() &#123;
-    LambdaQueryWrapper&lt;User&gt; wrapper = Wrappers.lambdaQuery();
-    wrapper.ge(User::getAge, 20);            
-    return this.baseMapper.selectList(wrapper);
-&#125;
-</code></pre>
-<h2 id="lt"><a href="#lt" class="headerlink" title="lt"></a>lt</h2><p>lt(“age”, 20) -&gt; age &lt; 20</p>
-<pre><code>public List&lt;User&gt; userList() &#123;
-    LambdaQueryWrapper&lt;User&gt; wrapper = Wrappers.lambdaQuery();
-    wrapper.lt(User::getAge, 20);            
-    return this.baseMapper.selectList(wrapper);
-&#125;
-</code></pre>
-<h2 id="le"><a href="#le" class="headerlink" title="le"></a>le</h2><p>le(“age”, 21) -&gt; age &lt;= 21</p>
-<pre><code>public List&lt;User&gt; userList() &#123;
-    LambdaQueryWrapper&lt;User&gt; wrapper = Wrappers.lambdaQuery();
-    wrapper.le(User::getAge, 20);            
-    return this.baseMapper.selectList(wrapper);
-&#125;
-</code></pre>
-<h2 id="between-notBetween"><a href="#between-notBetween" class="headerlink" title="between,notBetween"></a>between,notBetween</h2><p>between(“age”, 18, 25) -&gt; age BETWEEN 18 AND 25 ，年龄在18到25之间</p>
-<p>notBetween就是不在18到25之间</p>
-<pre><code>public List&lt;User&gt; userList() &#123;
-    LambdaQueryWrapper&lt;User&gt; wrapper = Wrappers.lambdaQuery();
-    wrapper.between(User::getAge, 18,25);                
-    return this.baseMapper.selectList(wrapper);
-&#125;
-</code></pre>
-<h2 id="like-notLike"><a href="#like-notLike" class="headerlink" title="like,notLike"></a>like,notLike</h2><p>like 匹配值 -&gt; “%值%” 模糊查询</p>
-<p>notLike 模糊查询不匹配”%值%”</p>
-<pre><code>public List&lt;User&gt; userList() &#123;
-    LambdaQueryWrapper&lt;User&gt; wrapper = Wrappers.lambdaQuery();
-     wrapper.like(User::getName, &quot;张&quot;);           
-    return this.baseMapper.selectList(wrapper);
-&#125;
-</code></pre>
-<h2 id="likeLeft"><a href="#likeLeft" class="headerlink" title="likeLeft"></a>likeLeft</h2><p>likeLeft 匹配值 -&gt; “%值”</p>
-<pre><code>public List&lt;User&gt; userList() &#123;
-    LambdaQueryWrapper&lt;User&gt; wrapper = Wrappers.lambdaQuery();
-     wrapper.likeLeft(User::getName, &quot;张&quot;);           
-    return this.baseMapper.selectList(wrapper);
-&#125;
-</code></pre>
-<h2 id="likeRight"><a href="#likeRight" class="headerlink" title="likeRight"></a>likeRight</h2><p>likeRight 匹配值 -&gt; “值%”</p>
-<pre><code>public List&lt;User&gt; userList() &#123;
-    LambdaQueryWrapper&lt;User&gt; wrapper = Wrappers.lambdaQuery();
-    wrapper.likeRight(User::getName, &quot;张&quot;);           
-    return this.baseMapper.selectList(wrapper);
-&#125;
-</code></pre>
-<h2 id="isNull，isNotNull"><a href="#isNull，isNotNull" class="headerlink" title="isNull，isNotNull"></a>isNull，isNotNull</h2><p>isNull 空值查询<br>isNotNull 非空值查询</p>
-<pre><code>public List&lt;User&gt; userList() &#123;
-    LambdaQueryWrapper&lt;User&gt; wrapper = Wrappers.lambdaQuery();
-    wrapper.isNull(User::getName);
-    //wrapper.isNotNull(User::getName);              
-    return this.baseMapper.selectList(wrapper);
-&#125;
-</code></pre>
-<h2 id="in，notIn"><a href="#in，notIn" class="headerlink" title="in，notIn"></a>in，notIn</h2><p>in(“name”, “张三”, “李四”) -&gt; name in (“张三”, “李四”) 姓名是张三或李四的用户</p>
-<p>notIn(“name”, “张三”, “李四”) -&gt; name not in (“张三”, “李四”) 姓名不是张三或李四的用户</p>
-<pre><code>public List&lt;User&gt; userList() &#123;
-    LambdaQueryWrapper&lt;User&gt; wrapper = Wrappers.lambdaQuery();
-    wrapper.in(User::getName, &quot;张三&quot;,&quot;李四&quot;);
-    //wrapper.in(User::getName, &quot;张三&quot;,&quot;李四&quot;);           
-    return this.baseMapper.selectList(wrapper);
-&#125;
-</code></pre>
-<h2 id="inSql、notInSql"><a href="#inSql、notInSql" class="headerlink" title="inSql、notInSql"></a>inSql、notInSql</h2><pre><code>public List&lt;User&gt; userList() &#123;
-    LambdaQueryWrapper&lt;User&gt; wrapper= new LambdaQueryWrapper&lt;&gt;();
-    // SELECT id,name,email,age FROM user WHERE (age IN (select age from user where id = 1))
-    wrapper.inSql(User::getAge, &quot;select age from user where id = 1&quot;);
-    return this.baseMapper.selectList(wrapper);
-&#125;
-</code></pre>
-<h2 id="groupBy"><a href="#groupBy" class="headerlink" title="groupBy"></a>groupBy</h2><p>分组</p>
-<pre><code>public List&lt;User&gt; userList() &#123;
-    LambdaQueryWrapper&lt;User&gt; wrapper = new LambdaQueryWrapper&lt;&gt;();
-    wrapper.groupBy(User::getName);
-    return this.baseMapper.selectList(wrapper);
-&#125;
-</code></pre>
-<h2 id="orderBy、orderByAsc、orderByDesc"><a href="#orderBy、orderByAsc、orderByDesc" class="headerlink" title="orderBy、orderByAsc、orderByDesc"></a>orderBy、orderByAsc、orderByDesc</h2><pre><code>public List&lt;User&gt; userList() &#123;
-    LambdaQueryWrapper&lt;User&gt; wrapper = new LambdaQueryWrapper&lt;&gt;();
-    // SELECT id,name,email,age FROM user ORDER BY name ASC,age DESC
-    wrapper.orderBy(true, true, User::getName).orderBy(true, false, User::getAge);
-    
-    // SELECT id,name,email,age FROM user ORDER BY name ASC,age ASC
-    wrapper.orderByAsc(User::getName, User::getAge);
- 
-    // SELECT id,name,email,age FROM user ORDER BY name DESC,age DESC
-    wrapper.orderByDesc(User::getName, User::getAge);
- 
-    return this.baseMapper.selectList(wrapper);
-&#125;
-</code></pre>
-<h2 id="or、and"><a href="#or、and" class="headerlink" title="or、and"></a>or、and</h2><pre><code>public List&lt;User&gt; userList() &#123;
-    LambdaQueryWrapper&lt;User&gt; wrapper = Wrappers.lambdaQuery();
-
-    // SELECT id,name,email,age FROM user WHERE (name = ? AND id = ?)
-    wrapper.eq(User::getName, &quot;张三&quot;).and().eq(User::getId,1);
-
-    // SELECT id,name,email,age FROM user WHERE (name = ? OR id = ?)       
-    wrapper.eq(User::getName, &quot;张三&quot;).or().eq(User::getId,1);     
-    return this.baseMapper.selectList(wrapper);
-&#125;
-</code></pre>
-<p>这里说明一下or和and的问题</p>
-<p>错误代码</p>
-<pre><code>public List&lt;User&gt; userList() &#123;
- 
-    LambdaQueryWrapper&lt;User&gt; wrapper = new LambdaQueryWrapper&lt;&gt;();
-    wrapper.eq(User::getId,1);
-    wrapper.like(User::getName,&quot;张&quot;)
-           .or()
-           .like(User::getEmail,&quot;163&quot;)
-           .or()
-           .like(User::getAge,1);
-&#125;
-</code></pre>
-<p>根据上面的写法写出的sql语句如下：</p>
-<pre><code>WHERE id = &#39;1&#39; 
-    AND name LIKE &#39;%张%&#39;
-    OR email LIKE &#39;%163%&#39;
-    OR age LIKE &#39;%1%&#39;
-</code></pre>
-<p>这样明显是不对的，根据mysql语句执行顺序or最后执行 ，这会导致一旦[name like ‘%张%’]条件成立后面的or条件就会失效，所以第一个条件 并没有起到and的作用。</p>
-<p>解决方法</p>
-<pre><code>public List&lt;User&gt; userList() &#123;
- 
-    LambdaQueryWrapper&lt;User&gt; wrapper = new LambdaQueryWrapper&lt;&gt;();
-    wrapper.eq(User::getId,1);
-    wrapper.and(wrapper-&gt;wrapper.like(User::getName,&quot;张&quot;)
-                                .or()
-                                .like(User::getEmail,&quot;163&quot;)
-                                .or()
-                                .like(User::getAge,1)
-               );
-&#125;
-</code></pre>
-<p>这样得到的sql语句如下</p>
-<pre><code>WHERE id = &#39;1&#39; 
-    AND (name LIKE &#39;%张%&#39;
-    OR email LIKE &#39;%163%&#39;
-    OR age LIKE &#39;%1%&#39;)
-</code></pre>
-<p>这样就解决了，这个问题在我的公司中新人(包括我在内)貌似都遇到这个问题，在此说明一下</p>
-<h2 id="last"><a href="#last" class="headerlink" title="last"></a>last</h2><p>在末尾拼接sql语句</p>
-<p>注：last()有sql注入的风险，请谨慎使用！</p>
-<pre><code>public List&lt;User&gt; userList() &#123;
-    LambdaQueryWrapper&lt;User&gt; wrapper = new LambdaQueryWrapper&lt;&gt;();
-    // SELECT id,name,email,age FROM user WHERE (name = ? OR age = ?) limit 1
-    wrapper.eq(User::getName, &quot;张三&quot;).or().eq(User::getAge, 20).last(&quot;limit 1&quot;);
-    return this.baseMapper.selectList(wrapper);
-&#125;
-exists、notExists
-public List&lt;User&gt; userList() &#123;
-    LambdaQueryWrapper&lt;User&gt; wrapper = new LambdaQueryWrapper&lt;&gt;();
- 
-    // SELECT id,name,email,age FROM user WHERE (EXISTS (select name from user where age &gt; ?))
-    wrapper.exists(&quot;select name from user where age &gt; 21&quot;);
- 
-    // SELECT id,name,email,age FROM user WHERE (NOT EXISTS (select name from user where age &gt; ?))
-    wrapper.notExists(&quot;select name from user where age &gt; 21&quot;);
- 
-    return this.baseMapper.selectList(wrapper);
-&#125;
-</code></pre>
-<h1 id="附加MySQL语句执行顺序"><a href="#附加MySQL语句执行顺序" class="headerlink" title="附加MySQL语句执行顺序"></a>附加MySQL语句执行顺序</h1><pre><code>1、from
-2、where (or 最后执行)
-3、group by
-4、having
-5、DISTINCT
-6、order by
-7、limit
-</code></pre>
-<p>————————————————<br>版权声明：本文为CSDN博主「初级bug小天才」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_52317961/article/details/128317591">https://blog.csdn.net/weixin_52317961/article/details/128317591</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-QueryWrapper和LambdaQueryWrapper和Wrappers"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/10/04/QueryWrapper%E5%92%8CLambdaQueryWrapper%E5%92%8CWrappers/"
-    >QueryWrapper和LambdaQueryWrapper和Wrappers</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/10/04/QueryWrapper%E5%92%8CLambdaQueryWrapper%E5%92%8CWrappers/" class="article-date">
-  <time datetime="2023-10-04T02:04:00.000Z" itemprop="datePublished">2023-10-04</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>前言：当我们使用MybatisPlus进行数据库操作，条件构造器无可厚非会使用到！</p>
-<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><pre><code>Wrapper：条件构造抽象类，是最顶端父类；
-AbstractWrapper：用于查询条件封装，生成sql的where条件；
-AbstractLambdaWrapper：Lambda语法使用Wrapper统一处理解析lambda获取column。
-LambdaQueryWrapper：用于lambda语法使用的查询Wrapper；
-LambdaUpdateWrapper:Lambda更新封装Wrapper;
-QueryWrapper:Entity对象封装操作类，不是用lambda；
-UpdateWrapper:Update条件封装，用于Entity对象更新操作。
-</code></pre>
-<h1 id="一、QueryWrapper"><a href="#一、QueryWrapper" class="headerlink" title="一、QueryWrapper"></a>一、QueryWrapper</h1><p>1.1 写法</p>
-<pre><code>QueryWrapper&lt;Users&gt; queryWrapper = new QueryWrapper&lt;&gt;();
-queryWrapper.eq(&quot;username&quot;,name);
-List&lt;User&gt; user = userMapper.selectList(lambdaQueryWrapper)
-</code></pre>
-<p>1.2 方法解释</p>
-<pre><code>queryWrapper.lt();                            // 小于
-queryWrapper.le();                            // 小于等于
-queryWrapper.gt();                            // 大于
-queryWrapper.ge();                            // 大于等于
-queryWrapper.eq();                            // 等于    
-queryWrapper.ne();                            // 不等于
-queryWrapper.betweeen(&quot;age”,10,20);            // age在值10到20之间
-queryWrapper.notBetweeen(&quot;age”,10,20);        // age不在值10到20之间
-queryWrapper.like(&quot;属性&quot;,&quot;值&quot;);            // 模糊查询匹配值
-queryWrapper.notLike(&quot;属性&quot;,&quot;值&quot;);            // 模糊查询不匹配值
-queryWrapper.likeLeft(&quot;属性&quot;,&quot;值&quot;);        // 模糊查询匹配最后一位值
-queryWrapper.likeRight(&quot;属性&quot;,&quot;值&quot;);        // 模糊查询匹配第一位值‘值%’
-queryWrapper.isNull();                        // 值为空或null
-queryWrapper.isNotNull();                    // 值不为空或null
-queryWrapper.in(&quot;属性&quot;，条件，条件);            // 符合多个条件的值
-queryWrapper.notIn(&quot;属性&quot;，条件，条件);            // 不符合多个条件的值
-queryWrapper.or();                            // 或者
-queryWrapper.and();                            // 和
-queryWrapper.orderByAsc(“属性”);                // 根据属性升序排序
-queryWrapper.orderByDesc(“属性”);                // 根据属性降序排序
-queryWrapper.inSql(“sql语句”);                // 符合sql语句的值
-queryWrapper.notSql(“sql语句”);                // 不符合SQL语句的值
-queryWrapper.esists(“SQL语句”);                // 查询符合SQL语句的值
-queryWrapper.notEsists(“SQL语句”);            // 查询不符合SQL语句的值
-queryWrapper.select(&quot;字段1&quot;，&quot;字段2&quot;，&quot;字段3&quot;);    // 设置查询字段
-</code></pre>
-<h1 id="二、LambdaQueryWrapper"><a href="#二、LambdaQueryWrapper" class="headerlink" title="二、LambdaQueryWrapper"></a>二、LambdaQueryWrapper</h1><p>2.1 写法</p>
-<pre><code>LambdaQueryWrapper&lt;User&gt; lambdaQueryWrapper = new LambdaQueryWrapper&lt;&gt;();
-lambdaQueryWrapper.eq(User::getUsername,name);
-List&lt;User&gt; user = userMapper.selectList(lambdaQueryWrapper)
-</code></pre>
-<p>2.2 方法解释</p>
-<pre><code> wrapper.eq(&quot;实体类::查询字段&quot;, &quot;条件值&quot;);
- wrapper.between(&quot;实体类::查询字段&quot;, &quot;区间一&quot;, &quot;区间二&quot;);
- wrapper.like(&quot;实体类::查询字段&quot;, &quot;模糊查询的字符&quot;); 
- wrapper.groupBy(&quot;实体类::查询字段&quot;); 
- wrapper.in(&quot;实体类::查询字段&quot;, &quot;包括的值,分割&quot;); 
- wrapper.orderByAsc(&quot;实体类::查询字段&quot;);                 //升序
- wrapper.orderByDesc(&quot;实体类::查询字段&quot;);                //降序
- wrapper.ge(&quot;实体类::查询字段&quot;, &quot;要比较的值&quot;);             //大于等于
- wrapper.le(&quot;实体类::查询字段&quot;, &quot;要比较的值&quot;);             //小于等于
-</code></pre>
-<h1 id="三、Wrappers"><a href="#三、Wrappers" class="headerlink" title="三、Wrappers"></a>三、Wrappers</h1><p>3.1 写法</p>
-<pre><code>Wrappers.&lt;User&gt;lambdaQuery().eq(User::getUsername,name);
-</code></pre>
-<p>3.2 方法解释</p>
-<pre><code>看上面的
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Java8中LambdaQueryWrapper对象使用(学习笔记)"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/10/03/Java8%E4%B8%ADLambdaQueryWrapper%E5%AF%B9%E8%B1%A1%E4%BD%BF%E7%94%A8(%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0)/"
-    >Java8中LambdaQueryWrapper对象使用(学习笔记)</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/10/03/Java8%E4%B8%ADLambdaQueryWrapper%E5%AF%B9%E8%B1%A1%E4%BD%BF%E7%94%A8(%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0)/" class="article-date">
-  <time datetime="2023-10-03T02:03:00.000Z" itemprop="datePublished">2023-10-03</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="eq："><a href="#eq：" class="headerlink" title="eq："></a>eq：</h1><p>说明：等于=</p>
-<p>例：</p>
-<pre><code>eq(&quot;name&quot;,&quot;老王&quot;)--------&gt; name = &#39;老王&#39;
-</code></pre>
-<h1 id="ne："><a href="#ne：" class="headerlink" title="ne："></a>ne：</h1><p>说明：不等于&lt;&gt;</p>
-<p>例：</p>
-<pre><code>ne(&quot;name&quot;,&quot;老王&quot;)--------&gt; name &lt;&gt; &#39;老王&#39;
-</code></pre>
-<h1 id="gt："><a href="#gt：" class="headerlink" title="gt："></a>gt：</h1><p>说明：大于&gt;</p>
-<p>例：</p>
-<pre><code>gt(&quot;age&quot;,18)--------&gt; age &gt; 18
-</code></pre>
-<h1 id="ge："><a href="#ge：" class="headerlink" title="ge："></a>ge：</h1><p>说明：大于等于&gt;=</p>
-<p>例：</p>
-<pre><code>ge(&quot;age&quot;,18)--------&gt; age &gt;= 18
-</code></pre>
-<h1 id="lt："><a href="#lt：" class="headerlink" title="lt："></a>lt：</h1><p>说明：小于&lt;</p>
-<p>例：</p>
-<pre><code>lt(&quot;age&quot;,18)--------&gt; age &lt; 18
-</code></pre>
-<h1 id="le："><a href="#le：" class="headerlink" title="le："></a>le：</h1><p>说明：小于等于&lt;=</p>
-<p>例：</p>
-<pre><code>le(&quot;age&quot;,18)--------&gt; age &lt;= 18
-</code></pre>
-<h1 id="between："><a href="#between：" class="headerlink" title="between："></a>between：</h1><p>说明：BETWEEN 值1 AND 值2</p>
-<p>例：</p>
-<pre><code>between(&quot;age&quot;,18,30)--------&gt; age between 18 and 30
-</code></pre>
-<h1 id="notBetween："><a href="#notBetween：" class="headerlink" title="notBetween："></a>notBetween：</h1><p>说明：NOT BETWEEN 值1 AND 值2</p>
-<p>例：</p>
-<pre><code>notBetween(&quot;age&quot;,18,30)--------&gt; age not between 18 and 30
-</code></pre>
-<h1 id="like："><a href="#like：" class="headerlink" title="like："></a>like：</h1><p>说明：LIKE ‘%值%’</p>
-<p>例：</p>
-<pre><code>like(&quot;name&quot;,&quot;王&quot;)--------&gt; name like &#39;%王%&#39;
-</code></pre>
-<h1 id="notLike："><a href="#notLike：" class="headerlink" title="notLike："></a>notLike：</h1><p>说明：NOT LIKE ‘%值%’</p>
-<p>例：</p>
-<pre><code>notLike(&quot;name&quot;,&quot;王&quot;)--------&gt; name not like &#39;%王%&#39;
-</code></pre>
-<h1 id="likeLeft："><a href="#likeLeft：" class="headerlink" title="likeLeft："></a>likeLeft：</h1><p>说明：LIKE ‘%值’</p>
-<p>例：</p>
-<pre><code>likeLeft(&quot;name&quot;,&quot;王&quot;)--------&gt; name like &#39;%王&#39;
-</code></pre>
-<h1 id="likeRight："><a href="#likeRight：" class="headerlink" title="likeRight："></a>likeRight：</h1><p>说明：LIKE ‘值%’</p>
-<p>例：</p>
-<pre><code>likeRight(&quot;name&quot;,&quot;王&quot;)--------&gt; name like &#39;王%&#39;
-</code></pre>
-<h1 id="isNull："><a href="#isNull：" class="headerlink" title="isNull："></a>isNull：</h1><p>说明：字段 IS NULL</p>
-<p>例：</p>
-<pre><code>isNull(&quot;name&quot;)--------&gt; name is null
-</code></pre>
-<h1 id="isNotNull："><a href="#isNotNull：" class="headerlink" title="isNotNull："></a>isNotNull：</h1><p>说明：字段 IS NOT NULL</p>
-<p>例：</p>
-<pre><code>isNotNull(&quot;name&quot;)--------&gt; name is not null
-</code></pre>
-<h1 id="in："><a href="#in：" class="headerlink" title="in："></a>in：</h1><p>说明：字段 IN (v0, v1, …)</p>
-<p>例：</p>
-<pre><code>in(&quot;age&quot;,&#123;1,2,3&#125;)--------&gt; age in (1,2,3)
-</code></pre>
-<h1 id="notIn："><a href="#notIn：" class="headerlink" title="notIn："></a>notIn：</h1><p>说明：字段 NOT IN (v0, v1, …)</p>
-<p>例：</p>
-<pre><code>notIN(&quot;age&quot;,&#123;1,2,3&#125;)--------&gt; age not in (1,2,3)
-</code></pre>
-<h1 id="inSql："><a href="#inSql：" class="headerlink" title="inSql："></a>inSql：</h1><p>说明：字段 IN ( SQL语句 )</p>
-<p>例：</p>
-<pre><code>inSql(&quot;id&quot;,&quot;select id from table where id &lt; 3&quot;)--------&gt; id in (select id from table where id &lt; 3)
-</code></pre>
-<h1 id="notInSql："><a href="#notInSql：" class="headerlink" title="notInSql："></a>notInSql：</h1><p>说明：字段 NOT IN ( SQL语句 )</p>
-<p>例：</p>
-<pre><code>notInSql(&quot;id&quot;,&quot;select id from table where id &lt; 3&quot;)--------&gt; id not in (select id from table where id &lt; 3)
-</code></pre>
-<h1 id="groupBy："><a href="#groupBy：" class="headerlink" title="groupBy："></a>groupBy：</h1><p>说明：分组 GROUP BY 字段， …</p>
-<p>例：</p>
-<pre><code>groupBy(&quot;id&quot;,&quot;name&quot;)--------&gt; group by id,name
-</code></pre>
-<h1 id="orderByAsc："><a href="#orderByAsc：" class="headerlink" title="orderByAsc："></a>orderByAsc：</h1><p>说明：排序 ORDER BY 字段，… ASC</p>
-<p>例：</p>
-<pre><code>orderByAsc(&quot;id&quot;,&quot;name&quot;)--------&gt; order by id ASC,name ASC
-</code></pre>
-<h1 id="orderByDesc："><a href="#orderByDesc：" class="headerlink" title="orderByDesc："></a>orderByDesc：</h1><p>说明：排序 ORDER BY 字段，… DESC</p>
-<p>例：</p>
-<pre><code>orderByDesc(&quot;id&quot;,&quot;name&quot;)--------&gt; order by id DESC,name DESC
-</code></pre>
-<h1 id="orderBy："><a href="#orderBy：" class="headerlink" title="orderBy："></a>orderBy：</h1><p>说明：排序 ORDER BY 字段，…</p>
-<p>例：</p>
-<pre><code>orderBy(&quot;id&quot;,&quot;name&quot;)--------&gt; order by id ASC,name ASC
-</code></pre>
-<h1 id="having："><a href="#having：" class="headerlink" title="having："></a>having：</h1><p>说明：HAVING ( SQL语句 )</p>
-<p>例：</p>
-<pre><code>having(&quot;sum(age) &gt; &#123;0&#125;&quot;,11)--------&gt; having sum(age) &gt; 11
-</code></pre>
-<h1 id="or："><a href="#or：" class="headerlink" title="or："></a>or：</h1><p>说明：拼接 OR</p>
-<p>注意事项：主动调用 OR 表示紧接着下一个方法不是用 AND 连接！(不调用 OR 则默认使用 AND 连接)</p>
-<p>例：</p>
-<pre><code>eq.(&quot;id&quot;,1).or().eq(&quot;name&quot;,&quot;老王&quot;)--------&gt; id = 1 or name = &#39;老王&#39;
-</code></pre>
-<h1 id="and："><a href="#and：" class="headerlink" title="and："></a>and：</h1><p>说明：AND 嵌套</p>
-<p>例：</p>
-<pre><code>and(i -&gt; i.eq(&quot;name&quot;,&quot;老王&quot;).ne(&quot;status&quot;,1))--------&gt; and (name = &#39;老王&#39; and status &lt;&gt; 1)
-</code></pre>
-<h1 id="apply："><a href="#apply：" class="headerlink" title="apply："></a>apply：</h1><p>说明：拼接 SQL</p>
-<p>注意事项：该方法可用于数据库函数，动态入参的 params 对应前面 sqlHaving 内部的 {index} 部分，这样是不会有 SQL 注入风险的，反之会有！</p>
-<p>例：</p>
-<pre><code>apply(&quot;date_format(dateColumn,&#39;%Y-%m-%d&#39;) = &#123;0&#125;&quot;,&quot;2021-08-08&quot;)--------&gt; date_format(dateColumn,&#39;%Y-%m-%d&#39;) = &#39;2021-08-08&#39;
-</code></pre>
-<h1 id="last："><a href="#last：" class="headerlink" title="last："></a>last：</h1><p>说明：无视优化规则直接拼接到 SQL 的最后</p>
-<p>注意事项：只能调用一次，多次调用以最后一次为准，有 SQL 注入的风险，请谨慎使用</p>
-<p>例：</p>
-<pre><code>last(&quot;limit 1&quot;)
-</code></pre>
-<h1 id="exists："><a href="#exists：" class="headerlink" title="exists："></a>exists：</h1><p>说明：拼接 EXISTS ( SQL 语句 )</p>
-<p>例：</p>
-<pre><code>exists(&quot;select id from table where age = 1&quot;)--------&gt; exists (select id from table where age = 1)
-</code></pre>
-<h1 id="notExists："><a href="#notExists：" class="headerlink" title="notExists："></a>notExists：</h1><p>说明：拼接 NOT EXISTS ( SQL 语句 )</p>
-<p>例：</p>
-<pre><code>notExists(&quot;select id from table where age = 1&quot;)--------&gt; not exists (select id from table where age = 1)
-</code></pre>
-<h1 id="nested："><a href="#nested：" class="headerlink" title="nested："></a>nested：</h1><p>说明：正常嵌套 不带 AND 或者 OR</p>
-<p>例：</p>
-<pre><code>nested(i -&gt; i.eq(&quot;name&quot;,&quot;老王&quot;).ne(&quot;status&quot;,1))--------&gt; (name = &#39;老王&#39; and status &lt;&gt; 1)
-</code></pre>
-<p>————————————————<br>版权声明：本文为CSDN博主「woyaniya」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/woyaniya/article/details/129416870">https://blog.csdn.net/woyaniya/article/details/129416870</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Avue-crud 常用方法、属性"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/10/02/Avue-crud%20%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E3%80%81%E5%B1%9E%E6%80%A7/"
-    >Avue-crud 常用方法、属性</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/10/02/Avue-crud%20%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E3%80%81%E5%B1%9E%E6%80%A7/" class="article-date">
-  <time datetime="2023-10-02T02:02:00.000Z" itemprop="datePublished">2023-10-02</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>Avue的v2版本是一个基于element-ui低代码前端框架，Avue的v3是一个基于element-plus低代码前端框架，它使用 JSON 配置来生成页面，可以减少页面开发工作量，极大提升效率。avue对于后台管理系统的开发极其便捷，就是配置不容易记住，熟练该框架配置来开发会好点，不然真不如直接用element来开发的好，以下以v2为例。</p>
-<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>npm、yarn安装</p>
-<pre><code>npm i @smallwei/avue -S
-yarn add @smallwei/avue -S
-</code></pre>
-<p>或<br>CDN在线安装</p>
-<pre><code>&lt;!-- 引入样式文件 --&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@smallwei/avue/lib/index.css&quot;/&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://unpkg.com/element-ui/lib/theme-chalk/index.css&quot;/&gt;
-&lt;!-- 引入相关JS 文件 --&gt;
-&lt;script src=&quot;https://unpkg.com/vue/dist/vue.js&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;https://unpkg.com/element-ui/lib/index.js&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;https://cdn.jsdelivr.net/npm/@smallwei/avue/lib/avue.min.js&quot;&gt;&lt;/script&gt;
-</code></pre>
-<h1 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h1><p>通过CDN安装的，会挂载在全局属性AVUE下，通过 Vue.use(AVUE) 注册。</p>
-<pre><code>import Avue from &#39;@smallwei/avue&#39;;
-import &#39;@smallwei/avue/lib/index.css&#39;;
-Vue.use(Avue);
-</code></pre>
-<h1 id="全局配置"><a href="#全局配置" class="headerlink" title="全局配置"></a>全局配置</h1><pre><code>Vue.use(AVUE,&#123;
-  size:&#39;&#39;, // 组件的尺寸，默认small。可选值 small/mini/medium
-  tableSize:&#39;&#39;, // 
-  formSize:&#39;&#39;, // 
-  appendToBody:true, //
-  modalAppendToBody:true, // 
-  menuType:&#39;&#39;, // 用于改变操作栏菜单按钮类型性，属性的组件的默认尺寸均为 text。可选值 button/icon/text/menu
-  qiniu:&#123; // 七牛云配置
-    AK: &#39;&#39;,
-    SK: &#39;&#39;,
-    scope: &#39;&#39;,
-    url: &#39;&#39;,
-    deadline: 1
-  &#125;,
-  ali:&#123; // 阿里云配置
-    region: &#39;&#39;,
-    endpoint: &#39;&#39;,
-    accessKeyId: &#39;&#39;,
-    accessKeySecret: &#39;&#39;,
-    bucket: &#39;&#39;,
-  &#125;,
-  theme:&#39;&#39;, // 主题颜色配置，属性的组件的默认白色。可选值 dark
-  canvas:&#123; // 水印配置
-    text: &#39;avuejs.com&#39;,
-    fontFamily: &#39;microsoft yahei&#39;,
-    color: &quot;#999&quot;,
-    fontSize: 16,
-    opacity: 100,
-    bottom: 10,
-    right: 10,
-    ratio: 1
-  &#125;,
-&#125;);
-</code></pre>
-<h1 id="国际化"><a href="#国际化" class="headerlink" title="国际化"></a>国际化</h1><p>Avue 采用中文作为默认语言，同时支持多语言切换</p>
-<pre><code>import Vue from &#39;vue&#39;
-import Avue from &#39;@smallwei/avue&#39;
-import zhLocale from &#39;@smallwei/avue/lib/locale/lang/zh&#39;
-import enLocale from &#39;@smallwei/avue/lib/locale/lang/en&#39;
- 
-Vue.use(Avue, &#123; enLocale &#125;)
-</code></pre>
-<h1 id="全局api"><a href="#全局api" class="headerlink" title="全局api"></a>全局api</h1><pre><code>$DialogForm弹窗表单
-$Clipboard复制到剪切板
-$ImagePreview图片预览
-$Print 打印插件
-$Export excel导出
-watermark全局水印
-downFile文件下载
-deepClone对象深拷贝
-validatenull判断空
-findNode数组中寻找对象
-findArray数组中寻找对象下标
-</code></pre>
-<h1 id="crud-配置项-option"><a href="#crud-配置项-option" class="headerlink" title="crud 配置项 option"></a>crud 配置项 option</h1><p>crud 表格回调函数事件</p>
-<p>on-load：这个事件会在表格所在的组件加载时就会执行，初始化表格数据。当表格翻页、页码变化时候也会自动执行该方法，使用了这个方法可以省略表格的current-change 、size-change两个回调函数。</p>
-<p>current-change：表格页码发生变化时触发，第一个参数为当前页码。</p>
-<p>size-change：表格页容量变化时触发，第一个参数就是当前页容量大小。</p>
-<p>search-change ：表格查询按钮回调函数，默认有两个参数 form与done， form为搜索框的值，done为关闭搜索的刷新状态回调函数。</p>
-<p>row-save ：表格新增表单确定按钮的回调函数，默认有三个参数分别为：row（表单的值），done（用于关闭表单回调函数），loading（页面loading状态） 。</p>
-<p>row-update ：表格行编辑确定按钮的回调，默认四个参数 row（当前行），index（索引），done（关闭弹框回调函数），loading（页面loading状态）。</p>
-<p>row-del：表格操作行删除按钮回调函数，默认两个参数，row（当前行数据），index（当前索引） 。</p>
-<p>refresh-change：表格的刷新按钮回调函数。</p>
-<p>current-row-change：当前表格行被点击时的回调函数，第一个参数是当前行数据。</p>
-<p>tree-load：表格行展开的懒加载回调，带三个参数 row（当前展开行的数据），treeNode（展开行节点数据），resolve（行懒加载的成功回调函数，在resolve里面将懒加载的数据传出去表格进行渲染）。</p>
-<p>before-close：打开前的回调函数，两个参数done（用于关闭Dialog），type（当前窗口类型）。</p>
-<p>before-close：关闭前的回调函数，done（用于关闭Dialog），type（当前窗口的类型）。</p>
-<p>search-reset：点击清空按钮触发，清空搜索框回调函数。</p>
-<p>selection-change：当表格选择项勾选发生变化时会触发该回调函数。</p>
-<p>dateChange：dateBtn为true时的选择日期回调函数。</p>
-<pre><code>&lt;avue-crud
-  ref=&quot;crud&quot;
-  data=&quot;data&quot; // 表格显示的数据
-  :option=&quot;option&quot; // 表格配置项
-  :page.sync=&quot;page&quot;
-  :permission=&quot;permission&quot; // 表格按钮权限控制
-  @on-load=&quot;onLoad&quot;
-  @current-change=&quot;currentChange&quot;
-  @size-change=&quot;pageSizeChange&quot;
-  @search-change=&quot;searchChange&quot;
-  @row-save=&quot;rowSave&quot;
-  @row-update=&quot;rowUpdate&quot;
-  @row-del=&quot;rowDel&quot;
-  @refresh-change=&quot;refreshChange&quot;
-  @current-row-change=&quot;handleCurrentRowChange&quot;
-  @tree-load=&quot;treeLoad&quot;
-  @before-open=&quot;beforeOpen&quot;
-  @before-close=&quot;beforeClose&quot;
-  @search-reset=&quot;searchReset&quot;
-/&gt;
-const option = &#123;
-    &#39;table-loading&#39;:&#39;&#39;, // 表格等待框的控制
-    size:&#39;&#39;, // 组件尺寸
-    maxHeight:&#39;&#39;, // 表格的最大高度
-    index:&#39;&#39;, // 是否有序号
-    indexWidth:&#39;&#39;, // 序号列宽度
-    indexFixed:&#39;&#39;, // 序号列是否冻结列
-    menu:&#39;&#39;, // 是否有操作栏
-    menuWidth:&#39;&#39;, // 操作栏宽度
-    menuTitle:&#39;&#39;, // 操作栏标题
-    menuFixed:&#39;&#39;, // 操作栏列冻结列
-    menuType:&#39;&#39;, // 操作栏按钮样式
-    menuHeaderAlign:&#39;&#39;, // 操作栏表头的对齐方式
-    title:&#39;&#39;, // 表格标题
-    addBtn:&#39;&#39;, // 表格新增按钮；edit（修改）、del（删除）、view（查看）、update（修改）、save（保存）、cancel（取消）、search（查询）、empty（清空）
-    addBtnText:&#39;&#39;, // 表格新增按钮文案
-    addBtnIcon:&#39;&#39;, // 表格新增按钮图标
-    printBtn:&#39;&#39;, // 表格打印按钮
-    excelBtn:&#39;&#39;, // 表格导出按钮
-    filterBtn:&#39;&#39;, // 表格自定义过滤按钮
-    refreshBtn:&#39;&#39;, // 表格刷新数据按钮
-    columnBtn:&#39;&#39;, // 表格列操作按钮
-    searchShowBtn:&#39;&#39;, // 表格搜索显隐按钮
-    copyBtn:&#39;&#39;, // 表格复制数据按钮
-    addTitle:&#39;&#39;, // 表格新增弹窗标题 edit（修改）、view（查看）
-    dialogDrag:&#39;&#39;, // 表格弹窗是否可以拖拽
-    searchIndex:&#39;&#39;, // 表格搜索半收缩个数
-    searchPlaceholder:&#39;&#39;, // 搜索项辅助文字
-    searchSpan:&#39;&#39;, // 搜索项框栅列
-    searchGutter:&#39;&#39;, // 搜索项框间距
-    searchLabelWidth:&#39;&#39;, // 搜索项标题宽度
-    searchLabelPosition:&#39;&#39;, // 搜索项标题位置
-    column:[ // 表格列配置
-        &#123;
-            label:&#39;&#39;, // 列标题
-            prop:&#39;&#39;, // 列标题的内容属性名称
-            type:&#39;&#39;, // 
-            width:&#39;&#39;, // 对应列的宽度
-            minWidth:&#39;&#39;, // 对应列的最小宽度
-            fixed:&#39;&#39;, // 列固定
-            sortable:&#39;&#39;, // 对应列是否可以排序，监听 sort-change 回调，true, false, &#39;custom&#39;
-            formatter:&#39;&#39;, // 格式化列内容，(row, value, row, column)
-            overHidden:&#39;&#39;, // 当内容过长被隐藏时显示 tooltip
-            align:&#39;&#39;, // 对齐方式
-            headerAlign:&#39;&#39;, // 表头对齐方式
-            filters:&#39;&#39;, // 数据过滤的选项
-            search:&#39;&#39;, // 是否为搜索项
-            searchValue:&#39;&#39;, // 搜索项初始化值
-            searchPlaceholder:&#39;&#39;, // 搜索项辅助文字
-            searchSpan:&#39;&#39;, // 搜索项框栅列
-            searchOrder:&#39;&#39;, // 搜索项位置排序，序号越大越靠前
-            searchLabelWidth:&#39;&#39;, // 搜索项标题宽度
-            searchClearable:&#39;&#39;, // 搜索项清除
-            searchMultiple:&#39;&#39;, // 搜索项是否多选
-            searchTags:&#39;&#39;, // 搜索项将选中值按文字的形式展示
-            display:&#39;&#39;, // 弹出表单是否显示
-            disabled:&#39;&#39;, // 弹出表单是否禁止
-            addDisabled:&#39;&#39;, // 表单新增时项是否禁止，edit（编辑）、view（查看）
-            addDisplay:&#39;&#39;, // 表单新增时项是否显示，edit（编辑）、view（查看）
-            resizable:&#39;&#39;, // 对应列是否可以通过拖动改变宽度（需要在option中border属性为真）
-            searchClearable:&#39;&#39;, // 搜索项清除
-            searchClearable:&#39;&#39;, // 搜索项清除
-            searchClearable:&#39;&#39;, // 搜索项清除
-            dicData:[ // 下拉项字典枚举
-                &#123;label:&#39;A&#39;,value: &#39;a&#39;&#125;,
-            ],
-            rules:[ // 表单字段校验规则
-                &#123;equired: true,message: &quot;请输入姓名&quot;,trigger: &quot;blur&quot;&#125;,
-            ],
-            hide: false, // 隐藏列
-        &#125;
-    ],
-&#125;;
-</code></pre>
-<h1 id="自定义内容"><a href="#自定义内容" class="headerlink" title="自定义内容"></a>自定义内容</h1><pre><code>&lt;avue-crud :data=&quot;data&quot; :option=&quot;option&quot; ref=&quot;crud&quot;&gt;
-  &lt;!-- 左边插槽 --&gt;
-  &lt;template slot-scope=&quot;scope&quot; slot=&quot;menuLeft&quot;&gt;
-    &lt;el-button type=&quot;danger&quot; @click=&quot;$refs.crud.rowAdd()&quot;&gt;新增&lt;/el-button&gt;
-  &lt;/template&gt;
-  &lt;!-- 右边插槽 --&gt;
-  &lt;template slot-scope=&quot;scope&quot; slot=&quot;menuRight&quot;&gt;
-    &lt;el-button type=&quot;danger&quot; @click=() =&gt; &#123;&#125;&quot;&gt;刷新&lt;/el-button&gt;
-  &lt;/template&gt;
-  &lt;!-- 自定义行内操作栏插槽 --&gt;
-  &lt;template slot-scope=&quot;&#123;row,index&#125;&quot; slot=&quot;menu&quot;&gt;
-     &lt;el-button @click=&quot;$refs.crud.rowEdit(row,index)&quot;&gt;编辑&lt;/el-button&gt;
-     &lt;el-button @click=&quot;$refs.crud.rowDel(row,index)&quot;&gt;删除&lt;/el-button&gt;
-  &lt;/template&gt;
-  &lt;!-- 自定义弹窗内按钮插槽 --&gt;
-  &lt;template slot-scope=&quot;&#123;row,index,type&#125;&quot; slot=&quot;menuForm&quot;&gt;
-    &lt;el-button v-if=&quot;type==&#39;add&#39;&quot; @click=&quot;$refs.crud.rowSave()&quot;&gt;自定义新增&lt;/el-button&gt;
-    &lt;el-button v-if=&quot;type==&#39;edit&#39;&quot; @click=&quot;$refs.crud.rowUpdate()&gt;自定义修改&lt;/el-button&gt;
-    &lt;el-button @click=&quot;$refs.crud.closeDialog()&quot;&gt;取消&lt;/el-button&gt;
-  &lt;/template&gt;
-  &lt;!-- 自定义表单插槽，slot=&quot;propForm&quot; --&gt;
-  &lt;template slot-scope=&quot;&#123;type,disabled&#125;&quot; slot=&quot;nameForm&quot;&gt; // column: [&#123;prop:&#39;name&#39;,formslot:true&#125;]
-      &lt;el-tag v-if=&quot;type==&#39;add&#39;&quot;&gt;新增&lt;/el-tag&gt;
-      &lt;el-tag v-else-if=&quot;type==&#39;edit&#39;&quot;&gt;修改&lt;/el-tag&gt;
-      &lt;el-tag v-else-if=&quot;type==&#39;view&#39;&quot;&gt;查看&lt;/el-tag&gt;
-      &lt;el-tag&gt;&#123;&#123;user.name?user.name:'暂时没有内容'&#125;&#125;&lt;/el-tag&gt;
-      &lt;el-input :disabled=&quot;disabled&quot; v-model=&quot;user.name&quot;&gt;&lt;/el-input&gt;
-  &lt;/template&gt;
-  &lt;!-- 自定义表单错误提示插槽，slot=&quot;propError&quot; --&gt;
-  &lt;template slot-scope=&quot;&#123;error&#125;&quot; slot=&quot;nameError&quot;&gt; // column: [&#123;prop:&#39;name&#39;,labelslot:true&#125;]
-      &lt;p style=&quot;color:green&quot;&gt;自定义提示&#123;&#123;error&#125;&#125;&lt;/p&gt;
-  &lt;/template&gt;
-  &lt;!-- 自定义表单标题，slot=&quot;propLabel&quot; --&gt;
-  &lt;template slot-scope=&quot;scope&quot; slot=&quot;nameLabel&quot;&gt; // column: [&#123;prop:&#39;name&#39;,errorslot:true&#125;]
-     &lt;span&gt;姓名&amp;nbsp;&amp;nbsp;&lt;/span&gt;
-     &lt;el-tooltip class=&quot;item&quot; effect=&quot;dark&quot; content=&quot;文字提示&quot; placement=&quot;top-start&quot;&gt;
-      &lt;i class=&quot;el-icon-warning&quot;&gt;&lt;/i&gt;
-    &lt;/el-tooltip&gt;
-  &lt;/template&gt;
-  &lt;!-- 向搜索表单插入一个额外的（column中没有的字段）输入框 --&gt;
-  &lt;template slot=&quot;search&quot;&gt;
-      &lt;el-form-item label=&quot;状态&quot;&gt;
-          &lt;el-input placeholder=&quot;状态&quot; v-model=&quot;search.value&quot;/&gt;
-      &lt;/el-form-item&gt;
-  &lt;/template&gt;
-  &lt;!-- 向表单中插入一个额外的输入框 --&gt;
-  &lt;template slot=&quot;menuForm&quot;&gt;
-      &lt;el-form-item label=&quot;维修&quot;&gt;
-          &lt;el-input placeholder=&quot;维修&quot; v-model=&quot;search.value&quot;/&gt;
-      &lt;/el-form-item&gt;
-  &lt;/template&gt;
-&lt;/avue-crud&gt;
-</code></pre>
-<p>————————————————<br>版权声明：本文为CSDN博主「my__flower」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/my__flower/article/details/129419199">https://blog.csdn.net/my__flower/article/details/129419199</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
   </article>
   
 
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/8/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/54/">54</a><a class="extend next" rel="next" href="/page/10/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/8/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/55/">55</a><a class="extend next" rel="next" href="/page/10/">下一页</a>
   </nav>
   
 </section>
