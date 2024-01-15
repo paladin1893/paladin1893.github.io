@@ -3,11 +3,11 @@
   <title>帕拉丁的游鱼</title>
   
   <subtitle>3S践行者</subtitle>
-  <link href="https://paladin1893.gitee.io/atom.xml" rel="self"/>
+  <link href="https://paladin1893.github.io/atom.xml" rel="self"/>
   
-  <link href="https://paladin1893.gitee.io/"/>
+  <link href="https://paladin1893.github.io/"/>
   <updated>2024-01-15T16:03:55.369Z</updated>
-  <id>https://paladin1893.gitee.io/</id>
+  <id>https://paladin1893.github.io/</id>
   
   <author>
     <name>paladin1893</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>物联网网关，原来是这么回事，感谢！</title>
-    <link href="https://paladin1893.gitee.io/2023/11/29/%E7%89%A9%E8%81%94%E7%BD%91%E7%BD%91%E5%85%B3%EF%BC%8C%E5%8E%9F%E6%9D%A5%E6%98%AF%E8%BF%99%E4%B9%88%E5%9B%9E%E4%BA%8B%EF%BC%8C%E6%84%9F%E8%B0%A2%EF%BC%81/"/>
-    <id>https://paladin1893.gitee.io/2023/11/29/%E7%89%A9%E8%81%94%E7%BD%91%E7%BD%91%E5%85%B3%EF%BC%8C%E5%8E%9F%E6%9D%A5%E6%98%AF%E8%BF%99%E4%B9%88%E5%9B%9E%E4%BA%8B%EF%BC%8C%E6%84%9F%E8%B0%A2%EF%BC%81/</id>
+    <link href="https://paladin1893.github.io/2023/11/29/%E7%89%A9%E8%81%94%E7%BD%91%E7%BD%91%E5%85%B3%EF%BC%8C%E5%8E%9F%E6%9D%A5%E6%98%AF%E8%BF%99%E4%B9%88%E5%9B%9E%E4%BA%8B%EF%BC%8C%E6%84%9F%E8%B0%A2%EF%BC%81/"/>
+    <id>https://paladin1893.github.io/2023/11/29/%E7%89%A9%E8%81%94%E7%BD%91%E7%BD%91%E5%85%B3%EF%BC%8C%E5%8E%9F%E6%9D%A5%E6%98%AF%E8%BF%99%E4%B9%88%E5%9B%9E%E4%BA%8B%EF%BC%8C%E6%84%9F%E8%B0%A2%EF%BC%81/</id>
     <published>2023-11-29T12:14:23.000Z</published>
     <updated>2024-01-15T16:03:55.369Z</updated>
     
@@ -34,17 +34,17 @@
     
     
     
-    <category term="知识分享" scheme="https://paladin1893.gitee.io/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/"/>
+    <category term="知识分享" scheme="https://paladin1893.github.io/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/"/>
     
     
-    <category term="通信" scheme="https://paladin1893.gitee.io/tags/%E9%80%9A%E4%BF%A1/"/>
+    <category term="通信" scheme="https://paladin1893.github.io/tags/%E9%80%9A%E4%BF%A1/"/>
     
   </entry>
   
   <entry>
     <title>Modbus RTU 协议概述</title>
-    <link href="https://paladin1893.gitee.io/2023/11/28/Modbus%20RTU%20%E5%8D%8F%E8%AE%AE%E6%A6%82%E8%BF%B0/"/>
-    <id>https://paladin1893.gitee.io/2023/11/28/Modbus%20RTU%20%E5%8D%8F%E8%AE%AE%E6%A6%82%E8%BF%B0/</id>
+    <link href="https://paladin1893.github.io/2023/11/28/Modbus%20RTU%20%E5%8D%8F%E8%AE%AE%E6%A6%82%E8%BF%B0/"/>
+    <id>https://paladin1893.github.io/2023/11/28/Modbus%20RTU%20%E5%8D%8F%E8%AE%AE%E6%A6%82%E8%BF%B0/</id>
     <published>2023-11-28T12:14:23.000Z</published>
     <updated>2024-01-15T16:01:41.637Z</updated>
     
@@ -59,17 +59,17 @@
     
     
     
-    <category term="知识分享" scheme="https://paladin1893.gitee.io/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/"/>
+    <category term="知识分享" scheme="https://paladin1893.github.io/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/"/>
     
     
-    <category term="通信" scheme="https://paladin1893.gitee.io/tags/%E9%80%9A%E4%BF%A1/"/>
+    <category term="通信" scheme="https://paladin1893.github.io/tags/%E9%80%9A%E4%BF%A1/"/>
     
   </entry>
   
   <entry>
     <title>配电网在电力系统中的作用</title>
-    <link href="https://paladin1893.gitee.io/2023/11/27/%E9%85%8D%E7%94%B5%E7%BD%91%E5%9C%A8%E7%94%B5%E5%8A%9B%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E4%BD%9C%E7%94%A8/"/>
-    <id>https://paladin1893.gitee.io/2023/11/27/%E9%85%8D%E7%94%B5%E7%BD%91%E5%9C%A8%E7%94%B5%E5%8A%9B%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E4%BD%9C%E7%94%A8/</id>
+    <link href="https://paladin1893.github.io/2023/11/27/%E9%85%8D%E7%94%B5%E7%BD%91%E5%9C%A8%E7%94%B5%E5%8A%9B%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E4%BD%9C%E7%94%A8/"/>
+    <id>https://paladin1893.github.io/2023/11/27/%E9%85%8D%E7%94%B5%E7%BD%91%E5%9C%A8%E7%94%B5%E5%8A%9B%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E4%BD%9C%E7%94%A8/</id>
     <published>2023-11-27T12:14:23.000Z</published>
     <updated>2024-01-15T01:31:55.683Z</updated>
     
@@ -84,17 +84,17 @@
     
     
     
-    <category term="知识分享" scheme="https://paladin1893.gitee.io/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/"/>
+    <category term="知识分享" scheme="https://paladin1893.github.io/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/"/>
     
     
-    <category term="电力" scheme="https://paladin1893.gitee.io/tags/%E7%94%B5%E5%8A%9B/"/>
+    <category term="电力" scheme="https://paladin1893.github.io/tags/%E7%94%B5%E5%8A%9B/"/>
     
   </entry>
   
   <entry>
     <title>在Linux环境下运行jar文件</title>
-    <link href="https://paladin1893.gitee.io/2023/11/26/%E5%9C%A8Linux%E7%8E%AF%E5%A2%83%E4%B8%8B%E8%BF%90%E8%A1%8Cjar%E6%96%87%E4%BB%B6/"/>
-    <id>https://paladin1893.gitee.io/2023/11/26/%E5%9C%A8Linux%E7%8E%AF%E5%A2%83%E4%B8%8B%E8%BF%90%E8%A1%8Cjar%E6%96%87%E4%BB%B6/</id>
+    <link href="https://paladin1893.github.io/2023/11/26/%E5%9C%A8Linux%E7%8E%AF%E5%A2%83%E4%B8%8B%E8%BF%90%E8%A1%8Cjar%E6%96%87%E4%BB%B6/"/>
+    <id>https://paladin1893.github.io/2023/11/26/%E5%9C%A8Linux%E7%8E%AF%E5%A2%83%E4%B8%8B%E8%BF%90%E8%A1%8Cjar%E6%96%87%E4%BB%B6/</id>
     <published>2023-11-26T12:14:23.000Z</published>
     <updated>2024-01-15T01:02:26.481Z</updated>
     
@@ -109,21 +109,21 @@
     
     
     
-    <category term="部署运维" scheme="https://paladin1893.gitee.io/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/"/>
+    <category term="部署运维" scheme="https://paladin1893.github.io/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/"/>
     
     
-    <category term="部署运维" scheme="https://paladin1893.gitee.io/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/"/>
+    <category term="部署运维" scheme="https://paladin1893.github.io/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/"/>
     
-    <category term="Linux" scheme="https://paladin1893.gitee.io/tags/Linux/"/>
+    <category term="Linux" scheme="https://paladin1893.github.io/tags/Linux/"/>
     
-    <category term="CentOS" scheme="https://paladin1893.gitee.io/tags/CentOS/"/>
+    <category term="CentOS" scheme="https://paladin1893.github.io/tags/CentOS/"/>
     
   </entry>
   
   <entry>
     <title>Centos7 的 Systemctl 与 创建系统服务</title>
-    <link href="https://paladin1893.gitee.io/2023/11/25/Centos7%20%E7%9A%84%20Systemctl%20%E4%B8%8E%20%E5%88%9B%E5%BB%BA%E7%B3%BB%E7%BB%9F%E6%9C%8D%E5%8A%A1/"/>
-    <id>https://paladin1893.gitee.io/2023/11/25/Centos7%20%E7%9A%84%20Systemctl%20%E4%B8%8E%20%E5%88%9B%E5%BB%BA%E7%B3%BB%E7%BB%9F%E6%9C%8D%E5%8A%A1/</id>
+    <link href="https://paladin1893.github.io/2023/11/25/Centos7%20%E7%9A%84%20Systemctl%20%E4%B8%8E%20%E5%88%9B%E5%BB%BA%E7%B3%BB%E7%BB%9F%E6%9C%8D%E5%8A%A1/"/>
+    <id>https://paladin1893.github.io/2023/11/25/Centos7%20%E7%9A%84%20Systemctl%20%E4%B8%8E%20%E5%88%9B%E5%BB%BA%E7%B3%BB%E7%BB%9F%E6%9C%8D%E5%8A%A1/</id>
     <published>2023-11-25T12:14:23.000Z</published>
     <updated>2024-01-15T00:59:23.256Z</updated>
     
@@ -138,21 +138,21 @@
     
     
     
-    <category term="部署运维" scheme="https://paladin1893.gitee.io/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/"/>
+    <category term="部署运维" scheme="https://paladin1893.github.io/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/"/>
     
     
-    <category term="部署运维" scheme="https://paladin1893.gitee.io/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/"/>
+    <category term="部署运维" scheme="https://paladin1893.github.io/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/"/>
     
-    <category term="Linux" scheme="https://paladin1893.gitee.io/tags/Linux/"/>
+    <category term="Linux" scheme="https://paladin1893.github.io/tags/Linux/"/>
     
-    <category term="CentOS" scheme="https://paladin1893.gitee.io/tags/CentOS/"/>
+    <category term="CentOS" scheme="https://paladin1893.github.io/tags/CentOS/"/>
     
   </entry>
   
   <entry>
     <title>使用curl执行Http请求</title>
-    <link href="https://paladin1893.gitee.io/2023/11/24/%E4%BD%BF%E7%94%A8curl%E6%89%A7%E8%A1%8CHttp%E8%AF%B7%E6%B1%82/"/>
-    <id>https://paladin1893.gitee.io/2023/11/24/%E4%BD%BF%E7%94%A8curl%E6%89%A7%E8%A1%8CHttp%E8%AF%B7%E6%B1%82/</id>
+    <link href="https://paladin1893.github.io/2023/11/24/%E4%BD%BF%E7%94%A8curl%E6%89%A7%E8%A1%8CHttp%E8%AF%B7%E6%B1%82/"/>
+    <id>https://paladin1893.github.io/2023/11/24/%E4%BD%BF%E7%94%A8curl%E6%89%A7%E8%A1%8CHttp%E8%AF%B7%E6%B1%82/</id>
     <published>2023-11-24T12:14:23.000Z</published>
     <updated>2024-01-14T09:34:35.788Z</updated>
     
@@ -167,21 +167,21 @@
     
     
     
-    <category term="部署运维" scheme="https://paladin1893.gitee.io/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/"/>
+    <category term="部署运维" scheme="https://paladin1893.github.io/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/"/>
     
     
-    <category term="部署运维" scheme="https://paladin1893.gitee.io/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/"/>
+    <category term="部署运维" scheme="https://paladin1893.github.io/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/"/>
     
-    <category term="Linux" scheme="https://paladin1893.gitee.io/tags/Linux/"/>
+    <category term="Linux" scheme="https://paladin1893.github.io/tags/Linux/"/>
     
-    <category term="CentOS" scheme="https://paladin1893.gitee.io/tags/CentOS/"/>
+    <category term="CentOS" scheme="https://paladin1893.github.io/tags/CentOS/"/>
     
   </entry>
   
   <entry>
     <title>Linux命令：ss命令</title>
-    <link href="https://paladin1893.gitee.io/2023/11/23/Linux%E5%91%BD%E4%BB%A4%EF%BC%9Ass%E5%91%BD%E4%BB%A4/"/>
-    <id>https://paladin1893.gitee.io/2023/11/23/Linux%E5%91%BD%E4%BB%A4%EF%BC%9Ass%E5%91%BD%E4%BB%A4/</id>
+    <link href="https://paladin1893.github.io/2023/11/23/Linux%E5%91%BD%E4%BB%A4%EF%BC%9Ass%E5%91%BD%E4%BB%A4/"/>
+    <id>https://paladin1893.github.io/2023/11/23/Linux%E5%91%BD%E4%BB%A4%EF%BC%9Ass%E5%91%BD%E4%BB%A4/</id>
     <published>2023-11-23T12:14:23.000Z</published>
     <updated>2024-01-14T09:22:10.517Z</updated>
     
@@ -196,21 +196,21 @@
     
     
     
-    <category term="部署运维" scheme="https://paladin1893.gitee.io/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/"/>
+    <category term="部署运维" scheme="https://paladin1893.github.io/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/"/>
     
     
-    <category term="部署运维" scheme="https://paladin1893.gitee.io/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/"/>
+    <category term="部署运维" scheme="https://paladin1893.github.io/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/"/>
     
-    <category term="Linux" scheme="https://paladin1893.gitee.io/tags/Linux/"/>
+    <category term="Linux" scheme="https://paladin1893.github.io/tags/Linux/"/>
     
-    <category term="CentOS" scheme="https://paladin1893.gitee.io/tags/CentOS/"/>
+    <category term="CentOS" scheme="https://paladin1893.github.io/tags/CentOS/"/>
     
   </entry>
   
   <entry>
     <title>CentOS系统安装JDK1.8 详细教程</title>
-    <link href="https://paladin1893.gitee.io/2023/11/22/CentOS%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85JDK1.8%20%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/"/>
-    <id>https://paladin1893.gitee.io/2023/11/22/CentOS%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85JDK1.8%20%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/</id>
+    <link href="https://paladin1893.github.io/2023/11/22/CentOS%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85JDK1.8%20%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/"/>
+    <id>https://paladin1893.github.io/2023/11/22/CentOS%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85JDK1.8%20%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/</id>
     <published>2023-11-22T12:14:23.000Z</published>
     <updated>2024-01-14T08:51:16.705Z</updated>
     
@@ -225,23 +225,23 @@
     
     
     
-    <category term="部署运维" scheme="https://paladin1893.gitee.io/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/"/>
+    <category term="部署运维" scheme="https://paladin1893.github.io/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/"/>
     
     
-    <category term="部署运维" scheme="https://paladin1893.gitee.io/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/"/>
+    <category term="部署运维" scheme="https://paladin1893.github.io/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/"/>
     
-    <category term="Linux" scheme="https://paladin1893.gitee.io/tags/Linux/"/>
+    <category term="Linux" scheme="https://paladin1893.github.io/tags/Linux/"/>
     
-    <category term="JDK" scheme="https://paladin1893.gitee.io/tags/JDK/"/>
+    <category term="JDK" scheme="https://paladin1893.github.io/tags/JDK/"/>
     
-    <category term="CentOS" scheme="https://paladin1893.gitee.io/tags/CentOS/"/>
+    <category term="CentOS" scheme="https://paladin1893.github.io/tags/CentOS/"/>
     
   </entry>
   
   <entry>
     <title>CentOS 安装 activeMq</title>
-    <link href="https://paladin1893.gitee.io/2023/11/21/CentOS%20%E5%AE%89%E8%A3%85%20nginx/"/>
-    <id>https://paladin1893.gitee.io/2023/11/21/CentOS%20%E5%AE%89%E8%A3%85%20nginx/</id>
+    <link href="https://paladin1893.github.io/2023/11/21/CentOS%20%E5%AE%89%E8%A3%85%20nginx/"/>
+    <id>https://paladin1893.github.io/2023/11/21/CentOS%20%E5%AE%89%E8%A3%85%20nginx/</id>
     <published>2023-11-21T12:14:23.000Z</published>
     <updated>2024-01-14T10:48:15.601Z</updated>
     
@@ -256,23 +256,23 @@
     
     
     
-    <category term="部署运维" scheme="https://paladin1893.gitee.io/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/"/>
+    <category term="部署运维" scheme="https://paladin1893.github.io/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/"/>
     
     
-    <category term="部署运维" scheme="https://paladin1893.gitee.io/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/"/>
+    <category term="部署运维" scheme="https://paladin1893.github.io/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/"/>
     
-    <category term="Linux" scheme="https://paladin1893.gitee.io/tags/Linux/"/>
+    <category term="Linux" scheme="https://paladin1893.github.io/tags/Linux/"/>
     
-    <category term="CentOS" scheme="https://paladin1893.gitee.io/tags/CentOS/"/>
+    <category term="CentOS" scheme="https://paladin1893.github.io/tags/CentOS/"/>
     
-    <category term="activeMq" scheme="https://paladin1893.gitee.io/tags/activeMq/"/>
+    <category term="activeMq" scheme="https://paladin1893.github.io/tags/activeMq/"/>
     
   </entry>
   
   <entry>
     <title>CentOS 安装 activeMq</title>
-    <link href="https://paladin1893.gitee.io/2023/11/20/CentOS%20%E5%AE%89%E8%A3%85%20activeMq/"/>
-    <id>https://paladin1893.gitee.io/2023/11/20/CentOS%20%E5%AE%89%E8%A3%85%20activeMq/</id>
+    <link href="https://paladin1893.github.io/2023/11/20/CentOS%20%E5%AE%89%E8%A3%85%20activeMq/"/>
+    <id>https://paladin1893.github.io/2023/11/20/CentOS%20%E5%AE%89%E8%A3%85%20activeMq/</id>
     <published>2023-11-20T12:14:23.000Z</published>
     <updated>2024-01-12T18:18:01.545Z</updated>
     
@@ -287,23 +287,23 @@
     
     
     
-    <category term="部署运维" scheme="https://paladin1893.gitee.io/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/"/>
+    <category term="部署运维" scheme="https://paladin1893.github.io/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/"/>
     
     
-    <category term="部署运维" scheme="https://paladin1893.gitee.io/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/"/>
+    <category term="部署运维" scheme="https://paladin1893.github.io/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/"/>
     
-    <category term="Linux" scheme="https://paladin1893.gitee.io/tags/Linux/"/>
+    <category term="Linux" scheme="https://paladin1893.github.io/tags/Linux/"/>
     
-    <category term="CentOS" scheme="https://paladin1893.gitee.io/tags/CentOS/"/>
+    <category term="CentOS" scheme="https://paladin1893.github.io/tags/CentOS/"/>
     
-    <category term="activeMq" scheme="https://paladin1893.gitee.io/tags/activeMq/"/>
+    <category term="activeMq" scheme="https://paladin1893.github.io/tags/activeMq/"/>
     
   </entry>
   
   <entry>
     <title>CentOS 搭建 ElasticSearch</title>
-    <link href="https://paladin1893.gitee.io/2023/11/19/CentOS%20%E6%90%AD%E5%BB%BA%20ElasticSearch/"/>
-    <id>https://paladin1893.gitee.io/2023/11/19/CentOS%20%E6%90%AD%E5%BB%BA%20ElasticSearch/</id>
+    <link href="https://paladin1893.github.io/2023/11/19/CentOS%20%E6%90%AD%E5%BB%BA%20ElasticSearch/"/>
+    <id>https://paladin1893.github.io/2023/11/19/CentOS%20%E6%90%AD%E5%BB%BA%20ElasticSearch/</id>
     <published>2023-11-19T12:14:23.000Z</published>
     <updated>2024-01-14T10:39:18.220Z</updated>
     
@@ -318,23 +318,23 @@
     
     
     
-    <category term="部署运维" scheme="https://paladin1893.gitee.io/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/"/>
+    <category term="部署运维" scheme="https://paladin1893.github.io/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/"/>
     
     
-    <category term="部署运维" scheme="https://paladin1893.gitee.io/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/"/>
+    <category term="部署运维" scheme="https://paladin1893.github.io/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/"/>
     
-    <category term="Linux" scheme="https://paladin1893.gitee.io/tags/Linux/"/>
+    <category term="Linux" scheme="https://paladin1893.github.io/tags/Linux/"/>
     
-    <category term="CentOS" scheme="https://paladin1893.gitee.io/tags/CentOS/"/>
+    <category term="CentOS" scheme="https://paladin1893.github.io/tags/CentOS/"/>
     
-    <category term="ElasticSearch" scheme="https://paladin1893.gitee.io/tags/ElasticSearch/"/>
+    <category term="ElasticSearch" scheme="https://paladin1893.github.io/tags/ElasticSearch/"/>
     
   </entry>
   
   <entry>
     <title>CentOS7安装最新版 gcc g++</title>
-    <link href="https://paladin1893.gitee.io/2023/11/18/CentOS7%E5%AE%89%E8%A3%85%E6%9C%80%E6%96%B0%E7%89%88%20gcc%20g++/"/>
-    <id>https://paladin1893.gitee.io/2023/11/18/CentOS7%E5%AE%89%E8%A3%85%E6%9C%80%E6%96%B0%E7%89%88%20gcc%20g++/</id>
+    <link href="https://paladin1893.github.io/2023/11/18/CentOS7%E5%AE%89%E8%A3%85%E6%9C%80%E6%96%B0%E7%89%88%20gcc%20g++/"/>
+    <id>https://paladin1893.github.io/2023/11/18/CentOS7%E5%AE%89%E8%A3%85%E6%9C%80%E6%96%B0%E7%89%88%20gcc%20g++/</id>
     <published>2023-11-18T12:14:23.000Z</published>
     <updated>2024-01-13T05:48:33.236Z</updated>
     
@@ -349,25 +349,25 @@
     
     
     
-    <category term="部署运维" scheme="https://paladin1893.gitee.io/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/"/>
+    <category term="部署运维" scheme="https://paladin1893.github.io/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/"/>
     
     
-    <category term="部署运维" scheme="https://paladin1893.gitee.io/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/"/>
+    <category term="部署运维" scheme="https://paladin1893.github.io/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/"/>
     
-    <category term="Linux" scheme="https://paladin1893.gitee.io/tags/Linux/"/>
+    <category term="Linux" scheme="https://paladin1893.github.io/tags/Linux/"/>
     
-    <category term="CentOS" scheme="https://paladin1893.gitee.io/tags/CentOS/"/>
+    <category term="CentOS" scheme="https://paladin1893.github.io/tags/CentOS/"/>
     
-    <category term="gcc" scheme="https://paladin1893.gitee.io/tags/gcc/"/>
+    <category term="gcc" scheme="https://paladin1893.github.io/tags/gcc/"/>
     
-    <category term="g++" scheme="https://paladin1893.gitee.io/tags/g/"/>
+    <category term="g++" scheme="https://paladin1893.github.io/tags/g/"/>
     
   </entry>
   
   <entry>
     <title>Centos7下安装Redis5</title>
-    <link href="https://paladin1893.gitee.io/2023/11/17/Centos7%E4%B8%8B%E5%AE%89%E8%A3%85Redis5/"/>
-    <id>https://paladin1893.gitee.io/2023/11/17/Centos7%E4%B8%8B%E5%AE%89%E8%A3%85Redis5/</id>
+    <link href="https://paladin1893.github.io/2023/11/17/Centos7%E4%B8%8B%E5%AE%89%E8%A3%85Redis5/"/>
+    <id>https://paladin1893.github.io/2023/11/17/Centos7%E4%B8%8B%E5%AE%89%E8%A3%85Redis5/</id>
     <published>2023-11-17T13:14:23.000Z</published>
     <updated>2024-01-12T09:59:49.374Z</updated>
     
@@ -382,23 +382,23 @@
     
     
     
-    <category term="部署运维" scheme="https://paladin1893.gitee.io/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/"/>
+    <category term="部署运维" scheme="https://paladin1893.github.io/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/"/>
     
     
-    <category term="Redis" scheme="https://paladin1893.gitee.io/tags/Redis/"/>
+    <category term="Redis" scheme="https://paladin1893.github.io/tags/Redis/"/>
     
-    <category term="部署运维" scheme="https://paladin1893.gitee.io/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/"/>
+    <category term="部署运维" scheme="https://paladin1893.github.io/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/"/>
     
-    <category term="Linux" scheme="https://paladin1893.gitee.io/tags/Linux/"/>
+    <category term="Linux" scheme="https://paladin1893.github.io/tags/Linux/"/>
     
-    <category term="CentOS" scheme="https://paladin1893.gitee.io/tags/CentOS/"/>
+    <category term="CentOS" scheme="https://paladin1893.github.io/tags/CentOS/"/>
     
   </entry>
   
   <entry>
     <title>Homebrew&amp;Linuxbrew镜像使用帮助</title>
-    <link href="https://paladin1893.gitee.io/2023/11/16/MQTT%E7%BD%91%E5%85%B3%E8%BF%9E%E6%8E%A5%E5%90%84%E7%B1%BB%E5%B7%A5%E4%B8%9A%E7%89%A9%E8%81%94%E8%AE%BE%E5%A4%87%EF%BC%8C%E5%AE%9E%E7%8E%B0%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E4%B8%8E%E6%8E%A7%E5%88%B6/"/>
-    <id>https://paladin1893.gitee.io/2023/11/16/MQTT%E7%BD%91%E5%85%B3%E8%BF%9E%E6%8E%A5%E5%90%84%E7%B1%BB%E5%B7%A5%E4%B8%9A%E7%89%A9%E8%81%94%E8%AE%BE%E5%A4%87%EF%BC%8C%E5%AE%9E%E7%8E%B0%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E4%B8%8E%E6%8E%A7%E5%88%B6/</id>
+    <link href="https://paladin1893.github.io/2023/11/16/MQTT%E7%BD%91%E5%85%B3%E8%BF%9E%E6%8E%A5%E5%90%84%E7%B1%BB%E5%B7%A5%E4%B8%9A%E7%89%A9%E8%81%94%E8%AE%BE%E5%A4%87%EF%BC%8C%E5%AE%9E%E7%8E%B0%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E4%B8%8E%E6%8E%A7%E5%88%B6/"/>
+    <id>https://paladin1893.github.io/2023/11/16/MQTT%E7%BD%91%E5%85%B3%E8%BF%9E%E6%8E%A5%E5%90%84%E7%B1%BB%E5%B7%A5%E4%B8%9A%E7%89%A9%E8%81%94%E8%AE%BE%E5%A4%87%EF%BC%8C%E5%AE%9E%E7%8E%B0%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E4%B8%8E%E6%8E%A7%E5%88%B6/</id>
     <published>2023-11-16T13:14:23.000Z</published>
     <updated>2024-01-12T08:22:56.345Z</updated>
     
@@ -413,17 +413,17 @@
     
     
     
-    <category term="知识分享" scheme="https://paladin1893.gitee.io/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/"/>
+    <category term="知识分享" scheme="https://paladin1893.github.io/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/"/>
     
     
-    <category term="通信" scheme="https://paladin1893.gitee.io/tags/%E9%80%9A%E4%BF%A1/"/>
+    <category term="通信" scheme="https://paladin1893.github.io/tags/%E9%80%9A%E4%BF%A1/"/>
     
   </entry>
   
   <entry>
     <title>Homebrew&amp;Linuxbrew镜像使用帮助</title>
-    <link href="https://paladin1893.gitee.io/2023/11/15/Homebrew&amp;Linuxbrew%E9%95%9C%E5%83%8F%E4%BD%BF%E7%94%A8%E5%B8%AE%E5%8A%A9/"/>
-    <id>https://paladin1893.gitee.io/2023/11/15/Homebrew&amp;Linuxbrew%E9%95%9C%E5%83%8F%E4%BD%BF%E7%94%A8%E5%B8%AE%E5%8A%A9/</id>
+    <link href="https://paladin1893.github.io/2023/11/15/Homebrew&amp;Linuxbrew%E9%95%9C%E5%83%8F%E4%BD%BF%E7%94%A8%E5%B8%AE%E5%8A%A9/"/>
+    <id>https://paladin1893.github.io/2023/11/15/Homebrew&amp;Linuxbrew%E9%95%9C%E5%83%8F%E4%BD%BF%E7%94%A8%E5%B8%AE%E5%8A%A9/</id>
     <published>2023-11-15T13:14:23.000Z</published>
     <updated>2024-01-09T06:27:36.318Z</updated>
     
@@ -438,17 +438,17 @@
     
     
     
-    <category term="软件开发" scheme="https://paladin1893.gitee.io/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/"/>
+    <category term="软件开发" scheme="https://paladin1893.github.io/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/"/>
     
     
-    <category term="Homebrew" scheme="https://paladin1893.gitee.io/tags/Homebrew/"/>
+    <category term="Homebrew" scheme="https://paladin1893.github.io/tags/Homebrew/"/>
     
   </entry>
   
   <entry>
     <title>conda 基本操作</title>
-    <link href="https://paladin1893.gitee.io/2023/11/14/conda%20%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/"/>
-    <id>https://paladin1893.gitee.io/2023/11/14/conda%20%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/</id>
+    <link href="https://paladin1893.github.io/2023/11/14/conda%20%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/"/>
+    <id>https://paladin1893.github.io/2023/11/14/conda%20%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/</id>
     <published>2023-11-14T13:14:23.000Z</published>
     <updated>2024-01-09T03:23:41.140Z</updated>
     
@@ -463,17 +463,17 @@
     
     
     
-    <category term="软件开发" scheme="https://paladin1893.gitee.io/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/"/>
+    <category term="软件开发" scheme="https://paladin1893.github.io/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/"/>
     
     
-    <category term="python" scheme="https://paladin1893.gitee.io/tags/python/"/>
+    <category term="python" scheme="https://paladin1893.github.io/tags/python/"/>
     
   </entry>
   
   <entry>
     <title>Anaconda 镜像使用帮助</title>
-    <link href="https://paladin1893.gitee.io/2023/11/13/Anaconda%20%E9%95%9C%E5%83%8F%E4%BD%BF%E7%94%A8%E5%B8%AE%E5%8A%A9/"/>
-    <id>https://paladin1893.gitee.io/2023/11/13/Anaconda%20%E9%95%9C%E5%83%8F%E4%BD%BF%E7%94%A8%E5%B8%AE%E5%8A%A9/</id>
+    <link href="https://paladin1893.github.io/2023/11/13/Anaconda%20%E9%95%9C%E5%83%8F%E4%BD%BF%E7%94%A8%E5%B8%AE%E5%8A%A9/"/>
+    <id>https://paladin1893.github.io/2023/11/13/Anaconda%20%E9%95%9C%E5%83%8F%E4%BD%BF%E7%94%A8%E5%B8%AE%E5%8A%A9/</id>
     <published>2023-11-13T13:14:23.000Z</published>
     <updated>2024-01-09T03:14:36.076Z</updated>
     
@@ -488,17 +488,17 @@
     
     
     
-    <category term="软件开发" scheme="https://paladin1893.gitee.io/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/"/>
+    <category term="软件开发" scheme="https://paladin1893.github.io/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/"/>
     
     
-    <category term="python" scheme="https://paladin1893.gitee.io/tags/python/"/>
+    <category term="python" scheme="https://paladin1893.github.io/tags/python/"/>
     
   </entry>
   
   <entry>
     <title>python更换国内镜像源三种实用方法</title>
-    <link href="https://paladin1893.gitee.io/2023/11/12/python%E6%9B%B4%E6%8D%A2%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F%E6%BA%90%E4%B8%89%E7%A7%8D%E5%AE%9E%E7%94%A8%E6%96%B9%E6%B3%95/"/>
-    <id>https://paladin1893.gitee.io/2023/11/12/python%E6%9B%B4%E6%8D%A2%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F%E6%BA%90%E4%B8%89%E7%A7%8D%E5%AE%9E%E7%94%A8%E6%96%B9%E6%B3%95/</id>
+    <link href="https://paladin1893.github.io/2023/11/12/python%E6%9B%B4%E6%8D%A2%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F%E6%BA%90%E4%B8%89%E7%A7%8D%E5%AE%9E%E7%94%A8%E6%96%B9%E6%B3%95/"/>
+    <id>https://paladin1893.github.io/2023/11/12/python%E6%9B%B4%E6%8D%A2%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F%E6%BA%90%E4%B8%89%E7%A7%8D%E5%AE%9E%E7%94%A8%E6%96%B9%E6%B3%95/</id>
     <published>2023-11-12T13:14:23.000Z</published>
     <updated>2024-01-09T03:03:41.232Z</updated>
     
@@ -513,17 +513,17 @@
     
     
     
-    <category term="软件开发" scheme="https://paladin1893.gitee.io/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/"/>
+    <category term="软件开发" scheme="https://paladin1893.github.io/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/"/>
     
     
-    <category term="python" scheme="https://paladin1893.gitee.io/tags/python/"/>
+    <category term="python" scheme="https://paladin1893.github.io/tags/python/"/>
     
   </entry>
   
   <entry>
     <title>Ubuntu用户列表：如何查看系统用户列表及其详细信息</title>
-    <link href="https://paladin1893.gitee.io/2023/11/11/Ubuntu%E7%94%A8%E6%88%B7%E5%88%97%E8%A1%A8%EF%BC%9A%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E7%B3%BB%E7%BB%9F%E7%94%A8%E6%88%B7%E5%88%97%E8%A1%A8%E5%8F%8A%E5%85%B6%E8%AF%A6%E7%BB%86%E4%BF%A1%E6%81%AF/"/>
-    <id>https://paladin1893.gitee.io/2023/11/11/Ubuntu%E7%94%A8%E6%88%B7%E5%88%97%E8%A1%A8%EF%BC%9A%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E7%B3%BB%E7%BB%9F%E7%94%A8%E6%88%B7%E5%88%97%E8%A1%A8%E5%8F%8A%E5%85%B6%E8%AF%A6%E7%BB%86%E4%BF%A1%E6%81%AF/</id>
+    <link href="https://paladin1893.github.io/2023/11/11/Ubuntu%E7%94%A8%E6%88%B7%E5%88%97%E8%A1%A8%EF%BC%9A%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E7%B3%BB%E7%BB%9F%E7%94%A8%E6%88%B7%E5%88%97%E8%A1%A8%E5%8F%8A%E5%85%B6%E8%AF%A6%E7%BB%86%E4%BF%A1%E6%81%AF/"/>
+    <id>https://paladin1893.github.io/2023/11/11/Ubuntu%E7%94%A8%E6%88%B7%E5%88%97%E8%A1%A8%EF%BC%9A%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E7%B3%BB%E7%BB%9F%E7%94%A8%E6%88%B7%E5%88%97%E8%A1%A8%E5%8F%8A%E5%85%B6%E8%AF%A6%E7%BB%86%E4%BF%A1%E6%81%AF/</id>
     <published>2023-11-11T13:14:23.000Z</published>
     <updated>2024-01-09T02:49:40.750Z</updated>
     
@@ -538,17 +538,17 @@
     
     
     
-    <category term="部署运维" scheme="https://paladin1893.gitee.io/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/"/>
+    <category term="部署运维" scheme="https://paladin1893.github.io/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/"/>
     
     
-    <category term="Ubuntu" scheme="https://paladin1893.gitee.io/tags/Ubuntu/"/>
+    <category term="Ubuntu" scheme="https://paladin1893.github.io/tags/Ubuntu/"/>
     
   </entry>
   
   <entry>
     <title>macOS程序破解提示文件提示损坏解决办法</title>
-    <link href="https://paladin1893.gitee.io/2023/11/10/macOS%E7%A8%8B%E5%BA%8F%E7%A0%B4%E8%A7%A3%E6%8F%90%E7%A4%BA%E6%96%87%E4%BB%B6%E6%8F%90%E7%A4%BA%E6%8D%9F%E5%9D%8F%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/"/>
-    <id>https://paladin1893.gitee.io/2023/11/10/macOS%E7%A8%8B%E5%BA%8F%E7%A0%B4%E8%A7%A3%E6%8F%90%E7%A4%BA%E6%96%87%E4%BB%B6%E6%8F%90%E7%A4%BA%E6%8D%9F%E5%9D%8F%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</id>
+    <link href="https://paladin1893.github.io/2023/11/10/macOS%E7%A8%8B%E5%BA%8F%E7%A0%B4%E8%A7%A3%E6%8F%90%E7%A4%BA%E6%96%87%E4%BB%B6%E6%8F%90%E7%A4%BA%E6%8D%9F%E5%9D%8F%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/"/>
+    <id>https://paladin1893.github.io/2023/11/10/macOS%E7%A8%8B%E5%BA%8F%E7%A0%B4%E8%A7%A3%E6%8F%90%E7%A4%BA%E6%96%87%E4%BB%B6%E6%8F%90%E7%A4%BA%E6%8D%9F%E5%9D%8F%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</id>
     <published>2023-11-10T13:14:23.000Z</published>
     <updated>2024-01-07T16:04:23.281Z</updated>
     
@@ -563,10 +563,10 @@
     
     
     
-    <category term="部署运维" scheme="https://paladin1893.gitee.io/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/"/>
+    <category term="部署运维" scheme="https://paladin1893.github.io/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/"/>
     
     
-    <category term="macOS" scheme="https://paladin1893.gitee.io/tags/macOS/"/>
+    <category term="macOS" scheme="https://paladin1893.github.io/tags/macOS/"/>
     
   </entry>
   
