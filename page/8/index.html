@@ -154,6 +154,341 @@
     
     
     <article
+  id="post-PyQt5中未包含QtWebEngine,QtWebEngineWidgets也就是老版本的QWebView"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/10/21/PyQt5%E4%B8%AD%E6%9C%AA%E5%8C%85%E5%90%ABQtWebEngine,QtWebEngineWidgets%E4%B9%9F%E5%B0%B1%E6%98%AF%E8%80%81%E7%89%88%E6%9C%AC%E7%9A%84QWebView/"
+    >PyQt5中未包含QtWebEngine,QtWebEngineWidgets也就是老版本的QWebView</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/10/21/PyQt5%E4%B8%AD%E6%9C%AA%E5%8C%85%E5%90%ABQtWebEngine,QtWebEngineWidgets%E4%B9%9F%E5%B0%B1%E6%98%AF%E8%80%81%E7%89%88%E6%9C%AC%E7%9A%84QWebView/" class="article-date">
+  <time datetime="2023-10-21T02:21:00.000Z" itemprop="datePublished">2023-10-21</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h1><p>新版本的PyQt5 没有web引擎(至少5.15.4版本没有),需要自己改写</p>
+<h1 id="思路步骤"><a href="#思路步骤" class="headerlink" title="思路步骤"></a>思路步骤</h1><p>1、额外安装模块PyQtWebEngine</p>
+<pre><code>pip install PyQtWebEngine
+</code></pre>
+<p>2、先选择Widget控件</p>
+<p>3、将Widget升级成WebEngine</p>
+<p>4、在ui转成的py文件中添加URL 修改尺寸位置等</p>
+<pre><code>self.webview = QtWebEngineWidgets.QWebEngineView(self.centralwidget)
+self.webview.setGeometry(QtCore.QRect(280, 470, 120, 80))
+self.webview.setUrl(QtCore.QUrl(&quot;https://www.baidu.com/&quot;))
+self.webview.setObjectName(&quot;webview&quot;)
+</code></pre>
+<h1 id="具体代码"><a href="#具体代码" class="headerlink" title="具体代码"></a>具体代码</h1><pre><code>from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QVBoxLayout
+from PyQt5.QtCore import QUrl
+from PyQt5.QtWebEngineWidgets import QWebEngineView
+
+if __name__ == &#39;__main__&#39;:
+    app = QApplication([])
+    main_window = QMainWindow()
+    main_window.setGeometry(300, 300, 800, 600)
+    main_window.setWindowTitle(&quot;web引擎&quot;)
+
+    main_widget = QWidget()
+    main_window.setCentralWidget(main_widget)
+
+    main_layout = QVBoxLayout()
+    main_widget.setLayout(main_layout)
+
+    web = QWebEngineView()
+    main_layout.addWidget(web)
+
+    web.setUrl(QUrl(&quot;https://www.baidu.com&quot;))
+
+    main_window.show()
+    app.exec_()
+</code></pre>
+<p>————————————————<br>版权声明：本文为CSDN博主「qq_65932616」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_65932616/article/details/128364939">https://blog.csdn.net/qq_65932616/article/details/128364939</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-Python替换文件"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/10/20/Python%E6%9B%BF%E6%8D%A2%E6%96%87%E4%BB%B6/"
+    >Python替换文件</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/10/20/Python%E6%9B%BF%E6%8D%A2%E6%96%87%E4%BB%B6/" class="article-date">
+  <time datetime="2023-10-20T02:20:00.000Z" itemprop="datePublished">2023-10-20</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p><a target="_blank" rel="noopener" href="https://www.python100.com/html/W14O5WJ56I2U.html">https://www.python100.com/html/W14O5WJ56I2U.html</a></p>
+<p>Python是一种多用途、高效的编程语言，它具有广泛的应用场景。文件处理是其中一个领域，Python提供了很多方便的模块和函数来处理文本、二进制数据、CSV、JSON等文件类型。本文将介绍Python如何使用常用的模块和函数来替换文件。</p>
+<h1 id="一、os模块"><a href="#一、os模块" class="headerlink" title="一、os模块"></a>一、os模块</h1><p>os模块提供了与操作系统交互的接口。使用该模块可以方便地访问文件系统、环境变量等系统资源。os模块中的replace()函数可以用来替换文件名和路径。</p>
+<p>示例代码：</p>
+<pre><code>import os
+
+file_path = &#39;D:/test/file.txt&#39;
+new_path = &#39;D:/test/new_file.txt&#39;
+os.replace(file_path, new_path)
+</code></pre>
+<p>以上代码将文件D:/test/file.txt替换为D:/test/new_file.txt。该函数可以自动处理文件名重复等情况。</p>
+<h1 id="二、shutil模块"><a href="#二、shutil模块" class="headerlink" title="二、shutil模块"></a>二、shutil模块</h1><p>shutil模块是Python的一个标准库，提供了高级的文件操作接口。它可以实现复制、移动、重命名等文件操作。shutil模块中的move()函数也可以用来替换文件。</p>
+<p>示例代码：</p>
+<pre><code>import shutil
+
+file_path = &#39;D:/test/file.txt&#39;
+new_path = &#39;D:/test/new_file.txt&#39;
+shutil.move(file_path, new_path)
+</code></pre>
+<p>以上代码将文件D:/test/file.txt替换为D:/test/new_file.txt。该函数也可以自动处理文件名重复等情况。</p>
+<h1 id="三、re模块"><a href="#三、re模块" class="headerlink" title="三、re模块"></a>三、re模块</h1><p>re模块是Python的一个标准库，提供了正则表达式的功能。正则表达式可以用来匹配和替换字符串。在替换文件中，如果需要根据某些特定的规则替换文件内容，可以使用re模块。</p>
+<p>示例代码：</p>
+<pre><code>import re
+
+file_path = &#39;D:/test/file.txt&#39;
+new_path = &#39;D:/test/new_file.txt&#39;
+
+with open(file_path, &#39;r&#39;) as f:
+    content = f.read()
+    new_content = re.sub(&#39;old_text&#39;, &#39;new_text&#39;, content)
+
+with open(new_path, &#39;w&#39;) as f:
+    f.write(new_content)
+</code></pre>
+<p>以上代码将文件D:/test/file.txt中的所有old_text替换为new_text，并将结果保存到D:/test/new_file.txt中。用with语句打开文件可以更加方便地处理文件的读写操作。</p>
+<h1 id="四、fileinput模块"><a href="#四、fileinput模块" class="headerlink" title="四、fileinput模块"></a>四、fileinput模块</h1><p>fileinput模块也是Python的一个标准库，提供了一种通用的方法来处理文件输入和输出。它可以将多个文件作为一个整体来处理，并且可以自动备份文件。</p>
+<p>示例代码：</p>
+<pre><code>import fileinput
+
+file_path = &#39;D:/test/file.txt&#39;
+new_path = &#39;D:/test/new_file.txt&#39;
+with fileinput.FileInput(file_path, inplace=True, backup=&#39;.bak&#39;) as f:
+    for line in f:
+        print(line.replace(&#39;old_text&#39;, &#39;new_text&#39;), end=&#39;&#39;)
+</code></pre>
+<p>以上代码将文件D:/test/file.txt中的所有old_text替换为new_text，并保存到原来的文件中。使用inplace参数可以自动备份文件，使用print函数和end参数可以方便地处理文件的输出。</p>
+<h1 id="五、总结"><a href="#五、总结" class="headerlink" title="五、总结"></a>五、总结</h1><p>Python提供了很多方便的模块和函数来处理文件，以上介绍的os、shutil、re、fileinput模块是其中常用的几个。在实际开发中，可以根据实际需求选取相应的模块和函数来完成文件替换操作。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-如果单击眼睛图标显示隐藏密码（QPushButton）"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/10/19/%E5%A6%82%E6%9E%9C%E5%8D%95%E5%87%BB%E7%9C%BC%E7%9D%9B%E5%9B%BE%E6%A0%87%E6%98%BE%E7%A4%BA%E9%9A%90%E8%97%8F%E5%AF%86%E7%A0%81%EF%BC%88QPushButton%EF%BC%89/"
+    >如果单击眼睛图标显示隐藏密码（QPushButton）</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/10/19/%E5%A6%82%E6%9E%9C%E5%8D%95%E5%87%BB%E7%9C%BC%E7%9D%9B%E5%9B%BE%E6%A0%87%E6%98%BE%E7%A4%BA%E9%9A%90%E8%97%8F%E5%AF%86%E7%A0%81%EF%BC%88QPushButton%EF%BC%89/" class="article-date">
+  <time datetime="2023-10-19T02:19:00.000Z" itemprop="datePublished">2023-10-19</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p><a target="_blank" rel="noopener" href="https://www.cnpython.com/qa/1374456">https://www.cnpython.com/qa/1374456</a></p>
+<h1 id="方案一"><a href="#方案一" class="headerlink" title="方案一"></a>方案一</h1><p>PyQt5的一大优点是它将自动将信号连接到方法。如果您的应用程序中有一个名为<mybutton>的按钮和一个名为on_<mybutton>_clicked的方法，loadUi将自动连接。所以模式是</mybutton></mybutton></p>
+<pre><code>on_&lt;widget_name&gt;_&lt;signal&gt;
+</code></pre>
+<p>如果我们将此应用于您的问题，您应该将“显示/隐藏”按钮设置为切换按钮。在Qt设计器中，将checkable属性设置为True（或dobtn_show_pwd.clicked.setChecked(True)）</p>
+<p>代码：</p>
+<pre><code>from PyQt5 import QtCore, QtGui, QtWidgets, uic
+from PyQt5.QtWidgets import QPushButton, QLineEdit
+import sys
+
+class MyWindow(QtWidgets.QMainWindow):
+    def __init__(self, maxWidth=None):
+        super(MyWindow, self).__init__()
+        uic.loadUi(&#39;test1.ui&#39;, self)
+
+        self.line_password.setEchoMode(QLineEdit.Password)
+
+    def on_btn_show_pwd_toggled(self, checked):
+        if checked:
+            self.line_password.setEchoMode(QLineEdit.Password)
+        else:
+            self.line_password.setEchoMode(QLineEdit.Normal)
+
+if __name__ == &#39;__main__&#39;:
+    app = QtWidgets.QApplication(sys.argv)
+    window = MyWindow()
+    window.show()
+    sys.exit(app.exec_())
+    
+</code></pre>
+<h1 id="方案二"><a href="#方案二" class="headerlink" title="方案二"></a>方案二</h1><p>另一种可能是将可检查的QAction添加到QLineEdit并连接到toggled（或triggered）信号</p>
+<pre><code>class MyWindow(QtWidgets.QMainWindow):
+    def __init__(self, maxWidth=None):
+        super(MyWindow, self).__init__()
+        uic.loadUi(&#39;MainWindow.ui&#39;, self)
+
+        icon = QtGui.QIcon(&#39;eye-icon.png&#39;)
+        self.showPassAction = QtWidgets.QAction(icon, &#39;Show password&#39;, self)
+        self.line_password.addAction(
+            self.showPassAction, QtWidgets.QLineEdit.TrailingPosition)
+        self.showPassAction.setCheckable(True)
+        self.showPassAction.toggled.connect(self.showPassword)
+
+    def showPassword(self, show):
+        self.line_password.setEchoMode(
+            QtWidgets.QLineEdit.Normal if show else QtWidgets.QLineEdit.Password)
+</code></pre>
+<p>如果只想在按下鼠标时显示密码，则不要连接到toggled信号，而是找到该操作的子QToolButton并连接到pressed和released。在这种情况下，操作不需要是可检查的</p>
+<pre><code>self.line_password.addAction(
+    self.showPassAction, QtWidgets.QLineEdit.TrailingPosition)
+showPassButton = self.line_password.findChild(QtWidgets.QAbstractButton)
+showPassButton.pressed.connect(lambda: self.showPassword(True))
+showPassButton.released.connect(lambda: self.showPassword(False))
+</code></pre>
+<h1 id="方案三"><a href="#方案三" class="headerlink" title="方案三"></a>方案三</h1><p>您可以创建单个函数并切换可见性，而不是创建两个单独的方法，如eyepass_show和eyepass_hide。另外，您正试图通过self.btn_show_pwd.clicked.connect(self.eyepass_hide)和self.btn_show_pwd.clicked.connect(self.eyepass_show)将同一信号两次连接到两种不同的方法</p>
+<p>试着这样做：</p>
+<pre><code>from PyQt5 import QtCore, QtGui, QtWidgets, uic
+from PyQt5.QtWidgets import QPushButton, QLineEdit
+import sys
+import pymysql
+pymysql.install_as_MySQLdb()
+
+class MyWindow(QtWidgets.QMainWindow):
+    def __init__(self, maxWidth=None):
+        super(MyWindow, self).__init__()
+        uic.loadUi(&#39;MainWindow.ui&#39;, self)
+
+        self.eyepass_show()
+        self.eyepass_hide()
+        self.btn_show_pwd.clicked.connect(self.toggleVisibility)
+        
+    def toggleVisibility(self):
+        if self.line_password.echoMode()==QLineEdit.Normal:
+            self.line_password.setEchoMode(QLineEdit.Password)
+        else:
+            self.line_password.setEchoMode(QLineEdit.Normal)
+
+    #     self.btn_show_pwd.clicked.connect(self.eyepass_hide)
+    #     self.btn_show_pwd.clicked.connect(self.eyepass_show)
+    # 
+    # def eyepass_show(self):
+    #     self.line_password.setEchoMode(QLineEdit.Normal)
+    #     print(&#39;show pass&#39;)
+    # 
+    # def eyepass_hide(self):
+    #     self.line_password.setEchoMode(QLineEdit.Password)
+    #     print(&#39;hide pass&#39;)
+
+
+if __name__ == &#39;__main__&#39;:
+    app = QtWidgets.QApplication(sys.argv)
+    window = MyWindow()
+    window.show()
+    sys.exit(app.exec_())
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-AttributeError module ‘backend_interagg‘ has no attribute ‘FigureCanvas‘的解决办法"
   class="article article-type-post"
   itemscope
@@ -1100,319 +1435,6 @@ source_dir/realpython.md                   2021-08-31 09:31:22          428
 </code></pre>
 <p>此代码在工作目录中创建一个名为 sample.zip 的压缩文件。此 ZIP 文件将包含输入目录 source_dir/ 中的所有文件。当您需要一种快速且高级的方式在 Python 中创建 ZIP 文件时，make_archive() 函数非常方便。</p>
 <h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p>当需要从 ZIP 归档中读取、写入、压缩、解压和提取文件时，Python 的 zipfile 是一个方便的工具。ZIP 文件格式已经成为行业标准，可以打包和压缩数字数据。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-利用Python的zipfile模块批量压缩指定文件夹下子文件夹"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/10/15/%E5%88%A9%E7%94%A8Python%E7%9A%84zipfile%E6%A8%A1%E5%9D%97%E6%89%B9%E9%87%8F%E5%8E%8B%E7%BC%A9%E6%8C%87%E5%AE%9A%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%8B%E5%AD%90%E6%96%87%E4%BB%B6%E5%A4%B9/"
-    >Python删除目录下的所有文件</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/10/15/%E5%88%A9%E7%94%A8Python%E7%9A%84zipfile%E6%A8%A1%E5%9D%97%E6%89%B9%E9%87%8F%E5%8E%8B%E7%BC%A9%E6%8C%87%E5%AE%9A%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%8B%E5%AD%90%E6%96%87%E4%BB%B6%E5%A4%B9/" class="article-date">
-  <time datetime="2023-10-15T02:15:00.000Z" itemprop="datePublished">2023-10-15</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>废话不多说，直接上代码，<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qz_CSDN/article/details/127745062">https://blog.csdn.net/qz_CSDN/article/details/127745062</a></p>
-<pre><code>import zipfile
-import os
-
-
-def zip_folder(dir_path, zip_full_name):
-    &quot;&quot;&quot;
-    压缩文件夹下所有子文件夹和文件
-    :param dirpath: 目标文件夹路径
-    :param zip_full_name: zip文件绝对路径
-    &quot;&quot;&quot;
-    with zipfile.ZipFile(zip_full_name, &#39;w&#39;, zipfile.ZIP_DEFLATD) as zf:
-        for dir_full_path, dir_names, file_names in os.walk(dir_path):
-            # zip压缩包内的相对路径
-            dir_path_inzip = dir_full_path.replace(dirpath, &#39;&#39;)
-            for dir_name in dir_names:
-                zf.write(os.path.join(dir_full_path, dir_name), os.path.join(dir_path_inzip, dir_name))
-            for file_name in file_names:
-                zf.write(os.path.join(dir_full_path, file_name), os.path.join(dir_path_inzip, file_name))
-    zf.close()
-
-
-if __name__ == &#39;__name__&#39;:
-    in_path = u&quot;F:\\测试\\1&quot;
-    out_path = u&quot;F:\\测试\\输出&quot;
-    
-    folder_name_list = os.listdir(in_path)
-    count = 0
-    # 遍历输入路径下所有子文件夹，分别压缩
-    for folder_name in folder_name_list:
-        count += 1
-        zip_file_fullname = os.path.join(out_path, folder_name + &quot;.zip&quot;)
-        print(&quot;&#123;0&#125;、&#123;1&#125;&quot;.format(count, folder_name))
-        print(&quot;    &#123;0&#125;&quot;.format(zip_file_fullname))
-        zip_folder(os.path.join(in_path, folder_name), zip_file_fullname)
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Python删除目录下的所有文件"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/10/14/Python%E5%88%A0%E9%99%A4%E7%9B%AE%E5%BD%95%E4%B8%8B%E7%9A%84%E6%89%80%E6%9C%89%E6%96%87%E4%BB%B6/"
-    >Python删除目录下的所有文件</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/10/14/Python%E5%88%A0%E9%99%A4%E7%9B%AE%E5%BD%95%E4%B8%8B%E7%9A%84%E6%89%80%E6%9C%89%E6%96%87%E4%BB%B6/" class="article-date">
-  <time datetime="2023-10-14T02:14:00.000Z" itemprop="datePublished">2023-10-14</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://www.python100.com/html/4XI33HW03WL0.html">https://www.python100.com/html/4XI33HW03WL0.html</a></p>
-<p>一、Python删除目录及目录下文件</p>
-<pre><code>import shutil
-import os
-
-dir_path = &#39;/path/to/directory&#39;
-
-# 删除目录
-shutil.rmtree(dir_path)
-</code></pre>
-<p>当你想要删除一个目录以及里面所有的文件时，你可以使用shutil模块中的rmtree()函数。该函数可以删除整个目录，包括其所有的文件和子目录。这是最便捷的方法，但是请确保你真的需要这么做。</p>
-<p>二、Python删除目录中所有内容</p>
-<pre><code>import os
-
-dir_path = &#39;/path/to/directory&#39;
-
-# 删除目录中所有的文件
-for filename in os.listdir(dir_path):
-    file_path = os.path.join(dir_path, filename)
-    if os.path.isfile(file_path) or os.path.islink(file_path):
-        os.unlink(file_path)
-    elif os.path.isdir(file_path):
-        shutil.rmtree(file_path)
-
-# 删除目录本身
-os.rmdir(dir_path)
-</code></pre>
-<p>如果你想要删除目录中所有内容，但是保留目录本身，你可以使用os模块中listdir()和unlink()函数来遍历该目录中的所有文件并逐个删除。在删除文件夹之前，必须先删除所有文件和子目录。</p>
-<p>三、Python os删除目录</p>
-<pre><code>import os
-
-dir_path = &#39;/path/to/directory&#39;
-
-# 删除目录
-os.removedirs(dir_path)
-</code></pre>
-<p>os.removedirs()函数可以删除指定的目录。如果该目录是一个空目录，则可以直接删除它。如果该目录不是空目录，则需要递归地删除其所有子目录和文件。</p>
-<p>四、Python删除指定目录下的文件</p>
-<pre><code>import os
-
-dir_path = &#39;/path/to/directory&#39;
-
-# 删除指定格式的文件
-for filename in os.listdir(dir_path):
-    if filename.endswith(&#39;.txt&#39;):
-        os.unlink(os.path.join(dir_path, filename))
-</code></pre>
-<p>如果你只想删除指定格式的文件，你可以使用listdir()和endswith()函数来列出该目录中满足指定格式的所有文件，并逐个删除。</p>
-<p>五、Python删除非空目录</p>
-<pre><code>import shutil
-
-dir_path = &#39;/path/to/directory&#39;
-
-# 删除非空目录
-shutil.rmtree(dir_path)
-</code></pre>
-<p>如果你只想删除非空目录，你可以使用shutil模块的rmtree()函数。请注意，该函数可以删除目录和其中的所有文件和子目录。</p>
-<p>通过上述5种方法，你可以选择最适用于你的需求的方法来删除指定目录下的所有文件。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Python判断文件是否存在并且删除"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/10/13/Python%E5%88%A4%E6%96%AD%E6%96%87%E4%BB%B6%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8%E5%B9%B6%E4%B8%94%E5%88%A0%E9%99%A4/"
-    >Python判断文件是否存在并且删除</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/10/13/Python%E5%88%A4%E6%96%AD%E6%96%87%E4%BB%B6%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8%E5%B9%B6%E4%B8%94%E5%88%A0%E9%99%A4/" class="article-date">
-  <time datetime="2023-10-13T02:13:00.000Z" itemprop="datePublished">2023-10-13</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://www.python100.com/html/4XI33HW03WL0.html">https://www.python100.com/html/4XI33HW03WL0.html</a></p>
-<p>对于不熟悉Python文件操作的开发者来说，如何判断文件是否存在并删除是一件常见的问题。本文将会详细介绍Python如何判断文件是否存在，并通过多个方面介绍如何删除指定文件。</p>
-<p>一、Python如何判断文件是否存在？</p>
-<p>在Python中，使用os和os.path模块可以判断文件是否存在。下面是一个判断文件是否存在的代码：</p>
-<pre><code>import os
-
-if os.path.isfile(&#39;test.txt&#39;):
-    print(&quot;File exists&quot;)
-else:
-    print(&quot;File not exists&quot;)
-</code></pre>
-<p>上面的代码通过isfile()函数判断指定文件是否存在，如果存在则输出”File exists”，否则输出”File not exists”。</p>
-<pre><code>import os
-
-if os.path.exists(&#39;/path/to/file&#39;):
-    print(&#39;文件存在&#39;)
-else:
-    print(&#39;文件不存在&#39;)
-</code></pre>
-<p>以上代码中，/path/to/file是要检测的文件路径。如果文件存在，就会输出文件存在，否则输出文件不存在。</p>
-<p>二、Python如何删除文件？</p>
-<p>如果我们需要删除文件，可以使用Python的os模块中的remove函数。下面是一个删除文件的代码：</p>
-<pre><code>import os
-
-if os.path.isfile(&#39;test.txt&#39;):
-    os.remove(&#39;test.txt&#39;)
-    print(&quot;File removed&quot;)
-else:
-    print(&quot;File not exists&quot;)
-</code></pre>
-<p>上面的代码会检查文件是否存在，如果存在则删除文件，并输出”File removed”，否则输出”File not exists”。</p>
-<p>三、Python如何删除目录？</p>
-<p>如果我们需要删除整个目录，可以使用Python的os模块中的rmdir函数或者shutil模块中的rmtree函数。下面是一个使用rmdir函数删除目录的代码：</p>
-<pre><code>import os
-
-if os.path.isdir(&#39;test&#39;):
-    os.rmdir(&#39;test&#39;)
-    print(&quot;Directory removed&quot;)
-else:
-    print(&quot;Directory not exists&quot;)
-</code></pre>
-<p>上面的代码会检查目录是否存在，如果存在则删除目录，并输出”Directory removed”，否则输出”Directory not exists”。</p>
-<p>使用shutil模块的rmtree函数可以删除整个目录，包括目录下的所有文件和子目录。下面是一个使用rmtree函数删除目录的代码：</p>
-<pre><code>import shutil
-
-if os.path.exists(&#39;test&#39;):
-    shutil.rmtree(&#39;test&#39;)
-    print(&quot;Directory removed&quot;)
-else:
-    print(&quot;Directory not exists&quot;)
-</code></pre>
-<p>上面的代码会检查目录是否存在，如果存在则删除目录，并输出”Directory removed”，否则输出”Directory not exists”。</p>
-<p>四、Python如何删除特定类型的文件？</p>
-<p>如果我们需要删除特定类型的文件，可以通过glob模块来获取所有指定类型的文件，然后使用os模块中的remove函数删除它们。下面是一个删除所有txt文件的代码：</p>
-<pre><code>import glob, os
-
-for file in glob.glob(&quot;*.txt&quot;):
-    os.remove(file)
-    print(&quot;File removed: %s&quot; % file)
-</code></pre>
-<p>上面的代码会列出所有txt文件，并依次删除它们。删除每个文件时，代码会输出”File removed: file.txt”，其中file.txt是被删除的文件名。</p>
-<p>五、总结</p>
-<p>本文详细介绍了如何在Python中判断文件是否存在并删除。从多个方面介绍了如何删除文件和目录，以及如何删除特定类型的文件。为Python开发者提供了解决类似问题的思路和代码示例，希望本文对您有所帮助。</p>
  
       <!-- reward -->
       

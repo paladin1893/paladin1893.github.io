@@ -154,6 +154,205 @@
     
     
     <article
+  id="post-Centos7开放3306端口-iptables"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/11/02/Centos7%E5%BC%80%E6%94%BE3306%E7%AB%AF%E5%8F%A3-iptables/"
+    >Centos7开放端口-iptables</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/11/02/Centos7%E5%BC%80%E6%94%BE3306%E7%AB%AF%E5%8F%A3-iptables/" class="article-date">
+  <time datetime="2023-11-02T13:28:00.000Z" itemprop="datePublished">2023-11-02</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>CentOS防火墙也可以还原传统的管理方式使用 iptables</p>
+<pre><code>systemctl stop firewalld  
+systemctl mask firewalld  
+</code></pre>
+<p>安装 iptables-services</p>
+<pre><code>yum install iptables-services  
+</code></pre>
+<p>设置开机启动</p>
+<pre><code>systemctl enable iptables
+</code></pre>
+<p>操作命令</p>
+<pre><code>systemctl stop iptables  
+systemctl start iptables  
+systemctl restart iptables  
+systemctl reload iptables 
+</code></pre>
+<p>保存设置</p>
+<pre><code>service iptables save
+</code></pre>
+<p>开放某个端口<br>在 /etc/sysconfig/iptables 里添加</p>
+<pre><code>-A RH-Firewall-1-INPUT -m state --state NEW -m tcp -p tcp --dport 8080 -j ACCEPT
+</code></pre>
+<p>————————————————<br>版权声明：本文为CSDN博主「十&amp;年」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/xubenxismile/article/details/107835931">https://blog.csdn.net/xubenxismile/article/details/107835931</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NGINX/" rel="tag">NGINX</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-Visual Studio 编译器警告：该文件包含不能在当前代码页（936）中表示的字符"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/11/01/Visual%20Studio%20%E7%BC%96%E8%AF%91%E5%99%A8%E8%AD%A6%E5%91%8A%EF%BC%9A%E8%AF%A5%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E4%B8%8D%E8%83%BD%E5%9C%A8%E5%BD%93%E5%89%8D%E4%BB%A3%E7%A0%81%E9%A1%B5%EF%BC%88936%EF%BC%89%E4%B8%AD%E8%A1%A8%E7%A4%BA%E7%9A%84%E5%AD%97%E7%AC%A6/"
+    >Visual Studio 编译器警告：该文件包含不能在当前代码页（936）中表示的字符。</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/11/01/Visual%20Studio%20%E7%BC%96%E8%AF%91%E5%99%A8%E8%AD%A6%E5%91%8A%EF%BC%9A%E8%AF%A5%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E4%B8%8D%E8%83%BD%E5%9C%A8%E5%BD%93%E5%89%8D%E4%BB%A3%E7%A0%81%E9%A1%B5%EF%BC%88936%EF%BC%89%E4%B8%AD%E8%A1%A8%E7%A4%BA%E7%9A%84%E5%AD%97%E7%AC%A6/" class="article-date">
+  <time datetime="2023-11-01T13:28:00.000Z" itemprop="datePublished">2023-11-01</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>Visual Studio 编译器警告：该文件包含不能在当前代码页（936）中表示的字符。 以 Unicode 格式保存该文件防止数据丢失。</p>
+<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在利用Visual Studio编译FreeType时，编译器报警告C4819：该文件包含不能在当前代码页（936）中表示的字符。 以 Unicode 格式保存该文件防止数据丢失。一般来说这种警告应该无伤大雅，忽视即可，但按FreeType的开发者们的说法，他们写的代码在编译时应该是一个警告都不会有：</p>
+<p>FreeType is written in industry-standard ANSI C and should compile easily with any compliant C or C++ compiler. We have even taken great care to eliminate all warnings when compiling with popular compilers like gcc, Visual C++, and Borland C++.<br>这勾起了我的好奇心，我想弄清楚如何以一种较为合理（优雅）的方式去消除这个警告。</p>
+<h1 id="分析与解决"><a href="#分析与解决" class="headerlink" title="分析与解决"></a>分析与解决</h1><p>按微软官方文档的说法：</p>
+<p>在不能表示文件中所有字符的代码页的系统上编译 ANSI 源文件时，出现 C4819。<br>C4819 occurs when you compile an ANSI source file on a system using a codepage that can’t represent all characters in the file.<br>代码页（code page）是一类字符的编码方案，编号为936的代码页对应的字符编码为GB2312（参见 Code Page Identifiers - Win32 apps | Microsoft Learn），所以我遇到的问题是：我的编程环境所用的编码是GB2312, 但我编译的源文件中却含有不能用GB2312表示的字符。按官方文档的说法，有如下三种解决方案：</p>
+<h2 id="方案1："><a href="#方案1：" class="headerlink" title="方案1："></a>方案1：</h2><p>将源文件里不能用GB2312表示的字符给删了，因为这种字符往往仅出现在注释中，删掉对编译没有什么影响。这种做法有些许简单粗暴，且仅适合用在不能表示的字符数量较少的情境中，不够优雅。</p>
+<h2 id="方案2："><a href="#方案2：" class="headerlink" title="方案2："></a>方案2：</h2><p>将源文件以Unicode格式保存，具体操作如下：</p>
+<p>在 Visual Studio 中，选择“文件”&gt;“另存为”。 在“将文件另存为”对话框中，选择“保存”按钮旁的下拉菜单，然后选择“保存时使用编码”。 如果保存到同一文件名，可能需要确认要替换该文件。 在“高级保存选项”对话框中，选择可表示该文件中所有字符的编码（例如，Unicode（带签名的 UTF-8）- Codepage 65001，然后选择“确定”。<br>不过我下载的FreeType源码应该本身就是以Unicode格式进行编码的，所以貌似不应该是这种解决方案。事实上这种方案也并没有解决该编译器警告问题。</p>
+<h2 id="方案3："><a href="#方案3：" class="headerlink" title="方案3："></a>方案3：</h2><p>将系统代码页设置为支持源代码使用的字符集，简单来说，就是让我们的Windows系统支持使用Unicode编码的字符。我认为这应该是最优雅的解决方式，毕竟作为程序员，Unicode与UTF-8应该是必须要熟悉与运用的，于情于理要让我们使用的系统支持使用Unicode。</p>
+<p>这里提一嘴Unicode与UTF-8的关系：Unicode标准定义的是一个字符到一个整数的映射关系，也就是将一个字符用一个数字进行唯一的编号；而UTF-8则可以看作Unicode在计算机中的实现，如何将这个整数用一个合适的01序列进行编码并储存在计算机中，就是UTF-8干的事；UTF-16也是Unicode的一种实现，但感觉还是UTF-8的应用更广泛一些。</p>
+<p>设置方法：Windows 设置&gt;时间&amp;语言&gt;区域&gt;管理语言设置&gt;更改系统区域设置，勾选Beta 版：使用 Unicode UTF-8 获取全球语言支持，然后要重启一下电脑，使更改生效。(图示版见封面)</p>
+<p>方案3成功解决了我的问题，不过根据评论区的建议，谨慎采用.</p>
+<h2 id="方案4："><a href="#方案4：" class="headerlink" title="方案4："></a>方案4：</h2><p>编译时，设置VC项目中的C/C++命令行 -&gt;其他选项，增加 /utf-8</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Visual-Studio/" rel="tag">Visual Studio</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-终端通讯规约类型"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/10/31/%E7%BB%88%E7%AB%AF%E9%80%9A%E8%AE%AF%E8%A7%84%E7%BA%A6%E7%B1%BB%E5%9E%8B/"
+    >终端通讯规约类型</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/10/31/%E7%BB%88%E7%AB%AF%E9%80%9A%E8%AE%AF%E8%A7%84%E7%BA%A6%E7%B1%BB%E5%9E%8B/" class="article-date">
+  <time datetime="2023-10-31T02:28:00.000Z" itemprop="datePublished">2023-10-31</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p><a target="_blank" rel="noopener" href="https://www.techphant.cn/blog/2305.html">https://www.techphant.cn/blog/2305.html</a><br>终端通讯规约类型<br>作者： 技象物联网 / 行业百科 / 通信系统, 通讯规约 / 2023年9月16日 09:45:01</p>
+<p>终端通讯规约类型是一种用来控制和管理计算机网络上的数据传输的标准。它定义了发送和接收方如何在网络上传输数据，以及传输的数据格式、编码和传输时间。终端通讯规约类型可以帮助网络管理员更容易地管理网络，并且可以帮助网络用户更容易地使用网络。</p>
+<p>终端通讯规约类型关键词</p>
+<p>1.信息格式<br>信息格式是指网络上传输的数据的格式，它可以是文本、图像、声音或视频等。网络上的数据传输必须遵循一定的格式，以便发送方和接收方能够正确地识别和处理数据。</p>
+<p>2.编码方式<br>编码方式是指将信息转换成数字或字符码的方式。编码是为了使信息能够被网络传输，使发送方和接收方能够正确地识别和处理信息。</p>
+<p>3.传输时间<br>传输时间是指网络上传输数据的时间。它可以是实时传输，也可以是延迟传输。网络上传输数据的传输时间取决于网络带宽、网络负载和网络延迟等因素。</p>
+<p>总结<br>终端通讯规约类型是一种用来控制和管理计算机网络上的数据传输的标准。它定义了发送和接收方如何在网络上传输数据，以及传输的数据格式、编码和传输时间。终端通讯规约类型包括信息格式、编码方式和传输时间等关键词，它们可以帮助网络管理员更容易地管理网络，并且可以帮助网络用户更容易地使用网络。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%80%9A%E4%BF%A1/" rel="tag">通信</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-通信规约类型"
   class="article article-type-post"
   itemscope
@@ -338,942 +537,6 @@
     <footer class="article-footer">
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%80%9A%E4%BF%A1/" rel="tag">通信</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Python图像处理程序知识笔记"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/10/27/Python%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E7%A8%8B%E5%BA%8F%E7%9F%A5%E8%AF%86%E7%AC%94%E8%AE%B0/"
-    >Python图像处理程序知识笔记</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/10/27/Python%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E7%A8%8B%E5%BA%8F%E7%9F%A5%E8%AF%86%E7%AC%94%E8%AE%B0/" class="article-date">
-  <time datetime="2023-10-27T02:27:00.000Z" itemprop="datePublished">2023-10-27</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="3-1-读取文件函数"><a href="#3-1-读取文件函数" class="headerlink" title="3.1 读取文件函数"></a>3.1 读取文件函数</h1><p>PyQt中QFileDialog常用来打开保存文件或打开文件对话框，允许用户选择本地文件或者文件夹，</p>
-<p>常用方法有：</p>
-<p>QFileDialog.getOpenFileName()    #获取一个打开文件的文件名<br>QFileDialog.getOpenFileNames()   #获取多个打开文件的文件名<br>QFileDialog.getExistingDirectory()  #获取打开文件夹的文件名<br>QFileDialog.getOpenFileUrl()     #获取一个打开文件的统一资源定位符<br>QFileDialog.getOpenFileUrls()    #获取多个打开文件的统一资源定位符<br>QFileDialog.getSaveFileName()    #获取保存的文件名<br>QFileDialog.getSaveFileUrl()     #获取保存的url</p>
-<h2 id="3-1-1-打开本地图片"><a href="#3-1-1-打开本地图片" class="headerlink" title="3.1.1 打开本地图片"></a>3.1.1 打开本地图片</h2><p>QFileDialog.getOpenFileName()返回值有两个，第一个是选择文件的文件名（文件路径），我们可以通过这个文件名打开本地文件，第二个是选择文件的类型。</p>
-<p>输入有4个参数，第一个参数一般是self，第2个参数是弹出框的标题，第3个参数是打开对话框的默认地址，第4个参数是过滤字符串，一般用来限制文件类型，定义打开文件下拉框中的可选列表，并且不同的文件类型用两个分号;;隔开。</p>
-<pre><code># 选择本地图片上传
-def openImage(self):
-global imgNamepath  # 这里为了方便别的地方引用图片路径，将其设置为全局变量
-
-# 弹出一个文件选择框，第一个返回值imgName记录选中的文件路径+文件名，第二个返回值imgType记录文件的类型
-# QFileDialog就是系统对话框的那个类第一个参数是上下文，第二个参数是弹框的名字，第三个参数是默认打开的路径，第四个参数是需要的格式
-
-imgNamepath, imgType = QFileDialog.getOpenFileName(self.centralwidget, &quot;选择图片&quot;,
-                                                   &quot;D:\\&quot;,&quot;*.jpg;;*.png;;All Files(*)&quot;)
-# 通过文件路径获取图片文件，并设置图片长宽为label控件的长、宽
-img = QtGui.QPixmap(imgNamepath).scaled(self.label_3.width(), self.label_3.height())
-
-# 在label控件上显示选择的图片
-self.label_3.setPixmap(img)
-
-# 显示所选图片的路径
-self.lineEdit_3.setText(imgNamepath)
-</code></pre>
-<h2 id="3-1-2-保存图片到本地"><a href="#3-1-2-保存图片到本地" class="headerlink" title="3.1.2 保存图片到本地"></a>3.1.2 保存图片到本地</h2><p>（1）保存图片到本地的第一种方式:首先把图片所在label控件截图，然后打开一个保存文件的弹出框，最后保存截图到选中的路径。</p>
-<pre><code>def saveImage(self):
-    screen = QApplication.primaryScreen()
-    pix = screen.grabWindow(self.label_4.winId())
-    fpath, ftype = QFileDialog.getSaveFileName(self.centralwidget, &quot;保存图片&quot;, &quot;d:\\&quot;, &quot;*.jpg;;*.png;;All Files(*)&quot;)
-    pix.save(fpath)
-</code></pre>
-<p>（2）保存图片到本地的第二种方式:首先提取相对应Qlabel中的图片，然后打开一个保存文件的弹出框，最后保存图片到选中的路径。</p>
-<pre><code>def saveImage(self):
-    # 提取Qlabel中的图片
-    img = self.label_4.pixmap().toImage()
-    fpath, ftype = QFileDialog.getSaveFileName(self.centralwidget, &quot;保存图片&quot;, &quot;d:\\&quot;, &quot;*.jpg;;*.png;;All Files(*)&quot;)
-    img.save(fpath)
-</code></pre>
-<p>以下函数读取文件函数在此实验没用到，只是用来记录</p>
-<h2 id="3-1-3-打开文件夹"><a href="#3-1-3-打开文件夹" class="headerlink" title="3.1.3 打开文件夹"></a>3.1.3 打开文件夹</h2><pre><code># 打开文件夹（目录）
-def openDirectory(self):
-fd = QFileDialog.getExistingDirectory(self.centralwidget, &quot;选择文件夹&quot;, &quot;&quot;)
-
-# 这里的label_directoryPath要根据项目替换成自己的组件
-self.label_directoryPath.setText(fd)   
-</code></pre>
-<h2 id="3-1-4-打开本地文本文件并显示"><a href="#3-1-4-打开本地文本文件并显示" class="headerlink" title="3.1.4 打开本地文本文件并显示"></a>3.1.4 打开本地文本文件并显示</h2><pre><code># 选择文本文件上传
-    def openTextFile(self):  # 选择文本文件上传
-    fd, fp = QFileDialog.getOpenFileName(self.centralwidget, &quot;选择文件&quot;, &quot;d:\\&quot;, &quot;*.txt;;All Files(*)&quot;)
-    f = open(fd, &#39;r&#39;)
-    self.label_txt.setText(f.read())
-    self.label_filePath.setText(fd)
-    f.close()
-</code></pre>
-<h2 id="3-1-5-保存文本到本地"><a href="#3-1-5-保存文本到本地" class="headerlink" title="3.1.5 保存文本到本地"></a>3.1.5 保存文本到本地</h2><pre><code># 保存文本文件
-def saveTextFile(self):
-fd, fp = QFileDialog.getSaveFileName(self.centralwidget, &quot;保存文件&quot;, &quot;d:\\&quot;, &quot;*.txt;;All Files(*)&quot;)
-f = open(fd, &#39;w&#39;)
-f.write(self.label_txt.text())
-f.close()
-</code></pre>
-<h2 id="3-1-6-Qimage转换为mat类型"><a href="#3-1-6-Qimage转换为mat类型" class="headerlink" title="3.1.6 Qimage转换为mat类型"></a>3.1.6 Qimage转换为mat类型</h2><pre><code># 将Qimage转换为mat类型
-def qimage_to_mat(self,qimg):
-ptr = qimg.consBits()
-ptr.setsize(qimg.byteCount())
-mat = np.array(ptr).reshape(qimg.height(),qimg.width(),4)   # 注意通道数要填4，否则报错
-return mat
-</code></pre>
-<h1 id="3-2-关联函数"><a href="#3-2-关联函数" class="headerlink" title="3.2 关联函数"></a>3.2 关联函数</h1><pre><code># 按钮关联函数
-self.pushButton_2.clicked.connect(self.openImage)
-self.pushButton_3.clicked.connect(self.startAction)
-self.pushButton_4.clicked.connect(self.saveImage)
-</code></pre>
-<p>注意函数名后面没有括号，和方法调用有点不一样self.openImage和self.openImage().</p>
-<p>素描图像生成函数：</p>
-<pre><code># 生成素描图
-def startAction(self):
-    img = cv2.imread(imgNamepath)
-    img = cv2.resize(img, dsize=(768, 1080))
-    # 图像转灰度图像
-    gray_image = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    # 灰度图像到反转灰度图像
-    inverted_gray_image = 255 - gray_image
-    # 模糊倒置灰度图像
-    blurred_inverted_gray_image = cv2.GaussianBlur(inverted_gray_image, (19, 19), 0)
-    # 反转模糊图像
-    inverted_blurred_image = 255 - blurred_inverted_gray_image
-    # 准备照片素描
-    sketck = cv2.divide(gray_image, inverted_blurred_image, scale=256.0)
- 
-    path = &quot;D:\\python\\RRJ\\pycharmProject2\\zhanCunDiZhi\\&quot;
-    # 因为不知道怎么将&lt;class &#39;numpy.ndarray&#39;&gt;转换为&lt;class &#39;PyQt5.QtGui.QPixmap&#39;&gt;类型，因此采用暂存再读出的方式
-    cv2.imwrite(path + &#39;ZC.jpg&#39;, sketck)
-    # pyqt5从路径读取图片
-    imgShow = QPixmap(path + &#39;ZC.jpg&#39;)
-    self.label_4.setScaledContents(True)
-    self.label_4.setPixmap(imgShow)
-</code></pre>
-<p>————————————————<br>版权声明：本文为CSDN博主「༄༄小半生༅࿐」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_47682721/article/details/123928585">https://blog.csdn.net/m0_47682721/article/details/123928585</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-PYQT5实现图片显示"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/10/26/PYQT5%E5%AE%9E%E7%8E%B0%E5%9B%BE%E7%89%87%E6%98%BE%E7%A4%BA/"
-    >PYQT5实现图片显示</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/10/26/PYQT5%E5%AE%9E%E7%8E%B0%E5%9B%BE%E7%89%87%E6%98%BE%E7%A4%BA/" class="article-date">
-  <time datetime="2023-10-26T02:26:00.000Z" itemprop="datePublished">2023-10-26</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="版本一"><a href="#版本一" class="headerlink" title="版本一"></a>版本一</h1><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/TM0831/p/12733571.html">https://www.cnblogs.com/TM0831/p/12733571.html</a></p>
-<pre><code>import sys
-
-from PyQt5.QtGui import QImageReader
-from PyQt5.QtWidgets import QWidget, QApplication, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QFileDialog
-from PyQt5.Qt import QPixmap, QPoint, Qt, QPainter, QIcon
-from PyQt5.QtCore import QSize
-
-class ImageBox(QWidget):
-    def __init__(self):
-        super(ImageBox, self).__init__()
-        self.img = None
-        self.scaled_img = None
-        self.point = QPoint(0, 0)
-        self.start_pos = None
-        self.end_pos = None
-        self.left_click = False
-        self.scale = 1
-
-    def init_ui(self):
-        self.setWindowTitle(&quot;ImageBox&quot;)
-
-    def set_image(self, img_path):
-        &quot;&quot;&quot;
-        open image file
-        :param img_path: image file path
-        :return:
-        &quot;&quot;&quot;
-        # img = QImageReader(img_path)
-        # img.setScaledSize(QSize(self.size().width(), self.size().height()))
-        # img = img.read()
-        self.img = QPixmap(img_path)
-        self.scaled_img = self.img
-
-    def paintEvent(self, e):
-        &quot;&quot;&quot;
-        receive paint events
-        :param e: QPaintEvent
-        :return:
-        &quot;&quot;&quot;
-        if self.scaled_img:
-            painter = QPainter()
-            painter.begin(self)
-            painter.scale(self.scale, self.scale)
-            painter.drawPixmap(self.point, self.scaled_img)
-            painter.end()
-
-    def mouseMoveEvent(self, e):
-        &quot;&quot;&quot;
-        mouse move events for the widget
-        :param e: QMouseEvent
-        :return:
-        &quot;&quot;&quot;
-        if self.left_click:
-            size = self.size().width()
-            self.end_pos = e.pos() - self.start_pos
-            self.point = self.point + self.end_pos
-            self.start_pos = e.pos()
-            self.repaint()
-
-    def mousePressEvent(self, e):
-        &quot;&quot;&quot;
-        mouse press events for the widget
-        :param e: QMouseEvent
-        :return:
-        &quot;&quot;&quot;
-        if e.button() == Qt.LeftButton:
-            self.left_click = True
-            self.start_pos = e.pos()
-
-    def mouseReleaseEvent(self, e):
-        &quot;&quot;&quot;
-        mouse release events for the widget
-        :param e: QMouseEvent
-        :return:
-        &quot;&quot;&quot;
-        if e.button() == Qt.LeftButton:
-            self.left_click = False
-
-class MainDemo(QWidget):
-    def __init__(self):
-        super(MainDemo, self).__init__()
-
-        self.setWindowTitle(&quot;Image Viewer&quot;)
-        self.setFixedSize(1000, 600)
-
-        self.open_file = QPushButton(&quot;Open Image&quot;)
-        self.open_file.setToolTip(&quot;Open the image to view.&quot;)
-        self.open_file.clicked.connect(self.open_image)
-        self.open_file.setFixedSize(150, 30)
-
-        self.zoom_in = QPushButton(&quot;&quot;)
-        self.zoom_in.clicked.connect(self.large_click)
-        self.zoom_in.setFixedSize(30, 30)
-        in_icon = QIcon(&quot;icons/zoomIn.png&quot;)
-        self.zoom_in.setIcon(in_icon)
-        self.zoom_in.setIconSize(QSize(30, 30))
-
-        self.zoom_out = QPushButton(&quot;&quot;)
-        self.zoom_out.clicked.connect(self.small_click)
-        self.zoom_out.setFixedSize(30, 30)
-        out_icon = QIcon(&quot;icons/zoomOut.png&quot;)
-        self.zoom_out.setIcon(out_icon)
-        self.zoom_out.setIconSize(QSize(30, 30))
-
-        w = QWidget(self)
-        layout = QHBoxLayout()
-        layout.addWidget(self.open_file)
-        layout.addWidget(self.zoom_in)
-        layout.addWidget(self.zoom_out)
-        layout.setAlignment(Qt.AlignLeft)
-        w.setLayout(layout)
-        w.setFixedSize(300, 50)
-
-        self.box = ImageBox()
-        self.box.setFixedSize(500,500)
-
-        layout = QVBoxLayout()
-        layout.addWidget(w)
-        layout.addWidget(self.box)
-        self.setLayout(layout)
-
-    def open_image(self):
-        &quot;&quot;&quot;
-        select image file and open it
-        :return:
-        &quot;&quot;&quot;
-        # img_name, _ = QFileDialog.getOpenFileName(self, &quot;打开图片&quot;, &quot;&quot;, &quot;All Files(*);;*.jpg;;*.png&quot;)
-        img_name, _ = QFileDialog.getOpenFileName(self, &quot;Open Image File&quot;,&quot;&quot;,&quot;All Files(*);;*.jpg;;*.png;;*.jpeg&quot;)
-        self.box.set_image(img_name)
-
-    def large_click(self):
-        &quot;&quot;&quot;
-        used to enlarge image
-        :return:
-        &quot;&quot;&quot;
-        if self.box.scale &lt; 2:
-            self.box.scale += 0.1
-            self.box.adjustSize()
-            self.update()
-
-    def small_click(self):
-        &quot;&quot;&quot;
-        used to reduce image
-        :return:
-        &quot;&quot;&quot;
-        if self.box.scale &gt; 0.3:
-            self.box.scale -= 0.2
-            self.box.adjustSize()
-            self.update()
-
-if __name__ == &#39;__main__&#39;:
-    app = QApplication(sys.argv)
-    box = MainDemo()
-    box.show()
-    app.exec_()
-</code></pre>
-<h1 id="版本二"><a href="#版本二" class="headerlink" title="版本二"></a>版本二</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_42743778/article/details/118567409">https://blog.csdn.net/qq_42743778/article/details/118567409</a></p>
-<pre><code># -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file &#39;top-half.ui&#39;
-#
-# Created by: PyQt5 UI code generator 5.15.4
-#
-# WARNING: Any manual changes made to this file will be lost when pyuic5 is
-# run again.  Do not edit this file unless you know what you are doing.
-
-import sys
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtGui import QImageReader
-from PyQt5.QtWidgets import QWidget, QApplication, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QFileDialog
-from PyQt5.Qt import QPixmap, QPoint, Qt, QPainter, QIcon
-from PyQt5.QtCore import QSize
-
-
-class ImageBox(QWidget):
-    def __init__(self):
-        super(ImageBox, self).__init__()
-        self.img = None
-        self.scaled_img = None
-        self.point = QPoint(0, 0)
-        self.start_pos = None
-        self.end_pos = None
-        self.left_click = False
-        self.scale = 1
-
-    def init_ui(self):
-        self.setWindowTitle(&quot;ImageBox&quot;)
-
-    def set_image(self, img_path):
-        &quot;&quot;&quot;
-        open image file
-        :param img_path: image file path
-        :return:
-        &quot;&quot;&quot;
-        # img = QImageReader(img_path)
-        # img.setScaledSize(QSize(self.size().width(), self.size().height()))
-        # img = img.read()
-        self.img = QPixmap(img_path)
-        self.scaled_img = self.img
-
-    def paintEvent(self, e):
-        &quot;&quot;&quot;
-        receive paint events
-        :param e: QPaintEvent
-        :return:
-        &quot;&quot;&quot;
-        if self.scaled_img:
-            painter = QPainter()
-            painter.begin(self)
-            painter.scale(self.scale, self.scale)
-            painter.drawPixmap(self.point, self.scaled_img)
-            painter.end()
-
-    def wheelEvent(self, event):
-        angle = event.angleDelta() / 8  # 返回QPoint对象，为滚轮转过的数值，单位为1/8度
-        angleY = angle.y()
-        # 获取当前鼠标相对于view的位置
-        if angleY &gt; 0:
-            self.scale *= 1.1
-        else:  # 滚轮下滚
-            self.scale *= 0.9
-        self.adjustSize()
-        self.update()
-
-
-    def mouseMoveEvent(self, e):
-        &quot;&quot;&quot;
-        mouse move events for the widget
-        :param e: QMouseEvent
-        :return:
-        &quot;&quot;&quot;
-        if self.left_click:
-            self.end_pos = e.pos() - self.start_pos
-            self.point = self.point + self.end_pos
-            self.start_pos = e.pos()
-            self.repaint()
-
-    def mousePressEvent(self, e):
-        &quot;&quot;&quot;
-        mouse press events for the widget
-        :param e: QMouseEvent
-        :return:
-        &quot;&quot;&quot;
-        if e.button() == Qt.LeftButton:
-            self.left_click = True
-            self.start_pos = e.pos()
-
-    def mouseReleaseEvent(self, e):
-        &quot;&quot;&quot;
-        mouse release events for the widget
-        :param e: QMouseEvent
-        :return:
-        &quot;&quot;&quot;
-        if e.button() == Qt.LeftButton:
-            self.left_click = False
-
-class Ui_Form(QWidget):
-    def setupUi(self, Form):
-        Form.setObjectName(&quot;Form&quot;)
-        Form.resize(1020, 726)
-        self.scrollArea = QtWidgets.QScrollArea(Form)
-        self.scrollArea.setGeometry(QtCore.QRect(240, 50, 719, 309))
-        self.scrollArea.setWidgetResizable(True)
-        self.scrollArea.setObjectName(&quot;scrollArea&quot;)
-        self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.box = ImageBox()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, self.box.width(), self.box.height()))
-        self.scrollAreaWidgetContents.setMinimumSize(QtCore.QSize(719, 309))
-        self.scrollAreaWidgetContents.setObjectName(&quot;scrollAreaWidgetContents&quot;)
-        self.gridLayout = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
-        self.gridLayout.setObjectName(&quot;gridLayout&quot;)
-
-        self.gridLayout.addWidget(self.box, 0, 0, 1, 1)
-        self.scrollArea.setWidget(self.scrollAreaWidgetContents)
-        self.open_file = QtWidgets.QPushButton(Form)
-        self.open_file.setGeometry(QtCore.QRect(30, 100, 81, 41))
-        font = QtGui.QFont()
-        font.setFamily(&quot;Aharoni&quot;)
-        font.setPointSize(10)
-        font.setBold(True)
-        font.setWeight(75)
-        self.open_file.setFont(font)
-        self.open_file.setObjectName(&quot;open_file&quot;)
-        self.open_file.clicked.connect(self.open_image)
-        self.progressBar = QtWidgets.QProgressBar(Form)
-        self.progressBar.setGeometry(QtCore.QRect(240, 370, 751, 23))
-        self.progressBar.setProperty(&quot;value&quot;, 24)
-        self.progressBar.setObjectName(&quot;progressBar&quot;)
-        self.line = QtWidgets.QFrame(Form)
-        self.line.setGeometry(QtCore.QRect(50, 410, 911, 16))
-        self.line.setFrameShape(QtWidgets.QFrame.HLine)
-        self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
-        self.line.setObjectName(&quot;line&quot;)
-        self.start_check = QtWidgets.QPushButton(Form)
-        self.start_check.setGeometry(QtCore.QRect(130, 100, 81, 41))
-        font = QtGui.QFont()
-        font.setFamily(&quot;Aharoni&quot;)
-        font.setPointSize(10)
-        font.setBold(True)
-        font.setWeight(75)
-        self.start_check.setFont(font)
-        self.start_check.setObjectName(&quot;start_check&quot;)
-        self.label = QtWidgets.QLabel(Form)
-        self.label.setGeometry(QtCore.QRect(40, 170, 61, 31))
-        font = QtGui.QFont()
-        font.setFamily(&quot;Aharoni&quot;)
-        font.setPointSize(10)
-        font.setBold(True)
-        font.setWeight(75)
-        self.label.setFont(font)
-        self.label.setObjectName(&quot;label&quot;)
-        self.label_2 = QtWidgets.QLabel(Form)
-        self.label_2.setGeometry(QtCore.QRect(40, 300, 61, 31))
-        font = QtGui.QFont()
-        font.setFamily(&quot;Aharoni&quot;)
-        font.setPointSize(10)
-        font.setBold(True)
-        font.setWeight(75)
-        self.label_2.setFont(font)
-        self.label_2.setObjectName(&quot;label_2&quot;)
-
-
-        self.retranslateUi(Form)
-        QtCore.QMetaObject.connectSlotsByName(Form)
-
-    def retranslateUi(self, Form):
-        _translate = QtCore.QCoreApplication.translate
-        Form.setWindowTitle(_translate(&quot;Form&quot;, &quot;Form&quot;))
-        self.open_file.setText(_translate(&quot;Form&quot;, &quot;选择文件&quot;))
-        self.start_check.setText(_translate(&quot;Form&quot;, &quot;开始检测&quot;))
-        self.label.setText(_translate(&quot;Form&quot;, &quot;文件名称：&quot;))
-        self.label_2.setText(_translate(&quot;Form&quot;, &quot;检测状态:&quot;))
-
-    def open_image(self):
-        &quot;&quot;&quot;
-        select image file and open it
-        :return:
-        &quot;&quot;&quot;
-        # img_name, _ = QFileDialog.getOpenFileName(self, &quot;打开图片&quot;, &quot;&quot;, &quot;All Files(*);;*.jpg;;*.png&quot;)
-        img_name, _ = QFileDialog.getOpenFileName(None, &quot;Open Image File&quot;,&quot;&quot;,&quot;All Files(*);;*.jpg;;*.png;;*.jpeg&quot;)
-        img = QPixmap(img_name)
-        print(img.width(),&quot;+&quot;,img.height())
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, img.width(), img.height()))
-        self.box.set_image(img_name)
-
-if __name__ == &quot;__main__&quot;:
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_Form()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())
-</code></pre>
-<h1 id="版本三"><a href="#版本三" class="headerlink" title="版本三"></a>版本三</h1><p><a target="_blank" rel="noopener" href="https://huaweicloud.csdn.net/63808365dacf622b8df894dc.html">https://huaweicloud.csdn.net/63808365dacf622b8df894dc.html</a></p>
-<pre><code># -*- coding: utf-8 -*-
-import sys
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtGui import QImageReader
-from PyQt5.QtWidgets import QWidget, QApplication, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QFileDialog
-from PyQt5.Qt import QPixmap, QPoint, Qt, QPainter, QIcon
-from PyQt5.QtCore import QSize
-
-
-class ImageBox(QWidget):
-    def __init__(self):
-        super(ImageBox, self).__init__()
-        self.img = None
-        self.scaled_img = None
-        self.start_pos = None
-        self.end_pos = None
-        self.left_click = False
-        self.wheel_flag = False
-
-        self.scale = 1
-        self.old_scale = 1
-        self.point = QPoint(0, 0)
-        self.x = -1
-        self.y = -1
-        self.new_height = -1
-        self.new_width = -1
-
-    def init_ui(self):
-        self.setWindowTitle(&quot;ImageBox&quot;)
-
-    def set_image(self, img_path):
-        self.img = QPixmap(img_path)
-        width, height = self.img.width(), self.img.height()
-        if height / width &gt; 990 / 660:
-            new_height = 990
-            new_width = width * 990 / height
-        else:
-            new_height = height * 660 / width
-            new_width = 660
-        self.point = QPoint(int((660 - new_width) * 0.5), int((990 - new_height) * 0.5))
-        self.img = self.img.scaled(new_width, new_height, Qt.KeepAspectRatio)
-        self.scaled_img = self.img
-
-        self.new_height = new_height
-        self.new_width = new_width
-        self.scale = 1
-
-    def paintEvent(self, e):
-        if self.scaled_img:
-            painter = QPainter()
-            painter.begin(self)
-            painter.scale(self.scale, self.scale)
-            if self.wheel_flag:        # 定点缩放
-                self.wheel_flag = False
-                # 判断当前鼠标pos在不在图上
-                this_left_x = self.point.x() * self.old_scale
-                this_left_y = self.point.y() * self.old_scale
-                this_scale_width = self.new_width * self.old_scale
-                this_scale_height = self.new_height * self.old_scale
-
-                # 鼠标点在图上，以鼠标点为中心动作
-                gap_x = self.x - this_left_x
-                gap_y = self.y - this_left_y
-                if 0 &lt; gap_x &lt; this_scale_width and 0 &lt; gap_y &lt; this_scale_height:
-                    new_left_x = int(self.x / self.scale - gap_x / self.old_scale)
-                    new_left_y = int(self.y / self.scale - gap_y / self.old_scale)
-                    self.point = QPoint(new_left_x, new_left_y)
-                # 鼠标点不在图上，固定左上角进行缩放
-                else:
-                    true_left_x = int(self.point.x() * self.old_scale / self.scale)
-                    true_left_y = int(self.point.y() * self.old_scale / self.scale)
-                    self.point = QPoint(true_left_x, true_left_y)
-            painter.drawPixmap(self.point, self.scaled_img)  # 此函数中还会用scale对point进行处理
-            painter.end()
-
-    def wheelEvent(self, event):
-        angle = event.angleDelta() / 8  # 返回QPoint对象，为滚轮转过的数值，单位为1/8度
-        angleY = angle.y()
-        self.old_scale = self.scale
-        self.x, self.y = event.x(), event.y()
-        self.wheel_flag = True
-        # 获取当前鼠标相对于view的位置
-        if angleY &gt; 0:
-            self.scale *= 1.08
-        else:  # 滚轮下滚
-            self.scale *= 0.92
-        if self.scale &lt; 0.3:
-            self.scale = 0.3
-        self.adjustSize()
-        self.update()
-
-    def mouseMoveEvent(self, e):
-        if self.left_click:
-            self.end_pos = e.pos() - self.start_pos                    # 当前位置-起始位置=差值
-            self.point = self.point + self.end_pos / self.scale        # 左上角的距离变化
-            self.start_pos = e.pos()
-            self.repaint()
-
-    def mousePressEvent(self, e):
-        if e.button() == Qt.LeftButton:
-            self.left_click = True
-            self.start_pos = e.pos()
-
-    def mouseReleaseEvent(self, e):
-        if e.button() == Qt.LeftButton:
-            self.left_click = False
-
-
-class Ui_Form(QWidget):
-    def setupUi(self, Form):
-        Form.setObjectName(&quot;Form&quot;)
-        Form.resize(900, 1080)
-        self.scrollArea = QtWidgets.QScrollArea(Form)
-        self.scrollArea.setGeometry(QtCore.QRect(150, 10, 680, 990))
-        self.scrollArea.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-        self.scrollArea.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-        # self.scrollArea.setWidgetResizable(True)
-        self.scrollArea.setObjectName(&quot;scrollArea&quot;)
-
-        self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.box = ImageBox()
-
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 680, 990))
-        self.scrollAreaWidgetContents.setMinimumSize(QtCore.QSize(100, 100))
-        self.scrollAreaWidgetContents.setObjectName(&quot;scrollAreaWidgetContents&quot;)
-        self.gridLayout = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
-        self.gridLayout.setObjectName(&quot;gridLayout&quot;)
-
-        self.gridLayout.addWidget(self.box, 0, 0, 1, 1)
-        self.scrollArea.setWidget(self.scrollAreaWidgetContents)
-
-        self.open_file = QtWidgets.QPushButton(Form)
-        self.open_file.setGeometry(QtCore.QRect(30, 100, 81, 41))
-        font = QtGui.QFont()
-        font.setFamily(&quot;Aharoni&quot;)
-        font.setPointSize(10)
-        font.setBold(True)
-        font.setWeight(75)
-        self.open_file.setFont(font)
-        self.open_file.setObjectName(&quot;open_file&quot;)
-        self.open_file.clicked.connect(self.open_image)
-
-        self.retranslateUi(Form)
-        QtCore.QMetaObject.connectSlotsByName(Form)
-
-    def retranslateUi(self, Form):
-        _translate = QtCore.QCoreApplication.translate
-        Form.setWindowTitle(_translate(&quot;Form&quot;, &quot;Form&quot;))
-        self.open_file.setText(_translate(&quot;Form&quot;, &quot;选择文件&quot;))
-
-    def open_image(self):
-        img_name, _ = QFileDialog.getOpenFileName(None, &quot;Open Image File&quot;,&quot;&quot;,&quot;All Files(*);;*.jpg;;*.png;;*.jpeg&quot;)
-        self.box.set_image(img_name)
-
-
-if __name__ == &quot;__main__&quot;:
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_Form()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-QSS美化控件教程"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/10/25/QSS%E7%BE%8E%E5%8C%96%E6%8E%A7%E4%BB%B6%E6%95%99%E7%A8%8B/"
-    >QSS美化控件教程</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/10/25/QSS%E7%BE%8E%E5%8C%96%E6%8E%A7%E4%BB%B6%E6%95%99%E7%A8%8B/" class="article-date">
-  <time datetime="2023-10-25T02:25:00.000Z" itemprop="datePublished">2023-10-25</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>在使用Qt开发界面程序时，常用控件的美化是一件繁琐的事情，收藏一些基本控件的美化样式，可以在项目开发时节省大量时间，本篇文章由此而出，收集常用的控件美化样式。<br>以下qss代码是直接在Qt Designer设计界面中样式表中添加或者使用QFile读取qss代码进行修改控件样式。</p>
-<h1 id="1、QPushButton美化"><a href="#1、QPushButton美化" class="headerlink" title="1、QPushButton美化"></a>1、QPushButton美化</h1><pre><code>QWidget#Widget&#123;
-background-color:#fff;
-&#125;
-
-QPushButton&#123;
-border:5px solid #fff;
-border-radius:8px;
-padding:1px 5px;
-min-width:120px;
-min-height:35px;
-&#125;
-
-QPushButton#first_btn&#123;
-color:#fff;
-background-color:#0d6efd;
-&#125;
-#first_btn:hover&#123;
-background-color:#0055ff;
-&#125;
-#first_btn:pressed&#123;
-border: 4px solid #98c1fe;
-&#125;
-
-QPushButton#second_btn&#123;
-color:#fff;
-background-color:#6c757d;
-&#125;
-
-#second_btn:hover&#123;
-background-color:#5c636a;
-&#125;
-#second_btn:pressed&#123;
-border:4px solid #c0c4c8;
-&#125;
-
-QPushButton#third_btn&#123;
-color:#fff;
-background-color:#198754;
-&#125;
-#third_btn:hover&#123;
-background-color:#157347;
-&#125;
-#third_btn:pressed&#123;
-border:4px solid #9dccb6;
-&#125;
-
-QPushButton#four_btn&#123;
-color:#fff;
-background-color:#dc3545;
-&#125;
-#four_btn:hover&#123;
-background-color:#bb2d3b;
-&#125;
-#four_btn:pressed&#123;
-border:4px solid #f0a9b0;
-&#125;
-QPushButton#five_btn&#123;
-color:#000;
-background-color:#ffc107;
-&#125;
-#five_btn:hover&#123;
-background-color:#ffca2c;
-&#125;
-#five_btn:pressed&#123;
-border:5px solid #ecd182;
-&#125;
-QPushButton#six_btn&#123;
-color:#000;
-background-color:#0dcaf0;
-&#125;
-#six_btn:hover&#123;
-background-color:#31d2f2;
-&#125;
-#six_btn:pressed&#123;
-border:54x solid #85d5e5;
-&#125;
-QPushButton#seven_btn&#123;
-color:#000;
-background-color:#f8f9fa;
-&#125;
-#seven_btn:hover&#123;
-background-color:#f9fafb;
-&#125;
-#seven_btn:pressed&#123;
-border:4px solid #e9e9ea;
-&#125;
-QPushButton#eight_btn&#123;
-color:#fff;
-background-color:#212529;
-&#125;
-#eight_btn:hover&#123;
-background-color:#1c1f23;
-&#125;
-#eight_btn:pressed&#123;
-border:4px solid #a0a2a4;
-&#125;
-QPushButton#nine_btn&#123;
-color:#fff;
-background-color:#d235d2;
-&#125;
-#nine_btn:hover&#123;
-background-color:#a600a6;
-&#125;
-#nine_btn:pressed&#123;
-border:4px solid #d25fd2;
-&#125;
-</code></pre>
-<h1 id="2、QComboBox美化"><a href="#2、QComboBox美化" class="headerlink" title="2、QComboBox美化"></a>2、QComboBox美化</h1><pre><code>#cbx&#123;
-border:1px #ced4da;
-border-radius:4px;
-padding-left:10px;
-&#125;
-#cbx::drop-down&#123;
-border:0px;
-&#125;
-
-#cbx::down-arrow&#123;
-    border-image: url(:/icons/down.png);
-    width:20px;
-    height:20px;
-    margin-right:20px;
-&#125;
-#cbx:on&#123;
-border:4px solid #c2dbfe;
-&#125;
-#cbx QListView&#123;
-font-size:16px;
-border:1px solid rgba(0,0,0,10%);
-padding:5px;
-background-color:#fff;
-outline:0px;
-&#125;
-#cbx QListView::item&#123;
-padding-left:10px;
-background-color:#fff;
-&#125;
-#cbx QListView::item:hover&#123;
-background-color:#1e90ff;
-&#125;
-#cbx QListView::item:selected&#123;
-background-color:#1e90ff;
-&#125;
-</code></pre>
-<h1 id="3、QLineEdit美化"><a href="#3、QLineEdit美化" class="headerlink" title="3、QLineEdit美化"></a>3、QLineEdit美化</h1><pre><code>QLineEdit&#123;
-color:#fff;
-border:2px solid rgb(37,39,48);
-border-radius:20px;
-padding-left:20px;
-padding-right:20px;
-background-color:rgb(34,36,44);
-&#125;
-QLineEdit:hover&#123;
-border:4px solid rgb(48,50,62);
-&#125;
-QLineEdit:focus&#123;
-border:4px solid rgb(85,170,255);
-background-color:rgb(43,45,56);
-&#125;
-#Widget&#123;
-background-color:rgb(37,39,48);
-&#125;
-</code></pre>
-<p>————————————————<br>版权声明：本文为CSDN博主「神威难藏泪~」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/Thinking777/article/details/130374425">https://blog.csdn.net/Thinking777/article/details/130374425</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
 
     </footer>
   </div>

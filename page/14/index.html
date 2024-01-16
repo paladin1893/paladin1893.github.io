@@ -154,6 +154,1454 @@
     
     
     <article
+  id="post-Vue父组件子组件的通信方式20种（全网最全总结）"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/09/15/Vue%E7%88%B6%E7%BB%84%E4%BB%B6%E5%AD%90%E7%BB%84%E4%BB%B6%E7%9A%84%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F20%E7%A7%8D%EF%BC%88%E5%85%A8%E7%BD%91%E6%9C%80%E5%85%A8%E6%80%BB%E7%BB%93%EF%BC%89/"
+    >Vue父组件子组件的通信方式20种（全网最全总结）</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/09/15/Vue%E7%88%B6%E7%BB%84%E4%BB%B6%E5%AD%90%E7%BB%84%E4%BB%B6%E7%9A%84%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F20%E7%A7%8D%EF%BC%88%E5%85%A8%E7%BD%91%E6%9C%80%E5%85%A8%E6%80%BB%E7%BB%93%EF%BC%89/" class="article-date">
+  <time datetime="2023-09-15T07:30:45.000Z" itemprop="datePublished">2023-09-15</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="一、常用"><a href="#一、常用" class="headerlink" title="一、常用"></a>一、常用</h1><p>最近一直在封装各种组件, 提高组员开发效率,<br>遇到了各种情况下的父子组件, 兄弟组件之间各种传值,<br>这里做下总结和一些探索, 欢迎补充~</p>
+<h2 id="Props"><a href="#Props" class="headerlink" title="Props"></a>Props</h2><p>父组件向子组件传递数据，子组件通过props属性接收数据</p>
+<p>父组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;child-component :parentData=&quot;data&quot;&gt;&lt;/child-component&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+import ChildComponent from &#39;./ChildComponent.vue&#39;
+ 
+export default &#123;
+  components: &#123;
+    ChildComponent
+  &#125;,
+  data () &#123;
+    return &#123;
+      data: &#39;父组件传递的数据&#39;
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>子组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    子组件接收到的数据：&#123;&#123; parentData &#125;&#125;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+export default &#123;
+  props: &#123;
+    parentData: String
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>Vue props默认值类型有哪些</p>
+<h2 id="emit和-on"><a href="#emit和-on" class="headerlink" title="$emit和$on"></a>$emit和$on</h2><p>子组件向父组件传递数据，子组件通过$emit触发事件，父组件通过$on监听事件并接收数据。</p>
+<p>父组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;child-component @childEvent=&quot;handleChild&quot;&gt;&lt;/child-component&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+import ChildComponent from &#39;./ChildComponent.vue&#39;
+ 
+export default &#123;
+  components: &#123;
+    ChildComponent
+  &#125;,
+  methods: &#123;
+    handleChild (data) &#123;
+      console.log(&#39;父组件接收到的数据：&#39; + data)
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>子组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;button @click=&quot;handleClick&quot;&gt;点击触发事件&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+export default &#123;
+  methods: &#123;
+    handleClick () &#123;
+      this.$emit(&#39;childEvent&#39;, &#39;子组件传递的数据&#39;)
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<h2 id="parent和-children"><a href="#parent和-children" class="headerlink" title="$parent和$children"></a>$parent和$children</h2><p>父组件向子组件传递数据，父组件通过$children获取子组件实例并调用子组件方法传递数据。</p>
+<p>父组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;button @click=&quot;handleClick&quot;&gt;向子组件传递数据&lt;/button&gt;
+    &lt;child-component ref=&quot;child&quot;&gt;&lt;/child-component&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+import ChildComponent from &#39;./ChildComponent.vue&#39;
+ 
+export default &#123;
+  components: &#123;
+    ChildComponent
+  &#125;,
+  methods: &#123;
+    handleClick () &#123;
+      this.$refs.child.handleData(&#39;父组件传递的数据&#39;)
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>子组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    子组件
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+export default &#123;
+  methods: &#123;
+    handleData (data) &#123;
+      console.log(&#39;子组件接收到的数据：&#39; + data)
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<h2 id="attrs和-listeners"><a href="#attrs和-listeners" class="headerlink" title="$attrs和$listeners"></a>$attrs和$listeners</h2><p>父组件向子组件传递属性和事件，子组件通过$attrs获取属性，通过$listeners获取事件并绑定在子组件上。</p>
+<p>父组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;child-component attr1=&quot;属性1&quot; attr2=&quot;属性2&quot; @event1=&quot;handleEvent&quot;&gt;&lt;/child-component&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+import ChildComponent from &#39;./ChildComponent.vue&#39;
+ 
+export default &#123;
+  components: &#123;
+    ChildComponent
+  &#125;,
+  methods: &#123;
+    handleEvent (data) &#123;
+      console.log(&#39;父组件接收到的数据：&#39; + data)
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>子组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    子组件
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+export default &#123;
+  mounted () &#123;
+    this.$emit(&#39;event1&#39;, &#39;子组件传递的数据&#39;)
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<h2 id="provide和inject"><a href="#provide和inject" class="headerlink" title="provide和inject"></a>provide和inject</h2><p>父组件向子组件传递数据，父组件通过provide提供数据，子组件通过inject注入数据。</p>
+<p>父组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;child-component&gt;&lt;/child-component&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+import ChildComponent from &#39;./ChildComponent.vue&#39;
+ 
+export default &#123;
+  components: &#123;
+    ChildComponent
+  &#125;,
+  provide () &#123;
+    return &#123;
+      parentData: &#39;父组件提供的数据&#39;
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>子组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    子组件接收到的数据：&#123;&#123; childData &#125;&#125;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+export default &#123;
+  inject: [&#39;parentData&#39;],
+  computed: &#123;
+    childData () &#123;
+      return this.parentData + &#39;，子组件加工处理后的数据&#39;
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<h1 id="二、其他探索"><a href="#二、其他探索" class="headerlink" title="二、其他探索"></a>二、其他探索</h1><h2 id="EventBus"><a href="#EventBus" class="headerlink" title="EventBus"></a>EventBus</h2><p>父组件和子组件之间通过中央事件总线(EventBus)进行通信。</p>
+<p>EventBus.js：</p>
+<pre><code>import Vue from &#39;vue&#39;
+export const EventBus = new Vue()
+</code></pre>
+<p>父组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;button @click=&quot;handleParent&quot;&gt;向子组件传递数据&lt;/button&gt;
+    &lt;child-component&gt;&lt;/child-component&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+import ChildComponent from &#39;./ChildComponent.vue&#39;
+import &#123; EventBus &#125; from &#39;./EventBus&#39;
+ 
+export default &#123;
+  components: &#123;
+    ChildComponent
+  &#125;,
+  methods: &#123;
+    handleParent () &#123;
+      EventBus.$emit(&#39;parent-event&#39;, &#39;父组件传递的数据&#39;)
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>子组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    子组件接收到的数据：&#123;&#123; childData &#125;&#125;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+import &#123; EventBus &#125; from &#39;./EventBus&#39;
+ 
+export default &#123;
+  data () &#123;
+    return &#123;
+      childData: &#39;&#39;
+    &#125;
+  &#125;,
+  mounted () &#123;
+    EventBus.$on(&#39;parent-event&#39;, data =&gt; &#123;
+      this.childData = data
+    &#125;)
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<h2 id="Vuex"><a href="#Vuex" class="headerlink" title="Vuex"></a>Vuex</h2><p>父组件和子组件之间通过Vuex进行通信，共享同一状态树。</p>
+<p>store.js：</p>
+<pre><code>import Vue from &#39;vue&#39;
+import Vuex from &#39;vuex&#39;
+ 
+Vue.use(Vuex)
+ 
+export default new Vuex.Store(&#123;
+  state: &#123;
+    data: &#39;共享的数据&#39;
+  &#125;,
+  mutations: &#123;
+    setData (state, data) &#123;
+      state.data = data
+    &#125;
+  &#125;
+&#125;)
+</code></pre>
+<p>父组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;button @click=&quot;handleParent&quot;&gt;向子组件传递数据&lt;/button&gt;
+    &lt;child-component&gt;&lt;/child-component&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+import ChildComponent from &#39;./ChildComponent.vue&#39;
+import store from &#39;./store&#39;
+ 
+export default &#123;
+  components: &#123;
+    ChildComponent
+  &#125;,
+  methods: &#123;
+    handleParent () &#123;
+      store.commit(&#39;setData&#39;, &#39;父组件传递的数据&#39;)
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>子组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    子组件接收到的数据：&#123;&#123; childData &#125;&#125;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+import &#123; mapState &#125; from &#39;vuex&#39;
+ 
+export default &#123;
+  computed: &#123;
+    ...mapState([&#39;data&#39;]),
+    childData () &#123;
+      return this.data + &#39;，子组件加工处理后的数据&#39;
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<h2 id="refs属性"><a href="#refs属性" class="headerlink" title="$refs属性"></a>$refs属性</h2><p>父组件可以通过$refs获取子组件的实例，进而访问子组件的属性和方法。</p>
+<p>父组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;button @click=&quot;handleParent&quot;&gt;向子组件传递数据&lt;/button&gt;
+    &lt;child-component ref=&quot;child&quot;&gt;&lt;/child-component&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+import ChildComponent from &#39;./ChildComponent.vue&#39;
+ 
+export default &#123;
+  components: &#123;
+    ChildComponent
+  &#125;,
+  methods: &#123;
+    handleParent () &#123;
+      this.$refs.child.childData = &#39;父组件修改的数据&#39;
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>子组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    子组件接收到的数据：&#123;&#123; childData &#125;&#125;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+export default &#123;
+  data () &#123;
+    return &#123;
+      childData: &#39;子组件原始数据&#39;
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<h2 id="parent属性"><a href="#parent属性" class="headerlink" title="$parent属性"></a>$parent属性</h2><p>子组件可以通过$parent获取父组件的实例，进而访问父组件的属性和方法。</p>
+<p>父组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;child-component&gt;&lt;/child-component&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+import ChildComponent from &#39;./ChildComponent.vue&#39;
+ 
+export default &#123;
+  components: &#123;
+    ChildComponent
+  &#125;,
+  data () &#123;
+    return &#123;
+      parentData: &#39;父组件数据&#39;
+    &#125;
+  &#125;,
+  methods: &#123;
+    handleParent () &#123;
+      console.log(&#39;父组件的方法&#39;)
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>子组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;button @click=&quot;handleChild&quot;&gt;调用父组件方法&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+export default &#123;
+  methods: &#123;
+    handleChild () &#123;
+      console.log(this.$parent.parentData)
+      this.$parent.handleParent()
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<h2 id="root属性"><a href="#root属性" class="headerlink" title="$root属性"></a>$root属性</h2><p>子组件可以通过$root获取根组件的实例，进而访问根组件的属性和方法。</p>
+<p>根组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;child-component&gt;&lt;/child-component&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+import ChildComponent from &#39;./ChildComponent.vue&#39;
+ 
+export default &#123;
+  components: &#123;
+    ChildComponent
+  &#125;,
+  mounted () &#123;
+    console.log(&#39;根组件的数据：&#39; + this.rootData)
+    this.rootMethod()
+  &#125;,
+  data () &#123;
+    return &#123;
+      rootData: &#39;根组件的数据&#39;
+    &#125;
+  &#125;,
+  methods: &#123;
+    rootMethod () &#123;
+      console.log(&#39;根组件的方法&#39;)
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>子组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    子组件
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+export default &#123;
+  mounted () &#123;
+    console.log(&#39;根组件的数据：&#39; + this.$root.rootData)
+    this.$root.rootMethod()
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<h2 id="provide-inject-高级"><a href="#provide-inject-高级" class="headerlink" title="provide / inject (高级)"></a>provide / inject (高级)</h2><p>provide / inject 可以让祖先组件向所有后代组件注入一个依赖，让这些组件使用相同的依赖注入。</p>
+<p>祖先组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;child-component&gt;&lt;/child-component&gt;
+    &lt;grand-child&gt;&lt;/grand-child&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+import ChildComponent from &#39;./ChildComponent.vue&#39;
+import GrandChild from &#39;./GrandChild.vue&#39;
+ 
+export default &#123;
+  components: &#123;
+    ChildComponent,
+    GrandChild
+  &#125;,
+  provide: &#123;
+    sharedObj: &#123;
+      message: &#39;这是祖先组件注入的对象&#39;
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>直接子组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    子组件
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+export default &#123;
+  inject: [&#39;sharedObj&#39;]
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>间接子组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    子组件接收到的数据：&#123;&#123; childData &#125;&#125;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+export default &#123;
+  inject: [&#39;sharedObj&#39;],
+  computed: &#123;
+    childData () &#123;
+      return this.sharedObj.message + &#39;，子组件加工处理后的数据&#39;
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<h2 id="provide-inject-Vuex-高级"><a href="#provide-inject-Vuex-高级" class="headerlink" title="provide / inject + Vuex (高级)"></a>provide / inject + Vuex (高级)</h2><p>使用provide / inject注入Vuex的实例，使所有组件使用相同的Vuex实例。</p>
+<p>store.js：</p>
+<pre><code>import Vue from &#39;vue&#39;
+import Vuex from &#39;vuex&#39;
+ 
+Vue.use(Vuex)
+ 
+export default new Vuex.Store(&#123;
+  state: &#123;
+    data: &#39;共享的数据&#39;
+  &#125;,
+  mutations: &#123;
+    setData (state, data) &#123;
+      state.data = data
+    &#125;
+  &#125;
+&#125;)
+</code></pre>
+<p>根组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;child-component&gt;&lt;/child-component&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+import ChildComponent from &#39;./ChildComponent.vue&#39;
+import store from &#39;./store&#39;
+ 
+export default &#123;
+  components: &#123;
+    ChildComponent
+  &#125;,
+  provide () &#123;
+    return &#123;
+      store
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>子组件和孙组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    组件接收到的数据：&#123;&#123; componentData &#125;&#125;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+export default &#123;
+  inject: &#123;
+    store: &#123;
+      default: null
+    &#125;
+  &#125;,
+  computed: &#123;
+    componentData () &#123;
+      return this.store.state.data + &#39;，组件加工处理后的数据&#39;
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<h2 id="自定义事件"><a href="#自定义事件" class="headerlink" title="自定义事件"></a>自定义事件</h2><p>使用vm.$on(eventName, callback)事件监听，使用vm.$emit(eventName, …args)触发事件。</p>
+<p>父组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;child-component @custom-event=&quot;handleCustomEvent&quot;&gt;&lt;/child-component&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+import ChildComponent from &#39;./ChildComponent.vue&#39;
+ 
+export default &#123;
+  components: &#123;
+    ChildComponent
+  &#125;,
+  methods: &#123;
+    handleCustomEvent (data) &#123;
+      console.log(&#39;父组件接收到的数据：&#39; + data)
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>子组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;button @click=&quot;handleClick&quot;&gt;点击触发事件&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+export default &#123;
+  methods: &#123;
+    handleClick () &#123;
+      this.$emit(&#39;custom-event&#39;, &#39;子组件传递的数据&#39;)
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<h2 id="兄弟组件之间的通信"><a href="#兄弟组件之间的通信" class="headerlink" title="兄弟组件之间的通信"></a>兄弟组件之间的通信</h2><p>使用一个空的Vue实例作为事件总线，一边向事件总线发出事件，另一边监听事件。</p>
+<p>EventBus.js：</p>
+<pre><code>import Vue from &#39;vue&#39;
+export const EventBus = new Vue()
+</code></pre>
+<p>组件A：<br>    <template><br>      <div><br>        &lt;button @click=”handleClick”&gt;向组件B传递数据<br>      </div><br>    </template></p>
+<pre><code>&lt;script&gt;
+import &#123; EventBus &#125; from &#39;./EventBus&#39;
+ 
+export default &#123;
+  methods: &#123;
+    handleClick () &#123;
+      EventBus.$emit(&#39;event&#39;, &#39;组件A传递的数据&#39;)
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>组件B：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    组件B接收到的数据：&#123;&#123; data &#125;&#125;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+import &#123; EventBus &#125; from &#39;./EventBus&#39;
+ 
+export default &#123;
+  data () &#123;
+    return &#123;
+      data: &#39;&#39;
+    &#125;
+  &#125;,
+  mounted () &#123;
+    EventBus.$on(&#39;event&#39;, data =&gt; &#123;
+      this.data = data
+    &#125;)
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<h2 id="localStorage（浏览器缓存）"><a href="#localStorage（浏览器缓存）" class="headerlink" title="localStorage（浏览器缓存）"></a>localStorage（浏览器缓存）</h2><p>使用浏览器缓存来存储数据，在需要通信的组件中存储并监听缓存中的数据。</p>
+<p>组件A：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;button @click=&quot;handleClick&quot;&gt;向组件B传递数据&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+export default &#123;
+  methods: &#123;
+    handleClick () &#123;
+      localStorage.setItem(&#39;data&#39;, &#39;组件A传递的数据&#39;)
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>组件B：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    组件B接收到的数据：&#123;&#123; data &#125;&#125;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+export default &#123;
+  data () &#123;
+    return &#123;
+      data: &#39;&#39;
+    &#125;
+  &#125;,
+  mounted () &#123;
+    window.addEventListener(&#39;storage&#39;, this.handleStorageUpdate)
+    this.updateData()
+  &#125;,
+  beforeDestroy () &#123;
+    window.removeEventListener(&#39;storage&#39;, this.handleStorageUpdate)
+  &#125;,
+  methods: &#123;
+    handleStorageUpdate (event) &#123;
+      if (event.key === &#39;data&#39;) &#123;
+        this.updateData()
+      &#125;
+    &#125;,
+    updateData () &#123;
+      this.data = localStorage.getItem(&#39;data&#39;) || &#39;&#39;
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<h2 id="发布订阅（Pub-Sub）模式"><a href="#发布订阅（Pub-Sub）模式" class="headerlink" title="发布订阅（Pub/Sub）模式"></a>发布订阅（Pub/Sub）模式</h2><p>使用一个消息中心，订阅者向消息中心订阅消息，发布者向消息中心发布消息，消息中心将消息通知给所有订阅者。</p>
+<p>消息中心：</p>
+<pre><code>// PubSub.js
+export const PubSub = &#123;
+  events: &#123;&#125;,
+  subscribe (event, callback) &#123;
+    if (!this.events[event]) &#123;
+      this.events[event] = []
+    &#125;
+    this.events[event].push(callback)
+  &#125;,
+  publish (event, data) &#123;
+    if (!this.events[event]) &#123;
+      this.events[event] = []
+    &#125;
+    this.events[event].forEach(callback =&gt; callback(data))
+  &#125;
+&#125;
+</code></pre>
+<p>组件A：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;button @click=&quot;handleClick&quot;&gt;向组件B传递数据&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+import &#123; PubSub &#125; from &#39;./PubSub&#39;
+ 
+export default &#123;
+  methods: &#123;
+    handleClick () &#123;
+      PubSub.publish(&#39;event&#39;, &#39;组件A传递的数据&#39;)
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>组件B：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    组件B接收到的数据：&#123;&#123; data &#125;&#125;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+import &#123; PubSub &#125; from &#39;./PubSub&#39;
+ 
+export default &#123;
+  data () &#123;
+    return &#123;
+      data: &#39;&#39;
+    &#125;
+  &#125;,
+  mounted () &#123;
+    PubSub.subscribe(&#39;event&#39;, data =&gt; &#123;
+      this.data = data
+    &#125;)
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<h2 id="WebSocket-高级"><a href="#WebSocket-高级" class="headerlink" title="WebSocket (高级)"></a>WebSocket (高级)</h2><p>使用WebSocket协议实现实时通信，将所有组件连接到同一个WebSocket服务器，通过推送消息实现通信。</p>
+<p>连接WebSocket服务器：</p>
+<pre><code>const ws = new WebSocket(&#39;ws://localhost:3000&#39;)
+ 
+ws.onopen = function () &#123;
+  console.log(&#39;WebSocket已连接&#39;)
+&#125;
+ 
+ws.onclose = function () &#123;
+  console.log(&#39;WebSocket已关闭&#39;)
+&#125;
+ 
+ws.onerror = function () &#123;
+  console.log(&#39;WebSocket出错&#39;)
+&#125;
+</code></pre>
+<p>组件A：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;button @click=&quot;handleClick&quot;&gt;向组件B传递数据&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+const ws = new WebSocket(&#39;ws://localhost:3000&#39;)
+ 
+export default &#123;
+  methods: &#123;
+    handleClick () &#123;
+      ws.send(&#39;组件A传递的数据&#39;)
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>组件B：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    组件B接收到的数据：&#123;&#123; data &#125;&#125;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+const ws = new WebSocket(&#39;ws://localhost:3000&#39;)
+ 
+export default &#123;
+  data () &#123;
+    return &#123;
+      data: &#39;&#39;
+    &#125;
+  &#125;,
+  mounted () &#123;
+    ws.onmessage = event =&gt; &#123;
+      this.data = event.data
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<h2 id="路由参数（高级）"><a href="#路由参数（高级）" class="headerlink" title="路由参数（高级）"></a>路由参数（高级）</h2><p>使用路由参数来传递数据，通常适用于父子组件之间或兄弟组件之间的通信。</p>
+<p>父组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    点击以下链接可以传递数据：&lt;br&gt;
+    &lt;router-link :to=&quot;&#123; name: &#39;child&#39;, params: &#123; data: &#39;父组件传递的数据&#39; &#125; &#125;&quot;&gt;传递数据到子组件&lt;/router-link&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+</code></pre>
+<p>子组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    子组件接收到的数据：&#123;&#123; $route.params.data &#125;&#125;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+export default &#123;
+  mounted () &#123;
+    console.log(&#39;子组件接收到的数据：&#39; + this.$route.params.data)
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>兄弟组件：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    兄弟组件接收到的数据：&#123;&#123; $route.params.data &#125;&#125;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+export default &#123;
+  mounted () &#123;
+    console.log(&#39;兄弟组件接收到的数据：&#39; + this.$route.params.data)
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<h2 id="Vuex状态管理（高级）"><a href="#Vuex状态管理（高级）" class="headerlink" title="Vuex状态管理（高级）"></a>Vuex状态管理（高级）</h2><p>使用Vuex管理公共状态，组件通过Vuex进行通信。</p>
+<p>store.js：</p>
+<pre><code>import Vue from &#39;vue&#39;
+import Vuex from &#39;vuex&#39;
+ 
+Vue.use(Vuex)
+ 
+export default new Vuex.Store(&#123;
+  state: &#123;
+    data: &#39;共享的数据&#39;
+  &#125;,
+  mutations: &#123;
+    setData (state, data) &#123;
+      state.data = data
+    &#125;
+  &#125;
+&#125;)
+</code></pre>
+<p>组件A：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;button @click=&quot;handleClick&quot;&gt;向组件B传递数据&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+import store from &#39;./store&#39;
+ 
+export default &#123;
+  methods: &#123;
+    handleClick () &#123;
+      store.commit(&#39;setData&#39;, &#39;组件A传递的数据&#39;)
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>组件B：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    组件B接收到的数据：&#123;&#123; data &#125;&#125;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+import &#123; mapState &#125; from &#39;vuex&#39;
+ 
+export default &#123;
+  computed: &#123;
+    ...mapState([&#39;data&#39;])
+  &#125;,
+  mounted () &#123;
+    console.log(&#39;组件B接收到的数据：&#39; + this.data)
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<h2 id="事件总线（高级）"><a href="#事件总线（高级）" class="headerlink" title="事件总线（高级）"></a>事件总线（高级）</h2><p>使用一个空的Vue实例作为事件总线，组件A通过事件总线向组件B传递数据。</p>
+<p>事件总线：</p>
+<pre><code>// EventBus.js
+import Vue from &#39;vue&#39;
+export const EventBus = new Vue()
+</code></pre>
+<p>组件A：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;button @click=&quot;handleClick&quot;&gt;向组件B传递数据&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+import &#123; EventBus &#125; from &#39;./EventBus&#39;
+ 
+export default &#123;
+  methods: &#123;
+    handleClick () &#123;
+      EventBus.$emit(&#39;event&#39;, &#39;组件A传递的数据&#39;)
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>组件B：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    组件B接收到的数据：&#123;&#123; data &#125;&#125;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+import &#123; EventBus &#125; from &#39;./EventBus&#39;
+ 
+export default &#123;
+  data () &#123;
+    return &#123;
+      data: &#39;&#39;
+    &#125;
+  &#125;,
+  mounted () &#123;
+    EventBus.$on(&#39;event&#39;, data =&gt; &#123;
+      this.data = data
+    &#125;)
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>————————————————<br>版权声明：本文为CSDN博主「慕白Lee」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/libusi001/article/details/131668644">https://blog.csdn.net/libusi001/article/details/131668644</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-Vue组件间数据同步刷新解决方案--全局事件总线"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/09/14/Vue%E7%BB%84%E4%BB%B6%E9%97%B4%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5%E5%88%B7%E6%96%B0%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88--%E5%85%A8%E5%B1%80%E4%BA%8B%E4%BB%B6%E6%80%BB%E7%BA%BF/"
+    >Vue组件间数据同步刷新解决方案--全局事件总线</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/09/14/Vue%E7%BB%84%E4%BB%B6%E9%97%B4%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5%E5%88%B7%E6%96%B0%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88--%E5%85%A8%E5%B1%80%E4%BA%8B%E4%BB%B6%E6%80%BB%E7%BA%BF/" class="article-date">
+  <time datetime="2023-09-14T06:28:42.000Z" itemprop="datePublished">2023-09-14</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>Vue工程很多时候需要我们保持数据的一致性。举个例子，我在一个组件A的事件中请求后端接口修改了某个数据，并且后端接口响应我修改成功了。这时候界面上另外一个组件B也在展示该数据，这时候就需要使得这个B组件也进行显示数据的刷新，否则A组件与B组件的数据就不同步，很容易被测试提bug。</p>
+<p>如果A组件与B组件是父子关系的话，那么只需要利用父子组件之间的通讯即可完成数据的同步。但是如果这两个组件之间没有任何关系，那么如何进行跨组件之间的数据同步呢？</p>
+<h1 id="方法一：Vuex状态管理，配合组件计算属性使用"><a href="#方法一：Vuex状态管理，配合组件计算属性使用" class="headerlink" title="方法一：Vuex状态管理，配合组件计算属性使用"></a>方法一：Vuex状态管理，配合组件计算属性使用</h1><p>简要介绍一下步骤思路：</p>
+<p>1、将项目中很多地方都需要用到的数据提取到Vuex的state中；并用getters方法返回该值； </p>
+<p>2、在组件中使用计算属性返回Vuex的getters获取数据；</p>
+<p>3、组件中通过watch监听计算属性值的变化，一旦有变化，则重新赋值；</p>
+<p>4、通过Vuex中的mutations方法修改state中数据值；</p>
+<p>上诉步骤即可实现在任一组件中修改数据触发其他组件实时刷新的效果。但是实现过程较为繁琐。</p>
+<h1 id="方法二：全局事件总线"><a href="#方法二：全局事件总线" class="headerlink" title="方法二：全局事件总线"></a>方法二：全局事件总线</h1><p>全局事件总线是解决前端数据同步问题的一种架构思维，或者说是一种重要的编程“模式”，因为他不局限于任何一种前端框架，无论是Vue，React还是Flutter，甚至游戏编程。它都经常出现并应用。只需要学会这一套路，并通过语法变通举一反三，那么你就能轻松在各种框架上使用并解决一些列问题。而我们这里就只以Vue为例说明一下具体实现。</p>
+<p>全局事件总线运用编程中两大模式：单例模式，观察者模式。</p>
+<p>1、首先在任一位置新建总线类，并且该类为单例，有且只能有一个实例；以下是简单实现</p>
+<pre><code>class eventbus&#123;
+    constructor() &#123;
+        if (!eventbus.Instance) &#123;
+            //内存中存储所有事件的处理函数
+            this.eventMap = &#123;&#125;;
+            eventbus.Instance = this;
+        &#125;
+        return eventbus.Instance
+    &#125;
+    /**
+     * 注册事件      
+     * key         事件名
+     * page        组件(页面)名
+     * callback    注册的事件
+     */
+    on(key,page,callback)&#123;
+        //将函数通过事件名key，页面(组件)名的形式进行注册
+        this.eventMap[key] = this.eventMap[key] || &#123;&#125;;
+        this.eventMap[key][page] = callback;
+    &#125;
+    /**
+     * 事件通知      
+     * key         事件名
+     * data        通知的数据
+     * page        组件(页面)名
+     */
+    emit(key,data,page=null)&#123;
+        if(key &amp;&amp; this.eventMap[key])&#123;
+            if(page)&#123;
+                //如果参数中有页面名(组件名)，则将data通知单个页面(组件)注册的函数进行处理
+                this.eventMap[key][page] &amp;&amp; this.eventMap[key][page](data);
+            &#125;else&#123;
+                //通知该事件名下的所有页面(组件)注册的函数进行处理
+                for(let sub in this.eventMap[key]) &#123; 
+                    this.eventMap[key][sub](data);
+                &#125;
+            &#125;
+        &#125;else&#123;
+            //该事件名下没有注册任何函数
+        &#125;
+    &#125;,
+    /**
+     * 事件销毁，一般在页面(组件销毁时同步销毁)      
+     * key         事件名
+     * page        组件(页面)名
+     */
+    destroy(key,page)&#123;
+        if(this.eventMap[key] &amp;&amp; this.eventMap[key][page])&#123;
+            //删除单个页面事件
+            delete this.eventMap[key][page];
+        &#125;
+        if(this.eventMap[key] == &#123;&#125;)&#123;
+            delete this.eventMap[key];
+        &#125;
+    &#125;,
+    /**
+     * 事件销毁，销毁全部     
+     * key         事件名
+     * page        组件(页面)名
+     */
+    destroyAll(key)&#123;
+        if(this.eventMap[key] == &#123;&#125;)&#123;
+            //删除所有
+            delete this.eventMap[key];
+        &#125;
+    &#125;
+&#125;
+export default new eventbus()
+</code></pre>
+<p>2、在A组件中注册监听事件</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;&#123;&#123;user&#125;&#125;&lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+//引入全局总线类
+import event from &quot;@/Eventbus.js&quot;;
+export default &#123;
+   name: &quot;ComA&quot;,
+   data () &#123;
+      return &#123;
+        user:&quot;我是A&quot;
+      &#125;;
+    &#125;,
+    created() &#123;
+        //注册监听事件,事件名：changeUser,组件名:ComA
+        event.on(&quot;changeUser&quot;,&quot;ComA&quot;,(data)=&gt;&#123;
+            if(data)&#123;
+                this.user = data;
+            &#125;
+        &#125;)
+    &#125;,
+    destroyed() &#123;
+        //销毁事件
+        event.destroyed(&quot;changeUser&quot;,&quot;ComA&quot;);
+    &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>3、B组件发送监听，使A组件变量一起刷新</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;&#123;&#123;user&#125;&#125;&lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+//引入全局总线类
+import event from &quot;@/Eventbus.js&quot;;
+export default &#123;
+   name: &quot;ComB&quot;,
+   data () &#123;
+      return &#123;
+        user:&quot;我是B&quot;
+      &#125;;
+    &#125;,
+    methods: &#123;
+        updateUser()&#123;
+            let data = &quot;改成C&quot;;
+            this.user = data;
+            //通知所有组件(页面)刷新
+            event.emit(&quot;changeUser&quot;,data);
+            //只通知组件A刷新
+            event.emit(&quot;changeUser&quot;,data,&quot;ComA&quot;)
+        &#125;
+    &#125; 
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>————————————————<br>版权声明：本文为CSDN博主「Ajucy」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/Ajucy/article/details/130194549">https://blog.csdn.net/Ajucy/article/details/130194549</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-Vue数据更新页面却没有更新的几种情况以及解决方法"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/09/13/Vue%E6%95%B0%E6%8D%AE%E6%9B%B4%E6%96%B0%E9%A1%B5%E9%9D%A2%E5%8D%B4%E6%B2%A1%E6%9C%89%E6%9B%B4%E6%96%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%83%85%E5%86%B5%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/"
+    >Vue数据更新页面却没有更新的几种情况以及解决方法</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/09/13/Vue%E6%95%B0%E6%8D%AE%E6%9B%B4%E6%96%B0%E9%A1%B5%E9%9D%A2%E5%8D%B4%E6%B2%A1%E6%9C%89%E6%9B%B4%E6%96%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%83%85%E5%86%B5%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" class="article-date">
+  <time datetime="2023-09-13T03:33:44.000Z" itemprop="datePublished">2023-09-13</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="情况一：Vue无法检测实例被创建时不存在于data中的变量"><a href="#情况一：Vue无法检测实例被创建时不存在于data中的变量" class="headerlink" title="情况一：Vue无法检测实例被创建时不存在于data中的变量"></a>情况一：Vue无法检测实例被创建时不存在于data中的变量</h1><p>原因：由于 Vue 会在初始化实例时对 data中的数据执行 getter/setter 转化，所以 变量必须在 data 对象上存在才能让 Vue 将它转换为响应式的。</p>
+<p>例如： </p>
+<pre><code>new Vue(&#123;
+  data:&#123;&#125;,
+  template: &#39;&lt;div&gt;&#123;&#123;message&#125;&#125;&lt;/div&gt;&#39;
+&#125;)
+this.message = &#39;Hello world!&#39; // `message` 不是响应式的页面不会发生变化
+</code></pre>
+<p>解决方法：</p>
+<pre><code>new Vue(&#123;
+  data: &#123;
+    message: &#39;&#39;,
+  &#125;,
+  template: &#39;&lt;div&gt;&#123;&#123; message &#125;&#125;&lt;/div&gt;&#39;
+&#125;)
+this.message = &#39;Hello world!&#39;
+</code></pre>
+<h1 id="情况二：vue也不能检测到data中对象的动态添加和删除"><a href="#情况二：vue也不能检测到data中对象的动态添加和删除" class="headerlink" title="情况二：vue也不能检测到data中对象的动态添加和删除"></a>情况二：vue也不能检测到data中对象的动态添加和删除</h1><p>例如：</p>
+<pre><code>new Vue(&#123;
+  data:&#123;
+    obj: &#123;
+      id: 1
+    &#125;
+  &#125;,
+  template: &#39;&lt;div&gt;&#123;&#123; obj.message &#125;&#125;&lt;/div&gt;&#39;
+&#125;)
+this.obj.message = &#39;hello&#39; // 不是响应式的
+delete this.obj.id       // 不是响应式的
+</code></pre>
+<p>解决方法：</p>
+<pre><code>// 动态添加 - Vue.set
+Vue.set(this.obj, &#39;id&#39;, 002)
+  
+// 动态添加 - this.$set
+this.$set(this.obj, &#39;id&#39;, 002)
+  
+// 动态添加多个
+// 代替 Object.assign(this.obj, &#123; a: 1, b: 2 &#125;)
+this.obj = Object.assign(&#123;&#125;, this.obj, &#123; a: 1, b: 2 &#125;)
+  
+// 动态移除 - Vue.delete
+Vue.delete(this.obj, &#39;name&#39;)
+  
+// 动态移除 - this.$delete
+this.$delete(this.obj, &#39;name&#39;)
+</code></pre>
+<h1 id="情况三：变量为数组时"><a href="#情况三：变量为数组时" class="headerlink" title="情况三：变量为数组时"></a>情况三：变量为数组时</h1><p>不能通过索引直接修改或者赋值，也不能修改数组的长度</p>
+<p>例如：</p>
+<pre><code>new Vue(&#123;
+  data: &#123;
+    items: [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]
+  &#125;
+&#125;)
+this.items[1] = &#39;x&#39; // 不是响应性的
+this.items[3] = &#39;d&#39; // 不是响应性的
+this.items.length = 2 // 不是响应性的
+</code></pre>
+<p>解决方法：</p>
+<pre><code>// Vue.set
+Vue.set(this.items, 4, &#39;d&#39;)
+  
+// this.$set
+this.$set(this.items, 4, &#39;d)
+  
+// Array.prototype.splice
+this.items.splice(indexOfItem, 4, &#39;d&#39;)
+//修改长度
+this.items.splice(3)
+</code></pre>
+<h1 id="情况四：异步获取接口数据，DOM数据不发现变化"><a href="#情况四：异步获取接口数据，DOM数据不发现变化" class="headerlink" title="情况四：异步获取接口数据，DOM数据不发现变化"></a>情况四：异步获取接口数据，DOM数据不发现变化</h1><p>原因：Vue 在更新 DOM 时是异步执行的。只要侦听到数据变化，Vue 将开启一个队列，并缓冲在同一事件循环中发生的所有数据变更。如果同一个 watcher 被多次触发，只会被推入到队列中一次。这种在缓冲时去除重复数据对于避免不必要的计算和 DOM 操作是非常重要的。然后，在下一个的事件循环“tick”中，Vue 刷新队列并执行实际 (已去重的) 工作。Vue 在内部对异步队列尝试使用原生的 Promise.then、MutationObserver 和 setImmediate，如果执行环境不支持，则会采用 setTimeout(funcation, 0) 代替。</p>
+<p>例如：</p>
+<pre><code>&lt;div id=&quot;example&quot;&gt;&#123;&#123;message&#125;&#125;&lt;/div&gt;
+var vm = new Vue(&#123;
+  el: &#39;#example&#39;,
+  data: &#123;
+    message: &#39;123&#39;
+  &#125;
+&#125;)
+vm.message = &#39;new message&#39; // 更改数据
+vm.$el.textContent === &#39;new message&#39; // false
+vm.$el.style.color = &#39;red&#39; // 页面没有变化
+</code></pre>
+<p>解决方法：</p>
+<pre><code>var vm = new Vue(&#123;
+  el: &#39;#example&#39;,
+  data: &#123;
+    message: &#39;123&#39;
+  &#125;
+&#125;)
+vm.message = &#39;new message&#39; // 更改数据
+//使用 Vue.nextTick(callback) callback 将在 DOM 更新完成后被调用
+Vue.nextTick(function () &#123;
+  vm.$el.textContent === &#39;new message&#39; // true
+  vm.$el.style.color = &#39;red&#39; // 文字颜色变成红色
+&#125;)
+</code></pre>
+<h1 id="情况五：循环嵌套层级太深，视图不更新"><a href="#情况五：循环嵌套层级太深，视图不更新" class="headerlink" title="情况五：循环嵌套层级太深，视图不更新"></a>情况五：循环嵌套层级太深，视图不更新</h1><p>当嵌套太深时，页面也可能不更新，此时可以让页面强制刷新</p>
+<p>this.$forceUpdate()迫使vue实例重新（rander）渲染虚拟DOM，注意并不是重新加载组件。<br>结合vue的生命周期，调用$forceUpdate后只会触发beforeUpdate和updated这两个钩子函数，不会触发其他的钩子函数。<br>它仅仅影响实例本身和插入插槽内容的子组件，而不是所有子组件。</p>
+<pre><code>//官方说如果你现在的场景需要用forceUpdate方法 ,那么99%是你的操作有问题
+this.$forceUpdate();
+</code></pre>
+<h1 id="情况六：路由参数变化时，页面不更新-数据不更新"><a href="#情况六：路由参数变化时，页面不更新-数据不更新" class="headerlink" title="情况六：路由参数变化时，页面不更新(数据不更新)"></a>情况六：路由参数变化时，页面不更新(数据不更新)</h1><p>例如：</p>
+<pre><code>&lt;div id=&quot;app&quot;&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;router-link to=&quot;/home/foo&quot;&gt;To Foo&lt;/router-link&gt;&lt;/li&gt;    
+    &lt;li&gt;&lt;router-link to=&quot;/home/baz&quot;&gt;To Baz&lt;/router-link&gt;&lt;/li&gt;    
+    &lt;li&gt;&lt;router-link to=&quot;/home/bar&quot;&gt;To Bar&lt;/router-link&gt;&lt;/li&gt;    
+  &lt;/ul&gt;    
+  &lt;router-view&gt;&lt;/router-view&gt;
+&lt;/div&gt;
+
+const Home = &#123;
+  template: `&lt;div&gt;&#123;&#123;message&#125;&#125;&lt;/div&gt;`,
+  data() &#123;
+    return &#123;
+      message: this.$route.params.name
+    &#125;
+  &#125;
+&#125;
+  
+const router = new VueRouter(&#123;
+  mode:&#39;history&#39;,
+    routes: [
+    &#123;path: &#39;/home&#39;, component: Home &#125;,
+    &#123;path: &#39;/home/:name&#39;, component: Home &#125;
+  ]
+&#125;)
+  
+new Vue(&#123;
+  el: &#39;#app&#39;,
+  router
+&#125;)
+</code></pre>
+<p>上段代码中，我们在路由构建选项 routes 中配置了一个动态路由 ‘/home/:name’，它们共用一个路由组件 Home，这代表他们复用 RouterView 。</p>
+<p>当进行路由切换时，页面只会渲染第一次路由匹配到的参数，之后再进行路由切换时，message 是没有变化的。</p>
+<p>解决方法：</p>
+<ul>
+<li><p>1.通过 watch 监听 $route 的变化。</p>
+<p>  const Home = {</p>
+<pre><code>template: `&lt;div&gt;&#123;&#123;message&#125;&#125;&lt;/div&gt;`,
+data() &#123;
+  return &#123;
+    message: this.$route.params.name
+  &#125;
+&#125;,
+watch:&#123;
+   &#39;$route&#39;:function()&#123;
+      this.message = this.$route.params.name
+   &#125;
+&#125;
+</code></pre>
+<p>  }<br>  …<br>  new Vue({</p>
+<pre><code>el: &#39;#app&#39;,
+router
+</code></pre>
+<p>  })</p>
+</li>
+<li><p>2.给<router-view> 绑定key属性，这样 Vue 就会认为这是不同的 <router-view>。</router-view></router-view></p>
+</li>
+</ul>
+<p>弊端：如果从 /home 跳转到 /user 等其他路由下，我们是不用担心组件更新问题的，所以这个时候 key 属性是多余的。</p>
+<pre><code>&lt;div id=&quot;app&quot;&gt;
+   &lt;router-view :key=&quot;key&quot;&gt;&lt;/router-view&gt;
+&lt;/div&gt;
+</code></pre>
+<h1 id="情况七：变量通过赋值来定义的"><a href="#情况七：变量通过赋值来定义的" class="headerlink" title="情况七：变量通过赋值来定义的"></a>情况七：变量通过赋值来定义的</h1><p>在 Vue 中有两种类型的变量：响应式变量和非响应式变量。</p>
+<p>从后端获取的变量通常是响应式变量，也就是说它们会被 Vue 监测到变化并同步到页面上，如果你修改了这些响应式变量，页面会随之改变。</p>
+<p>而通过赋值来定义的变量通常是非响应式变量，如果你修改了这些非响应式变量，Vue 并不会监测到它们的变化，所以页面不会改变。</p>
+<p>如果你需要使一个非响应式变量变成响应式变量，可以使用 Vue.set 方法或者数组的变异方法（例如 push、splice 等）。</p>
+<p>例1：Vue.set(对象,添加的key,属性值”)</p>
+<pre><code>Vue.set
+//这个是直接用在Vue身上的。例如: Vue.set(对象,添加的key,属性值”)
+//常见于: xx.js文件中
+//注意: js文件中，需要引入vue，比如: import Vue from vue
+</code></pre>
+<p>例2：this.$set(对象,添加的key’,属性值)</p>
+<pre><code>this.$set
+//这个是用在vm或者vc实例身上的，比如vue文件中，this.$set(对象,添加的key&#39;,属性值)
+//常见于: xx.vue文件中
+强制更新数据：this.$forceUpdate();
+</code></pre>
+<p><a target="_blank" rel="noopener" href="https://www.jb51.net/javascript/286151v3n.htm">https://www.jb51.net/javascript/286151v3n.htm</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-Vue2 组件通信、组件间传值的几种方式"
   class="article article-type-post"
   itemscope
@@ -725,298 +2173,6 @@ export default &#123;
   &#125;
 &#125;
 &lt;/script&gt;
-</code></pre>
-<p>————————————————<br>版权声明：本文为CSDN博主「小毕学习代码」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_70703397/article/details/132201160">https://blog.csdn.net/qq_70703397/article/details/132201160</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Vue2传值方式详解09"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/09/09/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A309/"
-    >Vue2传值方式详解09-祖传孙 $attrs</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/09/09/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A309/" class="article-date">
-  <time datetime="2023-09-09T12:40:59.000Z" itemprop="datePublished">2023-09-09</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>祖传孙 $attrs</p>
-<p>正常情况下需要借助父亲的props作为中间过渡，但是这样在父亲组件就会多了一些跟父组件业务无关的属性，耦合度高，借助$attrs可以简化些，而且祖跟孙都无需做修改</p>
-<p>祖组件：</p>
-<pre><code>&lt;template&gt;
-    &lt;section&gt;
-        &lt;parent name=&quot;grandParent&quot; sex=&quot;男&quot; age=&quot;88&quot; hobby=&quot;code&quot; @sayKnow=&quot;sayKnow&quot;&gt;&lt;/parent&gt;
-    &lt;/section&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-    import Parent from &#39;./Parent&#39;
-    export default &#123;
-        name: &quot;GrandParent&quot;,
-        components: &#123;
-          Parent
-        &#125;,
-        data() &#123;
-            return &#123;&#125;
-        &#125;,
-        methods: &#123;
-          sayKnow(val)&#123;
-            console.log(val)
-          &#125;
-        &#125;,
-        mounted() &#123;
-        &#125;
-    &#125;
-&lt;/script&gt;
-</code></pre>
-<p>父组件</p>
-<pre><code>&lt;template&gt;
-  &lt;section&gt;
-    &lt;p&gt;父组件收到&lt;/p&gt;
-    &lt;p&gt;祖父的名字：&#123;&#123;name&#125;&#125;&lt;/p&gt;
-    &lt;children v-bind=&quot;$attrs&quot; v-on=&quot;$listeners&quot;&gt;&lt;/children&gt;
-  &lt;/section&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-  import Children from &#39;./Children&#39;
- 
-  export default &#123;
-    name: &quot;Parent&quot;,
-    components: &#123;
-      Children
-    &#125;,
-    // 父组件接收了name,所以name值是不会传到子组件的
-    props:[&#39;name&#39;],
-    data() &#123;
-      return &#123;&#125;
-    &#125;,
-    methods: &#123;&#125;,
-    mounted() &#123;
-    &#125;
-  &#125;
-&lt;/script&gt;
-</code></pre>
-<p>子组件</p>
-<pre><code>&lt;template&gt;
-  &lt;section&gt;
-    &lt;p&gt;子组件收到&lt;/p&gt;
-    &lt;p&gt;祖父的名字：&#123;&#123;name&#125;&#125;&lt;/p&gt;
-    &lt;p&gt;祖父的性别：&#123;&#123;sex&#125;&#125;&lt;/p&gt;
-    &lt;p&gt;祖父的年龄：&#123;&#123;age&#125;&#125;&lt;/p&gt;
-    &lt;p&gt;祖父的爱好：&#123;&#123;hobby&#125;&#125;&lt;/p&gt;
- 
-    &lt;button @click=&quot;sayKnow&quot;&gt;我知道啦&lt;/button&gt;
-  &lt;/section&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-  export default &#123;
-    name: &quot;Children&quot;,
-    components: &#123;&#125;,
-    // 由于父组件已经接收了name属性，所以name不会传到子组件了
-    props:[&#39;sex&#39;,&#39;age&#39;,&#39;hobby&#39;,&#39;name&#39;],
-    data() &#123;
-      return &#123;&#125;
-    &#125;,
-    methods: &#123;
-      sayKnow()&#123;
-        this.$emit(&#39;sayKnow&#39;,&#39;我知道啦&#39;)
-      &#125;
-    &#125;,
-    mounted() &#123;
-    &#125;
-  &#125;
-&lt;/script&gt;
-</code></pre>
-<p>————————————————<br>版权声明：本文为CSDN博主「小毕学习代码」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_70703397/article/details/132201160">https://blog.csdn.net/qq_70703397/article/details/132201160</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Vue2传值方式详解08"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/09/08/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A308/"
-    >Vue2传值方式详解08-路由传值</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/09/08/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A308/" class="article-date">
-  <time datetime="2023-09-08T04:24:36.000Z" itemprop="datePublished">2023-09-08</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>路由传值</p>
-<p>*使用问号传值</p>
-<p>A页面跳转B页面时使用 this.r o u t e r . p u s h ( ’ / B ? n a m e = d a n s e e k ’ ) B 页面可以使用 t h i s . router.push(’/B?name=danseek’) B页面可以使用 this.router.push(’/B?name=danseek’)B页面可以使用this.route.query.name 来获取A页面传过来的值<br>上面要注意router和route的区别</p>
-<p>*使用冒号传值</p>
-<p>配置如下路由：</p>
-<pre><code>&#123;
-    path: &#39;/b/:name&#39;,
-    name: &#39;b&#39;,
-    component: () =&gt; import( &#39;../views/B.vue&#39;)
-&#125;,
-</code></pre>
-<p>在B页面可以通过 this.$route.params.name 来获取路由传入的name的值</p>
-<p>*使用父子组件传值</p>
-<p>由于router-view本身也是一个组件，所以我们也可以使用父子组件传值方式传值，然后在对应的子页面里加上props，因为type更新后没有刷新路由，所以不能直接在子页面的mounted钩子里直接获取最新type的值，而要使用watch</p>
-<pre><code>&lt;router-view :type=&quot;type&quot;&gt;&lt;/router-view&gt;
- 
-// 子页面
-props: [&#39;type&#39;]
-watch: &#123;
-       type()&#123;
-           // console.log(&quot;在这个方法可以时刻获取最新的数据:type=&quot;,this.type)
-       &#125;,
-&#125;,
-</code></pre>
-<p>————————————————<br>版权声明：本文为CSDN博主「小毕学习代码」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_70703397/article/details/132201160">https://blog.csdn.net/qq_70703397/article/details/132201160</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Vue2传值方式详解07"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/09/07/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A307/"
-    >Vue2传值方式详解07-sessionStorage传值</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/09/07/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A307/" class="article-date">
-  <time datetime="2023-09-07T12:20:20.000Z" itemprop="datePublished">2023-09-07</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>sessionStorage 是浏览器的全局对象，存在它里面的数据会在页面关闭时清除 。运用这个特性，我们可以在所有页面共享一份数据。<br>代码示例：</p>
-<pre><code>// 保存数据到 sessionStorage
-sessionStorage.setItem(&#39;key&#39;, &#39;value&#39;);
- 
-// 从 sessionStorage 获取数据
-let data = sessionStorage.getItem(&#39;key&#39;);
- 
-// 从 sessionStorage 删除保存的数据
-sessionStorage.removeItem(&#39;key&#39;);
- 
-// 从 sessionStorage 删除所有保存的数据
-sessionStorage.clear();
-</code></pre>
-<p>注意：里面存的是键值对，只能是字符串类型，如果要存对象的话，需要使用 let objStr = JSON.stringify(obj) 转成字符串然后再存储（使用的时候 let obj = JSON.parse(objStr) 解析为对象）。<br>推荐一个库 good-storage ，它封装了sessionStorage ，可以直接用它的API存对象</p>
-<pre><code>//localStorage
- storage.set(key,val) 
- storage.get(key, def)
-//sessionStorage
- storage.session.set(key, val)
 </code></pre>
 <p>————————————————<br>版权声明：本文为CSDN博主「小毕学习代码」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_70703397/article/details/132201160">https://blog.csdn.net/qq_70703397/article/details/132201160</a></p>
  

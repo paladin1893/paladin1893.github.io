@@ -154,6 +154,260 @@
     
     
     <article
+  id="post-How-QGIS-Serve-a-project"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/03/03/How-QGIS-Serve-a-project/"
+    >How QGIS Serve a project</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/03/03/How-QGIS-Serve-a-project/" class="article-date">
+  <time datetime="2023-03-03T06:07:30.000Z" itemprop="datePublished">2023-03-03</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>Now that QGIS Server is installed and running, we just have to use it.</p>
+<p>Obviously, we need a QGIS project to work on. Of course, you can fully customize your project by defining contact information, precise some restrictions on CRS or even exclude some layers. Everything you need to know about that is described later in Configure your project.</p>
+<p>But for now, we are going to use a simple project already configured and previously downloaded in /home/qgis/projects/world.qgs, as described above.</p>
+<p>By opening the project and taking a quick look on layers, we know that 4 layers are currently available:</p>
+<p>airports<br>places<br>countries<br>countries_shapeburst</p>
+<p>You don’t have to understand the full request for now but you may retrieve a map with some of the previous layers thanks to QGIS Server by doing something like this in your web browser to retrieve the countries layer:</p>
+<pre><code>http://qgis.demo/qgisserver?
+  MAP=/home/qgis/projects/world.qgs&amp;
+  LAYERS=countries&amp;
+  SERVICE=WMS&amp;
+  VERSION=1.3.0&amp;
+  REQUEST=GetMap&amp;
+  CRS=EPSG:4326&amp;
+  WIDTH=400&amp;
+  HEIGHT=200&amp;
+  BBOX=-90,-180,90,180
+</code></pre>
+<p>If you obtain the next image, then QGIS Server is running correctly:</p>
+<p>Note that you may define QGIS_PROJECT_FILE environment variable to use a project by default instead of giving a MAP parameter (see Environment variables).</p>
+<p>For example with spawn-fcgi:</p>
+<p>export QGIS_PROJECT_FILE=/home/qgis/projects/world.qgs<br>spawn-fcgi -f /usr/lib/bin/cgi-bin/qgis_mapserv.fcgi <br>           -s /var/run/qgisserver.socket <br>           -U www-data -G www-data -n</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/QGIS/" rel="tag">QGIS</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-QGIS-Server-Installation-on-Windows"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/03/02/QGIS-Server-Installation-on-Windows/"
+    >QGIS Server Installation on Windows</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/03/02/QGIS-Server-Installation-on-Windows/" class="article-date">
+  <time datetime="2023-03-02T15:40:52.000Z" itemprop="datePublished">2023-03-02</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>QGIS Server can also be installed on Windows systems using the 64 bit version of the OSGeo4W network installer (<a target="_blank" rel="noopener" href="https://qgis.org/en/site/forusers/download.html">https://qgis.org/en/site/forusers/download.html</a>).</p>
+<h1 id="A-simple-procedure-is-the-following"><a href="#A-simple-procedure-is-the-following" class="headerlink" title="A simple procedure is the following:"></a>A simple procedure is the following:</h1><ul>
+<li><p>Download and run the OSGeo4W installer</p>
+</li>
+<li><p>Follow the “Advanced Install” and install the QGIS Desktop, QGIS Server apache and mod_fcgid packages.</p>
+</li>
+<li><p>Apache is not directly installed as a service on Windows. You need to:</p>
+</li>
+</ul>
+<p>** Right-click the OSGeo4W.bat file at the root of the C:\OSGeo4W64\ folder (if the default installation paths have been used) and select Run as administrator</p>
+<p>** In the console, run apache-install.bat, which will output</p>
+<pre><code>&gt; apache-install.bat
+Installing the &#39;Apache OSGeo4W Web Server&#39; service
+The &#39;Apache OSGeo4W Web Server&#39; service is successfully installed.
+Testing httpd.conf....
+Errors reported here must be corrected before the service can be started.
+...
+</code></pre>
+<p>The service is started as you can notice in the report. But the server may fail to run due to missing custom configuration.</p>
+<ul>
+<li>Edit the C:\OSGeo4w64\apps\apache\conf\httpd.conf file with the following changes (various other combinations are possible):</li>
+</ul>
+<p>** (Optional) Customize the address to listen to using an IP and/or port, You can and add as many entries as you wish.</p>
+<p>*** Existing config<br>    Listen ${SRVPORT}</p>
+<p>*** Replacement<br>    Listen localhost:8080</p>
+<p>** Indicate where to find the script files<br>*** Existing config<br>    ScriptAlias /cgi-bin/ “${SRVROOT}/cgi-bin/“</p>
+<p>*** Replacement<br>    ScriptAlias /cgi-bin/ “C:/OSGeo4W64/apps/qgis/bin/“</p>
+<p>** Provide permissions on the script folder<br>*** Existing config<br>&lt;Directory “${SRVROOT}/cgi-bin”&gt;<br>    AllowOverride None<br>    Options None<br>    Require all granted<br></p>
+<p>*** Replacement<br>&lt;Directory “C:/OSGeo4W64/apps/qgis/bin”&gt;<br>    SetHandler cgi-script<br>    AllowOverride None<br>    Options ExecCGI<br>    Require all granted<br></p>
+<p>** Enable file extensions to use for script files. Uncomment and complete<br>*** Existing config<br>    #AddHandler cgi-script .cgi<br>*** Replacement<br>    AddHandler cgi-script .cgi .exe</p>
+<p>** Add more OSGeo4W custom configuration variables</p>
+<p>*** Existing config<br>    # parse OSGeo4W apache conf files<br>    IncludeOptional “C:/OSGeo4W64/httpd.d/httpd_*.conf”<br>*** Replacement<br>    # parse OSGeo4W apache conf files<br>    IncludeOptional “C:/OSGeo4W64/httpd.d/httpd_*.conf”<br>    SetEnv GDAL_DATA “C:/OSGeo4W64/share/gdal”<br>    SetEnv QGIS_AUTH_DB_DIR_PATH “C:/OSGeo4W64/apps/qgis/resources”</p>
+<p>** Restart the Apache web server</p>
+<pre><code>&gt; apache-restart.bat
+</code></pre>
+<ul>
+<li>Open browser window to testing a GetCapabilities request to QGIS Server. Replace localhost:8080 with the IP and port you set to listen.</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="http://localhost:8080/cgi-bin/qgis_mapserv.fcgi.exe?SERVICE=WMS&amp;VERSION=1.3.0&amp;REQUEST=GetCapabilities">http://localhost:8080/cgi-bin/qgis_mapserv.fcgi.exe?SERVICE=WMS&amp;VERSION=1.3.0&amp;REQUEST=GetCapabilities</a></p>
+<p>A XML file with the capabilities should be returned. Your server is ready to use.</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/QGIS/" rel="tag">QGIS</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-PostgreSQL-Connection-URIs"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/03/01/PostgreSQL-Connection-URIs/"
+    >PostgreSQL Connection URIs</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/03/01/PostgreSQL-Connection-URIs/" class="article-date">
+  <time datetime="2023-03-01T15:13:43.000Z" itemprop="datePublished">2023-03-01</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>The general form for a connection URI is:</p>
+<pre><code>postgresql://[userspec@][hostspec][/dbname][?paramspec]
+</code></pre>
+<p>where userspec is:</p>
+<pre><code>user[:password]
+</code></pre>
+<p>and hostspec is:</p>
+<pre><code>[host][:port][,...]
+</code></pre>
+<p>and paramspec is:</p>
+<pre><code>name=value[&amp;...]
+</code></pre>
+<p>The URI scheme designator can be either postgresql:// or postgres://. Each of the remaining URI parts is optional. The following examples illustrate valid URI syntax:</p>
+<pre><code>postgresql://
+postgresql://localhost
+postgresql://localhost:5433
+postgresql://localhost/mydb
+postgresql://user@localhost
+postgresql://user:secret@localhost
+postgresql://other@localhost/otherdb?connect_timeout=10&amp;application_name=myapp
+postgresql://host1:123,host2:456/somedb?target_session_attrs=any&amp;application_name=myapp
+</code></pre>
+<p>Values that would normally appear in the hierarchical part of the URI can alternatively be given as named parameters. For example:</p>
+<pre><code>postgresql:///mydb?host=localhost&amp;port=5433
+</code></pre>
+<p>All named parameters must match key words listed in Section 34.1.2, except that for compatibility with JDBC connection URIs, instances of ssl=true are translated into sslmode=require.</p>
+<p>The connection URI needs to be encoded with percent-encoding if it includes symbols with special meaning in any of its parts. Here is an example where the equal sign (=) is replaced with %3D and the space character with %20:</p>
+<pre><code>postgresql://user@localhost:5433/mydb?options=-c%20synchronous_commit%3Doff
+</code></pre>
+<p>The host part may be either a host name or an IP address. To specify an IPv6 address, enclose it in square brackets:</p>
+<pre><code>postgresql://[2001:db8::1234]/database
+</code></pre>
+<p>The host part is interpreted as described for the parameter host. In particular, a Unix-domain socket connection is chosen if the host part is either empty or looks like an absolute path name, otherwise a TCP/IP connection is initiated. Note, however, that the slash is a reserved character in the hierarchical part of the URI. So, to specify a non-standard Unix-domain socket directory, either omit the host part of the URI and specify the host as a named parameter, or percent-encode the path in the host part of the URI:</p>
+<pre><code>postgresql:///dbname?host=/var/lib/postgresql
+postgresql://%2Fvar%2Flib%2Fpostgresql/dbname
+</code></pre>
+<p>It is possible to specify multiple host components, each with an optional port component, in a single URI. A URI of the form postgresql://host1:port1,host2:port2,host3:port3/ is equivalent to a connection string of the form host=host1,host2,host3 port=port1,port2,port3. As further described below, each host will be tried in turn until a connection is successfully established.</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-PostgreSQL-Password-File"
   class="article article-type-post"
   itemscope
@@ -413,276 +667,6 @@ user=waterpass
     <footer class="article-footer">
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-在windows上使用pg-service-conf配置服务连接PostgreSQL数据库"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/02/25/%E5%9C%A8windows%E4%B8%8A%E4%BD%BF%E7%94%A8pg-service-conf%E9%85%8D%E7%BD%AE%E6%9C%8D%E5%8A%A1%E8%BF%9E%E6%8E%A5PostgreSQL%E6%95%B0%E6%8D%AE%E5%BA%93/"
-    >在windows上使用pg_service.conf配置服务连接PostgreSQL数据库</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/02/25/%E5%9C%A8windows%E4%B8%8A%E4%BD%BF%E7%94%A8pg-service-conf%E9%85%8D%E7%BD%AE%E6%9C%8D%E5%8A%A1%E8%BF%9E%E6%8E%A5PostgreSQL%E6%95%B0%E6%8D%AE%E5%BA%93/" class="article-date">
-  <time datetime="2023-02-25T15:35:03.000Z" itemprop="datePublished">2023-02-25</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>在windows上使用PostgreSQL的连接服务文件(Connection Service File)连接到数据库中。</p>
-<p>参考：<a target="_blank" rel="noopener" href="https://www.postgresql.org/docs/11/libpq-pgservice.html">https://www.postgresql.org/docs/11/libpq-pgservice.html</a></p>
-<p>作者注：<br>PostgreSQL的连接服务文件(Connection Service File)存放了ip地址，数据库名，端口号等信息，作用类似于Oracle database的tnsnames.ora文件。</p>
-<pre><code>C:\&gt;set lc_messages=C
-C:\&gt;d:\postgresql\pg11.5\bin\pg_config --sysconfdir
-d:/postgresql/pg11.5/etc
- 
-C:\&gt;d:\postgresql\pg11.5\bin\pg_config
-BINDIR = d:/postgresql/pg11.5/bin
-DOCDIR = d:/postgresql/pg11.5/doc
-HTMLDIR = d:/postgresql/pg11.5/doc
-INCLUDEDIR = d:/postgresql/pg11.5/include
-PKGINCLUDEDIR = d:/postgresql/pg11.5/include
-INCLUDEDIR-SERVER = d:/postgresql/pg11.5/include/server
-LIBDIR = d:/postgresql/pg11.5/lib
-PKGLIBDIR = d:/postgresql/pg11.5/lib
-LOCALEDIR = d:/postgresql/pg11.5/share/locale
-MANDIR = d:/postgresql/pg11.5/man
-SHAREDIR = d:/postgresql/pg11.5/share
-SYSCONFDIR = d:/postgresql/pg11.5/etc
-PGXS = d:/postgresql/pg11.5/lib/pgxs/src/makefiles/pgxs.mk
-CONFIGURE = --enable-thread-safety --enable-nls --with-ldap --with-openssl --with-ossp-uuid --with-libxml --with-libxslt --with-icu --with-tcl --with-perl --with-python
-CC = not recorded
-CPPFLAGS = not recorded
-CFLAGS = not recorded
-CFLAGS_SL = not recorded
-LDFLAGS = not recorded
-LDFLAGS_EX = not recorded
-LDFLAGS_SL = not recorded
-LIBS = not recorded
-VERSION = PostgreSQL 11.5
-</code></pre>
-<p>注意上面的输出：SYSCONFDIR = d:/postgresql/pg11.5/etc</p>
-<p>在SYSCONFDIR = d:/postgresql/pg11.5/etc下建立名为pg_service.conf的文件（该文件的模板存放在SHAREDIR = d:/postgresql/pg11.5/share 目录中，可copy过来）</p>
-<p>pg_service.conf的文件内容如下：</p>
-<pre><code>#
-#    Connection configuration file
-#
-# A service is a set of named connection parameters.  You may specify
-# multiple services in this file.  Each starts with a service name in
-# brackets.  Subsequent lines have connection configuration parameters of
-# the pattern &quot;param=value&quot; or LDAP URLs starting with &quot;ldap://&quot;
-# to look up such parameters.  A sample configuration for postgres is
-# included in this file.  Lines beginning with &#39;#&#39; are comments.
-#
-# Copy this to your sysconf directory (typically /usr/local/pgsql/etc) and
-# rename it pg_service.conf.
-#
-#
-#[postgres service name]
-[pg12bt2-cluster]  ---&gt;&gt;&gt;这个是服务名，请自行定义，在psql连接时使用。
-host=192.168.80.187
-dbname=postgres
-user=pg12bt2
-port=7432
-</code></pre>
-<p>下面做登录测试：</p>
-<pre><code>C:\&gt;d:\postgresql\pg11.5\bin\psql service=pg12bt2-cluster
-用户 pg12bt2 的口令：
-psql (11.5, 服务器 12beta2)
-警告：psql 主版本11,服务器主版本为12.
-     一些psql功能可能无法正常使用.
-输入 &quot;help&quot; 来获取帮助信息.
-
-postgres=# \q
-</code></pre>
-<p>注意：<br>1.PostgreSQL的连接服务文件(Connection Service File)中的关键字清单见：<br><a target="_blank" rel="noopener" href="https://www.postgresql.org/docs/11/libpq-connect.html#LIBPQ-PARAMKEYWORDS">https://www.postgresql.org/docs/11/libpq-connect.html#LIBPQ-PARAMKEYWORDS</a><br>2.psql登录方式不止“psql service=pg12bt2-cluster”，<br>其他的登录方式请见：<br><a target="_blank" rel="noopener" href="https://www.postgresql.org/docs/11/libpq-pgservice.html">https://www.postgresql.org/docs/11/libpq-pgservice.html</a><br><a target="_blank" rel="noopener" href="https://www.cybertec-postgresql.com/en/pg_service-conf-the-forgotten-config-file/">https://www.cybertec-postgresql.com/en/pg_service-conf-the-forgotten-config-file/</a></p>
-<p>————————————————<br>版权声明：本文为CSDN博主「msdnchina」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/msdnchina/article/details/100933935">https://blog.csdn.net/msdnchina/article/details/100933935</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-the-ability-to-create-a-file-called-pg-service-conf"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/02/24/the-ability-to-create-a-file-called-pg-service-conf/"
-    >the ability to create a file called pg_service.conf</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/02/24/the-ability-to-create-a-file-called-pg-service-conf/" class="article-date">
-  <time datetime="2023-02-24T15:27:20.000Z" itemprop="datePublished">2023-02-24</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>Once in a while I am rediscovering features in PostgreSQL, which have been there for many many years but which are so rarely used that people tend not to talk about them. One of those (in my experience) rarely used features is the ability to create a file called pg_service.conf.</p>
-<p>The basic idea is to configure services in a config file and address them without having to worry about host, port, user and so on.</p>
-<p>A simple pg_service.conf file</p>
-<p>How does that work? Well, here is an example:</p>
-<pre><code>iMac:~ hs$ cat .pg_service.conf
- 
-# a sample service
-[hansservice]
-host=localhost
-port=5432
-dbname=test
-user=hs
-password=abc
- 
-[paulservice]
-host=192.168.0.45
-port=5432
-dbname=xyz
-user=paul
-password=cde
-</code></pre>
-<p>In this case two services have been defined. Note that PostgreSQL uses a standard .ini-file format. Inside a section you can use all connection parameters available in PostgreSQL (a full list can be found here: <a target="_blank" rel="noopener" href="http://www.postgresql.org/docs/9.5/static/libpq-connect.html#LIBPQ-PARAMKEYWORDS">http://www.postgresql.org/docs/9.5/static/libpq-connect.html#LIBPQ-PARAMKEYWORDS</a>).</p>
-<p>The first important thing is that a service can be referenced by name. The way to do that is to set an environment variable:</p>
-<pre><code>iMac:~ hs$ export PGSERVICE=hansservice
-</code></pre>
-<p>A connection can now be established without passing parameters to psql:</p>
-<pre><code>iMac:~ hs$ psql
-psql (9.5.0)
-Type &quot;help&quot; for help.
- 
-test=#
-</code></pre>
-<p>Actually a pg_service.conf file is a pretty convenient thing to have. Maybe I should reconsider my behavior and use this thing more often.</p>
-<p>this paper from <a target="_blank" rel="noopener" href="https://www.cybertec-postgresql.com/en/pg_service-conf-the-forgotten-config-file/">https://www.cybertec-postgresql.com/en/pg_service-conf-the-forgotten-config-file/</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-QGIS服务器从PostgreSQL数据库读取项目"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/02/23/QGIS%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%8EPostgreSQL%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AF%BB%E5%8F%96%E9%A1%B9%E7%9B%AE/"
-    >QGIS服务器从Postgresql数据库读取项目</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/02/23/QGIS%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%8EPostgreSQL%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AF%BB%E5%8F%96%E9%A1%B9%E7%9B%AE/" class="article-date">
-  <time datetime="2023-02-23T06:29:45.000Z" itemprop="datePublished">2023-02-23</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>你可以使用存储在数据库中的项目文件（在我的情况下是postgres）。我是怎么做到的。</p>
-<p>我在包含数据库连接凭据的主目录中创建了一个pg_service文件，让我们仅指定服务名称即可连接到数据库，例如，使用psql可以psql service=myservicename 在nginx上连接并设置fastcgi参数 fastcgi_param PGSERVICEFILE /home/qgis/.pg_service.conf;</p>
-<p>我从qgis桌面连接到postgres数据库，并指定了我在服务文件中设置的服务名称。</p>
-<p>已将项目文件保存在数据库中。通过这样做，该项目文件将包含通过服务名称进行的数据库连接。</p>
-<p>为项目名称设置fastcgi_param<br>location / {<br>    add_header ‘Access-Control-Allow-Origin’ ‘*’;<br>    add_header ‘Access-Control-Allow-Methods’ ‘GET, POST, OPTIONS’;<br>    add_header ‘Access-Control-Allow-Headers’ ‘DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range’;<br>    add_header ‘Access-Control-Expose-Headers’ ‘Content-Length,Content-Range’;<br>    gzip off;<br>    include fastcgi_params;<br>    fastcgi_param QGIS_PROJECT_FILE postgresql:///?service=myservicename&amp;schema=public&amp;project=testproject;<br>    fastcgi_pass unix:/var/run/fcgiwrap.socket;;<br>    }</p>
-<p>你可以通过url在Web应用程序的前端中设置默认的qgis项目，这并不困难。</p>
-<hr>
-<p>you can use project files stored in a database (in my case it is postgres). How I did it.</p>
-<p>I created a pg_service file on a home directory which contains database connection credentials and let us to connect to database just specifying service name, for example using psql you can connect psql service=myservicename and set fastcgi params on nginx fastcgi_param  PGSERVICEFILE /home/qgis/.pg_service.conf;</p>
-<p>I connected from qgis desktop to postgres database specifying the service name which I set in service file.</p>
-<p>Saved project file in database. By doing like this project file will contain database connection via service name.</p>
-<p>Set fastcgi_param for project name<br>location / {<br>    add_header ‘Access-Control-Allow-Origin’ ‘*’;<br>    add_header ‘Access-Control-Allow-Methods’ ‘GET, POST, OPTIONS’;<br>    add_header ‘Access-Control-Allow-Headers’ ‘DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range’;<br>    add_header ‘Access-Control-Expose-Headers’ ‘Content-Length,Content-Range’;<br>    gzip           off;<br>    include        fastcgi_params;<br>    fastcgi_param  QGIS_PROJECT_FILE postgresql:///?service=myservicename&amp;schema=public&amp;project=testproject;<br>    fastcgi_pass   unix:/var/run/fcgiwrap.socket;;<br>    }<br>Default qgis project you can set in frontend of your web application via url, that is not difficult.</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/QGIS/" rel="tag">QGIS</a></li></ul>
 
     </footer>
   </div>

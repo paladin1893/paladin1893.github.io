@@ -154,6 +154,211 @@
     
     
     <article
+  id="post-finereport入门系列（一）"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/08/04/finereport%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97%EF%BC%88%E4%B8%80%EF%BC%89/"
+    >finereport入门系列（一）</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/08/04/finereport%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97%EF%BC%88%E4%B8%80%EF%BC%89/" class="article-date">
+  <time datetime="2023-08-04T04:35:46.000Z" itemprop="datePublished">2023-08-04</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="JS实现切换Tab块时进行数据联动"><a href="#JS实现切换Tab块时进行数据联动" class="headerlink" title="JS实现切换Tab块时进行数据联动"></a>JS实现切换Tab块时进行数据联动</h1><h2 id="1-准备数据"><a href="#1-准备数据" class="headerlink" title="1 准备数据"></a>1 准备数据</h2><p>点击设计器左上角「文件&gt;新建决策报表」，新建数据库查询 ds1，输出 SQL 查询语句：</p>
+<pre><code>SELECT * FROM 地图
+</code></pre>
+<h2 id="2-设计模板"><a href="#2-设计模板" class="headerlink" title="2 设计模板"></a>2 设计模板</h2><h3 id="1-设计-Tab-块"><a href="#1-设计-Tab-块" class="headerlink" title="1 设计 Tab 块"></a>1 设计 Tab 块</h3><p>1）向决策报表 body 中拖入一个 Tab 块，并调整其大小和位置。<br>2）双击 Tab 块，点击 Tab 块右上角添加按钮，再添加两个 Tab 页。接着向每个 Tab 页中拖入一个地图图表。<br>3）分别设置地图：单击选中地图图表，在属性面板中取消勾选「标题可见」。<br>再双击图表进入编辑状态，将三个地图的边界分别设置为「江苏省、山东省、浙江省」，GIS图层均设置为「标准&gt;幻影黑」。<br>本文主要演示 Tab 切换时的联动，所以这里地图无需绑定数据。<br>4）选中 Tab 块整体，开启 Tab 块轮播，轮播间隔时间为 2 秒。再选中 Tab 块标题，将标题组件大小修改为 0 ，即可实现隐藏 Tab 块标题。</p>
+<h3 id="2-添加模板参数"><a href="#2-添加模板参数" class="headerlink" title="2 添加模板参数"></a>2 添加模板参数</h3><p>为了实现联动，需添加一个模板参数。<br>点击「模板&gt;模板参数」，新增一个参数并重命名为 area ，设置默认值为「江苏省」，对应第一个 Tab 页中的地图边界。</p>
+<h3 id="3-设计报表块"><a href="#3-设计报表块" class="headerlink" title="3 设计报表块"></a>3 设计报表块</h3><p>1）向 body 中拖入一个 报表块，并调整其大小和位置。<br>2）双击报表块进入编辑界面，将 pid 、销售额字段分别拖入 A1、A2 单元格，并设置其字体、大小、颜色等。<br>再选中 A2 单元格，设置销售额的「数据设置」为「汇总&gt;求和」，左父格设置为「自定义&gt; A1 」。<br>3）双击 A1 单元格，设置过滤条件为 pid 等于参数 $area ，则会根据参数过滤显示数据。<br>4）点击表格左下角「表单」返回 body 界面，将报表块背景设置为与地图背景同样的颜色。 </p>
+<h3 id="4-添加控件"><a href="#4-添加控件" class="headerlink" title="4 添加控件"></a>4 添加控件</h3><p>为了配合 JS 和数据集传参实现联动，需添加一个控件。<br>1）向 body 中拖入一个 下拉框控件 ，将控件名称设置为 area ，即可与参数 $area 绑定 。取消勾选「可见」，则预览时不会显示该控件。<br>2）选中控件，设置其数据字典为 ds1 数据集的 pid 字段。 </p>
+<h3 id="5-添加事件"><a href="#5-添加事件" class="headerlink" title="5 添加事件"></a>5 添加事件</h3><p>选中 Tab 块的标题面板 tabpane0 ，添加一个「Tab块切换」事件。输入 JavaScript 代码如下：</p>
+<pre><code>setTimeout(function() &#123; 
+//TAB切换后,获取到当前TAB块的标题索引
+FR.IndexNum = _g().getWidgetByName(&quot;tabpane0&quot;).getShowIndex();
+var a = 0;
+a = FR.IndexNum;
+if(a==0)&#123;
+    x=&#39;江苏省&#39;;
+    &#125;
+else if(a==1)&#123;
+        x=&#39;山东省&#39;;
+    &#125;
+else if(a==2)&#123;
+        x=&#39;浙江省&#39;;
+    &#125;      
+var cc = _g().getWidgetByName(&quot;area&quot;) //获取控件
+cc.setValue(x);    //给控件赋值
+&#125;, 50);
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/finereport/" rel="tag">finereport</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-xampp-mysql-FEEDBACK-is-disabled修复"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/08/03/xampp-mysql-FEEDBACK-is-disabled%E4%BF%AE%E5%A4%8D/"
+    >xampp-mysql-FEEDBACK-is-disabled修复</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/08/03/xampp-mysql-FEEDBACK-is-disabled%E4%BF%AE%E5%A4%8D/" class="article-date">
+  <time datetime="2023-08-03T11:41:31.000Z" itemprop="datePublished">2023-08-03</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>前一天还能正常使用的 xampp，再一次使用时，无端端地无法启用 mysql 服务，启用 mysql 服务时提示 MySQL 意外关闭（Error: MySQL shutdown unexpectedly.）</p>
+<p>查看 mysql 错误日志文件 mysql_error.log 发现有一行提示 “Plugin ‘FEEDBACK’ is disabled.”</p>
+<p>看字面意思是 “FEEDBACK” 这个插件被禁用，查找到的解决方法如下：</p>
+<h1 id="解决方法："><a href="#解决方法：" class="headerlink" title="解决方法："></a>解决方法：</h1><p>1、先备份/xampp/mysql/data/中的所有文件。</p>
+<p>2、将/xampp/mysql/backup/中所有文件复制并覆盖/xampp/mysql/data/中的所有文件，重启 xampp 后 mysql 启动成功。</p>
+<p>或者复制xampp/mysql/backup里的所有文件除了ibdata1文件，覆盖掉xampp/mysql/data里的所有文件。</p>
+<p>3、文件覆盖后，phpmyadmin的登录密码变回初始密码（即没有密码），需要进入 phpmyadmin 管理中重新修改 root 帐号密码，原来的网站才能正常连接数据库。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/xampp/" rel="tag">xampp</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-VeraCrypt好用的硬盘加密工具"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/08/02/VeraCrypt%E5%A5%BD%E7%94%A8%E7%9A%84%E7%A1%AC%E7%9B%98%E5%8A%A0%E5%AF%86%E5%B7%A5%E5%85%B7/"
+    >VeraCrypt好用的硬盘加密工具</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/08/02/VeraCrypt%E5%A5%BD%E7%94%A8%E7%9A%84%E7%A1%AC%E7%9B%98%E5%8A%A0%E5%AF%86%E5%B7%A5%E5%85%B7/" class="article-date">
+  <time datetime="2023-08-02T13:03:13.000Z" itemprop="datePublished">2023-08-02</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>VeraCrypt is a free open source disk encryption software for Windows, Mac OSX and Linux. Brought to you by IDRIX (<a target="_blank" rel="noopener" href="https://www.idrix.fr/">https://www.idrix.fr</a>) and based on TrueCrypt 7.1a.</p>
+<h1 id="VeraCrypt-main-features"><a href="#VeraCrypt-main-features" class="headerlink" title="VeraCrypt main features:"></a>VeraCrypt main features:</h1><ul>
+<li>Creates a virtual encrypted disk within a file and mounts it as a real disk.</li>
+<li>Encrypts an entire partition or storage device such as USB flash drive or hard drive.</li>
+<li>Encrypts a partition or drive where Windows is installed (pre-boot authentication).</li>
+<li>Encryption is automatic, real-time(on-the-fly) and transparent.</li>
+<li>Parallelization and pipelining allow data to be read and written as fast as if the drive was not encrypted.</li>
+<li>Encryption can be hardware-accelerated on modern processors.</li>
+<li>Provides plausible deniability, in case an adversary forces you to reveal the password: Hidden volume (steganography) and hidden operating system.</li>
+<li>More information about the features of VeraCrypt may be found in the documentation</li>
+</ul>
+<h1 id="What-does-VeraCrypt-bring-to-you"><a href="#What-does-VeraCrypt-bring-to-you" class="headerlink" title="What does VeraCrypt bring to you?"></a>What does VeraCrypt bring to you?</h1><p>VeraCrypt adds enhanced security to the algorithms used for system and partitions encryption making it immune to new developments in brute-force attacks.<br>VeraCrypt also solves many vulnerabilities and security issues found in TrueCrypt.</p>
+<p>As an example, when the system partition is encrypted, TrueCrypt uses PBKDF2-RIPEMD160 with 1000 iterations whereas in VeraCrypt we use 200000 iterations by default (can be increased using a custom PIM). And for standard containers and other partitions, TrueCrypt uses at most 2000 iterations but VeraCrypt uses 500000 iterations by default (can also be increased using a custom PIM).</p>
+<p>This enhanced security adds some delay only to the opening of encrypted partitions without any performance impact to the application use phase. This is acceptable to the legitimate owner but it makes it much harder for an attacker to gain access to the encrypted data.</p>
+<p>Starting from version 1.12, it is possible to use custom iterations through the PIM feature, which can be used to increase the encryption security.</p>
+<p>Starting from version 1.0f, VeraCrypt can load TrueCrypt volume. It also offers the possibility to convert TrueCrypt containers and non-system partitions to VeraCrypt format.</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9A%94%E7%A6%BB%E8%A3%85%E7%BD%AE/" rel="tag">隔离装置</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-C++工具库集合Harlinn.Windows"
   class="article article-type-post"
   itemscope
@@ -348,248 +553,6 @@
     <footer class="article-footer">
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/" rel="tag">Docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%A6%85%E9%81%93/" rel="tag">禅道</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-最新docker部署ownCloud指南"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/07/29/%E6%9C%80%E6%96%B0docker%E9%83%A8%E7%BD%B2ownCloud%E6%8C%87%E5%8D%97/"
-    >最新docker部署ownCloud指南</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/07/29/%E6%9C%80%E6%96%B0docker%E9%83%A8%E7%BD%B2ownCloud%E6%8C%87%E5%8D%97/" class="article-date">
-  <time datetime="2023-07-29T06:21:51.000Z" itemprop="datePublished">2023-07-29</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><p><a target="_blank" rel="noopener" href="https://doc.owncloud.com/server/10.12/admin_manual/installation/docker/">Installing with Docker</a></p>
-<h1 id="安装命令"><a href="#安装命令" class="headerlink" title="安装命令"></a>安装命令</h1><pre><code>docker pull owncloud
-docker pull mariadb
-
-docker run --name mariadb -e MYSQL_ROOT_PASSWORD=owncloud -v /home/owncloud/mariadb:/var/lib/mysql --restart=always -d mariadb
-docker run --name owncloud -p 10080:80 -v /home/owncloud/owncloud:/var/www/html/data --link mariadb:mysql --restart=always -d owncloud
-</code></pre>
-<h1 id="信任域问题"><a href="#信任域问题" class="headerlink" title="信任域问题"></a>信任域问题</h1><p> find / -name config.php<br>编辑 …/config/config.php文件</p>
-<pre><code>A typical configuration may look like this:
-
-&#39;trusted_domains&#39; =&gt; [
-   0 =&gt; &#39;localhost&#39;,
-   1 =&gt; &#39;server1.example.com&#39;,
-   2 =&gt; &#39;192.168.1.50&#39;,
-],
-</code></pre>
-<p>仿照格式添加信任域，然后重新访问 http://公网IP:端口，问题解决了</p>
-<h1 id="数据库连接"><a href="#数据库连接" class="headerlink" title="数据库连接"></a>数据库连接</h1><p>登录<a href="http://ip:9780，第一次登录需要配置，配置信息如下：">http://ip:9780，第一次登录需要配置，配置信息如下：</a><br>管理员账号密码<br>数据目录（默认值，不改）<br>数据库：选择mysql/mariadb。数据库用户root，数据库密码ownCloud，数据库名owncloud，localhost设为mariadb</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/" rel="tag">Docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ownCloud/" rel="tag">ownCloud</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-最新docker部署gitlab指南"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/07/28/%E6%9C%80%E6%96%B0docker%E9%83%A8%E7%BD%B2gitlab%E6%8C%87%E5%8D%97/"
-    >最新docker部署gitlab指南</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/07/28/%E6%9C%80%E6%96%B0docker%E9%83%A8%E7%BD%B2gitlab%E6%8C%87%E5%8D%97/" class="article-date">
-  <time datetime="2023-07-28T06:21:15.000Z" itemprop="datePublished">2023-07-28</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><p><a target="_blank" rel="noopener" href="https://docs.gitlab.cn/jh/install/docker.html">极狐GitLab Docker 镜像</a></p>
-<h1 id="拉取镜像"><a href="#拉取镜像" class="headerlink" title="拉取镜像"></a>拉取镜像</h1><pre><code>sudo docker pull gitlab/gitlab-ce:latest
-</code></pre>
-<h1 id="安装容器"><a href="#安装容器" class="headerlink" title="安装容器"></a>安装容器</h1><pre><code>sudo docker run --detach \
-  --hostname 192.168.10.33 \
-  --publish 9443:443 --publish 9980:80 --publish 9822:22 \
-  --name gitlab \
-  --restart always \
-  --volume /home/gitlab/config:/etc/gitlab \
-  --volume /home/gitlab/logs:/var/log/gitlab \
-  --volume /home/gitlab/data:/var/opt/gitlab \
-  gitlab/gitlab-ce:latest
-</code></pre>
-<h1 id="查看日志"><a href="#查看日志" class="headerlink" title="查看日志"></a>查看日志</h1><pre><code>，可以用容器名，也可以用容器id
-
-sudo docker logs -f gitlab
-</code></pre>
-<h1 id="进入容器"><a href="#进入容器" class="headerlink" title="进入容器"></a>进入容器</h1><pre><code>sudo docker exec -it gitlab /bin/bash
-</code></pre>
-<h1 id="修改root密码"><a href="#修改root密码" class="headerlink" title="修改root密码"></a>修改root密码</h1><ol>
-<li>切换到相应路径下: cd /opt/gitlab/bin/</li>
-<li>打开控制台: gitlab-rails console -e production</li>
-<li>查询用户账号信息并赋值给u: u=User.where(id:1).first</li>
-<li>设置该用户名的密码: u.password=’Demo9999’</li>
-<li>确认密码: u.password_confirmation=’Demo9999’</li>
-<li>保存信息： u.save </li>
-<li>退出: exit</li>
-</ol>
-<h1 id="修改外部访问地址"><a href="#修改外部访问地址" class="headerlink" title="修改外部访问地址"></a>修改外部访问地址</h1><pre><code>vi /etc/gitlab/gitlab.rb
-
-external_url &#39;http://192.168.10.33:9980&#39;
-gitlab_rails[&#39;gitlab_ssh_host&#39;]=&#39;192.168.10.33&#39;
-gitlab_rails[&#39;gitlab_shell_ssh_port&#39;]=&#39;9822&#39;
-gitlab_rails[&#39;time_zone&#39;] = &#39;Asia/Shanghai&#39;
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/" rel="tag">Docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GitLab/" rel="tag">GitLab</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-最新centos部署docker指南"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/07/27/%E6%9C%80%E6%96%B0centos%E9%83%A8%E7%BD%B2docker%E6%8C%87%E5%8D%97/"
-    >最新centos部署docker指南</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/07/27/%E6%9C%80%E6%96%B0centos%E9%83%A8%E7%BD%B2docker%E6%8C%87%E5%8D%97/" class="article-date">
-  <time datetime="2023-07-27T02:42:32.000Z" itemprop="datePublished">2023-07-27</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>2023年7月之后，Docker Compose V1不再更新，与后续新版Docker Destop也不再适配。<br>取而代之，当前支持的Docker Desktop均使用Docker Compose V2。</p>
-<h1 id="参考文档："><a href="#参考文档：" class="headerlink" title="参考文档："></a>参考文档：</h1><p><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/install/centos/">Install Docker Engine on CentOS</a><br><a target="_blank" rel="noopener" href="https://docs.docker.com/compose/install/">Overview of installing Docker Compose</a></p>
-<h1 id="安装命令"><a href="#安装命令" class="headerlink" title="安装命令"></a>安装命令</h1><p>整理如下：</p>
-<pre><code>sudo yum remove docker \
-                  docker-client \
-                  docker-client-latest \
-                  docker-common \
-                  docker-latest \
-                  docker-latest-logrotate \
-                  docker-logrotate \
-                  docker-engine
-
-sudo yum install -y yum-utils
-sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-sudo yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
-
-sudo yum install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-</code></pre>
-<h1 id="查看版本："><a href="#查看版本：" class="headerlink" title="查看版本："></a>查看版本：</h1><pre><code>sudo docker -v
-sudo docker compose version
-</code></pre>
-<h1 id="启动docker"><a href="#启动docker" class="headerlink" title="启动docker"></a>启动docker</h1><pre><code>sudo systemctl start docker
-sudo systemctl enable docker
-</code></pre>
-<h1 id="测试docker"><a href="#测试docker" class="headerlink" title="测试docker"></a>测试docker</h1><pre><code>sudo docker run hello-world
-</code></pre>
-<h1 id="查看docker容器"><a href="#查看docker容器" class="headerlink" title="查看docker容器"></a>查看docker容器</h1><pre><code>sudo docker ps
-sudo docker ps | grep zentao
-</code></pre>
-<h1 id="查看docker容器日志，XXXXXX可以是容器名字，也可以是容器id"><a href="#查看docker容器日志，XXXXXX可以是容器名字，也可以是容器id" class="headerlink" title="查看docker容器日志，XXXXXX可以是容器名字，也可以是容器id"></a>查看docker容器日志，XXXXXX可以是容器名字，也可以是容器id</h1><pre><code>docker logs -f XXXXXX
-</code></pre>
-<h1 id="进入容器操作"><a href="#进入容器操作" class="headerlink" title="进入容器操作"></a>进入容器操作</h1><pre><code>sudo docker exec -it gitlab /bin/bash
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/" rel="tag">Docker</a></li></ul>
 
     </footer>
   </div>

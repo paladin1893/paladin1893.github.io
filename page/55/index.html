@@ -154,6 +154,221 @@
     
     
     <article
+  id="post-QGIS二次开发：QGIS3-28-0编译"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/02/05/QGIS%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91%EF%BC%9AQGIS3-28-0%E7%BC%96%E8%AF%91/"
+    >QGIS二次开发：QGIS3.28.0编译</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/02/05/QGIS%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91%EF%BC%9AQGIS3-28-0%E7%BC%96%E8%AF%91/" class="article-date">
+  <time datetime="2023-02-05T08:02:08.000Z" itemprop="datePublished">2023-02-05</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>qgis二次编译的方式越来越简单，下面是最新的编译配置步骤：</p>
+<p>环境要求：</p>
+<ul>
+<li>Visual Studio 2022</li>
+<li>cmake-3.22.6-windows-x86_64</li>
+<li>cygwin</li>
+</ul>
+<p>1、新建一个批处理文件OSGeo4W-dev-2022.bat，内容如下，qgis路径请调整为本机真实路径。</p>
+<pre><code>@echo off
+call E:\QGIS\3.28.0\qgis-3.28.0\qgis\ms-windows\osgeo4w\msvc-env-2022.bat x86_64
+@cmd
+</code></pre>
+<p>2、复制一份ms-windows\osgeo4w\msvc-env.bat，重命名为msvc-env-2022.bat。对其修改如下：</p>
+<p><img src="https://c2.im5i.com/2023/02/05/nfV95.png" alt="msvc-env-2022.bat修改内容"></p>
+<p>3、运行OSGeo4W-dev-2022.bat，命令行调用cmake-gui.exe，配置如下：</p>
+<p><img src="https://c2.im5i.com/2023/02/05/nfK1G.png" alt="cmake依赖配置"></p>
+<p>4、configure，generate，得到vs的工程文件。即可开始编译。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CMAKE/" rel="tag">CMAKE</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/QGIS/" rel="tag">QGIS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BE%9D%E8%B5%96%E9%85%8D%E7%BD%AE/" rel="tag">依赖配置</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-QGIS二次开发：打开POSTGIS图层"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/02/04/QGIS%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91%EF%BC%9A%E6%89%93%E5%BC%80POSTGIS%E5%9B%BE%E5%B1%82/"
+    >QGIS二次开发：打开POSTGIS图层</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/02/04/QGIS%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91%EF%BC%9A%E6%89%93%E5%BC%80POSTGIS%E5%9B%BE%E5%B1%82/" class="article-date">
+  <time datetime="2023-02-04T13:51:13.000Z" itemprop="datePublished">2023-02-04</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>核心代码如下：</p>
+<pre><code>QString service = QStringLiteral(&quot;&quot;);
+QString host = QStringLiteral(&quot;localhost&quot;);
+QString port = QStringLiteral(&quot;5432&quot;);
+QString database = QStringLiteral(&quot;postgis_25_sample&quot;);
+
+bool useEstimatedMetadata = false;
+QgsDataSourceUri::SslMode sslmode = QgsDataSourceUri::SslMode::SslDisable;
+
+QString username = QStringLiteral(&quot;postgres&quot;);
+QString password = QStringLiteral(&quot;geostar&quot;);
+QString authcfg = QStringLiteral(&quot;&quot;);
+
+QgsDataSourceUri uri;
+uri.setConnection(host, port, database, username, password, sslmode, authcfg);
+
+QString schema = QStringLiteral(&quot;china&quot;);
+QString tablename = QStringLiteral(&quot;bou2_4p&quot;);
+QString geometrycol = QStringLiteral(&quot;geom&quot;);
+
+uri.setDataSource(schema, tablename, geometrycol);
+
+QgsVectorLayer::LayerOptions options;
+options.loadDefaultStyle = false;
+
+QgsVectorLayer *vectorLayer = new QgsVectorLayer(uri.uri(false), uri.table(), &quot;postgres&quot;, options);
+QgsProject::instance()-&gt;addMapLayer(vectorLayer);
+m_layers.append(vectorLayer);
+
+m_mapCanvas-&gt;setLayers(m_layers);
+m_mapCanvas-&gt;setVisible(true);
+m_mapCanvas-&gt;zoomToFullExtent();
+m_mapCanvas-&gt;freeze(false);
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostGIS/" rel="tag">PostGIS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/QGIS/" rel="tag">QGIS</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-QGIS二次开发：依赖下载配置"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/02/03/QGIS%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91%EF%BC%9A%E4%BE%9D%E8%B5%96%E4%B8%8B%E8%BD%BD%E9%85%8D%E7%BD%AE/"
+    >QGIS二次开发：依赖下载配置</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/02/03/QGIS%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91%EF%BC%9A%E4%BE%9D%E8%B5%96%E4%B8%8B%E8%BD%BD%E9%85%8D%E7%BD%AE/" class="article-date">
+  <time datetime="2023-02-03T13:40:35.000Z" itemprop="datePublished">2023-02-03</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>QGIS已经升级到3.6了，每次从源码编译开始做起，生成自己的二次开发包，是件很痛苦的事情。有没有其他更便捷的方式呢？</p>
+<p>其实是有的，那就是用osgeo4w-setup-x86_64.exe这样的工具直接下载QGIS项目团队提供好的二次开发包。</p>
+<p>根据个人实践，推荐使用该种方案：qgis+gdal+grass。</p>
+<h1 id="1、qgis"><a href="#1、qgis" class="headerlink" title="1、qgis"></a>1、qgis</h1><p><img src="https://c2.im5i.com/2023/02/03/nqaQ8.png" alt="qgis"></p>
+<h1 id="2、gdal"><a href="#2、gdal" class="headerlink" title="2、gdal"></a>2、gdal</h1><p><img src="https://c2.im5i.com/2023/02/03/nq4BU.png" alt="gdal-part-1"></p>
+<p><img src="https://c2.im5i.com/2023/02/03/nqzb5.png" alt="gdal-part-2"></p>
+<h1 id="3、grass"><a href="#3、grass" class="headerlink" title="3、grass"></a>3、grass</h1><p><img src="https://c2.im5i.com/2023/02/03/nq0m6.png" alt="grass"></p>
+<p>下载后，也可以基于此方案对QGIS进行编译，形成自己的二次开发包，或对QGIS进行深入的学习研究。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/QGIS/" rel="tag">QGIS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BE%9D%E8%B5%96%E9%85%8D%E7%BD%AE/" rel="tag">依赖配置</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-QGIS二次开发：QGIS3-0-2编译"
   class="article article-type-post"
   itemscope

@@ -154,6 +154,419 @@
     
     
     <article
+  id="post-Vue使用RegExp"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/08/28/Vue%E4%BD%BF%E7%94%A8RegExp/"
+    >Vue使用RegExp</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/08/28/Vue%E4%BD%BF%E7%94%A8RegExp/" class="article-date">
+  <time datetime="2023-08-28T07:44:55.000Z" itemprop="datePublished">2023-08-28</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>vue 把字符串的所有=替换成&amp;&amp;&amp;的方法</p>
+<pre><code>//把字符串中所有=换成&amp;&amp;&amp;
+let reg=new RegExp(&#39;=&#39;,&#39;g&#39;)//g代表全部
+let newMsg=JSON.stringify(msg).replace(reg,&#39;&amp;&amp;&amp;&#39;);
+console.log(newMsg)
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-CSS样式的书写顺序及规范"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/08/27/CSS%E6%A0%B7%E5%BC%8F%E7%9A%84%E4%B9%A6%E5%86%99%E9%A1%BA%E5%BA%8F%E5%8F%8A%E8%A7%84%E8%8C%83/"
+    >CSS样式的书写顺序及规范</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/08/27/CSS%E6%A0%B7%E5%BC%8F%E7%9A%84%E4%B9%A6%E5%86%99%E9%A1%BA%E5%BA%8F%E5%8F%8A%E8%A7%84%E8%8C%83/" class="article-date">
+  <time datetime="2023-08-27T06:09:36.000Z" itemprop="datePublished">2023-08-27</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="CSS样式的书写顺序及规范"><a href="#CSS样式的书写顺序及规范" class="headerlink" title="CSS样式的书写顺序及规范"></a>CSS样式的书写顺序及规范</h1><p>CSS样式属性有很多，开发过程中书写顺序对于浏览器渲染其实至关重要。规范化编码有利于程序的后期维护，并且别人也容易理解其中意思。</p>
+<h1 id="书写顺序"><a href="#书写顺序" class="headerlink" title="书写顺序"></a>书写顺序</h1><h2 id="布局定位属性"><a href="#布局定位属性" class="headerlink" title="布局定位属性"></a>布局定位属性</h2><p>display    置元素是否被视为块或者内联元素以及用于子元素的布局，例如流式布局、网格布局或弹性布局。<br>visibility    指定一个元素是否是可见的。<br>list-style    在一个声明中设置所有的列表属性。<br>list-style-type    设置列表项标记的类型。<br>list-style-position    指示如何相对于对象的内容绘制列表项标记。<br>list-style-image    使用图像来替换列表项的标记。<br>position    指定一个元素（静态的，相对的，绝对或固定）的定位方法的类型。<br>top    定义了一个定位元素的上外边距边界与其包含块上边界之间的偏移。<br>right    定义了定位元素右外边距边界与其包含块右边界之间的偏移。<br>bottom    定义了定位元素下外边距边界与其包含块下边界之间的偏移。<br>left    定义了定位元素左外边距边界与其包含块左边界之间的偏移。<br>z-index    指定一个元素的堆叠顺序。<br>clear    指定段落的左侧或右侧不允许浮动的元素。<br>float    指定一个盒子（元素）是否应该浮动。</p>
+<h2 id="自身属性"><a href="#自身属性" class="headerlink" title="自身属性"></a>自身属性</h2><p>width    设置元素的宽度。<br>max-width    设置元素的最大宽度。<br>min-width    设置元素的最小宽度。<br>height    设置元素的高度。<br>max-height    设置元素的最大高度。<br>min-height    设置元素的最低高度。<br>overflow    指定如果内容溢出一个元素的框，会发生什么。<br>clip    定义及使用说明如果图像大于包含它的元素,会发生什么?<br>margin    一个声明中设置所有外边距属性。<br>margin-top    设置元素的上部边距。<br>margin-right    设置元素的右边距。<br>margin-bottom    设置元素的下边距。<br>margin-left    设置元素的左边距。<br>padding    在一个声明中设置所有填充属性。<br>padding-top    设置一个元素的顶部填充（空格）。<br>padding-right    设置一个元素的右填充（空格）。<br>padding-bottom    设置一个元素的底部填充（空格）。<br>padding-left    设置一个元素的左填充（空格）。<br>outline    在一个声明中设置所有的轮廓属性。<br>outline-color    指定轮廓颜色。<br>outline-style    指定outline的样式。<br>outline-width    指定轮廓的宽度。<br>border    用于指定元素边框的样式、宽度和颜色。<br>background    在一个声明中设置所有的背景属性。<br>background-color    指定要使用的背景颜色。<br>background-image    指定要使用的一个或多个背景图像。<br>background-repeat    指定如何重复背景图像。<br>background-attachment    设置背景图像是否固定或者随着页面的其余部分滚动。<br>background-position    指定背景图像的位置。</p>
+<h2 id="文本属性"><a href="#文本属性" class="headerlink" title="文本属性"></a>文本属性</h2><p>color    指定文本的颜色。<br>font    在一个声明中设置所有字体属性。<br>font-style    规定字体样式<br>font-variant    规定字体异体。<br>font-weight    规定字体粗细。<br>font-size    规定字体尺寸。<br>line-height    规定字体行高。<br>font-family    规定字体系列。<br>caption    定义被标题控件（比如按钮、下拉列表等）使用的字体。<br>icon    定义被图标标记使用的字体。<br>menu    定义被下拉列表使用的字体。<br>message-box    定义被对话框使用的字体。<br>small-caption    caption 字体的小型版本。<br>status-bar    定义被窗口状态栏使用的字体。<br>text-overflow    指定当文本溢出包含它的元素时，应该如何显示。<br>text-align    指定元素文本的水平对齐方式。<br>text-indent    规定文本块中首行文本的缩进。<br>white-space    指定元素内的空白怎样处理。<br>vertical-align    设置一个元素的垂直对齐方式。</p>
+<h2 id="其他属性"><a href="#其他属性" class="headerlink" title="其他属性"></a>其他属性</h2><p>cursor    设置鼠标指针(光标)在元素上面时的显示样式<br>animation    通过关键帧@keyframes来实现更为复杂的动画效果。<br>transition    设置元素当过渡效果，</p>
+<h1 id="CSS3浏览器私有前缀写法"><a href="#CSS3浏览器私有前缀写法" class="headerlink" title="CSS3浏览器私有前缀写法"></a>CSS3浏览器私有前缀写法</h1><p>CSS3 浏览器私有前缀在前，标准前缀在后</p>
+<pre><code>-webkit-border-radius: 10px;
+-moz-border-radius: 10px;
+-o-border-radius: 10px;
+-ms-border-radius: 10px;
+border-radius: 10px;
+</code></pre>
+<h1 id="浏览器的渲染流程"><a href="#浏览器的渲染流程" class="headerlink" title="浏览器的渲染流程"></a>浏览器的渲染流程</h1><p>1、解析html构建dom树，解析css构建css树：将html解析成树形的数据结构，将css解析成树形的数据结构布局<br>2、构建render树：DOM树和CSS树合并以后造成的render树。<br>3、布局render树：有了render树，浏览器已经知道那些网页中有哪些节点，各个节点的css定义和以及它们的从属关系，从而计算出每一个节点在屏幕中的位置。<br>4、绘制render树：按照计算出来的规则，经过显卡把内容画在屏幕上。</p>
+<p>css样式解析到显示至浏览器屏幕上就发生在②③④步骤，可见浏览器并非一获取到css样式就立马开始解析而是根据css样式的书写顺序将之按照dom树的结构分布render样式，完成第②步，而后开始遍历每一个树结点的css样式进行解析，此时的css样式的遍历顺序彻底是按照以前的书写顺序。在解析过程当中，一旦浏览器发现某个元素的定位变化影响布局，则须要倒回去从新渲染.</p>
+<ul>
+<li><p>例如<br>按照这样的书写书序：</p>
+<p> width: 100px;<br> height: 100px;<br> background-color: red;<br> position: absolute;</p>
+</li>
+</ul>
+<p>当浏览器解析到position的时候忽然发现该元素是绝对定位元素须要脱离文档流，而以前倒是按照普通元素进行解析的，因此不得不从新渲染，解除该元素在文档中所占位置，然而因为该元素的占位发生变化，其余元素也可能会受到它回流的影响而从新排位。最终致使③步骤花费的时间过久而影响到④步骤的显示，影响了用户体验。</p>
+<p>因此规范的的css书写顺序对于文档渲染来讲必定是事半功倍的！</p>
+<h1 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h1><p>回流必将引起重绘, 重绘不一定引起回流。</p>
+<ul>
+<li>reflow（回流）:<br>会引起元素位置变化的就会reflow(回流),窗口大小改变、字体大小改变、以及元素位置改变，都会引起周围的元素改变他们以前的位置。</li>
+</ul>
+<p>*repaint（重绘）：<br>改变某个元素的背景色、文字颜色、边框颜色等等不影响它周围或内部布局的属性时，屏幕的一部分要重画，可是元素的几何尺寸没有变。</p>
+<h1 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h1><p>a.render树的结构不等同于DOM树的结构，一些设置display:none的节点不会被放在render树中，但会在dom树中。</p>
+<p>b.有些状况，好比修改了元素的样式，浏览器并不会理科reflow或repaint，而是把这些操做积攒一批，而后作一次reflow，这也叫作异步reflow.但在有些状况下，好比改变窗口，改变页面默认的字体等，对于这些状况，浏览器会立刻进行reflow.</p>
+<p>c.为了更好的用户体验，渲染引擎将会尽量早的将内容呈现到屏幕上，并不会等到全部的html都解析完成以后再去构建和布局render树。它是解析完一部份内容就显示一部份内容，同时，可能还在经过网络下载其他内容。</p>
+<h1 id="布局流程"><a href="#布局流程" class="headerlink" title="布局流程"></a>布局流程</h1><p>必须确定页面的版心(可视区),我们测量可知<br>分析页面中的行模块,以及每个行模块中的列模块,其实页面布局就是一行行罗列而成<br>制作html结构,我们还是遵循,现有结构后有样式的原则,结构永远最重要<br>然后开始运用盒子模型的原理,通过div+css布局来控制网页的各个模块</p>
+<h1 id="顺序书写的优点"><a href="#顺序书写的优点" class="headerlink" title="顺序书写的优点"></a>顺序书写的优点</h1><p>正确的样式顺序有利于查看维护。<br>减小浏览器reflow（回流）与repaint（重绘），提高浏览器渲染dom的性能<br>利于网页加载代码，加快代码加载顺序。<br>正确的样式顺序也是css样式优化的一种方式。</p>
+<h1 id="命名规范"><a href="#命名规范" class="headerlink" title="命名规范"></a>命名规范</h1><h2 id="css文件命名规范"><a href="#css文件命名规范" class="headerlink" title="css文件命名规范"></a>css文件命名规范</h2><p>文件名    说明<br>reset.css    重置样式，重置元素默认样式<br>global.css    全局样式，全站公用，定义页面基础样式<br>themes.css    主题样式，用于实现换肤功能<br>module.css    模块样式，用于模块的样式<br>print.css    打印样式，用于打印的样式<br>master.css    主要样式<br>themes.css    主体样式<br>font.css    文字样式<br>layout.css    布局样式<br>columns.css    专栏<br>forms.css    表单<br>mend.css    补丁样式</p>
+<h2 id="id和class命名"><a href="#id和class命名" class="headerlink" title="id和class命名"></a>id和class命名</h2><p>骆驼峰命名法，例如topMain、 subLeftMenu。<br>中划线命名法，例如top-main、sub-left-menu。<br>下划线命名法，例如top_ main、sub_ Jeft_ menu。</p>
+<h2 id="id和class命名规范"><a href="#id和class命名规范" class="headerlink" title="id和class命名规范"></a>id和class命名规范</h2><p>网页部分    命名<br>最外层    wrapper<br>头部    header<br>容器    container<br>内容    content<br>导航条    nav<br>主导航    mainnav<br>子导航    subnav<br>顶导航    topnav<br>边导航、侧栏    sidebar<br>左导航    leftsidebar<br>右导航    rightsidebar<br>主体    main<br>左侧    main-left<br>右侧    main-right<br>底部    footer<br>左    left<br>中    right<br>右    center<br>栏目    column<br>菜单    menu<br>子菜单    submenu<br>登录条    loginbar<br>登录    login<br>注册    register<br>标志    logo<br>功能区    shop<br>按钮    btn<br>当前的    current<br>图标    icon<br>注释    note<br>搜索    search<br>滚动    scroll<br>标签    tags<br>标籤页    tab<br>状态    status<br>提示信息    msg<br>小技巧    tips<br>栏目标题    title<br>摘要    summary<br>下载    download<br>链接    link<br>友情链接    friendlink<br>加入我们    joinus<br>版权    copyright<br>服务    service<br>新闻    news<br>文章列表    list<br>广告    banner<br>热点    hot<br>加入    joinus<br>指南    guide<br>投票    vote<br>合作伙伴    partner</p>
+<h2 id="规范命名的优点"><a href="#规范命名的优点" class="headerlink" title="规范命名的优点"></a>规范命名的优点</h2><p>把样式文件划分为多个文件，按照功能模块划分CSS文件，是为了方便在开发阶段进行开发和修改。<br>好的元素id和class的命名，方便阅读、方便维护。</p>
+<h2 id="CSS书写规范"><a href="#CSS书写规范" class="headerlink" title="CSS书写规范"></a>CSS书写规范</h2><p>*使用CSS缩写属性</p>
+<p>CSS有些属性是可以缩写的，比如padding,margin,font等等，这样精简代码同时又能提高用户的阅读体验。</p>
+<p>*不要随意使用id</p>
+<p>id在JS是唯一的，不能多次使用，而使用class类选择器却可以重复使用，另外id的优先级优先与class，所以id应该按需使用，而不能滥用。</p>
+<p>*为选择器添加状态前缀</p>
+<p>有时候可以给选择器添加一个表示状态的前缀，让语义更明了。<br>为了避免class命名的重复，命名时- -般取父元素的class名作为前缀，例如:</p>
+<pre><code>&lt;div class=&quot;column&quot;&gt;
+  &lt;h3 class=&quot;column-title&quot;&gt;&lt;/h3&gt;
+  &lt;div class=&quot;column-content&quot;&gt;&lt;/div&gt;.
+&lt;/div&gt;
+</code></pre>
+<h2 id="id和class命名统一规范"><a href="#id和class命名统一规范" class="headerlink" title="id和class命名统一规范"></a>id和class命名统一规范</h2><p>id和class命名一律小写，尽量用英文，尽量不缩写，除非一看就明白的单词。<br>尽量不要出现一个用中划线命名，而另外一个用下划线命名的情况。虽然下划线和中划线都可以，但是建议使用中划线，可参见各大型网站。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>为了长远发展考虑，建议大家应该重视这些编码习惯。当然，本文所述内容并不完全是绝对正确的指导，但学会了这些内容，你就学会了最基本的CSS编码规范。可参考本文内容，结合您自己的部分编码习惯，编写适合您的优秀、规范代码。<br>————————————————<br>版权声明：本文为CSDN博主「song-yl」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_42367460/article/details/131042969">https://blog.csdn.net/weixin_42367460/article/details/131042969</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/css/" rel="tag">css</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-一份 CSS 书写顺序、命名规则的指南"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/08/26/%E4%B8%80%E4%BB%BD%20CSS%20%E4%B9%A6%E5%86%99%E9%A1%BA%E5%BA%8F%E3%80%81%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99%E7%9A%84%E6%8C%87%E5%8D%97/"
+    >一份 CSS 书写顺序、命名规则的指南</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/08/26/%E4%B8%80%E4%BB%BD%20CSS%20%E4%B9%A6%E5%86%99%E9%A1%BA%E5%BA%8F%E3%80%81%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99%E7%9A%84%E6%8C%87%E5%8D%97/" class="article-date">
+  <time datetime="2023-08-26T11:50:47.000Z" itemprop="datePublished">2023-08-26</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>这里总结了一些国外一些文章以及我的个人经验总结出来，我想对写CSS的前端用户来说是值得学习的。</p>
+<h1 id="CSS-书写顺序"><a href="#CSS-书写顺序" class="headerlink" title="CSS 书写顺序"></a>CSS 书写顺序</h1><p>位置属性 position、top、right、z-index、display、float 等<br>大小 width、height、padding、margin)<br>文字系列 font、line-height、letter-spacing、color-text-align 等<br>背景 background、border 等<br>其他 animation、transition 等</p>
+<p>不推荐</p>
+<pre><code>.example &#123;
+    color: red;
+    z-index: -1;
+    background-color: #9e0;
+    display: inline-block;
+    font-size: 1.5em;
+&#125;
+</code></pre>
+<p>推荐</p>
+<pre><code>.example &#123;
+    z-index: -1;
+    display: inline-block;
+    font-size: 1.5em;
+    color: red;
+    background-color: #9e0;
+&#125;
+</code></pre>
+<h1 id="CSS-书写规范"><a href="#CSS-书写规范" class="headerlink" title="CSS 书写规范"></a>CSS 书写规范</h1><h2 id="使用-CSS-缩写属性"><a href="#使用-CSS-缩写属性" class="headerlink" title="使用 CSS 缩写属性"></a>使用 CSS 缩写属性</h2><p>CSS 有些属性是可以缩写的，比如 padding、margin、font 等等，这样精简代码同时又能提高用户的阅读体验。</p>
+<p>不推荐</p>
+<pre><code>.list-box &#123;
+    border-top-style: none;
+    font-family: serif;
+    font-size: 100%;
+    line-height: 1.6;
+    padding-bottom: 2em;
+    padding-left: lem;
+    padding-right: lem;
+    padding-top: 0;
+&#125;
+</code></pre>
+<p>推荐</p>
+<pre><code>.list-box &#123;
+    border-top: 0;
+    font: 100%/1.6 serif;
+    padding: 0 lem 2em;
+&#125;
+</code></pre>
+<h2 id="去掉小数点前的-0"><a href="#去掉小数点前的-0" class="headerlink" title="去掉小数点前的 0"></a>去掉小数点前的 0</h2><p>不推荐</p>
+<pre><code>font-size: 0.8em;
+</code></pre>
+<p>推荐</p>
+<pre><code>font-size: .8em;
+</code></pre>
+<h2 id="简写命名"><a href="#简写命名" class="headerlink" title="简写命名"></a>简写命名</h2><p>很多用户都喜欢简写类名，但前提是要让人看懂你的命名才能简写哦！</p>
+<p>不推荐</p>
+<pre><code>#navigation &#123;
+    margin: 0 0 lem 2em;
+&#125;
+.atr &#123;
+    color: #93c;
+&#125;
+</code></pre>
+<p>推荐</p>
+<pre><code>#nav &#123;
+    margin: 0 0 lem 2em;
+&#125;
+.author &#123;
+    color: #93c;
+&#125;
+</code></pre>
+<h2 id="16-进制颜色代码缩写"><a href="#16-进制颜色代码缩写" class="headerlink" title="16 进制颜色代码缩写"></a>16 进制颜色代码缩写</h2><p>有些颜色代码是可以缩写的，我们就尽量缩写吧，提高用户体验为主。</p>
+<p>不推荐</p>
+<pre><code>color: #eebbcc;
+</code></pre>
+<p>推荐</p>
+<pre><code>color: #ebc;
+</code></pre>
+<h2 id="连字符-CSS-选择器命名规范"><a href="#连字符-CSS-选择器命名规范" class="headerlink" title="连字符 CSS 选择器命名规范"></a>连字符 CSS 选择器命名规范</h2><p>长名称或词组可以使用中横线来为选择器命名。<br>不建议使用 _ 下划线来命名 CSS 选择器，为什么呢？<br>*输入的时候少按一个 shift 键；<br>*浏览器兼容问题 （比如使用 _tips 的选择器命名，在 IE6 是无效的）<br>*能良好区分 JavaScript 变量命名（JS 变量命名是用 _）</p>
+<p>这里有一篇破折号与下划线的详细讨论，<br>英文：点击查看<br>中文：点击查看</p>
+<h2 id="不要随意使用-Id"><a href="#不要随意使用-Id" class="headerlink" title="不要随意使用 Id"></a>不要随意使用 Id</h2><p>id 在 JS 是唯一的，不能多次使用，而使用 class 类选择器却可以重复使用，另外 id 的优先级优先与 class，所以 id 应该按需使用，而不能滥用。</p>
+<p>不推荐</p>
+<pre><code>#info-title &#123;
+    font-size: 8em;
+&#125;
+</code></pre>
+<p>推荐</p>
+<pre><code>.info-title &#123;
+    font-size: 8em;
+&#125;
+</code></pre>
+<h2 id="为选择器添加状态前缀"><a href="#为选择器添加状态前缀" class="headerlink" title="为选择器添加状态前缀"></a>为选择器添加状态前缀</h2><p>有时候可以给选择器添加一个表示状态的前缀，让语义更明了，比如下图是添加了 .is- 前缀。</p>
+<p>不推荐</p>
+<pre><code>#withdrawal &#123;
+    background-color: #ccc;
+&#125;
+</code></pre>
+<p>推荐</p>
+<pre><code>.is-withdrawal &#123;
+    background-color: #ccc;
+&#125;
+</code></pre>
+<h1 id="CSS-命名规范（规则）"><a href="#CSS-命名规范（规则）" class="headerlink" title="CSS 命名规范（规则）"></a>CSS 命名规范（规则）</h1><h2 id="常用的-CSS-命名规则"><a href="#常用的-CSS-命名规则" class="headerlink" title="常用的 CSS 命名规则"></a>常用的 CSS 命名规则</h2><pre><code>头：header
+内容：content/container
+尾：footer
+导航：nav
+侧栏：sidebar
+栏目：column
+页面外围控制整体佈局宽度：wrapper
+左右中：left right center
+登录条：loginbar
+标志：logo
+广告：banner
+页面主体：main
+热点：hot
+新闻：news
+下载：download
+子导航：subnav
+菜单：menu
+子菜单：submenu
+搜索：search
+友情链接：friendlink
+页脚：footer
+版权：copyright
+滚动：scroll
+内容：content
+标签：tags
+文章列表：list
+提示信息：msg
+小技巧：tips
+栏目标题：title
+加入：joinus
+指南：guide
+服务：service
+注册：regsiter
+状态：status
+投票：vote
+合作伙伴：partner
+</code></pre>
+<h2 id="注释的写法"><a href="#注释的写法" class="headerlink" title="注释的写法"></a>注释的写法</h2><pre><code>/* Header */
+内容区
+/* End Header */
+</code></pre>
+<h2 id="Id-的命名"><a href="#Id-的命名" class="headerlink" title="Id 的命名"></a>Id 的命名</h2><h3 id="1-页面结构"><a href="#1-页面结构" class="headerlink" title="(1)页面结构"></a>(1)页面结构</h3><pre><code>容器: container
+页头：header
+内容：content/container
+页面主体：main
+页尾：footer
+导航：nav
+侧栏：sidebar
+栏目：column
+页面外围控制整体佈局宽度：wrapper
+左右中：left right center
+</code></pre>
+<h3 id="2-导航"><a href="#2-导航" class="headerlink" title="(2)导航"></a>(2)导航</h3><pre><code>导航：nav
+主导航：mainnav
+子导航：subnav
+顶导航：topnav
+边导航：sidebar
+左导航：leftsidebar
+右导航：rightsidebar
+菜单：menu
+子菜单：submenu
+标题: title
+摘要: summary
+</code></pre>
+<h3 id="3-功能"><a href="#3-功能" class="headerlink" title="(3)功能"></a>(3)功能</h3><pre><code>标志：logo
+广告：banner
+登陆：login
+登录条：loginbar
+注册：register
+搜索：search
+功能区：shop
+标题：title
+加入：joinus
+状态：status
+按钮：btn
+滚动：scroll
+标籤页：tab
+文章列表：list
+提示信息：msg
+当前的: current
+小技巧：tips
+图标: icon
+注释：note
+指南：guild
+服务：service
+热点：hot
+新闻：news
+下载：download
+投票：vote
+合作伙伴：partner
+友情链接：link
+版权：copyright
+</code></pre>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><pre><code>1.一律小写
+2.尽量用英文
+3.不加中槓和下划线
+4.尽量不缩写，除非一看就明白的单词
+</code></pre>
+<h3 id="CSS-样式表文件命名"><a href="#CSS-样式表文件命名" class="headerlink" title="CSS 样式表文件命名"></a>CSS 样式表文件命名</h3><pre><code>主要的 master.css
+模块 module.css
+基本共用 base.css
+布局、版面 layout.css
+主题 themes.css
+专栏 columns.css
+文字 font.css
+表单 forms.css
+补丁 mend.css
+打印 print.css
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/css/" rel="tag">css</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-flask实用入门案例08"
   class="article article-type-post"
   itemscope
@@ -454,518 +867,6 @@ with open(&#39;user.json&#39;, &#39;w&#39;, encoding=&#39;utf-8&#39;) as f:
  
 </code></pre>
 <p>————————————————<br>版权声明：本文为CSDN博主「qfCSDN」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qfCSDN/article/details/120505846">https://blog.csdn.net/qfCSDN/article/details/120505846</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Vue中Vue.prototype使用详解"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/08/22/Vue%E4%B8%ADVue.prototype%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/"
-    >Vue中Vue.prototype使用详解</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/08/22/Vue%E4%B8%ADVue.prototype%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/" class="article-date">
-  <time datetime="2023-08-22T12:25:10.000Z" itemprop="datePublished">2023-08-22</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>我们可能会在很多组件里用到数据/实用工具，但是不想污染全局作用域。这种情况下，可以通过在原型上定义它们使其在每个 Vue 的实例中可用。</p>
-<h1 id="1-基本示例"><a href="#1-基本示例" class="headerlink" title="1. 基本示例"></a>1. 基本示例</h1><p>在main.js中添加一个变量到 Vue.prototype</p>
-<pre><code>Vue.prototype.$appName = &#39;My App&#39;
-</code></pre>
-<p>这样 $appName 就在所有的 Vue 实例中可用了，甚至在实例被创建之前就可以</p>
-<pre><code>new Vue(&#123;
-  beforeCreate: function () &#123;
-    console.log(this.$appName)
-  &#125;
-&#125;)
-</code></pre>
-<p>控制台会打印出 My App，就这么简单！</p>
-<h1 id="2-为实例prototype设置作用域"><a href="#2-为实例prototype设置作用域" class="headerlink" title="2. 为实例prototype设置作用域"></a>2. 为实例prototype设置作用域</h1><p>为什么 appName 要以$开头？这很重要吗？这里没有什么魔法。<br>$是在 Vue 所有实例中都可用的 property 的一个简单约定。这样做会避免和已被定义的数据、方法、计算属性产生冲突。<br>如果我们设置：</p>
-<pre><code>Vue.prototype.appName = &#39;My App&#39;
-</code></pre>
-<p>那么如下的代码输出什么：</p>
-<pre><code>new Vue(&#123;
-  data: &#123;
-    // 啊哦，`appName` 也是一个我们定义的实例 property 名！
-    appName: &#39;The name of some other app&#39;
-  &#125;,
-  beforeCreate: function () &#123;
-    console.log(this.appName)
-  &#125;,
-  created: function () &#123;
-    console.log(this.appName)
-  &#125;
-&#125;)
-</code></pre>
-<p>日志中会先出现 “My App”，然后出现 “The name of some other app”，因为 this.appName 在实例被创建之后被 data 覆写了。我们通过 为实例property设置作用域来避免这种事情发生。你还可以根据你的喜好使用自己的约定，诸如为实例 property 设置作用域来避免这种事情发生。 </p>
-<p>你还可以根据你的喜好使用自己的约定，诸如为实例property设置作用域来避免这种事情发生。你还可以根据你的喜好使用自己的约定，诸如_appName 或 ΩappName，来避免和插件或未来的插件相冲突。</p>
-<h1 id="3-注册和使用全局变量"><a href="#3-注册和使用全局变量" class="headerlink" title="3. 注册和使用全局变量"></a>3. 注册和使用全局变量</h1><p>每个组件都是一个vue实例，Vue.prototype加一个变量，只是给每个组件加了一个属性，这个属性的值并不具有全局性。<br>比如以下例子：</p>
-<pre><code>// main.js
-import Vue from &#39;vue&#39;
-import App from &#39;./App&#39;
-import router from &#39;./router&#39;
-import store from &#39;./store&#39;
- 
-Vue.config.productionTip = false
-Vue.prototype.$appName = &#39;main&#39;
- 
-new Vue(&#123;
-    el: &#39;#app&#39;,
-    store,
-    router,
-    components: &#123; App &#125;,
-    template: &#39;&lt;App/&gt;&#39;,
-&#125;)
- 
-// 给所有组件注册了一个属性 $appName，赋予初始值 &#39;main&#39; ，所有组件都可以用 this.$appName 访问此变量;
-// 如果组件中没有赋值，初始值都是&#39;main&#39;
-
-// home.vue
-&lt;template&gt;
-  &lt;div&gt;
-    &lt;div @click=&quot;changeName&quot;&gt;change name&lt;/div&gt;
-    &lt;div @click=&quot;gotoTest2&quot;&gt;goto test2&lt;/div&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-export default &#123;
-  methods:&#123;
-    changeName()&#123;
-      this.$appName = &quot;test1&quot;
-    &#125;,
-    gotoTest2()&#123;
-      this.$router.push(&#39;/about&#39;)
-    &#125; 
-  &#125;
-&#125;
-&lt;/script&gt;
-
-// about.vue
-&lt;template&gt;
-  &lt;div&gt;
-    &lt;div&gt;&#123;&#123;this.$appName&#125;&#125; in test2&lt;/div&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-</code></pre>
-<p>点击 home 中的 change name 再跳转about，about里面还是显示 main in test2<br>如果要实现全局变量的功能，需要把属性变为引用类型</p>
-<pre><code>Vue.prototype.$appName = &#123; name: &#39;main&#39; &#125;
-</code></pre>
-<p>后面使用 this.$appName.name 改变和引用相应的值<br>这进入 about 后显示 test1 in test2</p>
-<h1 id="4-原型方法的上下文"><a href="#4-原型方法的上下文" class="headerlink" title="4. 原型方法的上下文"></a>4. 原型方法的上下文</h1><p>在 JavaScript 中一个原型的方法会获得该实例的上下文,也就是说可以使用 this 访问：数据、计算属性、方法或其它任何定义在实例上的东西。<br>让我们将其用在一个名为 $reverseText 的方法上：</p>
-<pre><code>// main.js
-Vue.prototype.$reverseText = function (propertyName) &#123;
-  this[propertyName] = this[propertyName]
-    .split(&#39;&#39;)
-    .reverse()
-    .join(&#39;&#39;)
-&#125;
-
-// 相应组件
-&lt;script&gt;
-export default &#123;
-  data() &#123;
-    return&#123;
-      message: &#39;Hello&#39;
-    &#125;
-  &#125;,
-  created() &#123;
-    console.log(this.message) // =&gt; &quot;Hello&quot;
-    this.$reverseText(&#39;message&#39;)
-    console.log(this.message) // =&gt; &quot;olleH&quot;
-  &#125;
-&#125;
-&lt;/script&gt;
-</code></pre>
-<h1 id="5-应用示例"><a href="#5-应用示例" class="headerlink" title="5. 应用示例"></a>5. 应用示例</h1><h2 id="5-1-引入-axios"><a href="#5-1-引入-axios" class="headerlink" title="5.1 引入 axios"></a>5.1 引入 axios</h2><p>安装</p>
-<pre><code>npm install vue-axios --save
-npm install qs.js --save//它的作用是能把json格式的直接转成data所需的格式
-</code></pre>
-<p>代码</p>
-<pre><code>// mian.js
-import Vue from &#39;vue&#39;
-import axios from &#39;axios&#39;
-import qs from &#39;qs&#39;
- 
-Vue.prototype.$axios = axios    //全局注册，使用方法为:this.$axios
-Vue.prototype.qs = qs           //全局注册，使用方法为:this.qs
- 
-// 相应组件
-&lt;script&gt;
-  export default&#123;
-    data()&#123;
-      return&#123;
-        userId:666,
-        token:&#39;&#39;,
-      &#125;
-    &#125;,
-    created()&#123;
-      this.$axios(&#123;
-        method:&#39;post&#39;,
-        url:&#39;api&#39;,
-        data:this.qs.stringify(&#123;    //这里是发送给后台的数据
-          userId:this.userId,
-          token:this.token,
-        &#125;)
-      &#125;).then((response) =&gt;&#123;          //这里使用了ES6的语法
-        console.log(response)       //请求成功返回的数据
-      &#125;).catch((error) =&gt;&#123;
-        console.log(error)       //请求失败返回的数据
-      &#125;)
-    &#125;
-  &#125;
-&lt;/script&gt;
-</code></pre>
-<h1 id="6、Vue-prototype、Vue-component和Vue-use区别"><a href="#6、Vue-prototype、Vue-component和Vue-use区别" class="headerlink" title="6、Vue.prototype、Vue.component和Vue.use区别"></a>6、Vue.prototype、Vue.component和Vue.use区别</h1><h2 id="1、Vue-prototype"><a href="#1、Vue-prototype" class="headerlink" title="1、Vue.prototype"></a>1、Vue.prototype</h2><p>在多个地方都需要使用但不想污染全局作用域的情况下，这样定义，在每个 Vue 实例中都可用。<br>参考：<a target="_blank" rel="noopener" href="https://cn.vuejs.org/v2/cookbook/adding-instance-properties.html">https://cn.vuejs.org/v2/cookbook/adding-instance-properties.html</a><br>$ 表示这是一个在 Vue 所有实例中都可用的属性<br>常用于方法、变量等</p>
-<pre><code>import echarts from &#39;echarts&#39;
-Vue.prototype.$echarts = echarts 
-</code></pre>
-<h2 id="2、vue-component"><a href="#2、vue-component" class="headerlink" title="2、vue.component"></a>2、vue.component</h2><p>全局注册组件，<br>第一个参数是调用组件时写的组件名<br>第二个参数是引入组件时写的名称<br>可用于注册自定义组件</p>
-<pre><code>import myLoading from &#39;base/loading&#39;
-Vue.component(&#39;myLoading&#39;,myLoading);
-</code></pre>
-<h2 id="3、Vue-use"><a href="#3、Vue-use" class="headerlink" title="3、Vue.use"></a>3、Vue.use</h2><p>同样是全局注册，和component的区别是接收的参数必须有install方法<br>常用于注册第三方插件</p>
-<pre><code>import ElementUI from &#39;element-ui&#39;;
-Vue.use(ElementUI);
-</code></pre>
-<p>到此这篇关于Vue中 Vue.prototype使用详解的文章就介绍到这了</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Flex 布局教程"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/08/21/Flex%20%E5%B8%83%E5%B1%80%E6%95%99%E7%A8%8B/"
-    >Flex 布局教程</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/08/21/Flex%20%E5%B8%83%E5%B1%80%E6%95%99%E7%A8%8B/" class="article-date">
-  <time datetime="2023-08-21T11:47:36.000Z" itemprop="datePublished">2023-08-21</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="什么是弹性布局？"><a href="#什么是弹性布局？" class="headerlink" title="什么是弹性布局？"></a>什么是弹性布局？</h1><p>弹性布局（Flex布局）是一种现代的CSS布局方式，通过使用display: flex属性来创建一个弹性容器，并在其中使用灵活的盒子模型来进行元素的排列和定位。</p>
-<h1 id="弹性布局的特点？"><a href="#弹性布局的特点？" class="headerlink" title="弹性布局的特点？"></a>弹性布局的特点？</h1><p>弹性布局具有以下特点：</p>
-<p>*主轴与交叉轴：<br>弹性容器具有主轴（main axis）和交叉轴（cross axis）。默认情况下，主轴是水平方向，交叉轴是垂直方向。</p>
-<p>*弹性容器：<br>通过将父元素的display属性设置为flex或inline-flex来创建弹性容器。</p>
-<p>*子元素的弹性项目：<br>弹性容器中的每个子元素都成为弹性项目。子元素可以指定各自在主轴和交叉轴上的大小、顺序以及对齐方式等。</p>
-<p>*主轴对齐：<br>弹性项目可以在主轴上按照一定比例分配空间，也可以使用justify-content属性定义主轴的对齐方式。</p>
-<p>*交叉轴对齐：<br>弹性项目可以在交叉轴上进行对齐，包括顶部对齐、底部对齐、居中对齐等，使用align-items属性定义交叉轴对齐方式。</p>
-<p>*换行与自动调整：<br>可控制弹性项目是否换行，并且具备自动调整元素大小的能力。<br>弹性布局简化了网页布局的开发过程，提供了更灵活、响应式的布局方式。它适用于各种屏幕尺寸和设备类型，并能够快速适应不同的布局需求。</p>
-<h1 id="容器的属性"><a href="#容器的属性" class="headerlink" title="容器的属性"></a>容器的属性</h1><h2 id="justify-content"><a href="#justify-content" class="headerlink" title="justify-content"></a>justify-content</h2><p>justify-content属性定义了项目在主轴上的对齐方式。</p>
-<pre><code>.box &#123;
-  justify-content: flex-start | flex-end | center | space-between | space-around;
-&#125;
-</code></pre>
-<p>它可能取5个值，具体对齐方式与轴的方向有关。下面假设主轴为从左到右。</p>
-<pre><code>flex-start（默认值）：左对齐
-flex-end：右对齐
-center： 居中
-space-between：两端对齐，项目之间的间隔都相等。
-space-around：每个项目两侧的间隔相等。所以，项目之间的间隔比项目与边框的间隔大一倍。
-</code></pre>
-<h2 id="align-items"><a href="#align-items" class="headerlink" title="align-items"></a>align-items</h2><p>align-items属性定义项目在交叉轴上如何对齐。</p>
-<pre><code>.box &#123;
-  align-items: flex-start | flex-end | center | baseline | stretch;
-&#125;
-</code></pre>
-<p>它可能取5个值。具体的对齐方式与交叉轴的方向有关，下面假设交叉轴从上到下。</p>
-<pre><code>flex-start：交叉轴的起点对齐。
-flex-end：交叉轴的终点对齐。
-center：交叉轴的中点对齐。
-baseline: 项目的第一行文字的基线对齐。
-stretch（默认值）：如果项目未设置高度或设为auto，将占满整个容器的高度。
-</code></pre>
-<h2 id="flex-direction"><a href="#flex-direction" class="headerlink" title="flex-direction"></a>flex-direction</h2><p>决定主轴的方向，水平或者垂直</p>
-<pre><code>.box &#123;
-  flex-direction: row | row-reverse | column | column-reverse;
-&#125;
-
-row（默认值）：主轴为水平方向，起点在左端。
-row-reverse：主轴为水平方向，起点在右端。
-column：主轴为垂直方向，起点在上沿。
-column-reverse：主轴为垂直方向，起点在下沿。
-</code></pre>
-<h2 id="flex-wrap"><a href="#flex-wrap" class="headerlink" title="flex-wrap"></a>flex-wrap</h2><p>换行不换行以及换行的方向</p>
-<pre><code>.box&#123;
-  flex-wrap: nowrap | wrap | wrap-reverse;
-&#125;
-
-nowrap（默认）：不换行
-wrap：换行，第一行在上方。
-wrap-reverse：换行，第一行在下方。
-</code></pre>
-<h2 id="flex-flow"><a href="#flex-flow" class="headerlink" title="flex-flow"></a>flex-flow</h2><p>以上两种的简写方式</p>
-<pre><code>.box &#123;
-  flex-flow: &lt;flex-direction&gt; || &lt;flex-wrap&gt;;
-&#125;
-</code></pre>
-<h2 id="align-content"><a href="#align-content" class="headerlink" title="align-content"></a>align-content</h2><p>align-content属性定义了多根轴线的对齐方式。如果项目只有一根轴线，该属性不起作用。</p>
-<pre><code>.box &#123;
-  align-content: flex-start | flex-end | center | space-between | space-around | stretch;
-&#125;
-
-flex-start：与交叉轴的起点对齐。
-flex-end：与交叉轴的终点对齐。
-center：与交叉轴的中点对齐。
-space-between：与交叉轴两端对齐，轴线之间的间隔平均分布。
-space-around：每根轴线两侧的间隔都相等。所以，轴线之间的间隔比轴线与边框的间隔大一倍。
-stretch（默认值）：轴线占满整个交叉轴。
-</code></pre>
-<h2 id="order属性"><a href="#order属性" class="headerlink" title="order属性"></a>order属性</h2><p>order属性定义项目的排列顺序。数值越小，排列越靠前，默认为0。</p>
-<pre><code>.item &#123;
-  order: &lt;integer&gt;;
-&#125;
-</code></pre>
-<h2 id="flex-grow属性"><a href="#flex-grow属性" class="headerlink" title="flex-grow属性"></a>flex-grow属性</h2><p>flex-grow属性定义项目的放大比例，默认为0，即如果存在剩余空间，也不放大。</p>
-<pre><code>.item &#123;
-  flex-grow: &lt;number&gt;; /* default 0 */
-&#125;
-</code></pre>
-<p>如果所有项目的flex-grow属性都为1，则它们将等分剩余空间（如果有的话）。如果一个项目的flex-grow属性为2，其他项目都为1，则前者占据的剩余空间将比其他项多一倍。</p>
-<h2 id="flex-shrink属性"><a href="#flex-shrink属性" class="headerlink" title="flex-shrink属性"></a>flex-shrink属性</h2><p>flex-shrink属性定义了项目的缩小比例，默认为1，即如果空间不足，该项目将缩小。</p>
-<pre><code>.item &#123;
-  flex-shrink: &lt;number&gt;; /* default 1 */
-&#125;
-</code></pre>
-<p>如果所有项目的flex-shrink属性都为1，当空间不足时，都将等比例缩小。如果一个项目的flex-shrink属性为0，其他项目都为1，则空间不足时，前者不缩小。</p>
-<p>负值对该属性无效。</p>
-<h2 id="flex-basis属性"><a href="#flex-basis属性" class="headerlink" title="flex-basis属性"></a>flex-basis属性</h2><p>flex-basis属性定义了在分配多余空间之前，项目占据的主轴空间（main size）。浏览器根据这个属性，计算主轴是否有多余空间。它的默认值为auto，即项目的本来大小。</p>
-<pre><code>.item &#123;
-  flex-basis: &lt;length&gt; | auto; /* default auto */
-&#125;
-</code></pre>
-<p>它可以设为跟width或height属性一样的值（比如350px），则项目将占据固定空间。</p>
-<h2 id="flex属性"><a href="#flex属性" class="headerlink" title="flex属性"></a>flex属性</h2><p>flex属性是flex-grow, flex-shrink 和 flex-basis的简写，默认值为0 1 auto。后两个属性可选。</p>
-<pre><code>.item &#123;
-  flex: none | [ &lt;&#39;flex-grow&#39;&gt; &lt;&#39;flex-shrink&#39;&gt;? || &lt;&#39;flex-basis&#39;&gt; ]
-&#125;
-</code></pre>
-<p>该属性有两个快捷值：auto (1 1 auto) 和 none (0 0 auto)。</p>
-<p>建议优先使用这个属性，而不是单独写三个分离的属性，因为浏览器会推算相关值。</p>
-<h2 id="align-self属性"><a href="#align-self属性" class="headerlink" title="align-self属性"></a>align-self属性</h2><p>align-self属性允许单个项目有与其他项目不一样的对齐方式，可覆盖align-items属性。默认值为auto，表示继承父元素的align-items属性，如果没有父元素，则等同于stretch。</p>
-<pre><code>.item &#123;
-  align-self: auto | flex-start | flex-end | center | baseline | stretch;
-&#125;
-</code></pre>
-<p>该属性可能取6个值，除了auto，其他都与align-items属性完全一致。</p>
-<p>————————————————<br>版权声明：本文为CSDN博主「奶糖 肥晨」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_48998573/article/details/131240067">https://blog.csdn.net/weixin_48998573/article/details/131240067</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Vue按钮居中居左居右"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/08/20/Vue%E6%8C%89%E9%92%AE%E5%B1%85%E4%B8%AD%E5%B1%85%E5%B7%A6%E5%B1%85%E5%8F%B3/"
-    >Vue按钮居中居左居右</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/08/20/Vue%E6%8C%89%E9%92%AE%E5%B1%85%E4%B8%AD%E5%B1%85%E5%B7%A6%E5%B1%85%E5%8F%B3/" class="article-date">
-  <time datetime="2023-08-20T10:59:58.000Z" itemprop="datePublished">2023-08-20</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>在 Vue 中,如果需要将按钮居中显示,可以使用 CSS 中的 <code>text-align: center</code> 属性来实现。</p>
-<h1 id="一、按钮居中"><a href="#一、按钮居中" class="headerlink" title="一、按钮居中"></a>一、按钮居中</h1><p>在 Vue 中，如果需要将按钮居中显示，可以使用 CSS 中的 <code>text-align: center</code> 属性来实现。</p>
-<p>例如，可以在按钮所在的容器元素上添加 <code>text-align: center</code> 样式：</p>
-<pre><code>&lt;template&gt;
-  &lt;div class=&quot;button-container&quot;&gt;
-    &lt;el-button type=&quot;primary&quot;&gt;提交&lt;/el-button&gt;
-    &lt;el-button&gt;取消&lt;/el-button&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-  
-&lt;style&gt;
-.button-container &#123;
-  text-align: center;
-&#125;
-&lt;/style&gt;
-</code></pre>
-<p>上面的代码中，我们在按钮所在的容器元素上添加了 <code>text-align: center</code> 样式，来实现按钮居中显示。</p>
-<p>另外，还可以使用 Flex 布局来实现。例如，将按钮所在的容器元素设置为 Flex 容器，并使用 <code>justify-content: center</code> 属性来实现水平居中显示。示例如下：</p>
-<pre><code>&lt;template&gt;
-  &lt;div class=&quot;button-container&quot;&gt;
-    &lt;el-button type=&quot;primary&quot;&gt;提交&lt;/el-button&gt;
-    &lt;el-button&gt;取消&lt;/el-button&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-  
-&lt;style&gt;
-.button-container &#123;
-  display: flex;
-  justify-content: center;
-&#125;
-&lt;/style&gt;
-</code></pre>
-<p>上面的代码中，我们将按钮所在的容器元素设置为 Flex 容器，并使用 <code>justify-content: center</code> 属性来实现水平居中显示。</p>
-<h1 id="二、按钮居右"><a href="#二、按钮居右" class="headerlink" title="二、按钮居右"></a>二、按钮居右</h1><p>在 Vue 中，可以使用 flex 布局来实现按钮居右的效果。具体步骤如下：</p>
-<p>在按钮父元素上添加 display: flex; justify-content: flex-end; 样式，将子元素沿着横轴方向向右对齐。</p>
-<pre><code>&lt;div class=&quot;button-wrapper&quot;&gt;
-  &lt;button&gt;按钮&lt;/button&gt;
-&lt;/div&gt;
-
-.button-wrapper &#123;
-  display: flex;
-  justify-content: flex-end;
-&#125;
-</code></pre>
-<p>在按钮上添加 margin-left 样式，控制按钮与其左边兄弟元素之间的距离。</p>
-<pre><code>&lt;div class=&quot;button-wrapper&quot;&gt;
-  &lt;span&gt;左边的元素&lt;/span&gt;
-  &lt;button class=&quot;right-btn&quot;&gt;按钮&lt;/button&gt;
-&lt;/div&gt;
-
-.button-wrapper &#123;
-  display: flex;
-  justify-content: flex-end;
-&#125;
-.right-btn &#123;
-  margin-left: 10px; /* 调整按钮与左边元素之间的距离 */
-&#125;
-</code></pre>
-<p>这样就可以将按钮居右了。如果有多个元素需要靠右对齐，只需要将它们包裹在一个父元素中，并且在父元素上应用 display: flex; justify-content: flex-end; 样式即可。</p>
-<h1 id="三、按钮居左"><a href="#三、按钮居左" class="headerlink" title="三、按钮居左"></a>三、按钮居左</h1><p>1、方法1<br>在 Vue 中，可以使用 flex 布局来实现按钮居左的效果。具体步骤如下：</p>
-<p>在按钮父元素上添加 display: flex; 样式，启用 flex 布局。</p>
-<pre><code>&lt;div class=&quot;button-wrapper&quot;&gt;
-  &lt;button class=&quot;left-btn&quot;&gt;按钮&lt;/button&gt;
-&lt;/div&gt;
-
-.button-wrapper &#123;
-  display: flex;
-&#125;
-</code></pre>
-<p>在按钮上添加 margin-right 样式，控制按钮与其右边兄弟元素之间的距离。</p>
-<pre><code>&lt;div class=&quot;button-wrapper&quot;&gt;
-  &lt;button class=&quot;left-btn&quot;&gt;按钮&lt;/button&gt;
-  &lt;span&gt;右边的元素&lt;/span&gt;
-&lt;/div&gt;
-
-.button-wrapper &#123;
-  display: flex;
-&#125;
-.left-btn &#123;
-  margin-right: 10px; /* 调整按钮与右边的元素之间的距离 */
-&#125;
-</code></pre>
-<p>这样就可以将按钮居左了。如果有多个元素需要靠左对齐，只需要将它们包裹在一个父元素中，并且在父元素上应用 display: flex; 样式即可。使用 flex 布局时，元素的位置由 order 属性控制，而子元素的位置是由它们在父元素中出现的顺序决定的，因此靠前的元素会出现在靠左的位置。如果需要调整元素的位置，只需要在它的样式中添加 order 属性即可。</p>
-<p>2、方法2<br>在 Vue 中，可以通过给按钮元素添加 float: left; 样式来实现按钮居左的效果。具体步骤如下：</p>
-<pre><code>&lt;div class=&quot;button-container&quot;&gt;
-  &lt;button class=&quot;left-btn&quot;&gt;按钮&lt;/button&gt;
-&lt;/div&gt;
-</code></pre>
-<p>这样就可以将按钮居左了。如果按钮元素的父元素中还有其它元素，为避免按钮影响其他元素的布局，可以在父元素上添加 overflow: auto; 样式，使其包含浮动元素的布局上下文，从而避免对其它元素造成影响。</p>
  
       <!-- reward -->
       

@@ -154,6 +154,306 @@
     
     
     <article
+  id="post-WebGIS开源时空架构方案"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/07/23/WebGIS%E5%BC%80%E6%BA%90%E6%97%B6%E7%A9%BA%E6%9E%B6%E6%9E%84%E6%96%B9%E6%A1%88/"
+    >WebGIS开源时空架构方案</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/07/23/WebGIS%E5%BC%80%E6%BA%90%E6%97%B6%E7%A9%BA%E6%9E%B6%E6%9E%84%E6%96%B9%E6%A1%88/" class="article-date">
+  <time datetime="2023-07-23T05:10:12.000Z" itemprop="datePublished">2023-07-23</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h1><p>一套WebGIS架构方案包含以下几个基本要素：</p>
+<h2 id="1-前端框架"><a href="#1-前端框架" class="headerlink" title="1. 前端框架"></a>1. 前端框架</h2><p>前端框架选择主要考虑到易用性、维护性和功能性。目前比较流行的前端框架有Vue、React和Angular等，其中Vue最为轻量级、易上手和扩展性好，因此可以选择Vue作为前端框架。</p>
+<h2 id="2-后端框架"><a href="#2-后端框架" class="headerlink" title="2. 后端框架"></a>2. 后端框架</h2><p>后端框架主要负责处理数据接口请求和数据存储。根据项目规模和需求，可以选择Flask、Django、Express、Spring等框架。其中，Flask是一款轻量级、灵活的框架，易于搭建，因此可以选择Flask作为后端框架。</p>
+<h2 id="3-数据库选择"><a href="#3-数据库选择" class="headerlink" title="3. 数据库选择"></a>3. 数据库选择</h2><p>数据库主要用于存储和管理各种数据，包括地理空间数据、非地理空间数据等。目前较为常见的数据库有MySQL、PostgreSQL、MongoDB等，其中PostgreSQL是一款可扩展性和稳定性较好的数据库，支持地理空间数据的存储和查询，因此可以选择PostgreSQL作为数据库。</p>
+<h2 id="4-数据库管理工具"><a href="#4-数据库管理工具" class="headerlink" title="4. 数据库管理工具"></a>4. 数据库管理工具</h2><p>数据库管理工具可以方便地对数据库进行管理、维护和优化。目前比较优质的数据库管理工具有PgAdmin、Navicat等，其中PgAdmin是一款免费且开源的数据库管理工具，支持PostgreSQL的管理和维护。</p>
+<h2 id="5-地图渲染引擎"><a href="#5-地图渲染引擎" class="headerlink" title="5. 地图渲染引擎"></a>5. 地图渲染引擎</h2><p>地图渲染引擎负责将地理空间数据转换为可视化的地图，并提供丰富的地图交互功能。目前较为流行的地图渲染引擎有Mapbox、Leaflet、OpenLayers等，其中Leaflet是一款轻量级、易扩展的地图渲染引擎，提供丰富的地图渲染和交互功能，因此可以选择Leaflet作为地图渲染引擎。</p>
+<h2 id="6-地理编码服务"><a href="#6-地理编码服务" class="headerlink" title="6. 地理编码服务"></a>6. 地理编码服务</h2><p>地理编码服务主要用于将地址转换为经纬度坐标或者将经纬度坐标转换为地址。目前市面上比较好的地理编码服务有Google Maps API、ArcGIS Online等，其中Google Maps API是一款大众使用的地理编码服务，免费版可以提供较准确的地址解析和逆地址解析功能，因此可以选择Google Maps API作为地理编码服务。</p>
+<h2 id="7-部署环境"><a href="#7-部署环境" class="headerlink" title="7. 部署环境"></a>7. 部署环境</h2><p>部署环境在开源WebGIS方案中也是十分关键的，可以选择Linux操作系统、Nginx服务器和Docker容器。其中，Linux操作系统是开源、快速、安全和稳定的操作系统，适用于部署Web应用、网络服务器等；Nginx服务器是一款高性能的Web服务器和反向代理服务器，可以提高Web应用程序的性能和规模化适应能力；Docker容器是一款轻量级、移植性强的容器技术平台，可以确保应用程序在任何环境下都能够正常运行。</p>
+<p>以此为基本架构，可以根据实际情况进行灵活的定制和优化，以满足项目需求。</p>
+<p>目前国际上著名的地理空间信息生产商大都拥有了成熟的产品线， 基本涵盖了从数据采集、数据编辑、数据管理、空间数据互操作、空间分析到网络地理信息服务注册、发布、聚合等所有地理信息工程相关的功能模块 。有时候，在商业软件价格比较昂贵的情况下，使用开源WebGIS也是一个不错的选择。</p>
+<h1 id="二、开源WebGIS架构"><a href="#二、开源WebGIS架构" class="headerlink" title="二、开源WebGIS架构"></a>二、开源WebGIS架构</h1><p>一套开源WebGIS架构方案包含以下三个部分：</p>
+<h2 id="2-1-地理信息数据库和业务数据库"><a href="#2-1-地理信息数据库和业务数据库" class="headerlink" title="2.1 地理信息数据库和业务数据库"></a>2.1 地理信息数据库和业务数据库</h2><p>地理信息数据库用于存储地理信息数据（包含矢量、地名地址、专题及瓦片数据）；<br>业务数据库用于存储前端网站或者行业应用的关系型数据；</p>
+<h2 id="2-2-GIS服务器"><a href="#2-2-GIS服务器" class="headerlink" title="2.2 GIS服务器"></a>2.2 GIS服务器</h2><p>GIS服务器则用于提供WMS、WTMS、WFS和WCS等GIS服务；</p>
+<h2 id="2-3-Web应用服务器"><a href="#2-3-Web应用服务器" class="headerlink" title="2.3 Web应用服务器"></a>2.3 Web应用服务器</h2><p>Web应用服务器主要针对行业应用，用于调取GIS服务和后台的业务数据，并在前端展示。</p>
+<p>提供Web信息浏览服务，通常你看到的是一个网站。</p>
+<h2 id="2-4-开源WebGIS解决方案"><a href="#2-4-开源WebGIS解决方案" class="headerlink" title="2.4 开源WebGIS解决方案"></a>2.4 开源WebGIS解决方案</h2><p>针对WebGIS以上组成部分，一套开源WebGIS有着相应的解决方案，其架构方式如下 ：</p>
+<p>数据生产（桌面软件–uDig、QGIS等）<br>数据存储（关系型或非关系型数据库：postgreSQL、mySQL、mongodb）<br>GIS服务（GIS服务器：mapserver、Geoserver）<br>Web服务（Web服务器：tomcat、apache、nginx）<br>前端渲染（OpenLayers 、cesium、mapbox、leaflet）<br>当然还需要提供这一整套架构方式的外围软件环境：</p>
+<p>虚拟化或者云环境(VirtualBox、OpenStack、docker)<br>操作系统（linux：centos、ubuntu）<br>堡垒机( teleport )<br>运维系统( spug )<br>Nas服务器(TrueNas)</p>
+<ul>
+<li>2.4.1 地图数据生产</li>
+</ul>
+<p>使用uDig、QGIS、Grass等开源桌面GIS软件采集、加工地理信息数据<br>uDig：<a target="_blank" rel="noopener" href="http://udig.refractions.net/">http://udig.refractions.net/</a><br>QGIS：<a target="_blank" rel="noopener" href="https://www.qgis.org/">https://www.qgis.org/</a><br>Grass：<a target="_blank" rel="noopener" href="https://grass.osgeo.org/">https://grass.osgeo.org/</a><br>OpenEV：<a target="_blank" rel="noopener" href="http://openev.sourceforge.net/">http://openev.sourceforge.net/</a><br>gvSIG ：<a target="_blank" rel="noopener" href="http://www.gvsig.com/">http://www.gvsig.com/</a><br>OpenJUMP：<a target="_blank" rel="noopener" href="http://www.openjump.org/">http://www.openjump.org/</a><br>OSSIM：<a target="_blank" rel="noopener" href="http://trac.osgeo.org/ossim/">http://trac.osgeo.org/ossim/</a><br>InterImage：<a target="_blank" rel="noopener" href="http://www.lvc.ele.puc-rio.br/projects/interimage/%EF%BC%88%E4%B8%93%E6%B3%A8%E5%BD%B1%E5%83%8F%E8%A7%A3%E8%AF%91%EF%BC%89">http://www.lvc.ele.puc-rio.br/projects/interimage/（专注影像解译）</a><br>PolSARPro：<a target="_blank" rel="noopener" href="https://earth.esa.int/web/polsarpro%EF%BC%88%E6%9E%81%E5%8C%96%E9%9B%B7%E8%BE%BE%E5%A4%84%E7%90%86%EF%BC%89">https://earth.esa.int/web/polsarpro（极化雷达处理）</a><br>E-foto：<a target="_blank" rel="noopener" href="http://www.efoto.eng.uerj.br/en">http://www.efoto.eng.uerj.br/en</a> 航空摄影测量</p>
+<ul>
+<li>2.4.2 地理信息数据存储</li>
+</ul>
+<p>关系型数据使用PostGIS或者MySQL Spatial数据库存储地理信息数据和关系型业务数据，</p>
+<p>非关系型数据使用mongodb数据库（瓦片、图像）<br>PostGIS：<a target="_blank" rel="noopener" href="http://postgis.net/">http://postgis.net/</a><br>PostgreSQL：<a target="_blank" rel="noopener" href="https://www.postgresql.org/">https://www.postgresql.org/</a><br>MySQL：<a target="_blank" rel="noopener" href="https://www.mysql.com/">https://www.mysql.com</a><br>mongodb ：<a target="_blank" rel="noopener" href="https://www.mongodb.com/">https://www.mongodb.com/</a><br>rasdaman：<a target="_blank" rel="noopener" href="http://www.rasdaman.org/">http://www.rasdaman.org/</a> （栅格数据库）<br>SpatiaLite:<a target="_blank" rel="noopener" href="http://www.gaia-gis.it/gaia-sins/">http://www.gaia-gis.it/gaia-sins/</a> (轻量级数据库SQLite空间扩展)</p>
+<ul>
+<li>2.4.3 GIS服务器</li>
+</ul>
+<p>使用GeoServer、MapServer生产地图瓦片，注册、发布地理信息服务。</p>
+<p>GeoServer：<a target="_blank" rel="noopener" href="http://geoserver.org/">http://geoserver.org/</a><br>MapServer：<a target="_blank" rel="noopener" href="http://mapserver.org/">http://mapserver.org/</a><br>Mapnik：<a target="_blank" rel="noopener" href="http://mapnik.org/">http://mapnik.org/</a><br>TileCache：<a target="_blank" rel="noopener" href="http://tilecache.org/">http://tilecache.org/</a><br>MapTiler:<a target="_blank" rel="noopener" href="https://www.maptiler.com/">https://www.maptiler.com/</a></p>
+<ul>
+<li>2.4.4 Web服务器应用</li>
+</ul>
+<p>使用Geomajas、Tomcat或apache搭建网站，在网页中嵌入地图容器加载地图；使用niginx作为反向代理或者负载均衡。</p>
+<p>Tomcat：<a target="_blank" rel="noopener" href="http://tomcat.apache.org/">http://tomcat.apache.org/</a> （网站服务器）<br>apache:<a target="_blank" rel="noopener" href="https://www.apache.org/(apache%E5%8D%B3%E5%8F%AF%E5%81%9A%E7%BD%91%E7%AB%99%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8F%88%E5%8F%AF%E4%BD%9C%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E3%80%81%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1)">https://www.apache.org/(apache即可做网站服务器又可作反向代理、负载均衡)</a><br>nginx：<a target="_blank" rel="noopener" href="http://nginx.org/">http://nginx.org/</a> （负载均衡、反向代理）</p>
+<p>地图网站专用服务器<br>GeoMoose：<a target="_blank" rel="noopener" href="https://demo.geomoose.org/">https://demo.geomoose.org/</a><br>Geomajas：<a target="_blank" rel="noopener" href="http://www.geomajas.org/">http://www.geomajas.org/</a></p>
+<ul>
+<li>2.4.5 个人客户端或者web应用服务器的前端展示：</li>
+</ul>
+<p>地理信息服务使用OpenScales、支持Java的Openlayers或Leaflet地图容器前端展示。前端其他数据展示使用Java、vue等流行网页API。</p>
+<p>openlayers(Java): <a target="_blank" rel="noopener" href="http://openlayers.org/">http://openlayers.org/</a><br>openscales(Flex): <a target="_blank" rel="noopener" href="http://openscales.org/">http://openscales.org/</a><br>LeafLet：<a target="_blank" rel="noopener" href="https://leafletjs.com/">https://leafletjs.com</a><br>Cesium:<a target="_blank" rel="noopener" href="https://github.com/CesiumGS/cesium">https://github.com/CesiumGS/cesium</a><br>ol-cesium:<a target="_blank" rel="noopener" href="https://openlayers.org/ol-cesium/">https://openlayers.org/ol-cesium/</a><br>注：这里的web应用服务器相对于GIS服务器而言是客户端，相对于浏览者而言是服务器。</p>
+<p>以上给出使用开源软件实现WebGIS各个环节可采用的软件，在实际项目中，应根据项目需要做一下筛选。</p>
+<p>比如：uDig (QGIS)+ PostgreSQL/PostGIS （mongodb）+ GeoServer + Tomcat +Openlayers组合。</p>
+<p>倘若有高性能、高可用的需求，还应使用集群技术，搭建数据库集群、GIS服务器集群和web应用服务器集群生态，增加服务的冗余，提高服务性能，毕竟地图服务不是简单的网页服务，其消耗的资源是非常大的，即便是一个空间查询语句，对数据库的性能消耗也是非常可观的。</p>
+<h1 id="三、开源地理数据函数库"><a href="#三、开源地理数据函数库" class="headerlink" title="三、开源地理数据函数库"></a>三、开源地理数据函数库</h1><p>以下列出所有开源软地理信息软件或者商业地理信息软件都可能有到的开源地理信息函数库。其中，GDAL/ORG、PROJ.4、GEOS是地理信息软件或者系统开发的三架马车，它们搭建了地理信息软件的基础。</p>
+<p>GDAL/OGR:<a target="_blank" rel="noopener" href="https://gdal.org/">https://gdal.org/</a> 开源栅格/矢量空间数据转换库<br>PROJ.4:<a target="_blank" rel="noopener" href="https://proj.org/">https://proj.org/</a> 地图投影库<br>GEOS:<a target="_blank" rel="noopener" href="http://trac.osgeo.org/geos">http://trac.osgeo.org/geos</a> 开源地理空间数据引擎<br>pyshp:<a target="_blank" rel="noopener" href="https://pypi.org/project/pyshp/">https://pypi.org/project/pyshp/</a> 用于处理shapfile的简单函数库<br>Shapely:<a target="_blank" rel="noopener" href="https://pypi.org/project/Shapely/">https://pypi.org/project/Shapely/</a> 基于 GEOS，用于操作和分析平面几何对象的函数库<br>Fiona:<a target="_blank" rel="noopener" href="https://pypi.org/project/Fiona/">https://pypi.org/project/Fiona/</a> 基于GDAL,用于读取空间矢量数据的函数库<br>Rasterio:<a target="_blank" rel="noopener" href="https://pypi.org/project/rasterio/">https://pypi.org/project/rasterio/</a> 基于GDAL和Numpy，用于读取地理空间栅格数据的函数库<br>PIL:<a target="_blank" rel="noopener" href="https://pypi.org/project/PIL/">https://pypi.org/project/PIL/</a> 用于处理影像的python库<br>NumPy：<a target="_blank" rel="noopener" href="https://pypi.org/project/numpy/">https://pypi.org/project/numpy/</a> 用于矩阵科学计算的函数库<br>Scikit-image：基于scipy的一款图像处理python库<br>GeoPandas:<a target="_blank" rel="noopener" href="http://geopandas.org/">http://geopandas.org/</a> 用于空间分析的函数库<br>SPy:<a target="_blank" rel="noopener" href="http://www.spectralpython.net/">http://www.spectralpython.net/</a> 用于高光谱遥感影像处理的python库<br>GML4J：<a target="_blank" rel="noopener" href="http://gml4j.sourceforge.net/">http://gml4j.sourceforge.net/</a> 用于读取gml数据的函数库<br>GSLIB：<a target="_blank" rel="noopener" href="http://www.gslib.com/">http://www.gslib.com/</a> 用于空间统计的函数库<br>JTS：<a target="_blank" rel="noopener" href="https://sourceforge.net/projects/jts-topo-suite/">https://sourceforge.net/projects/jts-topo-suite/</a> （支持JAVA的空间分析包）<br>GeoTools：<a target="_blank" rel="noopener" href="https://www.geotools.org/">https://www.geotools.org/</a> （支持JAVA的地理处理工具箱）<br>GeoMesa：<a target="_blank" rel="noopener" href="https://www.geomesa.org/">https://www.geomesa.org/</a> 分布式时空大数据分析工具，配合hadoop使用</p>
+<h1 id="四、开放网络地图引擎"><a href="#四、开放网络地图引擎" class="headerlink" title="四、开放网络地图引擎"></a>四、开放网络地图引擎</h1><p>OSM:<a target="_blank" rel="noopener" href="https://www.openstreetmap.org/">https://www.openstreetmap.org/</a> 地图<br>Navit:<a target="_blank" rel="noopener" href="https://www.navit-project.org/">https://www.navit-project.org/</a> 导航</p>
+<h1 id="五、开放三维引擎"><a href="#五、开放三维引擎" class="headerlink" title="五、开放三维引擎"></a>五、开放三维引擎</h1><p>Cesium：<a target="_blank" rel="noopener" href="https://cesium.com/">https://cesium.com/</a><br>OSG earth:<a target="_blank" rel="noopener" href="http://www.openscenegraph.org/">http://www.openscenegraph.org/</a><br>ogre:<a target="_blank" rel="noopener" href="https://www.ogre3d.org/">https://www.ogre3d.org/</a><br>marble:<a target="_blank" rel="noopener" href="https://marble.kde.org/">https://marble.kde.org/</a></p>
+<h1 id="六、开放地理处理工具"><a href="#六、开放地理处理工具" class="headerlink" title="六、开放地理处理工具"></a>六、开放地理处理工具</h1><p>GeoTools：<a target="_blank" rel="noopener" href="https://www.geotools.org/">https://www.geotools.org/</a> 地理处理工具箱<br>GeoNetwork：<a target="_blank" rel="noopener" href="https://geonetwork-opensource.org/">https://geonetwork-opensource.org/</a> 网络地图查看和目录工具<br>Orfeo ToolBox：<a target="_blank" rel="noopener" href="https://www.orfeo-toolbox.org/">https://www.orfeo-toolbox.org/</a> 可以处理TB级的高分辨率光学，多光谱和雷达图像。 </p>
+<h1 id="七、时空大数据框架"><a href="#七、时空大数据框架" class="headerlink" title="七、时空大数据框架"></a>七、时空大数据框架</h1><p>随着全球化和信息化的发展，数据已经成为一种非常宝贵的资源。时空大数据处理技术也因其在军事、环境、气象、交通和金融等领域的广泛应用而备受关注。为了提高数据处理效率和准确度，许多企业和机构开始采用开源框架来构建他们的时空大数据应用。</p>
+<p>在本文中，我们介绍几个流行的时空大数据开源框架。</p>
+<ul>
+<li><ol>
+<li>Apache Hadoop</li>
+</ol>
+</li>
+</ul>
+<p>Apahce Hadoop是一款流行的分布式存储和分析平台，它可以处理大规模数据和时间序列数据。Hadoop是一种完全开源的框架，旨在处理大数据集并在集群中分发数据。它主要由HDFS（Hadoop 分布式文件系统）和MapReduce（一种计算框架）组成。Hadoop有着广泛的数据处理能力，因此可以在很多大型企业、政府机构和科研团队中得到应用。</p>
+<ul>
+<li><ol start="2">
+<li>Apache Spark</li>
+</ol>
+</li>
+</ul>
+<p>Apache Spark是一款快速的大数据计算系统，其可以在内存中快速处理大数据。它能够支持复杂的数据分析任务和像机器学习这样的数据科学工作负载。Spark比Hadoop处理速度更快，并且可以在不占用太多资源的情况下进行大数据处理。它也支持Python、Java和Scala等多种编程语言。Apache Spark常被用来对时空数据进行分析和可视化。</p>
+<ul>
+<li><ol start="3">
+<li>GeoMesa</li>
+</ol>
+</li>
+</ul>
+<p>GeoMesa是一个地理信息系统（GIS）库，可以用于管理和分析大规模时空数据集。它是一个开源库，形成了在云中处理海量时空数据的技术基础，并提供了一些用于时空数据管理和分析的工具。GeoMesa支持多种数据源，如Hadoop、Spark和Accumulo等。利用GeoMesa框架，可以实现时空数据的存储、查询、分析和可视化等操作。</p>
+<ul>
+<li><ol start="4">
+<li>GeoSpark</li>
+</ol>
+</li>
+</ul>
+<p>GeoSpark是基于Spark的时空数据处理、分析和可视化框架。与Apache Spark相似，GeoSpark使用内存计算技术，利于大规模数据的处理。该框架支持多种时空数据源，包括点、线、面、栅格等各种空间数据类型，并提供了丰富的时空数据分析算法。GeoSpark发挥了Spark和Hadoop的优点，使它成为一种非常强大的时空数据分析框架，被广泛应用于城市规划、交通管理和环境监测等领域。</p>
+<p>总之，这些时空大数据开源框架可以帮助企业和组织快速处理和分析时空数据，最大程度地实现数据价值。以上框架都是经过长期测试的，应用广泛的开源框架，因此用户可以根据项目需求和特点对其进行灵活的选择和定制。</p>
+<h1 id="八、开放协会或组织"><a href="#八、开放协会或组织" class="headerlink" title="八、开放协会或组织"></a>八、开放协会或组织</h1><p><a target="_blank" rel="noopener" href="https://www.osgeo.org/">https://www.osgeo.org/</a> 开源地理空间基金会<br><a target="_blank" rel="noopener" href="https://www.osgeo.cn/">https://www.osgeo.cn/</a> 中国开放地理空间实验室<br><a target="_blank" rel="noopener" href="https://www.opengeospatial.org/">https://www.opengeospatial.org/</a> OGC开放地理空间信息联盟</p>
+<p>加利福利亚大学荧光动力学实验室python 库:<br><a target="_blank" rel="noopener" href="https://www.lfd.uci.edu/~gohlke/pythonlibs/">https://www.lfd.uci.edu/~gohlke/pythonlibs/</a></p>
+<p>也可参见grss-ieee地球科学与遥感学会与遥感相关的开源函数库和软件列表：<br><a target="_blank" rel="noopener" href="http://www.grss-ieee.org/open-source-software-related-to-geoscience-and-remote-sensing/">http://www.grss-ieee.org/open-source-software-related-to-geoscience-and-remote-sensing/</a></p>
+<p>OSGeoLive 目录：<br><a target="_blank" rel="noopener" href="http://live.osgeo.org/en/overview/overview.html">http://live.osgeo.org/en/overview/overview.html</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OpenSource/" rel="tag">OpenSource</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebGIS/" rel="tag">WebGIS</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-CentOS7下的GItLab安装与删除"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/07/22/CentOS7%E4%B8%8B%E7%9A%84GItLab%E5%AE%89%E8%A3%85%E4%B8%8E%E5%88%A0%E9%99%A4/"
+    >CentOS7下的GitLab安装与删除</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/07/22/CentOS7%E4%B8%8B%E7%9A%84GItLab%E5%AE%89%E8%A3%85%E4%B8%8E%E5%88%A0%E9%99%A4/" class="article-date">
+  <time datetime="2023-07-22T04:04:33.000Z" itemprop="datePublished">2023-07-22</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="一-GitLab-安装"><a href="#一-GitLab-安装" class="headerlink" title="一. GitLab 安装"></a>一. GitLab 安装</h1><h2 id="1-安装和配置必须的依赖项"><a href="#1-安装和配置必须的依赖项" class="headerlink" title="1. 安装和配置必须的依赖项"></a>1. 安装和配置必须的依赖项</h2><pre><code>sudo yum install -y curl policycoreutils-python openssh-server perl
+sudo systemctl enable sshd
+sudo systemctl start sshd
+sudo firewall-cmd --permanent --add-service=http
+sudo firewall-cmd --permanent --add-service=https
+sudo systemctl reload firewalld
+
+sudo yum install postfix
+sudo systemctl enable postfix
+sudo systemctl start postfix
+</code></pre>
+<h2 id="2-下载-安装极狐GitLab"><a href="#2-下载-安装极狐GitLab" class="headerlink" title="2. 下载/安装极狐GitLab"></a>2. 下载/安装极狐GitLab</h2><p>配置极狐GitLab 软件源镜像。</p>
+<ul>
+<li><p>旗舰版、官网教程</p>
+<p>  curl -fsSL <a target="_blank" rel="noopener" href="https://packages.gitlab.cn/repository/raw/scripts/setup.sh">https://packages.gitlab.cn/repository/raw/scripts/setup.sh</a> | /bin/bash<br>  sudo EXTERNAL_URL=”<a href="https://192.168.10.33:9998&quot;">https://192.168.10.33:9998&quot;</a> yum install -y gitlab-jh</p>
+</li>
+<li><p>社区版，CSDN参考</p>
+<p>  curl <a target="_blank" rel="noopener" href="https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh">https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh</a> | sudo bash<br>  sudo EXTERNAL_URL=”<a href="http://192.168.10.33:9998&quot;">http://192.168.10.33:9998&quot;</a> yum install -y gitlab-ce</p>
+<p>  gitlab-ctl reconfigure</p>
+<p>  gitlab-ctl start || gitlab-ctl restart</p>
+</li>
+</ul>
+<h2 id="4-设置开机自启动"><a href="#4-设置开机自启动" class="headerlink" title="4 设置开机自启动"></a>4 设置开机自启动</h2><pre><code>sudo systemctl enable gitlab-runsvdir.service
+</code></pre>
+<h2 id="5-切换目录使用命令进入控制台修改用户状态"><a href="#5-切换目录使用命令进入控制台修改用户状态" class="headerlink" title="5.切换目录使用命令进入控制台修改用户状态"></a>5.切换目录使用命令进入控制台修改用户状态</h2><pre><code>1) 切换到相应路径下: cd /opt/gitlab/bin/
+2) 打开控制台: sudo gitlab-rails console -e production
+3) 查询用户账号信息并赋值给u: u=User.where(id:1).first
+4) 设置该用户名的密码: u.password=&#39;Demo9999&#39;
+5) 确认密码: u.password_confirmation=&#39;Demo9999&#39;
+6) 保存信息： u.save 
+7) 退出: exit
+</code></pre>
+<h1 id="二-GitLab-卸载"><a href="#二-GitLab-卸载" class="headerlink" title="二. GitLab 卸载"></a>二. GitLab 卸载</h1><h2 id="1、停止-gitlab服务"><a href="#1、停止-gitlab服务" class="headerlink" title="1、停止 gitlab服务"></a>1、停止 gitlab服务</h2><pre><code>gitlab-ctl stop
+</code></pre>
+<h2 id="2、卸载-gitlab（社区版）"><a href="#2、卸载-gitlab（社区版）" class="headerlink" title="2、卸载 gitlab（社区版）"></a>2、卸载 gitlab（社区版）</h2><pre><code>rpm -e gitlab-ce 或者  yum remove gitlab-ce
+</code></pre>
+<h2 id="3、查看-gitlab-进程"><a href="#3、查看-gitlab-进程" class="headerlink" title="3、查看 gitlab 进程"></a>3、查看 gitlab 进程</h2><pre><code>ps aux | grep gitlab 
+</code></pre>
+<h2 id="4、杀掉gitlab-service进程，该进程与runsvdir相关（带有好多…………-的进程）"><a href="#4、杀掉gitlab-service进程，该进程与runsvdir相关（带有好多…………-的进程）" class="headerlink" title="4、杀掉gitlab service进程，该进程与runsvdir相关（带有好多…………. 的进程）"></a>4、杀掉gitlab service进程，该进程与runsvdir相关（带有好多…………. 的进程）</h2><pre><code>kill -9 xxxxxx
+</code></pre>
+<p>其实就是强杀/opt/gitlab/service进程</p>
+<p>如果还不知道怎么杀，就重启服务器也行。</p>
+<h2 id="5、查找并删除所有包含-gitlab-的遗留文件"><a href="#5、查找并删除所有包含-gitlab-的遗留文件" class="headerlink" title="5、查找并删除所有包含 gitlab 的遗留文件"></a>5、查找并删除所有包含 gitlab 的遗留文件</h2><pre><code>find / -name *gitlab*|xargs rm -rf  
+find / -name gitlab |xargs rm -rf 
+
+find / -name postgres |xargs rm -rf 
+
+删除gitlab-ctl uninstall时自动在root下备份的配置文件（ls /root/gitlab* 看看有没有，有也删除）
+</code></pre>
+<h2 id="6、根据上面列出来的目录清单主要删除一下目录"><a href="#6、根据上面列出来的目录清单主要删除一下目录" class="headerlink" title="6、根据上面列出来的目录清单主要删除一下目录"></a>6、根据上面列出来的目录清单主要删除一下目录</h2><pre><code>rm -rf /etc/gitlab
+rm -rf /opt/gitlab
+rm -rf /log/gitlab
+rm -rf /var/opt/gitlab
+rm -rf /var/log/gitlab
+rm -rf /run/gitlab
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GitLab/" rel="tag">GitLab</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-WinRar删除文件有妙用"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/07/21/WinRar%E5%88%A0%E9%99%A4%E6%96%87%E4%BB%B6%E6%9C%89%E5%A6%99%E7%94%A8/"
+    >WinRar删除文件有妙用</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/07/21/WinRar%E5%88%A0%E9%99%A4%E6%96%87%E4%BB%B6%E6%9C%89%E5%A6%99%E7%94%A8/" class="article-date">
+  <time datetime="2023-07-21T01:04:33.000Z" itemprop="datePublished">2023-07-21</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>经常出现文件删掉了，文件夹无法删除，出现“该项目不在请确认该项目位置,然后重试”的场景</p>
+<p>使用WinRar的压缩功能，把文件夹选中，点右键选中压缩功能，在弹窗中勾选压缩后自动删除源文件，压缩。神奇的事情发生了，可以把源文件删掉。win11亲测有效。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WinRar/" rel="tag">WinRar</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%88%A0%E9%99%A4%E6%96%87%E4%BB%B6/" rel="tag">删除文件</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-RPM软件包名中的el5、el6、el7是什么"
   class="article article-type-post"
   itemscope
@@ -345,340 +645,6 @@
     <footer class="article-footer">
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%94%B5%E5%8A%9B/" rel="tag">电力</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-南方区域（广东）储能规模化应用的机遇和挑战"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/07/17/%E5%8D%97%E6%96%B9%E5%8C%BA%E5%9F%9F%EF%BC%88%E5%B9%BF%E4%B8%9C%EF%BC%89%E5%82%A8%E8%83%BD%E8%A7%84%E6%A8%A1%E5%8C%96%E5%BA%94%E7%94%A8%E7%9A%84%E6%9C%BA%E9%81%87%E5%92%8C%E6%8C%91%E6%88%98/"
-    >南方区域（广东）储能规模化应用的机遇和挑战</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/07/17/%E5%8D%97%E6%96%B9%E5%8C%BA%E5%9F%9F%EF%BC%88%E5%B9%BF%E4%B8%9C%EF%BC%89%E5%82%A8%E8%83%BD%E8%A7%84%E6%A8%A1%E5%8C%96%E5%BA%94%E7%94%A8%E7%9A%84%E6%9C%BA%E9%81%87%E5%92%8C%E6%8C%91%E6%88%98/" class="article-date">
-  <time datetime="2023-07-17T12:42:38.000Z" itemprop="datePublished">2023-07-17</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>2018年7月2-4日，由上海逍天电子科技有限公司和华东储能领跑者联盟（EESA）联合主办的“2018中国国际光储充大会”于上海佘山召开。大会期间，共有百位演讲嘉宾分享了他们的专题报告。</p>
-<p>南方区域（广东）储能规模化应用的机遇和挑战</p>
-<p>南方电网储能科研团队，广东电网电科院储能技术研究所，易斌</p>
-<p>01</p>
-<p>储能应用需求及现状</p>
-<p>广东电力系统运行特点：</p>
-<p>从电网安全稳定运行的角度来看，广东电力系统运行特点明显，对灵活性快速调节资源的需求大。</p>
-<p>广东电力系统运行特点：一是，电源装机容量大、煤电占比高。截至2017年底，广东统调装机容量1.07亿千瓦，其中燃煤机组占比54%。二是，省内快速调节资源紧张，调峰困难。燃气燃油机组、水电机组、蓄能机组占比仅28%，随着风电、光伏发电、核电等电源不断投产，预计未来系统调峰更为困难。三是，电网负荷水平高、峰谷差大，负荷曲线波动大及调频困难。2017年最高统调负荷10858万千瓦，负荷水平全国第一。广东电网高峰负荷日谷峰比达到0.62，高峰负荷当日的高峰与低谷负荷的差值甚至达到广西最高统调负荷的2倍。广东负荷攀升和下降速度快，部分时段变化速率较大，达80万kW/分钟。</p>
-<p>▲ 2017年底广东电网地理接线图</p>
-<p>▲ 广东电力系统运行特点</p>
-<p>▲ 广东电网2017年高峰负荷日统调负荷曲线</p>
-<p>广东可再生能源发展情况：</p>
-<p>目前，广东省可再生能源以陆上风电、集中式光伏、分布式光伏和生物质发电为主，截至2018年5月，可再生能源并网总容量785.8万千瓦；光伏发电部分，分布式光伏所占比重大，且以城市区域分布式光伏发电较多，过去两年集中式光伏规模增长快。</p>
-<p>▲ 截至2018年5月广东可再生能源并网容量（万千瓦）</p>
-<p>▲ 集中式和分布式光伏对比（万千瓦）</p>
-<p>注：广东省不含广州、深圳，不含水电</p>
-<p>广东省沿海平均风速较大，风功率密度和风能利用小时数较高，湍流强度较低，风能资源丰富、品质较好，十分适宜发展海上风电。</p>
-<p>《广东省海上风电发展规划(2017-2030)（修编）》，2020年海上风电建成投产200万千瓦，2030年约3000万千瓦。</p>
-<p>全省规划海上风电场址23个，总装机容量6685万千瓦。近海浅水区15个，装机985万千瓦；近海深水区8个，装机5700万千瓦。</p>
-<p>用户侧需求较大：</p>
-<p>广东省2017年全社会用电量5958.97亿千瓦时，全国排名第一，其中工业用电量3815.29亿千瓦时，占比64%；</p>
-<p>珠三角地区电价水平相对较高，也是工业用户聚集地，工业用户通过储能削峰填谷，可节约可观的用电成本。</p>
-<p>注1：五市是指广州、珠海、佛山、中山、东莞。</p>
-<p>注2：2017年1月1日起执行电价表。</p>
-<p>注3：一般工商业用电的峰谷电价执行范围仅限于原普通工业专变用户。</p>
-<p>注4：上述电价不含各项政府性基金及附加。</p>
-<p>储能应用现状：</p>
-<p>受储能技术成本因素制约，储能在广东应用规模较小，主要分布在少数的工业用户、工业园区、微电网示范区，发电侧储能应用刚刚起步。</p>
-<p>但市场空间和发展潜力较大。</p>
-<p>相关政策解读及市场机遇</p>
-<p>02</p>
-<p>广东电力市场建设概况：</p>
-<p>当前广东中长期市场主要包括年度双边协商交易、年度合同电量集中交易、发电合同电量转让交易、月度集中竞争交易等四个交易品种，后续随着现货市场建立，交易品种将会更丰富。</p>
-<p>年度集中竞价：为减少场外双边合同产生的利益分配不均衡，2018年广东省新增加了该类交易作为补充。</p>
-<p>发电合同转让：为鼓励高参数、技术改造先进的大机组多发满发，2017年广东省增加了该类交易</p>
-<p>2017年电力市场交易：</p>
-<p>2017年广东电力市场交易电量突破千亿度，其中年度长协电量827.17亿度、月度集中竞价交易电量319.64亿度，培育市场主体6211个。</p>
-<p>▲ 部分数据来源于广东省经济和信息化委网站公布数据</p>
-<p>2018年随着市场主体准入条件进一步放宽，参与市场的用户进一步增多，市场化交易电量规模也进一步扩大。</p>
-<p>电力现货市场建设：</p>
-<p>广东电力市场改革不断深入，将逐步建立电能量现货市场、调频辅助服务市场和调峰辅助服务市场等运营规则，储能设施获得与其他资源同等身份参与电力市场的可能性变大。</p>
-<p>▲ 从2017年第获批首批电力现货市场建设试点地区以来，广东电力现货市场建设节奏加快，取了较多阶段性的成果</p>
-<p>南方（以广东起步）调频市场模拟运行情况：</p>
-<p>2018年1-2月，南方（以广东起步）调频市场模拟运行期间，共交易调频里程共计323.49万兆瓦，平均日交易里程4.45万兆瓦，平均日调频补偿费用191.97万元，平均成交价格34.79元/兆瓦。</p>
-<p>注：数据来源广东中调“南方区域（以广东起步）调频市场试运行情况汇报”</p>
-<p>南方区域“两个细则”(2017版)：</p>
-<p>新修订的《两个细则》首度承认了储能电站可提供充电调峰服务，并明确基本条件、补偿标准、考核标准等。</p>
-<p>第三条本细则适用于南方区域地市级及以上电力调度机构直接调度的并与电力调度机构签订并网调度协议的容量为2MW/0.5小时及以上的储能电站。其他类型储能电站参照执行。</p>
-<p>第十九条储能电站应具备自动发电控制（AGC）功能。</p>
-<p>第二十一条储能电站根据电力调度机构指令进入充电状态的，按其提供充电调峰服务统计，对充电电量进行补偿，具体补偿标准为0.05 万元/兆瓦时。</p>
-<p>智能电网专项规划：</p>
-<p>响应国家智能电网发展指导意见和配电网建设改造行动计划等政策，积极开展智能电网专项规划，并明确推广储能系统与电网协调优化运行技术，应用储能构建综合能源利用体系，推进用户侧和配电网储能应用试点，提升电网可靠性和供电服务水平、提高电力设备利用率。电网企业对储能的重视将促进储能产业的发展和规模化应用。</p>
-<p>▲ 9个智能电网示范区</p>
-<p>03</p>
-<p>规模化应用的问题与挑战</p>
-<p>发电侧储能应用：</p>
-<p>◆《广东调频辅助服务市场交易规则（试行）》的发布有效激励电厂进行灵活性改造，提升了系统调节性能；</p>
-<p>◇ 目前部分电厂准备通过加装电池储能装置进行灵活性改造，储能的确迎来重要的发展机遇；</p>
-<p>◆但电力调频辅助服务的分担共享机制还不健全，调频市场收益规模存在一定投资风险；</p>
-<p>◇ 据悉，南方（以广东起步）调频市场正式运行时，市场机组总数约为153台</p>
-<p>用户侧需求较大：</p>
-<p>◆受储能投资成本和循环寿命等影响，储能在延缓电力输配设施扩容升级的技术经济性优势还不明显（甚至没优势）；</p>
-<p>◇推动电网侧储能发展的政策和市场机制仍不完善，商业模式单一，储能的多元价值及其效益无法得到体现；</p>
-<p>◆ 电网还缺少系统性的电网侧储能应用规划设计；</p>
-<p>◇ 两个细则中的充电调峰服务，在实操层面还存在一定问题</p>
-<p>用户侧储能应用：</p>
-<p>◆ 应用模式单一，商业模式单一，主要靠削峰填谷获取收益；</p>
-<p>◇ 广东广州、珠海、佛山、中山、东莞等5市峰谷价差不算太高，大工业峰谷价0.6997元/kWh（全国排第五），一般工商业0.9214元/kWh（全国排第三）；</p>
-<p>◆管理制度不完善，补贴政策短期内不可实现，远期看电力现货市场体现用户侧储能等灵活性资源价值；</p>
-<p>◇目前的市场环境下，“天时、地利、人和”兼备，才能获得较好的收益率</p>
-<p>总结</p>
-<p>1</p>
-<p>广东负荷水平高、峰谷差大，对调峰调频等辅助服务的需求较高，特别是在新能源比例不但增大的背景下，系统对灵活的调峰、调频、备用的需求将进一步增大。但受储能技术成本和寿命的制约，应用规模仍较小，增长潜力较大。</p>
-<p>2</p>
-<p>受电力市场建设政策、能源规划政策等外部因素推动，以及电网自身升级改造内在需求驱动，储能将迎来快速发展的机遇，应该值得关注。</p>
-<p>3</p>
-<p>但总体来说需谨慎分析市场规模，并考虑市场规则变化和政策不完善的投资风险。</p>
-<p>转载请注明来源：光储充一体化电站</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%94%B5%E5%8A%9B/" rel="tag">电力</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-IEEE-33节点配电网"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/07/16/IEEE-33%E8%8A%82%E7%82%B9%E9%85%8D%E7%94%B5%E7%BD%91/"
-    >IEEE-33节点配电网</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/07/16/IEEE-33%E8%8A%82%E7%82%B9%E9%85%8D%E7%94%B5%E7%BD%91/" class="article-date">
-  <time datetime="2023-07-16T01:03:09.000Z" itemprop="datePublished">2023-07-16</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="回答1："><a href="#回答1：" class="headerlink" title="回答1："></a>回答1：</h1><p>IEEE-33节点配电网是一种典型的低压配电网结构，是电力系统中最常见的一种网络形式。该网络包括33个节点，其中包括三个变压器节点，30个负荷节点以及6个发电节点。该低压配电网结构通常被用于用电负荷较小的城市、乡村和工业园区的配电系统中。<br>IEEE-33节点配电网的设计理念是建立一个高效、稳定和经济的电力系统，以满足用户对电能的需求。其特点是节约空间、成本低廉、可靠性高以及维护成本低。这种网络结构具有较好的电压控制能力和电流平衡能力，可以满足用户对电力质量的要求。<br>在该低压配电网结构中，用户可以根据自己的需求选择不同的供电方式，包括单相电、双相电和三相电。同时，该网络还支持多种负荷类型，包括住宅、商业、工业和公共事业等不同用电负荷类型，可以更好地满足用户的要求。<br>总之，IEEE-33节点配电网作为一种低压配电网结构，具有版本性能、高效可靠、成本低廉等优点，可以为城市、乡村和工业园区的电力供应提供稳健的保障和支持。</p>
-<h1 id="回答2："><a href="#回答2：" class="headerlink" title="回答2："></a>回答2：</h1><p>IEEE-33节点配电网是一个经典的电力系统仿真测试算例，广泛地应用于电力行业的研究、教学和实践。该配电网由33个节点组成，包含了传统配电网中的多种元件和设备，如变压器、开关、负荷、发电机等，以及典型的配电网拓扑结构，如环网、大量支路和单回路等。<br>在IEEE-33节点配电网中，每个节点都有独立的电压和电流参数，它们之间通过各种线路和设备相互连接。这些元件的特性参数，如阻抗、电容、电感等都是有限的，因此，在实际使用中，需要根据实际情况进行改动和修正，使其能更好地反映实际的配电网运行情况。<br>在研究IEEE-33节点配电网时，可以采用不同的仿真工具和算法，如潮流计算、短路计算、故障分析、保护设置等，用来评估和探究配电网的性能和特性，指导配电网的运行和管理，提高供电质量和可靠性等方面。同时，还可以用该配电网设计各种控制策略、保护方案、新能源接入等方面的应用研究。<br>总的来说，IEEE-33节点配电网是一个非常重要的电力系统仿真案例，它不仅具有较强的理论价值和实践意义，还为电力工程的发展和创新提供了重要的支撑和参考。</p>
-<h1 id="回答3："><a href="#回答3：" class="headerlink" title="回答3："></a>回答3：</h1><p>IEEE-33节点配电网是指基于IEEE标准的33节点配电系统模型，该模型是研究和测试配电系统可靠性和稳定性的重要工具之一。这个模型包括33个节点、32条联接线路和3个高压源节点。<br>配电系统是指将高电压变压器输出的电能分配到低电压终端用户的系统。在现代城市和农村，配电系统越来越重要，配电安全和稳定运行对于经济和社会的发展都是至关重要的。因此，研究配电系统的可靠性、负荷调节、故障保护和能源管理等问题尤为重要，而IEEE33节点配电网模型为研究这些问题提供了良好的基础。<br>通过对IEEE-33节点配电网模型的研究，可以深入了解配电系统的运行机理和性能，提高配电系统的效率和可靠性。此外，该模型还可以用于测试和调整各种智能配电网应用程序和技术，如能量管理、分布式发电、电池储能和可靠性优化等。<br>总的来说，IEEE-33节点配电网模型是一个重要的工具，可以帮助研究者和工程师深入探究配电系统的运行特性，解决各种配电问题和优化能源管理。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%94%B5%E5%8A%9B/" rel="tag">电力</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-时空大数据及GIS在商业化选址中的探索应用"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/07/15/%E6%97%B6%E7%A9%BA%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%8F%8AGIS%E5%9C%A8%E5%95%86%E4%B8%9A%E5%8C%96%E9%80%89%E5%9D%80%E4%B8%AD%E7%9A%84%E6%8E%A2%E7%B4%A2%E5%BA%94%E7%94%A8/"
-    >时空大数据及GIS在商业化选址中的探索应用</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/07/15/%E6%97%B6%E7%A9%BA%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%8F%8AGIS%E5%9C%A8%E5%95%86%E4%B8%9A%E5%8C%96%E9%80%89%E5%9D%80%E4%B8%AD%E7%9A%84%E6%8E%A2%E7%B4%A2%E5%BA%94%E7%94%A8/" class="article-date">
-  <time datetime="2023-07-15T02:45:52.000Z" itemprop="datePublished">2023-07-15</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>作者：陈旭<br>链接：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/27115233/answer/2115892008">https://www.zhihu.com/question/27115233/answer/2115892008</a><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
-<p>本回答以某国产新势力造车企业的选址项目为例，讲述时空大数据及GIS在商业化选址中的探索应用。</p>
-<ol>
-<li>整体架构</li>
-</ol>
-<p>随着特斯拉和蔚来用直营模式在市场上逐渐站稳脚跟，更多车企意识到“用户思维”的重要性，因此他们也开始尝试改变销售模式，由批发转向零售，直面消费者。</p>
-<p>直营模式的第一步就是要建立完整的营销渠道体系，其中包括销售门店选址、短期巡展商场选址、售后服务中心选址、品牌充电场站选址、线上新媒体广告投放选址、线下楼宇广告选址6个场景。</p>
-<p>下图为利用时空大数据及GIS进行车企营销渠道选址的技术架构图，以新能源汽车轨迹数据、人口分布数据以及AOI数据为数据基础，对其进行清洗、处理、建模以及指标计算，通过数据了解目标群体客户居住在哪里、常去哪些商场、固定在哪里充电，从而帮助车企进行营销渠道选址。</p>
-<p>利用时空大数据及GIS进行营销渠道选址的技术架构图</p>
-<ol start="2">
-<li>原始数据</li>
-</ol>
-<p>2.1 新能源汽车轨迹数据</p>
-<p>车企依据国家标准（GBT32960.1-2016）实时从新能源汽车上采集车辆运行数据并汇聚到当地新能源汽车数据中心以及北京理工新能源汽车国家监测与管理平台。</p>
-<p>采集的静态车辆属性数据包括车架号、车辆品牌，车辆型号、车辆购买年月等；采集的车辆动态运行数据包括位置数据、整车数据、电机数据、电驱数据、电池数据以及报警数据；采集频率是5~30秒一条。</p>
-<p>国家标准（GBT32960.1-2016）规定采集的数据字段</p>
-<p>下图为某辆车某次出行的连续轨迹数据，这辆车从浦东新区的中环森兰国际出发，经过中环高架路到达虹口区的海怡花园。</p>
-<p>车辆轨迹数据示例</p>
-<p>车辆轨迹数据示例车辆轨迹数据示例利用新能源汽车数据中的车辆品牌、车辆型号、购买年月并结合动态位置数据，可以了解目标客户群体的时空分布特征从而赋能选址工作。</p>
-<p>2.2 人口分布数据</p>
-<p>下图为人口分布数据示意图，利用人口分布数据可以清楚地了解城市内居民的时空分布特征，在大规模线上广告投放中可以准确地瞄准人群聚集区域进行投放，以最低的成本尽可能触达到更多的人口数量，节省大量不必要的成本支出。</p>
-<p>人口分布数据</p>
-<p>2.3 AOI数据</p>
-<p>AOI数据（Area of Interest）指的是互联网电子地图中的兴趣面，包含名称、地址、类别、经纬度坐标四项基本信息，主要用于在地图中表达区域状的地理实体，如居民小区、商场、写字楼、产业园区、综合商场等。</p>
-<p>AOI数据示例在营销渠道选址中使用AOI数据可以将非结构化的车辆轨迹数据以及人口分布数据落到具体的AOI实体边界中，以AOI为载体形成具体指标，例如某小区中高价值车辆的保有量、某商场中高价值车辆的停驻次数等，利用这些指标可以直接进行营销渠道选址。</p>
-<ol start="3">
-<li>数据清洗</li>
-</ol>
-<p>由于接入的车辆轨迹数据以及AOI数据存在空值率高、坐标偏移、坐标网格化、地理坐标系不统一、AOI实体缺失等问题。因此在使用数据之前需要进行数据清洗，清洗的步骤包括常规数据清洗、轨迹纠偏、网格化筛选、地理坐标系统一、AOI补充。</p>
-<p>3.1 常规数据清洗</p>
-<p>对车辆轨迹数据、人口分布数据以及AOI数据进行常规数据清洗，具体步骤包括：</p>
-<p>对车辆静态属性数据、人口分布数据、AOI数据进行去重处理、缺失值及异常值处理。<br>剔除车辆轨迹数据中关键字段空置率的车辆数据，关键字段包括经纬度坐标、累计里程数、剩余电量<br>剔除车辆轨迹数据中关键字段异常率高的车辆数据。经度正常范围是70°<del>138°，纬度正常范围是2°</del>55°，累计里程值正常范围是0公里<del>5000000公里，剩余电量正常范围是0%</del>100%<br>针对车辆轨迹数据中剩余电量字段范围不一致的情况（有的车企电量最大值是100，有的车企电量最大值是255）进行一致化处理<br>针对人口分布数据中人口数量值字段的缺失值或异常值，利用均值插值的方法进行补充</p>
-<p>人口分布数据插值处理</p>
-<p>3.2 轨迹纠偏</p>
-<p>由于GPS定位精度受到硬件及周边环境因素的干扰，车辆轨迹数据偶尔会出现坐标点偏移的情况</p>
-<p>车辆轨迹数据坐标点偏移</p>
-<p>针对轨迹偏移的情况，计算待判断坐标点与前后两个坐标点均值之间的距离，如果距离超过阈值（阈值一般是100米，针对采集频率的不同需要进行调整），则为偏移点需要剔除。</p>
-<p>计算待判断坐标点与的前后两个坐标点均值之间的距离</p>
-<p>3.3 网格化筛选</p>
-<p>由于经纬度坐标值位数较长，在传输过程中可能因为通信协议的限制被强制取整，例如121.342313-&gt;121.34。存在这样问题的车辆轨迹数据在空间上呈网格化的特征，这样的数据对于时空行为特征探查是没有意义的，因此需要识别并剔除。</p>
-<p>网格化的车辆轨迹数据</p>
-<p>实际操作中用group by的方法提取每辆车唯一的经纬度坐标值，如果唯一的经纬度坐标数量与轨迹点总数量的比值过小，则车辆存在网格化的问题。</p>
-<p>3.4 地理坐标系统一</p>
-<p>不同的车企会根据不同的地理坐标系采集车辆轨迹数据，坐标系不统一会造成数据分析结果的偏差，因此在使用车辆轨迹数据之前先要确保地理坐标系的一致。</p>
-<p>车辆轨迹坐标系与底图不匹配的情况</p>
-<p>车辆轨迹坐标系与底图不匹配的情况</p>
-<p>地理坐标系转换的方法可参考下面文章<br>陈旭：技术文档|利用Python进行地理坐标系统的转换90 赞同 · 51 评论文章</p>
-<p>3.5 AOI数据补充</p>
-<p>在实际操作中发现AOI数据存在重要地物缺失的问题，如下图所示为厦门AOI数据，其中SM广场一期和SM广场二期都缺失，这会对选址工作带来偏差。因此，在使用AOI数据之前，需要对缺失的重要地物进行补充。</p>
-<p>厦门AOI数据缺少SM广场一期和SM广场二期</p>
-<p>这边利用高德地图POI数据检验AOI数据的完整性，如下图所示，蓝绿色面图层是AOI数据，点图层是商场类POI数据，其中红色点是POI存在但AOI不存在的商场，针对这些缺失的商场进行手动补齐。运用相同的办法可以补充住宅小区、写字楼、产业园区等其他重要地物。</p>
-<p>利用高德地图POI数据检验AOI数据的完整</p>
-<p>性批量获取高德地图POI的方法可以参考下面这篇文章<br>陈旭：技术文档|利用Python获取高德POI兴趣点数据49 赞同 · 5 评论文章</p>
-<ol start="4">
-<li>数据处理</li>
-</ol>
-<p>4.1 次行切割</p>
-<p>车辆轨迹数据属于非结构化数据，体量大且不能直接进行指标计算。因此，在指标计算之前需要建模将连续的车辆轨迹数据转变为只有起点和终点信息（包含经纬度坐标、时间、行驶里程、电量）的次行数据。</p>
-<p>车辆轨迹数据变为次行数据</p>
-<p>下图为次行切割模型的具体实现步骤，大概思路是先根据点与点之间的时间差进行自然切分，之后针对每段轨迹进行固定长度窗口切分并判断每个窗口的状态（行驶、停驻、充电），最后对相邻同状态的窗口进行合并形成次行数据。</p>
-<p>次行切割模型步骤</p>
-<p>4.2 居住地识别</p>
-<p>在商业化选址中潜在客户的居住聚集区域是重要的参考依据，因此需要对次行数据进行建模并识别车主的居住地。</p>
-<p>下图为某辆车一段时间内的次行数据，可以明显地看到这辆车的数据以南花园为中心散开，所以推测上南花园可能是这辆车的居住地。</p>
-<p>某辆车的次行数据</p>
-<p>在实际操作中通过以下步骤可以识别出车辆的居住地：<br>针对某辆车的次行数据，筛选17：00<del>24：00之间的到达坐标点以及6：00</del>10：00之间的出发坐标点，并形成一个坐标点的列表<br>利用DBSCAN算法对上面的坐标点列表进行密度聚类，得到若干个该车辆的聚集停留点<br>将聚集停留点与AOI数据进行空间匹配，在满足落到住宅小区前提下热度最高的聚集停留点就是该车辆的居住地。（可连续观测多个月数据来提高识别准确性）</p>
-<p>4.3 空间匹配计算</p>
-<p>通过建模得到车辆的次行数据以及居住地数据之后需要将这些坐标点与AOI数据进行空间匹配计算，最终将数字格式的经纬度坐标数据转换为具有实际意义的AOI实体。<br>例如某辆车某次的起点坐标是121.501601,31.23299，终点坐标是121.47663,31.232435，那么通过空间匹配计算我们就可以知道这辆车这次出行时从汤臣一品到人民广场来福士商场。<br>利用下图所示算法可以判断坐标点是否在AOI面内，或者也可以直接用Python中的GeoPandas库以及Java中GeoTools库完成这步计算。</p>
-<p>判断坐标点是否在AOI面内的算法流程</p>
-<p>利用上面的算法确实能够进行准确的空间匹配计算，但是对于大规模坐标点以及AOI面的计算效率较低，因此需要用技术手段来提高计算效率。</p>
-<p>实际操作中，通过建立空间网格索引的方法来提高空间匹配计算的效率，用简单的浮点计算代替复杂的空间计算，下图为该算法的具体流程。</p>
-<p>利用空间网格索引提高空间匹配计算的效率</p>
-<ol start="5">
-<li>指标计算</li>
-</ol>
-<p>经过数据清洗以及数据处理之后，已经将非结构化的车辆轨迹数据变成结构化的次行数据。接下来基于车辆行为日期类型、时间段、车辆价值、车辆购买时长6个数据维度进行计算，形成以AOI数据为载体的数据指标用于商业化选址。</p>
-<p>数据维度包括5个方面：<br>车辆行为：停驻车辆数、充电车辆数、居住车辆数<br>车辆类型：乘用车、出租车、运营车、私家车<br>日期类型：工作日、休息日<br>时间段：23<del>6点、7</del>9点、10<del>16点、17</del>20点、21<del>22点月份：1月、2月、3月、4月、5月、6月、7月、8月、9月、10月、11月、12月<br>车辆价值：0</del>10万、10<del>20万、20</del>30万、30<del>40万、40万以上车辆<br>购买时长：0</del>1年、1<del>3年、3</del>5年、5~10年、10年以上</p>
-<p>6个维度可以进行交叉计算得到对应的数据指标。</p>
-<p>数据指标交叉计算在计算单个AOI数据指标的基础上，利用GIS中的缓冲区计算工具分别计算目标AOI周围1.5公里、3公里、5公里、10公里、15公里范围内的各项数据指标和。</p>
-<p>缓冲区计算</p>
-<ol start="6">
-<li>选址场景</li>
-</ol>
-<p>车企商业化选址共有销售门店选址、巡展商场选址、售后服务中心选址、品牌充电站选址、线上广告投放选址、线下广告投放选址6个场景，针对不同的选址场景需要用不同的数据指标进行赋能。</p>
-<p>销售门店是车企最重要的固定曝光点，是车企在当地城市中的旗舰标杆。销售门店需要选在具有稳定且带有巨大流量的商场，选址需要用到的数据指标包括（以某高端品牌车企为例，下同）：</p>
-<p>所有车辆的停驻车辆数（判断商场人流量是否充足）<br>12个月的所有车辆的停驻车辆数（判断人流量是否稳定）<br>40万以上车辆的停驻车辆数（判断高净值人群是否经常光顾该商场）<br>1.5公里内40万以上车辆的居住车辆数（判断是否有大量高净值人群居住在商场周边，饭后闲逛能够有更多曝光）</p>
-<p>巡展商场是车企的流动曝光点，相比销售门店成本较低且灵活性较强，一般一场巡展10天到半个月左右。巡展商场的选址逻辑和销售门店大致相同，在人流稳定的商场建立门店进行长期收割，在人流不太稳定的商场开展巡展进行定期收割，另外可以通过数据探查每个商场流量较高的月份并进行巡展。</p>
-<p>售后服务中心是车企对已售出车辆提供养护及维修服务的场所，需要选在场地面积大且方便客户出行的区域。选址标准是以某城市所有售后服务中心为中心做15公里的缓冲区，所有缓冲区加起来需要覆盖80%的客户居住地。</p>
-<p>售后服务中心选址</p>
-<p>品牌充电站是车企给车主提供的增值服务，同时也是在潜在客户面前曝光的重要渠道。品牌充电站需要建立在两类地方，第一类是自己品牌车主聚集的居住地、工作地附近，目的是方便车主临时充电提升使用满意度；第二类是所有品牌车主聚集充电的地方，目的是提升在潜在客户（其他品牌车主）面前的曝光度。</p>
-<p>线上广告指的是抖音、微信朋友圈等效果类广告投放，目的是获得更多潜在客户的电话号码。利用分时间段的40万以上车辆的停驻车辆数可以在时间和空间2个维度准确地找到目标客户群体，优化广告投放的时间和空间逻辑，避免大量不必要的成本支出。</p>
-<p>线下广告指的是楼宇电梯广告、停车场道闸广告等。利用车龄5年以上的40万以上车辆的停驻车辆数等相关指标可以找到可能需要换车的高净值客户聚集的住宅小区。</p>
-<ol start="7">
-<li>展望</li>
-</ol>
-<p>未来可以利用更多数据辅助商业化选址，包括手机信令数据、商圈探针数据<br>利用时空大数据进行商业化选址的模式不仅仅可以应用于车企选址，零售行业、文旅行业都可以用<br>可以将本文所讲的内容打包成可以用的系统，开放给需要的人员使用（现在也正在做）</p>
-<p>如果对本回答中出现的内容感兴趣，可以私聊我进行讨论~<br>如果我的回答对您有帮助，请不要吝啬您的赞和关注，谢谢~</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" rel="tag">大数据</a></li></ul>
 
     </footer>
   </div>
