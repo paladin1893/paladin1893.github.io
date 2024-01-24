@@ -154,7 +154,7 @@
     
     
     <article
-  id="post-Vue2传值方式详解03"
+  id="post-Vue2传值方式详解10"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -165,8 +165,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/09/03/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A303/"
-    >Vue2传值方式详解03-兄弟组件通信（bus总线）</a> 
+  <a class="article-title" href="/2023/09/10/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A310/"
+    >Vue2传值方式详解10-孙传祖使用$listeners</a> 
 </h2>
  
 
@@ -174,8 +174,8 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2023/09/03/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A303/" class="article-date">
-  <time datetime="2023-09-03T11:19:19.000Z" itemprop="datePublished">2023-09-03</time>
+      <a href="/2023/09/10/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A310/" class="article-date">
+  <time datetime="2023-09-10T05:26:39.000Z" itemprop="datePublished">2023-09-10</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -185,244 +185,68 @@
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>main.js</p>
-<pre><code>// main.js 文件
-import Vue from &#39;vue&#39;
-import App from &#39;./App.vue&#39;
-
-Vue.config.productionTip = false
-
-new Vue(&#123;
-  render: h =&gt; h(App),
-  beforeCreate() &#123;
-    // 需要在全局添加一个属性
-    Vue.prototype.$bus = this
-  &#125;
-&#125;).$mount(&#39;#app&#39;)
-</code></pre>
-<p>Father.vue</p>
-<pre><code>// Father.vue 文件
-&lt;template&gt;
-  &lt;div id=&quot;father&quot;&gt;
-    &lt;button @click=&quot;btn&quot;&gt;我要给 Brother 组件传数据&lt;/button&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-
-&lt;script&gt;
-export default &#123;
-  name: &quot;Father&quot;,
-  methods: &#123;
-    btn() &#123;
-      this.$bus.$emit(&quot;change&quot;, 66666);
-    &#125;,
-  &#125;,
-&#125;;
-&lt;/script&gt;
-</code></pre>
-<p>Brother.vue</p>
-<pre><code>// Brother.vue 文件
-&lt;template&gt;
-  &lt;div id=&quot;brother&quot;&gt;&lt;/div&gt;
-&lt;/template&gt;
-
-&lt;script&gt;
-export default &#123;
-  name: &quot;Brother&quot;,
-  mounted() &#123;
-    this.$bus.$on(&quot;change&quot;, (msg) =&gt; &#123;
-      console.log(msg);
-    &#125;);
-  &#125;,
-&#125;;
-&lt;/script&gt;
-</code></pre>
-<p>————————————————<br>版权声明：本文为CSDN博主「codeCat!」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_60547084/article/details/124408513">https://blog.csdn.net/weixin_60547084/article/details/124408513</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Vue2传值方式详解02"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/09/02/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A302/"
-    >Vue2传值方式详解02-子传父传递</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/09/02/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A302/" class="article-date">
-  <time datetime="2023-09-02T12:34:26.000Z" itemprop="datePublished">2023-09-02</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>（1）在父组件的子组件标签上自定义一个事件，然后调用需要的方法<br>（2）在子组件的方法中通过 this.$emit(“事件”)来触发在父组件中定义的事件，数据是以参数的形式进行传递的</p>
-<p>代码示例：</p>
-<p>父组件</p>
+  <p>孙传祖使用$listeners<br>文字内容同第九个</p>
+<p>祖组件</p>
 <pre><code>&lt;template&gt;
-  &lt;div&gt;
-    &lt;i&gt;父组件&lt;/i&gt;
-    &lt;!--页面使用--&gt;
-    &lt;son @lcclick=&quot;lcclick&quot;&gt;&lt;/son&gt;//自定义一个事件
+  &lt;div id=&quot;app&quot;&gt;
+    &lt;children-one @eventOne=&quot;eventOne&quot;&gt;&lt;/children-one&gt;
+    &#123;&#123; msg &#125;&#125;
   &lt;/div&gt;
 &lt;/template&gt;
- 
 &lt;script&gt;
-import son from &quot;./son.vue&quot;; //导入父组件
+import ChildrenOne from &#39;../src/components/children.vue&#39;
 export default &#123;
-  components: &#123; son &#125;, //注册组件
-  name: &quot;父组件&quot;,
-  data() &#123;
-    return &#123;&#125;;
+  name: &#39;App&#39;,
+  components: &#123;
+    ChildrenOne,
   &#125;,
-  methods: &#123;
-    lcclick()&#123;
-      alert(&#39;子传父&#39;)
-    &#125;
-  &#125;,
-&#125;;
-&lt;/script&gt;
-</code></pre>
-<p>子组件</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    &lt;button @click=&quot;lcalter&quot;&gt;点我&lt;/button&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-export default &#123;
-components: &#123; &#125;,
-  name: &#39;子组件&#39;,
-  methods: &#123;
-    lcalter()&#123;
-      this.$emit(&#39;lcclick&#39;)//通过emit来触发事件
-    &#125;
-  &#125;,
-&#125;;
-&lt;/script&gt;
-</code></pre>
-<p>————————————————<br>版权声明：本文为CSDN博主「小毕学习代码」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_70703397/article/details/132201160">https://blog.csdn.net/qq_70703397/article/details/132201160</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Vue2传值方式详解01"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/09/01/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A301/"
-    >Vue2传值方式详解01-父传子传递</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/09/01/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A301/" class="article-date">
-  <time datetime="2023-09-01T13:56:38.000Z" itemprop="datePublished">2023-09-01</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>（1）在父组件的子组件标签上绑定一个属性，挂载要传输的变量<br>（2）在子组件中通过props来接受数据，props可以是数组也可以是对象，接受的数据可以直接使用 props: [“属性名”] props:{属性名:数据类型}</p>
-<p>代码示例</p>
-<p>父组件</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    &lt;i&gt;父组件&lt;/i&gt;
-    &lt;!--页面使用--&gt;
-    &lt;son :data=&#39;name&#39;&gt;&lt;/son&gt; 
-  &lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-import son from &quot;./son.vue&quot;;//导入父组件
-export default &#123;
-  components: &#123; son &#125;,//注册组件
-  name: &quot;父组件&quot;,
   data() &#123;
     return &#123;
-      name: &quot;Frazier&quot;, //父组件定义变量
-    &#125;;
+      msg: &#39;&#39;
+    &#125;
   &#125;,
-&#125;;
+  methods: &#123;
+    eventOne(value) &#123;
+      this.msg = value
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>父组件</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;children-two v-on=&quot;$listeners&quot;&gt;&lt;/children-two&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+import ChildrenTwo from &#39;./childrenTwo.vue&#39;
+ 
+export default &#123;
+  name: &#39;childrenOne&#39;,
+  components: &#123;
+    ChildrenTwo
+  &#125;
+&#125;
 &lt;/script&gt;
 </code></pre>
 <p>子组件</p>
 <pre><code>&lt;template&gt;
-  &lt;div&gt;&#123;&#123;data&#125;&#125;&lt;/div&gt;
+  &lt;div&gt;
+    &lt;button @click=&quot;setMsg&quot;&gt;点击传给祖父&lt;/button&gt;
+  &lt;/div&gt;
 &lt;/template&gt;
  
 &lt;script&gt;
 export default &#123;
-components: &#123; &#125;,
-  name: &#39;子组件&#39;,
-  props:[&quot;data&quot;],
-&#125;;
+  name: &#39;children&#39;,
+  methods: &#123;
+    setMsg() &#123;
+      this.$emit(&#39;eventOne&#39;, &#39;123&#39;)
+    &#125;
+  &#125;
+&#125;
 &lt;/script&gt;
 </code></pre>
 <p>————————————————<br>版权声明：本文为CSDN博主「小毕学习代码」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_70703397/article/details/132201160">https://blog.csdn.net/qq_70703397/article/details/132201160</a></p>
@@ -447,7 +271,7 @@ components: &#123; &#125;,
 
     
     <article
-  id="post-Pandas实用入门案例04"
+  id="post-Vue2传值方式详解09"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -458,8 +282,8 @@ components: &#123; &#125;,
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/08/31/Pandas%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B04/"
-    >Pandas实用入门案例04</a> 
+  <a class="article-title" href="/2023/09/09/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A309/"
+    >Vue2传值方式详解09-祖传孙 $attrs</a> 
 </h2>
  
 
@@ -467,8 +291,8 @@ components: &#123; &#125;,
     </header>
      
     <div class="article-meta">
-      <a href="/2023/08/31/Pandas%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B04/" class="article-date">
-  <time datetime="2023-08-31T14:00:48.000Z" itemprop="datePublished">2023-08-31</time>
+      <a href="/2023/09/09/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A309/" class="article-date">
+  <time datetime="2023-09-09T12:40:59.000Z" itemprop="datePublished">2023-09-09</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -478,676 +302,96 @@ components: &#123; &#125;,
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>首先先介绍一下什么是Pandas ？</p>
-<p>Pandas 是基于NumPy 的一种工具，该工具是为了解决数据分析任务而创建的。<br>Pandas 纳入了大量库和一些标准的数据模型，提供了高效地操作大型数据集所需的工具。<br>pandas提供了大量能使我们快速便捷地处理数据的函数和方法。你很快就会发现，它是使Python成为强大而高效的数据分析环境的重要因素之一。</p>
-<p>首先引入相关模块：</p>
-<pre><code>import numpy as np
-import pandas as pd
-</code></pre>
-<h1 id="DataFrame"><a href="#DataFrame" class="headerlink" title="DataFrame"></a>DataFrame</h1><h2 id="第一章-DataFrame"><a href="#第一章-DataFrame" class="headerlink" title="第一章 DataFrame"></a>第一章 DataFrame</h2><h3 id="1-1-创建Series"><a href="#1-1-创建Series" class="headerlink" title="1.1 创建Series"></a>1.1 创建Series</h3><p>index不指定则从0开始编号</p>
-<pre><code>s = pd.Series([1, 2, 3, np.nan], index=[&#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;D&#39;])
-print s
-</code></pre>
-<p>输出</p>
-<pre><code>A 1.0
-B 2.0
-C 3.0
-D NaN
-dtype: float64
-</code></pre>
-<h3 id="1-2-创建时间序列"><a href="#1-2-创建时间序列" class="headerlink" title="1.2 创建时间序列"></a>1.2 创建时间序列</h3><p>必须指定start、end、periods中的两个参数值</p>
-<pre><code>dates = pd.date_range(&#39;20180101&#39;, periods=5)
-print dates
-</code></pre>
-<p>输出</p>
-<pre><code>DatetimeIndex([‘2018-01-01’, ‘2018-01-02’, 
-‘2018-01-03’, ‘2018-01-04’,‘2018-01-05’],
-dtype=’datetime64[ns]’, freq=’D’)
-</code></pre>
-<h3 id="1-3-创建DataFrame"><a href="#1-3-创建DataFrame" class="headerlink" title="1.3 创建DataFrame"></a>1.3 创建DataFrame</h3><p>必须指定start、end、periods中的两个参数值</p>
-<pre><code>df = pd.DataFrame(np.random.rand(3,4),columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
-print df
-</code></pre>
-<p>输出</p>
-<pre><code>a b c d
-0 0.233310 0.170256 0.036988 0.697916
-1 0.159580 0.287814 0.528123 0.956051
-2 0.815038 0.438103 0.143477 0.769143
-</code></pre>
-<p>通过字典创建（key为列名）：</p>
-<pre><code>df = pd.DataFrame(&#123;&#39;A&#39;: 1,
-                   &#39;B&#39;: pd.Timestamp(&#39;20171208&#39;),
-                   &#39;C&#39;: pd.Series(np.arange(4)),
-                   &#39;D&#39;: pd.Categorical([&#39;test&#39;, &#39;train&#39;, &#39;test&#39;, &#39;train&#39;])&#125;)
-print df
-</code></pre>
-<p>输出</p>
-<pre><code>A B C D
-0 1 2017-12-08 0 test
-1 1 2017-12-08 1 train
-2 1 2017-12-08 2 test
-3 1 2017-12-08 3 train
-</code></pre>
-<h3 id="1-4-DataFrame属性"><a href="#1-4-DataFrame属性" class="headerlink" title="1.4 DataFrame属性"></a>1.4 DataFrame属性</h3><pre><code>df = pd.DataFrame(&#123;&#39;A&#39;: 1,
-                   &#39;B&#39;: pd.Timestamp(&#39;20171208&#39;),
-                   &#39;C&#39;: pd.Series(np.arange(4)),
-                   &#39;D&#39;: pd.Categorical([&#39;test&#39;, &#39;train&#39;, &#39;test&#39;, &#39;train&#39;])&#125;)
-</code></pre>
-<p>查看每列数据类型</p>
-<pre><code>print df.dtypes
-</code></pre>
-<p>输出</p>
-<pre><code>A int64
-B datetime64[ns]
-C int32
-D category
-dtype: object
-</code></pre>
-<p>查看索引</p>
-<pre><code>print df.index  
-</code></pre>
-<p>输出</p>
-<pre><code>RangeIndex(start=0, stop=4, step=1)
-</code></pre>
-<p>查看列名</p>
-<pre><code>print df.columns
-</code></pre>
-<p>输出</p>
-<pre><code>Index([u’A’, u’B’, u’C’, u’D’], dtype=’object’)
-</code></pre>
-<p>查看数据</p>
-<pre><code>print df.values  
-</code></pre>
-<p>输出</p>
-<pre><code>[[1L Timestamp(‘2017-12-08 00:00:00’) 0 ‘test’]
-[1L Timestamp(‘2017-12-08 00:00:00’) 1 ‘train’]
-[1L Timestamp(‘2017-12-08 00:00:00’) 2 ‘test’]
-[1L Timestamp(‘2017-12-08 00:00:00’) 3 ‘train’]]
-</code></pre>
-<p>DataFrame统计信息</p>
-<pre><code>print df.describe()
-</code></pre>
-<p>输出</p>
-<pre><code>A C
-count 4.0 4.000000
-mean 1.0 1.500000
-std 0.0 1.290994
-min 1.0 0.000000
-25% 1.0 0.750000
-50% 1.0 1.500000
-75% 1.0 2.250000
-max 1.0 3.000000
-</code></pre>
-<h3 id="1-5-DataFrame常用操作"><a href="#1-5-DataFrame常用操作" class="headerlink" title="1.5 DataFrame常用操作"></a>1.5 DataFrame常用操作</h3><p>转置</p>
-<pre><code>df = pd.DataFrame(np.arange(12).reshape((3,4)),columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
-print df.T
-</code></pre>
-<p>输出</p>
-<pre><code>0 1 2
-a 0 4 8
-b 1 5 9
-c 2 6 10
-d 3 7 11
-</code></pre>
-<p>按index排序</p>
-<pre><code>df = pd.DataFrame(np.arange(12).reshape((3, 4)), columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
-print df.sort_index(axis=1, ascending=False)
-</code></pre>
-<p>输出</p>
-<pre><code>d c b a
-0 3 2 1 0
-1 7 6 5 4
-2 11 10 9 8
-</code></pre>
-<p>按值排序</p>
-<pre><code>df = pd.DataFrame(np.arange(12).reshape((3, 4)), columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
-print df.sort_values(by=&#39;b&#39;, ascending=False)
-</code></pre>
-<p>输出</p>
-<pre><code>a b c d
-2 8 9 10 11
-1 4 5 6 7
-0 0 1 2 3
-</code></pre>
-<p>数据选择</p>
-<p>创建如下dataframe：</p>
-<pre><code>dates = pd.date_range(&#39;20180101&#39;, periods=3)
-df = pd.DataFrame(np.arange(12).reshape((3, 4)),
-                  index=dates, columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
-print df
-</code></pre>
-<p>输出</p>
-<pre><code>a b c d
-2018-01-01 0 1 2 3
-2018-01-02 4 5 6 7
-2018-01-03 8 9 10 11
-</code></pre>
-<h2 id="第二章-数据选择"><a href="#第二章-数据选择" class="headerlink" title="第二章 数据选择"></a>第二章 数据选择</h2><h3 id="2-1-选择列"><a href="#2-1-选择列" class="headerlink" title="2.1 选择列"></a>2.1 选择列</h3><pre><code>print df[&#39;a&#39;]  # print df.a
-</code></pre>
-<p>输出</p>
-<pre><code>2018-01-01 0
-2018-01-02 4
-2018-01-03 8
-</code></pre>
-<h3 id="2-2-选择行"><a href="#2-2-选择行" class="headerlink" title="2.2 选择行"></a>2.2 选择行</h3><pre><code>print df[0:2]  # print df[&#39;20180101&#39;:&#39;20180102&#39;]
-</code></pre>
-<p>输出</p>
-<pre><code>a b c d
-2018-01-01 0 1 2 3
-2018-01-02 4 5 6 7
-</code></pre>
-<h3 id="2-3-标签选择：loc"><a href="#2-3-标签选择：loc" class="headerlink" title="2.3 标签选择：loc"></a>2.3 标签选择：loc</h3><p>1</p>
-<pre><code>print df.loc[:,[&#39;a&#39;, &#39;b&#39;]] 
-</code></pre>
-<p>输出</p>
-<pre><code>a b
-2018-01-01 0 1
-2018-01-02 4 5
-2018-01-03 8 9
-</code></pre>
-<p>2</p>
-<pre><code>print df.loc[&#39;20180102&#39;]
-</code></pre>
-<p>输出</p>
-<pre><code>a 4
-b 5
-c 6
-d 7
-Name: 2018-01-02 00:00:00, dtype: int32
-</code></pre>
-<h3 id="2-4-位置选择：iloc"><a href="#2-4-位置选择：iloc" class="headerlink" title="2.4 位置选择：iloc"></a>2.4 位置选择：iloc</h3><pre><code>print df.iloc[[0, 2], 2:4]
-</code></pre>
-<p>输出</p>
-<pre><code>c d
-2018-01-01 2 3
-2018-01-03 10 11
-</code></pre>
-<h3 id="2-5-混合标签与位置：ix"><a href="#2-5-混合标签与位置：ix" class="headerlink" title="2.5 混合标签与位置：ix"></a>2.5 混合标签与位置：ix</h3><pre><code>print df.ix[:2, [&#39;c&#39;, &#39;d&#39;]]
-</code></pre>
-<p>输出</p>
-<pre><code>c d
-2018-01-01 2 3
-2018-01-02 6 7
-</code></pre>
-<h3 id="2-6-Boolean选择"><a href="#2-6-Boolean选择" class="headerlink" title="2.6 Boolean选择"></a>2.6 Boolean选择</h3><pre><code>print df[df.a &lt; 5]
-</code></pre>
-<p>输出</p>
-<pre><code>a b c d
-2018-01-01 0 1 2 3
-2018-01-02 4 5 6 7
-</code></pre>
-<p>处理NaN数据</p>
-<p>首先创建包含NaN的dataframe：</p>
-<pre><code>dates = pd.date_range(&#39;20180101&#39;, periods=3)
-df = pd.DataFrame(np.arange(12).reshape((3, 4)),
-                  index=dates, columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
-df.iloc[1, 1], df.iloc[2, 2] = np.nan, np.nan
-print df
-</code></pre>
-<p>输出</p>
-<pre><code>a b c d
-2018-01-01 0 1.0 2.0 3
-2018-01-02 4 NaN 6.0 7
-2018-01-03 8 9.0 NaN 11
-</code></pre>
-<h2 id="第三章-处理NaN数据"><a href="#第三章-处理NaN数据" class="headerlink" title="第三章 处理NaN数据"></a>第三章 处理NaN数据</h2><h3 id="3-1-删除NaN数据"><a href="#3-1-删除NaN数据" class="headerlink" title="3.1 删除NaN数据"></a>3.1 删除NaN数据</h3><pre><code>print df.dropna(axis=1)  # how = [&#39;any&#39;, &#39;all&#39;]
-</code></pre>
-<p>输出</p>
-<pre><code>a d
-2018-01-01 0 3
-2018-01-02 4 7
-2018-01-03 8 11
-</code></pre>
-<h3 id="3-2-填充NaN数据"><a href="#3-2-填充NaN数据" class="headerlink" title="3.2 填充NaN数据"></a>3.2 填充NaN数据</h3><pre><code>print df.fillna(value=&#39;*&#39;)
-</code></pre>
-<p>输出</p>
-<pre><code>a b c d
-2018-01-01 0 1 2 3
-2018-01-02 4 * 6 7
-2018-01-03 8 9 * 11
-</code></pre>
-<h3 id="3-3-检查是否存在NaN数据"><a href="#3-3-检查是否存在NaN数据" class="headerlink" title="3.3 检查是否存在NaN数据"></a>3.3 检查是否存在NaN数据</h3><pre><code>print df.isnull()
-</code></pre>
-<p>输出</p>
-<pre><code>a b c d
-2018-01-01 False False False False
-2018-01-02 False True False False
-2018-01-03 False False True False
-</code></pre>
-<h2 id="第四章-导入与导出"><a href="#第四章-导入与导出" class="headerlink" title="第四章 导入与导出"></a>第四章 导入与导出</h2><pre><code>导入函数    导出函数功能
-read_csv    to_csv
-read_excel    to_excel
-read_sql    to_sql
-read_json    to_json
-read_msgpack    to_msgpack
-read_html    to_html
-read_gbq    to_gbq
-read_stata    to_stata
-read_sas    to_sas
-read_clipboard    to_clipboard
-read_pickle    to_pickle
-</code></pre>
-<p>以下面这个test.txt为例：</p>
-<pre><code>A B
-Tom 21
-Joe 26
-Sam 55
-Kerry 27
-</code></pre>
-<p>忽略第一行，并设置列名分别为‘name’和‘age’</p>
-<pre><code>data = pd.read_csv(&#39;test.txt&#39;, sep=&#39; &#39;, skiprows=1, names=[&#39;name&#39;,&#39;age&#39;])
-print data
-</code></pre>
-<p>输出</p>
-<pre><code>name age
-0 Tom 21
-1 Joe 26
-2 Sam 55
-3 Kerry 27
-</code></pre>
-<h2 id="第五章-合并DataFrame"><a href="#第五章-合并DataFrame" class="headerlink" title="第五章 合并DataFrame"></a>第五章 合并DataFrame</h2><h3 id="5-1-concat函数"><a href="#5-1-concat函数" class="headerlink" title="5.1 concat函数"></a>5.1 concat函数</h3><pre><code>df1 = pd.DataFrame(np.ones((3, 4))*0, columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
-df2 = pd.DataFrame(np.ones((3, 4))*1, columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
-df3 = pd.DataFrame(np.ones((3, 4))*2, columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
-# ignore_index=True将重新对index排序
-print pd.concat([df1, df2, df3], axis=0, ignore_index=True)
-</code></pre>
-<p>输出</p>
-<pre><code>a b c d
-0 0.0 0.0 0.0 0.0
-1 0.0 0.0 0.0 0.0
-2 0.0 0.0 0.0 0.0
-3 1.0 1.0 1.0 1.0
-4 1.0 1.0 1.0 1.0
-5 1.0 1.0 1.0 1.0
-6 2.0 2.0 2.0 2.0
-7 2.0 2.0 2.0 2.0
-8 2.0 2.0 2.0 2.0
-</code></pre>
-<p>join参数用法</p>
-<pre><code>df1 = pd.DataFrame(np.ones((3, 4))*0, columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;], index=[1,2,3])
-df2 = pd.DataFrame(np.ones((3, 4))*1, columns=[&#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;], index=[2,3,4])
-# join默认为&#39;outer&#39;，不共有的列用NaN填充
-print pd.concat([df1, df2], join=&#39;outer&#39;) 
-# join=&#39;inner&#39;只合并共有的列
-print pd.concat([df1, df2], join=&#39;inner&#39;)
-</code></pre>
-<p>输出 1</p>
-<pre><code>a b c d e
-1 0.0 0.0 0.0 0.0 NaN
-2 0.0 0.0 0.0 0.0 NaN
-3 0.0 0.0 0.0 0.0 NaN
-2 NaN 1.0 1.0 1.0 1.0
-3 NaN 1.0 1.0 1.0 1.0
-4 NaN 1.0 1.0 1.0 1.0
-</code></pre>
-<p>输出 2</p>
-<pre><code>b c d
-1 0.0 0.0 0.0
-2 0.0 0.0 0.0
-3 0.0 0.0 0.0
-2 1.0 1.0 1.0
-3 1.0 1.0 1.0
-4 1.0 1.0 1.0
-</code></pre>
-<p>join_axes参数用法</p>
-<pre><code>df1 = pd.DataFrame(np.ones((3, 4))*0, columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;], index=[1, 2, 3])
-df2 = pd.DataFrame(np.ones((3, 4))*1, columns=[&#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;], index=[2, 3, 4])
-# 按照df1的index进行合并
-print pd.concat([df1, df2], axis=1, join_axes=[df1.index])
-</code></pre>
-<p>输出</p>
-<pre><code>a b c d b c d e
-1 0.0 0.0 0.0 0.0 NaN NaN NaN NaN
-2 0.0 0.0 0.0 0.0 1.0 1.0 1.0 1.0
-3 0.0 0.0 0.0 0.0 1.0 1.0 1.0 1.0
-</code></pre>
-<h3 id="5-2-append函数"><a href="#5-2-append函数" class="headerlink" title="5.2 append函数"></a>5.2 append函数</h3><p>append多个DataFrame</p>
-<pre><code>df1 = pd.DataFrame(np.ones((3, 4))*0, columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
-df2 = pd.DataFrame(np.ones((3, 4))*1, columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
-
-print df1.append(df2, ignore_index=True)
-</code></pre>
-<p>输出</p>
-<pre><code>a b c d
-0 0.0 0.0 0.0 0.0
-1 0.0 0.0 0.0 0.0
-2 0.0 0.0 0.0 0.0
-3 1.0 1.0 1.0 1.0
-4 1.0 1.0 1.0 1.0
-5 1.0 1.0 1.0 1.0
-</code></pre>
-<p>append一组数据</p>
-<pre><code>df1 = pd.DataFrame(np.ones((3, 4))*0, columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
-s = pd.Series([4, 4, 4, 4], index=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
-
-print df1.append(s, ignore_index=True)
-</code></pre>
-<p>输出</p>
-<pre><code>a b c d
-0 0.0 0.0 0.0 0.0
-1 0.0 0.0 0.0 0.0
-2 0.0 0.0 0.0 0.0
-3 4.0 4.0 4.0 4.0
-</code></pre>
-<h3 id="5-3-merge函数"><a href="#5-3-merge函数" class="headerlink" title="5.3 merge函数"></a>5.3 merge函数</h3><p>基于某一列进行合并</p>
-<pre><code>df1 = pd.DataFrame(&#123;&#39;A&#39;: [&#39;A1&#39;, &#39;A2&#39;, &#39;A3&#39;],
-                    &#39;B&#39;: [&#39;B1&#39;, &#39;B2&#39;, &#39;B3&#39;],
-                   &#39;KEY&#39;: [&#39;K1&#39;, &#39;K2&#39;, &#39;K3&#39;]&#125;)
-df2 = pd.DataFrame(&#123;&#39;C&#39;: [&#39;C1&#39;, &#39;C2&#39;, &#39;C3&#39;],
-                    &#39;D&#39;: [&#39;D1&#39;, &#39;D2&#39;, &#39;D3&#39;],
-                   &#39;KEY&#39;: [&#39;K1&#39;, &#39;K2&#39;, &#39;K3&#39;]&#125;)
-
-print pd.merge(df1, df2, on=&#39;KEY&#39;)
-</code></pre>
-<p>输出</p>
-<pre><code>A B KEY C D
-0 A1 B1 K1 C1 D1
-1 A2 B2 K2 C2 D2
-2 A3 B3 K3 C3 D3
-</code></pre>
-<p>基于某两列进行合并</p>
-<pre><code>df1 = pd.DataFrame(&#123;&#39;A&#39;: [&#39;A1&#39;, &#39;A2&#39;, &#39;A3&#39;],
-                    &#39;B&#39;: [&#39;B1&#39;, &#39;B2&#39;, &#39;B3&#39;],
-                    &#39;KEY1&#39;: [&#39;K1&#39;, &#39;K2&#39;, &#39;K0&#39;],
-                    &#39;KEY2&#39;: [&#39;K0&#39;, &#39;K1&#39;, &#39;K3&#39;]&#125;)
-df2 = pd.DataFrame(&#123;&#39;C&#39;: [&#39;C1&#39;, &#39;C2&#39;, &#39;C3&#39;],
-                    &#39;D&#39;: [&#39;D1&#39;, &#39;D2&#39;, &#39;D3&#39;],
-                    &#39;KEY1&#39;: [&#39;K0&#39;, &#39;K2&#39;, &#39;K1&#39;],
-                    &#39;KEY2&#39;: [&#39;K1&#39;, &#39;K1&#39;, &#39;K0&#39;]&#125;)
-# how:[&#39;left&#39;,&#39;right&#39;,&#39;outer&#39;,&#39;inner&#39;]
-print pd.merge(df1, df2, on=[&#39;KEY1&#39;, &#39;KEY2&#39;], how=&#39;inner&#39;)
-</code></pre>
-<p>输出</p>
-<pre><code>A B KEY1 KEY2 C D
-0 A1 B1 K1 K0 C3 D3
-1 A2 B2 K2 K1 C2 D2
-</code></pre>
-<p>按index合并</p>
-<pre><code>df1 = pd.DataFrame(&#123;&#39;A&#39;: [&#39;A1&#39;, &#39;A2&#39;, &#39;A3&#39;],
-                    &#39;B&#39;: [&#39;B1&#39;, &#39;B2&#39;, &#39;B3&#39;]&#125;,
-                   index=[&#39;K0&#39;, &#39;K1&#39;, &#39;K2&#39;])
-df2 = pd.DataFrame(&#123;&#39;C&#39;: [&#39;C1&#39;, &#39;C2&#39;, &#39;C3&#39;],
-                    &#39;D&#39;: [&#39;D1&#39;, &#39;D2&#39;, &#39;D3&#39;]&#125;,
-                   index=[&#39;K0&#39;, &#39;K1&#39;, &#39;K3&#39;])
-
-print pd.merge(df1, df2, left_index=True, right_index=True, how=&#39;outer&#39;)
-</code></pre>
-<p>输出</p>
-<pre><code>A B C D
-K0 A1 B1 C1 D1
-K1 A2 B2 C2 D2
-K2 A3 B3 NaN NaN
-K3 NaN NaN C3 D3
-</code></pre>
-<p>为列加后缀</p>
-<pre><code>df_boys = pd.DataFrame(&#123;&#39;id&#39;: [&#39;1&#39;, &#39;2&#39;, &#39;3&#39;],
-                        &#39;age&#39;: [&#39;23&#39;, &#39;25&#39;, &#39;18&#39;]&#125;)
-df_girls = pd.DataFrame(&#123;&#39;id&#39;: [&#39;1&#39;, &#39;2&#39;, &#39;3&#39;],
-                        &#39;age&#39;: [&#39;18&#39;, &#39;18&#39;, &#39;18&#39;]&#125;)
-
-print pd.merge(df_boys, df_girls, on=&#39;id&#39;, suffixes=[&#39;_boys&#39;, &#39;_girls&#39;])
-</code></pre>
-<p>输出</p>
-<pre><code>age_boys id age_girls
-0 23 1 18
-1 25 2 18
-2 18 3 18
-</code></pre>
-<h1 id="绘图"><a href="#绘图" class="headerlink" title="绘图"></a>绘图</h1><p>引入相应模块</p>
-<pre><code>import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
-</code></pre>
-<p>绘制Series</p>
-<pre><code>data = pd.Series(np.random.randn(1000))
-data = data.cumsum()
-
-data.plot()
-plt.show()
-</code></pre>
-<h2 id="–本文完–"><a href="#–本文完–" class="headerlink" title="–本文完–"></a>–本文完–</h2><p>©著作权归作者所有：来自51CTO博客作者程序员小猿的原创作品，请联系作者获取转载授权，否则将追究法律责任<br>全网最全的Pandas入门教程（精简版）<br><a target="_blank" rel="noopener" href="https://blog.51cto.com/u_13294304/3386462">https://blog.51cto.com/u_13294304/3386462</a></p>
+  <p>祖传孙 $attrs</p>
+<p>正常情况下需要借助父亲的props作为中间过渡，但是这样在父亲组件就会多了一些跟父组件业务无关的属性，耦合度高，借助$attrs可以简化些，而且祖跟孙都无需做修改</p>
+<p>祖组件：</p>
+<pre><code>&lt;template&gt;
+    &lt;section&gt;
+        &lt;parent name=&quot;grandParent&quot; sex=&quot;男&quot; age=&quot;88&quot; hobby=&quot;code&quot; @sayKnow=&quot;sayKnow&quot;&gt;&lt;/parent&gt;
+    &lt;/section&gt;
+&lt;/template&gt;
  
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pandas/" rel="tag">pandas</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-vue循环遍历对象、数组和字符串"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/08/30/vue%E5%BE%AA%E7%8E%AF%E9%81%8D%E5%8E%86%E5%AF%B9%E8%B1%A1%E3%80%81%E6%95%B0%E7%BB%84%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2/"
-    >vue循环遍历对象、数组和字符串</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/08/30/vue%E5%BE%AA%E7%8E%AF%E9%81%8D%E5%8E%86%E5%AF%B9%E8%B1%A1%E3%80%81%E6%95%B0%E7%BB%84%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2/" class="article-date">
-  <time datetime="2023-08-30T09:00:11.000Z" itemprop="datePublished">2023-08-30</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="1-循环遍历对象"><a href="#1-循环遍历对象" class="headerlink" title="1.循环遍历对象"></a>1.循环遍历对象</h1><h2 id="1-1vue-在html里面循环遍历对象"><a href="#1-1vue-在html里面循环遍历对象" class="headerlink" title="1.1vue 在html里面循环遍历对象"></a>1.1vue 在html里面循环遍历对象</h2><pre><code>v-for=&quot; (val, key , i) in dimItemMap&quot; :key=&quot;key&quot;
-
-val-每一项
-key -key值
-i-第几个
-
-&lt;el-table-column prop=&quot;score&quot; label=&quot;评分&quot; :show-overflow-tooltip=&quot;true&quot; align=&quot;center&quot;&gt;
-    &lt;template slot-scope=&quot;scope&quot;&gt;
-    &lt;span&gt;
-        &lt;span v-for=&quot; (val, key , i) in scope.row.dimItemMap&quot; :key=&quot;key&quot;&gt;
-        &#123;&#123;val.score&#125;&#125;//score为键，val.score为值
-        &lt;/span&gt;
-    &lt;/span&gt;
-    &lt;/template&gt;
-&lt;/el-table-column&gt;
-</code></pre>
-<h2 id="1-2-在js里面forin遍历对象"><a href="#1-2-在js里面forin遍历对象" class="headerlink" title="1.2 在js里面forin遍历对象"></a>1.2 在js里面forin遍历对象</h2><p>for…in 循环主要是为了遍历对象而生，不适用于遍历数组</p>
-<pre><code>let data = [&#123; wiun2dvi: 232, wiun3dvi: 55, wiu4ndvi: 33, wiun1dvi: 24432 &#125;];
-    data.forEach((item,index)=&gt;&#123;
-      for (const key in item) &#123;
-        console.log(&quot;item[key]&quot;,item[key]);//值
-        console.log(&quot;key&quot;,key);//键
-      &#125;
-    &#125;)
-</code></pre>
-<h1 id="2-循环遍历数组"><a href="#2-循环遍历数组" class="headerlink" title="2.循环遍历数组"></a>2.循环遍历数组</h1><h2 id="2-1-vue-在html里面循环遍历数组"><a href="#2-1-vue-在html里面循环遍历数组" class="headerlink" title="2.1 vue 在html里面循环遍历数组"></a>2.1 vue 在html里面循环遍历数组</h2><pre><code>&lt;el-table-column v-for=&quot;item in tableCol&quot; :key=&quot;item.id&quot; :prop=&quot;item.id&quot; :label=&quot;item.name&quot; :show-overflow-tooltip=&quot;true&quot; align=&quot;center&quot;&gt;
-    &lt;template slot-scope=&quot;scope&quot;&gt;
-        &lt;span&gt;&#123;&#123;scope.row.dimItemMap?scope.row.dimItemMap[item.id].name:""&#125;&#125;&lt;/span&gt;
-    &lt;/template&gt;
-&lt;/el-table-column&gt;
-
-&lt;el-table-column prop=&quot;score&quot; label=&quot;评分&quot; :show-overflow-tooltip=&quot;true&quot; align=&quot;center&quot;&gt;
-    &lt;template slot-scope=&quot;scope&quot;&gt;
-        &lt;span&gt;
-            &lt;span v-for=&quot; (item, index) in scope.row.dimItemMap&quot; :key=&quot;index&quot;&gt;
-                &#123;&#123;item.score&#125;&#125;
-            &lt;/span&gt;
-        &lt;/span&gt;
-    &lt;/template&gt;
-&lt;/el-table-column&gt;
-</code></pre>
-<h2 id="2-2-在js里面for遍历数组"><a href="#2-2-在js里面for遍历数组" class="headerlink" title="2.2 在js里面for遍历数组"></a>2.2 在js里面for遍历数组</h2><pre><code>let id = 1524466
-for (let i = 0; i &lt; list.length; i++) &#123;
-    let a = list[i];
-    if (a.id === id) &#123;
-        return a.name;
-    &#125; 
-&#125;
-</code></pre>
-<h2 id="2-3-在js里面forof遍历数组"><a href="#2-3-在js里面forof遍历数组" class="headerlink" title="2.3 在js里面forof遍历数组"></a>2.3 在js里面forof遍历数组</h2><p>   let arr = [{<br>        name: 12,<br>        hello: “wsdfnioq”,<br>    }, {<br>        name: 12,<br>        hello: “wsdfnioq”,<br>    }, {<br>        name: 12,<br>        hello: “wsdfnioq”,<br>    }]</p>
-<pre><code>for (const i of arr) &#123;
-    console.log(&quot;i&quot;, i);
-&#125;
-        
-//i &#123;name: 12, hello: &#39;wsdfnioq&#39;&#125;
-//i &#123;name: 12, hello: &#39;wsdfnioq&#39;&#125;
-//i &#123;name: 12, hello: &#39;wsdfnioq&#39;&#125;
-
-let arr = [
-    [&#39;name&#39;, &quot;张三&quot;],
-    [&#39;地址&#39;, &#39;北京&#39;],
-    [&#39;手机&#39;, &#39;123&#39;]
-]
-for (const [value0, value1] of arr) &#123;
-    console.log(&#39;k&#39;, value0, value1);
-&#125;
-// k name 张三
-// k 地址 北京
-// k 手机 123
-</code></pre>
-<h2 id="2-4-for-in，不推荐对数组进行遍历"><a href="#2-4-for-in，不推荐对数组进行遍历" class="headerlink" title="2.4 for in，不推荐对数组进行遍历"></a>2.4 for in，不推荐对数组进行遍历</h2><pre><code>let arr = [&quot;lsadnkol&quot;, &quot;klsmvaod&quot;, &quot;lpsaojfoas&quot;]
-for (const key in arr) &#123;
-    console.log(&quot;arr&quot;, key, typeof key, arr[key]);
-&#125;
-// 0 string lsadnkol
-// 1 string klsmvaod
-// 2 string lpsaojfoas
-</code></pre>
-<h2 id="2-5-forEach-函数遍历数组"><a href="#2-5-forEach-函数遍历数组" class="headerlink" title="2.5 forEach() 函数遍历数组"></a>2.5 forEach() 函数遍历数组</h2><p>①无任何返回，可改变原来数组中的内容</p>
-<p>②循环次数：数组的长度</p>
-<p>③不支持return，不需要return语句</p>
-<p>如下案例：给每个对象中添加age属性</p>
-<pre><code>let forArr = [&#123;name:&#39;tom&#39;,sex:&#39;man&#39;&#125;,&#123;name:&#39;linda&#39;,sex:&#39;woman&#39;&#125;,]
- forArr.forEach((item,index) =&gt; &#123;
-    console.log(&quot;forEach循环==index==&quot;,index,item);
-     item.age = 27
-&#125;)
-console.log(&quot;forArr==遍历后===&quot;,forArr)
-// forArr ----&gt;[&#123;name:&#39;tom&#39;,sex:&#39;man&#39;,age:27&#125;,&#123;name:&#39;linda&#39;,sex:&#39;woman&#39;,age:27&#125;]
-</code></pre>
-<h1 id="vue循环遍历-指令v-for"><a href="#vue循环遍历-指令v-for" class="headerlink" title="vue循环遍历,指令v-for"></a>vue循环遍历,指令v-for</h1><h2 id="1-循环遍历"><a href="#1-循环遍历" class="headerlink" title="1.循环遍历"></a>1.循环遍历</h2><p>vue的循环遍历用v-for，语法类似于js中的for循环</p>
-<p>当我们有一组数据需要进行渲染时，我们就可以使用v-for来完成。</p>
-<p>v-for使用格式：</p>
-<p>格式为：v-for = item in items</p>
-<p> (遍历items中的数据)</p>
-<h2 id="2-v-for遍历数组"><a href="#2-v-for遍历数组" class="headerlink" title="2.v-for遍历数组"></a>2.v-for遍历数组</h2><p>用v-for指令基于一个数组来渲染一个列表。</p>
-<p>v-for 指令使用item in items形式的语法，其中items是源数据数组， 而item则是被迭代的数组元素。</p>
-<ul>
-<li>如果v-for遍历数组中的数组值</li>
-</ul>
-<p>语法格式：v-for=”movie in movies”<br>依次从movies中取出movie，并且在元素的内容中，我们可以使用Mustache语法，来使用movie</p>
-<pre><code>&lt;li v-for=&quot;movie in movies&quot;&gt; &#123;&#123;movie&#125;&#125; &lt;/li&gt;
- 
-</code></pre>
-<ul>
-<li>如果v-for遍历数组中的数组值、索引值</li>
-</ul>
-<p>语法格式：v-for=(item, index) in items<br>v-for中使用二个参数，即当前项和当前项的索引</p>
-<pre><code>&lt;li v-for=&quot;(item, index) in items&quot;&gt;&#123;&#123;index&#125;&#125;. &#123;&#123;item&#125;&#125;&lt;/li&gt;
-</code></pre>
-<p>样例：</p>
-<pre><code>&lt;div id=&quot;app&quot;&gt;
-  &lt;ul&gt;
-    &lt;li v-for=&quot;name in names&quot;&gt;&#123;&#123;name&#125;&#125;&lt;/li&gt;
-  &lt;/ul&gt;
-   //v-for遍历过程中，遍历数组中值,并显示
-  &lt;ul&gt;
-    &lt;li v-for=&quot;(name,index) in names&quot;&gt;&#123;&#123;index&#125;&#125;. &#123;&#123;name&#125;&#125;&lt;/li&gt;
-  &lt;/ul&gt;
-   //遍历过程中，遍历数组中值、索引值，并显示
-&lt;/div&gt;
-
 &lt;script&gt;
-  const app = new Vue(&#123;
-    el:&quot;#app&quot;,
-    data:&#123;
-      names:[&quot;刘富楠&quot;,&quot;科比&quot;,&quot;詹姆斯&quot;,&quot;库里&quot;]
+    import Parent from &#39;./Parent&#39;
+    export default &#123;
+        name: &quot;GrandParent&quot;,
+        components: &#123;
+          Parent
+        &#125;,
+        data() &#123;
+            return &#123;&#125;
+        &#125;,
+        methods: &#123;
+          sayKnow(val)&#123;
+            console.log(val)
+          &#125;
+        &#125;,
+        mounted() &#123;
+        &#125;
     &#125;
-  &#125;)
 &lt;/script&gt;
 </code></pre>
-<h2 id="3-v-for遍历对象"><a href="#3-v-for遍历对象" class="headerlink" title="3.v-for遍历对象"></a>3.v-for遍历对象</h2><p>1.遍历对象属性 用value值<br>2.遍历对象属性和属性值 用value值和key<br>3.遍历对象属性和属性值和索引 用value值、key和index</p>
-<pre><code>&lt;div id=&quot;app&quot;&gt;
-    //展示出所有信息
-    &lt;ul&gt;
-        &lt;li &gt;&#123;&#123;info.name&#125;&#125;&lt;/li&gt;
-        &lt;li &gt;&#123;&#123;info.age&#125;&#125;&lt;/li&gt;
-        &lt;li &gt;&#123;&#123;info.height&#125;&#125;&lt;/li&gt;
-    &lt;/ul&gt;
-    //方法1.一个个写出来
-    &lt;ul&gt;
-        &lt;li v-for=&quot;item in info&quot;&gt;&#123;&#123;item&#125;&#125;&lt;/li&gt;
-    &lt;/ul&gt;
-    //方法2.用v-for遍历对象的value值。(属性)
-    &lt;ul&gt;
-        &lt;li v-for=&quot;(value,key) in info&quot;&gt;&#123;&#123;value&#125;&#125;--&#123;&#123;key&#125;&#125;&lt;/li&gt;
-    &lt;/ul&gt;
-    //方法3.用v-for遍历对象的value值和key，value在前面。(属性和属性值)
-    &lt;ul&gt;
-        &lt;li v-for=&quot;(value,key,index) in info&quot;&gt;&#123;&#123;value&#125;&#125;--&#123;&#123;key&#125;&#125;--&#123;&#123;index&#125;&#125;&lt;/li&gt;
-    &lt;/ul&gt;
-    //方法4.用v-for遍历对象的value值、key和index。(属性和属性值和索引)
-&lt;/div&gt;
-
+<p>父组件</p>
+<pre><code>&lt;template&gt;
+  &lt;section&gt;
+    &lt;p&gt;父组件收到&lt;/p&gt;
+    &lt;p&gt;祖父的名字：&#123;&#123;name&#125;&#125;&lt;/p&gt;
+    &lt;children v-bind=&quot;$attrs&quot; v-on=&quot;$listeners&quot;&gt;&lt;/children&gt;
+  &lt;/section&gt;
+&lt;/template&gt;
+ 
 &lt;script&gt;
-    const app = new Vue(&#123;
-        el:&quot;#app&quot;,
-        data:&#123;
-            info:&#123;
-                name:&quot;lfn&quot;,
-                age :18,
-                height:180
-            &#125;
-        &#125;
-    &#125;)
-&lt;/script&gt;    
+  import Children from &#39;./Children&#39;
+ 
+  export default &#123;
+    name: &quot;Parent&quot;,
+    components: &#123;
+      Children
+    &#125;,
+    // 父组件接收了name,所以name值是不会传到子组件的
+    props:[&#39;name&#39;],
+    data() &#123;
+      return &#123;&#125;
+    &#125;,
+    methods: &#123;&#125;,
+    mounted() &#123;
+    &#125;
+  &#125;
+&lt;/script&gt;
 </code></pre>
-<h2 id="4-v-for使用中添加key"><a href="#4-v-for使用中添加key" class="headerlink" title="4.v-for使用中添加key"></a>4.v-for使用中添加key</h2><p>在遍历数组时可以在元素中绑定一个key，key=数组值</p>
-<p>绑定key的作用 ：主要是为了高效的更新虚拟DOM。(vue内部；让性能高一点)</p>
-<ul>
-<li><p>当某一层有很多相同的节点时，也就是列表节点时，我们希望插入一个新的节点，</p>
-<p> 则Diff算法默认执行起来是比较复杂的。(一个个重新替换)</p>
-</li>
-<li><p>但绑定key后，可以使用key来给每个节点做一个唯一标识</p>
-<p> Diff算法就可以正确的识别此节点，找到正确的位置区插入新的节点。</p>
-  <div id="app">
-    <ul>
-      <li v-for="item in letters" :key="item"></li>
-    </ul>
-  </div>
-
-  <script>
-    const app = new Vue({
-      el:"#app",
-      data:{
-        letters:["A","B","C","D","E"]
-      }
-    })
-  </script></li>
-</ul>
+<p>子组件</p>
+<pre><code>&lt;template&gt;
+  &lt;section&gt;
+    &lt;p&gt;子组件收到&lt;/p&gt;
+    &lt;p&gt;祖父的名字：&#123;&#123;name&#125;&#125;&lt;/p&gt;
+    &lt;p&gt;祖父的性别：&#123;&#123;sex&#125;&#125;&lt;/p&gt;
+    &lt;p&gt;祖父的年龄：&#123;&#123;age&#125;&#125;&lt;/p&gt;
+    &lt;p&gt;祖父的爱好：&#123;&#123;hobby&#125;&#125;&lt;/p&gt;
+ 
+    &lt;button @click=&quot;sayKnow&quot;&gt;我知道啦&lt;/button&gt;
+  &lt;/section&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+  export default &#123;
+    name: &quot;Children&quot;,
+    components: &#123;&#125;,
+    // 由于父组件已经接收了name属性，所以name不会传到子组件了
+    props:[&#39;sex&#39;,&#39;age&#39;,&#39;hobby&#39;,&#39;name&#39;],
+    data() &#123;
+      return &#123;&#125;
+    &#125;,
+    methods: &#123;
+      sayKnow()&#123;
+        this.$emit(&#39;sayKnow&#39;,&#39;我知道啦&#39;)
+      &#125;
+    &#125;,
+    mounted() &#123;
+    &#125;
+  &#125;
+&lt;/script&gt;
+</code></pre>
+<p>————————————————<br>版权声明：本文为CSDN博主「小毕学习代码」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_70703397/article/details/132201160">https://blog.csdn.net/qq_70703397/article/details/132201160</a></p>
  
       <!-- reward -->
       
@@ -1169,7 +413,7 @@ console.log(&quot;forArr==遍历后===&quot;,forArr)
 
     
     <article
-  id="post-vue遍历对象的几种方式"
+  id="post-Vue2传值方式详解08"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -1180,8 +424,8 @@ console.log(&quot;forArr==遍历后===&quot;,forArr)
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/08/29/vue%E9%81%8D%E5%8E%86%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/"
-    >vue遍历对象的几种方式</a> 
+  <a class="article-title" href="/2023/09/08/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A308/"
+    >Vue2传值方式详解08-路由传值</a> 
 </h2>
  
 
@@ -1189,8 +433,8 @@ console.log(&quot;forArr==遍历后===&quot;,forArr)
     </header>
      
     <div class="article-meta">
-      <a href="/2023/08/29/vue%E9%81%8D%E5%8E%86%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/" class="article-date">
-  <time datetime="2023-08-29T08:33:22.000Z" itemprop="datePublished">2023-08-29</time>
+      <a href="/2023/09/08/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A308/" class="article-date">
+  <time datetime="2023-09-08T04:24:36.000Z" itemprop="datePublished">2023-09-08</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -1200,72 +444,337 @@ console.log(&quot;forArr==遍历后===&quot;,forArr)
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>在vue项目开发中，我们需要对对象进行处理等问题，这里简单记录遍历对象的几种方法</p>
-<p>一、for in 这是遍历对象的基本方法，其中key代表键，值可以通过Object[key]进行获取，</p>
-<pre><code>let obj1 = &#123;
-    name: &#39;张三&#39;,
-    age: &#39;18&#39;,
-    height: &#39;180&#39;
-&#125;
-for (let key in obj2) &#123;
-    console.log(&#39;key&#39;, key)
-    console.log(&#39;value&#39;, obj1[key])
-&#125;
-        
+  <p>路由传值</p>
+<p>*使用问号传值</p>
+<p>A页面跳转B页面时使用 this.r o u t e r . p u s h ( ’ / B ? n a m e = d a n s e e k ’ ) B 页面可以使用 t h i s . router.push(’/B?name=danseek’) B页面可以使用 this.router.push(’/B?name=danseek’)B页面可以使用this.route.query.name 来获取A页面传过来的值<br>上面要注意router和route的区别</p>
+<p>*使用冒号传值</p>
+<p>配置如下路由：</p>
+<pre><code>&#123;
+    path: &#39;/b/:name&#39;,
+    name: &#39;b&#39;,
+    component: () =&gt; import( &#39;../views/B.vue&#39;)
+&#125;,
 </code></pre>
-<p>衍生：obj2中部分key与obj1相同，这是需要将obj1与obj2中key相同的进行赋值，代码如下</p>
-<pre><code>let obj2 = &#123;
-    name: &#39;&#39;,
-    age: &#39;&#39;,
-&#125;
-let obj1 = &#123;
-    name: &#39;张三&#39;,
-    age: &#39;18&#39;,
-    height: &#39;180&#39;
-&#125;
-for (let key in obj2) &#123;
-    obj2[key] = obj1[key]
-&#125;
-console.log(obj2)
-        
+<p>在B页面可以通过 this.$route.params.name 来获取路由传入的name的值</p>
+<p>*使用父子组件传值</p>
+<p>由于router-view本身也是一个组件，所以我们也可以使用父子组件传值方式传值，然后在对应的子页面里加上props，因为type更新后没有刷新路由，所以不能直接在子页面的mounted钩子里直接获取最新type的值，而要使用watch</p>
+<pre><code>&lt;router-view :type=&quot;type&quot;&gt;&lt;/router-view&gt;
+ 
+// 子页面
+props: [&#39;type&#39;]
+watch: &#123;
+       type()&#123;
+           // console.log(&quot;在这个方法可以时刻获取最新的数据:type=&quot;,this.type)
+       &#125;,
+&#125;,
 </code></pre>
-<p>二、Object.keys(),ES5新增的对象方法，该方法会返回自身属性名组成的数组</p>
-<pre><code>let obj1 = &#123;
-    name: &#39;张三&#39;,
-    age: &#39;18&#39;,
-    height: &#39;180&#39;
-&#125;
-let a = Object.keys(obj1)
-console.log(a) //输出[&#39;name&#39;, &#39;age&#39;, &#39;height&#39;]
-        
+<p>————————————————<br>版权声明：本文为CSDN博主「小毕学习代码」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_70703397/article/details/132201160">https://blog.csdn.net/qq_70703397/article/details/132201160</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-Vue2传值方式详解07"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/09/07/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A307/"
+    >Vue2传值方式详解07-sessionStorage传值</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/09/07/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A307/" class="article-date">
+  <time datetime="2023-09-07T12:20:20.000Z" itemprop="datePublished">2023-09-07</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>sessionStorage 是浏览器的全局对象，存在它里面的数据会在页面关闭时清除 。运用这个特性，我们可以在所有页面共享一份数据。<br>代码示例：</p>
+<pre><code>// 保存数据到 sessionStorage
+sessionStorage.setItem(&#39;key&#39;, &#39;value&#39;);
+ 
+// 从 sessionStorage 获取数据
+let data = sessionStorage.getItem(&#39;key&#39;);
+ 
+// 从 sessionStorage 删除保存的数据
+sessionStorage.removeItem(&#39;key&#39;);
+ 
+// 从 sessionStorage 删除所有保存的数据
+sessionStorage.clear();
 </code></pre>
-<p>衍生：obj2中部分key与obj1相同，这是需要将obj1与obj2中key相同的进行赋值，代码如下</p>
-<pre><code>let obj2 = &#123;
-    name: &#39;&#39;,
-    age: &#39;&#39;,
-&#125;
-let obj1 = &#123;
-    name: &#39;张三&#39;,
-    age: &#39;18&#39;,
-    height: &#39;180&#39;
-&#125;
-Object.keys(obj2).forEach(item =&gt; &#123;
-    obj2[item] = obj1[item]
-&#125;)
-console.log(obj2) //输出&#123;name: &#39;张三&#39;, age: &#39;18&#39;&#125;
-        
+<p>注意：里面存的是键值对，只能是字符串类型，如果要存对象的话，需要使用 let objStr = JSON.stringify(obj) 转成字符串然后再存储（使用的时候 let obj = JSON.parse(objStr) 解析为对象）。<br>推荐一个库 good-storage ，它封装了sessionStorage ，可以直接用它的API存对象</p>
+<pre><code>//localStorage
+ storage.set(key,val) 
+ storage.get(key, def)
+//sessionStorage
+ storage.session.set(key, val)
 </code></pre>
-<p>三、Object.getOwnPropertyNames()，该方法也是ES5新增的，返回一个自身属性名的数组，包括不可枚举的属性</p>
-<pre><code>let obj1 = &#123;
-    name: &#39;张三&#39;,
-    age: &#39;18&#39;,
-    height: &#39;180&#39;
-&#125;
-let a = Object.getOwnPropertyNames(obj1)
-console.log(a) //[&#39;name&#39;, &#39;age&#39;, &#39;height&#39;]
-        
+<p>————————————————<br>版权声明：本文为CSDN博主「小毕学习代码」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_70703397/article/details/132201160">https://blog.csdn.net/qq_70703397/article/details/132201160</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-Vue2传值方式详解06"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/09/06/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A306/"
+    >Vue2传值方式详解06-$parent</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/09/06/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A306/" class="article-date">
+  <time datetime="2023-09-06T05:13:13.000Z" itemprop="datePublished">2023-09-06</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>通过parent可以获父组件实例 ，然 后通过这个实例就可以访问父组件的属 性和方法 ，它还有一个兄弟parent可以获父组件实例，然后通过这个实例就可以访问父组件的属性和方法，它还有一个兄弟parent可以获父组件实例，然后通过这个实例就可以访问父组件的属性和方法，它还有一个兄弟root，可以获取根组件实例。</p>
+<p>代码示例：</p>
+<pre><code>// 获父组件的数据
+this.$parent.foo
+ 
+// 写入父组件的数据
+this.$parent.foo = 2
+ 
+// 访问父组件的计算属性
+this.$parent.bar
+ 
+// 调用父组件的方法
+this.$parent.baz()
+ 
+//在子组件传给父组件例子中，可以使用this.$parent.getNum(100)传值给父组件。
 </code></pre>
-<p>————————————————<br>版权声明：本文为CSDN博主「Maidangchen」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/A1123352950/article/details/132687113">https://blog.csdn.net/A1123352950/article/details/132687113</a></p>
+<p>————————————————<br>版权声明：本文为CSDN博主「小毕学习代码」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_70703397/article/details/132201160">https://blog.csdn.net/qq_70703397/article/details/132201160</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-Vue2传值方式详解05"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/09/05/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A305/"
+    >Vue2传值方式详解05-Vuex通信</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/09/05/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A305/" class="article-date">
+  <time datetime="2023-09-05T04:12:12.000Z" itemprop="datePublished">2023-09-05</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>组件通过 dispatch 到 actions，actions 是异步操作，再 actions中通过 commit 到 mutations，mutations 再通过逻辑操作改变 state，从而同步到组件，更新其数据状态</p>
+<p>代码示例：</p>
+<p>父组件</p>
+<pre><code>//父组件
+template&gt;
+  &lt;div id=&quot;app&quot;&gt;
+    &lt;ChildA/&gt;
+    &lt;ChildB/&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+  import ChildA from &#39;./ChildA&#39; // 导入A组件
+  import ChildB from &#39;./ChildB&#39; // 导入B组件
+  export default &#123;
+    components: &#123;ChildA, ChildB&#125; // 注册组件
+  &#125;
+&lt;/script&gt;
+</code></pre>
+<p>子组件A</p>
+<pre><code>//子组件A
+&lt;template&gt;
+ &lt;div id=&quot;childA&quot;&gt;
+   &lt;h1&gt;我是A组件&lt;/h1&gt;
+   &lt;button @click=&quot;transform&quot;&gt;点我让B组件接收到数据&lt;/button&gt;
+   &lt;p&gt;因为点了B，所以信息发生了变化：&#123;&#123;BMessage&#125;&#125;&lt;/p&gt;
+ &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+ export default &#123;
+   data() &#123;
+     return &#123;
+       AMessage: &#39;Hello，B组件，我是A组件&#39;
+     &#125;
+   &#125;,
+   computed: &#123;
+     BMessage() &#123;
+       // 这里存储从store里获取的B组件的数据
+       return this.$store.state.BMsg
+     &#125;
+   &#125;,
+   methods: &#123;
+     transform() &#123;
+       // 触发receiveAMsg，将A组件的数据存放到store里去
+       this.$store.commit(&#39;receiveAMsg&#39;, &#123;
+         AMsg: this.AMessage
+       &#125;)
+     &#125;
+   &#125;
+ &#125;
+&lt;/script&gt;
+</code></pre>
+<p>子组件B</p>
+<pre><code>//子组件B
+&lt;template&gt;
+ &lt;div id=&quot;childB&quot;&gt;
+   &lt;h1&gt;我是B组件&lt;/h1&gt;
+   &lt;button @click=&quot;transform&quot;&gt;点我让A组件接收到数据&lt;/button&gt;
+   &lt;p&gt;点了A，我的信息发生了变化：&#123;&#123;AMessage&#125;&#125;&lt;/p&gt;
+ &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+ export default &#123;
+   data() &#123;
+     return &#123;
+       BMessage: &#39;Hello，A组件，我是B组件&#39;
+     &#125;
+   &#125;,
+   computed: &#123;
+     AMessage() &#123;
+       // 这里存储从store里获取的A组件的数据
+       return this.$store.state.AMsg
+     &#125;
+   &#125;,
+   methods: &#123;
+     transform() &#123;
+       // 触发receiveBMsg，将B组件的数据存放到store里去
+       this.$store.commit(&#39;receiveBMsg&#39;, &#123;
+         BMsg: this.BMessage
+       &#125;)
+     &#125;
+   &#125;
+ &#125;
+&lt;/script&gt;
+</code></pre>
+<p>vuex</p>
+<pre><code>//vuex
+import Vue from &#39;vue&#39;
+ import Vuex from &#39;vuex&#39;
+ Vue.use(Vuex)
+ const state = &#123;
+   AMsg: &#39;&#39;,
+   BMsg: &#39;&#39;
+ &#125;
+ 
+ const mutations = &#123;
+   receiveAMsg(state, payload) &#123;
+     // 将A组件的数据存放于state
+     state.AMsg = payload.AMsg
+   &#125;,
+   receiveBMsg(state, payload) &#123;
+     // 将B组件的数据存放于state
+     state.BMsg = payload.BMsg
+   &#125;
+ &#125;
+ 
+ export default new Vuex.Store(&#123;
+   state,
+   mutations
+ &#125;)
+</code></pre>
+<p>————————————————<br>版权声明：本文为CSDN博主「小毕学习代码」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_70703397/article/details/132201160">https://blog.csdn.net/qq_70703397/article/details/132201160</a></p>
  
       <!-- reward -->
       
@@ -1292,7 +801,7 @@ console.log(a) //[&#39;name&#39;, &#39;age&#39;, &#39;height&#39;]
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/15/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="page-number" href="/page/15/">15</a><span class="page-number current">16</span><a class="page-number" href="/page/17/">17</a><a class="page-number" href="/page/18/">18</a><span class="space">&hellip;</span><a class="page-number" href="/page/55/">55</a><a class="extend next" rel="next" href="/page/17/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/15/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="page-number" href="/page/15/">15</a><span class="page-number current">16</span><a class="page-number" href="/page/17/">17</a><a class="page-number" href="/page/18/">18</a><span class="space">&hellip;</span><a class="page-number" href="/page/57/">57</a><a class="extend next" rel="next" href="/page/17/">下一页</a>
   </nav>
   
 </section>

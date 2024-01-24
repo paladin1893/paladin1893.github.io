@@ -154,7 +154,7 @@
     
     
     <article
-  id="post-利用Python的zipfile模块批量压缩指定文件夹下子文件夹"
+  id="post-QT对lineEdit添加图标"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -165,8 +165,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/10/15/%E5%88%A9%E7%94%A8Python%E7%9A%84zipfile%E6%A8%A1%E5%9D%97%E6%89%B9%E9%87%8F%E5%8E%8B%E7%BC%A9%E6%8C%87%E5%AE%9A%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%8B%E5%AD%90%E6%96%87%E4%BB%B6%E5%A4%B9/"
-    >Python删除目录下的所有文件</a> 
+  <a class="article-title" href="/2023/10/22/QT%E5%AF%B9lineEdit%E6%B7%BB%E5%8A%A0%E5%9B%BE%E6%A0%87/"
+    >QT对lineEdit添加图标</a> 
 </h2>
  
 
@@ -174,8 +174,8 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2023/10/15/%E5%88%A9%E7%94%A8Python%E7%9A%84zipfile%E6%A8%A1%E5%9D%97%E6%89%B9%E9%87%8F%E5%8E%8B%E7%BC%A9%E6%8C%87%E5%AE%9A%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%8B%E5%AD%90%E6%96%87%E4%BB%B6%E5%A4%B9/" class="article-date">
-  <time datetime="2023-10-15T02:15:00.000Z" itemprop="datePublished">2023-10-15</time>
+      <a href="/2023/10/22/QT%E5%AF%B9lineEdit%E6%B7%BB%E5%8A%A0%E5%9B%BE%E6%A0%87/" class="article-date">
+  <time datetime="2023-10-22T02:22:00.000Z" itemprop="datePublished">2023-10-22</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -185,467 +185,455 @@
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>废话不多说，直接上代码，<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qz_CSDN/article/details/127745062">https://blog.csdn.net/qz_CSDN/article/details/127745062</a></p>
-<pre><code>import zipfile
-import os
-
-
-def zip_folder(dir_path, zip_full_name):
-    &quot;&quot;&quot;
-    压缩文件夹下所有子文件夹和文件
-    :param dirpath: 目标文件夹路径
-    :param zip_full_name: zip文件绝对路径
-    &quot;&quot;&quot;
-    with zipfile.ZipFile(zip_full_name, &#39;w&#39;, zipfile.ZIP_DEFLATD) as zf:
-        for dir_full_path, dir_names, file_names in os.walk(dir_path):
-            # zip压缩包内的相对路径
-            dir_path_inzip = dir_full_path.replace(dirpath, &#39;&#39;)
-            for dir_name in dir_names:
-                zf.write(os.path.join(dir_full_path, dir_name), os.path.join(dir_path_inzip, dir_name))
-            for file_name in file_names:
-                zf.write(os.path.join(dir_full_path, file_name), os.path.join(dir_path_inzip, file_name))
-    zf.close()
-
-
-if __name__ == &#39;__name__&#39;:
-    in_path = u&quot;F:\\测试\\1&quot;
-    out_path = u&quot;F:\\测试\\输出&quot;
-    
-    folder_name_list = os.listdir(in_path)
-    count = 0
-    # 遍历输入路径下所有子文件夹，分别压缩
-    for folder_name in folder_name_list:
-        count += 1
-        zip_file_fullname = os.path.join(out_path, folder_name + &quot;.zip&quot;)
-        print(&quot;&#123;0&#125;、&#123;1&#125;&quot;.format(count, folder_name))
-        print(&quot;    &#123;0&#125;&quot;.format(zip_file_fullname))
-        zip_folder(os.path.join(in_path, folder_name), zip_file_fullname)
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Python删除目录下的所有文件"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/10/14/Python%E5%88%A0%E9%99%A4%E7%9B%AE%E5%BD%95%E4%B8%8B%E7%9A%84%E6%89%80%E6%9C%89%E6%96%87%E4%BB%B6/"
-    >Python删除目录下的所有文件</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/10/14/Python%E5%88%A0%E9%99%A4%E7%9B%AE%E5%BD%95%E4%B8%8B%E7%9A%84%E6%89%80%E6%9C%89%E6%96%87%E4%BB%B6/" class="article-date">
-  <time datetime="2023-10-14T02:14:00.000Z" itemprop="datePublished">2023-10-14</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://www.python100.com/html/4XI33HW03WL0.html">https://www.python100.com/html/4XI33HW03WL0.html</a></p>
-<p>一、Python删除目录及目录下文件</p>
-<pre><code>import shutil
-import os
-
-dir_path = &#39;/path/to/directory&#39;
-
-# 删除目录
-shutil.rmtree(dir_path)
-</code></pre>
-<p>当你想要删除一个目录以及里面所有的文件时，你可以使用shutil模块中的rmtree()函数。该函数可以删除整个目录，包括其所有的文件和子目录。这是最便捷的方法，但是请确保你真的需要这么做。</p>
-<p>二、Python删除目录中所有内容</p>
-<pre><code>import os
-
-dir_path = &#39;/path/to/directory&#39;
-
-# 删除目录中所有的文件
-for filename in os.listdir(dir_path):
-    file_path = os.path.join(dir_path, filename)
-    if os.path.isfile(file_path) or os.path.islink(file_path):
-        os.unlink(file_path)
-    elif os.path.isdir(file_path):
-        shutil.rmtree(file_path)
-
-# 删除目录本身
-os.rmdir(dir_path)
-</code></pre>
-<p>如果你想要删除目录中所有内容，但是保留目录本身，你可以使用os模块中listdir()和unlink()函数来遍历该目录中的所有文件并逐个删除。在删除文件夹之前，必须先删除所有文件和子目录。</p>
-<p>三、Python os删除目录</p>
-<pre><code>import os
-
-dir_path = &#39;/path/to/directory&#39;
-
-# 删除目录
-os.removedirs(dir_path)
-</code></pre>
-<p>os.removedirs()函数可以删除指定的目录。如果该目录是一个空目录，则可以直接删除它。如果该目录不是空目录，则需要递归地删除其所有子目录和文件。</p>
-<p>四、Python删除指定目录下的文件</p>
-<pre><code>import os
-
-dir_path = &#39;/path/to/directory&#39;
-
-# 删除指定格式的文件
-for filename in os.listdir(dir_path):
-    if filename.endswith(&#39;.txt&#39;):
-        os.unlink(os.path.join(dir_path, filename))
-</code></pre>
-<p>如果你只想删除指定格式的文件，你可以使用listdir()和endswith()函数来列出该目录中满足指定格式的所有文件，并逐个删除。</p>
-<p>五、Python删除非空目录</p>
-<pre><code>import shutil
-
-dir_path = &#39;/path/to/directory&#39;
-
-# 删除非空目录
-shutil.rmtree(dir_path)
-</code></pre>
-<p>如果你只想删除非空目录，你可以使用shutil模块的rmtree()函数。请注意，该函数可以删除目录和其中的所有文件和子目录。</p>
-<p>通过上述5种方法，你可以选择最适用于你的需求的方法来删除指定目录下的所有文件。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Python判断文件是否存在并且删除"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/10/13/Python%E5%88%A4%E6%96%AD%E6%96%87%E4%BB%B6%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8%E5%B9%B6%E4%B8%94%E5%88%A0%E9%99%A4/"
-    >Python判断文件是否存在并且删除</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/10/13/Python%E5%88%A4%E6%96%AD%E6%96%87%E4%BB%B6%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8%E5%B9%B6%E4%B8%94%E5%88%A0%E9%99%A4/" class="article-date">
-  <time datetime="2023-10-13T02:13:00.000Z" itemprop="datePublished">2023-10-13</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://www.python100.com/html/4XI33HW03WL0.html">https://www.python100.com/html/4XI33HW03WL0.html</a></p>
-<p>对于不熟悉Python文件操作的开发者来说，如何判断文件是否存在并删除是一件常见的问题。本文将会详细介绍Python如何判断文件是否存在，并通过多个方面介绍如何删除指定文件。</p>
-<p>一、Python如何判断文件是否存在？</p>
-<p>在Python中，使用os和os.path模块可以判断文件是否存在。下面是一个判断文件是否存在的代码：</p>
-<pre><code>import os
-
-if os.path.isfile(&#39;test.txt&#39;):
-    print(&quot;File exists&quot;)
-else:
-    print(&quot;File not exists&quot;)
-</code></pre>
-<p>上面的代码通过isfile()函数判断指定文件是否存在，如果存在则输出”File exists”，否则输出”File not exists”。</p>
-<pre><code>import os
-
-if os.path.exists(&#39;/path/to/file&#39;):
-    print(&#39;文件存在&#39;)
-else:
-    print(&#39;文件不存在&#39;)
-</code></pre>
-<p>以上代码中，/path/to/file是要检测的文件路径。如果文件存在，就会输出文件存在，否则输出文件不存在。</p>
-<p>二、Python如何删除文件？</p>
-<p>如果我们需要删除文件，可以使用Python的os模块中的remove函数。下面是一个删除文件的代码：</p>
-<pre><code>import os
-
-if os.path.isfile(&#39;test.txt&#39;):
-    os.remove(&#39;test.txt&#39;)
-    print(&quot;File removed&quot;)
-else:
-    print(&quot;File not exists&quot;)
-</code></pre>
-<p>上面的代码会检查文件是否存在，如果存在则删除文件，并输出”File removed”，否则输出”File not exists”。</p>
-<p>三、Python如何删除目录？</p>
-<p>如果我们需要删除整个目录，可以使用Python的os模块中的rmdir函数或者shutil模块中的rmtree函数。下面是一个使用rmdir函数删除目录的代码：</p>
-<pre><code>import os
-
-if os.path.isdir(&#39;test&#39;):
-    os.rmdir(&#39;test&#39;)
-    print(&quot;Directory removed&quot;)
-else:
-    print(&quot;Directory not exists&quot;)
-</code></pre>
-<p>上面的代码会检查目录是否存在，如果存在则删除目录，并输出”Directory removed”，否则输出”Directory not exists”。</p>
-<p>使用shutil模块的rmtree函数可以删除整个目录，包括目录下的所有文件和子目录。下面是一个使用rmtree函数删除目录的代码：</p>
-<pre><code>import shutil
-
-if os.path.exists(&#39;test&#39;):
-    shutil.rmtree(&#39;test&#39;)
-    print(&quot;Directory removed&quot;)
-else:
-    print(&quot;Directory not exists&quot;)
-</code></pre>
-<p>上面的代码会检查目录是否存在，如果存在则删除目录，并输出”Directory removed”，否则输出”Directory not exists”。</p>
-<p>四、Python如何删除特定类型的文件？</p>
-<p>如果我们需要删除特定类型的文件，可以通过glob模块来获取所有指定类型的文件，然后使用os模块中的remove函数删除它们。下面是一个删除所有txt文件的代码：</p>
-<pre><code>import glob, os
-
-for file in glob.glob(&quot;*.txt&quot;):
-    os.remove(file)
-    print(&quot;File removed: %s&quot; % file)
-</code></pre>
-<p>上面的代码会列出所有txt文件，并依次删除它们。删除每个文件时，代码会输出”File removed: file.txt”，其中file.txt是被删除的文件名。</p>
-<p>五、总结</p>
-<p>本文详细介绍了如何在Python中判断文件是否存在并删除。从多个方面介绍了如何删除文件和目录，以及如何删除特定类型的文件。为Python开发者提供了解决类似问题的思路和代码示例，希望本文对您有所帮助。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Python中查找文件是否存在"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/10/12/Python%E4%B8%AD%E6%9F%A5%E6%89%BE%E6%96%87%E4%BB%B6%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8/"
-    >Python中查找文件是否存在</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/10/12/Python%E4%B8%AD%E6%9F%A5%E6%89%BE%E6%96%87%E4%BB%B6%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8/" class="article-date">
-  <time datetime="2023-10-12T02:12:00.000Z" itemprop="datePublished">2023-10-12</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://www.python100.com/html/14E0N1LV1S5V.html">https://www.python100.com/html/14E0N1LV1S5V.html</a></p>
-<p>在Python编程中，我们经常需要查找文件是否存在。这个功能在文件处理、数据分析、系统管理等各个领域都非常有用。在本文中，我们将以Python作为中心，详细介绍如何使用Python来查找文件是否存在。</p>
-<p>一、使用os模块的方法</p>
-<p>Python的标准库中的os模块提供了一些方法来操作文件和目录。其中，os.path模块提供了一些判断文件或目录是否存在的函数。</p>
-<pre><code>import os
-
-# 检查文件是否存在
-def file_exists(path):
-    return os.path.exists(path)
-
-# 检查目录是否存在
-def directory_exists(path):
-    return os.path.isdir(path)
-</code></pre>
-<p>使用os.path.exists函数可以判断文件是否存在，返回值为True或False。如果文件存在，则返回True；如果文件不存在，则返回False。</p>
-<p>使用os.path.isdir函数可以判断目录是否存在，返回值同样为True或False。如果目录存在，则返回True；如果目录不存在，则返回False。</p>
-<p>二、使用glob模块的方法</p>
-<p>除了os模块，Python还提供了一个强大的文件和目录操作模块glob。glob模块可以使用通配符来查找文件。</p>
-<pre><code>import glob
-
-# 查找指定目录下的所有文件
-def find_files(directory, pattern):
-    return glob.glob(os.path.join(directory, pattern))
-
-# 判断文件是否存在
-def file_exists(path):
-    return len(find_files(os.path.dirname(path), os.path.basename(path))) &gt; 0
-</code></pre>
-<p>使用glob.glob函数可以根据通配符模式查找符合条件的文件。在find_files函数中，我们使用os.path.join函数将目录和文件名拼接在一起，然后使用glob.glob函数查找匹配的文件。</p>
-<p>在file_exists函数中，我们调用find_files函数查找指定文件并返回匹配到的文件列表，然后用len函数来判断文件列表的长度。如果长度大于0，则表示文件存在；如果长度等于0，则表示文件不存在。</p>
-<p>三、使用pathlib模块的方法</p>
-<p>Python 3.4及以上版本引入的pathlib模块提供了一种更简洁的方式来查找文件。</p>
-<pre><code>from pathlib import Path
-
-# 检查文件是否存在
-def file_exists(path):
-    return Path(path).is_file()
-
-# 检查目录是否存在
-def directory_exists(path):
-    return Path(path).is_dir()
-</code></pre>
-<p>在pathlib模块中，我们可以使用Path类的is_file方法来判断文件是否存在，使用is_dir方法来判断目录是否存在。这些方法返回值同样为True或False。</p>
-<p>四、其他注意事项<br>在使用Python查找文件是否存在时，还有一些注意事项需要注意：</p>
-<ol>
-<li><p>文件路径的表示：在使用文件路径时，我们需要注意使用不同的表示方式，如绝对路径、相对路径、转义字符等。</p>
-</li>
-<li><p>文件权限的问题：有时候文件存在，但是由于权限问题，我们无法操作或读取该文件。</p>
-</li>
-<li><p>文件名和文件后缀：有时候文件名或文件后缀的大小写问题可能导致文件找不到。</p>
-</li>
-</ol>
-<p>总结来说，使用Python查找文件是否存在需要借助os模块、glob模块或pathlib模块，根据具体的需求选择合适的方法。同时，在使用过程中还需注意文件路径、文件权限和文件名后缀等问题。</p>
-<p>希望本文对你理解Python中查找文件是否存在有所帮助！</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-pyqt界面美化笔记"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/10/11/pyqt%E7%95%8C%E9%9D%A2%E7%BE%8E%E5%8C%96%E7%AC%94%E8%AE%B0/"
-    >pyqt界面美化笔记</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/10/11/pyqt%E7%95%8C%E9%9D%A2%E7%BE%8E%E5%8C%96%E7%AC%94%E8%AE%B0/" class="article-date">
-  <time datetime="2023-10-11T02:11:00.000Z" itemprop="datePublished">2023-10-11</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1VY4y1p7it/?spm_id_from=333.999.0.0">https://www.bilibili.com/video/BV1VY4y1p7it/?spm_id_from=333.999.0.0</a></p>
-<p>1、窗体用label贴图或配色，做背景</p>
-<pre><code>background-color: rgba(16,30,41,240);
-border-radius:10px;
-</code></pre>
-<p>2、lineedit配色及调样式</p>
-<pre><code>background-color: rgba(0, 0, 0,0);
-border:1px solid rgba(0,0,0,0);
-border-bottom-color:rgba(255,255,255,200);
-padding-bottom:7px;
-</code></pre>
-<p>3、pushbutton配色及调样式</p>
-<pre><code>QPushButton#pushButton&#123;
-background-color:rgba(2,65,118,255);
-color:rgba(255,255,255,200);
-border-radius:5px;
-&#125;
-QPushButton#pushButton:hover&#123;
-background-color:rgba(2,65,118,150);
-color:rgba(255,255,255,200);
-border-radius:5px;
-&#125;
-QPushButton#pushButton:pressed&#123;
-padding-left:5px;
-padding-top:5px;
-background-color:rgba(2,65,118,100);
-&#125;
-</code></pre>
-<p>4、隐藏框：</p>
-<pre><code>MainWindow.setWindowFlags(QtCore.Qt.FramelessWindowHint)
-MainWindow.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-</code></pre>
-<p>5、main函数</p>
+  <h1 id="方案一"><a href="#方案一" class="headerlink" title="方案一"></a>方案一</h1><p>使用QLineEdit的setClearButtonEnabled方法显示清除按钮</p>
+<p>在PyQt中，QLineEdit类具有一个setClearButtonEnabled方法，该方法用于在文本框的右侧显示一个清除按钮。我们可以使用这个清除按钮来放置一个图标。</p>
+<p>首先，我们需要创建一个QLineEdit对象，并将其添加到主窗口中，如下所示：</p>
 <pre><code>import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow
-import login
+from PyQt5.QtWidgets import QApplication, QMainWindow, QLineEdit
+
+class MyWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        self.initUI()
+
+    def initUI(self):
+        self.setGeometry(100, 100, 300, 200)
+
+        self.lineedit = QLineEdit(self)
+        self.lineedit.setGeometry(50, 50, 200, 30)
+
+        self.lineedit.setClearButtonEnabled(True)
+
+
 if __name__ == &#39;__main__&#39;:
     app = QApplication(sys.argv)
-    win = QMainWindow()
-    ui = login.Ui_MainWindow()
-    ui.setupUi(win)
-    win.show()
+    mywindow = MyWindow()
+    mywindow.show()
+    sys.exit(app.exec_())
+</code></pre>
+<p>在上面的代码中，我们创建了一个自定义的窗口类MyWindow，并在initUI方法中创建了一个QLineEdit对象lineedit。然后，我们调用setClearButtonEnabled方法并将其参数设置为True，以显示清除按钮。</p>
+<p>保存并运行上述代码，将会看到一个带有清除按钮的文本框出现在应用程序的主窗口中。</p>
+<p>在上面的代码中，我们创建了一个自定义的窗口类MyWindow，并在initUI方法中创建了一个QLineEdit对象lineedit。然后，我们调用setClearButtonEnabled方法并将其参数设置为True，以显示清除按钮。</p>
+<p>保存并运行上述代码，将会看到一个带有清除按钮的文本框出现在应用程序的主窗口中。</p>
+<h1 id="方案二"><a href="#方案二" class="headerlink" title="方案二"></a>方案二</h1><p>使用QLineEdit的setStyleSheet方法设置图标样式</p>
+<p>除了显示清除按钮之外，我们还可以使用QLineEdit的setStyleSheet方法来设置图标样式，并将其放置在文本框的左侧或右侧。</p>
+<p>首先，我们需要创建一个QLineEdit对象，并将其添加到主窗口中，如下所示：</p>
+<pre><code>import sys
+from PyQt5.QtWidgets import QApplication, QMainWindow, QLineEdit
+
+class MyWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        self.initUI()
+
+    def initUI(self):
+        self.setGeometry(100, 100, 300, 200)
+
+        self.lineedit = QLineEdit(self)
+        self.lineedit.setGeometry(50, 50, 200, 30)
+
+        self.lineedit.setStyleSheet(&quot;background-image: url(&#39;icon.png&#39;);  background-position: right; background-repeat: no-repeat; padding-right: 20px;&quot;)
+
+
+if __name__ == &#39;__main__&#39;:
+    app = QApplication(sys.argv)
+    mywindow = MyWindow()
+    mywindow.show()
+    sys.exit(app.exec_())
+</code></pre>
+<p>在上面的代码中，我们使用了QLineEdit的setStyleSheet方法，并为其设置了一个包含图标的背景样式。在这个样式中，我们使用了background-image属性来指定图标的URL，background-position属性来设置图标的位置（这里是右侧），background-repeat属性来设置图标是否重复显示，padding-right属性来设置图标与文本框之间的距离。</p>
+<p>保存并运行上述代码，将会看到一个带有图标的文本框出现在应用程序的主窗口中。</p>
+<h1 id="方案三"><a href="#方案三" class="headerlink" title="方案三"></a>方案三</h1><ol start="3">
+<li>自定义QLineEdit来放置图标<br>除了使用QLineEdit的现有方法来放置图标之外，我们还可以自定义一个QLineEdit子类，并在其中绘制图标。</li>
+</ol>
+<p>首先，我们需要创建一个自定义的QLineEdit子类，如下所示：</p>
+<pre><code>import sys
+from PyQt5.QtWidgets import QApplication, QMainWindow, QLineEdit
+from PyQt5.QtGui import QIcon, QPainter
+from PyQt5.QtCore import Qt
+
+class IconLineEdit(QLineEdit):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.icon = QIcon(&#39;icon.png&#39;)
+
+    def paintEvent(self, event):
+        super().paintEvent(event)
+        painter = QPainter(self)
+        rect = self.contentsRect()
+        icon_rect = QRect(rect.right() - 20, rect.top(), 20, rect.height())
+        self.icon.paint(painter, icon_rect, Qt.AlignCenter)
+
+class MyWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        self.initUI()
+
+    def initUI(self):
+        self.setGeometry(100, 100, 300, 200)
+
+        self.lineedit = IconLineEdit(self)
+        self.lineedit.setGeometry(50, 50, 200, 30)
+
+if __name__ == &#39;__main__&#39;:
+    app = QApplication(sys.argv)
+    mywindow = MyWindow()
+    mywindow.show()
+    sys.exit(app.exec_())
+</code></pre>
+<p>在上面的代码中，我们创建了一个名为IconLineEdit的自定义QLineEdit子类，并在其paintEvent方法中绘制了一个图标。我们首先调用了父类QlineEdit的paintEvent方法来绘制文本框本身，然后使用QPainter对象绘制了一个图标，并设置了图标的位置（这里是在内容矩形的右侧）和对齐方式（居中对齐）。</p>
+<p>然后，我们在自定义的MyWindow类中使用这个自定义的IconLineEdit类来创建一个带有图标的文本框。</p>
+<p>保存并运行上述代码，将会看到一个带有图标的文本框出现在应用程序的主窗口中。</p>
+<h1 id="方案四"><a href="#方案四" class="headerlink" title="方案四"></a>方案四</h1><p>创建了一个QAction并设置其图标，然后通过addAction()方法将该QAction添加到QLineEdit控件的左侧。<br>第二个参数指定添加的位置，QLineEdit::LeadingPosition以在最左侧添加图像，QLineEdit::TrailingPosition以在最右侧添加图像</p>
+<pre><code>//对lineEdit左侧嵌入图片
+actionPassword = QAction(self)
+actionPassword.setIcon(QIcon(&quot;:/icons/icons/Lock.png&quot;))
+self.ui.lineEdit_Password.addAction(actionPassword, QLineEdit.LeadingPosition)
+
+self.iconEyeOpen = QIcon(&quot;:/icons/icons/EyeOpen.png&quot;)
+self.iconEyeClose = QIcon(&quot;:/icons/icons/EyeClose.png&quot;)
+self.actionVisible = QAction(self)
+self.actionVisible.setIcon(self.iconEyeClose)
+self.ui.lineEdit_Password.addAction(self.actionVisible, QLineEdit.TrailingPosition)
+self.actionVisible.setCheckable(True)
+self.actionVisible.toggled.connect(self.setPasswordVisibility)
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-PyQt5中未包含QtWebEngine,QtWebEngineWidgets也就是老版本的QWebView"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/10/21/PyQt5%E4%B8%AD%E6%9C%AA%E5%8C%85%E5%90%ABQtWebEngine,QtWebEngineWidgets%E4%B9%9F%E5%B0%B1%E6%98%AF%E8%80%81%E7%89%88%E6%9C%AC%E7%9A%84QWebView/"
+    >PyQt5中未包含QtWebEngine,QtWebEngineWidgets也就是老版本的QWebView</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/10/21/PyQt5%E4%B8%AD%E6%9C%AA%E5%8C%85%E5%90%ABQtWebEngine,QtWebEngineWidgets%E4%B9%9F%E5%B0%B1%E6%98%AF%E8%80%81%E7%89%88%E6%9C%AC%E7%9A%84QWebView/" class="article-date">
+  <time datetime="2023-10-21T02:21:00.000Z" itemprop="datePublished">2023-10-21</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h1><p>新版本的PyQt5 没有web引擎(至少5.15.4版本没有),需要自己改写</p>
+<h1 id="思路步骤"><a href="#思路步骤" class="headerlink" title="思路步骤"></a>思路步骤</h1><p>1、额外安装模块PyQtWebEngine</p>
+<pre><code>pip install PyQtWebEngine
+</code></pre>
+<p>2、先选择Widget控件</p>
+<p>3、将Widget升级成WebEngine</p>
+<p>4、在ui转成的py文件中添加URL 修改尺寸位置等</p>
+<pre><code>self.webview = QtWebEngineWidgets.QWebEngineView(self.centralwidget)
+self.webview.setGeometry(QtCore.QRect(280, 470, 120, 80))
+self.webview.setUrl(QtCore.QUrl(&quot;https://www.baidu.com/&quot;))
+self.webview.setObjectName(&quot;webview&quot;)
+</code></pre>
+<h1 id="具体代码"><a href="#具体代码" class="headerlink" title="具体代码"></a>具体代码</h1><pre><code>from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QVBoxLayout
+from PyQt5.QtCore import QUrl
+from PyQt5.QtWebEngineWidgets import QWebEngineView
+
+if __name__ == &#39;__main__&#39;:
+    app = QApplication([])
+    main_window = QMainWindow()
+    main_window.setGeometry(300, 300, 800, 600)
+    main_window.setWindowTitle(&quot;web引擎&quot;)
+
+    main_widget = QWidget()
+    main_window.setCentralWidget(main_widget)
+
+    main_layout = QVBoxLayout()
+    main_widget.setLayout(main_layout)
+
+    web = QWebEngineView()
+    main_layout.addWidget(web)
+
+    web.setUrl(QUrl(&quot;https://www.baidu.com&quot;))
+
+    main_window.show()
+    app.exec_()
+</code></pre>
+<p>————————————————<br>版权声明：本文为CSDN博主「qq_65932616」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_65932616/article/details/128364939">https://blog.csdn.net/qq_65932616/article/details/128364939</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-Python替换文件"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/10/20/Python%E6%9B%BF%E6%8D%A2%E6%96%87%E4%BB%B6/"
+    >Python替换文件</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/10/20/Python%E6%9B%BF%E6%8D%A2%E6%96%87%E4%BB%B6/" class="article-date">
+  <time datetime="2023-10-20T02:20:00.000Z" itemprop="datePublished">2023-10-20</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p><a target="_blank" rel="noopener" href="https://www.python100.com/html/W14O5WJ56I2U.html">https://www.python100.com/html/W14O5WJ56I2U.html</a></p>
+<p>Python是一种多用途、高效的编程语言，它具有广泛的应用场景。文件处理是其中一个领域，Python提供了很多方便的模块和函数来处理文本、二进制数据、CSV、JSON等文件类型。本文将介绍Python如何使用常用的模块和函数来替换文件。</p>
+<h1 id="一、os模块"><a href="#一、os模块" class="headerlink" title="一、os模块"></a>一、os模块</h1><p>os模块提供了与操作系统交互的接口。使用该模块可以方便地访问文件系统、环境变量等系统资源。os模块中的replace()函数可以用来替换文件名和路径。</p>
+<p>示例代码：</p>
+<pre><code>import os
+
+file_path = &#39;D:/test/file.txt&#39;
+new_path = &#39;D:/test/new_file.txt&#39;
+os.replace(file_path, new_path)
+</code></pre>
+<p>以上代码将文件D:/test/file.txt替换为D:/test/new_file.txt。该函数可以自动处理文件名重复等情况。</p>
+<h1 id="二、shutil模块"><a href="#二、shutil模块" class="headerlink" title="二、shutil模块"></a>二、shutil模块</h1><p>shutil模块是Python的一个标准库，提供了高级的文件操作接口。它可以实现复制、移动、重命名等文件操作。shutil模块中的move()函数也可以用来替换文件。</p>
+<p>示例代码：</p>
+<pre><code>import shutil
+
+file_path = &#39;D:/test/file.txt&#39;
+new_path = &#39;D:/test/new_file.txt&#39;
+shutil.move(file_path, new_path)
+</code></pre>
+<p>以上代码将文件D:/test/file.txt替换为D:/test/new_file.txt。该函数也可以自动处理文件名重复等情况。</p>
+<h1 id="三、re模块"><a href="#三、re模块" class="headerlink" title="三、re模块"></a>三、re模块</h1><p>re模块是Python的一个标准库，提供了正则表达式的功能。正则表达式可以用来匹配和替换字符串。在替换文件中，如果需要根据某些特定的规则替换文件内容，可以使用re模块。</p>
+<p>示例代码：</p>
+<pre><code>import re
+
+file_path = &#39;D:/test/file.txt&#39;
+new_path = &#39;D:/test/new_file.txt&#39;
+
+with open(file_path, &#39;r&#39;) as f:
+    content = f.read()
+    new_content = re.sub(&#39;old_text&#39;, &#39;new_text&#39;, content)
+
+with open(new_path, &#39;w&#39;) as f:
+    f.write(new_content)
+</code></pre>
+<p>以上代码将文件D:/test/file.txt中的所有old_text替换为new_text，并将结果保存到D:/test/new_file.txt中。用with语句打开文件可以更加方便地处理文件的读写操作。</p>
+<h1 id="四、fileinput模块"><a href="#四、fileinput模块" class="headerlink" title="四、fileinput模块"></a>四、fileinput模块</h1><p>fileinput模块也是Python的一个标准库，提供了一种通用的方法来处理文件输入和输出。它可以将多个文件作为一个整体来处理，并且可以自动备份文件。</p>
+<p>示例代码：</p>
+<pre><code>import fileinput
+
+file_path = &#39;D:/test/file.txt&#39;
+new_path = &#39;D:/test/new_file.txt&#39;
+with fileinput.FileInput(file_path, inplace=True, backup=&#39;.bak&#39;) as f:
+    for line in f:
+        print(line.replace(&#39;old_text&#39;, &#39;new_text&#39;), end=&#39;&#39;)
+</code></pre>
+<p>以上代码将文件D:/test/file.txt中的所有old_text替换为new_text，并保存到原来的文件中。使用inplace参数可以自动备份文件，使用print函数和end参数可以方便地处理文件的输出。</p>
+<h1 id="五、总结"><a href="#五、总结" class="headerlink" title="五、总结"></a>五、总结</h1><p>Python提供了很多方便的模块和函数来处理文件，以上介绍的os、shutil、re、fileinput模块是其中常用的几个。在实际开发中，可以根据实际需求选取相应的模块和函数来完成文件替换操作。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-如果单击眼睛图标显示隐藏密码（QPushButton）"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/10/19/%E5%A6%82%E6%9E%9C%E5%8D%95%E5%87%BB%E7%9C%BC%E7%9D%9B%E5%9B%BE%E6%A0%87%E6%98%BE%E7%A4%BA%E9%9A%90%E8%97%8F%E5%AF%86%E7%A0%81%EF%BC%88QPushButton%EF%BC%89/"
+    >如果单击眼睛图标显示隐藏密码（QPushButton）</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/10/19/%E5%A6%82%E6%9E%9C%E5%8D%95%E5%87%BB%E7%9C%BC%E7%9D%9B%E5%9B%BE%E6%A0%87%E6%98%BE%E7%A4%BA%E9%9A%90%E8%97%8F%E5%AF%86%E7%A0%81%EF%BC%88QPushButton%EF%BC%89/" class="article-date">
+  <time datetime="2023-10-19T02:19:00.000Z" itemprop="datePublished">2023-10-19</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p><a target="_blank" rel="noopener" href="https://www.cnpython.com/qa/1374456">https://www.cnpython.com/qa/1374456</a></p>
+<h1 id="方案一"><a href="#方案一" class="headerlink" title="方案一"></a>方案一</h1><p>PyQt5的一大优点是它将自动将信号连接到方法。如果您的应用程序中有一个名为<mybutton>的按钮和一个名为on_<mybutton>_clicked的方法，loadUi将自动连接。所以模式是</mybutton></mybutton></p>
+<pre><code>on_&lt;widget_name&gt;_&lt;signal&gt;
+</code></pre>
+<p>如果我们将此应用于您的问题，您应该将“显示/隐藏”按钮设置为切换按钮。在Qt设计器中，将checkable属性设置为True（或dobtn_show_pwd.clicked.setChecked(True)）</p>
+<p>代码：</p>
+<pre><code>from PyQt5 import QtCore, QtGui, QtWidgets, uic
+from PyQt5.QtWidgets import QPushButton, QLineEdit
+import sys
+
+class MyWindow(QtWidgets.QMainWindow):
+    def __init__(self, maxWidth=None):
+        super(MyWindow, self).__init__()
+        uic.loadUi(&#39;test1.ui&#39;, self)
+
+        self.line_password.setEchoMode(QLineEdit.Password)
+
+    def on_btn_show_pwd_toggled(self, checked):
+        if checked:
+            self.line_password.setEchoMode(QLineEdit.Password)
+        else:
+            self.line_password.setEchoMode(QLineEdit.Normal)
+
+if __name__ == &#39;__main__&#39;:
+    app = QtWidgets.QApplication(sys.argv)
+    window = MyWindow()
+    window.show()
+    sys.exit(app.exec_())
+    
+</code></pre>
+<h1 id="方案二"><a href="#方案二" class="headerlink" title="方案二"></a>方案二</h1><p>另一种可能是将可检查的QAction添加到QLineEdit并连接到toggled（或triggered）信号</p>
+<pre><code>class MyWindow(QtWidgets.QMainWindow):
+    def __init__(self, maxWidth=None):
+        super(MyWindow, self).__init__()
+        uic.loadUi(&#39;MainWindow.ui&#39;, self)
+
+        icon = QtGui.QIcon(&#39;eye-icon.png&#39;)
+        self.showPassAction = QtWidgets.QAction(icon, &#39;Show password&#39;, self)
+        self.line_password.addAction(
+            self.showPassAction, QtWidgets.QLineEdit.TrailingPosition)
+        self.showPassAction.setCheckable(True)
+        self.showPassAction.toggled.connect(self.showPassword)
+
+    def showPassword(self, show):
+        self.line_password.setEchoMode(
+            QtWidgets.QLineEdit.Normal if show else QtWidgets.QLineEdit.Password)
+</code></pre>
+<p>如果只想在按下鼠标时显示密码，则不要连接到toggled信号，而是找到该操作的子QToolButton并连接到pressed和released。在这种情况下，操作不需要是可检查的</p>
+<pre><code>self.line_password.addAction(
+    self.showPassAction, QtWidgets.QLineEdit.TrailingPosition)
+showPassButton = self.line_password.findChild(QtWidgets.QAbstractButton)
+showPassButton.pressed.connect(lambda: self.showPassword(True))
+showPassButton.released.connect(lambda: self.showPassword(False))
+</code></pre>
+<h1 id="方案三"><a href="#方案三" class="headerlink" title="方案三"></a>方案三</h1><p>您可以创建单个函数并切换可见性，而不是创建两个单独的方法，如eyepass_show和eyepass_hide。另外，您正试图通过self.btn_show_pwd.clicked.connect(self.eyepass_hide)和self.btn_show_pwd.clicked.connect(self.eyepass_show)将同一信号两次连接到两种不同的方法</p>
+<p>试着这样做：</p>
+<pre><code>from PyQt5 import QtCore, QtGui, QtWidgets, uic
+from PyQt5.QtWidgets import QPushButton, QLineEdit
+import sys
+import pymysql
+pymysql.install_as_MySQLdb()
+
+class MyWindow(QtWidgets.QMainWindow):
+    def __init__(self, maxWidth=None):
+        super(MyWindow, self).__init__()
+        uic.loadUi(&#39;MainWindow.ui&#39;, self)
+
+        self.eyepass_show()
+        self.eyepass_hide()
+        self.btn_show_pwd.clicked.connect(self.toggleVisibility)
+        
+    def toggleVisibility(self):
+        if self.line_password.echoMode()==QLineEdit.Normal:
+            self.line_password.setEchoMode(QLineEdit.Password)
+        else:
+            self.line_password.setEchoMode(QLineEdit.Normal)
+
+    #     self.btn_show_pwd.clicked.connect(self.eyepass_hide)
+    #     self.btn_show_pwd.clicked.connect(self.eyepass_show)
+    # 
+    # def eyepass_show(self):
+    #     self.line_password.setEchoMode(QLineEdit.Normal)
+    #     print(&#39;show pass&#39;)
+    # 
+    # def eyepass_hide(self):
+    #     self.line_password.setEchoMode(QLineEdit.Password)
+    #     print(&#39;hide pass&#39;)
+
+
+if __name__ == &#39;__main__&#39;:
+    app = QtWidgets.QApplication(sys.argv)
+    window = MyWindow()
+    window.show()
     sys.exit(app.exec_())
 </code></pre>
  
@@ -669,7 +657,7 @@ if __name__ == &#39;__main__&#39;:
 
     
     <article
-  id="post-pyqt5的打包exe软件"
+  id="post-AttributeError module ‘backend_interagg‘ has no attribute ‘FigureCanvas‘的解决办法"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -680,8 +668,8 @@ if __name__ == &#39;__main__&#39;:
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/10/10/pyqt5%E7%9A%84%E6%89%93%E5%8C%85exe%E8%BD%AF%E4%BB%B6/"
-    >pyqt5的打包exe软件</a> 
+  <a class="article-title" href="/2023/10/18/AttributeError%20module%20%E2%80%98backend_interagg%E2%80%98%20has%20no%20attribute%20%E2%80%98FigureCanvas%E2%80%98%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/"
+    >AttributeError module ‘backend_interagg‘ has no attribute ‘FigureCanvas‘的解决办法</a> 
 </h2>
  
 
@@ -689,8 +677,8 @@ if __name__ == &#39;__main__&#39;:
     </header>
      
     <div class="article-meta">
-      <a href="/2023/10/10/pyqt5%E7%9A%84%E6%89%93%E5%8C%85exe%E8%BD%AF%E4%BB%B6/" class="article-date">
-  <time datetime="2023-10-10T02:10:00.000Z" itemprop="datePublished">2023-10-10</time>
+      <a href="/2023/10/18/AttributeError%20module%20%E2%80%98backend_interagg%E2%80%98%20has%20no%20attribute%20%E2%80%98FigureCanvas%E2%80%98%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" class="article-date">
+  <time datetime="2023-10-18T02:18:00.000Z" itemprop="datePublished">2023-10-18</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -700,33 +688,109 @@ if __name__ == &#39;__main__&#39;:
       
     <div class="article-entry" itemprop="articleBody">
        
-  <h1 id="安装命令："><a href="#安装命令：" class="headerlink" title="安装命令："></a>安装命令：</h1><pre><code>pip install pyinstaller
+  <h1 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h1><p>一开始我还以为是我的matoltlib和我的python版本不匹配后面发现真正原因其实是matplotlib 的 backend的默认渲染器是agg，agg是一个没有图形显示界面的终端，如果要图像正常显示，则需要切换为图形界面显示的终端TkAgg</p>
+<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>修改 backend 配置：</p>
+<pre><code>matplotlib.use(‘TkAgg’)
 </code></pre>
-<h1 id="更新命令："><a href="#更新命令：" class="headerlink" title="更新命令："></a>更新命令：</h1><pre><code>pip install –upgrade pyinstaller
+<h1 id="原代码和修改后代码对比"><a href="#原代码和修改后代码对比" class="headerlink" title="原代码和修改后代码对比"></a>原代码和修改后代码对比</h1><h2 id="原代码："><a href="#原代码：" class="headerlink" title="原代码："></a>原代码：</h2><pre><code>import numpy as np
+
+import matplotlib.pyplot as plt
+
+x=np.linspace(0.0001,3,100)
+y=x**x
+plt.plot(x,y,&#39;r-&#39;,linewidth=3)
+plt.show()`
 </code></pre>
-<h1 id="打包命令："><a href="#打包命令：" class="headerlink" title="打包命令："></a>打包命令：</h1><p>通过下述命令可以打包出带有指定图标的exe，注意必须是真实的ico格式图标，不能是改后名的。</p>
-<pre><code>pyinstaller main.py -y -w -i &quot;D:\workspace\mytool\ui\icons\mytool.ico&quot;
+<p>错误提示：</p>
+<pre><code>AttributeError: module &#39;backend_interagg&#39; has no attribute &#39;FigureCanvas&#39;. Did you mean: &#39;FigureCanvasAgg&#39;?
 </code></pre>
-<h1 id="打包命令常用选项。"><a href="#打包命令常用选项。" class="headerlink" title="打包命令常用选项。"></a>打包命令常用选项。</h1><pre><code>-y 表示自动覆盖现有的 build 和 dist 文件夹
--h，–help    查看该模块的帮助信息
--F，-onefile    产生单个的可执行文件
--D，–onedir    产生一个目录（包含多个文件）作为可执行程序
--a，–ascii    不包含 Unicode 字符集支持
--d，–debug    产生 debug 版本的可执行文件
--w，–windowed，–noconsolc    指定程序运行时不显示命令行窗口（仅对 Windows 有效）
--c，–nowindowed，–console    指定使用命令行窗口运行程序（仅对 Windows 有效）
--o DIR，–out=DIR    指定 spec 文件的生成目录。如果没有指定，则默认使用当前目录来生成 spec 文件
--p DIR，–path=DIR    设置 Python 导入模块的路径（和设置 PYTHONPATH 环境变量的作用相似）。也可使用路径分隔符（Windows 使用分号，Linux 使用冒号）来分隔多个路径
--n NAME，–name=NAME    指定项目（产生的 spec）名字。如果省略该选项，那么第一个脚本的主文件名将作为 spec 的名字
---distpath：指定输出目录
---clean：在打包之前清除临时文件夹日志
---log-level：设置日志级别，供调试嵌入其他文件
---add-data：将data文件夹嵌入到生成的可执行文件中
---add-binary：将binary文件与其他文件一起嵌入到可执行文件中
---hidden-import：打包特定的Python库，例如--hidden-import=PIL
---version：显示版本信息
---help：显示帮助信息
+<h2 id="修改后代码："><a href="#修改后代码：" class="headerlink" title="修改后代码："></a>修改后代码：</h2><pre><code>import numpy as np
+import matplotlib
+matplotlib.use(&#39;TkAgg&#39;)
+import matplotlib.pyplot as plt
+
+x=np.linspace(0.0001,3,100)
+y=x**x
+plt.plot(x,y,&#39;r-&#39;,linewidth=3)
+plt.show()
 </code></pre>
+<p>————————————————<br>版权声明：本文为CSDN博主「倚剑策马笑西风」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_51763547/article/details/126918669">https://blog.csdn.net/qq_51763547/article/details/126918669</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-“matplotlib.use(‘agg‘)“语句的作用机理"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/10/17/%E2%80%9Cmatplotlib.use(%E2%80%98agg%E2%80%98)%E2%80%9C%E8%AF%AD%E5%8F%A5%E7%9A%84%E4%BD%9C%E7%94%A8%E6%9C%BA%E7%90%86/"
+    >“matplotlib.use(‘agg‘)“语句的作用机理</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/10/17/%E2%80%9Cmatplotlib.use(%E2%80%98agg%E2%80%98)%E2%80%9C%E8%AF%AD%E5%8F%A5%E7%9A%84%E4%BD%9C%E7%94%A8%E6%9C%BA%E7%90%86/" class="article-date">
+  <time datetime="2023-10-17T02:17:00.000Z" itemprop="datePublished">2023-10-17</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><p>在很多使用 matplotlib 库的代码中出现了 matplotlib.use(‘agg’) 的语句。有些博客认为1，在导入matplotlib库后，且在matplotlib.pyplot库被导入前加“matplotlib.use(‘agg’)”语句的作用是在PyCharm中不显示绘图。例如1：</p>
+<pre><code>import numpy as np
+import matplotlib
+matplotlib.use(&#39;agg&#39;) 
+import matplotlib.pyplot as plt # matplotlib.use(&#39;agg&#39;)必须在本句执行前运行
+x = np.arange(0, 2*np.pi, 0.001) 
+y = np.sin(2 * np.pi * x) 
+plt.clf() 
+plt.plot(x,y) 
+l = plt.axhline(linewidth=1, color=&#39;black&#39;) 
+l = plt.axvline(linewidth=1, color=&#39;black&#39;) 
+plt.show()
+</code></pre>
+<p>在Pycharm里面运行就不会显示图。</p>
+<h1 id="原理分析"><a href="#原理分析" class="headerlink" title="原理分析"></a>原理分析</h1><p>实际上，这样的理解是表面的，这个语句确实会使得在Pycharm运行时无法显示图，但是必须注意，这是其原理导致的，而这个语句并不是设置Pycharm不显示图的语句，其实前述的代码中，删掉 plt.show() ，也不会显示图片。</p>
+<p>matplotlib的use()命令其实是用来配置matplotlib的backend （后端）的命令。所谓后端，就是一个渲染器，用于将前端代码渲染成我们想要的图像2。后端详细的解释可以参考博客： matplotlib中什么是后端 。</p>
+<p>对于用户接口，典型的渲染器是Agg，它是使用Anti-Grain Geometry C++库来产生光栅(像素)图。</p>
+<p>那么为什么这样设置Pycharm会导致其不显示图片呢？</p>
+<p>可以查看一下目前的后端设置。方法是执行下面代码。</p>
+<pre><code>import matplotlib
+matplotlib.get_backend()
+</code></pre>
+<p>在Pycharm的Terminal 里面输入该项命令，可以看到，Pycharm运行的时候，默认的后端是Qt5Agg。</p>
+<p>实际上，Agg 渲染器是非交互式的后端，没有GUI界面，所以不显示图片，它是用来生成图像文件。Qt5Agg 是意思是Agg渲染器输出到Qt5绘图面板，它是交互式的后端，拥有在屏幕上展示的能力3。</p>
  
       <!-- reward -->
       
@@ -753,7 +817,7 @@ if __name__ == &#39;__main__&#39;:
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/8/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/55/">55</a><a class="extend next" rel="next" href="/page/10/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/8/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/57/">57</a><a class="extend next" rel="next" href="/page/10/">下一页</a>
   </nav>
   
 </section>

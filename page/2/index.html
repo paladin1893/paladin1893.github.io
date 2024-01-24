@@ -154,7 +154,7 @@
     
     
     <article
-  id="post-在Linux环境下运行jar文件"
+  id="post-springboot指定配置文件启动"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -165,8 +165,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/11/26/%E5%9C%A8Linux%E7%8E%AF%E5%A2%83%E4%B8%8B%E8%BF%90%E8%A1%8Cjar%E6%96%87%E4%BB%B6/"
-    >在Linux环境下运行jar文件</a> 
+  <a class="article-title" href="/2023/12/03/springboot%E6%8C%87%E5%AE%9A%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%90%AF%E5%8A%A8/"
+    >springboot指定配置文件启动</a> 
 </h2>
  
 
@@ -174,43 +174,35 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2023/11/26/%E5%9C%A8Linux%E7%8E%AF%E5%A2%83%E4%B8%8B%E8%BF%90%E8%A1%8Cjar%E6%96%87%E4%BB%B6/" class="article-date">
-  <time datetime="2023-11-26T12:14:23.000Z" itemprop="datePublished">2023-11-26</time>
+      <a href="/2023/12/03/springboot%E6%8C%87%E5%AE%9A%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%90%AF%E5%8A%A8/" class="article-date">
+  <time datetime="2023-12-03T12:14:23.000Z" itemprop="datePublished">2023-12-03</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
   </div>
    
     </div>
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>在Linux环境下运行jar文件</p>
-<h1 id="方式一："><a href="#方式一：" class="headerlink" title="方式一："></a>方式一：</h1><p>命令：</p>
-<pre><code>java -jar xxxx.jar
+  <h1 id="IDE开发工具启动"><a href="#IDE开发工具启动" class="headerlink" title="IDE开发工具启动"></a>IDE开发工具启动</h1><p>在JetBrains IDEA开发工具的配置</p>
+<p>1.启动类启动方式</p>
+<p>idea active profiles方式</p>
+<p>2.main方法启动方式</p>
+<p>在IDEA中的program arguments配置此项–spring.profiles.active=dev命令</p>
+<p>3.JVM启动方式</p>
+<p>在IDEA中的VM options配置此项-Dspring.profiles.active=dev命令</p>
+<h1 id="jar包启动"><a href="#jar包启动" class="headerlink" title="jar包启动"></a>jar包启动</h1><p>1.指定配置环境</p>
+<p>nohup java -jar -Dfile.encoding=utf-8 -Dspring.profiles.active=dev example.jar &gt;/dev/null 2&gt;&amp;1 &amp;<br>该启动时方式会去加载Jar包中resource目录下application-dev.yml或application-dev.properties文件。同时需要注意的是通IDEA的启动方式一样。</p>
+<p>2.指定配置文件<br>yml文件</p>
+<pre><code>nohup java -jar -Dfile.encoding=utf-8 -Dspring.config.location=classpath:/application-dev.yml example.jar &gt;/dev/null 2&gt;&amp;1 &amp;
 </code></pre>
-<p>特点：当前ssh窗口被锁定，可按ctrl+c打断程序运行，或直接关闭窗口，程序退出。</p>
-<h1 id="方式二："><a href="#方式二：" class="headerlink" title="方式二："></a>方式二：</h1><p>命令：</p>
-<pre><code>java -jar xxxx.jar &amp;
+<p>properties文件</p>
+<pre><code>nohup java -jar -Dfile.encoding=utf-8 -Dspring.config.location=classpath:/application-dev.properties example.jar &gt;/dev/null 2&gt;&amp;1 &amp;
 </code></pre>
-<p>特点：&amp;表示在后台运行。当前ssh窗口不被锁定，但是当窗口关闭时，程序中止运行。</p>
-<h1 id="方式三："><a href="#方式三：" class="headerlink" title="方式三："></a>方式三：</h1><p>命令：</p>
-<pre><code>nohup java -jar xxxx.jar &amp;
+<p>若配置文件在Jar包外面，-Dspring.config.location=后面不用classpath，直接使用配置文件的相对或绝对路径即可：例如 </p>
+<pre><code>-Dspring.config.location=app-dev.yml-Dspring.config.location=/usr/local/soft/config/app-dev.yml
 </code></pre>
-<p>特点：nohup 意思是不挂断运行命令，当账户退出或终端关闭时，程序仍然运行。当用 nohup 命令执行作业时，缺省情况下该作业的所有输出被重定向到nohup.out的文件中，除非另外指定了输出文件。</p>
-<h1 id="方式四："><a href="#方式四：" class="headerlink" title="方式四："></a>方式四：</h1><p>命令：</p>
-<pre><code>nohup java -jar xxxx.jar &gt;/log.file &amp;
-</code></pre>
-<p>特点：将日志输出到log.file指定的文件内。</p>
-<h2 id="shell-命令中，几个基本符号及其含义"><a href="#shell-命令中，几个基本符号及其含义" class="headerlink" title="shell 命令中，几个基本符号及其含义"></a>shell 命令中，几个基本符号及其含义</h2><pre><code>&gt;&gt;      输出重定向
-2&gt;&amp;1    (2)标准错误输出   (&gt;) 重定向到  (&amp;1)标准输出
-2&gt;&amp;1 标准错误输出重定向到标准输出
-&amp;       标识进程为后台进程
-</code></pre>
-<p>0 表示stdin标准输入 1 表示stdout标准输出 2 表示stderr标准错误</p>
-<h2 id="拓展"><a href="#拓展" class="headerlink" title="拓展:"></a>拓展:</h2><p>无论是否将 nohup 命令的输出重定向到终端，输出都将附加到当前目录的 nohup.out 文件中，如果当前目录的 nohup.out 文件不可写，输出重定向到 $HOME/nohup.out 文件中</p>
-<p>命令改为 nohup java -jar project.jar &gt;&gt; log.out 2&gt;&amp;1 &amp; 完美解决问题，日志追加到 log.out 文件中 ，且线程在后台不挂断运行</p>
-<p>报错nohup找不到java</p>
  
       <!-- reward -->
       
@@ -221,7 +213,7 @@
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li></ul>
 
     </footer>
   </div>
@@ -232,7 +224,7 @@
 
     
     <article
-  id="post-Centos7 的 Systemctl 与 创建系统服务"
+  id="post-新型电力系统行动方案（2021-2030年），国网Vs南网 （一）"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -243,8 +235,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/11/25/Centos7%20%E7%9A%84%20Systemctl%20%E4%B8%8E%20%E5%88%9B%E5%BB%BA%E7%B3%BB%E7%BB%9F%E6%9C%8D%E5%8A%A1/"
-    >Centos7 的 Systemctl 与 创建系统服务</a> 
+  <a class="article-title" href="/2023/12/02/%E6%96%B0%E5%9E%8B%E7%94%B5%E5%8A%9B%E7%B3%BB%E7%BB%9F%E8%A1%8C%E5%8A%A8%E6%96%B9%E6%A1%88%EF%BC%882021-2030%E5%B9%B4%EF%BC%89%EF%BC%8C%E5%9B%BD%E7%BD%91Vs%E5%8D%97%E7%BD%91%20%EF%BC%88%E4%B8%80%EF%BC%89/"
+    >新型电力系统行动方案（2021-2030年），国网Vs南网 （一）</a> 
 </h2>
  
 
@@ -252,181 +244,35 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2023/11/25/Centos7%20%E7%9A%84%20Systemctl%20%E4%B8%8E%20%E5%88%9B%E5%BB%BA%E7%B3%BB%E7%BB%9F%E6%9C%8D%E5%8A%A1/" class="article-date">
-  <time datetime="2023-11-25T12:14:23.000Z" itemprop="datePublished">2023-11-25</time>
+      <a href="/2023/12/02/%E6%96%B0%E5%9E%8B%E7%94%B5%E5%8A%9B%E7%B3%BB%E7%BB%9F%E8%A1%8C%E5%8A%A8%E6%96%B9%E6%A1%88%EF%BC%882021-2030%E5%B9%B4%EF%BC%89%EF%BC%8C%E5%9B%BD%E7%BD%91Vs%E5%8D%97%E7%BD%91%20%EF%BC%88%E4%B8%80%EF%BC%89/" class="article-date">
+  <time datetime="2023-12-02T12:14:23.000Z" itemprop="datePublished">2023-12-02</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
   </div>
    
     </div>
       
     <div class="article-entry" itemprop="articleBody">
        
-  <h1 id="Systemctl"><a href="#Systemctl" class="headerlink" title="Systemctl"></a>Systemctl</h1><h2 id="systemctl-命令"><a href="#systemctl-命令" class="headerlink" title="systemctl 命令"></a>systemctl 命令</h2><pre><code># 启动
-systemctl start NAME.service
-# 停止
-systemctl stop NAME.service
-# 重启
-systemctl restart NAME.service
-# 查看状态
-systemctl status NAME.service
-# 查看所有激活系统服务
-systemctl list-units -t service
-# 查看所有系统服务
-systemctl list-units -t service -a
-# 设置开机自启动
-systemctl enable NAME.service
-# 禁止开机自启动
-systemctl disable NAME.service
-# 查看服务是否是开机自启动
-systemctl list-unit-files –t service
-# 查看某服务是否开机自启动
-systemctl is-enabled NAME.service
-</code></pre>
-<h2 id="systemctl-状态"><a href="#systemctl-状态" class="headerlink" title="systemctl 状态"></a>systemctl 状态</h2><pre><code>loaded：unit配置文件已处理
-active（running）：一次或多次持续处理的运行
-active（exited）：成功完成一次性配置
-active（waiting）：运行中，等待一个事件
-inactive：不运行
-enable：开机启动
-disable：开机不启动
-static：开机不启动，但可以被另一个启用的服务激活。
-</code></pre>
-<h2 id="systemctl-运行级别"><a href="#systemctl-运行级别" class="headerlink" title="systemctl 运行级别"></a>systemctl 运行级别</h2><pre><code>0 ：关机：poweroff.target
-1 ：单用户模式：rescue.target
-2 ：默认不启用NFS的多用户：multi-user.target
-3 ：完全的多用户：multi-user.target
-4 ：保留：mult-user.target
-5 ：图形：graphical.target
-6 ：重启：reboot.target
-</code></pre>
-<h1 id="自建服务"><a href="#自建服务" class="headerlink" title="自建服务"></a>自建服务</h1><h2 id="1、服务存放路径"><a href="#1、服务存放路径" class="headerlink" title="1、服务存放路径"></a>1、服务存放路径</h2><p>用户级系统服务：/usr/lib/systemd/system<br>系统级系统服务：/etc/systemd/system</p>
-<h2 id="2、编写一个系统服务"><a href="#2、编写一个系统服务" class="headerlink" title="2、编写一个系统服务"></a>2、编写一个系统服务</h2><p>创建系统服务文件的三个部分分别是：Unit 、 Service、 Install</p>
-<h3 id="Unit："><a href="#Unit：" class="headerlink" title="Unit："></a>Unit：</h3><p>Description：描述信息<br>After：定义unit的启动次序，表示当前unit应该晚于哪些unit启动，其功能与Before相反；<br>Requires：依赖到的其它units，强依赖，被依赖的units无法激活时，当前unit即无法激活；<br>Wants：依赖到的其它units，弱依赖；<br>Conflicts：定义units间的冲突关系。</p>
-<h3 id="Service："><a href="#Service：" class="headerlink" title="Service："></a>Service：</h3><p>Type：定义影响ExecStart及相关参数功能的unit进程启动类型；</p>
-<p>simple：默认值，这个daemon主要由ExecStart接的指令串来启动，启动后常驻于内存中；<br>forking：由ExacStart启动的程序透过spawns延伸出其它子程序来作为此deamon的主要服务。原生父程序在启动结束后就会终止。<br>oneshot：与simple类似，不过这个程序在完成工作后就结束，不常驻内存；<br>dbus：与simple类似，但这个daemon必须要在取得一个D-Bus的名称后，才会继续运作。因此通常也要同时设定BusName=才行；<br>notify：在启动完成后会发送一个通知消息。还需要配合NotifyAccess来让Systemd接收消息；<br>idle：与simple类似，要执行这个daemon必须要所有的工作都顺利执行完毕后才会执行。这类的daemon通常是开机到最后才执行即可的服务。</p>
-<p>EnvironmentFile：环境配置文件；<br>ExecStart：指明启动unit要运行命令或脚本的绝对路径；<br>ExecStartPre：在ExecStart之前运行的绝对路径；<br>ExecStartPost：在ExecStart之后运行的绝对路径；<br>ExecStop：指明停止unit要运行的命令或脚本的绝对路径；<br>Restart：当设定Restart=1时，则当次daemon服务意外终止后，会再次自动启动。</p>
-<p>PrivateTmp:true/false表示是否给服务分配独立的临时空间</p>
-<h3 id="Install："><a href="#Install：" class="headerlink" title="Install："></a>Install：</h3><p>Alias：别名，可使用systemctl command Alias.service<br>RequiredBy：被哪些units所依赖，强依赖；<br>WantedBy：被哪些units所依赖，弱依赖；<br>Also：安装本服务的时候还要安装别的相关服务。</p>
-<h1 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h1><p>创建服务</p>
-<pre><code>vim /usr/lib/systemd/system/wxybackend.service
-</code></pre>
-<p>编辑内容</p>
-<pre><code>[Unit]
-Description=backend service  
-After=docker.service
-
-[Service]
-Type=forking
-ExecStart=/home/project/xxx/syscmd.sh start
-ExecReload=/home/project/xxx/syscmd.sh restart
-ExecStop=/home/project/xxx/syscmd.sh stop
-PrivateTmp=true
-
-[Install]
-WantedBy=multi-user.target
-</code></pre>
-<p>退出编辑</p>
-<pre><code>：wq!
-</code></pre>
-<p>启动服务</p>
-<pre><code>systemctl daemon-reload 
-systemctl enable wxybackend.service 
-systemctl start wxybackend.service
-</code></pre>
-<p>syscmd.sh脚本内容</p>
-<pre><code>#!/bin/sh
-# start 启动 stop 停止 restart 重启 status 状态
-AppName=xxxx.jar
-AppPath=/home/project/xxx
-# JVM参数
-JVM_OPTS=&quot;-Dname=$AppName  -Duser.timezone=Asia/Shanghai -Xms2048m -Xmx2048m -XX:MetaspaceSize=512m -XX:MaxMetaspaceSize=1024m -XX:+HeapDumpOnOutOfMemoryError -XX:+PrintGCDateStamps  -XX:+PrintGCDetails -XX:NewRatio=1 -XX:SurvivorRatio=30 -XX:+UseParallelGC -XX:+UseParallelOldGC&quot;
-APP_HOME=`pwd`
-LOG_PATH=$AppPath/logs/$AppName.log
-
-if [ &quot;$1&quot; = &quot;&quot; ];
-then
-    echo -e &quot;\033[0;31m 未输入操作名 \033[0m  \033[0;34m &#123;start|stop|restart|status&#125; \033[0m&quot;
-    exit 1
-fi
-
-if [ &quot;$AppName&quot; = &quot;&quot; ];
-then
-    echo -e &quot;\033[0;31m 未输入应用名 \033[0m&quot;
-    exit 1
-fi
-
-function start()
-&#123;
-    PID=`ps -ef |grep java|grep $AppName|grep -v grep|awk &#39;&#123;print $2&#125;&#39;`
-
-    if [ x&quot;$PID&quot; != x&quot;&quot; ]; then
-        echo &quot;$AppName is running...&quot;
-    else
-        #输出日志
-        nohup java $JVM_OPTS -jar $AppPath/$AppName &gt;&gt; $AppPath/nohup.out 2&gt;&amp;1 &amp; 
-        #不输出日志
-        #nohup java $JVM_OPTS -jar $AppPath/$AppName  &amp;
-        echo &quot;Start $AppName success...&quot;
-        #tail -500f nohup.out
-    fi
-&#125;
-
-function stop()
-&#123;
-    echo &quot;Stop $AppName&quot;
-
-    PID=&quot;&quot;
-    query()&#123;
-        PID=`ps -ef |grep java|grep $AppName|grep -v grep|awk &#39;&#123;print $2&#125;&#39;`
-    &#125;
-
-    query
-    if [ x&quot;$PID&quot; != x&quot;&quot; ]; then
-        kill -TERM $PID
-        echo &quot;$AppName (pid:$PID) exiting...&quot;
-        while [ x&quot;$PID&quot; != x&quot;&quot; ]
-        do
-            sleep 1
-            query
-        done
-        echo &quot;$AppName exited.&quot;
-    else
-        echo &quot;$AppName already stopped.&quot;
-    fi
-&#125;
-
-function restart()
-&#123;
-    stop
-    sleep 2
-    start
-&#125;
-
-function status()
-&#123;
-    PID=`ps -ef |grep java|grep $AppName|grep -v grep|wc -l`
-    if [ $PID != 0 ];then
-        echo &quot;$AppName is running...&quot;
-    else
-        echo &quot;$AppName is not running...&quot;
-    fi
-&#125;
-
-case $1 in
-    start)
-    start;;
-    stop)
-    stop;;
-    restart)
-    restart;;
-    status)
-    status;;
-    *)
-
-esac
-</code></pre>
+  <p>今年，国家电网有限公司发布《构建以新能源为主体的新型电力系统行动方案（2021-2030 年）》、中国南方电网有限责任公司发布《建设新型电力系统行动方案（ 2021-2030 年 ）》。</p>
+<p>在两个方案中，都提及行动方案制定是“全面落实习近平总书记‘四个革命、一个合作’能源安全新战略，服务国家‘2030年碳达峰、2060年碳中和’目标要求，推动构建以新能源为主体的新型电力系统”等字样。</p>
+<p>关于新型电力系统的定义和实现路径</p>
+<p>国网认为,电源结构由可控连续出力的煤电装机占主导，向强不确定性、弱可控出力的新能源发电装机占主导转变。负荷特性由传统的刚性、纯消费型，向柔性、生产与消费兼具型转变。电网形态由单向逐级输电为主的传统电网，向包括交直流混联大电网、  微电网、局部直流电网和可调节负荷的能源互联网转变。技术基础由同步发电机为主导的机械电磁系统，向由电力电子设备 和同步机共同主导的混合系统转变。运行特性由源随荷动的实时平衡模式、大电网一体化控制模式，向源网荷储协同互动的非完全实时平衡模式、大电网与微电网协同控制模式转变。</p>
+<p>以新能源为主体的新型电力系统承载着能源转型的历史使命，是清洁低碳、安全高效能源体系的重要组成部分，是以新能源为供给主体、以确保能源电力安全为基本前提、以满足经济社会发展电力需求为首要目标，以坚强智能电网为枢纽平台，以源网荷储互动与多能互补为支撑，具有清洁低碳、安全可控、灵活高效、智能友好、开放互动基本特征的电力系统。</p>
+<p>南网则提出，建设新型电力系统是应对持续可靠供电、电网安全稳定运行、电网公司运营模式等挑战的必然选择。构建以新能源为主体的新型电力系统，将促进全行业产业链、 价值链上下游紧密协同，推动新能源技术创新发展和产业持续变革，是能源电力行业实现跨越式发展的重大战略机遇。南方电网 公司将牢牢把握建设新型电力系统的重大机遇，立足新发展阶段、 贯彻新发展理念、构建新发展格局，实施创新驱动战略，加快数 字化转型，通过数字技术与公司业务、管理深度融合，全面推动公司战略转型和高质量发展。</p>
+<p>建设总体目标</p>
+<p>国网预计：</p>
+<p>到2035年，基本建成新型电力系统，到2050年全面建成新型电力系统。2021-2035 年是建设期。新能源装机逐步成为第一大电源，常规电源逐步转变为调节性和保障性电源。电力系统总体维持较高转动惯量和交流同步运行特点，交流与直流、大电网与微电 网协调发展。系统储能、需求响应等规模不断扩大，发电机组出力和用电负荷初步实现解耦。</p>
+<p>2036-2060年是成熟期。新能源逐步成为电力电量供应主体,火电通过CCUS技术逐步实现净零排放，成为长周期调节电源。分布式电源、微电网、交直流组网与大电网融合发展。系统储能全面应用、负荷全面深入参与调节，发电机组出力和用电负荷逐步实现全面解耦。</p>
+<p>为此，国网提出要实现3个方式和3个模式的转变。在公司发展方式上，按照 “一体四翼” 发展布局，由传统电网企业向能源互联网企业转变，积极培育新业务、新业态、新模式，延伸产业链、价值链。在电网发展方式上，由以大电网为主，向大电网、微电网、局部直流电网融合发展转变，推进电网数字化、透明化，满足新能源优先就地消纳和全国优化配置需要。在电源发展方式上，推动新能源发电由以集中式开发为主，向集中式与分布式开发并举转变；推动煤电由支撑性电源向调节性电源转变。在营销服务模式上，由为客户提供单向供电服务，向发供一体、多元用能、多态服务转变，打造 “供电+能效服务”模式，创新构建 “互联网+”现代客户服务模式。在调度运行模式上，由以大电源大电网为主要控制对象、源随荷动的调度模式，向源网荷储协调控制、输配微网多级协同的调度模式转变。在技术创新模式上，由以企业自主开发为主，向跨行业跨领域合作开发转变，技术领域向源网荷储全链条延伸。</p>
+<p>南网提出的总体目标是：</p>
+<p>2025年前，大力支持新能源接入，具备支撑新能源新增装机1亿千瓦以上的接入消纳能力，初步建立以新能源为主体的源网荷储体系和市场机制，具备新型电力系统基本特征；</p>
+<p>2030年前，具备支撑新能源再新增装机1亿千瓦以上的接入消纳能力，推动新能源装机处于主导地位，源网荷储体系和市场 机制趋于完善，基本建成新型电力系统，有力支持南方五省区及 港澳地区全面实现碳达峰；</p>
+<p>2060年前，新型电力系统全面建成并不断发展，全面支撑南方五省区及港澳地区碳中和目标实现。</p>
+<p>重点任务一：提升清洁能源优化配置和消纳能力</p>
+<p>国网在2021-2030年重点任务中，提出：加快特高压电网建设，“十四五”500千伏及以上电网建设投资约7000亿元，2025年华北、华东、华中和西南特高压网架全面建成；提高跨省跨区输送清洁能源力度，到2025年，公司经营区跨省跨区输电能力约3.0亿千瓦，2030年约3.5亿千瓦，输送清洁能源占比达到50%以上；加大配电网建设投入，“十四五”配电网建设投资超过1.2万亿元，占电网建设总投资的60%以上。</p>
+<p>南网提出加快新能源接入电网建设。重点推进广东、广西海上风电，云南大滇中地区新能源，贵州黔西、黔西北地区新能源等配套工 程建设；建设“强简有序、灵活可靠、先进适用”的配电网，支 持分布式新能源接入。通过努力，到2025年，具备支撑新能源新增装机1亿千瓦以上的接入消纳能力，非化石能源占比达到60%以上；到2030年，具备支撑新能源再新增装机1亿千瓦以上的接入消纳能力。</p>
  
       <!-- reward -->
       
@@ -437,7 +283,7 @@ esac
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%94%B5%E5%8A%9B/" rel="tag">电力</a></li></ul>
 
     </footer>
   </div>
@@ -448,7 +294,7 @@ esac
 
     
     <article
-  id="post-使用curl执行Http请求"
+  id="post-国家电网：构建以新能源为主体的新型电力系统行动方案（2021-2030 年）"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -459,8 +305,8 @@ esac
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/11/24/%E4%BD%BF%E7%94%A8curl%E6%89%A7%E8%A1%8CHttp%E8%AF%B7%E6%B1%82/"
-    >使用curl执行Http请求</a> 
+  <a class="article-title" href="/2023/12/01/%E5%9B%BD%E5%AE%B6%E7%94%B5%E7%BD%91%EF%BC%9A%E6%9E%84%E5%BB%BA%E4%BB%A5%E6%96%B0%E8%83%BD%E6%BA%90%E4%B8%BA%E4%B8%BB%E4%BD%93%E7%9A%84%E6%96%B0%E5%9E%8B%E7%94%B5%E5%8A%9B%E7%B3%BB%E7%BB%9F%E8%A1%8C%E5%8A%A8%E6%96%B9%E6%A1%88%EF%BC%882021-2030%20%E5%B9%B4%EF%BC%89/"
+    >国家电网：构建以新能源为主体的新型电力系统行动方案（2021-2030年）</a> 
 </h2>
  
 
@@ -468,129 +314,71 @@ esac
     </header>
      
     <div class="article-meta">
-      <a href="/2023/11/24/%E4%BD%BF%E7%94%A8curl%E6%89%A7%E8%A1%8CHttp%E8%AF%B7%E6%B1%82/" class="article-date">
-  <time datetime="2023-11-24T12:14:23.000Z" itemprop="datePublished">2023-11-24</time>
+      <a href="/2023/12/01/%E5%9B%BD%E5%AE%B6%E7%94%B5%E7%BD%91%EF%BC%9A%E6%9E%84%E5%BB%BA%E4%BB%A5%E6%96%B0%E8%83%BD%E6%BA%90%E4%B8%BA%E4%B8%BB%E4%BD%93%E7%9A%84%E6%96%B0%E5%9E%8B%E7%94%B5%E5%8A%9B%E7%B3%BB%E7%BB%9F%E8%A1%8C%E5%8A%A8%E6%96%B9%E6%A1%88%EF%BC%882021-2030%20%E5%B9%B4%EF%BC%89/" class="article-date">
+  <time datetime="2023-12-01T12:14:23.000Z" itemprop="datePublished">2023-12-01</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
   </div>
    
     </div>
       
     <div class="article-entry" itemprop="articleBody">
        
-  <h1 id="curl命令"><a href="#curl命令" class="headerlink" title="curl命令"></a>curl命令</h1><p>curl（CommandLine Uniform Resource Locator或CommandLine URL），curl命令是在命令行方式下工作，利用URL的语法进行数据的传输或者文件的传输。是一个利用URL语法在命令行下工作的文件传输工具。curl设计为：在无用户交互下完成工作。</p>
-<p>curl支持的协议包括：DICT、FILE、FTP、FTPS、GOPHER、HTTP、HTTPS、IMAP、IMAPS、LDAP、LDAPS、POP3、POP3S、RTMP、RTSP、SCP、SFTP、SMTP、SMTPS、TELNET、TFTP。</p>
-<h1 id="curl用法"><a href="#curl用法" class="headerlink" title="curl用法"></a>curl用法</h1><pre><code>curl [options…] &lt;url&gt;
-</code></pre>
-<h1 id="curl参数"><a href="#curl参数" class="headerlink" title="curl参数"></a>curl参数</h1><h2 id="请求"><a href="#请求" class="headerlink" title="请求"></a>请求</h2><h3 id="H-“name-value”"><a href="#H-“name-value”" class="headerlink" title="-H “name: value”"></a>-H “name: value”</h3><pre><code>-H &quot;name: value&quot;
---header &quot;name: value&quot;
-</code></pre>
-<p>(HTTP)添加一个http header(http请求头)</p>
-<h3 id="H-“name-”"><a href="#H-“name-”" class="headerlink" title="-H “name:”"></a>-H “name:”</h3><pre><code>-H &quot;name:&quot;
---header &quot;name:&quot;
-</code></pre>
-<p>(HTTP)移除一个http header(http请求头)</p>
-<h3 id="A-“string”"><a href="#A-“string”" class="headerlink" title="-A “string”"></a>-A “string”</h3><pre><code>-A &quot;string&quot;
---user-agent &quot;string&quot;
-</code></pre>
-<p>(HTTP)设置HTTP请求头User-Agent参数<br>服务器通过User-Agent可以判断客户端使用的浏览器名称和操作系统类型，伪造此参数能导致服务器做出错误判断</p>
-<h3 id="e"><a href="#e" class="headerlink" title="-e"></a>-e</h3><pre><code>-e
---referer
-</code></pre>
-<p>(HTTP)设置访问时的来源页面，告诉http服务从哪个页面进入到此页面<br>例如：-e “aiezu.com”相当于“-H “Referer: <a target="_blank" rel="noopener" href="http://www.qq.com&quot;”;/">www.qq.com&quot;”；</a></p>
-<h3 id="G"><a href="#G" class="headerlink" title="-G"></a>-G</h3><pre><code>-G
---get
-</code></pre>
-<p>(HTTP)使用HTTP GET方式</p>
-<h3 id="d"><a href="#d" class="headerlink" title="-d"></a>-d</h3><pre><code>-d @file
--d &quot;string&quot;
---data &quot;string&quot;
---data-ascii &quot;string&quot;
---data-binary &quot;string&quot;
---data-urlencode &quot;string&quot;
-</code></pre>
-<p>(HTTP)使用HTTP POST方式发送“key/value对”数据<br>相当于（method=”POST”，enctype=”application/x-www-form-urlencoded”）</p>
-<pre><code>-d，--data：HTTP方式POST数据
---data-ascii：HTTP方式POST ascii数据
---data-binary：HTTP方式POST二进制数据
---data-urlencode：HTTP方式POST数据（进行urlencode）
-</code></pre>
-<p>如果数据以“@”开头，后紧跟一个文件，将post文件内的内容；</p>
-<h3 id="F"><a href="#F" class="headerlink" title="-F"></a>-F</h3><pre><code>-F name=@file
--F name=&lt;file
--F name=content
---form name=content
---form-string &lt;key=value&gt;
-</code></pre>
-<p>(HTTP)使用HTTP POST方式发送类似“表单字段”的多类型数据<br>相当于同时设置浏览器表单属性（method=”POST”，enctype=”multipart/form-data”），可以使用此参数上传二进制文件。<br>如果字段内容以“@”开头，剩下的部分应该是文件名，curl将会上传此文件，如：</p>
-<pre><code>curl -F &quot;pic=@pic.jpg&quot; http://aiezu.com；
-curl -F &quot;page=@a.html;type=text/html&quot; http://aiezu.com
-curl -F &quot;page=@/tmp/a;filename=a.txt&quot; http://aiezu.com
-</code></pre>
-<p>如果字段内容以“&lt;”开头，剩下的部分应该是文件名，curl将从文件中获取作为此字段的值，如：curl -F “text=&lt;text.txt” <a target="_blank" rel="noopener" href="http://aiezu.com;/">http://aiezu.com；</a></p>
-<p>–form-string类似于“–form”，但是“@”、“&lt;”无特殊含义；</p>
-<h3 id="X"><a href="#X" class="headerlink" title="-X "></a>-X <command></h3><pre><code>-X &lt;command&gt;
---request &lt;command&gt;
-</code></pre>
-<p>(HTTP)指定与服务器通信使用的请求方法<br>如：GET、PUT、POST、DELETE等</p>
-<h2 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h2><h3 id="b-name-data"><a href="#b-name-data" class="headerlink" title="-b name=data"></a>-b name=data</h3><pre><code>-b name=data
---cookie name=data
-</code></pre>
-<p>(HTTP)发送cookie数据到HTTP服务器<br>数据格式为：”NAME1=VALUE1; NAME2=VALUE2”</p>
-<p>如果行中没有“=”，将把参数值当作cookie文件名</p>
-<p>这个cookie数据可以是由服务器的http响应头“Set-Cookie:”行发送过来的；</p>
-<h3 id="c-filename"><a href="#c-filename" class="headerlink" title="-c filename"></a>-c filename</h3><pre><code>-c filename
---cookie-jar file name
-</code></pre>
-<p>(HTTP)完成操作后将服务器返回的cookies保存到指定的文件<br>指定参数值为“-”将定向到标准输出“如控制台”</p>
-<h3 id="j"><a href="#j" class="headerlink" title="-j"></a>-j</h3><pre><code>-j
---junk-session-cookies
-</code></pre>
-<p>(HTTP)告诉curl放弃所有的”session cookies”.相当于重启浏览器</p>
-<h2 id="响应"><a href="#响应" class="headerlink" title="响应"></a>响应</h2><h3 id="I"><a href="#I" class="headerlink" title="-I"></a>-I</h3><pre><code>-I
---head
-</code></pre>
-<p>(HTTP)只输出HTTP-header，不获取内容(HTTP/FTP/FILE)</p>
-<ol>
-<li>用于HTTP服务时，获取页面的http头,如：curl -I <a target="_blank" rel="noopener" href="http://aiezu.com/">http://aiezu.com</a></li>
-<li>用于FTP/FILE时，将会获取文件大小、最后修改时间，如：curl -I file://test.txt</li>
-</ol>
-<h3 id="i"><a href="#i" class="headerlink" title="-i"></a>-i</h3><pre><code>-i
---include
-</code></pre>
-<p>(HTTP)输出HTTP头和返回内容</p>
-<h3 id="D"><a href="#D" class="headerlink" title="-D "></a>-D <file></file></h3><pre><code>-D &lt;file&gt;
---dump-header &lt;file&gt;
-</code></pre>
-<p>(HTTP)转储http响应头到指定文件</p>
-<h1 id="curl举例"><a href="#curl举例" class="headerlink" title="curl举例"></a>curl举例</h1><h2 id="GET请求"><a href="#GET请求" class="headerlink" title="GET请求"></a>GET请求</h2><pre><code>curl &#39;http://127.0.0.1:8888/test&#39;
-curl -G &#39;http://127.0.0.1:8888/test&#39;
-curl --get &#39;http://127.0.0.1:8888/test&#39;
-curl -X GET &#39;http://127.0.0.1:8888/test&#39;
-curl --request GET &#39;http://127.0.0.1:8888/test&#39;
-</code></pre>
-<p>当有参数时，请进行URL编码，否则会可能会出错</p>
-<pre><code>curl -X GET &#39;http://127.0.0.1:8888/test2?date=2022-02-22 11:22:33&amp;bo=1&#39;
-</code></pre>
-<p>报错：HTTP Status 505 – HTTP Version Not Supported（因为参数带空格）</p>
-<p>正确写法(对空格URL编码)</p>
-<pre><code>curl -X GET &#39;http://127.0.0.1:8888/test2?date=2022-02-22%2011:22:33&amp;bo=1&#39;
-</code></pre>
-<h2 id="POST请求"><a href="#POST请求" class="headerlink" title="POST请求"></a>POST请求</h2><pre><code>curl -X POST &#39;http://127.0.0.1:8888/test2?date=2022-02-22%2011:22:33&amp;bo=11&#39;
-curl -X POST &#39;http://127.0.0.1:8888/test2&#39; -d &#39;date=2022-02-22 11:22:33&amp;bo=11&#39;
-curl -X POST &#39;http://127.0.0.1:8888/test2&#39; --data &#39;date=2022-02-22 11:22:33&amp;bo=11&#39;
-curl -X POST &#39;http://127.0.0.1:8888/test2&#39; --data-urlencode &#39;date=2022-02-22 11:22:33&#39; --data-urlencode &#39;bo=11&#39;
-curl -X POST  -H &#39;Content-Type: application/x-www-form-urlencoded&#39; &#39;http://127.0.0.1:8888/test2&#39; --data-urlencode &#39;date=2022-02-22 11:22:33&#39; --data-urlencode &#39;bo=11&#39;
-</code></pre>
-<p>POST请求默认Content-Type: application/x-www-form-urlencoded</p>
-<p>可以多次使用 -d、–data选项来指定多个传输参数，也可以使用一次 -d、–data选项来指定多个参数。当 Content-Type 为 application/x-www-form-urlencoded 时，-X POST 不可缺省。</p>
-<p>POST JSON请求</p>
-<pre><code>curl -X POST &#39;http://127.0.0.1:8888/test8&#39; -H &#39;Content-Type: application/json&#39; -d &#39;&#123;&quot;code&quot;: 123456789,&quot;name&quot;: 1646278385537&#125;&#39;
-curl &#39;http://127.0.0.1:8888/test8&#39; -H &#39;Content-Type: application/json&#39; -d &#39;&#123;&quot;code&quot;: 123456789,&quot;name&quot;: 1646278385537&#125;&#39;
-</code></pre>
-<p>Content-Type：application/json 时，默认以 POST 方式提交，此时 -X POST 可以缺省。</p>
-<p>————————————————<br>版权声明：本文为CSDN博主「骑个小蜗牛」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/jokerljg/article/details/126534526">https://blog.csdn.net/jokerljg/article/details/126534526</a></p>
+  <p>为深入贯彻习近平总书记关于碳达峰、碳中和重要讲话和指示精神，按照中央财经委员会第九次会议工作部署，根据国家“十四五”规划和2035年远景目标纲要，国家电网公司研究制定了构建以新能源为主体的新型电力系统行动方案，全力推动实现“双碳”目标。</p>
+<p>一、构建新型电力系统的重大意义</p>
+<p>2021年3月15日，习近平总书记在中央财经委第九次会议上提出，构建以新能源为主体的新型电力系统。这是自2014年6月总书记提出“四个革命、一个合作”能源安全新战略以来，再次对能源电力发展作出的系统阐述，明确了新型电力系统在实现“双碳”目标中的基础地位，为能源电力发展指明了科学方向、提供了根本遵循。</p>
+<p>国家电网公司深入学习贯彻习近平总书记重要指示和中央财经委第九次会议精神，我们深刻认识到，构建以新能源为主体的新型电力系统，是加快生态文明建设的战略选择。我国生态文明建设以降碳为重点战略方向，大力发展风电、太阳能发电等非化石能源，是能源领域降碳的主要途径。是保障国家能源安全的重要举措。能源安全关系国家安全，实现以新能源为供给主体，将大幅降低我国油气对外依存度，显著提高能源安全保障能力。是构建新发展格局的强大动力。以终端用能电气化推动能源利用节能提效，增强绿色发展内生动力，为全面建成社会主义现代化国家提供基础支撑和持续动能。是推动能源产业链转型升级的重要引擎。通过自主创新，集中突破能源电力领域核心和颠覆性技术，摆脱关键技术装备对外依赖，推动能源电力产业全链条自主可控和转型升级。</p>
+<p>实现碳达峰、碳中和，能源是主战场，电力是主力军，电网是排头兵。电网连接电力生产和消费，是重要的网络平台，是能源转型的中心环节。国家电网公司将充分发挥“大国重器”和“顶梁柱”作用，自觉肩负起责任使命，在构建以新能源为主体的新型电力系统、推动能源绿色低碳发展中争做引领者、推动者、先行者。</p>
+<p>二、新型电力系统特征、内涵和实施路径</p>
+<p>随着碳达峰、碳中和进程加快推进，能源生产加速清洁化、能源消费高度电气化、能源配置日趋平台化、能源利用日益高效化。能源格局的深刻调整，必将给电力系统带来深刻变化。</p>
+<p>电源结构由可控连续出力的煤电装机占主导，向强不确定性、弱可控出力的新能源发电装机占主导转变。负荷特性由传统的刚性、纯消费型，向柔性、生产与消费兼具型转变。电网形态由单向逐级输电为主的传统电网，向包括交直流混联大电网、微电网、局部直流电网和可调节负荷的能源互联网转变。技术基础由同步发电机为主导的机械电磁系统，向由电力电子设备和同步机共同主导的混合系统转变。运行特性由源随荷动的实时平衡模式、大电网一体化控制模式，向源网荷储协同互动的非完全实时平衡模式、大电网与微电网协同控制模式转变。</p>
+<p>以新能源为主体的新型电力系统承载着能源转型的历史使命，是清洁低碳、安全高效能源体系的重要组成部分，是以新能源为供给主体、以确保能源电力安全为基本前提、以满足经济社会发展电力需求为首要目标，以坚强智能电网为枢纽平台，以源网荷储互动与多能互补为支撑，具有清洁低碳、安全可控、灵活高效、智能友好、开放互动基本特征的电力系统。</p>
+<p>清洁低碳，形成清洁主导、电为中心的能源供应和消费体系，生产侧实现多元化清洁化低碳化、消费侧实现高效化减量化电气化。安全可控，新能源具备主动支撑能力，分布式、微电网可观可测可控，大电网规模合理、结构坚强，构建安全防御体系，增强系统韧性、弹性和自愈能力。灵活高效，发电侧、负荷侧调节能力强，电网侧资源配置能力强，实现各类能源互通互济、灵活转换，提升整体效率。智能友好，高度数字化、智慧化、网络化，实现对海量分散发供用对象的智能协调控制，实现源网荷储各要素友好协同。开放互动，适应各类新技术、新设备以及多元负荷大规模接入，与电力市场紧密融合，各类市场主体广泛参与、充分竞争、主动响应、双向互动。</p>
+<p>按照国家“双碳”目标和电力发展规划，预计到2035年，基本建成新型电力系统，到2050年全面建成新型电力系统。</p>
+<p>2021-2035年是建设期。新能源装机逐步成为第一大电源，常规电源逐步转变为调节性和保障性电源。电力系统总体维持较高转动惯量和交流同步运行特点，交流与直流、大电网与微电网协调发展。系统储能、需求响应等规模不断扩大，发电机组出力和用电负荷初步实现解耦。2036-2060年是成熟期。新能源逐步成为电力电量供应主体，火电通过CCUS技术逐步实现净零排放，成为长周期调节电源。分布式电源、微电网、交直流组网与大电网融合发展。系统储能全面应用、负荷全面深入参与调节，发电机组出力和用电负荷逐步实现全面解耦。</p>
+<p>构建新型电力系统，是一项极具挑战性、开创性的战略性工程，坚强智能电网是基础，源网荷储协同是关键，推动科技创新是引领，发挥制度优势是保证。国家电网公司将积极面对发展机遇和挑战，贯彻新发展理念，坚持系统观念，转变发展方式，落实国家战略，强化规划引领，统筹计划安排，全力推进构建新型电力系统。</p>
+<p>在公司发展方式上，按照“一体四翼”发展布局，由传统电网企业向能源互联网企业转变，积极培育新业务、新业态、新模式，延伸产业链、价值链。在电网发展方式上，由以大电网为主，向大电网、微电网、局部直流电网融合发展转变，推进电网数字化、透明化，满足新能源优先就地消纳和全国优化配置需要。在电源发展方式上，推动新能源发电由以集中式开发为主，向集中式与分布式开发并举转变；推动煤电由支撑性电源向调节性电源转变。</p>
+<p>在营销服务模式上，由为客户提供单向供电服务，向发供一体、多元用能、多态服务转变，打造“供电+能效服务”模式，创新构建“互联网+”现代客户服务模式。在调度运行模式上，由以大电源大电网为主要控制对象、源随荷动的调度模式，向源网荷储协调控制、输配微网多级协同的调度模式转变。在技术创新模式上，由以企业自主开发为主，向跨行业跨领域合作开发转变，技术领域向源网荷储全链条延伸。</p>
+<p>三、2021-2030年重点任务</p>
+<p>（一）加强各级电网协调发展，提升清洁能源优化配置和消纳能力</p>
+<p>1.加快特高压电网建设。在受端，扩展和完善华北、华东特高压网架，加快建设华中特高压网架，实现500千伏合理分层分区，构建风光水火资源优化配置平台。在送端，推进西南特高压网架建设，完善西北、东北750/500千伏网架，支撑跨区直流安全高效运行。“十四五”500千伏及以上电网建设投资约7000亿元，2025年华北、华东、华中和西南特高压网架全面建成。</p>
+<p>2.提高跨省跨区输送清洁能源力度。“十四五”，将持续提升已建输电通道利用效率，作为电网发展主要内容和重点任务，实现已建通道满功率运行，提升输电能力3527万千瓦。优化已建通道配套电源结构，提高输送清洁能源比重。“十四五”规划建成7回、开工建设一批、研究储备一批特高压直流，新增输电能力5600万千瓦。到2025年，公司经营区跨省跨区输电能力约3.0亿千瓦，2030年约3.5亿千瓦，输送清洁能源占比达到50以上。</p>
+<p>3.加大配电网建设投入。加强配电网规划体系建设，全面落实公司新版《配电网规划设计技术导则》，深化应用网格化规划方法，大力推广配电网典型模式、标准接线，提高配电网规划精细度和精准度，适应分布式电源、微电网、多元负荷规模化发展需要。落实国家区域协调发展、乡村振兴和新型城镇化战略，实施农村电网巩固提升工程，推进国际领先城市电网建设，按期完成“煤改电”配套和老旧小区、城中村改造等重点任务。“十四五”配电网建设投资超过1.2万亿元，占电网建设总投资的60以上，2025年城乡供电可靠率分别达到99.97、99.88。</p>
+<p>（二）加强电网数字化转型，提升能源互联网发展水平</p>
+<p>4.提升配电网智慧化水平。加大中压配电网智能终端部署、配电通信网建设和配电自动化实用化，并向低压配电网延伸，大幅提高可观性可测性可控性。推动应用新型储能、需求侧响应，通过多能互补、源网荷储一体化协调控制技术，提高配电网调节能力和适应能力，促进电力电量分层分级分群平衡。2025年，基本建成安全可靠、绿色智能、灵活互动、经济高效的智慧配电网。</p>
+<p>5.打造电网数字化平台。加快信息采集、感知、处理、应用等环节建设，构建连接全社会用户、各环节设备的智慧物联体系，推广人工智能、国网链、北斗等共性平台和创新应用，提高全息感知和泛在互联能力，实现电网、设备、客户状态的动态采集、实时感知和在线监测。加快国网云平台建设，推广网上电网等业务应用，打造数字孪生电网，加快推动电网向能源互联网升级。</p>
+<p>6.构建能源互联网生态圈。推动新能源云成为国家级能源云，完善新能源资源优化、碳中和支撑服务、新能源工业互联网、新型电力系统科技创新四大平台。建设能源大数据中心，推动能源数据统一汇聚与共享应用。建设能源工业云网，为产业链上下游企业提供“上云用数赋智”服务。依托电网平台，加大数据共享和价值挖掘，拓展新业务新业态新模式。</p>
+<p>（三）加强调节能力建设，提升系统灵活性水平</p>
+<p>7.加快建设抽水蓄能电站。落实公司加快抽水蓄能开发建设6项重要举措，推动抽水蓄能电站科学布局，向社会开放抽蓄项目，引导社会资本投资建设，多开多投。加快已开工的4133万千瓦抽水蓄能电站建设，“十四五”新开工2000万千瓦以上抽蓄电站，2025年公司经营区抽水蓄能装机超过5000万千瓦，2030年达到1亿千瓦。</p>
+<p>8.全力配合推进火电灵活性改造。推动各省明确改造规模、具体项目、进度安排，2025年力争“三北”地区累计完成2.2亿、东中部地区累计完成1亿千瓦改造任务。推动各省全面启动调峰辅助服务市场建设，尽快建立健全调峰、调频辅助服务机制，调动火电参与灵活性改造和调峰积极性。</p>
+<p>9.支持新型储能规模化应用。按照国家政策要求，大力支持电源侧储能建设，积极服务用户侧储能发展，提供技术咨询和并网服务。对符合国家规定的项目优先并网、充分利用。积极推动并参与制定新型储能规划设计、建设安装、并网调试、运行监测等全环节标准体系。2025年，公司经营区新型储能容量超过3000万千瓦，2030年1亿千瓦左右。</p>
+<p>10.扩大可调节负荷资源库。开展可调节负荷资源普查。建成27家省级智慧能源服务平台，聚合各类资源，积极参与需求响应市场、辅助服务市场和现货市场。推动各省出台需求响应支持政策和市场机制，通过市场机制合理分配成本和收益。配合政府编制有序用电方案，达到最大负荷20以上且覆盖最大电力缺口。到2025年、2030年，可调节负荷容量分别达到5900万、7000万千瓦。</p>
+<p>（四）加强电网调度转型升级，提升驾驭新型电力系统能力</p>
+<p>11.构建新型电力系统安全稳定控制体系。攻克新型电力系统基础理论和稳定机理，建设以多时间尺度、平台化、智能化为特征的电网仿真平台，掌握“双高”电力系统运行特性。构建新型电力系统故障防御体系，建设自主可控新一代变电站二次系统，推动安自装置标准化应用，巩固完善“三道防线”。结合IT新技术，建设“人机融合、群智开放、多级协同、自主可控”的新一代调度技术支持系统。</p>
+<p>12.建设适应电力绿色低碳转型的平衡控制和新能源调度体系。提高新能源预测精度，推广长周期资源评估和功率预测技术。研究适应分布式新能源大规模接入的负荷预测技术及标准。加强电网统一调度，充分发挥源网荷储各类调节资源作用，保障电力可靠有序供应。2025年，省级电网负荷、新能源、分布式日前预测准确率整体提升至97、90、85以上。</p>
+<p>13.建设适应分布式电源发展的新型配电调度体系。建设贯穿国分省地县的分布式电源调度管理系统，构建全景观测、精准控制、主配协同的新型有源配电网调度模式。推广5G+智能电网调控应用，满足海量分布式电源调度通信需求，实现广域源网荷储资源协调控制。研究基于先进通信的配电网保护配置、主动配电网运行分析及协调控制等技术，全面升级配电网二次系统，实现方式灵活调节和故障快速隔离。</p>
+<p>（五）加强源网协调发展，提升新能源开发利用水平</p>
+<p>14.做好新能源接网服务工作。针对新能源与送出工程建设周期不匹配问题，开辟风电、太阳能发电等新能源配套电网工程建设“绿色通道”，加快接网工程建设，确保电网电源同步投产。深化应用新能源云，为新能源规划、建设、并网、消纳、补贴等全流程业务提供一站式服务，实现全环节工作高效化透明化。到2025年，公司经营区风电、太阳能发电总装机容量将达到8亿千瓦以上，2030年达到12亿千瓦以上。</p>
+<p>15.支持分布式新能源和微电网发展。配合政府部门做好分布式电源规划，明确分省、分地市、分县的开发规模。完善公司服务分布式新能源发展指导意见，继续做好一站式全流程免费服务，实现“应并尽并、愿并尽并”。研究微电网功能定位、发展模式、运行机制，完善标准体系，制订典型设计，提供“三零”“三省”并网服务。到2025年，公司经营区分布式新能源装机达到1.8亿千瓦以上，2030年达到3.5亿千瓦以上。</p>
+<p>16.不断扩大清洁能源交易规模。“十四五”，推广中长期交易+现货交易+应急调度的新能源消纳模式，开展绿电交易、发电权交易、新能源优先替代等多种形式交易，强化市场协同运营。2025年、2030年，公司经营区新能源发电量占总发电量比例分别超过15、20。</p>
+<p>（六）加强全社会节能提效，提升终端消费电气化水平</p>
+<p>17.推动低碳节能生产和改造。落实国家能源双控政策，密切跟踪重点省份“两高”企业调整和转移情况，严格用户并网审核，严禁不符合环保要求项目并网，严格执行差别性电价政策。开展“两高”企业用能监测和分析，为政府监管考核提供支撑。全面实施电网节能管理，开展绿色采购和绿色建造。加强六氟化硫气体数字化管控。</p>
+<p>18.持续拓展电能替代广度深度。在工业、建筑、交通等领域，大力推进以电代煤、以电代油、以电代气。推动1000吨及以上码头岸电设施全覆盖、长江船舶靠港使用岸电常态化。推动燃煤自备电厂清洁替代，科学稳妥推进北方“煤改电”清洁取暖。做好充换电网络布局规划，形成高效、稳定、可持续的车网互动业务模式和市场运作机制。2021-2030年，累计替代电量超过1万亿千瓦时。</p>
+<p>19.开展综合能源服务。聚焦公共建筑、工业企业和农业农村等领域，积极拓展综合能源实体项目和增值服务。以能效提升、分布式新能源开发利用为重点，开展楼宇建筑能源托管、供冷供暖、智能运维等业务。依托省级智慧能源服务平台，定期向客户推送用电能效账单、综合能效诊断报告。“十四五”，力争实现10千伏及以上高压供电客户能效服务能力全覆盖。</p>
+<p>（七）加强能源电力技术创新，提升运行安全和效率水平</p>
+<p>20.实施科技攻关行动计划。制定并加快实施“新型电力系统科技攻关行动计划”，以“三加强”（加强源网荷储协同发展、绿色低碳市场体系构建、电力系统可观可测可控能力建设）、“三提升”（提升新能源发电主动支撑、系统安全稳定运行、终端互动调节）为攻关方向，统筹推进基础理论研究、关键技术攻关、标准研制、成果应用和工程示范。联合能源电力行业上下游高校院所、企业协同攻关，深化产研用协同，打造开放共享创新平台。2021-2030年，安排研发经费投入3000亿元以上。</p>
+<p>21.加快关键技术攻关。重点突破新能源发电主动支撑、智能调度运行控制、市场运营协同、多能互补运行等技术，开展多尺度电力电量平衡、源网荷储协调规划等理论研究，推进大容量电化学储能、需求侧互动响应、柔性输电等技术进步和规模化应用，试验示范直流组网、氢能绿色制取与高效利用、超导输电等技术。</p>
+<p>22.开展关键装备和标准研制。制定国家电网技术成熟度评价体系，遴选出一批前景广阔、成熟度高的新技术新产品，加快推广应用。编制“新型电力系统技术标准体系框架”，重点开展新型电力系统构建及运行控制、分布式新能源及微电网、新能源和储能并网、需求响应等标准制订。超前布局标准国际化方向。</p>
+<p>23.推进新型电力系统示范区建设。选择西藏藏中、新疆南疆、河北张家口作为地区级示范区，重点研究送端高比例新能源电力系统构建方案，推广“新能源+储能+调相机”发展模式。选择福建、浙江、青海作为省级示范区，重点研究送受端大电网与分布式、微电网融合发展方案，以及适应新能源发展的政策和市场机制。</p>
+<p>（八）加强配套政策机制建设，提升支撑和保障能力</p>
+<p>24.推动健全电力价格形成机制。研究新型电力系统构建新增成本和疏导问题，配合政府部门健全价格体系，按照“谁受益、谁承担”原则，由各市场主体共同承担转型成本。通过输配电价合理疏导电网建设运营成本，还原电力商品价值属性。研究碳价体系，计算其他行业向电力行业转移的减碳成本，推动建立向受益行业合理分摊传导电力系统成本的机制。</p>
+<p>25.推进全国统一电力市场建设。加快推动建设竞争充分、开放有序的统一电力市场，在全国范围优化配置清洁能源。完善中长期、现货和辅助服务衔接机制，探索容量市场交易机制，开展绿色电力交易，推动可再生能源参与电力市场。研究电力市场和碳市场协同机制、碳价格与电价联动机制。建立公司碳管理体系，促进绿色低碳产业发展，拓展碳金融、绿色金融业务。2030年，初步建成适应新能源为主体的全国统一电力市场。</p>
+<p>26.构建能源电力安全预警体系。预判重点行业用电需求增长，滚动分析未来2年电力供需和电网安全形势，及时向政府部门汇报和预警。推动建立政府、企业和社会各负其责的燃料供应储备体系，确保极端情景下电力供应。开展客户安全在线诊断，完善重要输电通道、关键信息基础设施安全预案，强化市场运营风险管控，建设全场景网络安全防护体系。</p>
+<p>（九）加强组织领导和交流合作，提升全行业发展凝聚力</p>
+<p>27.强化工作组织落实责任。充分发挥公司碳达峰、碳中和领导小组统筹协调作用，充实领导小组办公室力量，建立一体谋划、一体部署、一体推进、一体考核的协同工作机制，实现全公司“一盘棋”。各部门、各机构、各单位细化分解工作任务，落实责任分工，全力推进各项工作。</p>
+<p>28.深化宣传引导与开放合作。加强信息公开和对外宣传，积极与政府机构、行业协会、科研院所、产业链上下游企业研讨交流，集思广益、群策群力、凝聚共识、形成合力，推动新型电力系统高质量发展。</p>
+<p><a target="_blank" rel="noopener" href="http://mm.chinapower.com.cn/xw/zyxw/20210728/90959.html">http://mm.chinapower.com.cn/xw/zyxw/20210728/90959.html</a></p>
  
       <!-- reward -->
       
@@ -601,7 +389,7 @@ curl &#39;http://127.0.0.1:8888/test8&#39; -H &#39;Content-Type: application/jso
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%94%B5%E5%8A%9B/" rel="tag">电力</a></li></ul>
 
     </footer>
   </div>
@@ -612,7 +400,7 @@ curl &#39;http://127.0.0.1:8888/test8&#39; -H &#39;Content-Type: application/jso
 
     
     <article
-  id="post-Linux命令：ss命令"
+  id="post-国务院关于印发2030年前碳达峰行动方案的通知"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -623,8 +411,8 @@ curl &#39;http://127.0.0.1:8888/test8&#39; -H &#39;Content-Type: application/jso
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/11/23/Linux%E5%91%BD%E4%BB%A4%EF%BC%9Ass%E5%91%BD%E4%BB%A4/"
-    >Linux命令：ss命令</a> 
+  <a class="article-title" href="/2023/11/30/%E5%9B%BD%E5%8A%A1%E9%99%A2%E5%85%B3%E4%BA%8E%E5%8D%B0%E5%8F%912030%E5%B9%B4%E5%89%8D%E7%A2%B3%E8%BE%BE%E5%B3%B0%E8%A1%8C%E5%8A%A8%E6%96%B9%E6%A1%88%E7%9A%84%E9%80%9A%E7%9F%A5/"
+    >国务院关于印发2030年前碳达峰行动方案的通知</a> 
 </h2>
  
 
@@ -632,53 +420,116 @@ curl &#39;http://127.0.0.1:8888/test8&#39; -H &#39;Content-Type: application/jso
     </header>
      
     <div class="article-meta">
-      <a href="/2023/11/23/Linux%E5%91%BD%E4%BB%A4%EF%BC%9Ass%E5%91%BD%E4%BB%A4/" class="article-date">
-  <time datetime="2023-11-23T12:14:23.000Z" itemprop="datePublished">2023-11-23</time>
+      <a href="/2023/11/30/%E5%9B%BD%E5%8A%A1%E9%99%A2%E5%85%B3%E4%BA%8E%E5%8D%B0%E5%8F%912030%E5%B9%B4%E5%89%8D%E7%A2%B3%E8%BE%BE%E5%B3%B0%E8%A1%8C%E5%8A%A8%E6%96%B9%E6%A1%88%E7%9A%84%E9%80%9A%E7%9F%A5/" class="article-date">
+  <time datetime="2023-11-30T12:14:23.000Z" itemprop="datePublished">2023-11-30</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
   </div>
    
     </div>
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>ss功能：</p>
-<p>用来显示套接字信息的，类似于netstat，可以显示更多的信息，用于替代netstat。</p>
-<p>ss常用选项</p>
-<pre><code>-t：tcp协议的连接
--u：udp协议的链接
--w：裸套接字相关
--x：unix sock相关
--l：listen监听状态的连接
--a：所有状态的连接
--e：显示扩展信息
--m：显示套接连接使用的内存信息
--p：进程及UDP
--n：数字格式显示
--o：计时器信息
-</code></pre>
-<p>常用组合：</p>
-<pre><code>-tan, -tanl, -tanlp, -uan
-</code></pre>
-<p>TCP常见状态：</p>
-<p>LISTEN：监听</p>
-<pre><code>ESTABLISHED：已建立连接
-FIN_WAIT_1
-FIN_WAIT_2
-SYN_SENT
-SYN_RECV
-CLOSED
-</code></pre>
-<p>其他用法：</p>
-<pre><code>ss -l 显示本地打开的所有端口
-ss -pl 显示每个进程具体打开的socket
-ss -t -a 显示所有tcp socket
-ss -u -a 显示所有的UDP Socekt
-ss -o state established &#39;( dport = :ssh or sport = :ssh )&#39; 显示所有已建立的ssh连接
-ss -o state established &#39;( dport = :http or sport = :http )&#39; 显示所有已建立的HTTP连接
-ss -s 列出当前socket详细信息
-</code></pre>
+  <p>国务院关于印发2030年前碳达峰</p>
+<p>行动方案的通知</p>
+<p>国发〔2021〕23号</p>
+<p>各省、自治区、直辖市人民政府，国务院各部委、各直属机构：</p>
+<p>现将《2030年前碳达峰行动方案》印发给你们，请认真贯彻执行。</p>
+<p>国务院</p>
+<p>2021年10月24日</p>
+<p>（本文有删减）</p>
+<p>2030年前碳达峰行动方案</p>
+<p>为深入贯彻落实党中央、国务院关于碳达峰、碳中和的重大战略决策，扎实推进碳达峰行动，制定本方案。</p>
+<p>一、总体要求</p>
+<p>（一）指导思想。以习近平新时代中国特色社会主义思想为指导，全面贯彻党的十九大和十九届二中、三中、四中、五中全会精神，深入贯彻习近平生态文明思想，立足新发展阶段，完整、准确、全面贯彻新发展理念，构建新发展格局，坚持系统观念，处理好发展和减排、整体和局部、短期和中长期的关系，统筹稳增长和调结构，把碳达峰、碳中和纳入经济社会发展全局，坚持“全国统筹、节约优先、双轮驱动、内外畅通、防范风险”的总方针，有力有序有效做好碳达峰工作，明确各地区、各领域、各行业目标任务，加快实现生产生活方式绿色变革，推动经济社会发展建立在资源高效利用和绿色低碳发展的基础之上，确保如期实现2030年前碳达峰目标。</p>
+<p>（二）工作原则。</p>
+<p>——总体部署、分类施策。坚持全国一盘棋，强化顶层设计和各方统筹。各地区、各领域、各行业因地制宜、分类施策，明确既符合自身实际又满足总体要求的目标任务。</p>
+<p>——系统推进、重点突破。全面准确认识碳达峰行动对经济社会发展的深远影响，加强政策的系统性、协同性。抓住主要矛盾和矛盾的主要方面，推动重点领域、重点行业和有条件的地方率先达峰。</p>
+<p>——双轮驱动、两手发力。更好发挥政府作用，构建新型举国体制，充分发挥市场机制作用，大力推进绿色低碳科技创新，深化能源和相关领域改革，形成有效激励约束机制。</p>
+<p>——稳妥有序、安全降碳。立足我国富煤贫油少气的能源资源禀赋，坚持先立后破，稳住存量，拓展增量，以保障国家能源安全和经济发展为底线，争取时间实现新能源的逐渐替代，推动能源低碳转型平稳过渡，切实保障国家能源安全、产业链供应链安全、粮食安全和群众正常生产生活，着力化解各类风险隐患，防止过度反应，稳妥有序、循序渐进推进碳达峰行动，确保安全降碳。</p>
+<p>二、主要目标</p>
+<p>“十四五”期间，产业结构和能源结构调整优化取得明显进展，重点行业能源利用效率大幅提升，煤炭消费增长得到严格控制，新型电力系统加快构建，绿色低碳技术研发和推广应用取得新进展，绿色生产生活方式得到普遍推行，有利于绿色低碳循环发展的政策体系进一步完善。到2025年，非化石能源消费比重达到20%左右，单位国内生产总值能源消耗比2020年下降13.5%，单位国内生产总值二氧化碳排放比2020年下降18%，为实现碳达峰奠定坚实基础。</p>
+<p>“十五五”期间，产业结构调整取得重大进展，清洁低碳安全高效的能源体系初步建立，重点领域低碳发展模式基本形成，重点耗能行业能源利用效率达到国际先进水平，非化石能源消费比重进一步提高，煤炭消费逐步减少，绿色低碳技术取得关键突破，绿色生活方式成为公众自觉选择，绿色低碳循环发展政策体系基本健全。到2030年，非化石能源消费比重达到25%左右，单位国内生产总值二氧化碳排放比2005年下降65%以上，顺利实现2030年前碳达峰目标。</p>
+<p>三、重点任务</p>
+<p>将碳达峰贯穿于经济社会发展全过程和各方面，重点实施能源绿色低碳转型行动、节能降碳增效行动、工业领域碳达峰行动、城乡建设碳达峰行动、交通运输绿色低碳行动、循环经济助力降碳行动、绿色低碳科技创新行动、碳汇能力巩固提升行动、绿色低碳全民行动、各地区梯次有序碳达峰行动等“碳达峰十大行动”。</p>
+<p>（一）能源绿色低碳转型行动。</p>
+<p>能源是经济社会发展的重要物质基础，也是碳排放的最主要来源。要坚持安全降碳，在保障能源安全的前提下，大力实施可再生能源替代，加快构建清洁低碳安全高效的能源体系。</p>
+<p>1．推进煤炭消费替代和转型升级。加快煤炭减量步伐，“十四五”时期严格合理控制煤炭消费增长，“十五五”时期逐步减少。严格控制新增煤电项目，新建机组煤耗标准达到国际先进水平，有序淘汰煤电落后产能，加快现役机组节能升级和灵活性改造，积极推进供热改造，推动煤电向基础保障性和系统调节性电源并重转型。严控跨区外送可再生能源电力配套煤电规模，新建通道可再生能源电量比例原则上不低于50%。推动重点用煤行业减煤限煤。大力推动煤炭清洁利用，合理划定禁止散烧区域，多措并举、积极有序推进散煤替代，逐步减少直至禁止煤炭散烧。</p>
+<p>2．大力发展新能源。全面推进风电、太阳能发电大规模开发和高质量发展，坚持集中式与分布式并举，加快建设风电和光伏发电基地。加快智能光伏产业创新升级和特色应用，创新“光伏+”模式，推进光伏发电多元布局。坚持陆海并重，推动风电协调快速发展，完善海上风电产业链，鼓励建设海上风电基地。积极发展太阳能光热发电，推动建立光热发电与光伏发电、风电互补调节的风光热综合可再生能源发电基地。因地制宜发展生物质发电、生物质能清洁供暖和生物天然气。探索深化地热能以及波浪能、潮流能、温差能等海洋新能源开发利用。进一步完善可再生能源电力消纳保障机制。到2030年，风电、太阳能发电总装机容量达到12亿千瓦以上。</p>
+<p>3．因地制宜开发水电。积极推进水电基地建设，推动金沙江上游、澜沧江上游、雅砻江中游、黄河上游等已纳入规划、符合生态保护要求的水电项目开工建设，推进雅鲁藏布江下游水电开发，推动小水电绿色发展。推动西南地区水电与风电、太阳能发电协同互补。统筹水电开发和生态保护，探索建立水能资源开发生态保护补偿机制。“十四五”、“十五五”期间分别新增水电装机容量4000万千瓦左右，西南地区以水电为主的可再生能源体系基本建立。</p>
+<p>4．积极安全有序发展核电。合理确定核电站布局和开发时序，在确保安全的前提下有序发展核电，保持平稳建设节奏。积极推动高温气冷堆、快堆、模块化小型堆、海上浮动堆等先进堆型示范工程，开展核能综合利用示范。加大核电标准化、自主化力度，加快关键技术装备攻关，培育高端核电装备制造产业集群。实行最严格的安全标准和最严格的监管，持续提升核安全监管能力。</p>
+<p>5．合理调控油气消费。保持石油消费处于合理区间，逐步调整汽油消费规模，大力推进先进生物液体燃料、可持续航空燃料等替代传统燃油，提升终端燃油产品能效。加快推进页岩气、煤层气、致密油（气）等非常规油气资源规模化开发。有序引导天然气消费，优化利用结构，优先保障民生用气，大力推动天然气与多种能源融合发展，因地制宜建设天然气调峰电站，合理引导工业用气和化工原料用气。支持车船使用液化天然气作为燃料。</p>
+<p>6．加快建设新型电力系统。构建新能源占比逐渐提高的新型电力系统，推动清洁电力资源大范围优化配置。大力提升电力系统综合调节能力，加快灵活调节电源建设，引导自备电厂、传统高载能工业负荷、工商业可中断负荷、电动汽车充电网络、虚拟电厂等参与系统调节，建设坚强智能电网，提升电网安全保障水平。积极发展“新能源+储能”、源网荷储一体化和多能互补，支持分布式新能源合理配置储能系统。制定新一轮抽水蓄能电站中长期发展规划，完善促进抽水蓄能发展的政策机制。加快新型储能示范推广应用。深化电力体制改革，加快构建全国统一电力市场体系。到2025年，新型储能装机容量达到3000万千瓦以上。到2030年，抽水蓄能电站装机容量达到1.2亿千瓦左右，省级电网基本具备5%以上的尖峰负荷响应能力。</p>
+<p>（二）节能降碳增效行动。</p>
+<p>落实节约优先方针，完善能源消费强度和总量双控制度，严格控制能耗强度，合理控制能源消费总量，推动能源消费革命，建设能源节约型社会。</p>
+<p>1．全面提升节能管理能力。推行用能预算管理，强化固定资产投资项目节能审查，对项目用能和碳排放情况进行综合评价，从源头推进节能降碳。提高节能管理信息化水平，完善重点用能单位能耗在线监测系统，建立全国性、行业性节能技术推广服务平台，推动高耗能企业建立能源管理中心。完善能源计量体系，鼓励采用认证手段提升节能管理水平。加强节能监察能力建设，健全省、市、县三级节能监察体系，建立跨部门联动机制，综合运用行政处罚、信用监管、绿色电价等手段，增强节能监察约束力。</p>
+<p>2．实施节能降碳重点工程。实施城市节能降碳工程，开展建筑、交通、照明、供热等基础设施节能升级改造，推进先进绿色建筑技术示范应用，推动城市综合能效提升。实施园区节能降碳工程，以高耗能高排放项目（以下称“两高”项目）集聚度高的园区为重点，推动能源系统优化和梯级利用，打造一批达到国际先进水平的节能低碳园区。实施重点行业节能降碳工程，推动电力、钢铁、有色金属、建材、石化化工等行业开展节能降碳改造，提升能源资源利用效率。实施重大节能降碳技术示范工程，支持已取得突破的绿色低碳关键技术开展产业化示范应用。</p>
+<p>3．推进重点用能设备节能增效。以电机、风机、泵、压缩机、变压器、换热器、工业锅炉等设备为重点，全面提升能效标准。建立以能效为导向的激励约束机制，推广先进高效产品设备，加快淘汰落后低效设备。加强重点用能设备节能审查和日常监管，强化生产、经营、销售、使用、报废全链条管理，严厉打击违法违规行为，确保能效标准和节能要求全面落实。</p>
+<p>4．加强新型基础设施节能降碳。优化新型基础设施空间布局，统筹谋划、科学配置数据中心等新型基础设施，避免低水平重复建设。优化新型基础设施用能结构，采用直流供电、分布式储能、“光伏+储能”等模式，探索多样化能源供应，提高非化石能源消费比重。对标国际先进水平，加快完善通信、运算、存储、传输等设备能效标准，提升准入门槛，淘汰落后设备和技术。加强新型基础设施用能管理，将年综合能耗超过1万吨标准煤的数据中心全部纳入重点用能单位能耗在线监测系统，开展能源计量审查。推动既有设施绿色升级改造，积极推广使用高效制冷、先进通风、余热利用、智能化用能控制等技术，提高设施能效水平。</p>
+<p>（三）工业领域碳达峰行动。</p>
+<p>工业是产生碳排放的主要领域之一，对全国整体实现碳达峰具有重要影响。工业领域要加快绿色低碳转型和高质量发展，力争率先实现碳达峰。</p>
+<p>1．推动工业领域绿色低碳发展。优化产业结构，加快退出落后产能，大力发展战略性新兴产业，加快传统产业绿色低碳改造。促进工业能源消费低碳化，推动化石能源清洁高效利用，提高可再生能源应用比重，加强电力需求侧管理，提升工业电气化水平。深入实施绿色制造工程，大力推行绿色设计，完善绿色制造体系，建设绿色工厂和绿色工业园区。推进工业领域数字化智能化绿色化融合发展，加强重点行业和领域技术改造。</p>
+<p>2．推动钢铁行业碳达峰。深化钢铁行业供给侧结构性改革，严格执行产能置换，严禁新增产能，推进存量优化，淘汰落后产能。推进钢铁企业跨地区、跨所有制兼并重组，提高行业集中度。优化生产力布局，以京津冀及周边地区为重点，继续压减钢铁产能。促进钢铁行业结构优化和清洁能源替代，大力推进非高炉炼铁技术示范，提升废钢资源回收利用水平，推行全废钢电炉工艺。推广先进适用技术，深挖节能降碳潜力，鼓励钢化联产，探索开展氢冶金、二氧化碳捕集利用一体化等试点示范，推动低品位余热供暖发展。</p>
+<p>3．推动有色金属行业碳达峰。巩固化解电解铝过剩产能成果，严格执行产能置换，严控新增产能。推进清洁能源替代，提高水电、风电、太阳能发电等应用比重。加快再生有色金属产业发展，完善废弃有色金属资源回收、分选和加工网络，提高再生有色金属产量。加快推广应用先进适用绿色低碳技术，提升有色金属生产过程余热回收水平，推动单位产品能耗持续下降。</p>
+<p>4．推动建材行业碳达峰。加强产能置换监管，加快低效产能退出，严禁新增水泥熟料、平板玻璃产能，引导建材行业向轻型化、集约化、制品化转型。推动水泥错峰生产常态化，合理缩短水泥熟料装置运转时间。因地制宜利用风能、太阳能等可再生能源，逐步提高电力、天然气应用比重。鼓励建材企业使用粉煤灰、工业废渣、尾矿渣等作为原料或水泥混合材。加快推进绿色建材产品认证和应用推广，加强新型胶凝材料、低碳混凝土、木竹建材等低碳建材产品研发应用。推广节能技术设备，开展能源管理体系建设，实现节能增效。</p>
+<p>5．推动石化化工行业碳达峰。优化产能规模和布局，加大落后产能淘汰力度，有效化解结构性过剩矛盾。严格项目准入，合理安排建设时序，严控新增炼油和传统煤化工生产能力，稳妥有序发展现代煤化工。引导企业转变用能方式，鼓励以电力、天然气等替代煤炭。调整原料结构，控制新增原料用煤，拓展富氢原料进口来源，推动石化化工原料轻质化。优化产品结构，促进石化化工与煤炭开采、冶金、建材、化纤等产业协同发展，加强炼厂干气、液化气等副产气体高效利用。鼓励企业节能升级改造，推动能量梯级利用、物料循环利用。到2025年，国内原油一次加工能力控制在10亿吨以内，主要产品产能利用率提升至80%以上。</p>
+<p>6．坚决遏制“两高”项目盲目发展。采取强有力措施，对“两高”项目实行清单管理、分类处置、动态监控。全面排查在建项目，对能效水平低于本行业能耗限额准入值的，按有关规定停工整改，推动能效水平应提尽提，力争全面达到国内乃至国际先进水平。科学评估拟建项目，对产能已饱和的行业，按照“减量替代”原则压减产能；对产能尚未饱和的行业，按照国家布局和审批备案等要求，对标国际先进水平提高准入门槛；对能耗量较大的新兴产业，支持引导企业应用绿色低碳技术，提高能效水平。深入挖潜存量项目，加快淘汰落后产能，通过改造升级挖掘节能减排潜力。强化常态化监管，坚决拿下不符合要求的“两高”项目。</p>
+<p>（四）城乡建设碳达峰行动。</p>
+<p>加快推进城乡建设绿色低碳发展，城市更新和乡村振兴都要落实绿色低碳要求。</p>
+<p>1．推进城乡建设绿色低碳转型。推动城市组团式发展，科学确定建设规模，控制新增建设用地过快增长。倡导绿色低碳规划设计理念，增强城乡气候韧性，建设海绵城市。推广绿色低碳建材和绿色建造方式，加快推进新型建筑工业化，大力发展装配式建筑，推广钢结构住宅，推动建材循环利用，强化绿色设计和绿色施工管理。加强县城绿色低碳建设。推动建立以绿色低碳为导向的城乡规划建设管理机制，制定建筑拆除管理办法，杜绝大拆大建。建设绿色城镇、绿色社区。</p>
+<p>2．加快提升建筑能效水平。加快更新建筑节能、市政基础设施等标准，提高节能降碳要求。加强适用于不同气候区、不同建筑类型的节能低碳技术研发和推广，推动超低能耗建筑、低碳建筑规模化发展。加快推进居住建筑和公共建筑节能改造，持续推动老旧供热管网等市政基础设施节能降碳改造。提升城镇建筑和基础设施运行管理智能化水平，加快推广供热计量收费和合同能源管理，逐步开展公共建筑能耗限额管理。到2025年，城镇新建建筑全面执行绿色建筑标准。</p>
+<p>3．加快优化建筑用能结构。深化可再生能源建筑应用，推广光伏发电与建筑一体化应用。积极推动严寒、寒冷地区清洁取暖，推进热电联产集中供暖，加快工业余热供暖规模化应用，积极稳妥开展核能供热示范，因地制宜推行热泵、生物质能、地热能、太阳能等清洁低碳供暖。引导夏热冬冷地区科学取暖，因地制宜采用清洁高效取暖方式。提高建筑终端电气化水平，建设集光伏发电、储能、直流配电、柔性用电于一体的“光储直柔”建筑。到2025年，城镇建筑可再生能源替代率达到8%，新建公共机构建筑、新建厂房屋顶光伏覆盖率力争达到50%。</p>
+<p>4．推进农村建设和用能低碳转型。推进绿色农房建设，加快农房节能改造。持续推进农村地区清洁取暖，因地制宜选择适宜取暖方式。发展节能低碳农业大棚。推广节能环保灶具、电动农用车辆、节能环保农机和渔船。加快生物质能、太阳能等可再生能源在农业生产和农村生活中的应用。加强农村电网建设，提升农村用能电气化水平。</p>
+<p>（五）交通运输绿色低碳行动。</p>
+<p>加快形成绿色低碳运输方式，确保交通运输领域碳排放增长保持在合理区间。</p>
+<p>1．推动运输工具装备低碳转型。积极扩大电力、氢能、天然气、先进生物液体燃料等新能源、清洁能源在交通运输领域应用。大力推广新能源汽车，逐步降低传统燃油汽车在新车产销和汽车保有量中的占比，推动城市公共服务车辆电动化替代，推广电力、氢燃料、液化天然气动力重型货运车辆。提升铁路系统电气化水平。加快老旧船舶更新改造，发展电动、液化天然气动力船舶，深入推进船舶靠港使用岸电，因地制宜开展沿海、内河绿色智能船舶示范应用。提升机场运行电动化智能化水平，发展新能源航空器。到2030年，当年新增新能源、清洁能源动力的交通工具比例达到40%左右，营运交通工具单位换算周转量碳排放强度比2020年下降9.5%左右，国家铁路单位换算周转量综合能耗比2020年下降10%。陆路交通运输石油消费力争2030年前达到峰值。</p>
+<p>2．构建绿色高效交通运输体系。发展智能交通，推动不同运输方式合理分工、有效衔接，降低空载率和不合理客货运周转量。大力发展以铁路、水路为骨干的多式联运，推进工矿企业、港口、物流园区等铁路专用线建设，加快内河高等级航道网建设，加快大宗货物和中长距离货物运输“公转铁”、“公转水”。加快先进适用技术应用，提升民航运行管理效率，引导航空企业加强智慧运行，实现系统化节能降碳。加快城乡物流配送体系建设，创新绿色低碳、集约高效的配送模式。打造高效衔接、快捷舒适的公共交通服务体系，积极引导公众选择绿色低碳交通方式。“十四五”期间，集装箱铁水联运量年均增长15%以上。到2030年，城区常住人口100万以上的城市绿色出行比例不低于70%。</p>
+<p>3．加快绿色交通基础设施建设。将绿色低碳理念贯穿于交通基础设施规划、建设、运营和维护全过程，降低全生命周期能耗和碳排放。开展交通基础设施绿色化提升改造，统筹利用综合运输通道线位、土地、空域等资源，加大岸线、锚地等资源整合力度，提高利用效率。有序推进充电桩、配套电网、加注（气）站、加氢站等基础设施建设，提升城市公共交通基础设施水平。到2030年，民用运输机场场内车辆装备等力争全面实现电动化。</p>
+<p>（六）循环经济助力降碳行动。</p>
+<p>抓住资源利用这个源头，大力发展循环经济，全面提高资源利用效率，充分发挥减少资源消耗和降碳的协同作用。</p>
+<p>1．推进产业园区循环化发展。以提升资源产出率和循环利用率为目标，优化园区空间布局，开展园区循环化改造。推动园区企业循环式生产、产业循环式组合，组织企业实施清洁生产改造，促进废物综合利用、能量梯级利用、水资源循环利用，推进工业余压余热、废气废液废渣资源化利用，积极推广集中供气供热。搭建基础设施和公共服务共享平台，加强园区物质流管理。到2030年，省级以上重点产业园区全部实施循环化改造。</p>
+<p>2．加强大宗固废综合利用。提高矿产资源综合开发利用水平和综合利用率，以煤矸石、粉煤灰、尾矿、共伴生矿、冶炼渣、工业副产石膏、建筑垃圾、农作物秸秆等大宗固废为重点，支持大掺量、规模化、高值化利用，鼓励应用于替代原生非金属矿、砂石等资源。在确保安全环保前提下，探索将磷石膏应用于土壤改良、井下充填、路基修筑等。推动建筑垃圾资源化利用，推广废弃路面材料原地再生利用。加快推进秸秆高值化利用，完善收储运体系，严格禁烧管控。加快大宗固废综合利用示范建设。到2025年，大宗固废年利用量达到40亿吨左右；到2030年，年利用量达到45亿吨左右。</p>
+<p>3．健全资源循环利用体系。完善废旧物资回收网络，推行“互联网+”回收模式，实现再生资源应收尽收。加强再生资源综合利用行业规范管理，促进产业集聚发展。高水平建设现代化“城市矿产”基地，推动再生资源规范化、规模化、清洁化利用。推进退役动力电池、光伏组件、风电机组叶片等新兴产业废物循环利用。促进汽车零部件、工程机械、文办设备等再制造产业高质量发展。加强资源再生产品和再制造产品推广应用。到2025年，废钢铁、废铜、废铝、废铅、废锌、废纸、废塑料、废橡胶、废玻璃等9种主要再生资源循环利用量达到4.5亿吨，到2030年达到5.1亿吨。</p>
+<p>4．大力推进生活垃圾减量化资源化。扎实推进生活垃圾分类，加快建立覆盖全社会的生活垃圾收运处置体系，全面实现分类投放、分类收集、分类运输、分类处理。加强塑料污染全链条治理，整治过度包装，推动生活垃圾源头减量。推进生活垃圾焚烧处理，降低填埋比例，探索适合我国厨余垃圾特性的资源化利用技术。推进污水资源化利用。到2025年，城市生活垃圾分类体系基本健全，生活垃圾资源化利用比例提升至60%左右。到2030年，城市生活垃圾分类实现全覆盖，生活垃圾资源化利用比例提升至65%。</p>
+<p>（七）绿色低碳科技创新行动。</p>
+<p>发挥科技创新的支撑引领作用，完善科技创新体制机制，强化创新能力，加快绿色低碳科技革命。</p>
+<p>1．完善创新体制机制。制定科技支撑碳达峰碳中和行动方案，在国家重点研发计划中设立碳达峰碳中和关键技术研究与示范等重点专项，采取“揭榜挂帅”机制，开展低碳零碳负碳关键核心技术攻关。将绿色低碳技术创新成果纳入高等学校、科研单位、国有企业有关绩效考核。强化企业创新主体地位，支持企业承担国家绿色低碳重大科技项目，鼓励设施、数据等资源开放共享。推进国家绿色技术交易中心建设，加快创新成果转化。加强绿色低碳技术和产品知识产权保护。完善绿色低碳技术和产品检测、评估、认证体系。</p>
+<p>2．加强创新能力建设和人才培养。组建碳达峰碳中和相关国家实验室、国家重点实验室和国家技术创新中心，适度超前布局国家重大科技基础设施，引导企业、高等学校、科研单位共建一批国家绿色低碳产业创新中心。创新人才培养模式，鼓励高等学校加快新能源、储能、氢能、碳减排、碳汇、碳排放权交易等学科建设和人才培养，建设一批绿色低碳领域未来技术学院、现代产业学院和示范性能源学院。深化产教融合，鼓励校企联合开展产学合作协同育人项目，组建碳达峰碳中和产教融合发展联盟，建设一批国家储能技术产教融合创新平台。</p>
+<p>3．强化应用基础研究。实施一批具有前瞻性、战略性的国家重大前沿科技项目，推动低碳零碳负碳技术装备研发取得突破性进展。聚焦化石能源绿色智能开发和清洁低碳利用、可再生能源大规模利用、新型电力系统、节能、氢能、储能、动力电池、二氧化碳捕集利用与封存等重点，深化应用基础研究。积极研发先进核电技术，加强可控核聚变等前沿颠覆性技术研究。</p>
+<p>4．加快先进适用技术研发和推广应用。集中力量开展复杂大电网安全稳定运行和控制、大容量风电、高效光伏、大功率液化天然气发动机、大容量储能、低成本可再生能源制氢、低成本二氧化碳捕集利用与封存等技术创新，加快碳纤维、气凝胶、特种钢材等基础材料研发，补齐关键零部件、元器件、软件等短板。推广先进成熟绿色低碳技术，开展示范应用。建设全流程、集成化、规模化二氧化碳捕集利用与封存示范项目。推进熔盐储能供热和发电示范应用。加快氢能技术研发和示范应用，探索在工业、交通运输、建筑等领域规模化应用。</p>
+<p>（八）碳汇能力巩固提升行动。</p>
+<p>坚持系统观念，推进山水林田湖草沙一体化保护和修复，提高生态系统质量和稳定性，提升生态系统碳汇增量。</p>
+<p>1．巩固生态系统固碳作用。结合国土空间规划编制和实施，构建有利于碳达峰、碳中和的国土空间开发保护格局。严守生态保护红线，严控生态空间占用，建立以国家公园为主体的自然保护地体系，稳定现有森林、草原、湿地、海洋、土壤、冻土、岩溶等固碳作用。严格执行土地使用标准，加强节约集约用地评价，推广节地技术和节地模式。</p>
+<p>2．提升生态系统碳汇能力。实施生态保护修复重大工程。深入推进大规模国土绿化行动，巩固退耕还林还草成果，扩大林草资源总量。强化森林资源保护，实施森林质量精准提升工程，提高森林质量和稳定性。加强草原生态保护修复，提高草原综合植被盖度。加强河湖、湿地保护修复。整体推进海洋生态系统保护和修复，提升红树林、海草床、盐沼等固碳能力。加强退化土地修复治理，开展荒漠化、石漠化、水土流失综合治理，实施历史遗留矿山生态修复工程。到2030年，全国森林覆盖率达到25%左右，森林蓄积量达到190亿立方米。</p>
+<p>3．加强生态系统碳汇基础支撑。依托和拓展自然资源调查监测体系，利用好国家林草生态综合监测评价成果，建立生态系统碳汇监测核算体系，开展森林、草原、湿地、海洋、土壤、冻土、岩溶等碳汇本底调查、碳储量评估、潜力分析，实施生态保护修复碳汇成效监测评估。加强陆地和海洋生态系统碳汇基础理论、基础方法、前沿颠覆性技术研究。建立健全能够体现碳汇价值的生态保护补偿机制，研究制定碳汇项目参与全国碳排放权交易相关规则。</p>
+<p>4．推进农业农村减排固碳。大力发展绿色低碳循环农业，推进农光互补、“光伏+设施农业”、“海上风电+海洋牧场”等低碳农业模式。研发应用增汇型农业技术。开展耕地质量提升行动，实施国家黑土地保护工程，提升土壤有机碳储量。合理控制化肥、农药、地膜使用量，实施化肥农药减量替代计划，加强农作物秸秆综合利用和畜禽粪污资源化利用。</p>
+<p>（九）绿色低碳全民行动。</p>
+<p>增强全民节约意识、环保意识、生态意识，倡导简约适度、绿色低碳、文明健康的生活方式，把绿色理念转化为全体人民的自觉行动。</p>
+<p>1．加强生态文明宣传教育。将生态文明教育纳入国民教育体系，开展多种形式的资源环境国情教育，普及碳达峰、碳中和基础知识。加强对公众的生态文明科普教育，将绿色低碳理念有机融入文艺作品，制作文创产品和公益广告，持续开展世界地球日、世界环境日、全国节能宣传周、全国低碳日等主题宣传活动，增强社会公众绿色低碳意识，推动生态文明理念更加深入人心。</p>
+<p>2．推广绿色低碳生活方式。坚决遏制奢侈浪费和不合理消费，着力破除奢靡铺张的歪风陋习，坚决制止餐饮浪费行为。在全社会倡导节约用能，开展绿色低碳社会行动示范创建，深入推进绿色生活创建行动，评选宣传一批优秀示范典型，营造绿色低碳生活新风尚。大力发展绿色消费，推广绿色低碳产品，完善绿色产品认证与标识制度。提升绿色产品在政府采购中的比例。</p>
+<p>3．引导企业履行社会责任。引导企业主动适应绿色低碳发展要求，强化环境责任意识，加强能源资源节约，提升绿色创新水平。重点领域国有企业特别是中央企业要制定实施企业碳达峰行动方案，发挥示范引领作用。重点用能单位要梳理核算自身碳排放情况，深入研究碳减排路径，“一企一策”制定专项工作方案，推进节能降碳。相关上市公司和发债企业要按照环境信息依法披露要求，定期公布企业碳排放信息。充分发挥行业协会等社会团体作用，督促企业自觉履行社会责任。</p>
+<p>4．强化领导干部培训。将学习贯彻习近平生态文明思想作为干部教育培训的重要内容，各级党校（行政学院）要把碳达峰、碳中和相关内容列入教学计划，分阶段、多层次对各级领导干部开展培训，普及科学知识，宣讲政策要点，强化法治意识，深化各级领导干部对碳达峰、碳中和工作重要性、紧迫性、科学性、系统性的认识。从事绿色低碳发展相关工作的领导干部要尽快提升专业素养和业务能力，切实增强推动绿色低碳发展的本领。</p>
+<p>（十）各地区梯次有序碳达峰行动。</p>
+<p>各地区要准确把握自身发展定位，结合本地区经济社会发展实际和资源环境禀赋，坚持分类施策、因地制宜、上下联动，梯次有序推进碳达峰。</p>
+<p>1．科学合理确定有序达峰目标。碳排放已经基本稳定的地区要巩固减排成果，在率先实现碳达峰的基础上进一步降低碳排放。产业结构较轻、能源结构较优的地区要坚持绿色低碳发展，坚决不走依靠“两高”项目拉动经济增长的老路，力争率先实现碳达峰。产业结构偏重、能源结构偏煤的地区和资源型地区要把节能降碳摆在突出位置，大力优化调整产业结构和能源结构，逐步实现碳排放增长与经济增长脱钩，力争与全国同步实现碳达峰。</p>
+<p>2．因地制宜推进绿色低碳发展。各地区要结合区域重大战略、区域协调发展战略和主体功能区战略，从实际出发推进本地区绿色低碳发展。京津冀、长三角、粤港澳大湾区等区域要发挥高质量发展动力源和增长极作用，率先推动经济社会发展全面绿色转型。长江经济带、黄河流域和国家生态文明试验区要严格落实生态优先、绿色发展战略导向，在绿色低碳发展方面走在全国前列。中西部和东北地区要着力优化能源结构，按照产业政策和能耗双控要求，有序推动高耗能行业向清洁能源优势地区集中，积极培育绿色发展动能。</p>
+<p>3．上下联动制定地方达峰方案。各省、自治区、直辖市人民政府要按照国家总体部署，结合本地区资源环境禀赋、产业布局、发展阶段等，坚持全国一盘棋，不抢跑，科学制定本地区碳达峰行动方案，提出符合实际、切实可行的碳达峰时间表、路线图、施工图，避免“一刀切”限电限产或运动式“减碳”。各地区碳达峰行动方案经碳达峰碳中和工作领导小组综合平衡、审核通过后，由地方自行印发实施。</p>
+<p>4．组织开展碳达峰试点建设。加大中央对地方推进碳达峰的支持力度，选择100个具有典型代表性的城市和园区开展碳达峰试点建设，在政策、资金、技术等方面对试点城市和园区给予支持，加快实现绿色低碳转型，为全国提供可操作、可复制、可推广的经验做法。</p>
+<p>四、国际合作</p>
+<p>（一）深度参与全球气候治理。大力宣传习近平生态文明思想，分享中国生态文明、绿色发展理念与实践经验，为建设清洁美丽世界贡献中国智慧、中国方案、中国力量，共同构建人与自然生命共同体。主动参与全球绿色治理体系建设，坚持共同但有区别的责任原则、公平原则和各自能力原则，坚持多边主义，维护以联合国为核心的国际体系，推动各方全面履行《联合国气候变化框架公约》及其《巴黎协定》。积极参与国际航运、航空减排谈判。</p>
+<p>（二）开展绿色经贸、技术与金融合作。优化贸易结构，大力发展高质量、高技术、高附加值绿色产品贸易。加强绿色标准国际合作，推动落实合格评定合作和互认机制，做好绿色贸易规则与进出口政策的衔接。加强节能环保产品和服务进出口。加大绿色技术合作力度，推动开展可再生能源、储能、氢能、二氧化碳捕集利用与封存等领域科研合作和技术交流，积极参与国际热核聚变实验堆计划等国际大科学工程。深化绿色金融国际合作，积极参与碳定价机制和绿色金融标准体系国际宏观协调，与有关各方共同推动绿色低碳转型。</p>
+<p>（三）推进绿色“一带一路”建设。秉持共商共建共享原则，弘扬开放、绿色、廉洁理念，加强与共建“一带一路”国家的绿色基建、绿色能源、绿色金融等领域合作，提高境外项目环境可持续性，打造绿色、包容的“一带一路”能源合作伙伴关系，扩大新能源技术和产品出口。发挥“一带一路”绿色发展国际联盟等合作平台作用，推动实施《“一带一路”绿色投资原则》，推进“一带一路”应对气候变化南南合作计划和“一带一路”科技创新行动计划。</p>
+<p>五、政策保障</p>
+<p>（一）建立统一规范的碳排放统计核算体系。加强碳排放统计核算能力建设，深化核算方法研究，加快建立统一规范的碳排放统计核算体系。支持行业、企业依据自身特点开展碳排放核算方法学研究，建立健全碳排放计量体系。推进碳排放实测技术发展，加快遥感测量、大数据、云计算等新兴技术在碳排放实测技术领域的应用，提高统计核算水平。积极参与国际碳排放核算方法研究，推动建立更为公平合理的碳排放核算方法体系。</p>
+<p>（二）健全法律法规标准。构建有利于绿色低碳发展的法律体系，推动能源法、节约能源法、电力法、煤炭法、可再生能源法、循环经济促进法、清洁生产促进法等制定修订。加快节能标准更新，修订一批能耗限额、产品设备能效强制性国家标准和工程建设标准，提高节能降碳要求。健全可再生能源标准体系，加快相关领域标准制定修订。建立健全氢制、储、输、用标准。完善工业绿色低碳标准体系。建立重点企业碳排放核算、报告、核查等标准，探索建立重点产品全生命周期碳足迹标准。积极参与国际能效、低碳等标准制定修订，加强国际标准协调。</p>
+<p>（三）完善经济政策。各级人民政府要加大对碳达峰、碳中和工作的支持力度。建立健全有利于绿色低碳发展的税收政策体系，落实和完善节能节水、资源综合利用等税收优惠政策，更好发挥税收对市场主体绿色低碳发展的促进作用。完善绿色电价政策，健全居民阶梯电价制度和分时电价政策，探索建立分时电价动态调整机制。完善绿色金融评价机制，建立健全绿色金融标准体系。大力发展绿色贷款、绿色股权、绿色债券、绿色保险、绿色基金等金融工具，设立碳减排支持工具，引导金融机构为绿色低碳项目提供长期限、低成本资金，鼓励开发性政策性金融机构按照市场化法治化原则为碳达峰行动提供长期稳定融资支持。拓展绿色债券市场的深度和广度，支持符合条件的绿色企业上市融资、挂牌融资和再融资。研究设立国家低碳转型基金，支持传统产业和资源富集地区绿色转型。鼓励社会资本以市场化方式设立绿色低碳产业投资基金。</p>
+<p>（四）建立健全市场化机制。发挥全国碳排放权交易市场作用，进一步完善配套制度，逐步扩大交易行业范围。建设全国用能权交易市场，完善用能权有偿使用和交易制度，做好与能耗双控制度的衔接。统筹推进碳排放权、用能权、电力交易等市场建设，加强市场机制间的衔接与协调，将碳排放权、用能权交易纳入公共资源交易平台。积极推行合同能源管理，推广节能咨询、诊断、设计、融资、改造、托管等“一站式”综合服务模式。</p>
+<p>六、组织实施</p>
+<p>（一）加强统筹协调。加强党中央对碳达峰、碳中和工作的集中统一领导，碳达峰碳中和工作领导小组对碳达峰相关工作进行整体部署和系统推进，统筹研究重要事项、制定重大政策。碳达峰碳中和工作领导小组成员单位要按照党中央、国务院决策部署和领导小组工作要求，扎实推进相关工作。碳达峰碳中和工作领导小组办公室要加强统筹协调，定期对各地区和重点领域、重点行业工作进展情况进行调度，科学提出碳达峰分步骤的时间表、路线图，督促将各项目标任务落实落细。</p>
+<p>（二）强化责任落实。各地区各有关部门要深刻认识碳达峰、碳中和工作的重要性、紧迫性、复杂性，切实扛起责任，按照《中共中央国务院关于完整准确全面贯彻新发展理念做好碳达峰碳中和工作的意见》和本方案确定的主要目标和重点任务，着力抓好各项任务落实，确保政策到位、措施到位、成效到位，落实情况纳入中央和省级生态环境保护督察。各相关单位、人民团体、社会组织要按照国家有关部署，积极发挥自身作用，推进绿色低碳发展。</p>
+<p>（三）严格监督考核。实施以碳强度控制为主、碳排放总量控制为辅的制度，对能源消费和碳排放指标实行协同管理、协同分解、协同考核，逐步建立系统完善的碳达峰碳中和综合评价考核制度。加强监督考核结果应用，对碳达峰工作成效突出的地区、单位和个人按规定给予表彰奖励，对未完成目标任务的地区、部门依规依法实行通报批评和约谈问责。各省、自治区、直辖市人民政府要组织开展碳达峰目标任务年度评估，有关工作进展和重大问题要及时向碳达峰碳中和工作领导小组报告。</p>
+<p><a target="_blank" rel="noopener" href="https://www.gov.cn/zhengce/zhengceku/2021-10/26/content_5644984.htm">https://www.gov.cn/zhengce/zhengceku/2021-10/26/content_5644984.htm</a></p>
  
       <!-- reward -->
       
@@ -689,7 +540,7 @@ ss -s 列出当前socket详细信息
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%94%B5%E5%8A%9B/" rel="tag">电力</a></li></ul>
 
     </footer>
   </div>
@@ -700,7 +551,7 @@ ss -s 列出当前socket详细信息
 
     
     <article
-  id="post-CentOS系统安装JDK1.8 详细教程"
+  id="post-物联网网关，原来是这么回事，感谢！"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -711,8 +562,8 @@ ss -s 列出当前socket详细信息
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/11/22/CentOS%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85JDK1.8%20%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/"
-    >CentOS系统安装JDK1.8 详细教程</a> 
+  <a class="article-title" href="/2023/11/29/%E7%89%A9%E8%81%94%E7%BD%91%E7%BD%91%E5%85%B3%EF%BC%8C%E5%8E%9F%E6%9D%A5%E6%98%AF%E8%BF%99%E4%B9%88%E5%9B%9E%E4%BA%8B%EF%BC%8C%E6%84%9F%E8%B0%A2%EF%BC%81/"
+    >物联网网关，原来是这么回事，感谢！</a> 
 </h2>
  
 
@@ -720,52 +571,113 @@ ss -s 列出当前socket详细信息
     </header>
      
     <div class="article-meta">
-      <a href="/2023/11/22/CentOS%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85JDK1.8%20%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/" class="article-date">
-  <time datetime="2023-11-22T12:14:23.000Z" itemprop="datePublished">2023-11-22</time>
+      <a href="/2023/11/29/%E7%89%A9%E8%81%94%E7%BD%91%E7%BD%91%E5%85%B3%EF%BC%8C%E5%8E%9F%E6%9D%A5%E6%98%AF%E8%BF%99%E4%B9%88%E5%9B%9E%E4%BA%8B%EF%BC%8C%E6%84%9F%E8%B0%A2%EF%BC%81/" class="article-date">
+  <time datetime="2023-11-29T12:14:23.000Z" itemprop="datePublished">2023-11-29</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
   </div>
    
     </div>
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>1、下载jdk</p>
-<pre><code>wget https://repo.huaweicloud.com/java/jdk/8u202-b08/jdk-8u241-linux-x64.tar.gz
+  <p>物联网网关，原来是这么回事，感谢！<br>千手修罗</p>
+<h1 id="物联网网关是什么？"><a href="#物联网网关是什么？" class="headerlink" title="物联网网关是什么？"></a>物联网网关是什么？</h1><p>物联网网关是连接物联网设备和互联网的重要桥梁，它负责将物联网设备采集到的数据进行处理、存储和转发，使其能够与云端或其他设备进行通信。物联网网关的作用是实现物联网设备与云端的无缝连接和数据交换。</p>
+<h1 id="为什么要搞物联网网关？"><a href="#为什么要搞物联网网关？" class="headerlink" title="为什么要搞物联网网关？"></a>为什么要搞物联网网关？</h1><p>不要物联网网关行不行？直接使用设备连接云平台不行吗？</p>
+<h2 id="以下是一些情况下应该使用物联网网关："><a href="#以下是一些情况下应该使用物联网网关：" class="headerlink" title="以下是一些情况下应该使用物联网网关："></a>以下是一些情况下应该使用物联网网关：</h2><p>物联网网关通常用于连接不同类型的设备和协议，以便它们可以相互通信和交换数据，并不是所有设备都能直接联网。</p>
+<p>设备和协议多样性：当需要连接多种不同类型的设备和协议时，物联网网关可以充分发挥作用，帮助设备进行互操作和数据交换。<br>安全性要求高：在需要更高安全性的环境中，物联网网关可以控制访问和加密数据传输。<br>本地过滤和分析：物联网网关可以进行本地数据过滤和分析，从而减少云上数据的传输量和延迟。<br>离线设备管理：当需要管理离线设备时，物联网网关可以作为离线设备的代理，帮助设备进行远程管理和数据上传。</p>
+<h2 id="以下是一些情况下不应该使用物联网网关："><a href="#以下是一些情况下不应该使用物联网网关：" class="headerlink" title="以下是一些情况下不应该使用物联网网关："></a>以下是一些情况下不应该使用物联网网关：</h2><p>单种设备和协议：当只需要连接单一类型的设备和协议时，物联网网关的使用会增加成本和复杂性。<br>网络通信无需过滤和加密：当通信网络已经具备足够的安全性和过滤功能时，物联网网关的使用则会增加不必要的成本。</p>
+<h1 id="物联网网关作用？"><a href="#物联网网关作用？" class="headerlink" title="物联网网关作用？"></a>物联网网关作用？</h1><p>物联网网关是作为物联网系统中的中间件，连接低功耗、低带宽、短距离的设备与云端服务器之间的通信，并提供对接云服务的接口和协议转换等功能。其作用如下：</p>
+<p>支持多种物联网通信协议，如Zigbee、Z-Wave、BLE、WiFi等，实现设备间的相互通信和互联互通。<br>支持数据预处理和压缩，减少数据传输量和传输时间，提高整个系统的效率。<br>实现本地离线计算和云端计算的切换，能够在断网环境下进行设备之间的控制和操作。<br>提供通用API，支持对接各类物联网云平台，避免不同设备对接不同云平台的麻烦。<br>因此，物联网网关是实现物联网系统的重要一环，将设备的通信、数据的传输、云服务之间的对接等聚合在一起，使得整个系统更加高效、稳定、安全。如果设备直接连接云平台，将无法处理大量的设备数据、协议转换和设备的控制等问题，会导致系统处理能力差、易发生故障等问题。</p>
+<h1 id="物联网网关技术原理"><a href="#物联网网关技术原理" class="headerlink" title="物联网网关技术原理"></a>物联网网关技术原理</h1><p>物联网网关主要由硬件和软件两部分组成。硬件方面，网关通常搭载高性能的处理器、内存、存储和各种通信接口，如Wi-Fi、以太网、蓝牙等。软件方面，网关需要运行基于Linux或Windows等操作系统的应用程序，同时还需要支持各种通信协议，如MQTT、HTTP等，以及安全性考虑。</p>
+<h1 id="物联网网关的数据处理流程一般分为三步："><a href="#物联网网关的数据处理流程一般分为三步：" class="headerlink" title="物联网网关的数据处理流程一般分为三步："></a>物联网网关的数据处理流程一般分为三步：</h1><p>设备采集；<br>数据格式化；<br>网络传输；</p>
+<p>首先，网关通过各种接口和传感器从物联网设备中采集数据，随后对数据进行格式化和处理，最终通过网络将数据传输到云服务平台或其他设备。</p>
+<p>如上图所示：</p>
+<p>北向接口与南向接口：物联网网关需要提供北向接口和南向接口。北向接口连接云端，用于将数据上传到云端，提供数据分析、处理、存储、管理等服务。南向接口连接设备端，用于实现与终端设备的通信。<br>存储：物联网网关可以存储设备和传感器的数据，并对数据进行处理和分析，以便提供实时监测和控制。<br>协议转换：不同设备和传感器可能使用不同的通信协议，物联网网关可以实现协议转换，将不同协议之间的数据转换为统一的与云台交互的协议，从而实现设备的互联互通。<br>设备管理：物联网网关可以对连接的终端设备进行管理，包括设备的配置、参数设置、故障处理等。<br>操作系统：物联网网关需要搭载操作系统才能运行，一般采用嵌入式操作系统，如Linux、Windows Embedded等。<br>硬件：物联网网关需要运行软件和驱动程序来支持其各项功能。硬件方面，通常采用ARM等处理器，具有较高的计算能力和低功耗特性。<br>物联网网关需要具备较高的安全性，以保障物联网系统的可靠运行。一般来说，物联网网关需要实现以下安全措施：</p>
+<p>认证和授权：实现用户身份认证，避免未经授权的用户对系统进行操作。<br>加密通信：使用加密算法对数据进行加密，从而保证数据传输的安全性。<br>安全协议：使用各种安全协议，如TLS/SSL等，保障数据传输的完整性和机密性。<br>防火墙：设置防火墙来保障系统的安全性。<br>安全审计：监测系统的操作记录，及时发现和应对安全事件。<br>网关配置和升级：</p>
+<p>物联网网关的配置和升级是系统运行的关键环节，具备以下特点：</p>
+<p>灵活性：支持配置自由灵活，能够快速根据不同场景进行调整。<br>易用性：操作简单易懂，方便用户进行设置和管理。<br>实时性：支持实时配置，可在系统运行时进行快速响应。<br>可靠性：升级过程需要保证数据的完整性和一致性，防止数据丢失或损坏。<br>物联网网关升级一般分为在线升级和离线升级两种模式，离线升级需要手动传输升级包进行升级，而在线升级则可以通过网络直接进行下载和更新，是更为智能化和自动化的升级方式。在升级之前，需要提前进行备份和恢复操作，以防止数据丢失或者出现其他异常情况。同时，网关升级需要根据实际情况选择合适的升级方案，保障系统的平稳运行。</p>
+<h1 id="物联网网关实战开发"><a href="#物联网网关实战开发" class="headerlink" title="物联网网关实战开发"></a>物联网网关实战开发</h1><p>物联网网关的开发主要包括硬件和软件方面的工作。在硬件方面，需要选择合适的处理器、内存和通信接口等组件，以及进行电路设计和装配等工作。在软件方面，需要编写应用程序，包括驱动程序、数据处理模块和通信模块等。</p>
+<p>物联网网关的开发流程一般包括设备接入、数据处理和连接云平台等步骤。首先，需要通过各种接口将物联网设备连接到网关，随后对采集到的数据进行格式化和处理。最后，通过各种通信协议将数据上传到云服务平台，实现与云端的数据交换。</p>
+<p>我们可以选择使用现有的开源网关框架进行开发，例如Eclipse Kura或者Node-RED等等，或者直接使用编程语言和通信协议来设计自己的网关。 下面结合Python代码进行一个基于MQTT协议的物联网网关实战开发的简单示例：</p>
+<p>安装必要的库和依赖项 我们需要安装paho-mqtt库来支持使用Python语言来连接MQTT服务器和客户端。</p>
+<pre><code>pip install paho-mqtt
 </code></pre>
-<p>2、创建安装目录</p>
-<pre><code>mkdir /usr/local/java/
+<p>设计网关的基本业务逻辑 本示例中，我们的网关需要订阅来自传感器的数据，并将其传送到云平台上。我们还将实现一个简单的转换逻辑，将来自不同设备的数据进行处理，例如传感器类型、数据格式等信息的解析和分离。</p>
+<pre><code>import paho.mqtt.client as mqtt
+
+# MQTT服务器地址和端口号
+MQTT_HOST = &quot;localhost&quot;
+MQTT_PORT = 1883
+
+# 定义MQTT客户端回调函数
+def on_connect(client, userdata, flags, rc):
+    print(&quot;Connected with result code &quot; + str(rc))
+    # 订阅传感器数据
+    client.subscribe(&quot;sensors/#&quot;)
+
+# 处理传感器数据
+def process_sensor_data(topic, payload):
+    # 解析传感器ID和数据
+    sensor_id = topic.strip().split(&quot;/&quot;)[-1]
+    data_type, data_value = payload.strip().split(&quot;:&quot;)
+    # 打印传感器数据
+    print(&quot;Received data from sensor &#123;&#125; : &#123;&#125; = &#123;&#125;&quot;.format(sensor_id, data_type, data_value))
+    # TODO：数据转换和上传到云平台等操作
+
+# 定义MQTT客户端消息回调函数
+def on_message(client, userdata, msg):
+    print(&quot;Received message: &quot; + msg.payload.decode())
+    process_sensor_data(msg.topic, msg.payload.decode())
+
+# 连接MQTT服务器并开始循环监听传感器数据
+client = mqtt.Client()
+client.on_connect = on_connect
+client.on_message = on_message
+client.connect(MQTT_HOST, MQTT_PORT, 60)
+client.loop_forever()
 </code></pre>
-<p>3、解压至安装目录</p>
-<pre><code>tar -zxvf jdk-8u241-linux-x64.tar.gz -C /usr/local/java
+<p>编写传感器模拟程序来模拟传感器数据的发送 为了测试我们的物联网网关，我们需要编写一个模拟程序来模拟传感器数据的发送。这可以用Python的MQTT客户端模块来实现。</p>
+<pre><code>import paho.mqtt.client as mqtt
+import time
+from random import randint
+
+# MQTT服务器地址和端口号
+MQTT_HOST = &quot;localhost&quot;
+MQTT_PORT = 1883
+
+def simulate_sensor():
+    # 模拟传感器数据
+    sensor_id = &quot;sensor-&quot; + str(randint(1, 10))
+    temperature = str(randint(20, 30))
+    humidity = str(randint(30, 50))
+
+    # 发布传感器数据
+    client = mqtt.Client()
+    client.connect(MQTT_HOST, MQTT_PORT, 60)
+    client.publish(&quot;sensors/&quot; + sensor_id, &quot;temperature:&quot; + temperature, qos=1)
+    client.publish(&quot;sensors/&quot; + sensor_id, &quot;humidity:&quot; + humidity, qos=1)
+    client.disconnect()
+    print(&quot;Published sensor data from &quot; + sensor_id)
+
+if __name__ == &#39;__main__&#39;:
+    while True:
+        simulate_sensor()
+        time.sleep(5)
+    
 </code></pre>
-<p>4、配置环境变量</p>
-<pre><code>vim /etc/profile
-</code></pre>
-<p>在文本末尾添加</p>
-<pre><code>export JAVA_HOME=/usr/local/java/jdk1.8.0_241
-export JRE_HOME=$&#123;JAVA_HOME&#125;/jre
-export CLASSPATH=.:$&#123;JAVA_HOME&#125;/lib:$&#123;JRE_HOME&#125;/lib
-export PATH=$&#123;JAVA_HOME&#125;/bin:$PATH
-</code></pre>
-<p>5、保存并退出、按esc键、输入以下内容、按Enter键</p>
-<pre><code>:wq
-</code></pre>
-<p>6、使环境变量生效</p>
-<pre><code>source /etc/profile
-</code></pre>
-<p>7、添加软链接</p>
-<pre><code>ln -s /usr/local/java/jdk1.8.0_241/bin/java /usr/bin/java
-</code></pre>
-<p>8、检查jdk是否安装成功</p>
-<pre><code>java -version
-</code></pre>
-<p>执行结果：</p>
-<pre><code>java version &quot;1.8.0_241&quot;
-Java(TM) SE Runtime Environment (build 1.8.0_241-b07)
-Java HotSpot(TM) 64-Bit Server VM (build 25.241-b07, mixed mode)
-</code></pre>
+<p>以上就是一个简单的物联网网关实战开发示例，用Python语言实现了基于MQTT协议的数据传输和处理功能。实际的物联网网关开发使用的技术和工具非常多样化，需要根据具体的需求和应用场景来选择最适合的解决方案。</p>
+<h1 id="边缘计算与物联网网关的碰撞"><a href="#边缘计算与物联网网关的碰撞" class="headerlink" title="边缘计算与物联网网关的碰撞"></a>边缘计算与物联网网关的碰撞</h1><p>边缘计算的理解</p>
+<p>边缘计算是一种分布式计算模式，它将计算和数据处理部分从传统的中央服务器转移到与数据源最近的边缘计算节点上。这些边缘计算节点包括网络边缘、物联网网关、交换机以及其他物联设备和传感器。</p>
+<p>边缘计算的目标是在提供更高的数据响应速度的同时降低传输带宽和存储需求。与传统的云计算不同，边缘计算侧重于通过将嵌入式设备和传感器之类的物联网设备的计算能力转移到这些设备附近的边缘设备上来提高数据处理效率，从而降低响应时间和延迟。</p>
+<p>边缘计算提供了以下优点：</p>
+<p>更高的数据响应速度：边缘计算能够在更靠近数据来源的地方处理数据，因此可以更快地响应数据请求。<br>降低带宽需求：边缘计算可以在边缘设备上处理数据，从而避免将大量数据传输到中央服务器带来的带宽需求。<br>提高安全性：由于边缘设备通常是在企业或组织的边缘处，因此对于潜在的攻击者来说，它们被认为是难以访问的。<br>提高系统可靠性：除了更快的响应速度和更低的带宽需求外，边缘计算还可以从独立的边缘设备中恢复系统，从而提高基于物联网的系统的可靠性。</p>
+<p>边缘计算的目的是将计算任务尽可能地靠近用户，从而减少网络延迟和带宽，提高应用的性能和用户体验。在上图中，当用户设备需要进行一些计算任务时，这些任务可以通过边缘设备进行处理，而边缘设备可以将一部分数据传输到云端设备进行处理，再将处理后的结果返回给用户设备。这种分布式计算模式可以适用于各种场景，例如智能家居、智能交通等。<br>物联网网关结合边缘计算<br>在物联网网关中使用边缘计算，需要考虑以下设计原则：</p>
+<p>选择合适的边缘设备。边缘设备应该具备足够的计算能力、存储空间和通信能力，能够完成数据处理、存储和传输等任务。<br>定义合理的边缘计算模型。物联网网关应该根据具体业务需求，采用适当的边缘计算模型，如Spark、Flink、TensorFlow等，来处理数据和生成智能决策。<br>建立安全的通信和存储机制。物联网网关需要建立安全的通信和数据存储机制，保证传输过程中的数据安全和完整性，同时防止攻击者通过网关获取敏感信息或控制物联网设备。</p>
+<p>相较于传统的物联网网关，基于边缘计算的物联网网关多了以下内容：</p>
+<p>更强的数据处理能力。边缘计算将数据处理推向了设备端，可以更快地处理和分析海量数据。<br>更高的实时性和响应速度。边缘计算可以在设备端进行实时的数据分析和决策，减少了数据在传输过程中的延迟。<br>更好的可扩展性和灵活性。边缘计算可以灵活地根据业务需求选择不同的计算和存储模型，并且可以根据需求进行扩展和优化。<br>更高的安全性和可靠性。边缘计算可以将一部分敏感数据存储在设备端，减少了数据泄露的风险，同时也提高了系统的可靠性。<br>物联网网关可以利用边缘计算来处理和分析设备产生的数据，实现以下几个方面的功能：</p>
+<p>实时数据处理：通过在网关上运行轻量级的边缘计算资源，可以快速地对设备产生的实时数据进行处理，如数据的过滤、聚合、转换等操作，从而减少数据传输和存储的开销，提高数据处理和分析的实时性和准确性。<br>数据存储和管理：通过在网关上部署数据库等相关服务，可以将设备产生的数据在本地进行存储和管理，避免了对云端数据中心的依赖，从而提高数据的可靠性和安全性。同时，还可以根据需求在本地对数据进行查询、分析和可视化展示。<br>边缘智能化：通过在网关上部署人工智能等相关技术，可以实现对设备产生的数据的智能化分析和处理，如机器学习、图像识别、自然语言处理等技术。这样可以进一步提供更加智能化和个性化的设备服务和管理。 总的来说，物联网网关利用边缘计算可以实现更加高效和智能化的设备数据处理和管理，从而提高物联网系统的实时性、可靠性、安全性和智能化程度。<br>如果想整体学习高并发知识，请看《高并发系统实战派》这本书–人人都懂，人人都会，《高并发系统实战派》–这里获取<br>总之，边缘计算实现的关键是要依靠物联网技术和计算资源将数据和计算移到离用户更近的边缘设备上，从而实现数据处理的快速、高效和安全。</p>
  
       <!-- reward -->
       
@@ -776,7 +688,7 @@ Java HotSpot(TM) 64-Bit Server VM (build 25.241-b07, mixed mode)
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JDK/" rel="tag">JDK</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%80%9A%E4%BF%A1/" rel="tag">通信</a></li></ul>
 
     </footer>
   </div>
@@ -787,7 +699,7 @@ Java HotSpot(TM) 64-Bit Server VM (build 25.241-b07, mixed mode)
 
     
     <article
-  id="post-CentOS 安装 nginx"
+  id="post-Modbus RTU 协议概述"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -798,8 +710,8 @@ Java HotSpot(TM) 64-Bit Server VM (build 25.241-b07, mixed mode)
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/11/21/CentOS%20%E5%AE%89%E8%A3%85%20nginx/"
-    >CentOS 安装 activeMq</a> 
+  <a class="article-title" href="/2023/11/28/Modbus%20RTU%20%E5%8D%8F%E8%AE%AE%E6%A6%82%E8%BF%B0/"
+    >Modbus RTU 协议概述</a> 
 </h2>
  
 
@@ -807,97 +719,24 @@ Java HotSpot(TM) 64-Bit Server VM (build 25.241-b07, mixed mode)
     </header>
      
     <div class="article-meta">
-      <a href="/2023/11/21/CentOS%20%E5%AE%89%E8%A3%85%20nginx/" class="article-date">
-  <time datetime="2023-11-21T12:14:23.000Z" itemprop="datePublished">2023-11-21</time>
+      <a href="/2023/11/28/Modbus%20RTU%20%E5%8D%8F%E8%AE%AE%E6%A6%82%E8%BF%B0/" class="article-date">
+  <time datetime="2023-11-28T12:14:23.000Z" itemprop="datePublished">2023-11-28</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
   </div>
    
     </div>
       
     <div class="article-entry" itemprop="articleBody">
        
-  <h1 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h1><p>安装依赖库</p>
-<pre><code>yum -y install make zlib zlib-devel gcc-c++ libtool  openssl openssl-devel pcre pcre-devel 
-</code></pre>
-<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><pre><code>cd /usr/local/nginx
-
-#创建nginx安装目录
-mkdir nginx
-
-#解压
-tar -zxvf nginx-1.24.0.tar.gz
-
-#进入解压文件夹
-cd nginx-1.24.0
-
-#添加www用户
-useradd -s /sbin/nologin -M www
-
-#指定配置
-./configure --prefix=/usr/local/nginx/nginx --user=www --group=www --with-http_ssl_module --with-http_stub_status_module
-
-#编译
-make &amp;&amp; make install
-</code></pre>
-<h1 id="nginx常用命令"><a href="#nginx常用命令" class="headerlink" title="nginx常用命令"></a>nginx常用命令</h1><pre><code># 启动。默认监听80端口，启动成功之后可以浏览器访问ip:80，出现4.2中图表示centos服务器上nginx启动成功
-/usr/local/nginx/nginx/sbin/nginx
-# 重新载入配置文件
-/usr/local/nginx/nginx/sbin/nginx -s reload           
-# 重启 Nginx
-/usr/local/nginx/nginx/sbin/nginx -s reopen
-# 强制停止 Nginx
-/usr/local/nginx/nginx/sbin/nginx -s stop      
-# 优雅停止 Nginx，在退出前完成已经接受的连接请求
-/usr/local/nginx/nginx/sbin/nginx -s quit 
-# 检查nginx.conf文件正确性
-/usr/local/nginx/nginx/sbin/nginx -t 
-# 显示版本信息；
-/usr/local/nginx/nginx/sbin/nginx -v
-</code></pre>
-<h1 id="服务配置"><a href="#服务配置" class="headerlink" title="服务配置"></a>服务配置</h1><p>添加到系统服务：</p>
-<pre><code>#vim /usr/lib/systemd/system/nginx.service
-
-[Unit]
-Description=nginx web service
-Documentation=http://nginx.org/en/docs/
-After=network.target
- 
-[Service]
-Type=forking
-PIDFile=/usr/local/nginx/nginx/logs/nginx.pid
-ExecStartPre=/usr/local/nginx/nginx/sbin/nginx -t -c /usr/local/nginx/nginx/conf/nginx.conf
-ExecStart=/usr/local/nginx/nginx/sbin/nginx
-ExecReload=/usr/local/nginx/nginx/sbin/nginx -s reload
-ExecStop=/usr/local/nginx/nginx/sbin/nginx -s stop
-PrivateTmp=true
- 
-[Install]
-WantedBy=default.target
-</code></pre>
-<p>启动关停命令</p>
-<pre><code>#重新加载系统服务
-systemctl daemon-reload
-
-#启动: 
-systemctl start nginx
-
-#停止: 
-systemctl stop nginx
-
-#重启: 
-systemctl restart nginx
-
-#重新加载配置文件: 
-systemctl reload nginx.service
-
-#查看nginx状态: 
-systemctl status nginx
-
-#开机启动: 
-systemctl enable nginx
-</code></pre>
+  <h1 id="什么是-Modbus-RTU？"><a href="#什么是-Modbus-RTU？" class="headerlink" title="什么是 Modbus RTU？"></a>什么是 Modbus RTU？</h1><p>Modbus RTU 协议是一种开放的串行协议，广泛应用于当今的工业监控设备中。该协议使用 RS-232 或 RS-485 串行接口进行通信，并得到市场上几乎所有商业 SCADA、HMI、OPC 服务器和数据采集软件程序的支持。因此，很容易将 Modbus 兼容设备集成到新的或现有的监控应用程序中，并具有即时的软件支持。</p>
+<h1 id="Modbus-主-从技术"><a href="#Modbus-主-从技术" class="headerlink" title="Modbus 主/从技术"></a>Modbus 主/从技术</h1><p>Modbus RTU 协议使用主/从技术在设备之间进行通信。这意味着，任何使用 Modbus RTU 协议的应用程序都将有一个 Modbus 主站和至少一个 Modbus 从站。Modbus Master 通常是一台运行软件的主机监控计算机，它将与一个或多个 Modbus Slave 设备进行通信。</p>
+<p>Modbus 从设备是执行系统参数测量和控制系统中的开/关设备的设备。为了执行这些任务，主站向 Modbus 从站发送消息，请求执行特定任务。</p>
+<p>Modbus RTU 协议使用格式化的消息在主机和从机之间进行通信。消息由系统 Master 发起并发送到 Slave 设备。然后，从站以请求的数据进行响应，或者确认它执行了请求的功能。所有进出主站的消息都包含一个两字节（16 位）CRC（循环冗余校验）校验和值，用于错误检查。如果将无效请求传输到 Modbus 从站，则会返回一个字节（8 位）错误代码值，说明请求错误的原因。</p>
+<p>Modbus 主站消息包含几个重要的信息。每条消息都以接受消息的设备的从地址开始。接下来是要执行的功能编号（或命令）。后面是指定函数正确执行所需的任何数据。从地址是一个单字节（8 位）值，可用值范围在 0-247 之间。Modbus 功能号也是一个字节值，并且在协议中定义了许多标准化功能号。支持所请求功能所需的任何数据值的长度将是一个或多个字节。Modbus 从站响应消息将包含响应的从站地址、功能编号和主站请求的任何必要数据。</p>
+<h1 id="Modbus-RTU-是免版税且可定制的"><a href="#Modbus-RTU-是免版税且可定制的" class="headerlink" title="Modbus RTU 是免版税且可定制的"></a>Modbus RTU 是免版税且可定制的</h1><p>Modbus RTU 协议是一种开放协议，可以免版税使用。这允许制造商在其设备中使用通用 Modbus 协议结构，并添加自定义功能以访问其硬件中的功能。虽然这可能是一个很大的好处，但它可能会导致与不支持新定义功能的商业软件程序的兼容性问题。</p>
+<p>Modbus 协议包含当今市场上几乎所有 SCADA、HMI 和数据采集程序都支持的功能列表。以下是用于执行大多数 Modbus 设备读取和控制的协议功能的简要列表。从列表中，“线圈”通常是继电器或数字输出，“寄存器”代表从系统状态到模拟输入或输出信号值的任何内容。每个硬件供应商都有一个“寄存器映射”，详细说明每个寄存器位置和该寄存器的可能数据值。</p>
  
       <!-- reward -->
       
@@ -908,7 +747,7 @@ systemctl enable nginx
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/activeMq/" rel="tag">activeMq</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%80%9A%E4%BF%A1/" rel="tag">通信</a></li></ul>
 
     </footer>
   </div>
@@ -924,7 +763,7 @@ systemctl enable nginx
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/">上一页</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/55/">55</a><a class="extend next" rel="next" href="/page/3/">下一页</a>
+    <a class="extend prev" rel="prev" href="/">上一页</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/57/">57</a><a class="extend next" rel="next" href="/page/3/">下一页</a>
   </nav>
   
 </section>

@@ -154,7 +154,7 @@
     
     
     <article
-  id="post-mysql5.7之后版本datetime默认值不能设置为0000-00-00的问题"
+  id="post-Pandas实用入门案例01"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -165,8 +165,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/08/10/mysql5.7%E4%B9%8B%E5%90%8E%E7%89%88%E6%9C%ACdatetime%E9%BB%98%E8%AE%A4%E5%80%BC%E4%B8%8D%E8%83%BD%E8%AE%BE%E7%BD%AE%E4%B8%BA0000-00-00%E7%9A%84%E9%97%AE%E9%A2%98/"
-    >mysql5.7之后版本datetime默认值不能设置为0000-00-00的问题</a> 
+  <a class="article-title" href="/2023/08/17/Pandas%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B01/"
+    >Pandas实用入门案例01</a> 
 </h2>
  
 
@@ -174,8 +174,8 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2023/08/10/mysql5.7%E4%B9%8B%E5%90%8E%E7%89%88%E6%9C%ACdatetime%E9%BB%98%E8%AE%A4%E5%80%BC%E4%B8%8D%E8%83%BD%E8%AE%BE%E7%BD%AE%E4%B8%BA0000-00-00%E7%9A%84%E9%97%AE%E9%A2%98/" class="article-date">
-  <time datetime="2023-08-10T06:27:23.000Z" itemprop="datePublished">2023-08-10</time>
+      <a href="/2023/08/17/Pandas%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B01/" class="article-date">
+  <time datetime="2023-08-17T06:24:38.000Z" itemprop="datePublished">2023-08-17</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -185,287 +185,52 @@
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>根据报错猜测可能是因为MySQL版本的问题，导出的SQL文件是从MySQL 5.6导出的， 目前Mac上面的MySQL版本是5.7</p>
-<p>查询官网发现：</p>
-<p>参考地址<a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/5.7/en/datetime.html">https://dev.mysql.com/doc/refman/5.7/en/datetime.html</a></p>
-<p>The DATE type is used for values with a date part but no time part. MySQL retrieves and displays DATE values in ‘YYYY-MM-DD’<br>format. The supported range is ‘1000-01-01’ to ‘9999-12-31’.</p>
-<p>The DATETIME type is used for values that contain both date and time parts. MySQL retrieves and displays DATETIME values<br>in ‘YYYY-MM-DD HH:MM:SS’ format. The supported range is ‘1000-01-01 00:00:00’ to ‘9999-12-31 23:59:59’.</p>
-<p>The TIMESTAMP data type is used for values that contain both date and time parts. TIMESTAMP has a range of<br>‘1970-01-01 00:00:01’ UTC to ‘2038-01-19 03:14:07’ UTC.<br>故相关的默认值需要设置成’1000-01-01 00:00:00’ 到 ‘9999-12-31 23:59:59’ 之间即可</p>
-<p>作者：全栈运维<br>链接：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/90bb8c825f2f">https://www.jianshu.com/p/90bb8c825f2f</a><br>来源：简书<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-SF6气体"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/08/09/SF6%E6%B0%94%E4%BD%93/"
-    >SF6气体</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/08/09/SF6%E6%B0%94%E4%BD%93/" class="article-date">
-  <time datetime="2023-08-09T09:42:32.000Z" itemprop="datePublished">2023-08-09</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>如果您是从事高压电力工作的小伙伴，您可能会接触到气体绝缘开关装置。这三个字母是气体绝缘全封闭复合装置的英文缩写。它也可以称为“SF6全封闭开关设备”。为什么会这样？</p>
-<p>最初，当充满SF6气体时，气体绝缘开关设备可以实现导体对护套、相间和断口之间的可靠绝缘。</p>
-<p>那么，什么是SF6气体？为什么它具有良好的绝缘和灭弧性能？本文作者将带你一起去揭开他的秘密。</p>
-<h2 id="SF6气体的基本特性"><a href="#SF6气体的基本特性" class="headerlink" title="SF6气体的基本特性"></a>SF6气体的基本特性</h2><p>六氟化硫，化学式为SF6，是一种无色、无臭、无毒、不燃的稳定气体，分子量为146.06，在20℃和0.1MPa时密度为6.1kg/m3，约为空气密度的5倍，六氟化硫在常温常压下为气态。</p>
-<p>SF6气体是目前最好的绝缘介质和灭弧剂，其绝缘和灭弧性能远优于绝缘油。</p>
-<p>其分子结构为完全对称的八面体结构，尖端有六个氟原子，中心有硫原子共价键合。</p>
-<p>物理性质：无色、无味、无味、无毒、不易燃，临界温度45.6℃；它不溶于水，在某些有机溶剂中具有很高的溶解度。</p>
-<p>化学性质：非常稳定。通常，在室温下，甚至在电气设备最高允许温度的150℃范围内，不会发生化学反应。超过150℃时，与塑料发生弱化学反应。超过200℃时，它与铜和铝反应缓慢，在500℃时开始分解。</p>
-<p>导热性：导热性差，导热系数仅为空气的2/3，但表面传热系数为15，为空气的2.5倍。总的来说，其散热性能优于空气。</p>
-<p>电负性：分子容易吸收自由电子形成负离子。由于F的最外层是7个电子，因此很容易吸收一个电子，使其成为稳定的8个电子。</p>
-<p>灭弧原理：SF6的负电荷形成负离子，与电弧中的正离子结合，使电弧中的击穿迅速减少，电弧的击穿电压升高，电弧迅速恢复。</p>
-<p>制造工艺：s+3f2→sf6+q（放热），合成原料经水洗、碱洗、热解、吸附剂吸附等一系列清洗处理后，放入钢瓶中进行液体输送。</p>
-<p>气体绝缘开关设备安装后，应清除各种杂质和水分。其标准由国际电工委员会（IEC）和各国制定。</p>
-<p>由于SF6气体的分子量较大，用公式p=rt计算温度、压力和密度三个状态参数的偏差很大。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%94%B5%E5%8A%9B/" rel="tag">电力</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-PNMP安装使用"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/08/08/PNMP%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/"
-    >PNMP安装使用</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/08/08/PNMP%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/" class="article-date">
-  <time datetime="2023-08-08T07:14:05.000Z" itemprop="datePublished">2023-08-08</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>简介</p>
-<p>pnpm是一种新起的包管理器，从npm的下载量看，目前还没有超过yarn，但它的实现方式值得主流包管理器学习，某些开发者极力推荐使用pnpm。</p>
-<p>从结果上来看，它具有以下优势：</p>
-<ol>
-<li>目前，安装效率高于npm和yarn的最新版</li>
-<li>极其简洁的node_modules目录</li>
-<li>避免了开发时使用间接依赖的问题</li>
-<li>能极大的降低磁盘空间的占用</li>
-</ol>
-<p>// 全局安装<br>npm install pnpm -g</p>
-<p>//查看源<br>pnpm config get registry<br>//切换淘宝源<br>pnpm config set registry <a target="_blank" rel="noopener" href="https://registry.npmmirror.com/">https://registry.npmmirror.com/</a></p>
-<p>// 使用<br>pnpm install 包 // 安装依赖<br>pnpm i  包      // 安装依赖<br>pnpm add 包     // -S  默认写入dependencies<br>pnpm add -D     // -D devDependencies<br>pnpm add -g     // 全局安装</p>
-<p>// 移除<br>pnpm remove 包               // 移除包<br>pnpm remove 包 –global      // 移除全局包</p>
-<p>// 更新<br>pnpm up                      // 更新所有依赖项<br>pnpm upgrade 包              // 更新包<br>pnpm upgrade 包 –global     // 更新全局包</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PNMP/" rel="tag">PNMP</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-finereport入门系列（四）"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/08/07/finereport%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97%EF%BC%88%E5%9B%9B%EF%BC%89/"
-    >finereport入门系列（四）</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/08/07/finereport%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97%EF%BC%88%E5%9B%9B%EF%BC%89/" class="article-date">
-  <time datetime="2023-08-07T05:02:05.000Z" itemprop="datePublished">2023-08-07</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="决策报表自动查询"><a href="#决策报表自动查询" class="headerlink" title="决策报表自动查询"></a>决策报表自动查询</h1><ol>
-<li>概述</li>
-<li>1 应用场景<br>在决策报表中，控件可以添加到参数界面使用「查询」按钮查询数据，也可以直接在 body 中使用，但是在 body 中使用时，控件是无法直接使用查询按钮来查询数据的，那我们要如何实现控件联动查询数据呢？</li>
-</ol>
-<p>例如：在 body 中的下拉框控件选择「地区」，其他使用了地区参数的组件能根据选择的地区展示对应数据。预期效果 </p>
-<p>1.2 实现思路<br>在数据集中定义地区参数为 $area ，将下拉框控件的名称修改为与地区参数相同的名称 area，即可使用参数联动控件实现自动查询。</p>
-<p>若想要实现在参数界面实现自动查询请参考：JS实现决策报表参数界面自动查询。</p>
-<ol start="2">
-<li>示例</li>
-<li>1 数据准备<br>1）点击设计器左上角「文件&gt;新建决策报表」，新建空白模板。</li>
-</ol>
-<p>2）新建一个数据库查询 ds1，SQL 查询语句为：</p>
-<pre><code>SELECT * FROM 销量 where 1=1 $&#123;if(len(area)=0,&quot;&quot;,&quot; and 地区=&#39;&quot;+area+&quot;&#39;&quot;)&#125;
+  <h1 id="遍历DataFrame的三种方法"><a href="#遍历DataFrame的三种方法" class="headerlink" title="遍历DataFrame的三种方法"></a>遍历DataFrame的三种方法</h1><p>iteritem()方法返回一个&lt;class ‘method’&gt;数据,可利用for循环获得输出<br>iterrow()方法返回一个&lt;class ‘generator’&gt;数据,可利用for循环获得输出<br>itertuple()方法返回一个&lt;class ‘pandas.core.frame.Pandas’&gt;数据,可利用getattr(row,‘列索引’)方法获得对应数据</p>
+<h1 id="演示数据准备"><a href="#演示数据准备" class="headerlink" title="演示数据准备"></a>演示数据准备</h1><pre><code>data = &#123;&#39;state&#39;:[&#39;Ohio&#39;,&#39;Ohio&#39;,&#39;Ohio&#39;,&#39;Nevada&#39;,&#39;Nevada&#39;,&#39;Nevada&#39;],
+&#39;year&#39;:[2000,2001,2002,2003,2004,2005],
+&#39;pop&#39;:[1.5,1.7,3.6,2.4,2.9,3.2]&#125;
+frame = pd.DataFrame(data)
 </code></pre>
-<p>即定义 area 参数，值为「地区」字段，且当 参数为空时展示全部数据 。</p>
-<p>2.2 决策报表设计<br>1）将 body 的布局方式修改为「绝对布局」，再向 body 中拖入「报表块」、「饼图」、「标签控件」和「下拉框控件」。 </p>
-<p>2）设置「标签控件」的控件值为「地区：」；「下拉框控件」的控件名称为「area」，即将下拉框控件与参数 $area 绑定。</p>
-<p>注：必须保证「下拉框控件」的控件名称与参数名称 area 保持一致。</p>
-<p>3）设置「下拉框控件」的数据字典为「数据库表」销量表，实际值和显示值均为「地区」。 </p>
-<p>2.3 设计报表块<br>双击报表块，进入报表块编辑界面，拖入「地区、销售员、销量」字段，设置 C2 单元格的数据设置为「汇总&gt;求和」。单元格样式可在「单元格属性&gt;样式」中自行设置。</p>
-<p>2.4 绑定图表数据<br>双击饼图，设置饼图的数据来源：数据集为 ds1，系列名为「销售员」，值为「销量」，汇总方式为「求和」。 </p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/finereport/" rel="tag">finereport</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-finereport入门系列（三）"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/08/06/finereport%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97%EF%BC%88%E4%B8%89%EF%BC%89/"
-    >finereport入门系列（三）</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/08/06/finereport%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97%EF%BC%88%E4%B8%89%EF%BC%89/" class="article-date">
-  <time datetime="2023-08-06T11:56:23.000Z" itemprop="datePublished">2023-08-06</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="钻取地图示例"><a href="#钻取地图示例" class="headerlink" title="钻取地图示例"></a>钻取地图示例</h1><p>3.1 准备数据<br>新建决策报表，新建内置数据集， </p>
-<p>注：这边因跨数据取数问题，也就直接分了两个数据集，供参考。</p>
-<p>3.2 插入地图<br>1）决策报表中插入报表块和钻取地图， </p>
-<p>2）报表块中有 2 个数据集的数据，所以要进行数据集关联，设置下过滤条件， </p>
-<p>3.3 绑定数据<br>钻取地图添加需要的钻取层级，将报表块中处理好的单元格数据添加至地图单元格数据集中， </p>
-<p>注：第 1 层和第 2 层都要设置，图中只给了第 1 层的，别漏掉了。</p>
-<p>3.4 添加事件<br>1）决策报表 body 添加初始化事件， </p>
-<p>JavaScript 代码如下：</p>
-<pre><code>setTimeout(function()&#123;
-var vanchart =FR.Chart.WebUtils.getChart(&quot;chart0&quot;).getChartWithIndex(0); //获取图表对象
-vanchart.openAutoTooltip(); //开启数据点提示轮播
-&#125;,500)
+<h1 id="1、遍历方法"><a href="#1、遍历方法" class="headerlink" title="1、遍历方法"></a>1、遍历方法</h1><h2 id="按列遍历"><a href="#按列遍历" class="headerlink" title="按列遍历"></a>按列遍历</h2><pre><code>column_indexs = []
+for column_index, row_data in frame.iteritems():
+    column_indexs.append(column_index)
+    print(row_data)
+print(column_indexs)
 </code></pre>
-<p>2）在钻取地图「特效&gt;交互属性」下添加 JavaScript 类型的超级链接， </p>
-<p>JavaScript 代码如下：</p>
-<pre><code>FR.Chart.WebUtils.getChart(&quot;chart0&quot;).getChartWithIndex(0).openAutoTooltip();
-//钻取时触发超链，实现轮播
+<h2 id="按行遍历"><a href="#按行遍历" class="headerlink" title="按行遍历"></a>按行遍历</h2><h3 id="第一种方法"><a href="#第一种方法" class="headerlink" title="第一种方法"></a>第一种方法</h3><pre><code>row_indexs = []
+for index, row in frame.iterrows():
+    row_indexs.append(index)
+    print(row)
+print(row_indexs)
+</code></pre>
+<h3 id="第二种方法"><a href="#第二种方法" class="headerlink" title="第二种方法"></a>第二种方法</h3><pre><code>for row in frame.itertuples():
+    print(getattr(row, &#39;state&#39;), getattr(row, &#39;year&#39;), getattr(row, &#39;pop&#39;))
+    print(type(row))
+    
+</code></pre>
+<h1 id="2、遍历DataFrame某一列-行-数据"><a href="#2、遍历DataFrame某一列-行-数据" class="headerlink" title="2、遍历DataFrame某一列(行)数据"></a>2、遍历DataFrame某一列(行)数据</h1><h2 id="获取frame的index属性-然后使用frame-列索引-get-行索引-获得对应的值"><a href="#获取frame的index属性-然后使用frame-列索引-get-行索引-获得对应的值" class="headerlink" title="获取frame的index属性,然后使用frame[列索引].get(行索引)获得对应的值"></a>获取frame的index属性,然后使用frame[列索引].get(行索引)获得对应的值</h2><pre><code>print(frame.columns)
+for index in frame.index:
+    print(frame[&#39;state&#39;].get(index))
+for index in frame.index:
+    print(frame[&#39;state&#39;][index])
+for index in frame.index:
+    print(frame.get(&#39;state&#39;).get(index))
+</code></pre>
+<h2 id="获取frame的column属性-然后使用frame-列索引-get-行索引-获得对应的值"><a href="#获取frame的column属性-然后使用frame-列索引-get-行索引-获得对应的值" class="headerlink" title="获取frame的column属性,然后使用frame[列索引].get(行索引)获得对应的值"></a>获取frame的column属性,然后使用frame[列索引].get(行索引)获得对应的值</h2><pre><code>print(frame.index)
+for column in frame.columns:
+    print(frame[column].get(0))
+    
+</code></pre>
+<h1 id="3、获取某一个值"><a href="#3、获取某一个值" class="headerlink" title="3、获取某一个值"></a>3、获取某一个值</h1><h2 id="DataFrame-at-行索引-列索引-获取某一个值"><a href="#DataFrame-at-行索引-列索引-获取某一个值" class="headerlink" title="DataFrame.at[行索引,列索引]获取某一个值"></a>DataFrame.at[行索引,列索引]获取某一个值</h2><pre><code>print(frame.at[1,&#39;pop&#39;])
+</code></pre>
+<h2 id="DataFrame-iat-默认行索引-默认列索引-获取某一个值"><a href="#DataFrame-iat-默认行索引-默认列索引-获取某一个值" class="headerlink" title="DataFrame.iat[默认行索引,默认列索引]获取某一个值"></a>DataFrame.iat[默认行索引,默认列索引]获取某一个值</h2><pre><code>print(frame.iat[1,1])
+</code></pre>
+<h2 id="DataFrame-loc-行索引-列索引-获取某个值-与at不同的是-只输入某一参数-获得某一行或某一列"><a href="#DataFrame-loc-行索引-列索引-获取某个值-与at不同的是-只输入某一参数-获得某一行或某一列" class="headerlink" title="DataFrame.loc[行索引,列索引]获取某个值,与at不同的是,只输入某一参数,获得某一行或某一列"></a>DataFrame.loc[行索引,列索引]获取某个值,与at不同的是,只输入某一参数,获得某一行或某一列</h2><pre><code>print(frame.loc[1,&#39;pop&#39;])
+print(frame.loc[:,&#39;pop&#39;])
+print(frame.loc[[1,2]])
+print(frame.loc[:,[&#39;state&#39;,&#39;pop&#39;]])
+</code></pre>
+<h2 id="DataFrame-iloc-默认行索引-默认列索引-获取某个值-与iat不同的是-只输入某一参数-获得某一行或某一列"><a href="#DataFrame-iloc-默认行索引-默认列索引-获取某个值-与iat不同的是-只输入某一参数-获得某一行或某一列" class="headerlink" title="DataFrame.iloc[默认行索引,默认列索引]获取某个值,与iat不同的是,只输入某一参数,获得某一行或某一列:"></a>DataFrame.iloc[默认行索引,默认列索引]获取某个值,与iat不同的是,只输入某一参数,获得某一行或某一列:</h2><pre><code>print(frame.loc[0:2,:])
 </code></pre>
  
       <!-- reward -->
@@ -477,7 +242,7 @@ vanchart.openAutoTooltip(); //开启数据点提示轮播
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/finereport/" rel="tag">finereport</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pandas/" rel="tag">pandas</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
 
     </footer>
   </div>
@@ -488,7 +253,7 @@ vanchart.openAutoTooltip(); //开启数据点提示轮播
 
     
     <article
-  id="post-finereport入门系列（二）"
+  id="post-flask实用入门案例06"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -499,8 +264,8 @@ vanchart.openAutoTooltip(); //开启数据点提示轮播
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/08/05/finereport%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97%EF%BC%88%E4%BA%8C%EF%BC%89/"
-    >finereport入门系列（二）</a> 
+  <a class="article-title" href="/2023/08/16/flask%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B06/"
+    >flask实用入门案例06--跨域</a> 
 </h2>
  
 
@@ -508,8 +273,8 @@ vanchart.openAutoTooltip(); //开启数据点提示轮播
     </header>
      
     <div class="article-meta">
-      <a href="/2023/08/05/finereport%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97%EF%BC%88%E4%BA%8C%EF%BC%89/" class="article-date">
-  <time datetime="2023-08-05T04:23:51.000Z" itemprop="datePublished">2023-08-05</time>
+      <a href="/2023/08/16/flask%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B06/" class="article-date">
+  <time datetime="2023-08-16T04:32:49.000Z" itemprop="datePublished">2023-08-16</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -519,32 +284,23 @@ vanchart.openAutoTooltip(); //开启数据点提示轮播
       
     <div class="article-entry" itemprop="articleBody">
        
-  <h1 id="地图开启数据点提示轮播"><a href="#地图开启数据点提示轮播" class="headerlink" title="地图开启数据点提示轮播"></a>地图开启数据点提示轮播</h1><h2 id="1-实现思路"><a href="#1-实现思路" class="headerlink" title="1 实现思路"></a>1 实现思路</h2><p>获取 图表对象 后，调用方法chart.openAutoTooltip([delay, initPoints]);即可开启数据点提示自动轮播。</p>
-<p>方法中的delay为轮播间隔时间，initPoints为数据点集合。</p>
-<p>如果不设置参数，直接调用chart.openAutoTooltip()，表示采用默认设置，轮播间隔为 3 秒，数据点集合为当前图表下的所有数据点。</p>
-<p>注：该接口不支持扩展图表。</p>
-<p>注：FVS 可视化看板详情可见：FVS基础图表实现数据点提示轮播 。</p>
-<h2 id="2-普通地图示例"><a href="#2-普通地图示例" class="headerlink" title="2. 普通地图示例"></a>2. 普通地图示例</h2><h3 id="2-1-准备数据"><a href="#2-1-准备数据" class="headerlink" title="2.1 准备数据"></a>2.1 准备数据</h3><p>新建决策报表，新建内置数据集 Embedded1</p>
-<h3 id="2-2-插入地图"><a href="#2-2-插入地图" class="headerlink" title="2.2 插入地图"></a>2.2 插入地图</h3><p>将「地图」拖到决策报表中，「编辑」地图，地图类型选择区域地图，地图边界选择「安徽省」，GIS图层选择「无」</p>
-<h3 id="2-3-绑定数据"><a href="#2-3-绑定数据" class="headerlink" title="2.3 绑定数据"></a>2.3 绑定数据</h3><p>属性面板点击「数据」，绑定地图数据</p>
-<h3 id="4-设置图例"><a href="#4-设置图例" class="headerlink" title="4 设置图例"></a>4 设置图例</h3><p>此处是对地图区域的预览颜色进行设置。</p>
-<p>属性面板点击「样式&gt;图例」，勾选「图例可见」，形态选择「渐变色」，区间配置自定义最小值为「0」，最大值为「200」，自定义「主题颜色」，划分阶段修改为1</p>
-<h3 id="5-设置提示"><a href="#5-设置提示" class="headerlink" title="5 设置提示"></a>5 设置提示</h3><p>此处修改提示信息的背景样式，提升提示清晰度。</p>
-<p>属性面板点击「样式&gt;提示」，勾选「使用数据点提示」，背景填充颜色选择「黑色」，不透明度设置为「50」</p>
-<h3 id="6-修改悬浮颜色"><a href="#6-修改悬浮颜色" class="headerlink" title="6 修改悬浮颜色"></a>6 修改悬浮颜色</h3><p>鼠标悬浮在地图区域上会有高亮效果，地图数据点提示轮播时也会显示这个高亮效果，但是默认的高亮效果不明显，需要进行修改。</p>
-<p>属性面板选择「特效&gt;条件显示」，给地图添加一个「悬浮颜色」类型的条件属性，自定义颜色后，将「区域名」和内置数据集字段「区域」绑定，点击「增加」按钮即可</p>
-<h3 id="7-添加事件"><a href="#7-添加事件" class="headerlink" title="7 添加事件"></a>7 添加事件</h3><p>选中「body」，添加一个「初始化后事件」</p>
-<p>JavaScript 代码如下：</p>
-<pre><code>setTimeout(function () &#123;
-    //获取图表对象
-    var vanchart = FR.Chart.WebUtils.getChart(&quot;chart0&quot;).getChartWithIndex(0);
-    //开启数据点提示轮播，轮播间隔为1秒，作用于该系列下的所有数据点
-    vanchart.openAutoTooltip(1000, vanchart.series[0].points);
-&#125;, 3000);
+  <p>#场景：<br>问题：跨域问题<br>原因分析：由于前后端分离，服务的端口号不同导致的</p>
+<p>#解决方案<br>引入flask_cors，并配置<br>CORS(app, resources=r’/*’)<br>即可解决跨域问题</p>
+<pre><code>from flask import Flask
+from flask_cors import CORS
+
+app = Flask(__name__)
+CORS(app, resources=r&#39;/*&#39;)
+
+
+@app.route(&#39;/&#39;)
+def hello_world():  # put application&#39;s code here
+    return &#39;Hello World!&#39;
+
+
+if __name__ == &#39;__main__&#39;:
+    app.run()
 </code></pre>
-<h3 id="8-设置报表背景"><a href="#8-设置报表背景" class="headerlink" title="8 设置报表背景"></a>8 设置报表背景</h3><p>选中「body」，属性下点击样式「编辑」按钮，修改决策报表的背景填充颜色为「深蓝色」</p>
-<h3 id="9-效果预览"><a href="#9-效果预览" class="headerlink" title="9 效果预览"></a>9 效果预览</h3><p>保存报表，点击「PC端预览」，效果如「1.1预期效果」所示。</p>
-<p>注：不支持移动端。</p>
  
       <!-- reward -->
       
@@ -555,7 +311,476 @@ vanchart.openAutoTooltip(); //开启数据点提示轮播
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/finereport/" rel="tag">finereport</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flask/" rel="tag">flask</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-flask实用入门案例05"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/08/15/flask%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B05/"
+    >flask实用入门案例05--参数解析</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/08/15/flask%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B05/" class="article-date">
+  <time datetime="2023-08-15T14:00:00.000Z" itemprop="datePublished">2023-08-15</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>官方文档：<br>（1）尽管 Flask 能够简单地访问请求数据(比如查询字符串或者 POST 表单编码的数据)，验证表单数据仍然很痛苦。Flask-RESTful 内置了支持验证请求数据，它使用了一个类似 argparse 的库。<br>（2）需要注意地是与 argparse 模块不同，reqparse.RequestParser.parse_args() 返回一个 Python 字典而不是一个自定义的数据结构。</p>
+<pre><code>from flask import Flask
+from flask_restful import reqparse, abort, Api, Resource
+ 
+app = Flask(__name__)
+api = Api(app)
+ 
+parser = reqparse.RequestParser()
+parser.add_argument(&#39;task&#39;, type=str)
+parser.add_argument(&#39;name&#39;, type=str)
+ 
+ 
+# 获取 &amp; 更新
+class Get_Modify(Resource):
+ def post(self):
+  args = parser.parse_args()
+  print(args)
+  return args, 201
+ 
+ 
+api.add_resource(Get_Modify, &#39;/get_modify&#39;)
+ 
+if __name__ == &#39;__main__&#39;:
+ app.run(debug=True)
+ 
+</code></pre>
+<p>上例中，即使传递其他参数，最终也只会读取定义的2个参数的值<br>通过如上代码说明：reqparse.RequestParser.parse_args()，即如上的args可以获取到request的form表单的参数，最终是一个字典。</p>
+<pre><code>from flask import Flask
+from flask_restful import reqparse, abort, Api, Resource
+
+app = Flask(__name__)
+api = Api(app)
+
+Tasks = &#123;
+ &#39;t1&#39;: &#123;&#39;task&#39;: &#39;eat an app&#39;&#125;,
+ &#39;t2&#39;: &#123;&#39;task&#39;: &#39;play football&#39;&#125;,
+ &#39;t3&#39;: &#123;&#39;task&#39;: &#39;watching TV&#39;&#125;,
+&#125;
+
+def abort_if_todo_doesnt_exist(t_id):
+ if t_id not in Tasks:
+  abort(404, message=&quot;Todo &#123;&#125; doesn&#39;t exist&quot;.format(t_id))
+
+
+parser = reqparse.RequestParser()
+parser.add_argument(&#39;task&#39;, type=str)
+
+
+# 获取 &amp; 更新
+class Get_Modify(Resource):
+ def get(self):
+  return Tasks
+
+ def post(self):
+  args = parser.parse_args()
+  t_id = int(max(Tasks.keys()).lstrip(&#39;t&#39;)) + 1
+  t_id = &#39;t%i&#39; % t_id
+  Tasks[t_id] = &#123;&#39;task&#39;: args[&#39;task&#39;]&#125;
+  return Tasks[t_id], 201
+
+
+# 设置每个视图函数的访问格式
+api.add_resource(Get_Modify, &#39;/get_modify&#39;)
+
+if __name__ == &#39;__main__&#39;:
+ app.run(debug=True)
+</code></pre>
+<p>解释：<br>（1）如上的函数，get是获取总的列表Tasks<br>（2）post是添加最新的一个key的值，且key的值是以“t”开头，数字自增的一种形式<br>（3）max(Tasks.keys())这个可以获取到Tasks列表里面，索引最大的key值，在没添加的时候，索引最大为t3<br>（4）x_string.lstrip（‘t’）,这个可以截取x_string字符串里面以’t’开始的剩余字符串。例如t3最终得到3，最终int(max(Tasks.keys()).lstrip(‘t’)) + 1这一行的意思是，得到列表最大的一个key的索引，然后自增到下一个。<br>（5）在希望在form表单里面传递参数，需要在函数里面，使用args = parser.parse_args()接收传递的参数，具体key值通过add_argument函数设置 </p>
+<pre><code>from flask import Flask
+from flask_restful import reqparse, abort, Api, Resource
+
+app = Flask(__name__)
+api = Api(app)
+
+Tasks = &#123;
+ &#39;t1&#39;: &#123;&#39;task&#39;: &#39;eat an app&#39;&#125;,
+ &#39;t2&#39;: &#123;&#39;task&#39;: &#39;play football&#39;&#125;,
+ &#39;t3&#39;: &#123;&#39;task&#39;: &#39;watching TV&#39;&#125;,
+&#125;
+
+
+def abort_if_todo_doesnt_exist(t_id):
+ if t_id not in Tasks:
+  abort(404, message=&quot;Todo &#123;&#125; doesn&#39;t exist&quot;.format(t_id))
+
+
+parser = reqparse.RequestParser()
+parser.add_argument(&#39;task&#39;, type=str)
+
+
+# 更新 &amp; 删除 任务
+class Updata_Delete(Resource):
+ def get(self, t_id):    # 根据t_id获取对应的value
+  abort_if_todo_doesnt_exist(t_id)
+  return Tasks[t_id]
+
+ def delete(self, t_id):   # 根据t_id删除对应的value
+  abort_if_todo_doesnt_exist(t_id)
+  del Tasks[t_id]
+  return &#39;delete success&#39;, 204
+
+ def post(self, t_id):   # 判断t_id是否存在，并返回Tasks整个列表
+  abort_if_todo_doesnt_exist(t_id)
+  return Tasks,201
+
+ def put(self, t_id):   # 根据t_id添加对应的value，并返回所有值
+  args = parser.parse_args()
+  task = &#123;&#39;task&#39;: args[&#39;task&#39;]&#125;
+  Tasks[t_id] = task
+  return Tasks, 201
+
+
+api.add_resource(Updata_Delete, &#39;/update_delete/&lt;t_id&gt;&#39;)
+
+if __name__ == &#39;__main__&#39;:
+ app.run(debug=True)
+ 
+</code></pre>
+<p>解释：<br>（1）通过url传递参数，给视图函数，这种方式一般用在get请求，post请求通过form表单形式比较实用<br>（2）通过url传递参数，需要定义函数时候，使用形参t_id,且在使用add_resource（）函数的使用，url参数形式最后添加<t_id>变量，例如’/update_delete/<t_id>‘这个形式。<br>（3）delete这个函数，最终执行删除是成功的，但是最终并没有返回return的字符串”delete success”，具体原因不详，可能是用法不对，后续再更新中说明.<br>(return ‘delete success’, 204 将 204去掉即可)</t_id></t_id></p>
+<p><a target="_blank" rel="noopener" href="https://www.jb51.net/article/176172.htm">https://www.jb51.net/article/176172.htm</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flask/" rel="tag">flask</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-flask实用入门案例04"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/08/14/flask%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B04/"
+    >flask实用入门案例04--endpoint</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/08/14/flask%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B04/" class="article-date">
+  <time datetime="2023-08-14T12:43:15.000Z" itemprop="datePublished">2023-08-14</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>在flask框架中，我们经常会遇到endpoint这个东西，最开始也没法理解这个到底是做什么的。最近正好在研究Flask的源码，也就顺带了解了一下这个endpoint<br>首先，我们看一个例子：</p>
+<pre><code>@app.route(&#39;/user/&lt;name&gt;&#39;)
+def user(name):
+  return &#39;Hello, %s&#39; % name
+</code></pre>
+<p>这个是我们在用flask框架写网站中最常用的。<br>通过看源码，我们可以发现：<br>函数等效于</p>
+<pre><code>def user(name)
+  return &#39;Hello, %s&#39; % name
+</code></pre>
+<p>app.add_url_rule(‘/user/<name>‘, ‘user’, user)</name></p>
+<p>这个add_url_rule函数在文档中是这样解释的：</p>
+<pre><code>add_url_rule(*args, **kwargs)
+ Connects a URL rule. Works exactly like the route() decorator. If a view_func is provided it will be registered with the endpoint.
+</code></pre>
+<p>add_url_rule有如下参数：</p>
+<pre><code>rule – the URL rule as string
+
+endpoint – the endpoint for the registered URL rule. Flask itself assumes the name of the view function as endpoint
+
+view_func – the function to call when serving a request to the provided endpoint
+options – the options to be forwarded to the underlying Rule object. A change to Werkzeug is handling of method options. methods is a list of methods this rule should be limited to (GET, POST etc.). By default a rule just listens for GET (and implicitly HEAD). Starting with Flask 0.6, OPTIONS is implicitly added and handled by the standard request handling.
+</code></pre>
+<p>抛开options这个参数不谈，我们看看前三个参数。</p>
+<p>rule：这个参数很简单，就是匹配的路由地址<br>view_func：这个参数就是我们写的视图函数<br>endpoint：这个参数就是我今天重点要讲的，endpoint</p>
+<p>很多人认为：假设用户访问<a target="_blank" rel="noopener" href="http://www.example.com/user/eric">http://www.example.com/user/eric</a><br>flask会找到该函数，并传递name=’eric’，执行这个函数并返回值。<br>但是实际中，Flask真的是直接根据路由查询视图函数么？<br>在源码中我们可以发现：</p>
+<p>每个应用程序app都有一个view_functions，这是一个字典，存储endpoint-view_func键值对。add_url_rule的第一个作用就是向view_functions中添加键值对(这件事在应用程序run之前就做好了)<br>每个应用程序app都有一个url_map，它是一个Map类(具体实现在werkzeug/routing.py中)，里面包含了一个列表，列表元素是Role的实例(werkzeug/routing.py中)。add_url_rule的第二个作用就是向url_map中添加Role的实例(它也是在应用程序run之前就做好了)</p>
+<p>我们可以通过一个例子来看：</p>
+<pre><code>app = Flask(__name__)
+ 
+@app.route(&#39;/test&#39;, endpoint=&#39;Test&#39;)
+def test():
+  pass
+ 
+ 
+@app.route(&#39;/&#39;, endpoint=&#39;index&#39;)
+def hello_world():
+  return &#39;Hello World!&#39;
+ 
+if __name__ == &#39;__main__&#39;:
+  print(app.view_functions)
+  print(app.url_map)
+  app.run()
+</code></pre>
+<p>运行这个程序，结果是：</p>
+<pre><code>&#123;&#39;static&#39;: &lt;bound method Flask.send_static_file of &lt;Flask &#39;flask-code&#39;&gt;&gt;, &#39;Test&#39;: &lt;function test at 0x10065e488&gt;, &#39;index&#39;: &lt;function hello_world at 0x10323d488&gt;&#125;
+Map([&lt;Rule &#39;/test&#39; (HEAD, OPTIONS, GET) -&gt; Test&gt;,
+ &lt;Rule &#39;/&#39; (HEAD, OPTIONS, GET) -&gt; index&gt;,
+ &lt;Rule &#39;/static/&lt;filename&gt;&#39; (HEAD, OPTIONS, GET) -&gt; static&gt;])
+ * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+</code></pre>
+<p>所以我们可以看出：这个url_map存储的是url与endpoint的映射!<br>回到flask接受用户请求地址并查询函数的问题。实际上，当请求传来一个url的时候，会先通过rule找到endpoint(url_map)，然后再根据endpoint再找到对应的view_func(view_functions)。通常，endpoint的名字都和视图函数名一样。</p>
+<p>这时候，这个endpoint也就好理解了：<br>实际上这个endpoint就是一个Identifier，每个视图函数都有一个endpoint，<br>当有请求来到的时候，用它来知道到底使用哪一个视图函数</p>
+<p>在实际应用中，当我们需要在一个视图中跳转到另一个视图中的时候，我们经常会使用url_for(endpoint)去查询视图，而不是把地址硬编码到函数中。<br>这个时候，我们就不能使用视图函数名当endpoint去查询了<br>我们举个例子来说明。比如：</p>
+<pre><code>app = Flask(__name__)
+app.register_blueprint(user, url_prefix=&#39;user&#39;)
+app.register_blueprint(file, url_prefix=&#39;file&#39;)
+</code></pre>
+<p>我们注册了2个蓝图。<br>在user中(省略初始化过程)：</p>
+<pre><code>@user.route(&#39;/article&#39;)
+def article():
+  pass
+</code></pre>
+<p>在file中(省略初始化过程)：</p>
+<pre><code>@file.route(&#39;/article&#39;)
+def article():
+  pass
+</code></pre>
+<p>这时候，我们发现，/article这个路由对应了两个函数名一样的函数，分别在两个蓝图中。当我们使用url_for(article)调用的时候(注意，url_for是通过endpoint查询url地址，然后找视图函数)，flask无法知道到底使用哪个蓝图下的endpoint，所以我们需要这样:</p>
+<pre><code>url_for(&#39;user.article&#39;)
+</code></pre>
+<p>以上就是本文的全部内容，希望对大家的学习有所帮助。</p>
+<p>来源：<a target="_blank" rel="noopener" href="https://www.jb51.net/article/176173.htm">https://www.jb51.net/article/176173.htm</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flask/" rel="tag">flask</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-flask实用入门案例03"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/08/13/flask%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B03/"
+    >flask实用入门案例03--Flask-RESTful</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/08/13/flask%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B03/" class="article-date">
+  <time datetime="2023-08-13T11:55:21.000Z" itemprop="datePublished">2023-08-13</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>使用flask可以快速开发restful风格的后台服务，下面展示几种常用实用接口案例。</p>
+<p>Flask-RESTful 提供的最主要的基础就是资源(resources)。资源(Resources)是构建在 Flask 可拔插视图 之上，只要在你的资源(resource)上定义方法就能够容易地访问多个 HTTP 方法.</p>
+<p>其实就是想表达，在资源路由上（resources）定义多个方法（get，post，put等），就可以实现多种效果</p>
+<pre><code>from flask import Flask, request
+from flask_restful import Api, Resource
+ 
+app = Flask(__name__)
+api = Api(app)
+ 
+todos = &#123;&#125;
+ 
+class TodoSimple(Resource):
+ def get(self, todo_id):
+  return &#123;todo_id: todos[todo_id]&#125;
+ 
+ def put(self, todo_id):
+  todos[todo_id] = request.form[&#39;data&#39;]
+  return &#123;todo_id: todos[todo_id]&#125;
+ 
+api.add_resource(TodoSimple, &#39;/&lt;string:todo_id&gt;&#39;)
+ 
+if __name__ == &#39;__main__&#39;:
+ app.run(debug=True)
+ 
+</code></pre>
+<p>解释：<br>（1）TodoSimple类定义了2种方法，最终地址/string:todo_id’下面，就可以实现2种请求方法<br>（2）add_resource方法中第一个参数：视图函数名；第二个参数：路由的具体地址，以及string:todo_id代表传递的是一个字符串，且是必要参数。<br>（3）request.form[‘data’]获取request里面，form表单的key为data的参数，如果request里面，没有data参数，那报错。如果有包含data的多个参数，那也只会取data这一个参数</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flask/" rel="tag">flask</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-flask实用入门案例02"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/08/12/flask%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B02/"
+    >flask实用入门案例02</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/08/12/flask%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B02/" class="article-date">
+  <time datetime="2023-08-12T12:19:46.000Z" itemprop="datePublished">2023-08-12</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>使用flask可以快速开发restful风格的后台服务，下面展示几种常用实用接口案例。</p>
+<pre><code>from flask import Flask, request, jsonify, send_from_directory
+from werkzeug.utils import secure_filename
+import os
+import uuid
+
+app = Flask(__name__)
+
+# 设置文件上传保存路径
+app.config[&#39;UPLOAD_FOLDER&#39;] = &#39;static/upload/&#39;
+# MAX_CONTENT_LENGTH设置上传文件的大小，单位字节
+app.config[&#39;MAX_CONTENT_LENGTH&#39;] = 1 * 1024 * 1024
+
+
+@app.route(&#39;/upload&#39;, methods=[&#39;POST&#39;])
+def upload():
+    f = request.files[&#39;file&#39;]
+    fname = secure_filename(f.filename)
+    ext = fname.rsplit(&#39;.&#39;)[-1]
+    # 生成一个uuid作为文件名
+    fileName = str(uuid.uuid4()) + &quot;.&quot; + ext
+    # os.path.join拼接地址，上传地址，f.filename获取文件名
+    f.save(os.path.join(app.config[&#39;UPLOAD_FOLDER&#39;], fileName))
+    return jsonify(&#123;&#39;result&#39;: &#39;success&#39;&#125;)
+
+
+# 图片下载
+@app.route(&#39;/download/&lt;filename&gt;&#39;, methods=[&#39;GET&#39;])
+def download(filename):
+    if request.method == &quot;GET&quot;:
+        # 通过文件名下载文件
+        path = os.path.isfile(os.path.join(app.config[&#39;UPLOAD_FOLDER&#39;], filename))
+        if path:
+            return send_from_directory(app.config[&#39;UPLOAD_FOLDER&#39;], filename, as_attachment=True)
+
+@app.route(&#39;/&#39;)
+def hello_world():  # put application&#39;s code here
+    return &#39;Hello World!&#39;
+
+
+if __name__ == &#39;__main__&#39;:
+    app.run()
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flask/" rel="tag">flask</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
 
     </footer>
   </div>
@@ -571,7 +796,7 @@ vanchart.openAutoTooltip(); //开启数据点提示轮播
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/19/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="page-number" href="/page/19/">19</a><span class="page-number current">20</span><a class="page-number" href="/page/21/">21</a><a class="page-number" href="/page/22/">22</a><span class="space">&hellip;</span><a class="page-number" href="/page/55/">55</a><a class="extend next" rel="next" href="/page/21/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/19/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="page-number" href="/page/19/">19</a><span class="page-number current">20</span><a class="page-number" href="/page/21/">21</a><a class="page-number" href="/page/22/">22</a><span class="space">&hellip;</span><a class="page-number" href="/page/57/">57</a><a class="extend next" rel="next" href="/page/21/">下一页</a>
   </nav>
   
 </section>

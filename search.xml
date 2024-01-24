@@ -1,6 +1,294 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>nohup命令</title>
+    <url>/2023/12/09/github%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F%E7%BD%91%E5%9D%80%E5%88%86%E4%BA%AB/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>hub.yzuu.cf/<br>hub.nuaa.cf/<br>hub.fgit.ml/</p>
+<p>使用chrome浏览器，不要使用360系列的浏览器。</p>
+]]></content>
+      <categories>
+        <category>知识分享</category>
+      </categories>
+      <tags>
+        <tag>Github</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>nohup命令</title>
+    <url>/2023/12/08/nohup%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>nohup命令</p>
+<p>后台运行：</p>
+<pre><code>sh test.sh &amp;
+</code></pre>
+<p>关闭终端也运行：</p>
+<pre><code>nohup sh test.sh &amp;
+</code></pre>
+<p>一般使用：</p>
+<pre><code>nohup sh test.sh &gt; nohup.out  2&gt;&amp;1 &amp;
+</code></pre>
+<p>2&gt;&amp;1 解释：<br>将标准错误 2 重定向到标准输出 &amp;1 ，标准输出 &amp;1 再被重定向输入到 nohup.out 文件中。</p>
+<p>————————————————<br>版权声明：本文为CSDN博主「小赵小赵福星高照～」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a href="https://blog.csdn.net/attemptendeavor/article/details/125501870">https://blog.csdn.net/attemptendeavor/article/details/125501870</a></p>
+]]></content>
+      <categories>
+        <category>软件开发</category>
+      </categories>
+      <tags>
+        <tag>QGIS</tag>
+        <tag>OSGeo4W</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>交互设计师必须get的场景化设计大解密，附详细案例</title>
+    <url>/2023/12/07/%E4%BA%A4%E4%BA%92%E8%AE%BE%E8%AE%A1%E5%B8%88%E5%BF%85%E9%A1%BBget%E7%9A%84%E5%9C%BA%E6%99%AF%E5%8C%96%E8%AE%BE%E8%AE%A1%E5%A4%A7%E8%A7%A3%E5%AF%86%EF%BC%8C%E9%99%84%E8%AF%A6%E7%BB%86%E6%A1%88%E4%BE%8B/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>交互设计师必须get的场景化设计大解密，附详细案例<br><a href="https://www.zcool.com.cn/article/ZMTA1NTk0NA==.html">https://www.zcool.com.cn/article/ZMTA1NTk0NA==.html</a></p>
+<p>一、什么是场景化设计</p>
+<p>「场景」在百度百科里的定义是：戏剧、电影中的场面，泛指情景。情景又指(1) 感情与景色。(2) 情形；景象。(3) 环境：假设是在这个情景。在戏剧或影视剧里，场景由人物，时空，事件（行为），环境（社会环境和自然环境）等要素构成。</p>
+<p>互联网中的「场景」我把它分为两类，一类是为了实现用户目标而产生的场景，这种类型的场景需要明确用户目标，可能并不需要涵盖用户是怎么实现目标的，这类场景指根据用户的精准需求，为其提供精准服务，用明确的差异化服务给用户提供一个使用产品的动机。比如微博和微信，微信定位是熟人社交，微博则是陌生人社交；另一类是更加精细化的场景，这类场景需要明确用户操作流程。本文主要针对第二类场景展开。</p>
+<p>场景化设计指基于对场景的分析，得出用户痛点与需求，结合前后场景预判用户目标，通过设计提高用户效率，给予用户惊喜与感动。</p>
+<p>场景要素包括：4W+1H，即Who人、When时间、Where地点、What事件、How环境，什么人，在什么时候，在什么地方，做了什么事情，所处的环境如何。其中Where又包括线上地点和线下地点，线下指现实中的定位，可以通过手机信号塔数据（GPS），Wifi连接等获取；线上指用户所处的具体页面。</p>
+<p>如：用户（who）早上上班（when）在地铁上（where）看电子书（what），地铁上人多嘈杂且操作不方便（how）。再比如用户（who）中午（when）在办公室里（where）点外卖（what），肚子很饿还不知道吃什么（how）。五要素就像口诀，帮助我们全面快速的描述场景。</p>
+<p>二、有哪些场景化设计的例子</p>
+<p>为帮助大家更好的理解场景化设计，这里基于上面提到的场景五要素举一些例子：</p>
+<p>人是变量：用户不同，看到的信息不同。随着大数据和智能推荐技术的普及，越来越多的产品通过挖掘不同用户的喜好，生成用户画像，为每位用户提供“千人千面”的个性化内容。这样的产品大家都很熟悉，比如抖音，淘宝，微博，今日头条。</p>
+<p>时间是变量：时间不同，看到的信息不同。比如小米MIUI11的效率革新功能「智能出行」，当在出行类app上定好行程后，MIUI11就会自动将该行程记录在负一屏显示并同步日历，同时会根据出行的时间点，在通知栏实时更新提示：<br>再比如在Google Maps的app里开启导航时，如果目的地在预计到达时间还没有开门，或者快要/已经关门了的话，会有个弹窗提醒。</p>
+<p>还有蚂蚁森林的页面会根据用户打开的时间进行变化（白天与夜晚模式）等等，这些都是充分考虑了场景中时间这一变量，才有如此高效暖心的设计。</p>
+<p>地点是变量：同一个用户，在不同地点看到的信息不同。比如，大众点评APP当用户从常住地北京（where）定位成非常住地杭州（where）时，根据用户的上个场景与当前场景预测用户可能处于旅游状态，从而预测用户下一步的目标是在杭州「吃喝玩乐」，所以首页和攻略页的内容都发生了变化，为用户推荐旅行地的「吃喝玩乐」。<br>环境是变量：不同环境看到的信息不同，比如设备环境发生变化时：Ios13中的备忘录页面，将「添加」按钮移到了右下角，为什么？因为手机屏幕越来越大，把按钮从右上角移到右下角，更有利于用户单手操作。<br>再比如：我们在驾驶环境下，要保持注意力集中，避免或减少分心驾驶导致的交通事故，所以基于驾驶环境ios11上线了驾驶模式功能，当iphone与车内的USB或蓝牙连接，或iphone感知到人的移动速度时，iphone就会自动进入驾驶模式，在该模式下，任何人发短信，我们都不会收到提示，对方会收到“我正在驾驶，稍后回复您”的自动回复，同时，iphone会追加一条短信，提示对方只要回复“紧急”关键词，我们就能立刻接收到他们的消息提示。<br>三、为什么要基于场景做设计？<br>通过上面的举例想必大家已经了解到了基于场景做设计的好处。由于与用户的空间相隔，设计师无法感知用户在真实场景中使用产品的具体情况。通过场景化设计的方法，对用户使用场景进行分析与预期，可以帮助设计师找到用户与场景的内在联系，探索新的功能及交互方式。</p>
+<p>四、怎么进行场景化设计</p>
+<p>可以概括为以下四步：<br>1、根据用户使用流程和行为路径穷尽场景<br>根据用户的使用流程和行为路径列举场景，这里以乘坐飞机（手机购票）为例，列举乘坐飞机涉及到的关键场景：<br>①乘客（who）在航旅纵横页面（where）购票（what），航班多查找起来麻烦（how）。<br>②乘客（who）起大早拖着疲惫的身体（how）在去往机场的路上（where），又遇到早高峰堵车，内心焦躁烦闷（how）。<br>③起飞前（when）乘客（who）在机场（where）过安检（what），安检流程复杂，又检测出不符合登机规定的物品，让人心烦，手忙脚乱（how）。<br>④起飞前（when），乘客（who）在候机口（where）候机（what），人多嘈杂，没有座位，还背着繁重的行李，还要时刻关注航班信息（how）。<br>⑤起飞前40分钟（when），乘客（who）背着行李排着队（how），将登机牌（纸质/电子）和身份证出示给工作人员（what），工作人员（who）站在入口处（where）开始检查每位乘客的登机牌和身份证（what）。<br>⑥检完票后（when），乘客（who）拿着身份证和登机牌，背着行李（how）乘坐摆渡车（what），摆渡车上嘈杂、拥挤（how）。<br>⑦下摆渡车后（when），乘客拿出登机牌，背着行李（how）排队检票登机（what），工作人员（who）站在飞机前（where）开始检查每位乘客的登机牌（what）。<br>⑧在起飞前30分钟（when），乘客（who）登机（what），背着行李在狭窄拥挤的通道里（how）寻找自己的座位（what）。找到座位后，将沉重的行李艰难的（how）放到上方的置物架上（what）。放好行李后，坐到自己的座位上（what），系好安全带（what），调节座椅靠背（what），等待飞机起飞（what）。<br>⑨飞行过程中（when），气流导致飞机颠簸，乘客感到恐慌不适（how）。飞行过程中，乘客通过看电影，看书，睡觉打发时间（what）。<br>⑩到达目的地（when），乘客（who）从高处置物架上（how）取下行李（what），拿着沉重的行李（how）排队下飞机（what）。此时乘客对目的地的天气等其他情况都不清楚。<br>⑪乘客走出飞机到达航站楼后，在陌生的机场（where），跟着标牌指示艰难的找到自己的行李（what）。拿着行李跟着指示牌（how）困难的找出口（what）。</p>
+<p>通过对关键场景的详细描述，我们将摸不着的用户场景像过电影一样在眼前一一呈现，有利于我们发现很多想不到或者通过调研得不到的细节，帮助我们发现用户真正的痛点与需求，洞察设计机会点。</p>
+<p>2、根据场景挖掘机会点<br>完成了第一步的场景列举，我们对流程中涉及的场景有了深刻的了解，下一步就是对场景的判断与分析，挖掘机会点。机会点挖掘有两个方向，一是通过分析当前场景存在的痛点和需求挖掘机会点，二是通过对用户下一步目标的预判寻找机会点。<br>①通过分析当前场景存在的痛点和需求挖掘机会点<br>举例说明1：支付宝「朋友」界面，当用户输入某数值时，输入框上方会自动显示「给对方转账***元」按钮，用户可点击该按钮完成转账。这是因为经常有用户误以为输入数值发送即完成了转账，导致很多尴尬出现。基于该场景下的痛点与需求，支付宝做了这个改进，贴心又好用。<br>举例说明2：ios系统在切换APP操作时，会将一些金融类APP虚化，以此来保证用户信息安全。这一设计细节也是充分考虑了用户在切换APP时的场景，解除了用户在公告场合担心被窥屏而泄露个人财富信息的担忧。<br>还有，当我们用耳机听音乐或播放视频时，拔下耳机，声音就会自动停掉，这样就算在安静的场合听音乐或者看视频，耳机不小心掉下来也不会发出尴尬的声音，这些都是充分考虑了用户当前使用时的场景，才做出如何贴心的设计。</p>
+<p>②通过对用户下一步目标的预判寻找机会点<br>第二个方法是通过对用户当前场景的分析，预判用户下一步的行为与目标，从而寻找当前场景的机会点。<br>如何预期用户下一步目标？有三个方法：<br>1）通过成组动作进行预期，如复制—粘贴，编辑—保存。<br>2）通过用户认知流程预判，如，浏览时反向滑动→结束浏览/回到顶部；再比如谷歌翻译在发音时，第一遍是正常语速，第二遍语速变慢，第三遍又恢复到常速，是不是很贴心，很符合用户期望？<br>3）通过产品使用流程进行预期，如订外卖—取外卖—评价。<br>举例说明1：在谷歌浏览器，当我们打开多个浏览窗口时，通常需要手动一个个地关闭标签页。chrome充分考虑到了用户的该使用场景，当用户关闭一个标签页时，预期用户会关闭下一个标签页，所以当关闭一个标签时，相邻标签会自动靠近，保证关闭的按钮始终位于鼠标的当前位置，这样用户就不用移动鼠标关闭下一个标签页，提高了用户的使用效率。<br>3、机会点转化为落地的设计方案<br>在将机会点转化为具体的设计时，有两个可作为依据的设计原则，分别为高效，情感化。<br>实现高效有以下几个方法：<br>①行动点前置，通过对用户下一目标的预测，将用户目标在当前场景展示，缩短操作流程，达到高效的目标。如淘宝首页的tab栏会根据每个用户的浏览记录预测用户目标，千人千面个性化展现，缩短了用户查找商品的路径，提高商品购买效率。<br>②行动点置换，还是拿淘宝举例，淘宝底部的第一个导航，当用户滑动首页下方的商品流时，该按钮由首页变成置顶。<br>③行动点相关提示，意思是根据用户当前目标或下一步目标进行相关的提示。如支付宝朋友页面，当上滑时，会出现「找人转账」的提示，点击进入朋友列表的纯净模式（去掉了服务通知等跟转账无用的列表），提高了用户寻找的效率。<br>再比如，网易邮箱，当邮件中提到附件，但是没有上传附件时，点击发送后，系统弹出下方的提示，解决了用户常常忘记添加附件的困扰。<br>④突出行动点，根据用户当前目标或下一步目标突出关键按钮，帮助用户快速找到关键操作，吸引用户点击，降低了用户思考成本，提升效率。运用这个方法进行设计的例子太多了，比如淘宝的商品详情页用红色突出购买按钮等。<br>⑤直接执行，根据用户当前目标或下一步目标直接执行。比如滴滴的扫一扫界面，当检测到光线较暗时，手电筒会自动打开，提高了扫一扫的效率。<br>情感化<br>唐纳德·诺曼在《情感化设计》中提到设计的三个层次，分别为：本能的设计，行为的设计，反思的设计，情感化设计是能打动人的，它能传递感情，勾起回忆，给人惊喜，情感化设计帮助产品与用户之间建立情感的纽带，能强化用户对品牌的认知，培养对品牌的忠诚度。</p>
+<p>情感化设计的步骤依次为：提炼影响产品的的情感指标→聚焦用户对产品的情感诉求→产出设计方案→验证设计价值（来源于周姮—知乎蚂蚁金服体验技术部的一次分享）。</p>
+<p>举例说明1：在谷歌表格每列的开头依次输入「Pride」五个字母后，表格会变成彩虹样式</p>
+<p>举例说明2：网易云音乐在用户生日时会变成「生日快乐」的蛋糕样式，点击进去的音乐列表，第一首歌是生日歌，让人心里暖暖的。<br>4、设计检验<br>最后一步就是设计方案的验证，设计方案能否帮助用户缩短操作流程？降低用户思考成本？帮助用户高效的完成任务？是否能打动用户给他们带来惊喜与温暖？通过可用性测试及上线后的数据反馈，帮助我们更好的优化设计方案。<br>文章较长，我们再回顾一下：<br>一、什么是场景化设计？<br>场景五要素：4W+1H，即Who人、When时间、Where地点、What事件 、How环境，什么人，在什么时候，在什么地方，做了什么事情，所处的环境如何。<br>二、有哪些场景化设计的例子？<br>三、为什么要进行场景化设计？<br>四、怎么进行场景化设计？<br>1、根据使用流程和行为路径穷尽场景<br>2、根据场景挖掘设计机会点<br>3、将机会点转化为落地的设计方案<br>4、设计检验<br>好了，今天就说到这，文章较长，希望大家能耐心消化。<br>说明：文章部分内容引用了阿里中国站UED团队博客里的分享。</p>
+]]></content>
+      <categories>
+        <category>软件开发</category>
+      </categories>
+      <tags>
+        <tag>QGIS</tag>
+        <tag>OSGeo4W</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>HEX、DEC、OCT 和 BIN 的含义</title>
+    <url>/2023/12/06/HEX%E3%80%81DEC%E3%80%81OCT%20%E5%92%8C%20BIN%20%E7%9A%84%E5%90%AB%E4%B9%89/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="HEX、DEC、OCT-和-BIN含义如下："><a href="#HEX、DEC、OCT-和-BIN含义如下：" class="headerlink" title="HEX、DEC、OCT 和 BIN含义如下："></a>HEX、DEC、OCT 和 BIN含义如下：</h1><p>HEX，英文全称 Hexadecimal，表示十六进制。</p>
+<p>DEC，英文全称 Decimal，表示十进制。</p>
+<p>OCT，英文全称 Octal，表示八进制。</p>
+<p>BIN，英文全称 Binary，表示二进制。</p>
+<h1 id="详解"><a href="#详解" class="headerlink" title="详解"></a>详解</h1><p>十六进制（简写为 hex 或下标 16）是一种基数为 16 的计数系统，是一种逢 16 进 1 的进位制。通常用数字 0、1、2、3、4、5、6、7、8、9 和字母 A、B、C、D、E、F（a、b、c、d、e、f）表示，其中: A<del>F 表示 10</del>15，这些称作十六进制数字。</p>
+<p>十进制数是组成以10为基础的数字系统，有 0，1，2，3， 4， 5， 6， 7， 8， 9 十个基本数字组成。十进制，英文名称为 Decimal System，来源于希腊文 Decem，意为十。十进制计数是由印度教教徒在 1500 年前发明的，由阿拉伯人传承至 11 世纪。</p>
+<p>八进制，Octal，缩写 OCT 或 O，一种以 8 为基数的计数法，采用 0，1，2，3，4，5，6，7 八个数字，逢八进 1。一些编程语言中常常以数字 0 开始表明该数字是八进制。八进制的数和二进制数可以按位对应（八进制一位对应二进制三位），因此常应用在计算机语言中。</p>
+<p>二进制是计算技术中广泛采用的一种数制。 二进制数据是用 0 和 1 两个数码来表示的数。 它的基数为2，进位规则是”逢二进一”，借位规则是”借一当二”。 二进制数（binaries）是逢2进位的进位制，0、1是基本算符 ；计算机运算基础采用二进制。</p>
+]]></content>
+      <categories>
+        <category>软件开发</category>
+      </categories>
+      <tags>
+        <tag>QGIS</tag>
+        <tag>OSGeo4W</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>OSGeo4W 镜像仓库</title>
+    <url>/2023/12/05/OSGeo4W%20%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>注意：本仓库手动同步，不保证所有内容是最新的！</p>
+<p>使用方法</p>
+<p>打开 OSGeo4W Setup ，在 “Choose A Download Site” 页面的 User URL 中输入地址 <a href="http://gwmodel.whu.edu.cn/mirrors/osgeo4w">http://gwmodel.whu.edu.cn/mirrors/osgeo4w</a> ，点击 Add 按钮，然后选择该镜像进行安装</p>
+]]></content>
+      <categories>
+        <category>软件开发</category>
+      </categories>
+      <tags>
+        <tag>QGIS</tag>
+        <tag>OSGeo4W</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>springboot指定配置文件启动</title>
+    <url>/2023/12/04/%E9%80%9A%E8%BF%87%20Maven%20%E4%BB%93%E5%BA%93%E5%AE%89%E8%A3%85%20Spire%20%E7%B3%BB%E5%88%97%20Java%20%E4%BA%A7%E5%93%81/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>只需简单配置，您就可以轻松将 Java 产品的 JAR 包通过 Maven 仓库安装到的 Maven 项目中。我们所有 Java 产品均可通过 Maven 安装。下面将详细说明如何在 Maven 程序中添加对 JAR 包的依赖。</p>
+<p>首先，在 pom.xml 文件中配置 Maven 仓库路径。</p>
+<pre><code>&lt;repositories&gt;
+        &lt;repository&gt;
+            &lt;id&gt;com.e-iceblue&lt;/id&gt;
+            &lt;name&gt;e-iceblue&lt;/name&gt;
+            &lt;url&gt;https://repo.e-iceblue.cn/repository/maven-public/&lt;/url&gt;
+        &lt;/repository&gt;
+&lt;/repositories&gt;
+</code></pre>
+<p>然后，在 pom.xml 文件中指定 Spire 产品的 Maven 依赖。如下列举了几种产品的配置方式，可参考使用。</p>
+<p>如果需要在同一个程序项目中操作多种文件格式，例如：同时操作 Word、Excel 和 PDF 或者其他多种文件格式时，请使用集合包 Spire.Office for Java。否则，在同一程序中使用多个 Spire Jar 包会引起程序冲突，导致异常报错。</p>
+<p>配置 Spire.PDF for Java</p>
+<pre><code>&lt;repositories&gt;
+    &lt;repository&gt;
+        &lt;id&gt;com.e-iceblue&lt;/id&gt;
+        &lt;name&gt;e-iceblue&lt;/name&gt;
+        &lt;url&gt;https://repo.e-iceblue.cn/repository/maven-public/&lt;/url&gt;
+    &lt;/repository&gt;
+&lt;/repositories&gt;
+
+&lt;dependencies&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;e-iceblue&lt;/groupId&gt;
+        &lt;artifactId&gt;spire.pdf&lt;/artifactId&gt;
+        &lt;version&gt;10.1.5&lt;/version&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;
+</code></pre>
+<p>配置 Spire.Doc for Java</p>
+<pre><code>&lt;repositories&gt;
+    &lt;repository&gt;
+        &lt;id&gt;com.e-iceblue&lt;/id&gt;
+        &lt;name&gt;e-iceblue&lt;/name&gt;
+        &lt;url&gt;https://repo.e-iceblue.cn/repository/maven-public/&lt;/url&gt;
+    &lt;/repository&gt;
+&lt;/repositories&gt;
+
+&lt;dependencies&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;e-iceblue&lt;/groupId&gt;
+        &lt;artifactId&gt;spire.doc&lt;/artifactId&gt;
+        &lt;version&gt;12.1.10&lt;/version&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;
+</code></pre>
+<p>配置 Spire.XLS for Java</p>
+<pre><code>&lt;repositories&gt;
+    &lt;repository&gt;
+        &lt;id&gt;com.e-iceblue&lt;/id&gt;
+        &lt;name&gt;e-iceblue&lt;/name&gt;
+        &lt;url&gt;https://repo.e-iceblue.cn/repository/maven-public/&lt;/url&gt;
+    &lt;/repository&gt;
+&lt;/repositories&gt;
+
+&lt;dependencies&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;e-iceblue&lt;/groupId&gt;
+        &lt;artifactId&gt;spire.xls&lt;/artifactId&gt;
+        &lt;version&gt;14.1.1&lt;/version&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;
+</code></pre>
+<p>配置 Spire.Presentation for Java</p>
+<pre><code>&lt;repositories&gt;
+    &lt;repository&gt;
+        &lt;id&gt;com.e-iceblue&lt;/id&gt;
+        &lt;name&gt;e-iceblue&lt;/name&gt;
+        &lt;url&gt;https://repo.e-iceblue.cn/repository/maven-public/&lt;/url&gt;
+    &lt;/repository&gt;
+&lt;/repositories&gt;
+
+&lt;dependencies&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;e-iceblue&lt;/groupId&gt;
+        &lt;artifactId&gt;spire.presentation&lt;/artifactId&gt;
+        &lt;version&gt;8.12.1&lt;/version&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;
+</code></pre>
+<p>配置 Spire.Office for Java</p>
+<pre><code>&lt;repositories&gt;
+    &lt;repository&gt;
+        &lt;id&gt;com.e-iceblue&lt;/id&gt;
+        &lt;name&gt;e-iceblue&lt;/name&gt;
+        &lt;url&gt;https://repo.e-iceblue.cn/repository/maven-public/&lt;/url&gt;
+    &lt;/repository&gt;
+&lt;/repositories&gt;
+
+&lt;dependencies&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;e-iceblue&lt;/groupId&gt;
+        &lt;artifactId&gt;spire.office&lt;/artifactId&gt;
+        &lt;version&gt;9.1.4&lt;/version&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;
+</code></pre>
+<p>如需配置 Spire 产品的免费版本 jar 包，只需更改 artifactId 和 version 信息即可，如下配置方法：</p>
+<p>配置 Free Spire.PDF for Java</p>
+<pre><code>&lt;dependencies&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;e-iceblue&lt;/groupId&gt;
+        &lt;artifactId&gt;spire.pdf.free&lt;/artifactId&gt;
+        &lt;version&gt;5.1.0&lt;/version&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;
+</code></pre>
+<p>配置 Free Spire.Doc for Java</p>
+<pre><code>&lt;dependencies&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;e-iceblue&lt;/groupId&gt;
+        &lt;artifactId&gt;spire.doc.free&lt;/artifactId&gt;
+        &lt;version&gt;5.3.1&lt;/version&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;
+</code></pre>
+<p>配置 Free Spire.XLS for Java</p>
+<pre><code>&lt;dependencies&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;e-iceblue&lt;/groupId&gt;
+        &lt;artifactId&gt;spire.xls.free&lt;/artifactId&gt;
+        &lt;version&gt;5.1.0&lt;/version&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;
+</code></pre>
+<p>配置 Free Spire.Presentation for Java</p>
+<pre><code>&lt;dependencies&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;e-iceblue&lt;/groupId&gt;
+        &lt;artifactId&gt;spire.presentation.free&lt;/artifactId&gt;
+        &lt;version&gt;5.1.0&lt;/version&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;
+</code></pre>
+<p>配置 Free Spire.Office for Java</p>
+<pre><code>&lt;dependencies&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;e-iceblue&lt;/groupId&gt;
+        &lt;artifactId&gt;spire.office.free&lt;/artifactId&gt;
+        &lt;version&gt;5.3.1&lt;/version&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;
+</code></pre>
+]]></content>
+      <categories>
+        <category>软件开发</category>
+      </categories>
+      <tags>
+        <tag>JAVA</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>springboot指定配置文件启动</title>
+    <url>/2023/12/03/springboot%E6%8C%87%E5%AE%9A%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%90%AF%E5%8A%A8/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="IDE开发工具启动"><a href="#IDE开发工具启动" class="headerlink" title="IDE开发工具启动"></a>IDE开发工具启动</h1><p>在JetBrains IDEA开发工具的配置</p>
+<p>1.启动类启动方式</p>
+<p>idea active profiles方式</p>
+<p>2.main方法启动方式</p>
+<p>在IDEA中的program arguments配置此项–spring.profiles.active=dev命令</p>
+<p>3.JVM启动方式</p>
+<p>在IDEA中的VM options配置此项-Dspring.profiles.active=dev命令</p>
+<h1 id="jar包启动"><a href="#jar包启动" class="headerlink" title="jar包启动"></a>jar包启动</h1><p>1.指定配置环境</p>
+<p>nohup java -jar -Dfile.encoding=utf-8 -Dspring.profiles.active=dev example.jar &gt;/dev/null 2&gt;&amp;1 &amp;<br>该启动时方式会去加载Jar包中resource目录下application-dev.yml或application-dev.properties文件。同时需要注意的是通IDEA的启动方式一样。</p>
+<p>2.指定配置文件<br>yml文件</p>
+<pre><code>nohup java -jar -Dfile.encoding=utf-8 -Dspring.config.location=classpath:/application-dev.yml example.jar &gt;/dev/null 2&gt;&amp;1 &amp;
+</code></pre>
+<p>properties文件</p>
+<pre><code>nohup java -jar -Dfile.encoding=utf-8 -Dspring.config.location=classpath:/application-dev.properties example.jar &gt;/dev/null 2&gt;&amp;1 &amp;
+</code></pre>
+<p>若配置文件在Jar包外面，-Dspring.config.location=后面不用classpath，直接使用配置文件的相对或绝对路径即可：例如 </p>
+<pre><code>-Dspring.config.location=app-dev.yml-Dspring.config.location=/usr/local/soft/config/app-dev.yml
+</code></pre>
+]]></content>
+      <categories>
+        <category>软件开发</category>
+      </categories>
+      <tags>
+        <tag>JAVA</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>新型电力系统行动方案（2021-2030年），国网Vs南网 （一）</title>
     <url>/2023/12/02/%E6%96%B0%E5%9E%8B%E7%94%B5%E5%8A%9B%E7%B3%BB%E7%BB%9F%E8%A1%8C%E5%8A%A8%E6%96%B9%E6%A1%88%EF%BC%882021-2030%E5%B9%B4%EF%BC%89%EF%BC%8C%E5%9B%BD%E7%BD%91Vs%E5%8D%97%E7%BD%91%20%EF%BC%88%E4%B8%80%EF%BC%89/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>今年，国家电网有限公司发布《构建以新能源为主体的新型电力系统行动方案（2021-2030 年）》、中国南方电网有限责任公司发布《建设新型电力系统行动方案（ 2021-2030 年 ）》。</p>
