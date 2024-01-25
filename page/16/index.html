@@ -154,6 +154,483 @@
     
     
     <article
+  id="post-Vue2 组件通信、组件间传值的几种方式"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/09/12/Vue2%20%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E3%80%81%E7%BB%84%E4%BB%B6%E9%97%B4%E4%BC%A0%E5%80%BC%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/"
+    >Vue2 组件通信、组件间传值的几种方式</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/09/12/Vue2%20%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E3%80%81%E7%BB%84%E4%BB%B6%E9%97%B4%E4%BC%A0%E5%80%BC%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/" class="article-date">
+  <time datetime="2023-09-12T03:22:33.000Z" itemprop="datePublished">2023-09-12</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="1-文件间的关系"><a href="#1-文件间的关系" class="headerlink" title="1. 文件间的关系"></a>1. 文件间的关系</h1><p>App 为根组件<br>Father 与 Brother 为兄弟组件，也同为 App 的子组件<br>Child 是 Father 的子组件，也是 App 的孙组件</p>
+<h1 id="2-父子之间传值"><a href="#2-父子之间传值" class="headerlink" title="2. 父子之间传值"></a>2. 父子之间传值</h1><h2 id="2-1-props，父传子"><a href="#2-1-props，父传子" class="headerlink" title="2.1 props，父传子"></a>2.1 props，父传子</h2><p>Father.vue 文件</p>
+<pre><code>// Father.vue 文件
+&lt;template&gt;
+  &lt;div id=&quot;father&quot;&gt;
+    &lt;Child :cMsg=&quot;msg&quot; /&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import Child from &quot;./Child.vue&quot;;
+
+export default &#123;
+  name: &quot;Father&quot;,
+  components: &#123;
+    Child,
+  &#125;,
+  data() &#123;
+    return &#123;
+      msg: &quot;我是 Father 组件中的数据&quot;,
+    &#125;;
+  &#125;,
+&#125;;
+&lt;/script&gt;
+</code></pre>
+<p>Child.vue 文件</p>
+<pre><code>// Child.vue 文件
+&lt;template&gt;
+  &lt;div id=&quot;child&quot;&gt;
+    &lt;span&gt; 我是 Child 组件，接收到的数据为：&#123;&#123; cMsg &#125;&#125; &lt;/span&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default &#123;
+  name: &quot;Child&quot;,
+  props: &#123;
+    cMsg: String,
+  &#125;,
+&#125;;
+&lt;/script&gt;
+</code></pre>
+<h2 id="2-2-props，子传父"><a href="#2-2-props，子传父" class="headerlink" title="2.2 props，子传父"></a>2.2 props，子传父</h2><p>Father.vue 文件</p>
+<pre><code>// Father.vue 文件
+&lt;template&gt;
+  &lt;div id=&quot;father&quot;&gt;
+    &lt;Child :cHander=&quot;fHander&quot; /&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import Child from &quot;./Child.vue&quot;;
+
+export default &#123;
+  name: &quot;Father&quot;,
+  components: &#123;
+    Child,
+  &#125;,
+  methods: &#123;
+    fHander(msg) &#123;
+      console.log(msg);
+    &#125;,
+  &#125;,
+&#125;;
+&lt;/script&gt;
+</code></pre>
+<p>Child.vue 文件</p>
+<pre><code>// Child.vue 文件
+&lt;template&gt;
+  &lt;div id=&quot;child&quot;&gt;
+    &lt;button @click=&quot;btn&quot;&gt;点击我向 Father 组件传入数据&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default &#123;
+  name: &quot;Child&quot;,
+  props: &#123;
+    cHander: Function,
+  &#125;,
+  methods: &#123;
+    btn() &#123;
+      this.cHander(&quot;666666&quot;);
+    &#125;,
+  &#125;,
+&#125;;
+&lt;/script&gt;
+</code></pre>
+<h2 id="2-3-自定义事件，子传父"><a href="#2-3-自定义事件，子传父" class="headerlink" title="2.3 自定义事件，子传父"></a>2.3 自定义事件，子传父</h2><p>Father.vue 文件</p>
+<pre><code>// Father.vue 文件
+&lt;template&gt;
+  &lt;div id=&quot;father&quot;&gt;
+    &lt;Child ref=&quot;child&quot; /&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import Child from &quot;./Child.vue&quot;;
+
+export default &#123;
+  name: &quot;Father&quot;,
+  components: &#123;
+    Child,
+  &#125;,
+  mounted() &#123;
+    this.$refs.child.$on(&quot;change&quot;, (msg) =&gt; &#123;
+      console.log(msg);
+    &#125;);
+  &#125;,
+&#125;;
+&lt;/script&gt;
+</code></pre>
+<p>Child.vue 文件</p>
+<pre><code>// Child.vue 文件
+&lt;template&gt;
+  &lt;div id=&quot;child&quot;&gt;
+    &lt;button @click=&quot;btn&quot;&gt;点击我向 Father 组件传入数据&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default &#123;
+  name: &quot;Child&quot;,
+  methods: &#123;
+    btn() &#123;
+      this.$emit(&quot;change&quot;, 666666);
+    &#125;,
+  &#125;,
+&#125;;
+&lt;/script&gt;
+</code></pre>
+<h1 id="3-兄弟之间传值"><a href="#3-兄弟之间传值" class="headerlink" title="3. 兄弟之间传值"></a>3. 兄弟之间传值</h1><h2 id="3-1-事件总线"><a href="#3-1-事件总线" class="headerlink" title="3.1 事件总线"></a>3.1 事件总线</h2><p>main.js 文件</p>
+<pre><code>// main.js 文件
+import Vue from &#39;vue&#39;
+import App from &#39;./App.vue&#39;
+
+Vue.config.productionTip = false
+
+new Vue(&#123;
+  render: h =&gt; h(App),
+  beforeCreate() &#123;
+    // 需要在全局添加一个属性
+    Vue.prototype.$bus = this
+  &#125;
+&#125;).$mount(&#39;#app&#39;)
+</code></pre>
+<p>Father.vue 文件</p>
+<pre><code>// Father.vue 文件
+&lt;template&gt;
+  &lt;div id=&quot;father&quot;&gt;
+    &lt;button @click=&quot;btn&quot;&gt;我要给 Brother 组件传数据&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default &#123;
+  name: &quot;Father&quot;,
+  methods: &#123;
+    btn() &#123;
+      this.$bus.$emit(&quot;change&quot;, 66666);
+    &#125;,
+  &#125;,
+&#125;;
+&lt;/script&gt;
+</code></pre>
+<p>Brother.vue 文件</p>
+<pre><code>// Brother.vue 文件
+&lt;template&gt;
+  &lt;div id=&quot;brother&quot;&gt;&lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default &#123;
+  name: &quot;Brother&quot;,
+  mounted() &#123;
+    this.$bus.$on(&quot;change&quot;, (msg) =&gt; &#123;
+      console.log(msg);
+    &#125;);
+  &#125;,
+&#125;;
+&lt;/script&gt;
+</code></pre>
+<h2 id="3-2-Vuex"><a href="#3-2-Vuex" class="headerlink" title="3.2 Vuex"></a>3.2 Vuex</h2><p>store/index.js 文件</p>
+<pre><code>// store/index.js 文件
+import Vue from &quot;vue&quot;
+import Vuex from &quot;vuex&quot;
+Vue.use(Vuex)
+
+export default new Vuex.Store(&#123;
+  state: &#123;
+    count: 1
+  &#125;,
+  mutations: &#123;
+    change(state, value) &#123;
+      state.count += value
+    &#125;
+  &#125;
+&#125;)
+</code></pre>
+<p>main.js 文件</p>
+<pre><code>// main.js 文件
+import Vue from &#39;vue&#39;
+import App from &#39;./App.vue&#39;
+import store from &quot;./store/index&quot;
+
+Vue.config.productionTip = false
+
+new Vue(&#123;
+  render: h =&gt; h(App),
+  // 需要挂载 store
+  store
+&#125;).$mount(&#39;#app&#39;)
+
+// Father.vue 文件
+&lt;template&gt;
+  &lt;div id=&quot;father&quot;&gt;
+    &lt;button @click=&quot;btn&quot;&gt;我要给 VueX 中的数据加一&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default &#123;
+  name: &quot;Father&quot;,
+  methods: &#123;
+    btn() &#123;
+      this.$store.commit(&quot;change&quot;, 1);
+    &#125;,
+  &#125;,
+&#125;;
+&lt;/script&gt;
+</code></pre>
+<p>Brother.vue 文件</p>
+<pre><code>// Brother.vue 文件
+&lt;template&gt;
+  &lt;div id=&quot;brother&quot;&gt;
+    &#123;&#123; $store.state.count &#125;&#125;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default &#123;
+  name: &quot;Brother&quot;,
+&#125;;
+&lt;/script&gt;
+</code></pre>
+<h2 id="3-3-发布订阅"><a href="#3-3-发布订阅" class="headerlink" title="3.3 发布订阅"></a>3.3 发布订阅</h2><p>需要安装 pubsub：npm i pubsub-js</p>
+<p>Father.vue</p>
+<pre><code>// Father.vue 文件
+&lt;template&gt;
+  &lt;div id=&quot;father&quot;&gt;
+    &lt;button @click=&quot;btn&quot;&gt;我要向 Brother 组件传递数据&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import pubsub from &quot;pubsub-js&quot;;
+
+export default &#123;
+  name: &quot;Father&quot;,
+  methods: &#123;
+    btn() &#123;
+      pubsub.publish(&quot;change&quot;, 666);
+    &#125;,
+  &#125;,
+&#125;;
+&lt;/script&gt;
+</code></pre>
+<p>Brother.vue 文件</p>
+<pre><code>// Brother.vue 文件
+&lt;template&gt;
+  &lt;div id=&quot;brother&quot;&gt;&lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import pubsub from &quot;pubsub-js&quot;;
+
+export default &#123;
+  name: &quot;Brother&quot;,
+  mounted() &#123;
+    pubsub.subscribe(&quot;change&quot;, (msgName, msg) =&gt; &#123;
+      console.log(msgName, msg);
+    &#125;);
+  &#125;,
+&#125;;
+&lt;/script&gt;
+</code></pre>
+<h1 id="4-祖孙之间传值"><a href="#4-祖孙之间传值" class="headerlink" title="4. 祖孙之间传值"></a>4. 祖孙之间传值</h1><h2 id="4-1-provide与inject"><a href="#4-1-provide与inject" class="headerlink" title="4.1 provide与inject"></a>4.1 provide与inject</h2><p>App.vue 文件</p>
+<pre><code>// App.vue 文件
+&lt;template&gt;
+  &lt;div id=&quot;app&quot;&gt;
+    &lt;Father /&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import Father from &quot;./components/Father.vue&quot;;
+
+export default &#123;
+  name: &quot;App&quot;,
+  components: &#123;
+    Father,
+  &#125;,
+  provide: &#123;
+    msg: &quot;要给 Child 传数据&quot;,
+  &#125;,
+&#125;;
+&lt;/script&gt;
+</code></pre>
+<p>Father.vue 文件</p>
+<pre><code>// Father.vue 文件
+&lt;template&gt;
+  &lt;div id=&quot;father&quot;&gt;
+    &lt;Child /&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import Child from &quot;./Child.vue&quot;;
+
+export default &#123;
+  name: &quot;Father&quot;,
+  components: &#123;
+    Child,
+  &#125;,
+&#125;;
+&lt;/script&gt;
+</code></pre>
+<p>Child.vue 文件</p>
+<pre><code>// Child.vue 文件
+&lt;template&gt;
+  &lt;div id=&quot;child&quot;&gt;
+    &#123;&#123; msg &#125;&#125;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default &#123;
+  name: &quot;Child&quot;,
+  inject: [&quot;msg&quot;],
+&#125;;
+&lt;/script&gt;
+</code></pre>
+<p>————————————————<br>版权声明：本文为CSDN博主「codeCat!」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_60547084/article/details/124408513">https://blog.csdn.net/weixin_60547084/article/details/124408513</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-Vue2传值方式详解11"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/09/11/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A311/"
+    >Vue2传值方式详解11-promise传参</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/09/11/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A311/" class="article-date">
+  <time datetime="2023-09-11T06:28:42.000Z" itemprop="datePublished">2023-09-11</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>promise 中 resolve 如何传递多个参数</p>
+<pre><code>//类似与这样使用，但实际上后面两个参数无法获取
+promise = new Promise((resolve,reject)=&gt;&#123;
+    let a = 1
+    let b = 2
+    let c = 3
+    resolve(a,b,c) 
+&#125;)
+promise.then((a,b,c)=&gt;&#123;
+    console.log(a,b,c)
+&#125;)
+</code></pre>
+<p>resolve() 只能接受并处理一个参数，多余的参数会被忽略掉。<br>如果想多个用数组，或者对象方式。。</p>
+<p>数组</p>
+<pre><code>promise = new Promise((resolve,reject)=&gt;&#123;
+    resolve([1,2,3]) 
+&#125;)
+promise.then((arr)=&gt;&#123;
+    console.log(arr[0],arr[1],arr[2])
+&#125;)
+</code></pre>
+<p>对象</p>
+<pre><code>promise = new Promise((resolve,reject)=&gt;&#123;
+    resolve(&#123;a:1,b:2,c:3&#125;) 
+&#125;)
+promise.then(obj=&gt;&#123;
+    console.log(obj.a,obj.b,obj.c)
+&#125;)
+</code></pre>
+<p>————————————————<br>版权声明：本文为CSDN博主「小毕学习代码」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_70703397/article/details/132201160">https://blog.csdn.net/qq_70703397/article/details/132201160</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-Vue2传值方式详解10"
   class="article article-type-post"
   itemscope
@@ -540,239 +1017,6 @@ sessionStorage.clear();
  storage.get(key, def)
 //sessionStorage
  storage.session.set(key, val)
-</code></pre>
-<p>————————————————<br>版权声明：本文为CSDN博主「小毕学习代码」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_70703397/article/details/132201160">https://blog.csdn.net/qq_70703397/article/details/132201160</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Vue2传值方式详解06"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/09/06/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A306/"
-    >Vue2传值方式详解06-$parent</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/09/06/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A306/" class="article-date">
-  <time datetime="2023-09-06T05:13:13.000Z" itemprop="datePublished">2023-09-06</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>通过parent可以获父组件实例 ，然 后通过这个实例就可以访问父组件的属 性和方法 ，它还有一个兄弟parent可以获父组件实例，然后通过这个实例就可以访问父组件的属性和方法，它还有一个兄弟parent可以获父组件实例，然后通过这个实例就可以访问父组件的属性和方法，它还有一个兄弟root，可以获取根组件实例。</p>
-<p>代码示例：</p>
-<pre><code>// 获父组件的数据
-this.$parent.foo
- 
-// 写入父组件的数据
-this.$parent.foo = 2
- 
-// 访问父组件的计算属性
-this.$parent.bar
- 
-// 调用父组件的方法
-this.$parent.baz()
- 
-//在子组件传给父组件例子中，可以使用this.$parent.getNum(100)传值给父组件。
-</code></pre>
-<p>————————————————<br>版权声明：本文为CSDN博主「小毕学习代码」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_70703397/article/details/132201160">https://blog.csdn.net/qq_70703397/article/details/132201160</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Vue2传值方式详解05"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/09/05/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A305/"
-    >Vue2传值方式详解05-Vuex通信</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/09/05/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A305/" class="article-date">
-  <time datetime="2023-09-05T04:12:12.000Z" itemprop="datePublished">2023-09-05</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>组件通过 dispatch 到 actions，actions 是异步操作，再 actions中通过 commit 到 mutations，mutations 再通过逻辑操作改变 state，从而同步到组件，更新其数据状态</p>
-<p>代码示例：</p>
-<p>父组件</p>
-<pre><code>//父组件
-template&gt;
-  &lt;div id=&quot;app&quot;&gt;
-    &lt;ChildA/&gt;
-    &lt;ChildB/&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-&lt;script&gt;
-  import ChildA from &#39;./ChildA&#39; // 导入A组件
-  import ChildB from &#39;./ChildB&#39; // 导入B组件
-  export default &#123;
-    components: &#123;ChildA, ChildB&#125; // 注册组件
-  &#125;
-&lt;/script&gt;
-</code></pre>
-<p>子组件A</p>
-<pre><code>//子组件A
-&lt;template&gt;
- &lt;div id=&quot;childA&quot;&gt;
-   &lt;h1&gt;我是A组件&lt;/h1&gt;
-   &lt;button @click=&quot;transform&quot;&gt;点我让B组件接收到数据&lt;/button&gt;
-   &lt;p&gt;因为点了B，所以信息发生了变化：&#123;&#123;BMessage&#125;&#125;&lt;/p&gt;
- &lt;/div&gt;
-&lt;/template&gt;
-&lt;script&gt;
- export default &#123;
-   data() &#123;
-     return &#123;
-       AMessage: &#39;Hello，B组件，我是A组件&#39;
-     &#125;
-   &#125;,
-   computed: &#123;
-     BMessage() &#123;
-       // 这里存储从store里获取的B组件的数据
-       return this.$store.state.BMsg
-     &#125;
-   &#125;,
-   methods: &#123;
-     transform() &#123;
-       // 触发receiveAMsg，将A组件的数据存放到store里去
-       this.$store.commit(&#39;receiveAMsg&#39;, &#123;
-         AMsg: this.AMessage
-       &#125;)
-     &#125;
-   &#125;
- &#125;
-&lt;/script&gt;
-</code></pre>
-<p>子组件B</p>
-<pre><code>//子组件B
-&lt;template&gt;
- &lt;div id=&quot;childB&quot;&gt;
-   &lt;h1&gt;我是B组件&lt;/h1&gt;
-   &lt;button @click=&quot;transform&quot;&gt;点我让A组件接收到数据&lt;/button&gt;
-   &lt;p&gt;点了A，我的信息发生了变化：&#123;&#123;AMessage&#125;&#125;&lt;/p&gt;
- &lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
- export default &#123;
-   data() &#123;
-     return &#123;
-       BMessage: &#39;Hello，A组件，我是B组件&#39;
-     &#125;
-   &#125;,
-   computed: &#123;
-     AMessage() &#123;
-       // 这里存储从store里获取的A组件的数据
-       return this.$store.state.AMsg
-     &#125;
-   &#125;,
-   methods: &#123;
-     transform() &#123;
-       // 触发receiveBMsg，将B组件的数据存放到store里去
-       this.$store.commit(&#39;receiveBMsg&#39;, &#123;
-         BMsg: this.BMessage
-       &#125;)
-     &#125;
-   &#125;
- &#125;
-&lt;/script&gt;
-</code></pre>
-<p>vuex</p>
-<pre><code>//vuex
-import Vue from &#39;vue&#39;
- import Vuex from &#39;vuex&#39;
- Vue.use(Vuex)
- const state = &#123;
-   AMsg: &#39;&#39;,
-   BMsg: &#39;&#39;
- &#125;
- 
- const mutations = &#123;
-   receiveAMsg(state, payload) &#123;
-     // 将A组件的数据存放于state
-     state.AMsg = payload.AMsg
-   &#125;,
-   receiveBMsg(state, payload) &#123;
-     // 将B组件的数据存放于state
-     state.BMsg = payload.BMsg
-   &#125;
- &#125;
- 
- export default new Vuex.Store(&#123;
-   state,
-   mutations
- &#125;)
 </code></pre>
 <p>————————————————<br>版权声明：本文为CSDN博主「小毕学习代码」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_70703397/article/details/132201160">https://blog.csdn.net/qq_70703397/article/details/132201160</a></p>
  

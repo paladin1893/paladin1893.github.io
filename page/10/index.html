@@ -154,6 +154,161 @@
     
     
     <article
+  id="post-AttributeError module ‘backend_interagg‘ has no attribute ‘FigureCanvas‘的解决办法"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/10/18/AttributeError%20module%20%E2%80%98backend_interagg%E2%80%98%20has%20no%20attribute%20%E2%80%98FigureCanvas%E2%80%98%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/"
+    >AttributeError module ‘backend_interagg‘ has no attribute ‘FigureCanvas‘的解决办法</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/10/18/AttributeError%20module%20%E2%80%98backend_interagg%E2%80%98%20has%20no%20attribute%20%E2%80%98FigureCanvas%E2%80%98%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" class="article-date">
+  <time datetime="2023-10-18T02:18:00.000Z" itemprop="datePublished">2023-10-18</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h1><p>一开始我还以为是我的matoltlib和我的python版本不匹配后面发现真正原因其实是matplotlib 的 backend的默认渲染器是agg，agg是一个没有图形显示界面的终端，如果要图像正常显示，则需要切换为图形界面显示的终端TkAgg</p>
+<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>修改 backend 配置：</p>
+<pre><code>matplotlib.use(‘TkAgg’)
+</code></pre>
+<h1 id="原代码和修改后代码对比"><a href="#原代码和修改后代码对比" class="headerlink" title="原代码和修改后代码对比"></a>原代码和修改后代码对比</h1><h2 id="原代码："><a href="#原代码：" class="headerlink" title="原代码："></a>原代码：</h2><pre><code>import numpy as np
+
+import matplotlib.pyplot as plt
+
+x=np.linspace(0.0001,3,100)
+y=x**x
+plt.plot(x,y,&#39;r-&#39;,linewidth=3)
+plt.show()`
+</code></pre>
+<p>错误提示：</p>
+<pre><code>AttributeError: module &#39;backend_interagg&#39; has no attribute &#39;FigureCanvas&#39;. Did you mean: &#39;FigureCanvasAgg&#39;?
+</code></pre>
+<h2 id="修改后代码："><a href="#修改后代码：" class="headerlink" title="修改后代码："></a>修改后代码：</h2><pre><code>import numpy as np
+import matplotlib
+matplotlib.use(&#39;TkAgg&#39;)
+import matplotlib.pyplot as plt
+
+x=np.linspace(0.0001,3,100)
+y=x**x
+plt.plot(x,y,&#39;r-&#39;,linewidth=3)
+plt.show()
+</code></pre>
+<p>————————————————<br>版权声明：本文为CSDN博主「倚剑策马笑西风」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_51763547/article/details/126918669">https://blog.csdn.net/qq_51763547/article/details/126918669</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-“matplotlib.use(‘agg‘)“语句的作用机理"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/10/17/%E2%80%9Cmatplotlib.use(%E2%80%98agg%E2%80%98)%E2%80%9C%E8%AF%AD%E5%8F%A5%E7%9A%84%E4%BD%9C%E7%94%A8%E6%9C%BA%E7%90%86/"
+    >“matplotlib.use(‘agg‘)“语句的作用机理</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/10/17/%E2%80%9Cmatplotlib.use(%E2%80%98agg%E2%80%98)%E2%80%9C%E8%AF%AD%E5%8F%A5%E7%9A%84%E4%BD%9C%E7%94%A8%E6%9C%BA%E7%90%86/" class="article-date">
+  <time datetime="2023-10-17T02:17:00.000Z" itemprop="datePublished">2023-10-17</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><p>在很多使用 matplotlib 库的代码中出现了 matplotlib.use(‘agg’) 的语句。有些博客认为1，在导入matplotlib库后，且在matplotlib.pyplot库被导入前加“matplotlib.use(‘agg’)”语句的作用是在PyCharm中不显示绘图。例如1：</p>
+<pre><code>import numpy as np
+import matplotlib
+matplotlib.use(&#39;agg&#39;) 
+import matplotlib.pyplot as plt # matplotlib.use(&#39;agg&#39;)必须在本句执行前运行
+x = np.arange(0, 2*np.pi, 0.001) 
+y = np.sin(2 * np.pi * x) 
+plt.clf() 
+plt.plot(x,y) 
+l = plt.axhline(linewidth=1, color=&#39;black&#39;) 
+l = plt.axvline(linewidth=1, color=&#39;black&#39;) 
+plt.show()
+</code></pre>
+<p>在Pycharm里面运行就不会显示图。</p>
+<h1 id="原理分析"><a href="#原理分析" class="headerlink" title="原理分析"></a>原理分析</h1><p>实际上，这样的理解是表面的，这个语句确实会使得在Pycharm运行时无法显示图，但是必须注意，这是其原理导致的，而这个语句并不是设置Pycharm不显示图的语句，其实前述的代码中，删掉 plt.show() ，也不会显示图片。</p>
+<p>matplotlib的use()命令其实是用来配置matplotlib的backend （后端）的命令。所谓后端，就是一个渲染器，用于将前端代码渲染成我们想要的图像2。后端详细的解释可以参考博客： matplotlib中什么是后端 。</p>
+<p>对于用户接口，典型的渲染器是Agg，它是使用Anti-Grain Geometry C++库来产生光栅(像素)图。</p>
+<p>那么为什么这样设置Pycharm会导致其不显示图片呢？</p>
+<p>可以查看一下目前的后端设置。方法是执行下面代码。</p>
+<pre><code>import matplotlib
+matplotlib.get_backend()
+</code></pre>
+<p>在Pycharm的Terminal 里面输入该项命令，可以看到，Pycharm运行的时候，默认的后端是Qt5Agg。</p>
+<p>实际上，Agg 渲染器是非交互式的后端，没有GUI界面，所以不显示图片，它是用来生成图像文件。Qt5Agg 是意思是Agg渲染器输出到Qt5绘图面板，它是交互式的后端，拥有在屏幕上展示的能力3。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-Python的zipfile入门教程"
   class="article article-type-post"
   itemscope
@@ -1258,208 +1413,6 @@ for file in glob.glob(&quot;*.txt&quot;):
 <p>上面的代码会列出所有txt文件，并依次删除它们。删除每个文件时，代码会输出”File removed: file.txt”，其中file.txt是被删除的文件名。</p>
 <p>五、总结</p>
 <p>本文详细介绍了如何在Python中判断文件是否存在并删除。从多个方面介绍了如何删除文件和目录，以及如何删除特定类型的文件。为Python开发者提供了解决类似问题的思路和代码示例，希望本文对您有所帮助。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Python中查找文件是否存在"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/10/12/Python%E4%B8%AD%E6%9F%A5%E6%89%BE%E6%96%87%E4%BB%B6%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8/"
-    >Python中查找文件是否存在</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/10/12/Python%E4%B8%AD%E6%9F%A5%E6%89%BE%E6%96%87%E4%BB%B6%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8/" class="article-date">
-  <time datetime="2023-10-12T02:12:00.000Z" itemprop="datePublished">2023-10-12</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://www.python100.com/html/14E0N1LV1S5V.html">https://www.python100.com/html/14E0N1LV1S5V.html</a></p>
-<p>在Python编程中，我们经常需要查找文件是否存在。这个功能在文件处理、数据分析、系统管理等各个领域都非常有用。在本文中，我们将以Python作为中心，详细介绍如何使用Python来查找文件是否存在。</p>
-<p>一、使用os模块的方法</p>
-<p>Python的标准库中的os模块提供了一些方法来操作文件和目录。其中，os.path模块提供了一些判断文件或目录是否存在的函数。</p>
-<pre><code>import os
-
-# 检查文件是否存在
-def file_exists(path):
-    return os.path.exists(path)
-
-# 检查目录是否存在
-def directory_exists(path):
-    return os.path.isdir(path)
-</code></pre>
-<p>使用os.path.exists函数可以判断文件是否存在，返回值为True或False。如果文件存在，则返回True；如果文件不存在，则返回False。</p>
-<p>使用os.path.isdir函数可以判断目录是否存在，返回值同样为True或False。如果目录存在，则返回True；如果目录不存在，则返回False。</p>
-<p>二、使用glob模块的方法</p>
-<p>除了os模块，Python还提供了一个强大的文件和目录操作模块glob。glob模块可以使用通配符来查找文件。</p>
-<pre><code>import glob
-
-# 查找指定目录下的所有文件
-def find_files(directory, pattern):
-    return glob.glob(os.path.join(directory, pattern))
-
-# 判断文件是否存在
-def file_exists(path):
-    return len(find_files(os.path.dirname(path), os.path.basename(path))) &gt; 0
-</code></pre>
-<p>使用glob.glob函数可以根据通配符模式查找符合条件的文件。在find_files函数中，我们使用os.path.join函数将目录和文件名拼接在一起，然后使用glob.glob函数查找匹配的文件。</p>
-<p>在file_exists函数中，我们调用find_files函数查找指定文件并返回匹配到的文件列表，然后用len函数来判断文件列表的长度。如果长度大于0，则表示文件存在；如果长度等于0，则表示文件不存在。</p>
-<p>三、使用pathlib模块的方法</p>
-<p>Python 3.4及以上版本引入的pathlib模块提供了一种更简洁的方式来查找文件。</p>
-<pre><code>from pathlib import Path
-
-# 检查文件是否存在
-def file_exists(path):
-    return Path(path).is_file()
-
-# 检查目录是否存在
-def directory_exists(path):
-    return Path(path).is_dir()
-</code></pre>
-<p>在pathlib模块中，我们可以使用Path类的is_file方法来判断文件是否存在，使用is_dir方法来判断目录是否存在。这些方法返回值同样为True或False。</p>
-<p>四、其他注意事项<br>在使用Python查找文件是否存在时，还有一些注意事项需要注意：</p>
-<ol>
-<li><p>文件路径的表示：在使用文件路径时，我们需要注意使用不同的表示方式，如绝对路径、相对路径、转义字符等。</p>
-</li>
-<li><p>文件权限的问题：有时候文件存在，但是由于权限问题，我们无法操作或读取该文件。</p>
-</li>
-<li><p>文件名和文件后缀：有时候文件名或文件后缀的大小写问题可能导致文件找不到。</p>
-</li>
-</ol>
-<p>总结来说，使用Python查找文件是否存在需要借助os模块、glob模块或pathlib模块，根据具体的需求选择合适的方法。同时，在使用过程中还需注意文件路径、文件权限和文件名后缀等问题。</p>
-<p>希望本文对你理解Python中查找文件是否存在有所帮助！</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-pyqt界面美化笔记"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/10/11/pyqt%E7%95%8C%E9%9D%A2%E7%BE%8E%E5%8C%96%E7%AC%94%E8%AE%B0/"
-    >pyqt界面美化笔记</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/10/11/pyqt%E7%95%8C%E9%9D%A2%E7%BE%8E%E5%8C%96%E7%AC%94%E8%AE%B0/" class="article-date">
-  <time datetime="2023-10-11T02:11:00.000Z" itemprop="datePublished">2023-10-11</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1VY4y1p7it/?spm_id_from=333.999.0.0">https://www.bilibili.com/video/BV1VY4y1p7it/?spm_id_from=333.999.0.0</a></p>
-<p>1、窗体用label贴图或配色，做背景</p>
-<pre><code>background-color: rgba(16,30,41,240);
-border-radius:10px;
-</code></pre>
-<p>2、lineedit配色及调样式</p>
-<pre><code>background-color: rgba(0, 0, 0,0);
-border:1px solid rgba(0,0,0,0);
-border-bottom-color:rgba(255,255,255,200);
-padding-bottom:7px;
-</code></pre>
-<p>3、pushbutton配色及调样式</p>
-<pre><code>QPushButton#pushButton&#123;
-background-color:rgba(2,65,118,255);
-color:rgba(255,255,255,200);
-border-radius:5px;
-&#125;
-QPushButton#pushButton:hover&#123;
-background-color:rgba(2,65,118,150);
-color:rgba(255,255,255,200);
-border-radius:5px;
-&#125;
-QPushButton#pushButton:pressed&#123;
-padding-left:5px;
-padding-top:5px;
-background-color:rgba(2,65,118,100);
-&#125;
-</code></pre>
-<p>4、隐藏框：</p>
-<pre><code>MainWindow.setWindowFlags(QtCore.Qt.FramelessWindowHint)
-MainWindow.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-</code></pre>
-<p>5、main函数</p>
-<pre><code>import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow
-import login
-if __name__ == &#39;__main__&#39;:
-    app = QApplication(sys.argv)
-    win = QMainWindow()
-    ui = login.Ui_MainWindow()
-    ui.setupUi(win)
-    win.show()
-    sys.exit(app.exec_())
-</code></pre>
  
       <!-- reward -->
       

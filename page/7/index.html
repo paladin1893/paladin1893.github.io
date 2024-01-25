@@ -154,6 +154,244 @@
     
     
     <article
+  id="post-CentOS最小安装"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/11/05/CentOS%E6%9C%80%E5%B0%8F%E5%AE%89%E8%A3%85/"
+    >CentOS最小安装</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/11/05/CentOS%E6%9C%80%E5%B0%8F%E5%AE%89%E8%A3%85/" class="article-date">
+  <time datetime="2023-11-05T13:28:00.000Z" itemprop="datePublished">2023-11-05</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>1、将安装光盘插入服务器，开机时会读取系统安装程序，选择Install CentOS 7</p>
+<p>2、安装过程是图形界面,可以选择熟悉的语言执行安装程序</p>
+<p>3、选择SECURITY POLICY(安全策略)将其关闭</p>
+<p>4、把KDUMP(内核崩溃转储机制)也进行关闭</p>
+<p>5、接着配置网络,服务器的网线是已经连接好的</p>
+<p>打开以太网连接</p>
+<p>将IPv6设置 忽略</p>
+<p>配置好地址,搜索域是这台主机的网络地址.</p>
+<p>主机名也是网络标识,修改一下.</p>
+<p>可以打开新的TTY终端,进行网络的连通性测试.</p>
+<p>6、硬盘分区</p>
+<p>boot引导到分区根据系统进行配置,swap分区根据内存大小而定.</p>
+<p>7、时间配置</p>
+<p>选择时区,可以将网络时间打开.</p>
+<p>8、选择所安装的系统类型</p>
+<p>选择最小安装,将一些开发工具勾选.</p>
+<p>9、开始安装</p>
+<p>安装前配置好了,选择开始安装.</p>
+<p>10、给ROOT配置密码</p>
+<p>11、安装完成</p>
+<p>安装成功,重启进入系统.</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-Centos7使用rpm离线安装PostgreSQL"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/11/04/Centos7%E4%BD%BF%E7%94%A8rpm%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85PostgreSQL/"
+    >Centos7使用rpm离线安装PostgreSQL</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/11/04/Centos7%E4%BD%BF%E7%94%A8rpm%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85PostgreSQL/" class="article-date">
+  <time datetime="2023-11-04T13:28:00.000Z" itemprop="datePublished">2023-11-04</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><p>使用一台能够联网的centos电脑</p>
+<p>安装postgresql源</p>
+<pre><code>yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+</code></pre>
+<p>安装 yumdownloader工具</p>
+<pre><code>yum install yum-utils -y
+</code></pre>
+<p>Yumdownloader是一款简单，但是却十分有用的命令行工具，<em>它可以一次性下载任何 RPM 软件包及其所有依赖包</em>。</p>
+<h1 id="PostgreSQL"><a href="#PostgreSQL" class="headerlink" title="PostgreSQL"></a>PostgreSQL</h1><h2 id="下载离线包"><a href="#下载离线包" class="headerlink" title="下载离线包"></a>下载离线包</h2><p>postgresql14-server</p>
+<pre><code>yumdownloader --resolve postgresql14-server
+</code></pre>
+<p>postgresql14</p>
+<pre><code>yumdownloader --resolve postgresql14
+</code></pre>
+<p>这里我们需要的是 postgresql14-server的相关依赖，可看到postgresql14-server的依赖包含了postgresql14客户端的依赖</p>
+<h2 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h2><pre><code>rpm -ivh libicu-50.2-4.el7_7.x86_64.rpm postgresql14-libs-14.10-1PGDG.rhel7.x86_64.rpm postgresql14-14.10-1PGDG.rhel7.x86_64.rpm postgresql14-server-14.10-1PGDG.rhel7.x86_64.rpm 
+</code></pre>
+<h2 id="配置数据库"><a href="#配置数据库" class="headerlink" title="配置数据库"></a>配置数据库</h2><p>默认初始化</p>
+<pre><code># 默认初始化数据库
+sudo /usr/pgsql-14/bin/postgresql-14-setup initdb
+</code></pre>
+<p>开机启动postgresql数据库</p>
+<pre><code>sudo systemctl enable postgresql-14
+</code></pre>
+<p>启动postgresql数据库服务</p>
+<pre><code>sudo systemctl start postgresql-14
+</code></pre>
+<p>启动成功后，使用lsof -i:5432 可以看见相关进程</p>
+<p>修改初始化数据路径</p>
+<pre><code>mkdir -p /home/pg14/data
+chown -R postgres:postgres /home/pg14/data
+</code></pre>
+<p>这里使用systemctl ：</p>
+<pre><code>systemctl edit postgresql-14.service
+</code></pre>
+<p>在新空白页覆盖原服务配置</p>
+<pre><code>[Service]
+Environment=PGDATA=/home/pg14/data
+</code></pre>
+<p>这个文件默认放在 /etc/systemd/system/postgresql-14.service.d 目录下。<br>里面会有 override.conf 文件。</p>
+<p>停止之前的数据库</p>
+<pre><code>systemctl stop postgresql-14
+</code></pre>
+<p>启动数据库</p>
+<pre><code>sudo /usr/pgsql-14/bin/postgresql-14-setup initdb
+</code></pre>
+<p>查看日志</p>
+<pre><code>more /var/lib/pgsql/14/initdb.log
+</code></pre>
+<p>修改数据位置后，原先默认的配置文件就失效了，配置文件在新的数据文件夹下，这里是/home/pg14/data</p>
+<p>修改默认用户密码</p>
+<pre><code>#登陆postgresql
+sudo -u postgres psql
+
+#修改i登陆postgresql密码
+alter user postgres with password &#39;postgres&#39;;
+
+#查看数据库存储地址
+show data_directory;
+</code></pre>
+<p>开启远程访问</p>
+<p>修改数据文件目录的postgresql.conf配置文件，监听全部IP命令</p>
+<pre><code>vi /home/pg14/data/postgresql.conf
+listen_addresses = &#39;*&#39; 
+</code></pre>
+<p>允许远程访问，修改pg_hba.conf</p>
+<pre><code>vi /home/pg14/data/pg_hba.conf
+
+# TYPE  DATABASE        USER            ADDRESS                 METHOD
+
+# &quot;local&quot; is for Unix domain socket connections only
+local   all             all                                     trust
+# IPv4 local connections:
+host    all             all             127.0.0.1/32            trust
+host    all             all             0.0.0.0/0                 md5
+# IPv6 local connections:
+host    all             all             ::1/128                 trust
+# Allow replication connections from localhost, by a user with the
+# replication privilege.
+local   replication     all                                     trust
+host    replication     all             127.0.0.1/32            trust
+host    replication     all             ::1/128                 trust
+</code></pre>
+<p>重启启动postgresql数据库服务</p>
+<pre><code>sudo systemctl restart postgresql-14
+</code></pre>
+<h1 id="安裝PostGIS"><a href="#安裝PostGIS" class="headerlink" title="安裝PostGIS"></a>安裝PostGIS</h1><h2 id="下载依赖"><a href="#下载依赖" class="headerlink" title="下载依赖"></a>下载依赖</h2><p>EPEL存储库中有许多依赖项</p>
+<pre><code>yumdownloader --resolve epel-release
+</code></pre>
+<p>下载指定版本的postgis，这里我选用pg14的3.3版本</p>
+<pre><code>yumdownloader --resolve postgis33_14
+</code></pre>
+<p>下载的依赖很多</p>
+<h2 id="安装依赖-1"><a href="#安装依赖-1" class="headerlink" title="安装依赖"></a>安装依赖</h2><pre><code># 安装epel
+rpm -ivh epel-release-7-11.noarch.rpm
+
+# 安装当前目录下的所有rpm包（推荐）
+rpm -Uvh  *.rpm
+
+# 强制安装当前文件夹中所有的rpm包，忽略依赖去安装（这是上一步的备选方案，不推荐）
+rpm -Uvh  *.rpm  --nodeps  --force 
+</code></pre>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><pre><code>-- 创建数据库
+CREATE DATABASE db_test;
+-- 切换数据库
+\c db_test;
+-- 创建postgis依赖
+CREATE EXTENSION postgis;
+</code></pre>
+<p>创建PostGIS扩展成功后、查看数据库插件</p>
+<pre><code>\dx
+</code></pre>
+<p>本文来自互联网用户投稿，该文观点仅代表作者本人，不代表本站立场。本站仅提供信息存储空间服务，不拥有所有权，不承担相关法律责任。如若转载，请注明出处：<a target="_blank" rel="noopener" href="http://www.bryh.cn/a/16064.html">http://www.bryh.cn/a/16064.html</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostGIS/" rel="tag">PostGIS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-Centos7下安装Mysql8"
   class="article article-type-post"
   itemscope
@@ -482,134 +720,6 @@ systemctl reload iptables
 <p>2.编码方式<br>编码方式是指将信息转换成数字或字符码的方式。编码是为了使信息能够被网络传输，使发送方和接收方能够正确地识别和处理信息。</p>
 <p>3.传输时间<br>传输时间是指网络上传输数据的时间。它可以是实时传输，也可以是延迟传输。网络上传输数据的传输时间取决于网络带宽、网络负载和网络延迟等因素。</p>
 <p>总结<br>终端通讯规约类型是一种用来控制和管理计算机网络上的数据传输的标准。它定义了发送和接收方如何在网络上传输数据，以及传输的数据格式、编码和传输时间。终端通讯规约类型包括信息格式、编码方式和传输时间等关键词，它们可以帮助网络管理员更容易地管理网络，并且可以帮助网络用户更容易地使用网络。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%80%9A%E4%BF%A1/" rel="tag">通信</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-通信规约类型"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/10/30/%E9%80%9A%E4%BF%A1%E8%A7%84%E7%BA%A6%E7%B1%BB%E5%9E%8B/"
-    >通信规约类型</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/10/30/%E9%80%9A%E4%BF%A1%E8%A7%84%E7%BA%A6%E7%B1%BB%E5%9E%8B/" class="article-date">
-  <time datetime="2023-10-30T02:28:00.000Z" itemprop="datePublished">2023-10-30</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://www.techphant.cn/blog/29755.html">https://www.techphant.cn/blog/29755.html</a><br>通信规约有哪几种？<br>作者： 技象物联网 / 行业百科 / 通信系统, 通讯规约 / 2023年9月16日 16:06:28</p>
-<p>随着科技的发展，人们对通信技术的需求越来越高，而为了保证通信的顺利进行，必须要有一套完善的通信规约。通信规约是指在通信过程中，双方必须遵守的规则，以确保通信的顺利进行。本文将为您介绍通信规约有哪几种，以及它们之间的区别。</p>
-<h1 id="OSI参考模型"><a href="#OSI参考模型" class="headerlink" title="OSI参考模型"></a>OSI参考模型</h1><p>OSI(Open System Interconnection)参考模型是由国际标准化组织(ISO)提出的一种通用的通信模型。它将通信过程分为7层，分别是物理层、数据链路层、网络层、传输层、会话层、表示层和应用层。每一层都有自己的功能，它们之间的协调可以保证数据在不同的网络系统之间传输的顺利进行。</p>
-<p>物理层<br>物理层是OSI参考模型中的第一层，它主要负责定义通信系统的物理连接，包括电缆、接口设备和电缆连接等。它还负责确定每个节点之间的数据传输方式，以及控制信号的传输速率。</p>
-<p>数据链路层<br>数据链路层是OSI参考模型中的第二层，它主要负责检测和纠正传输中出现的错误，以及确定数据传输的最佳路径。它还负责定义数据帧的格式，以及控制帧的传输顺序。</p>
-<p>网络层<br>网络层是OSI参考模型中的第三层，它主要负责确定数据在网络中的传输路径，以及确定数据包的传输顺序。它还负责确定网络中的数据传输协议，以及管理网络中的路由器和网关等。</p>
-<p>传输层<br>传输层是OSI参考模型中的第四层，它主要负责确保数据在网络中的可靠传输，以及确定数据传输的最佳路径。它还负责确定发送端和接收端之间的连接，以及确定数据传输的协议。</p>
-<p>会话层<br>会话层是OSI参考模型中的第五层，它主要负责管理发送端和接收端之间的会话，以及确定会话的开始和结束。它还负责确定会话的控制信息，以及确定会话中的数据传输方式。</p>
-<p>表示层<br>表示层是OSI参考模型中的第六层，它主要负责将数据转换成可以在网络中传输的格式，以及将传输的数据转换成可读的格式。它还负责确定数据的编码方式，以及将数据进行压缩等。</p>
-<p>应用层<br>应用层是OSI参考模型中的第七层，它主要负责实现用户和网络之间的交互，以及提供网络应用程序所需的服务。它还负责确定应用程序的协议，以及确定应用程序之间的数据传输方式。</p>
-<h1 id="TCP-IP参考模型"><a href="#TCP-IP参考模型" class="headerlink" title="TCP/IP参考模型"></a>TCP/IP参考模型</h1><p>TCP/IP参考模型是由美国国防部提出的一种通用的通信模型。它将通信过程分为4层，分别是应用层、传输层、网络层和数据链路层。每一层都有自己的功能，它们之间的协调可以保证数据在不同的网络系统之间传输的顺利进行。</p>
-<p>应用层<br>应用层是TCP/IP参考模型中的第一层，它主要负责实现用户和网络之间的交互，以及提供网络应用程序所需的服务。它还负责确定应用程序的协议，以及确定应用程序之间的数据传输方式。</p>
-<p>传输层<br>传输层是TCP/IP参考模型中的第二层，它主要负责确保数据在网络中的可靠传输，以及确定数据传输的最佳路径。它还负责确定发送端和接收端之间的连接，以及确定数据传输的协议。</p>
-<p>网络层<br>网络层是TCP/IP参考模型中的第三层，它主要负责确定数据在网络中的传输路径，以及确定数据包的传输顺序。它还负责确定网络中的数据传输协议，以及管理网络中的路由器和网关等。</p>
-<p>数据链路层<br>数据链路层是TCP/IP参考模型中的第四层，它主要负责检测和纠正传输中出现的错误，以及确定数据传输的最佳路径。它还负责定义数据帧的格式，以及控制帧的传输顺序。</p>
-<p>总结<br>通信规约是指在通信过程中，双方必须遵守的规则，以确保通信的顺利进行。OSI参考模型是由国际标准化组织(ISO)提出的一种通用的通信模型，它将通信过程分为7层，TCP/IP参考模型是由美国国防部提出的一种通用的通信模型，它将通信过程分为4层。以上就是有关通信规约有哪几种的介绍，希望</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%80%9A%E4%BF%A1/" rel="tag">通信</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-通信规约的内容和要求"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/10/29/%E9%80%9A%E4%BF%A1%E8%A7%84%E7%BA%A6%E7%9A%84%E5%86%85%E5%AE%B9%E5%92%8C%E8%A6%81%E6%B1%82/"
-    >通信规约的内容和要求</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/10/29/%E9%80%9A%E4%BF%A1%E8%A7%84%E7%BA%A6%E7%9A%84%E5%86%85%E5%AE%B9%E5%92%8C%E8%A6%81%E6%B1%82/" class="article-date">
-  <time datetime="2023-10-29T02:28:00.000Z" itemprop="datePublished">2023-10-29</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://www.techphant.cn/blog/2307.html">https://www.techphant.cn/blog/2307.html</a><br>通信规约有哪些内容和要求？<br>作者： 技象物联网 / 行业百科 / 通信系统, 通讯规约 / 2023年5月28日 23:39:29<br>通信规约是指在计算机网络中用于数据交换的一种协议规范。它定义了数据传输的格式、数据包的分组方式、错误检测和纠正等方面的细节。本文将介绍通信规约的内容和要求，以及它在计算机网络中的重要性。</p>
-<p>一、通信规约的内容</p>
-<p>通信规约包括以下几个方面：<br>1、数据传输格式：定义了数据在网络中传输时所采用的格式，比如二进制、十进制等。这个格式需要被所有设备所识别和支持。<br>2、数据分组方式：为了更高效地利用网络资源，通信规约将数据分成一个个小包进行传输，并通过头部信息进行标识。这样可以避免因为网络拥塞而导致整个数据包丢失或无法传输。<br>3、错误检测与纠正：由于网络传输过程中会出现各种各样的错误，比如噪声干扰、丢失等问题，因此需要通过差错检测和纠正机制来保证数据的可靠性。常见的差错检测方法有CRC校验和、异或校验等。<br>4、网络协议：指计算机之间进行交流时所遵循的一套规则。这些规则定义了计算机之间通信的方式，包括数据传输、数据分组和错误检测等方面。<br>无线通信</p>
-<p>二、通信规约的要求</p>
-<p>通信规约需要满足以下几个要求：<br>1、可靠性：通信规约需要保证数据传输的可靠性，即在传输过程中不会出现数据丢失或错误。<br>2、高效性：通信规约需要尽可能地提高网络的利用率，减少网络拥塞和延迟。<br>3、灵活性：通信规约需要能够适应不同的网络环境和需求，并具有一定的可扩展性和兼容性。<br>4、安全性：通信规约需要保证数据传输过程中的安全性，防止信息泄露、篡改等问题。</p>
-<p>三、通信规约在计算机网络中的重要性</p>
-<p>通信规约是计算机网络中最基本、最重要的组成部分之一。它不仅关乎到数据传输的可靠性和效率，还涉及到计算机系统安全等方面。以下是它在计算机网络中的重要作用：<br>1、保证数据传输的可靠性：通过差错检测和纠正机制来保证数据在传输过程中不会出现错误或丢失。<br>2、提高网络效率：通过数据分组和头部信息标识等方式来提高网络的利用率，减少网络拥塞和延迟。<br>3、保障计算机系统安全：通过加密、身份验证等手段来保证数据传输过程中的安全性，防止信息泄露、篡改等问题。<br>4、支持不同的应用程序和服务：通信规约可以适应不同的应用程序和服务需求，如电子邮件、文件传输、视频会议等。</p>
-<p>本文介绍了通信规约的内容、要求及其在计算机网络中的重要性。通信规约是计算机网络中最基本、最重要的组成部分之一，它关乎到数据传输的可靠性和效率，还涉及到计算机系统安全等方面。因此，在设计和实现计算机网络时，需要充分考虑通信规约的作用，并根据具体需求选择合适的协议。</p>
  
       <!-- reward -->
       

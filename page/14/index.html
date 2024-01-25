@@ -154,6 +154,367 @@
     
     
     <article
+  id="post-Vue.nextTick 的原理和用途"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/09/24/Vue.nextTick%20%E7%9A%84%E5%8E%9F%E7%90%86%E5%92%8C%E7%94%A8%E9%80%94/"
+    >Vue.nextTick 的原理和用途</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/09/24/Vue.nextTick%20%E7%9A%84%E5%8E%9F%E7%90%86%E5%92%8C%E7%94%A8%E9%80%94/" class="article-date">
+  <time datetime="2023-09-24T03:57:18.000Z" itemprop="datePublished">2023-09-24</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>Vue.nextTick 的原理和用途</p>
+<p>对于 Vue.nextTick 方法，自己有些疑惑。在查询了各种资料后，总结了一下其原理和用途，如有错误，请不吝赐教。</p>
+<h1 id="异步说明"><a href="#异步说明" class="headerlink" title="异步说明"></a>异步说明</h1><p>Vue 实现响应式并不是数据发生变化之后 DOM 立即变化，而是按一定的策略进行 DOM 的更新。<br>在 Vue 的文档中，说明 Vue 是异步执行 DOM 更新的。关于异步的解析，可以查看阮一峰老师的这篇文章。截取关键部分如下：</p>
+<p>具体来说，异步执行的运行机制如下。</p>
+<p>（1）所有同步任务都在主线程上执行，形成一个执行栈（execution context stack）。<br>（2）主线程之外，还存在一个”任务队列”（task queue）。只要异步任务有了运行结果，就在”任务队列”之中放置一个事件。<br>（3）一旦”执行栈”中的所有同步任务执行完毕，系统就会读取”任务队列”，看看里面有哪些事件。那些对应的异步任务，于是结束等待状态，进入执行栈，开始执行。<br>（4）主线程不断重复上面的第三步。</p>
+<h1 id="事件循环说明"><a href="#事件循环说明" class="headerlink" title="事件循环说明"></a>事件循环说明</h1><p>简单来说，Vue 在修改数据后，视图不会立刻更新，而是等同一事件循环中的所有数据变化完成之后，再统一进行视图更新。</p>
+<p>知乎上的例子：</p>
+<pre><code>//改变数据
+vm.message = &#39;changed&#39;
+
+//想要立即使用更新后的DOM。这样不行，因为设置message后DOM还没有更新
+console.log(vm.$el.textContent) // 并不会得到&#39;changed&#39;
+
+//这样可以，nextTick里面的代码会在DOM更新后执行
+Vue.nextTick(function()&#123;
+    console.log(vm.$el.textContent) //可以得到&#39;changed&#39;
+&#125;)
+</code></pre>
+<p>事件循环：</p>
+<p>第一个 tick（图例中第一个步骤，即’本次更新循环’）：</p>
+<p>首先修改数据，这是同步任务。同一事件循环的所有的同步任务都在主线程上执行，形成一个执行栈，此时还未涉及 DOM 。<br>Vue 开启一个异步队列，并缓冲在此事件循环中发生的所有数据改变。如果同一个 watcher 被多次触发，只会被推入到队列中一次。<br>第二个 tick（图例中第二个步骤，即’下次更新循环’）：</p>
+<p>同步任务执行完毕，开始执行异步 watcher 队列的任务，更新 DOM 。Vue 在内部尝试对异步队列使用原生的 Promise.then 和 MessageChannel 方法，如果执行环境不支持，会采用 setTimeout(fn, 0) 代替。</p>
+<p>第三个 tick（图例中第三个步骤）：</p>
+<p>此时就是文档所说的</p>
+<p>下次 DOM 更新循环结束之后<br>此时通过 Vue.nextTick 获取到改变后的 DOM 。通过 setTimeout(fn, 0) 也可以同样获取到。</p>
+<p>简单总结事件循环：</p>
+<p>同步代码执行 -&gt; 查找异步队列，推入执行栈，执行Vue.nextTick[事件循环1] -&gt;查找异步队列，推入执行栈，执行Vue.nextTick[事件循环2]…</p>
+<p>总之，异步是单独的一个tick，不会和同步在一个 tick 里发生，也是 DOM 不会马上改变的原因。</p>
+<p>对于事件循环，可以在这里查看更详细的内容： <a target="_blank" rel="noopener" href="https://segmentfault.com/a/11">https://segmentfault.com/a/11</a>…<br>用途<br>应用场景：需要在视图更新之后，基于新的视图进行操作。<br>created、mounted<br>需要注意的是，在 created 和 mounted 阶段，如果需要操作渲染后的试图，也要使用 nextTick 方法。</p>
+<p>官方文档说明：</p>
+<p>注意 mounted 不会承诺所有的子组件也都一起被挂载。如果你希望等到整个视图都渲染完毕，可以用 vm.$nextTick 替换掉 mounted</p>
+<pre><code>mounted: function () &#123;
+  this.$nextTick(function () &#123;
+    // Code that will run only after the
+    // entire view has been rendered
+  &#125;)
+&#125;
+</code></pre>
+<h1 id="其他应用场景"><a href="#其他应用场景" class="headerlink" title="其他应用场景"></a>其他应用场景</h1><p>其他应用场景如下三例：</p>
+<h2 id="例子1："><a href="#例子1：" class="headerlink" title="例子1："></a>例子1：</h2><p>点击按钮显示原本以 v-show = false 隐藏起来的输入框，并获取焦点。</p>
+<pre><code>showsou()&#123;
+  this.showit = true //修改 v-show
+  document.getElementById(&quot;keywords&quot;).focus()  //在第一个 tick 里，获取不到输入框，自然也获取不到焦点
+&#125;
+</code></pre>
+<p>修改为：</p>
+<pre><code>showsou()&#123;
+  this.showit = true
+  this.$nextTick(function () &#123;
+    // DOM 更新了
+    document.getElementById(&quot;keywords&quot;).focus()
+  &#125;)
+&#125;
+</code></pre>
+<h2 id="例子2："><a href="#例子2：" class="headerlink" title="例子2："></a>例子2：</h2><p>点击获取元素宽度。</p>
+<pre><code>&lt;div id=&quot;app&quot;&gt;
+    &lt;p ref=&quot;myWidth&quot; v-if=&quot;showMe&quot;&gt;&#123;&#123; message &#125;&#125;&lt;/p&gt;
+    &lt;button @click=&quot;getMyWidth&quot;&gt;获取p元素宽度&lt;/button&gt;
+&lt;/div&gt;
+
+getMyWidth() &#123;
+    this.showMe = true;
+    //this.message = this.$refs.myWidth.offsetWidth;
+    //报错 TypeError: this.$refs.myWidth is undefined
+    this.$nextTick(()=&gt;&#123;
+        //dom元素更新后执行，此时能拿到p元素的属性
+        this.message = this.$refs.myWidth.offsetWidth;
+  &#125;)
+&#125;
+</code></pre>
+<h2 id="例子3："><a href="#例子3：" class="headerlink" title="例子3："></a>例子3：</h2><p>使用 swiper 插件通过 ajax 请求图片后的滑动问题。</p>
+<h1 id="实例理解-nextTick-应用"><a href="#实例理解-nextTick-应用" class="headerlink" title="实例理解 nextTick 应用"></a>实例理解 nextTick 应用</h1><p>下面的例子各位可以复制运行一遍，加深理解。</p>
+<pre><code>&lt;template&gt;
+    &lt;div&gt;
+        &lt;ul&gt;
+            &lt;li class=&quot;example&quot; v-for=&quot;item in list1&quot;&gt;&#123;&#123;item&#125;&#125;&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;ul&gt;
+            &lt;li class=&quot;example&quot; v-for=&quot;item in list2&quot;&gt;&#123;&#123;item&#125;&#125;&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;ol&gt;
+            &lt;li class=&quot;example&quot; v-for=&quot;item in list3&quot;&gt;&#123;&#123;item&#125;&#125;&lt;/li&gt;
+        &lt;/ol&gt;
+        &lt;ol&gt;
+            &lt;li class=&quot;example&quot; v-for=&quot;item in list4&quot;&gt;&#123;&#123;item&#125;&#125;&lt;/li&gt;
+        &lt;/ol&gt;
+        &lt;ol&gt;
+            &lt;li class=&quot;example&quot; v-for=&quot;item in list5&quot;&gt;&#123;&#123;item&#125;&#125;&lt;/li&gt;
+        &lt;/ol&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+export default &#123;
+    data() &#123;
+        return &#123;
+            list1: [],
+            list2: [],
+            list3: [],
+            list4: [],
+            list5: []
+        &#125;
+    &#125;,
+    created() &#123;
+        this.composeList12()
+        this.composeList34()
+        this.composeList5()
+        this.$nextTick(function() &#123;
+            // DOM 更新了
+            console.log(&#39;finished test &#39; + new Date().toString(),document.querySelectorAll(&#39;.example&#39;).length)
+        &#125;)
+    &#125;,
+    methods: &#123;
+        composeList12() &#123;
+            let me = this
+            let count = 10000
+
+            for (let i = 0; i &lt; count; i++) &#123;
+                this.$set(me.list1, i, &#39;I am a 测试信息～～啦啦啦&#39; + i)
+            &#125;
+            console.log(&#39;finished list1 &#39; + new Date().toString(),document.querySelectorAll(&#39;.example&#39;).length)
+
+            for (let i = 0; i &lt; count; i++) &#123;
+                this.$set(me.list2, i, &#39;I am a 测试信息～～啦啦啦&#39; + i)
+            &#125;
+            console.log(&#39;finished list2 &#39; + new Date().toString(),document.querySelectorAll(&#39;.example&#39;).length)
+
+            this.$nextTick(function() &#123;
+                // DOM 更新了
+                console.log(&#39;finished tick1&amp;2 &#39; + new Date().toString(),document.querySelectorAll(&#39;.example&#39;).length)
+            &#125;)
+        &#125;,
+        composeList34() &#123;
+            let me = this
+            let count = 10000
+
+            for (let i = 0; i &lt; count; i++) &#123;
+                this.$set(me.list3, i, &#39;I am a 测试信息～～啦啦啦&#39; + i)
+            &#125;
+            console.log(&#39;finished list3 &#39; + new Date().toString(),document.querySelectorAll(&#39;.example&#39;).length)
+
+            this.$nextTick(function() &#123;
+                // DOM 更新了
+                console.log(&#39;finished tick3 &#39; + new Date().toString(),document.querySelectorAll(&#39;.example&#39;).length)
+            &#125;)
+
+            setTimeout(me.setTimeout1, 0)
+        &#125;,
+        setTimeout1() &#123;
+            let me = this
+            let count = 10000
+
+            for (let i = 0; i &lt; count; i++) &#123;
+                this.$set(me.list4, i, &#39;I am a 测试信息～～啦啦啦&#39; + i)
+            &#125;
+            console.log(&#39;finished list4 &#39; + new Date().toString(),document.querySelectorAll(&#39;.example&#39;).length)
+
+            me.$nextTick(function() &#123;
+                // DOM 更新了
+                console.log(&#39;finished tick4 &#39; + new Date().toString(),document.querySelectorAll(&#39;.example&#39;).length)
+            &#125;)
+        &#125;,
+        composeList5() &#123;
+            let me = this
+            let count = 10000
+
+            this.$nextTick(function() &#123;
+                // DOM 更新了
+                console.log(&#39;finished tick5-1 &#39; + new Date().toString(),document.querySelectorAll(&#39;.example&#39;).length)
+            &#125;)
+
+            setTimeout(me.setTimeout2, 0)
+        &#125;,
+        setTimeout2() &#123;
+            let me = this
+            let count = 10000
+
+            for (let i = 0; i &lt; count; i++) &#123;
+                this.$set(me.list5, i, &#39;I am a 测试信息～～啦啦啦&#39; + i)
+            &#125;
+            console.log(&#39;finished list5 &#39; + new Date().toString(),document.querySelectorAll(&#39;.example&#39;).length)
+
+            me.$nextTick(function() &#123;
+                // DOM 更新了
+                console.log(&#39;finished tick5 &#39; + new Date().toString(),document.querySelectorAll(&#39;.example&#39;).length)
+            &#125;)
+        &#125;
+    &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-vue中下载excel文件4种方法"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/09/23/vue%E4%B8%AD%E4%B8%8B%E8%BD%BDexcel%E6%96%87%E4%BB%B64%E7%A7%8D%E6%96%B9%E6%B3%95/"
+    >vue中下载excel文件4种方法</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/09/23/vue%E4%B8%AD%E4%B8%8B%E8%BD%BDexcel%E6%96%87%E4%BB%B64%E7%A7%8D%E6%96%B9%E6%B3%95/" class="article-date">
+  <time datetime="2023-09-23T15:46:09.000Z" itemprop="datePublished">2023-09-23</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="1、通过url下载"><a href="#1、通过url下载" class="headerlink" title="1、通过url下载"></a>1、通过url下载</h1><p>即后端提供文件的地址，直接使用浏览器去下载</p>
+<p>通过window.location.href = 文件路径下载</p>
+<pre><code>window.location.href = `$&#123;location.origin&#125;/operation/ruleImport/template`
+</code></pre>
+<p>通过 window.open(url, ‘_blank’)</p>
+<pre><code>window.open(`$&#123;location.origin&#125;/operation/ruleImport/template`)
+</code></pre>
+<p>这两种使用方法的不同：</p>
+<p>window.location：当前页跳转，也就是重新定位当前页；只能在网站中打开本网站的网页。<br>window.open：在新窗口中打开链接；可以在网站上打开另外一个网站的地址。</p>
+<h1 id="2、通过-a-标签-download-属性结合-blob-构造函数下载"><a href="#2、通过-a-标签-download-属性结合-blob-构造函数下载" class="headerlink" title="2、通过 a 标签 download 属性结合 blob 构造函数下载"></a>2、通过 a 标签 download 属性结合 blob 构造函数下载</h1><p>a 标签的 download 属性是 HTML5 标准新增的，作用是触发浏览器的下载操作而不是导航到下载的 url，这个属性可以设置下载时使用新的文件名称。</p>
+<p>前端创建超链接，接收后端的文件流：</p>
+<pre><code>axios.get(`/operation/ruleImport/template`,
+    responseType:&quot;blob&quot; //服务器响应的数据英型，可以是&#39;arraybuffer&quot;,&quot;blob&#39;,&quot;document&#39;&quot;,&#39;json&#39;,&#39;text&quot;,&#39;stream&#39;
+    &#125;)
+    .then(res =&gt;
+        if(!res) return
+        const blob = new Blob([res.data],(type:&#39;application/vnd.ms-excel&#39;&#125;)/构造一blob对象来处数据，并设置文件
+        
+        if (window.navigator.msSaveOrOpenBlob)&#123; //兼容IE10
+            navigator.msSaveBlob(blob, this.filename)
+        &#125; else &#123;
+            const href = URL.createObjectURL(blob) //创建所航URL装示指定bLob对象
+            const a = document.createElement(&#39;a&#39;)   //创建a标签
+            a.style.display = &#39;none&#39;
+            a.href = href //指定下视链接
+            a.download = this.fi1ename //指定下件文件名
+            a.click() //发下
+            URL.revokeObjectURL(a.href) //释放URL对象
+        &#125;
+        //这里也可以不创建a接，蓝简vindow.open(href)也能下，
+    &#125;)
+    .catch(err-&gt;&#123;
+        console.1og(err)
+    &#125;)
+</code></pre>
+<p>注：请求后台接口时要在请求头上加{responseType: ‘blob’}；download 设置文件名时，可以直接设置扩展名，如果没有设置浏览器将自动检测正确的文件扩展名并添加到文件。</p>
+<h1 id="3、通过-js-file-download-插件"><a href="#3、通过-js-file-download-插件" class="headerlink" title="3、通过 js-file-download 插件"></a>3、通过 js-file-download 插件</h1><p>安装：</p>
+<pre><code>npm install js-file-download --S
+</code></pre>
+<p>代码：</p>
+<pre><code>import fileDownload from &#39;js-file-download&#39;
+
+axios.get(`/operation/ruleImport/template`,&#123;
+    responseType: &#39;blob&#39; //返回的数据英型
+&#125;)
+.then(res =&gt; &#123;
+    fileDownload(res.data,this.fileName)
+&#125;)
+</code></pre>
+<h1 id="4、使用fetch下载"><a href="#4、使用fetch下载" class="headerlink" title="4、使用fetch下载"></a>4、使用fetch下载</h1><pre><code>exportFile()&#123;
+    fetch(&#39;http://127.0.0.1:8765/course/exportCourse/33&#39;,&#123;
+        method:&#39;GET&#39;,
+        headers:new Headers(&#123;
+            &#39;Authorization&#39;:Cookie.get(&#39;Authorization&#39;)
+        &#125;),
+    &#125;)
+    .then(res =&gt; res.blob())
+    .then(data =&gt; &#123;
+        const blobUrl = window.URL.createobjectURL(data);
+        const a = document.createElement(&#39;a&#39;);
+        a.download = this.fileName+&#39;.xlsx&#39;;
+        a.href = blobUrl;
+        a.click();
+    &#125;);
+    &#125;,
+</code></pre>
+<p>原文链接：<a target="_blank" rel="noopener" href="https://www.clzg.cn/article/441428.html">https://www.clzg.cn/article/441428.html</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-17个vue常用的数组方法总结与实例演示"
   class="article article-type-post"
   itemscope
@@ -677,323 +1038,6 @@ export default &#123;
 &#125;
 </code></pre>
 <p>————————————————<br>版权声明：本文为CSDN博主「wlik」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45220510/article/details/126172494">https://blog.csdn.net/weixin_45220510/article/details/126172494</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-vue 实现文件上传、下载"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/09/18/vue%20%E5%AE%9E%E7%8E%B0%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E3%80%81%E4%B8%8B%E8%BD%BD/"
-    >vue 实现文件上传、下载</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/09/18/vue%20%E5%AE%9E%E7%8E%B0%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E3%80%81%E4%B8%8B%E8%BD%BD/" class="article-date">
-  <time datetime="2023-09-18T10:36:54.000Z" itemprop="datePublished">2023-09-18</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>1、使用element ui 中的el-upload</p>
-<pre><code>&lt;!-- :limit=&quot;1&quot; 限制上传数量  :drag=&quot;true&quot; 可实现拖拽上传 :file-list会返显在下方--&gt;
-&lt;el-upload
-    class=&quot;upload-demo&quot;
-    action=&quot;#&quot;
-    :drag=&quot;true&quot;
-    :before-upload=&quot;uploadFileFun&quot;
-    :file-list=&quot;uploadFile.fileList&quot;&gt;
-    &lt;div class=&quot;el-upload__text&quot;&gt;将文件拖到此处，或&lt;em&gt;点击上传&lt;/em&gt;&lt;/div&gt;
-    &lt;div class=&quot;el-upload__tip fontSize12 colorRed&quot; slot=&quot;tip&quot;&gt;文件包括评审指南、须知及回避要求等，上传文件格式为word或pdf，文件大小在2M以内&lt;/div&gt;
-&lt;/el-upload&gt;
-</code></pre>
-<p>2、data中定义相关数据，methods中书写上传方法</p>
-<pre><code>data () &#123;
-    return &#123;
-        fileIdArr: [],
-        uploadFile:&#123;
-            createUser:&#39;&#39;,
-            createTime:&#39;&#39;,
-            fileId: &#39;&#39;, // 存放选择的文件
-            fileList: [],
-        &#125;,
-        uploadFileRules: &#123;
-          fileList: [&#123; required: true, message: &quot;请上传文件&quot;, trigger: &quot;blur&quot; &#125;],
-        &#125;
-    &#125;
-  &#125;,
-methods: &#123;
-    uploadFileFun(file)&#123;
-        var test = /(doc|docx|pdf)$/.test(file.type);
-        if (!test) &#123;
-             this.$message.error(&quot;请上传正确的文档格式!&quot;);
-             return false;
-         &#125;
-         const isLt2M = file.size / 1024 / 1024 &lt; 2;
-        if (!isLt2M) &#123;
-            this.$message.error(&quot;上传文件大小不能超过 2MB!&quot;);
-             return false;
-         &#125;
-        // 创建formdata实例
-        let formData = new window.FormData();
-        // 将获取的文件通过append方法加入实例中
-        formData.append(&quot;file&quot;, file);
-        this.$api.
-            uploadFile(formData)
-            .then(res =&gt; &#123;
-                // fileList用于反显
-                this.uploadFile.fileList.push(res.data)
-                this.fileIdArr.push(res.data.id)
-            &#125;)
-            .catch(err =&gt; &#123;&#125;);
-      &#125;,
- &#125;
-</code></pre>
-<p>3、下载</p>
-<pre><code>methods: &#123;
-    // 附件下载
-    downloadFile(row)&#123;
-        // 判断如果没有文件就不进行文件的下载
-       if (row.fileName)&#123;
-             this.$api
-             .downloadFile(&#123;fileId: row.fileId&#125;)
-             .then(res =&gt; &#123;
-                // 如果有文件且接口掉成功，后端会直接返回文件流，因此若返回res.code，表示接口没有返回文件流
-                 if(res.code)&#123;
-                     this.$message(&#123;
-                         type: &#39;error&#39;,
-                         message: res.msg
-                     &#125;)
-                 &#125;else&#123;
-                 
-                    // 这里最重要，这里最重要！！！！！
-                    
-                     const link = document.createElement(&quot;a&quot;);
-                     let blob = new Blob([res]);  //文件流处理
-                     link.style.display = &quot;none&quot;;  //去除a标签的样式
-                     // 设置链接
-                     link.href = window.URL.createObjectURL(blob);
-                     link.download = row.fileName; // 指定下载文件名，包含文件后缀
-                     document.body.appendChild(link);
-                     //模拟点击事件
-                     link.click();
-                     //移除创建的a标签
-                     window.URL.revokeObjectURL(link.href);
-                     document.body.removeChild(link);
-                 &#125;
-                
-             &#125;)
-             .catch(err =&gt; &#123;&#125;)
-         &#125;else&#123;
-             this.$message(&#123;
-                 message: &#39;该邮件模板没有可下载的附件&#39;
-             &#125;)
-         &#125;
-     &#125;,
-&#125;
-</code></pre>
-<p>————————————————<br>版权声明：本文为CSDN博主「淡紫色的回忆」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/niuniu2878499107/article/details/131958497">https://blog.csdn.net/niuniu2878499107/article/details/131958497</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-vue获取当前日期时间(moment、new Date())"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/09/17/vue%E8%8E%B7%E5%8F%96%E5%BD%93%E5%89%8D%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4(moment%E3%80%81new%20Date())/"
-    >vue获取当前日期时间(moment、new Date())</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/09/17/vue%E8%8E%B7%E5%8F%96%E5%BD%93%E5%89%8D%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4(moment%E3%80%81new%20Date())/" class="article-date">
-  <time datetime="2023-09-17T09:34:51.000Z" itemprop="datePublished">2023-09-17</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="vue获取当前日期时间"><a href="#vue获取当前日期时间" class="headerlink" title="vue获取当前日期时间"></a>vue获取当前日期时间</h1><p>开发中会有要获取当前日期的需求，有的是获取到当前月份，有的是精确到分秒。</p>
-<p>而且日期的格式还不一样，一下有两种获取时间的方式：</p>
-<h1 id="1-new-Date-拼接"><a href="#1-new-Date-拼接" class="headerlink" title="1 new Date()+拼接"></a>1 new Date()+拼接</h1><h2 id="格式一："><a href="#格式一：" class="headerlink" title="格式一："></a>格式一：</h2><pre><code>yy/MM/dd hh:mm:ss – 例如：2022/05/01 00:00:00
-yy/M/d hh:mm:ss – 例如：2022/5/1 00:00:00
-</code></pre>
-<p>获取当前时间</p>
-<pre><code>/**
-* 获取当前时间
-*/
-currentTime() &#123;
-    var date = new Date();
-    var year = date.getFullYear(); //月份从0~11，所以加一
-    let month = date.getMonth();
-    console.log(&quot;month&quot;,month);
-    var dateArr = [
-        date.getMonth() + 1,
-        date.getDate(),
-        date.getHours(),
-        date.getMinutes(),
-        date.getSeconds(),
-    ];
-    //如果格式是MM则需要此步骤，如果是M格式则此循环注释掉
-    for (var i = 0; i &lt; dateArr.length; i++) &#123;
-        if (dateArr[i] &gt;= 1 &amp;&amp; dateArr[i] &lt;= 9) &#123;
-            dateArr[i] = &quot;0&quot; + dateArr[i];
-        &#125;
-    &#125;
-    var strDate =
-        year +
-        &quot;/&quot; +
-        dateArr[0] +
-        &quot;/&quot; +
-        dateArr[1] +
-        &quot; &quot; +
-        dateArr[2] +
-        &quot;:&quot; +
-        dateArr[3] +
-        &quot;:&quot; +
-        dateArr[4];
-        //此处可以拿外部的变量接收，也可直接返回  strDate:2022-05-01 13:25:30
-        //this.date = strDate;
-    console.log(&quot;strDate&quot;,strDate);
-&#125;,
-</code></pre>
-<h2 id="格式二："><a href="#格式二：" class="headerlink" title="格式二："></a>格式二：</h2><pre><code>yy-MM-dd hh:mm:ss – 例如：2022-05-01 00:00:00
-yy-MM-dd hh:mm:ss – 例如：2022-05-01 00:00:00
-</code></pre>
-<p>获取当前时间</p>
-<pre><code>/**
-* 获取当前时间
-*/
-currentTime() &#123;
-    var date = new Date();
-    var year = date.getFullYear(); //月份从0~11，所以加一
-    let month = date.getMonth();
-    console.log(&quot;month&quot;,month);
-    var dateArr = [
-        date.getMonth() + 1,
-        date.getDate(),
-        date.getHours(),
-        date.getMinutes(),
-        date.getSeconds(),
-    ];
-    //如果格式是MM则需要此步骤，如果是M格式则此循环注释掉
-    for (var i = 0; i &lt; dateArr.length; i++) &#123;
-        if (dateArr[i] &gt;= 1 &amp;&amp; dateArr[i] &lt;= 9) &#123;
-            dateArr[i] = &quot;0&quot; + dateArr[i];
-        &#125;
-    &#125;
-    var strDate =
-        year +
-        &quot;/&quot; +
-        dateArr[0] +
-        &quot;/&quot; +
-        dateArr[1] +
-        &quot; &quot; +
-        dateArr[2] +
-        &quot;:&quot; +
-        dateArr[3] +
-        &quot;:&quot; +
-        dateArr[4];
-        //此处可以拿外部的变量接收  strDate:2022-05-01 13:25:30
-        //this.date = strDate;
-    console.log(&quot;strDate&quot;,strDate);
-&#125;,
-</code></pre>
-<p>获取当前月份</p>
-<pre><code>/**
-* 获取当前月份，可直接返回
-*/
-currentTime() &#123;
-    var date = new Date();
-    var year = date.getFullYear(); //月份从0~11，所以加一
-    let month = date.getMonth() + 1;
-    console.log(&quot;month&quot;, month);
-
-    //如果格式是MM则需要此步骤，如果是M格式则此处注释掉
-    if (month &gt;= 1 &amp;&amp; month &lt;= 9) &#123;
-        month = &quot;0&quot; + month;
-    &#125;
-    let strDate = year + &quot;-&quot; + month;
-    return strDate;
-&#125;,
-</code></pre>
-<h1 id="2-moment-函数获取"><a href="#2-moment-函数获取" class="headerlink" title="2 moment()函数获取"></a>2 moment()函数获取</h1><p>下载moment依赖</p>
-<pre><code>npm i moment
-</code></pre>
-<p>在所需要的页面引入</p>
-<pre><code>import moment from &quot;moment&quot;
-</code></pre>
-<p>为了方便也可以在全局引入<br>用法</p>
-<pre><code>this.$moment().format(&#39;YYYY-MM-DD HH:mm:ss&#39;)
-</code></pre>
-<p>此函数很方便，只需在format设置自己需要的格式即可<br>————————————————</p>
-<p>版权声明：本文为CSDN博主「猪大侠0.0」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_43331014/article/details/127698605">https://blog.csdn.net/qq_43331014/article/details/127698605</a></p>
  
       <!-- reward -->
       

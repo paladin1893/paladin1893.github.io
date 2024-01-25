@@ -1,6 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>windows使用cmd命令添加、删除和修改静态路由：route</title>
+    <url>/2023/12/11/windows%E4%BD%BF%E7%94%A8cmd%E5%91%BD%E4%BB%A4%E6%B7%BB%E5%8A%A0%E3%80%81%E5%88%A0%E9%99%A4%E5%92%8C%E4%BF%AE%E6%94%B9%E9%9D%99%E6%80%81%E8%B7%AF%E7%94%B1%EF%BC%9Aroute/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>1、添加一条路由表<br>route add 192.168.20.0 mask 255.255.255.0 192.168.4.1 metric 2 if 2<br>命令说明：添加一条路由记录，所有到192.168.20.0/24网段的数据包，都通过2号接口（网卡）走192.168.4.1的网关，优先级为2。</p>
+<p>route add -p 192.168.100.0 mask 255.255.255.248 192.168.1.1 metric 3 if 2<br>#作用同上，-p参数表：该记录为永久路由，不会因为重启机器而丢失。<br>2、删除一条路由表<br>route delete 192.168.10.0<br>【语法】</p>
+<p>route delete 网络目的地址 [mask] [子网掩码]<br>route delete 112* ——-&gt;删除路由时用这种模糊匹配，表示删除以112开头的IP路由表中的所有路由；<br>命令说明：如果有两条192.168.10.0路由记录，即路由表中存在相同的“目的网络号”，则会将两条记录同时删除。如果只想删除其中某一条的话，请在删除后用route add命令再添加上其中一条。</p>
+<p>3、修改一条现有路由记录<br>route change 162.0.0.0 mask 255.255.0.0 162.54.10.5 metric 2 if 2<br>命令说明：CHANGE参数只能修改路由条目的“网关”和“跳数”。</p>
+<p>4、查看路由表<br>route print -4/-6</p>
+<p>路由表列说明：</p>
+<p>第一列是网络目的地址。列出了路由器连接的所有的网段。</p>
+<p>第二行网络掩码列提供这个网段本身的子网掩码，而不是连接到这个网段的网卡的子网掩码。这基本上能够让路由器确定目的网络的地址类。</p>
+<p>第三列是网关。一旦路由器确定它要把这个数据包转发到哪一个目的网络，路由器就要查看网关列表。网关表告诉路由器这个数据包应该转发到哪一个IP地址才能达到目的网络。</p>
+<p>第四列接口列告诉路由器哪一个网卡连接到了合适的目的网络。从技术上说，接口列仅告诉路由器分配给网卡的IP地址。那个网卡把路由器连接到目的网络。然而，路由器很聪明，知道这个地址绑定到哪一个物理网卡。</p>
+<p>第五列是测量，或跳数。测量本身是一种科学。该值越小的，可信度越高<br>【例子】</p>
+<p>Network Destination Netmask Gateway Interface Metric<br>0.0.0.0 0.0.0.0 116.69.106.120 116.69.106.1 1<br>上面信息表示发向任意网段的数据通过本机接口116.69.106.1被送往一个默认的网关：116.69.106.120，它的管理距离是1，管理距离指的是在路径选择的过程中信息的可信度，管理距离越小的，可信度越高。</p>
+<p>5、查看广播信息<br>arp -a<br>##查看查看与本地电脑连接的mac地址跟IP地址，即当前电脑上的ARP映射表。可以看到当前的ARP的映射关系是动态的还是静态的。</p>
+<p>arp -s w.x.y.z aa-bb-cc-dd-ee-ff<br>##添加静态ARP实现ARP绑定。其中w.x.y.z代表要绑定的IP地址，aa-bb-cc-dd-ee-ff代表其MAC地址</p>
+<p>arp -d InetAddr[IfaceAddr]<br>##删除指定的IP地址项，此处的InetAddr代表IP地址，要删除所有项，请使用星号（*）通配符代替。</p>
+]]></content>
+      <categories>
+        <category>部署运维</category>
+      </categories>
+      <tags>
+        <tag>route</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>route add -p 命令详解</title>
+    <url>/2023/12/10/route%20add%20-p%20%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><code>route add</code>命令用于添加一条静态路由信息。在使用时，可以指定不同的子网掩码和其他参数来定义目的网络的路由条目。以下是一些示例用法：</p>
+<p>要添加一个指向特定目标的默认路由，可以使用如下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">route add 0.0.0.0 mask 0.0.0.0 [目标网关地址]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>若要在指定的子网掩码（如255.255.0.0）下为目标网络添加一个路由，可以使用类似的方法：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">route add [目标网络前缀] mask [子网掩码] [目标网关地址]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>对于具有特定Metric值的路由，可以使用<code>metric</code>参数进行设置：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">route add [目标网络前缀] mask [子网掩码] metric [Metric值] [目标网关地址]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>此外，<code>route add -p</code>命令用于添加一条永久路由。这通常用在网络中有多个网关地址的情况下，以便能够通过不同的网关访问同一组网络。</p>
+<p>例如，如果要将所有需要发送到130.0.0.0/8地址段的数据包都转发给134.32.80.1这个网关，可以使用以下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">route add -p 130.0.0.0 mask 255.0.0.0 134.32.80.1 metric 10</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，“-p”表示这是一个永久路由，而“130.0.0.0/8”是一个目标网络的前缀，其子网掩码被设置为“255.0.0.0”，目标网关地址是“134.32.80.1”，并且Metric值为“10”。</p>
+<p>需要注意的是，路由跳数（Metric值）通常是可选的，但在某些情况下可能需要指定以确保正确的路由优先级。</p>
+]]></content>
+      <categories>
+        <category>部署运维</category>
+      </categories>
+      <tags>
+        <tag>route</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>nohup命令</title>
     <url>/2023/12/09/github%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F%E7%BD%91%E5%9D%80%E5%88%86%E4%BA%AB/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>hub.yzuu.cf/<br>hub.nuaa.cf/<br>hub.fgit.ml/</p>

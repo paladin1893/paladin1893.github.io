@@ -154,6 +154,179 @@
     
     
     <article
+  id="post-flask实用入门案例03"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/08/13/flask%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B03/"
+    >flask实用入门案例03--Flask-RESTful</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/08/13/flask%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B03/" class="article-date">
+  <time datetime="2023-08-13T11:55:21.000Z" itemprop="datePublished">2023-08-13</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>使用flask可以快速开发restful风格的后台服务，下面展示几种常用实用接口案例。</p>
+<p>Flask-RESTful 提供的最主要的基础就是资源(resources)。资源(Resources)是构建在 Flask 可拔插视图 之上，只要在你的资源(resource)上定义方法就能够容易地访问多个 HTTP 方法.</p>
+<p>其实就是想表达，在资源路由上（resources）定义多个方法（get，post，put等），就可以实现多种效果</p>
+<pre><code>from flask import Flask, request
+from flask_restful import Api, Resource
+ 
+app = Flask(__name__)
+api = Api(app)
+ 
+todos = &#123;&#125;
+ 
+class TodoSimple(Resource):
+ def get(self, todo_id):
+  return &#123;todo_id: todos[todo_id]&#125;
+ 
+ def put(self, todo_id):
+  todos[todo_id] = request.form[&#39;data&#39;]
+  return &#123;todo_id: todos[todo_id]&#125;
+ 
+api.add_resource(TodoSimple, &#39;/&lt;string:todo_id&gt;&#39;)
+ 
+if __name__ == &#39;__main__&#39;:
+ app.run(debug=True)
+ 
+</code></pre>
+<p>解释：<br>（1）TodoSimple类定义了2种方法，最终地址/string:todo_id’下面，就可以实现2种请求方法<br>（2）add_resource方法中第一个参数：视图函数名；第二个参数：路由的具体地址，以及string:todo_id代表传递的是一个字符串，且是必要参数。<br>（3）request.form[‘data’]获取request里面，form表单的key为data的参数，如果request里面，没有data参数，那报错。如果有包含data的多个参数，那也只会取data这一个参数</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flask/" rel="tag">flask</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-flask实用入门案例02"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/08/12/flask%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B02/"
+    >flask实用入门案例02</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/08/12/flask%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B02/" class="article-date">
+  <time datetime="2023-08-12T12:19:46.000Z" itemprop="datePublished">2023-08-12</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>使用flask可以快速开发restful风格的后台服务，下面展示几种常用实用接口案例。</p>
+<pre><code>from flask import Flask, request, jsonify, send_from_directory
+from werkzeug.utils import secure_filename
+import os
+import uuid
+
+app = Flask(__name__)
+
+# 设置文件上传保存路径
+app.config[&#39;UPLOAD_FOLDER&#39;] = &#39;static/upload/&#39;
+# MAX_CONTENT_LENGTH设置上传文件的大小，单位字节
+app.config[&#39;MAX_CONTENT_LENGTH&#39;] = 1 * 1024 * 1024
+
+
+@app.route(&#39;/upload&#39;, methods=[&#39;POST&#39;])
+def upload():
+    f = request.files[&#39;file&#39;]
+    fname = secure_filename(f.filename)
+    ext = fname.rsplit(&#39;.&#39;)[-1]
+    # 生成一个uuid作为文件名
+    fileName = str(uuid.uuid4()) + &quot;.&quot; + ext
+    # os.path.join拼接地址，上传地址，f.filename获取文件名
+    f.save(os.path.join(app.config[&#39;UPLOAD_FOLDER&#39;], fileName))
+    return jsonify(&#123;&#39;result&#39;: &#39;success&#39;&#125;)
+
+
+# 图片下载
+@app.route(&#39;/download/&lt;filename&gt;&#39;, methods=[&#39;GET&#39;])
+def download(filename):
+    if request.method == &quot;GET&quot;:
+        # 通过文件名下载文件
+        path = os.path.isfile(os.path.join(app.config[&#39;UPLOAD_FOLDER&#39;], filename))
+        if path:
+            return send_from_directory(app.config[&#39;UPLOAD_FOLDER&#39;], filename, as_attachment=True)
+
+@app.route(&#39;/&#39;)
+def hello_world():  # put application&#39;s code here
+    return &#39;Hello World!&#39;
+
+
+if __name__ == &#39;__main__&#39;:
+    app.run()
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flask/" rel="tag">flask</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-flask实用入门案例01"
   class="article article-type-post"
   itemscope
@@ -431,149 +604,6 @@ if __name__ == &#39;__main__&#39;:
     <footer class="article-footer">
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PNMP/" rel="tag">PNMP</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-finereport入门系列（四）"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/08/07/finereport%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97%EF%BC%88%E5%9B%9B%EF%BC%89/"
-    >finereport入门系列（四）</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/08/07/finereport%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97%EF%BC%88%E5%9B%9B%EF%BC%89/" class="article-date">
-  <time datetime="2023-08-07T05:02:05.000Z" itemprop="datePublished">2023-08-07</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="决策报表自动查询"><a href="#决策报表自动查询" class="headerlink" title="决策报表自动查询"></a>决策报表自动查询</h1><ol>
-<li>概述</li>
-<li>1 应用场景<br>在决策报表中，控件可以添加到参数界面使用「查询」按钮查询数据，也可以直接在 body 中使用，但是在 body 中使用时，控件是无法直接使用查询按钮来查询数据的，那我们要如何实现控件联动查询数据呢？</li>
-</ol>
-<p>例如：在 body 中的下拉框控件选择「地区」，其他使用了地区参数的组件能根据选择的地区展示对应数据。预期效果 </p>
-<p>1.2 实现思路<br>在数据集中定义地区参数为 $area ，将下拉框控件的名称修改为与地区参数相同的名称 area，即可使用参数联动控件实现自动查询。</p>
-<p>若想要实现在参数界面实现自动查询请参考：JS实现决策报表参数界面自动查询。</p>
-<ol start="2">
-<li>示例</li>
-<li>1 数据准备<br>1）点击设计器左上角「文件&gt;新建决策报表」，新建空白模板。</li>
-</ol>
-<p>2）新建一个数据库查询 ds1，SQL 查询语句为：</p>
-<pre><code>SELECT * FROM 销量 where 1=1 $&#123;if(len(area)=0,&quot;&quot;,&quot; and 地区=&#39;&quot;+area+&quot;&#39;&quot;)&#125;
-</code></pre>
-<p>即定义 area 参数，值为「地区」字段，且当 参数为空时展示全部数据 。</p>
-<p>2.2 决策报表设计<br>1）将 body 的布局方式修改为「绝对布局」，再向 body 中拖入「报表块」、「饼图」、「标签控件」和「下拉框控件」。 </p>
-<p>2）设置「标签控件」的控件值为「地区：」；「下拉框控件」的控件名称为「area」，即将下拉框控件与参数 $area 绑定。</p>
-<p>注：必须保证「下拉框控件」的控件名称与参数名称 area 保持一致。</p>
-<p>3）设置「下拉框控件」的数据字典为「数据库表」销量表，实际值和显示值均为「地区」。 </p>
-<p>2.3 设计报表块<br>双击报表块，进入报表块编辑界面，拖入「地区、销售员、销量」字段，设置 C2 单元格的数据设置为「汇总&gt;求和」。单元格样式可在「单元格属性&gt;样式」中自行设置。</p>
-<p>2.4 绑定图表数据<br>双击饼图，设置饼图的数据来源：数据集为 ds1，系列名为「销售员」，值为「销量」，汇总方式为「求和」。 </p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/finereport/" rel="tag">finereport</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-finereport入门系列（三）"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/08/06/finereport%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97%EF%BC%88%E4%B8%89%EF%BC%89/"
-    >finereport入门系列（三）</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/08/06/finereport%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97%EF%BC%88%E4%B8%89%EF%BC%89/" class="article-date">
-  <time datetime="2023-08-06T11:56:23.000Z" itemprop="datePublished">2023-08-06</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="钻取地图示例"><a href="#钻取地图示例" class="headerlink" title="钻取地图示例"></a>钻取地图示例</h1><p>3.1 准备数据<br>新建决策报表，新建内置数据集， </p>
-<p>注：这边因跨数据取数问题，也就直接分了两个数据集，供参考。</p>
-<p>3.2 插入地图<br>1）决策报表中插入报表块和钻取地图， </p>
-<p>2）报表块中有 2 个数据集的数据，所以要进行数据集关联，设置下过滤条件， </p>
-<p>3.3 绑定数据<br>钻取地图添加需要的钻取层级，将报表块中处理好的单元格数据添加至地图单元格数据集中， </p>
-<p>注：第 1 层和第 2 层都要设置，图中只给了第 1 层的，别漏掉了。</p>
-<p>3.4 添加事件<br>1）决策报表 body 添加初始化事件， </p>
-<p>JavaScript 代码如下：</p>
-<pre><code>setTimeout(function()&#123;
-var vanchart =FR.Chart.WebUtils.getChart(&quot;chart0&quot;).getChartWithIndex(0); //获取图表对象
-vanchart.openAutoTooltip(); //开启数据点提示轮播
-&#125;,500)
-</code></pre>
-<p>2）在钻取地图「特效&gt;交互属性」下添加 JavaScript 类型的超级链接， </p>
-<p>JavaScript 代码如下：</p>
-<pre><code>FR.Chart.WebUtils.getChart(&quot;chart0&quot;).getChartWithIndex(0).openAutoTooltip();
-//钻取时触发超链，实现轮播
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/finereport/" rel="tag">finereport</a></li></ul>
 
     </footer>
   </div>

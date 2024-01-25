@@ -154,6 +154,836 @@
     
     
     <article
+  id="post-MySQL性能优化"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/04/17/MySQL%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"
+    >MySQL性能优化</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/04/17/MySQL%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" class="article-date">
+  <time datetime="2023-04-17T06:39:30.000Z" itemprop="datePublished">2023-04-17</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="使用-Explain-进行分析"><a href="#使用-Explain-进行分析" class="headerlink" title="使用 Explain 进行分析"></a>使用 Explain 进行分析</h1><p>Explain 用来分析 SELECT 查询语句，开发人员可以通过分析 Explain 结果来优化查询语句。</p>
+<p>比较重要的字段有:<br>select_type : 查询类型，有简单查询、联合查询、子查询等<br>key : 使用的索引<br>rows : 扫描的行数</p>
+<h1 id="优化数据访问"><a href="#优化数据访问" class="headerlink" title="优化数据访问"></a>优化数据访问</h1><h2 id="1-减少请求的数据量"><a href="#1-减少请求的数据量" class="headerlink" title="1. 减少请求的数据量"></a>1. 减少请求的数据量</h2><p>只返回必要的列: 最好不要使用 SELECT * 语句。<br>只返回必要的行: 使用 LIMIT 语句来限制返回的数据。<br>缓存重复查询的数据: 使用缓存可以避免在数据库中进行查询，特别在要查询的数据经常被重复查询时，缓存带来的查询性能提升将会是非常明显的。</p>
+<h2 id="2-减少服务器端扫描的行数"><a href="#2-减少服务器端扫描的行数" class="headerlink" title="2. 减少服务器端扫描的行数"></a>2. 减少服务器端扫描的行数</h2><p>最有效的方式是使用索引来覆盖查询。</p>
+<h3 id="重构查询方式"><a href="#重构查询方式" class="headerlink" title="重构查询方式"></a>重构查询方式</h3><ul>
+<li><ol>
+<li>切分大查询</li>
+</ol>
+</li>
+</ul>
+<p>一个大查询如果一次性执行的话，可能一次锁住很多数据、占满整个事务日志、耗尽系统资源、阻塞很多小的但重要的查询。</p>
+<pre><code>DELEFT FROM messages WHERE create &lt; DATE_SUB(NOW(), INTERVAL 3 MONTH);
+
+rows_affected = 0
+do &#123;
+    rows_affected = do_query(
+    &quot;DELETE FROM messages WHERE create  &lt; DATE_SUB(NOW(), INTERVAL 3 MONTH) LIMIT 10000&quot;)
+&#125; while rows_affected &gt; 0
+</code></pre>
+<ul>
+<li><ol start="2">
+<li>分解大连接查询</li>
+</ol>
+</li>
+</ul>
+<p>将一个大连接查询分解成对每一个表进行一次单表查询，然后将结果在应用程序中进行关联，这样做的好处有:让缓存更高效。对于连接查询，如果其中一个表发生变化，那么整个查询缓存就无法使用。而分解后的多个查询，即使其中一个表发生变化，对其它表的查询缓存依然可以使用。分解成多个单表查询，这些单表查询的缓存结果更可能被其它查询使用到，从而减少冗余记录的查询。减少锁竞争；在应用层进行连接，可以更容易对数据库进行拆分，从而更容易做到高性能和可伸缩。查询本身效率也可能会有所提升。例如下面的例子中，使用 IN() 代替连接查询，可以让 MySQL 按照 ID 顺序进行查询，这可能比随机的连接要更高效。</p>
+<pre><code>SELECT * FROM tab
+    JOIN tag_post ON tag_post.tag_id=tag.id
+    JOIN post ON tag_post.post_id=post.id
+    WHERE tag.tag=&#39;mysql&#39;;
+
+SELECT * FROM tag WHERE tag=&#39;mysql&#39;;
+SELECT * FROM tag_post WHERE tag_id=1234;
+SELECT * FROM post WHERE post.id IN (123,456,567,9098,8904);
+</code></pre>
+<hr>
+<p>著作权归@pdai所有<br>原文链接：<a target="_blank" rel="noopener" href="https://pdai.tech/md/db/sql-mysql/sql-mysql-performance.html">https://pdai.tech/md/db/sql-mysql/sql-mysql-performance.html</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-Oracle性能分析总结"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/04/16/Oracle%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E6%80%BB%E7%BB%93/"
+    >Oracle性能分析总结（转载）</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/04/16/Oracle%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E6%80%BB%E7%BB%93/" class="article-date">
+  <time datetime="2023-04-16T06:10:19.000Z" itemprop="datePublished">2023-04-16</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>关于Oracle的性能调整，一般包括两个方面。</p>
+<p>一是指Oracle数据库本身的调整，比如SGA、PGA的优化设置，</p>
+<p>二是连接Oracle的应用程序以及SQL语句的优化。</p>
+<p>做好这两个方面的优化，就可以使一套完整的Oracle应用系统处于良好的运行状态。</p>
+<p>本文主要是把一些OracleTuning的文章作了一个简单的总结，力求以实际可操作为目的，配合讲解部分理论知识，使大部分具有一般Oracle知识的使用者能够对Oracle Tuning有所了解，并且能够根据实际情况对某些参数进行调整。关于更加详细的知识，请参见本文结束部分所提及的推荐书籍，同时由于该话题内容太多且复杂，本文必定有失之偏颇甚至错误的地方，请不吝赐教，并共同进步。</p>
+<ol>
+<li> SGA的设置<br>在OracleTuning中，对SGA的设置是关键。SGA，是指Shared Global Area , 或者是System Global Area , 称为共享全局区或者系统全局区，结构如下图所示。</li>
+</ol>
+<p>对于SGA区域内的内存来说，是共享的、全局的，在UNIX 上，必须为oracle 设置共享内存段（可以是一个或者多个），因为oracle 在UNIX上是多进程；而在WINDOWS上oracle是单进程（多个线程），所以不用设置共享内存段。</p>
+<p>1.1  SGA的各个组成部分<br>下面用 sqlplus 查询举例看一下 SGA 各个组成部分的情况：</p>
+<pre><code>SQL&gt; select * from v$sga;
+NAME                     VALUE
+--------------------             ----------
+FixedSize                  104936
+VariableSize             823164928
+Database Buffers         1073741824
+RedoBuffers                172032
+</code></pre>
+<p>或者</p>
+<pre><code>SQL&gt; show sga
+Total System Global Area   1897183720 bytes
+FixedSize                  104936 bytes
+VariableSize             823164928 bytes
+Database Buffers         1073741824 bytes
+RedoBuffers                172032 bytes
+</code></pre>
+<p>Fixed Size</p>
+<p>oracle 的不同平台和不同版本下可能不一样，但对于确定环境是一个固定的值，里面存储了SGA 各部分组件的信息，可以看作引导建立SGA的区域。</p>
+<p>Variable Size</p>
+<p>包含了shared_pool_size、java_pool_size、large_pool_size 等内存设置</p>
+<p>Database Buffers</p>
+<p>指数据缓冲区，在8i 中包含db_block_buffer*db_block_size、buffer_pool_keep、buffer_pool_recycle 三部分内存。在9i 中包含db_cache_size、db_keep_cache_size、db_recycle_cache_size、db_nk_cache_size。</p>
+<p>Redo Buffers</p>
+<p>指日志缓冲区，log_buffer。在这里要额外说明一点的是，对于v$parameter、v$sgastat、v$sga查询值可能不一样。v$ parameter 里面的值，是指用户在初始化参数文件里面设置的值，v$sgastat是oracle 实际分配的日志缓冲区大小（因为缓冲区的分配值实际上是离散的，也不是以block 为最小单位进行分配的），v$sga 里面查询的值，是在oracle 分配了日志缓冲区后，为了保护日志缓冲区，设置了一些保护页，通常我们会发现保护页大小是8k(不同环境可能不一样)。参考如下内容</p>
+<pre><code>SQL&gt; select substr(name,1,10) name,substr(value,1,10) value
+       2 from v$parameter where name =&#39;log_buffer&#39;;
+NAME                VALUE
+--------------------  --------------------
+log_buffer             163840
+
+SQL&gt; select * from v$sgastat where pool is null;
+
+POOL       NAME                      BYTES
+-------------------------------------               ----------
+           fixed_sga                     104936
+           db_block_buffers           1073741824
+           log_buffer                    163840
+
+SQL&gt; select * from v$sga;
+
+NAME                     VALUE
+--------------------             ----------
+FixedSize                  104936
+VariableSize              823164928
+Database Buffers          1073741824
+RedoBuffers                172032
+</code></pre>
+<p>172032 – 163840 = 8192</p>
+<p>（以上试验数据是在 HPB.11.11 + Oracle 8.1.7.4 环境下得到的）</p>
+<p>1.2  SGA的大小设置</p>
+<p>在对SGA的结构进行简单分析以后，下面是关于如何根据系统的情况正确设置SGA大小的问题。<br>SGA是一块内存区域，占用的是系统物理内存，因此对于一个Oracle应用系统来说，SGA决不是越大越好，这就需要寻找一个系统优化的平衡点。</p>
+<p>1.2.1  设置参数前的准备<br>在设置SGA的内存参数之前，我们首先要问自己几个问题<br>一：物理内存多大<br>二：操作系统估计需要使用多少内存<br>三：数据库是使用文件系统还是裸设备<br>四：有多少并发连接<br>五：应用是OLTP 类型还是OLAP 类型</p>
+<p>根据这几个问题的答案，我们可以粗略地为系统估计一下内存设置。那我们现在来逐个问题地讨论，首先物理内存多大是最容易回答的一个问题，然后操作系统估计使用多少内存呢？从经验上看，不会太多，通常应该在200M 以内（不包含大量进程PCB）。<br>接下来我们要探讨一个重要的问题，那就是关于文件系统和裸设备的问题，这往往容易被我们所忽略。操作系统对于文件系统，使用了大量的buffer 来缓存操作系统块。这样当数据库获取数据块的时候，虽然SGA 中没有命中，但却实际上可能是从操作系统的文件缓存中获取的。而假如数据库和操作系统支持异步IO，则实际上当数据库写进程DBWR写磁盘时，操作系统在文件缓存中标记该块为延迟写，等到真正地写入磁盘之后，操作系统才通知DBWR写磁盘完成。对于这部分文件缓存，所需要的内存可能比较大，作为保守的估计，我们应该考虑在 0.2——0.3 倍内存大小。但是如果我们使用的是裸设备，则不考虑这部分缓存的问题。这样的情况下SGA就有调大的机会。<br>关于数据库有多少并发连接，这实际上关系到PGA 的大小（MTS 下还有large_pool_size）。事实上这个问题应该说还跟OLTP 类型或者OLAP 类型相关。对于OLTP类型oracle 倾向于可使用MTS,对于OLAP 类型使用独立模式，同时OLAP 还可能涉及到大量的排序操作的查询，这些都影响到我们内存的使用。那么所有的问题综合起来，实际上主要反映在UGA的大小上。UGA主要包含以下部分内存设置</p>
+<pre><code>SQL&gt; show parameters area_size
+
+NAME                                TYPE    VALUE
+------------------------------------              -------     --------
+bitmap_merge_area_size                  integer    1048576
+create_bitmap_area_size                  integer    8388608
+hash_area_size                          integer     131072
+sort_area_size                           integer     65536
+SQL&gt;
+</code></pre>
+<p>在这部分内存中我们最关注的通常是sort_area_size，这是当查询需要排序的时候，数据库会话将使用这部分内存进行排序，当内存大小不足的时候，使用临时表空间进行磁盘排序。由于磁盘排序效率和内存排序效率相差好几个数量级，所以这个参数的设置很重要。<br>当出现大量排序时的磁盘I/O操作时，可以考虑增加sort_area_size的值。sort_area_size是Oracle用于一次排序所需的最大内存数，在排序结束但是结果列返回之前，Oracle会释放sort_area_size大小的内存，但是会保留 sort_area_retained_size大小的内存，知道最后一行结果列返回以后，才释放所有的内存。<br>会导致排序的语句有 SELECT DISTINCT , MINUS , INTERSECT , UNION 和 min()、max()、count() 操作；而不会导致排序的语句有 UPDATE , 带BETWEEN子句的SELECT 等等。<br>这四个参数都是针对会话进行设置的，是单个会话使用的内存的大小，而不是整个数据库使用的。偶尔会看见有人误解了这个参数以为是整个数据库使用的大小，这是极其严重的错误。假如设置了MTS，则UGA被分配在large_pool_size，也就是说放在了共享内存里面，不同进程（线程）之间可以共享这部分内存。在这个基础上，我们假设数据库存在并发执行server process 为100 个，根据上面我们4 个参数在oracle8.1.7 下的默认值，我们来计算独立模式下PGA 的大致大小。由于会话并不会经常使用create_bitmap_area_size、bitmap_merge_area_size，所以我们通常不对四个参数求和。在考虑到除这四个参数外会话所保存的变量、堆栈等信息，我们估计为 2M，则200 个进程最大可能使用200M 的PGA。</p>
+<p>1.2.2  一个经验公式</p>
+<p>现在，根据上面这些假定，我们来看SGA 实际能达到多少内存。在1G 的内存的服务器上，我们能分配给SGA 的内存大约为400—500M。若是2G 的内存，大约可以分到1G的内存给SGA，8G 的内存可以分到5G的内存给SGA。当然我们这里是以默认的排序部分内存sort_area_size=64k进行衡量的，假如我们需要调大该参数和 hash_area_size等参数，然后我们应该根据并发的进程的数量，来衡量考虑这个问题。</p>
+<p>事实上，通常我们更习惯通过直观的公式化来表达这样的问题：<br>OS 使用内存+SGA+并发执行进程数*(sort_area_size+hash_ara_size+2M)&lt; 0.7*总内存</p>
+<p>(公式是死的，系统是活的，实际应用的调整不必框公式，这不过是一个参考建议)</p>
+<p>在我们的实际应用中，假如采用的是裸设备，我们可适当的增大SGA(如果需要的话)。由于目前几乎所有的操作系统都使用虚拟缓存，所以实际上如果就算SGA 设置的比较大也不会导致错误，而是可能出现频繁的内存页的换入与换出(page in/out)。在操作系统一级如果观察到这个现象，那么我们就需要调整内存的设置。</p>
+<p>1.2.3  各个参数的设置<br>那么SGA中的各个参数具体应该按照什么样的原则来设置呢，下面进行讨论：<br>log_buffer<br>对于日志缓冲区的大小设置，通常我觉得没有过多的建议，因为参考LGWR写的触发条件之后，我们会发现通常超过3M意义不是很大。作为一个正式系统，可能考虑先设置这部分为log_buffer=1—3M 大小，然后针对具体情况再调整。<br>large_pool_size<br>对于大缓冲池的设置，假如不使用MTS，建议在20—30M 足够了。这部分主要用来保存并行查询时候的一些信息，还有就是RMAN 在备份的时候可能会使用到。如果设置了MTS，则由于UGA部分要移入这里，则需要具体根据session最大数量和 sort_ares_size 等相关会话内存参数的设置来综合考虑这部分大小的设置，一般可以考虑为session * (sort_area_size + 2M)。这里要提醒一点，不是必须使用MTS，我们都不主张使用MTS，尤其同时在线用户数小于500的情况下。。<br>java_pool_size<br>假如数据库没有使用JAVA，我们通常认为保留10—20M大小足够了。事实上可以更少，甚至最少只需要32k，但具体跟安装数据库的时候的组件相关(比如http server)。<br>shared_pool_size<br>这是迄今为止最具有争议的一部分内存设置。按照很多文档的描述，这部分内容应该几乎和数据缓冲区差不多大小。但实际上情况却不是这样的。首先我们要考究一个问题，那就是这部分内存的作用，是为了缓存已经被解析过的SQL，而使其能被重用，不再解析。这样做的原因是因为，对于一个新的SQL （shared_pool 里面不存在已经解析的可用的相同的SQL），数据库将执行硬解析，这是一个很消耗资源的过程。而若已经存在，则进行的仅仅是软分析（在共享池中寻找相同 SQL），这样消耗的资源大大减少。所以我们期望能多共享一些SQL，并且如果该参数设置不够大，经常会出现ora-04031错误，表示为了解析新的 SQL，没有可用的足够大的连续空闲空间，这样自然我们期望该参数能大一些。但是该参数的增大，却也有负面的影响，因为需要维护共享的结构，内存的增大也会使得SQL 的老化的代价更高，带来大量的管理的开销，所有这些可能会导致CPU 的严重问题。</p>
+<p>在一个充分使用绑定变量的比较大的系统中，shared_pool_size的开销通常应该维持在300M 以内。除非系统使用了大量的存储过程、函数、包，比如oracleerp 这样的应用，可能会达到500M甚至更高。于是我们假定一个1G内存的系统，可能考虑设置该参数为100M，2G 的系统考虑设置为150M,8G 的系统可以考虑设置为200—300M。<br>对于一个没有充分使用或者没有使用绑定变量系统，这可能给我们带来一个严重的问题。所谓没有使用bind var 的SQL，我们称为Literal SQL。也就是比如这样的两句SQL我们认为是不同的SQL,需要进行2 次硬解析：<br>select * from EMP where name = ‘TOM’;<br>select * from EMP where name = ‘JERRY’;<br>假如把 ’TOM’ 和 ’JERRY’ 换做变量V，那就是使用了bind var，我们可以认为是同样的SQL 从而能很好地共享。共享SQL 本来就是shared_pool_size 这部分内存存在的本意，oracle的目的也在于此，而我们不使用bind var 就是违背了oracle 的初衷，这样将给我们的系统带来严重的问题。当然，如果通过在操作系统监控，没有发现严重的cpu问题，我们如果发现该共享池命中率不高可以适当的增加shred_pool_size。但是通常我们不主张这部分内存超过800M（特殊情况下可以更大）。<br>事实上，可能的话我们甚至要想办法避免软分析，这在不同的程序语言中实现方式有差异。我们也可能通过设置session_cached_cursors 参数来获得帮助（这将增大PGA）<br>关于使用绑定变量的话题，在下面的应用优化中继续讨论。</p>
+<p>Data buffer<br>现在我们来谈数据缓冲区，在确定了SGA 的大小并分配完了前面部分的内存后，其余的，都分配给这部分内存。通常，在允许的情况下，我们都尝试使得这部分内存更大。这部分内存的作用主要是缓存 DB BLOCK，减少甚至避免从磁盘上获取数据，在8i中通常是由db_block_buffers*db_block_size 来决定大小的。如果我们设置了buffer_pool_keep 和buffer_pool_recycle，则应该加上后面这两部分内存的大小。</p>
+<p>可以看出，设置SGA时基本上应该掌握的原则是：<br>  data buffer 一般可以尽可能的大<br>  shared_pool_size 应该适度<br>  log buffer 在 1MB 以内就可以了</p>
+<p>假定oracle是 32 bit ,服务器RAM大于2G ，注意你的PGA的情况，,则建议<br>shared_pool_size + data buffer +large_pool_size + java_pool_size &lt; 1.6G</p>
+<p>再具体化，如果512M RAM<br>建议 shared_pool_size = 50M, data buffer = 200M</p>
+<p>如果1G RAM<br>shared_pool_size = 100M , data buffer = 500M</p>
+<p>如果2G RAM<br>shared_pool_size = 150M ,data buffer = 1.2G</p>
+<p>物理内存再大已经跟参数没有关系了</p>
+<p>假定64 bit ORACLE<br>内存4G<br>shared_pool_size = 200M , data buffer = 2.5G</p>
+<p>内存8G<br>shared_pool_size = 300M , data buffer = 5G</p>
+<p>内存 12G<br>shared_pool_size = 300M—–800M , data buffer = 8G</p>
+<p>1.3  32bit 与 64bit 对SGA的影响<br>为什么在上面SGA大小设置的经验规则中要分 32bit Oracle 和 64bit Oracle 呢，是因为这关系到SGA大小的上限问题。在32bit的数据库下，通常oracle只能使用不超过1.7G的内存，即使我们拥有12G的内存，但是我们却只能使用1.7G，这是一个莫大的遗憾。假如我们安装64bit的数据库,我们就可以使用很大的内存，几乎不可能达到上限。但是64bit的数据库必须安装在64bit 的操作系统上，可惜目前windows上只能安装32bit的数据库，我们通过下面的方式可以查看数据库是32bit 还是 64bit ：</p>
+<pre><code>SQL&gt; select * from v$version;
+BANNER
+----------------------------------------------------------------
+Oracle8i Enterprise Edition Release 8.1.7.0.0 - Production
+PL/SQL Release 8.1.7.0.0 - Production
+CORE 8.1.7.0.0 Production
+TNS for 32-bit Windows: Version 8.1.7.0.0 - Production
+NLSRTL Version 3.4.1.0.0 – Production
+</code></pre>
+<p>在UNIX平台下的显示有所不同，明显可以看出是 64bit Oracle ，比如在HP-UX平台上：</p>
+<pre><code>SQL&gt; select * from v$version;
+
+BANNER
+----------------------------------------------------------------
+Oracle8i Enterprise Edition Release 8.1.7.4.0 - 64bit Production
+PL/SQL Release 8.1.7.4.0 - Production
+CORE    8.1.7.0.0       Production
+TNS for HPUX: Version 8.1.7.4.0 - Production
+NLSRTL Version 3.4.1.0.0 – Production
+</code></pre>
+<p>32bit的oracle无论跑在32bit或者64bit的平台都有SGA的限制的，而对于32bit的平台只能跑32bit的oracle，但是在特定的操作系统下，可能提供了一定的手段，使得我们可以使用超过1.7G 的内存，达到2G 以上甚至更多。由于我们现在一般都使用64bit Oracle，因此关于如何在32bit平台上扩展SGA大小的问题不再赘述。</p>
+<p>1.4  9i中相关参数的变化<br>oracle的版本的更新，总是伴随着参数的变化，并且越来越趋向于使得参数的设置更简单，因为复杂的参数设置使得DBA们经常焦头烂额。关于内存这部分的变化，我们可以考察下面的参数。事实上在9i中数据库本身可以给出一组适合当前运行系统的SGA相关部分的参数调整值（参考V$ DB_CACHE_ADVICE、V$SHARED_POOL_ADVICE），关于PGA也有相关视图V$PGA_TARGET_ADVICE 等。</p>
+<p>Data buffer<br>9i 中保留了8i中的参数，如设置了新的参数，则忽略旧的参数。9i中用db_cache_size来取代db_block_buffers ， 用db_keep_cache_size 取代buffer_pool_keep,用db_recycle_cache_size 取代buffer_pool_recycle；这里要注意9i 中设置的是实际的缓存大小而不再是块的数量。另外9i新增加了db_nk_cache_size，这是为了支持在同一个数据库中使用不同的块大小而设置的。对于不同的表空间，可以定义不同的数据块的大小，而缓冲区的定义则依靠该参数的支持。其中n 可以为2、4、6、8、16 等不同的值。在这里顺便提及的一个参数就是db_block_lru_latches，该参数在9i中已经成为了保留参数，不推荐手工设置。</p>
+<p>PGA<br>在9i 里面这部分也有了很大的变化。在独立模式下，9i已经不再主张使用原来的UGA相关的参数设置，而代之以新的参数。假如workarea_size_policy=AUTO（缺省），则所有的会话的UGA 共用一大块内存，该内存由 pga_aggregate_target 设置。在我们根据前面介绍的方法评估了所有进程可能使用的最大PGA 内存之后，我们可以通过在初始化参数中设置这个参数，从而不再关心其他”*_area_size” 参数。</p>
+<p>SGA_MAX_SIZE<br>在9i中若设置了SGA_MAX_SIZE，则在总和小于等于这个值内，可以动态的调整数据缓冲区和共享池的大小</p>
+<pre><code>SQL&gt; show parameters sga_max_size
+NAME      TYPE            VALUE
+---------------- -------------------- ------- -------------
+sga_max_size  unknown        193752940
+SQL&gt;
+SQL&gt; alter system set db_cache_size = 30000000;
+System altered.
+SQL&gt; alter system set shared_pool_size = 20480000;
+System altered.
+</code></pre>
+<p>1.5  lock_sga = true 的问题<br>由于几乎所有的操作系统都支持虚拟内存，所以即使我们使用的内存小于物理内存，也不能避免操作系统将SGA 换到虚拟内存（SWAP）。所以我们可以尝试使得SGA 锁定在物理内存中不被换到虚拟内存中，这样减少页面的换入和换出，从而提高性能。但在这里遗憾的是，windows 是无法避免这种情况的。下面我们来参考在不同的几个系统下怎么实现lock_sga</p>
+<pre><code>AIX 5L（AIX 4.3.3 以上）
+logon aix as root
+cd /usr/samples/kernel
+./vmtune (信息如下) v_pingshm已经是1
+./vmtune -S 1
+</code></pre>
+<p>然后oracle用户修改initSID.ora 中 lock_sga = true<br>重新启动数据库</p>
+<pre><code>HP UNIX
+Root身份登陆
+Create the file &quot;/etc/privgroup&quot;: vi /etc/privgroup
+Add line &quot;dba MLOCK&quot; to file
+As root, run the command &quot;/etc/setprivgrp -f /etc/privgroup&quot;:
+$/etc/setprivgrp -f /etc/privgroup
+oracle用户修改initSID.ora中lock_sga=true
+</code></pre>
+<p>重新启动数据库</p>
+<p>SOLARIS (solaris2.6以上)<br>8i版本以上数据库默认使用隐藏参数 use_ism = true ，自动锁定SGA于内存中,不用设置lock_sga, 如果设置 lock_sga =true 使用非 root 用户启动数据库将返回错误。</p>
+<p>WINDOWS<br>不能设置lock_sga=true,可以通过设置pre_page_sga=true,使得数据库启动的时候就把所有内存页装载，这样可能起到一定的作用。</p>
+<ol start="2">
+<li> 应用优化<br>下面我们从技术的角度入手，来探讨数据库优化方面的问题。通常作为优化Oracle系统的人，或者是DBA，其实很多时候对应用并不很了解甚至可以说是完全不了解，更不要说对应用程序代码的了解。事实上呢，一个系统运行的快或者慢相信大家都明白，第一重要的是数据库的设计，然后是应用的设计， SQL语句的编写，最后才是数据库参数的调整和硬件、网络的问题，等等。所以在我们不了解一个系统的时候来优化数据库应用不是一个轻松的容易的事情。那么我们第一步应该怎么做呢？<br>通常有两类方法：<br>其中一个方法就是我们常用的，使用statspack来进行诊断系统的瓶颈所在。在statspack中oracle给出了几乎涵盖oracle大部分重要内容的信息。<br>另外一种方式，就是trace session。假如某个session运行很慢或者某个用户的某个查询很慢，那么这个时候我们可以通过trace session的方式来诊断到底是慢在哪里，看究竟执行计划是怎样的，然后在user_dump_dest下根据该session的进程号或者线程号可以找到一个产生的trace文件。通过使用tkprof格式化文件之后我们就可以看见很多的统计信息，这里包括了执行计划、parse/fetch等步骤消耗cpu的时间。通常我们是观察query模式下的consistent gets来首先看sql是否使用了索引，然后看执行计划是不是正常，是不是有调整的余地。当然如果您没有实际做过的话，这些内容说起来很抽象。这是在不了解应用和程序下针对特定session的诊断和调整过程。<br>trace session的方式是一种自下而上的方法，从sql入手；而statspack是自顶向下的方法，也就是从宏观上先诊断数据库的瓶颈在哪里，然后从瓶颈入手来做调整，这个习惯上又可以称为通过等待事件（wait event）入手的方法。</li>
+</ol>
+<p>2.1  使用statspack<br>statspack是一个性能诊断工具，首先发布于Oracle8.1.6版本，在8.1.7版本中功能得到加强。Statspack除了查找实例中的性能问题外，还可以查找应用程序中高负荷的SQL语句，很容易确定Oracle 数据库的瓶颈所在，并且记录数据库性能状态。<br>在数据库中Statspack 的脚本位于$ORACLE_HOME/RDBMS/ADMIN 目录下，对于ORACLE8.1.6,是一组以stat 开头的文件；对于ORACLE8.1.7,是一组以sp 开头的文件。<br>在Statspack 发布之前，我们通常能够使用诊断数据库的工具是两个脚本UTLBSTAT.SQL和UTLESTAT.SQL，BSTAT/ESTAT 是一个非常简单的性能诊断工具。UTLBSTAT 获得开始时很多V$视图的快照，UTLESTAT 通过先前的快照和当前视图生成一个报表。<br>该报表实际上相当于statspack 中的两个采样点。<br>Statspack 通过连续的采样，能够给我们提供至关重要的趋势分析数据。这是一个巨大的进步。能够使用Statspack 的环境我们就尽量不要使用BSTAT/ESTAT 的方式来诊断数据库问题。</p>
+<p>2.1.1  安装statapack<br>§ 步骤一：<br>为了能够顺利安装和运行Statspack ，首先需要设置以下两个系统参数：</p>
+<ol>
+<li><p>job_queue_processes<br>为了能够建立自动任务，执行数据收集，该参数需要大于0。你可以在初试化参数文件中修改该参数(使该参数在重起后以然有效)。<br>该参数可以在系统级动态修改(重起后失效)。</p>
+<p> SQL&gt; alter system setjob_queue_processes = 6;<br> System altered</p>
+</li>
+</ol>
+<p>在Oracle9i 当中，可以指定范围，如 both,这样该修改在当前及之后保持有效(仅当你使用spfile 时，如果在9i 中仍然使用pfile，那么更改方法同8i 相同):</p>
+<pre><code>SQL&gt; alter system setjob_queue_processes = 6 scope=both;
+System altered
+</code></pre>
+<ol start="2">
+<li><p>timed_statistics<br>收集操作系统的计时信息，这些信息可被用来显示时间等统计信息、优化数据库和 SQL 语句。要防止因从操作系统请求时间而引起的开销，请将该值设置为False。<br>使用statspack 收集统计信息时建议将该值设置为 TRUE，否则收集的统计信息大约只能起到10%的作用，将timed_statistics 设置为True 所带来的性能影响与好处相比是微不足道的。<br>该参数使收集的时间信息存储在在V$SESSTATS 和V$SYSSTATS 等动态性能视图中。<br>timed_statistics 参数也可以在实例级进行更改</p>
+<p> SQL&gt; alter system settimed_statistics = true;<br> System altered</p>
+</li>
+</ol>
+<p>如果你担心一直启用timed_statistics 对于性能的影响，你可以在使用statspack 之前在system 更改，采样过后把该参数动态修改成false。</p>
+<p>§ 步骤二：<br>需要单独为statspack创建一个存储数据的表空间，如果采样间隔较短，周期较长，打算长期使用，那么可能需要一个大一点的表空间，如果每个半个小时采样一次，连续采样一周，数据量是很大的。下面的例子中创建了一个500M 的测试表空间。<br>注意: 这里创建的表空间不能太小，如果太小的话创建对象会失败，建议至少建立100M 表空间。</p>
+<pre><code>SQL&gt; create tablespace perfstat
+2 datafile &#39;/oracle/oradata/oradata/res/perfstat.dbf&#39;
+3 size 500M;
+Tablespace created。
+</code></pre>
+<p>§ 步骤三：<br>在 sqlplus 中用internal 身份登陆，或者拥有SYSDBA(connect / as sysdba)权限的用户登陆。<br>注: 在Oracle9i 中，不存在internal 用户，可以使用sys 用户以sysdba 身份连接。<br>先转到$ORACLE_HOME/RDBMS/ADMIN 目录，检查安装脚本是否存在，同时我们执行脚本也可以方便些。</p>
+<pre><code>$ cd $ORACLE_HOME/rdbms/admin
+$ ls -l sp*.sql
+-rw-r--r--   1 oracle  other       1774 Feb 18  2000 spauto.sql
+-rw-r--r--   1 oracle   other     62545 Jun 15  2000 spcpkg.sql
+-rw-r--r--   1 oracle  other        877 Feb 18  2000spcreate.sql
+-rw-r--r--   1 oracle   other     31193 Jun 15  2000 spctab.sql
+-rw-r--r--   1 oracle  other       6414 Jun 15  2000 spcusr.sql
+-rw-r--r--   1 oracle  other        758 Jun 15  2000spdrop.sql
+-rw-r--r--   1 oracle  other       3615 Jun 15  2000 spdtab.sql
+-rw-r--r--   1 oracle  other       1274 Jun 15  2000 spdusr.sql
+-rw-r--r--   1 oracle  other       6760 Jun 15  2000 sppurge.sql
+-rw-r--r--   1 oracle   other     71034 Jul 12  2000 spreport.sql
+-rw-r--r--   1 oracle  other       2191 Jun 15  2000 sptrunc.sql
+-rw-r--r--   1 oracle   other     30133 Jun 15  2000 spup816.sql
+$
+</code></pre>
+<p>接下来我们就可以开始安装Statspack 了。在Oracle8.1.6 版本中运行statscre.sql; 在Oracle8.1.7 版本中运行spcreate.sql。<br>这期间会提示你输入缺省表空间和临时表空间的位置,输入我们为 perfstat 用户创建的表空间和你的临时表空间。安装脚本会自动创建perfstat 用户。</p>
+<pre><code>$ sqlplus
+
+SQL*Plus: Release 8.1.7.0.0 - Productionon Sat Jul 26 16:27:31 2003
+
+(c) Copyright 2000 OracleCorporation.  All rights reserved.
+
+Enter user-name: internal
+
+Connected to:
+Oracle8i Enterprise Edition Release 8.1.7.0.0 - Production
+With the Partitioning option
+JServer Release 8.1.7.0.0 - Production
+
+SQL&gt;
+SQL&gt; @spcreate
+... Installing Required Packages
+
+Package created.
+
+Grant succeeded.
+
+View created.
+
+Package body created.
+
+Package created.
+
+Synonym dropped.
+
+Synonym created.
+……
+
+Specify PERFSTAT user&#39;sdefault   tablespace
+Enter value for default_tablespace: perfstat
+Using perfstat for the default tablespace
+
+User altered.
+
+User altered.
+
+Specify PERFSTAT user&#39;s temporarytablespace
+Enter value for temporary_tablespace: temp
+Using temp for the temporary tablespace
+
+User altered.
+
+NOTE:
+SPCUSR complete. Please check spcusr.lis for any errors.
+
+……
+</code></pre>
+<p>如果安装成功，你可以接着看到如下的输出信息：</p>
+<pre><code>….
+Creating Package STATSPACK...
+
+Package created.
+
+No errors.
+Creating Package Body STATSPACK...
+
+Package body created.
+
+No errors.
+
+NOTE:
+SPCPKG complete. Please check spcpkg.lis for any errors.
+</code></pre>
+<p>可以查看.lis 文件查看安装时的错误信息。</p>
+<p>§ 步骤四：<br>如果安装过程中出现错误，那么可以运行spdrop.sql 脚本来删除这些安装脚本建立的对象。然后重新运行spcreate.sql来创建这些对象。</p>
+<pre><code>SQL&gt; @spdrop
+Dropping old versions (if any)
+
+Synonym dropped.
+
+Sequence dropped.
+
+Synonym dropped.
+
+Table dropped.
+
+Synonym dropped.
+
+View dropped.
+……
+NOTE:
+SPDUSR complete. Please check spdusr.lis for any errors.
+</code></pre>
+<p>（以上的安装过程描述是在 HP 11.11 + Oracle8.1.7 平台上得到的）</p>
+<p>2.1.2  测试statspack<br>运行statspack.snap 可以产生系统快照，运行两次，然后执行spreport.sql就可以生成一个基于两个时间点的报告。<br>如果一切正常，说明安装成功。</p>
+<pre><code>SQL&gt;execute statspack.snap
+PL/SQL procedure successfully completed.
+SQL&gt;execute statspack.snap
+PL/SQL procedure successfully completed.
+SQL&gt;@spreport.sql
+</code></pre>
+<p>可是有可能你会得到以下错误：</p>
+<pre><code>SQL&gt; exec statspack.snap;
+BEGIN statspack.snap; END;
+*
+ERROR at line 1:
+ORA-01401: inserted value too large for column
+ORA-06512: at &quot;PERFSTAT.STATSPACK&quot;, line 978
+ORA-06512: at &quot;PERFSTAT.STATSPACK&quot;, line 1612
+ORA-06512: at &quot;PERFSTAT.STATSPACK&quot;, line 71
+ORA-06512: at line 1
+</code></pre>
+<p>这是Oracle 的一个Bug，Bug 号1940915。<br>该Bug 自8.1.7.3 后修正。<br>这个问题只会出现在多位的字符集, 需要修改spcpkg.sql 脚本，$ORACLE_HOME/rdbms/admin/spcpkg.sql，将”substr” 修改为”substrb”，然后重新运行该脚本。<br>该脚本错误部分：<br>select l_snap_id<br>, p_dbid<br>, p_instance_number<br>, substr(sql_text,1,31)<br>．．．．．．．．．．．<br>substr 会将多位的字符, 当作一个byte.substrb 则会当作多个byte。在收集数据时， statpack 会将 top10 的 sql 前 31 个字节 存入数据表中,若在SQL 的前31 个字有中文，就会出现此错误。<br>注意：运行 spcpkg.sql 也需要以 internal 用户登录 sqlplus</p>
+<p>2.1.3  生成statspack报告<br>调用spreport.sql 可以生成分析报告：<br>当调用spreprot.sql 时，系统首先会查询快照列表，然后要求你选择生成报告的开始快照ID(begin_snap)和结束快照ID(end_snap),生成一个报告.<br>为了生成一个report,我们至少需要两次采样:</p>
+<pre><code>SQL&gt; @spreport 
+
+   DB Id    DBName      Inst Num Instance
+-----------   ------------      -------- ------------
+  2749170756RES             1      res
+
+Completed Snapshots
+
+                          Snap                   Snap
+Instance     DBName         Id   SnapStarted    Level Comment
+------------ ------------ ----- ----------------- ----- ----------------------
+res         RES             1 26 Jul 2003 16:36     5
+                             2 26 Jul 2003 16:37     5
+                             3 26 Jul 2003 17:03     5
+
+Specify the Begin and End Snapshot Ids
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Enter value for begin_snap:2</span><br><span class="line">Begin Snapshot Id specified: 2</span><br><span class="line"></span><br><span class="line">Enter value for end_snap: 3</span><br><span class="line">End   Snapshot Id specified: 3</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Specify the Report Name</span><br></pre></td></tr></table></figure>
+The default report file name is sp_2_3.  To use this name,
+press to continue, otherwise enter an alternative.
+Enter value for report_name: rep0726.txt 
+
+ ……
+
+ Endof Report
+</code></pre>
+<p>在运行 spreport.sql 生成 statspack 报告的过程中，会有三个地方提示用户输入：<br>1、 开始快照ID；<br>2、 结束快照ID；<br>3、 输出报告文件的文件名，缺省的文件名是sp__<br>上面输入的开始快照ID是2，开始快照ID是3，输出报告文件的文件名是rep0726.txt<br>成功运行一次 statspack.snap 就会产生一个 snapshot ，在生成 statspack 报告的时候就可以看到这个 snap id 和 snap 运行的时间。运行 statspack.snap ，就是上面所说的采样，statspack 报告是分析两个采样点之间各种情况。</p>
+<p>2.1.4  删除历史快照数据<br>前面讲过，成功运行一次 statspack.snap 就会产生一个 snapshot ，这个 snapshot 的基本信息是存放在 PERFSTAT.stats$snapshot 表中的，生成 statspack报告时会查询该表的数据，供用户选择准备分析的snapshot 。如果运行 statspack.snap 次数多了以后，该表的数据也会增加，历史数据会影响正常运行的效果，因此需要定时清理一下历史快照数据。<br>删除stats$snapshot 数据表中的相应数据，其他表中的数据会相应的级连删除：</p>
+<pre><code>SQL&gt; select max(snap_id) fromstats$snapshot;
+MAX(SNAP_ID)
+------------
+166
+
+SQL&gt; delete from stats$snapshot wheresnap_id &lt; = 166;
+143 rows deleted
+</code></pre>
+<p>你可以更改snap_id 的范围以保留你需要的数据。<br>在以上删除过程中，你可以看到所有相关的表都被锁定。</p>
+<pre><code>SQL&gt; select a.object_id,a.oracle_username ,b.object_name
+from v$locked_object a,dba_objects b
+where a.object_id = b.object_id
+/
+OBJECT_ID ORACLE_USERNAME OBJECT_NAME
+---------------------------------------------------------------------------------------------------------------------
+156 PERFSTAT SNAP$
+39700 PERFSTAT STATS$LIBRARYCACHE
+39706 PERFSTAT STATS$ROLLSTAT
+39712 PERFSTAT STATS$SGA
+39754 PERFSTAT STATS$PARAMETER
+39745 PERFSTAT STATS$SQL_STATISTICS
+39739 PERFSTAT STATS$SQL_SUMMARY
+39736 PERFSTAT STATS$ENQUEUESTAT
+39733 PERFSTAT STATS$WAITSTAT
+39730 PERFSTAT STATS$BG_EVENT_SUMMARY
+39724 PERFSTAT STATS$SYSTEM_EVENT
+39718 PERFSTAT STATS$SYSSTAT
+39715 PERFSTAT STATS$SGASTAT
+39709 PERFSTAT STATS$ROWCACHE_SUMMARY
+39703 PERFSTAT STATS$BUFFER_POOL_STATISTICS
+39697 PERFSTAT STATS$LATCH_MISSES_SUMMARY
+39679 PERFSTAT STATS$SNAPSHOT
+39682 PERFSTAT STATS$FILESTATXS
+39688 PERFSTAT STATS$LATCH
+174 PERFSTAT JOB$
+20 rows selected
+</code></pre>
+<p>Oracle 还提供了系统脚本用于Truncate这些统计信息表，这个脚本名字是: sptrunc.sql (8i、9i 都相同)<br>该脚本主要内容如下，里面看到的就是statspack 相关的所有系统表：</p>
+<pre><code>truncate table STATS$FILESTATXS;
+truncate table STATS$LATCH;
+truncate table STATS$LATCH_CHILDREN;
+truncate table STATS$LATCH_MISSES_SUMMARY;
+truncate table STATS$LATCH_PARENT;
+truncate table STATS$LIBRARYCACHE;
+truncate table STATS$BUFFER_POOL_STATISTICS;
+truncate table STATS$ROLLSTAT;
+truncate table STATS$ROWCACHE_SUMMARY;
+truncate table STATS$SGA;
+truncate table STATS$SGASTAT;
+truncate table STATS$SYSSTAT;
+truncate table STATS$SESSTAT;
+truncate table STATS$SYSTEM_EVENT;
+truncate table STATS$SESSION_EVENT;
+truncate table STATS$BG_EVENT_SUMMARY;
+truncate table STATS$WAITSTAT;
+truncate table STATS$ENQUEUESTAT;
+truncate table STATS$SQL_SUMMARY;
+truncate table STATS$SQL_STATISTICS;
+truncate table STATS$SQLTEXT;
+truncate table STATS$PARAMETER;
+delete from STATS$SNAPSHOT;
+delete from STATS$DATABASE_INSTANCE;
+commit;
+</code></pre>
+<p>2.1.5  一些重要脚本<br>1．通过导出保存及共享数据<br>在诊断系统问题时，可能需要向专业人士提供原始数据，这时我们可以导出Statspack 表数据，<br>其中我们可能用到：spuexp.par<br>其内容主要为：<br>file=spuexp.dmp log=spuexp.log compress=y grants=y indexes=y rows=yconstraints=y owner=PERFSTAT consistent=y<br>我们可以导出如下：<br>exp userid=perfstat/my_perfstat_password parfile=spuexp.par</p>
+<p>2．删除数据<br>spdrop.sql 在执行时主要调用两个脚本: spdtab.sql 、spdusr.sql<br>前者删除表及同义词等数据，后者删除用户</p>
+<p>3．Oracle92中新增加的脚本<br>1） 用于升级statspack 对象的脚本,这些脚本需要以具有SYSDBA 权限的用户运行, 升级前请先<br>备份存在的Schema 数据:<br>spup90.sql: 用于升级9.0 版本的模式至9.2 版本。<br>spup817.sql: 如果从Statspack 8.1.7 升级,需要运行这个脚本<br>spup816.sql: 从Statspack 8.1.6 升级,需要运行这个脚本，然后运行spup817.sql<br>2） sprepsql.sql 用于根据给定的SQL Hash 值生成SQL 报告</p>
+<p>2.1.6  调整statspack的收集门限<br>Statspack 有两种类型的收集选项：</p>
+<p>1．级别（level）：控制收集数据的类型<br>Statspack 共有三种快照级别，默认值是5<br>a. level 0: 一般性能统计。包括等待事件、系统事件、系统统计、回滚段统计、行缓存、SGA、会话、锁、缓冲池统计等等。<br>b. level 5: 增加SQL 语句。除了包括level0 的所有内容，还包括SQL 语句的收集，收集结果记录在stats$sql_summary 中。<br>c. level 10: 增加子锁存统计。包括level5 的所有内容。并且还会将附加的子锁存存入stats$lathc_children中。在使用这个级别时需要慎重，建议在Oracle support 的指导下进行。<br>可以通过statspack 包修改缺省的级别设置<br>SQL&gt;executestatspack.snap(i_snap_level=&gt;0,i_modify_parameter=&gt;’true’);<br>通过这样的设置，以后的收集级别都将是0 级。<br>如果你只是想本次改变收集级别，可以忽略i_modify_parameter 参数。<br>SQL&gt;execute statspack.snap(i_snap_level=&gt;10);</p>
+<p>2．快照门限：设置收集的数据的阈值。<br>快照门限只应用于stats$sql_summary 表中获取的SQL 语句。<br>因为每一个快照都会收集很多数据，每一行都代表获取快照时数据库中的一个SQL 语句，所以stats$sql_summary 很快就会成为Statspack 中最大的表。<br>门限存储在stats$statspack_parameter 表中。让我们了结一下各种门限：<br>a. executions_th 这是SQL 语句执行的数量(默认值是100)<br>b. disk_reads_tn 这是SQL 语句执行的磁盘读入数量（默认值是1000）<br>c. parse_calls_th 这是SQL 语句执行的解析调用的数量（默认值是1000）<br>d. buffer_gets_th 这是SQL 语句执行的缓冲区获取的数量（默认值是10000）<br>任何一个门限值超过以上参数就会产生一条记录。<br>通过调用statspack.modify_statspack_parameter 函数我们可以改变门限的默认值。<br>例如：<br>SQL&gt;executestatspack.modify_statspack_parameter(i_buffer_gets_th=&gt;100000,i_disk_reads_th=&gt;100000;</p>
+<p>2.2  对statspack报告的分析<br>从上面的描述可以看出，产生一个statspack报告是比较简单的，但是如何读懂statspack报告却不是那么容易，需要对Oracle的体系架构、内存结构、等待事件以及应用系统有充分的了解，加上不断的实践，才能基本读懂statspack报告并且从报告中找到调整优化Oracle的途径。<br>下面接合一个实际的statspack报告，大致分析一下。</p>
+<p>2.2.1  基本信息分析</p>
+<pre><code>DB Name         DB Id   Instance     Inst Num Release     OPSHost
+------------ ----------- --------------------          --------------      ---------  ---
+RES           2749170756res                1  8.1.7.0.0   NO  res
+
+               Snap Id     Snap Time     Sessions
+               ------- ------------------ --------
+ Begin Snap:          226-Jul-03 16:37:08       38
+   End Snap:          326-Jul-03 17:03:23       38
+   Elapsed:                 26.25 (mins)
+</code></pre>
+<p>Statspack报告首先描述了数据库的基本情况，比如数据库名、实例名、实例个数、oracle版本号等等；然后是该报告的开始快照和结束快照的信息，包括 snapid , snap time 等等；最后是该报告经过的时间跨度，单位是分钟(mins)。</p>
+<p>Cache Sizes</p>
+<p>~~~~~~~~~~~<br>db_block_buffers:     61440         log_buffer:     163840<br>db_block_size:        8192     shared_pool_size:   52428800</p>
+<p>然后描述了Oracle内存结构中几个重要的参数。</p>
+<p>2.2.2  内存信息分析</p>
+<pre><code>Load Profile
+~~~~~~~~~~~~                      Per Second       Per Transaction
+                                  ---------------       ---------------
+             Redosize:             4,834.87            11,116.67
+          Logicalreads:               405.53               932.43
+          Blockchanges:                60.03               138.02
+          Physicalreads:               138.63               318.75
+          Physicalwrites:                54.27               124.79
+          Usercalls:                    62.69               144.13
+         Parses:                       19.14                44.00
+          Hardparses:                   2.26                 5.20
+                 Sorts:                 1.83                 4.20
+                Logons:                 0.21                 0.47
+              Executes:                21.10                48.50
+           Transactions:                 0.43
+
+  % Blocks changed perRead:   14.80    Recursive Call %:   34.45
+ Rollback per transaction %:   0.00       Rows per Sort:   20.57
+</code></pre>
+<p>Redo size: 是日志的生成量，分为每秒和每事务所产生的，通常在很繁忙的系统中日志生成量可能达到上百k，甚至几百k；</p>
+<p>Logical reads: 逻辑读实际上就是logical IO=buffer gets表示的含义，我们可以这样认为，block在内存中，我们每一次读一块内存，就相当于一次逻辑读；</p>
+<p>Parses 和 Hardparses:  Parse 和 hard parse通常是很容易出问题的部分，80%的系统的慢都是由于这个原因所导致的。<br>所谓parse分soft parse 和hard parse，soft parse是当一条sql传进来后，需要在shared pool中找是否有相同的sql，如果找到了，那就是soft parse，如果没有找着，那就开始hard parse，实际上hard parse主要是检查该sql所涉及到的所有的对象是否有效以及权限等关系，hardparse之后才根据rule/cost模式生成执行计划，再执行sql。<br>而hard parse的根源，基本都是由于不使用bind var所导致的，不使用bind var违背了oracle的shared pool的设计的原则，违背了这个设计用来共享的思想，这样导致shared_pool_size里面命中率下降。因此不使用bind var，将导致cpu使用率的问题，极有使得性能急剧下降。<br>还有就是为了维护internal structure，需要使用latch，latch是一种Oracle低级结构,用于保护内存资源，是一种内部生命周期很短的lock，大量使用latch将消耗大量的cpu资源。</p>
+<p>Sorts: 表示排序的数量；</p>
+<p>Executes: 表示执行次数；</p>
+<p>Transactions: 表示事务数量；</p>
+<p>Rollback per transaction %: 表示数据库中事务的回退率。如果不是因为业务本身的原因，通常应该小于10%为好，回退是一个很消耗资源的操作。</p>
+<pre><code>Instance Efficiency Percentages (Target 100%)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+           Buffer Nowait%:  100.00       Redo NoWait %:  99.98
+           Buffer Hit   %:   65.82    In-memory Sort%:   99.65
+           LibraryHit   %:   91.32       Soft Parse %:   88.18
+         Execute to Parse%:    9.28         LatchHit %:   99.99
+Parse CPU to Parse Elapsd %:   94.61     %Non-Parse CPU:   99.90
+</code></pre>
+<p>Buffer Hit %: 数据缓冲区命中率，通常应该大于90%；</p>
+<p>Library Hit %: libaray cache的命中率，通常应该大于98%；</p>
+<p>In-memory Sort %: 排序在内存的比例，如果这个比例过小，可以考虑增大sort_area_size，使得排序在内存中进行而不是在temp表空间中进行；</p>
+<p>Soft Parse %: 软解析的百分比，这个百分比也应该很大才好，因为我们要尽量减少hard parse。 soft parse 百分比=soft/(soft+hard)；</p>
+<p>Execute to Parse %: 这个数字也应该是越大越好，接近100%最好。有些报告中这个值是负的，看上去很奇怪。事实上这表示一个问题，sql如果被age out的话就可能出现这种情况，也就是sql老化，或执行alter system flush shared_pool等。</p>
+<pre><code>Shared Pool Statistics         Begin   End
+                            ------   ------
+         Memory Usage%:    90.63   87.19
+   % SQL with executions&gt;1:   71.53   75.39
+ % Memory for SQL w/exec&gt;1:  59.45   65.17
+</code></pre>
+<p>% SQL with executions&gt;1: 这个表示SQL被执行次数多于一次的比率，也应该大为好，小则表示很多sql只被执行了一次，说明没有使用bind var；</p>
+<p>2.2.3  等待事件分析<br>接下来，statspack报告中描述的是等待事件（Wait Events），这是Oracle中比较复杂难懂的概念。<br>Oracle 的等待事件是衡量Oracle 运行状况的重要依据及指标。<br>等待事件的概念是在Oracle7.0.1.2 中引入的，大致有100 个等待事件。在Oracle 8.0 中这个数目增加到了大约150 个，在Oracle8i 中大约有200 个事件,在Oracle9i 中大约有360 个等待事件。<br>主要有两种类别的等待事件，即空闲（idle）等待事件和非空闲（non-idle）等待事件。<br>空闲事件指Oracle 正等待某种工作,在诊断和优化数据库的时候,我们不用过多注意这部分事件。<br>常见的空闲事件有:</p>
+<pre><code>? dispatcher timer
+? lock element cleanup
+? Null event
+? parallel query dequeue wait
+? parallel query idle wait - Slaves
+? pipe get
+? PL/SQL lock timer
+? pmon timer- pmon
+? rdbms ipc message
+? slave wait
+? smon timer
+? SQL*Net break/reset to client
+? SQL*Net message from client
+? SQL*Net message to client
+? SQL*Net more data to client
+? virtual circuit status
+? client message
+</code></pre>
+<p>非空闲等待事件专门针对Oracle 的活动,指数据库任务或应用运行过程中发生的等待，这些等待事件是我们在调整数据库的时候应该关注与研究的。<br>一些常见的非空闲等待事件有:</p>
+<pre><code>? db file scattered read
+? db file sequential read
+? buffer busy waits
+? free buffer waits
+? enqueue
+? latch free
+? log file parallel write
+? log file sync
+</code></pre>
+<p>下面接合statspack中的一些等待事件进行讲述。</p>
+<pre><code>Top 5 Wait Events
+~~~~~~~~~~~~~~~~~                             Wait     % Total
+Event                                   Waits  Time (cs)   Wt Time
+--------------------------------------------          ------------ ------------    -------
+db file scatteredread                     26,877       12,850   52.94
+db file parallelwrite                        472        3,674   15.13
+log file parallel write                        975        1,560    6.43
+direct pathwrite                          1,571        1,543    6.36
+control file parallelwrite                    652        1,290    5.31
+         -------------------------------------------------------------
+</code></pre>
+<p>db file scattered read: DB文件分散读取。这个等待事件很常见，经常在top5中出现，这表示，一次从磁盘读数据进来的时候读了多于一个block的数据，而这些数据又被分散的放在不连续的内存块中，因为一次读进来的是多于一个block的。<br>通常来说我们可以认为是全表扫描类型的读，因为根据索引读表数据的话一次只读一个block，如果这个数字过大，就表明该表找不到索引，或者只能找到有限的索引，可能是全表扫描过多，需要检查sql是否合理的利用了索引，或者是否需要建立合理的索引。<br>当全表扫描被限制在内存时，它们很少会进入连续的缓冲区内，而是分散于整个缓冲存储器中。尽管在特定条件下执行全表扫描可能比索引扫描更有效，但如果出现这种等待时，最好检查一下这些全表扫描是否必要,是否可以通过建立合适的索引来减少对于大表全表扫描所产生的大规模数据读取。<br>对于经常使用的小表，应该尽量把他们pin 在内存中，避免不必要的老化清除及重复读取。</p>
+<p>db file sequential read: DB文件连续读取。通常显示单个块的读取(通常指索引读取)，表示的是读进磁盘的block被放在连续的内存块中。<br>事实上大部分基本代表着单个block的读入，可以说象征着 IO 或者说通过索引读入的比较多。因为一次IO若读进多个的block，放入连续的内存块的几率是很小的，分布在不同block的大量记录被读入就会遇到此事件。因为根据索引读数据的话，假设100条记录，根据索引，不算索引本身的读，而根据索引每个值去读一下表数据，理论上最多可能产生100 buffer gets，而如果是full table scan，则100条数据完全可能在一个block里面，则几乎一次就读过这个block了，就会产生这么大的差异。<br>这种等待的数目很多时，可能显示表的连接顺序不佳，或者不加选择地进行索引。<br>对于高级事务处理（high-transaction）、调整良好（welltuned）的系统，这一数值很大是很正常的，但在某些情况下，它可能暗示着系统中存在问题。<br>你应当将这一等待统计量与Statspack 报告中的已知问题（如效率较低的SQL）联系起来。检查索引扫描，以保证每个扫描都是必要的，并检查多表连接的连接顺序。<br>DB_CACHE_SIZE 也是这些等待出现频率的决定因素。有问题的散列区域（Hash-area）连接应当出现在PGA 内存中，但它们也会消耗大量内存，从而在顺序读取时导致大量等待。它们也可能以直接路径读／写等待的形式出现。</p>
+<p>Free Buffer Wait: 释放缓冲区。<br>这种等待表明系统正在等待内存中的缓冲，因为内存中已经没有可用的缓冲空间了。如果所有SQL 都得到了调优，这种等待可能表示你需要增大DB_BUFFER_CACHE。释放缓冲区等待也可能表示不加选择的SQL 导致数据溢出了带有索引块的缓冲存储器，没有为等待系统处理的特定语句留有缓冲区。<br>这种情况通常表示正在执行相当多数量的DML（插入／更新／删除），并且可能说明DBWR 写的速度不够快，缓冲存储器可能充满了相同缓冲器的多个版本，从而导致效率非常低。为了解决这个问题，可能需要考虑增加检查点、利用更多的DBWR 进程，或者增加物理磁盘的数量。</p>
+<p>Buffer Busy Wait: 缓冲区忙。<br>该等待事件表示正在等待一个以unshareable方式使用的缓冲区，或者表示当前正在被读入buffercache。也就是当进程想获取或者操作某个block的时候却发现被别的进程在使用而出现等待。一般来说BufferBusy Wait不应大于1%。<br>检查缓冲等待统计部分（或V$WAITSTAT），看一下等待是否位于段头。如果是，可以考虑增加自由列表（freelist，对于Oracle8i DMT）或者增加freelist groups.<br>其修改语法为：</p>
+<pre><code>SQL&gt; alter table sp_item storage (freelists 2);
+Table altered。
+</code></pre>
+<p>对于Oracle8i而言，增加freelist参数，在很多时候可以明显缓解等待，如果使用LMT，也就是 Local Manangement Tablespace，区段的管理就相对简单还可以考虑修改数据块的pctused\pctfree值，比如增大pctfree可以扩大数据的分布，在某种程度上就可以减少热点块的竞争。</p>
+<p>如果这一等待位于undo header，可以通过增加回滚段（rollback segment）来解决缓冲区的问题。<br>如果等待位于undo block上，我们可能需要检查相关应用，适当减少大规模的一致性读取，或者降低一致性读取(consistent read)的表中的数据密度或者增大DB_CACHE_SIZE。<br>如果等待处于data block，可以考虑将频繁并发访问的表或数据移到另一数据块或者进行更大范围的分布（可以增加pctfree 值，扩大数据分布，减少竞争），以避开这个”热点”数据块，或者可以考虑增加表中的自由列表或使用本地化管理的表空间（LocallyManaged Tablespaces）。<br>如果等待处于索引块，应该考虑重建索引、分割索引或使用反向键索引。反向键索引在很多情况下，可以极大地缓解竞争，其原理有点类似于hash分区的功效。反向键索引（reverse key index）常建在一些值是连续增长的列上，例如列中的值是由sequence产生的。</p>
+<p>为了防止与数据块相关的缓冲忙等待，也可以使用较小的块：在这种情况下，单个块中的记录就较少，所以这个块就不是那么”繁忙”；或者可以设置更大的pctfree,使数据扩大物理分布，减少记录间的热点竞争。<br>在执行DML (insert/update/ delete)时，Oracle向数据块中写入信息，对于多事务并发访问的数据表，关于ITL的竞争和等待可能出现，为了减少这个等待，可以增加initrans，使用多个ITL槽。<br>以下是一个生产系统v$waitstat 试图所显示的等待信息:</p>
+<pre><code>SQL&gt; select * from v$waitstat where count&lt;&gt;0 or time &lt;&gt;0;
+CLASS      COUNT TIME
+------------------ ---------- ----------
+data block       453   6686
+undo header      391   1126
+undo block      172      3
+</code></pre>
+<p>latch free: latch释放<br>latch 是一种低级排队机制，用于保护SGA 中共享内存结构。<br>latch就像是一种快速地被获取和释放的内存锁。latch用于防止共享内存结构被多个用户同时访问。如果latch不可用，就会记录latch释放失败(latch free miss)。<br>有两种与闩有关的类型：<br>■ 立刻。<br>■ 可以等待。<br>假如一个进程试图在立刻模式下获得闩，而该闩已经被另外一个进程所持有，如果该闩不能立刻可用的话，那么该进程就不会为获得该闩而等待。它将继续执行另一个操作。<br>大多数latch 问题都与以下操作相关：<br>没有很好的是用绑定变量（library cache latch）、重作生成问题（redoallocation latch）、缓冲存储器竞争问题（cache buffers LRUchain），以及buffer cache中的存在”热点”块（cache buffers chain）。<br>通常我们说，如果想设计一个失败的系统，不考虑绑定变量，这一个条件就够了，对于异构性极强的系统，不使用绑定变量的后果是极其严重的。<br>另外也有一些latch 等待与bug 有关，应当关注Metalink 相关bug 的公布及补丁的发布。<br>当latch miss ratios大于0.5%时，就应当研究这一问题。<br>Oracle 的 latch 机制是竞争，其处理类似于网络里的CSMA/CD，所有用户进程争夺latch，对于愿意等待类型(willing-to-wait)的latch,如果一个进程在第一次尝试中没有获得latch,那么它会等待并且再尝试一次,如果经过_spin_count 次争夺不能获得latch, 然后该进程转入睡眠状态，持续一段指定长度的时间，然后再次醒来，按顺序重复以前的步骤.在8i/9i 中默认值是 _spin_count=2000。<br>如果SQL语句不能调整，在8.1.6版本以上，Oracle提供了一个新的初始化参数: CURSOR_SHARING，可以通过设置CURSOR_SHARING = force 在服务器端强制绑定变量。设置该参数可能会带来一定的副作用，对于Java的程序，有相关的bug，具体应用应该关注Metalink的bug公告。</p>
+<p>enqueue<br>enqueue 是一种保护共享资源的锁定机制。该锁定机制保护共享资源，如记录中的数据，以避免两个人在同一时间更新同一数据。enqueue 包括一个排队机制，即FIFO（先进先出）排队机制。<br>Enqueue 等待常见的有ST、HW 、TX 、TM 等<br>ST enqueue 用于空间管理和字典管理的表空间(DMT)的分配。对于支持LMT 的版本，可以考虑使用本地管理表空间，对于Oracle8i，因为相关bug 不要把临时表空间设置为LMT. 或者考虑预分配一定数量的区。<br>HW enqueue 指段的高水位标记相关等待；手动分配适当区段可以避免这一等待。<br>TX 是最常见的enqueue 等待。TX enqueue 等待通常是以下三个问题之一产生的结果。<br>第一个问题是唯一索引中的重复索引，你需要执行提交（commit）/回滚（rollback）操作来释放enqueue。<br>第二个问题是对同一位图索引段的多次更新。因为单个位图段可能包含多个行地址（rowid），所以当多个用户试图更新同一段时，等待出现。直到提交或回滚，enqueue 释放。<br>第三个问题，也是最可能发生的问题是多个用户同时更新同一个块。如果没有自由的ITL 槽，就会发生块级锁定。通过增大initrans 和/或maxtrans 以允许使用多个ITL 槽，或者增大表上的pctfree值，就可以很轻松地避免这种情况。<br>TM enqueue 在DML 期间产生，以避免对受影响的对象使用DDL。如果有外键，一定要对它们进行索引，以避免这种常见的锁定问题。</p>
+<p>Log Buffer Space: 日志缓冲空间<br>当你将日志缓冲（log buffer）产生重做日志的速度比LGWR 的写出速度快，或者是当日志转换（log switch）太慢时，就会发生这种等待。为解决这个问题，可以增大日志文件的大小，或者增加日志缓冲器的大小.<br>另外一个可能的原因是磁盘I/O 存在瓶颈，可以考虑使用写入速度更快的磁盘。</p>
+<p>log file switch (archiving needed)<br>这个等待事件出现时通常是因为日志组循环写满以后，第一个日志归档尚未完成，出现该等待可能是 IO 存在问题。<br>解决办法：<br>可以考虑增大日志文件和增加日志组<br>移动归档文件到快速磁盘<br>调整log_archive_max_processes .</p>
+<p>log file switch (checkpoint incomplete): 日志切换（检查点未完成）<br>当你的日志组都写完以后，LGWR 试图写第一个log file，如果这时数据库没有完成写出记录在第一个log file 中的dirty 块时（例如第一个检查点未完成），该等待事件出现。<br>该等待事件说明你的日志组过少或者日志文件过小。<br>你可能需要增加你的日志组或日志文件大小。</p>
+<p>Log File Switch: 日志文件转换<br>所有的提交请求都需要等待”日志文件转换（必要的归档）”或”日志文件转换（chkpt.不完全）”。确保归档磁盘未满，并且速度不太慢。 DBWR可能会因为输入/输出（I／O）操作而变得很慢。你可能需要增加更多或更大的重做日志，而且如果DBWxR是问题症结所在的话，可能需要增加数据库书写器。</p>
+<p>log file sync: 日志文件同步<br>当一个用户提交或回滚数据时，LGWR 将session 会话的重做由redo buffer 写入到重做日志中。<br>log file sync 必须等待这一过程成功完成(Oracle 通过写redo log file 保证commit 成功的数据不丢失)，这个事件说明提交可能过于频繁，批量提交可以最大化LGWR 的效率，过分频繁的提交会引起LGWR频繁的激活，扩大了LGWR 的写代价。<br>为了减少这种等待事件，可以尝试每次提交更多的记录。<br>将重做日志置于较快的磁盘上，或者交替使用不同物理磁盘上的重做日志，以降低归档对LGWR的影响。<br>对于软RAID，一般来说不要使用RAID 5，RAID5 对于频繁写入得系统会带来较大的性能损失，可以考虑使用文件系统直接输入/输出，或者使用裸设备（raw device），这样可以获得写入的性能提高。</p>
+<p>log file single write<br>该事件仅与写日志文件头块相关，通常发生在增加新的组成员和增进序列号时。头块写单个进行，因为头块的部分信息是文件号，每个文件不同。更新日志文件头这个操作在后台完成，一般很少出现等待，无需太多关注。</p>
+<p>log file parallel write<br>从log buffer 写redo 记录到redo log 文件，主要指常规写操作(相对于log file sync)。<br>如果你的Log group 存在多个组成员，当flush log buffer 时，写操作是并行的，这时候此等待事件可能出现。<br>尽管这个写操作并行处理，直到所有I/O 操作完成该写操作才会完成(如果你的磁盘支持异步IO或者使用IO SLAVE，那么即使只有一个redo log file member,也有可能出现此等待)。<br>这个参数和log file sync 时间相比较可以用来衡量log file 的写入成本。通常称为同步成本率。</p>
+<p>control file parallel write: 控制文件并行写<br>当server 进程更新所有控制文件时，这个事件可能出现。<br>如果等待很短，可以不用考虑。如果等待时间较长，检查存放控制文件的物理磁盘I/O 是否存在瓶颈。<br>多个控制文件是完全相同的拷贝，用于镜像以提高安全性。对于业务系统，多个控制文件应该存放在不同的磁盘上，一般来说三个是足够的，如果只有两个物理硬盘，那么两个控制文件也是可以接受的。在同一个磁盘上保存多个控制文件是不具备实际意义的。<br>减少这个等待，可以考虑如下方法：<br>减少控制文件的个数(在确保安全的前提下)<br>如果系统支持，使用异步IO<br>转移控制文件到IO 负担轻的物理磁盘</p>
+<p>control file sequential read/ control file single write<br>控制文件连续读/控制文件单个写<br>对单个控制文件I/O 存在问题时，这两个事件会出现。<br>如果等待比较明显，检查单个控制文件，看存放位置是否存在I/O 瓶颈。<br>使用查询获得控制文件访问状态：<br>select P1 from V$SESSION_WAIT<br>where EVENT like ‘control file%’ and STATE=’WAITING’;<br>解决办法：<br>移动有问题的控制文件到快速磁盘<br>如果系统支持，启用异步I/O</p>
+<p>direct path write: 直接路径写<br>该等待发生在，等待确认所有未完成的异步I/O 都已写入磁盘。<br>你应该找到I/O 操作频繁的数据文件，调整其性能。<br>也有可能存在较多的磁盘排序，临时表空间操作频繁，可以考虑使用Local 管理表空间，分成多个小文件，写入不同磁盘或者裸设备。</p>
+<p>SQL*Net message from dblink<br>该等待通常指与分布式处理（从其他数据库中SELECT）有关的等待。<br>这个事件在通过DBLINKS 联机访问其他数据库时产生。如果查找的数据多数是静态的，可以考虑移动这些数据到本地表并根据需要刷新，通过快照或者物化视图来减少跨数据库的访问，会在性能上得到很大的提高。</p>
+<p>slave wait: 从属进程等<br>Slave Wait 是Slave I/O 进程等待请求，是一个空闲参数，一般不说明问题。</p>
+<p>2.2.4  High Load SQL 分析<br>对于一个特定的应用程序或者系统来讲，要调整优化其性能，最好的方法是检查程序的代码和用户使用的SQL语句。<br>如果使用了 level 5 级别的 snapshot ，那么statspack生成的报告中就会显示系统中高负荷SQL语句（High Load SQL）的信息，而其详细信息可以在 stats$sql_summary 表中查到。缺省情况下 snapshot 的级别是 level 5。<br>按照 buffer gets, physical reads, executions, memory usage andversion count 等参数的降序排列顺序，把SQL语句分为几个部分罗列在报告中。</p>
+<p>2.2.5  报告的其他部分<br>statspack报告的其他部分包括了 Instance Activity Stats，TablespaceIO Stats，Buffer Pool Statistics，Bufferwait Statistics，Rollback Segment Stats，LatchActivity，Dictionary Cache Stats，LibraryCache Activity，SGA breakdown difference 以及init.ora 参数，等等。目前本文不对这些内容进行详细讨论，请参加其他详细文档。</p>
+<p>2.3 trace session  （……）</p>
+<p>2.4 基于成本的优化器技术内幕<br>Oracle基于成本的优化器（Oracle’s cost-based SQL optimizer ，简称CBO)，是Oracle里面非常复杂的一个部分, 它决定了Oracle里面每个SQL的执行路径。CBO是一项评价SQL语句和产生最好执行计划的具有挑战性的工作，所以也使它成Oracle最复杂的软件组成部分。<br>众所周知，SQL的执行计划，几乎是Oracle性能调整最重要的方面了。所以想要学会如何调整Oracle数据库的性能，就要学会如何对SQL进行调整，就需要深入透彻理解CBO。<br>CBO的执行路径，取决于一些外部因素，内部的Oracle统计数据，以及数据是如何分布的。<br>我们将要讨论下面的话题：<br>CBO的参数：我们从基本的优化器参数开始学习，然后学习每个优化器参数是如何影响Oracle的优化器的执行的。</p>
+<p>CBO的统计：这里我们将讨论，使用Analyze或者DBMS_STATS来收集正确的统计数据，对Oracle 优化器而言，是多么的重要。我们还将学习如何把优化器的统计数据，从一个系统拷贝到另外一个系统，这样可以确保开发环境和产品数据库环境下，SQL的执行路径不会变化。</p>
+<p>下面我们开始讨论CBO优化模式以及影响CBO的Oracle参数</p>
+<p>2.4.1  CBO的参数<br>CBO受一些重要参数的影响，修改这些参数后可以看到CBO性能上戏剧性的变化。首先从设置CBO的optimizer_mode参数开始，然后讨论其他重要参数的设置。</p>
+<p>在 Oracle 9i 中，optimizer_mode 参数有四种取值，决定了四种优化模式：rule, choose, all_rows, 和 first_rows，其中 rule 和 choose 两种模式表示目前已经过时的基于规则的优化器模式（rule-based optimizer，简称RBO），所以我们在此着重讨论后两种CBO模式。</p>
+<p>优化模式的设置可以在系统级进行，也可以对某个会话（session）进行设置，或者对某个SQL语句进行设置。对应的语句如下：<br>alter system set optimizer_mode=first_rows_10;<br>alter session set optimizer_goal = all_rows;<br>select /*+ first_rows(100) */ from student;</p>
+<p>我们首先需要知道对一个SQL语句来说，什么是最好的执行计划（the best execution plan）？是使SQL语句返回结果的速度最快，还是使SQL语句占用系统资源最少？显然，这个答案取决于数据库的处理方式。</p>
+<p>举一个简单的例子，比如有下列SQL语句：<br>select customer_name<br>from<br>   customer<br>where<br>   region = ‘south’<br>order by<br>   customer_name;</p>
+<p>如果最好的执行计划是返回结果的速度最快，那么就需要使用region 列和 customer_name 列上的索引，从 customer 表中按照正确的顺序快速读取所有的列，而不用管是否从物理上读取了很多不连续的数据块导致的大量IO操作。（见下图）</p>
+<p>假设这个执行计划从开始到返回结果耗时0.0001 秒，同时产生了 10000 个 db_block_gets ，但是如果你的目标是计算资源的最小化呢？如果这个SQL语句是在一个批处理程序中执行，也许对返回结果的速度要求就不那么重要了，而另一个执行计划则可能耗费更少的系统资源。<br>在下图所示的例子中，并行的全表扫描由于不需要按照排序重新读取数据块，所以耗系统资源较少，并且IO操作也不多。当然，由于SQL语句执行过程中没有排序，得到预期结果的时间就长了，而资源耗费少了。假设这个执行计划从开始到返回结果耗时 10 秒，同时产生了 5000 个 db_block_gets</p>
+<p>Oracle提供了几个optimizer_mode 的设置参数，使你能够得到想要的最好的执行计划。</p>
+<p>optimizer_mode = first_rows<br>设置为这种CBO模式以后，SQL语句返回结果的速度会尽可能的快，而不管系统全部的查询是否会耗时较长或者耗系统资源过多。由于利用索引会使查询速度加快，所以 first_rows 优化模式会在全表扫描上进行索引扫描。这种优化模式一般适合于一些OLTP系统，满足用户能够在较短时间内看到较小查询结果集的要求。</p>
+<p>optimizer_mode = all_rows<br>设置为这种CBO模式以后，将保证消耗的所有计算资源最小，尽管有时查询结束以后没有结果返回。all_rows 的优化模式更倾向于全表扫描，而不是全索引扫描和利用索引排序，因此这种优化模式适合于数据查看实时性不是那么强的数据仓库、决策支持系统和面向批处理的数据库（batch-oriented databases）等。</p>
+<p>optimizer_mode = first_rows_n<br>Oracle 9i 对一些预期返回结果集的数据量小的SQL语句优化模式进行了加强，增加了四个参数值：first_rows_1、first_rows_10、 first_rows_100、first_rows_1000。CBO通过 first_rows_n 中的 n 值，决定了返回结果集数量的基数，我们可能仅仅需要查询结果集中的一部分，CBO就根据这样的 n 值来决定是否使用索引扫描。</p>
+<p>optimizer_mode = rule<br>基于规则的优化器模式，RBO，是早期Oracle版本使用过的一种优化模式。由于RBO不支持自1994年Oracle版本的新特性，如 bitmap indexes，table partitions，function-based indexes等，所以在以后Oracle版本中已经不再更新RBO，并且也不推荐用户使用RBO这种优化模式了。</p>
+<p>从上面的讨论可以看出，optimizer_mode 参数的设置对CBO是非常重要的，决定了CBO的基本模式，同时还有一些其他的参数也对CBO有着极大的影响。由于CBO的重要性，Oracle提供了一些系统级的参数来调整CBO的全局性能，这些调整参数包括索引扫描与全部扫描的选择、表连接方式的选择，等等。下面简单讨论一下。</p>
+<p>optimizer_index_cost_adj<br>这个参数用于调整使用索引的访问路径的成本算法，参数值越小，索引访问的成本就越低。</p>
+<p>optimizer_index_caching<br>这个参数告诉Oracle在内存缓冲区中索引的数量。该参数的设置会影响CBO如何决定使用表连接（嵌套循环）的索引还是使用全表扫描。</p>
+<p>db_file_multiblock_read_count<br>这个参数的值被设置较大的时候，CBO就会认为离散的、多数据块的读取会比顺序读取的代价更低，使得CBO更倾向于全表扫描。</p>
+<p>parallel_automatic_tuning<br>这个参数值被设置为 on 的时候，表示使用并行的全表扫描，由于并行的全表扫描比较快，所以CBO认为索引的访问是高成本的，同时就更倾向于全表扫描。</p>
+<p>hash_area_size<br>如果不使用 pga_aggregate_target 参数的话，该参数有效。该参数的设置大小决定CBO是否更加倾向于 hash joins ，而不是嵌套循环和表连接的索引合并。</p>
+<p>sort_area_size<br>如果不使用 pga_aggregate_target 参数的话，该参数有效。该参数的设置大小影响CBO决定是否进行索引访问和结果集的排序，参数值越大，在内存中排序的可能性就越大，CBO也就更加倾向于排序。</p>
+<p>由于对这些参数值的修改会影响到系统中成千上万的SQL语句的执行计划，所以Oracle并不推荐修改这些参数的缺省值。</p>
+<p>在对CBO的参数有了大致的了解以后，下面讨论如何根据提供给CBO的数据帮助CBO制定出一个好的执行计划。</p>
+<p>2.4.2  CBO的统计<br>对于CBO来说，最重要的是定义和管理好你的统计数据，为了使CBO能够为你的SQL语句产生一个最好的执行计划，必须要有与SQL语句相关的表和索引统计数据。只有当CBO知道了相关的信息，如表的大小、分布、基数以及列值的可选性等，才能对SQL语句作出正确的判断，从而得到最好的执行计划。</p>
+<p>下面讨论一下如何获得高质量的CBO统计数据，如何为你的数据库系统创建一个适当的CBO环境。</p>
+<p>CBO产生最好执行计划的能力来自于统计数据的有效性，获得统计数据的比较过时的方法是 analyze table 和 dbms_utility ，这两种方法对SQL语句的性能有一些危害，因为我们知道，CBO是使用对象统计数据（object statistics）来为所有的SQL语句选择最好的执行计划。</p>
+<p>dbms_stats 应用功能包是产生统计数据较好的方法，特别对大型分区表而言。下面看一个使用 dbms_stats 的例子。</p>
+<pre><code>exec dbms_stats.gather_schema_stats(
+  ownname          =&gt;&#39;SCOTT&#39;,
+ options            =&gt;&#39;GATHER AUTO&#39;,
+  estimate_percent    =&gt; dbms_stats.auto_sample_size,
+  method_opt        =&gt; &#39;for allcolumns size repeat&#39;,
+  degree           =&gt; 34
+   )
+</code></pre>
+<p>上面例子中的options参数的几个可选值需要说明一下。<br>GATHER  重新分析整个schema，产生统计数据；</p>
+<p>  GATHER EMPTY 仅分析那些还没有统计数据的表；</p>
+<p>  GATHER STALE 仅重新分析那些发生了10％变化的表（变化原因可能是 inserts, updates ,deletes ）</p>
+<p>  GATHER AUTO 仅重新分析那些还没有统计数据和发生了10％变化的表，该选项相当于 GATHER EMPTY 和 GATHER STALE 同时使用。</p>
+<p>使用 GATHER AUTO 和 GATHER STALE 两个选项需要进行监控，如果你执行了 ALTER TABLE XXX MONITORING 命令，Oracle利用 dba_tab_modifications 视图跟踪表的变化，记录了最近一次统计数据分析以来的 insert , update , delete 的准确记录数。</p>
+<pre><code>SQL&gt; desc dba_tab_modifications;
+ Name                    Type
+ -----------------             ---------------
+ TABLE_OWNER         VARCHAR2(30)
+ TABLE_NAME          VARCHAR2(30)
+ PARTITION_NAME       VARCHAR2(30)
+ SUBPARTITION_NAME   VARCHAR2(30)
+ INSERTS                NUMBER
+ UPDATES               NUMBER
+ DELETES               NUMBER
+ TIMESTAMP            DATE
+ TRUNCATED            VARCHAR2(3)
+</code></pre>
+<p>比较有趣的一个选项是 GATHER STALE ，比如在一个数据更新频繁的OLTP系统中，几乎所有的统计数据都会很快的过时，而我们必须记住GATHER STALE 选项是在表中10％的记录发生变化时才对该表重新分析产生统计数据，因此除了只读表以外的所有表几乎使用 GATHER STALE 选项重新分析产生统计数据，所以 GATHER STALE 选项主要还是用于一些主要是只读表组成的系统中。</p>
+<p>在上面使用 dbms_stats 的例子中，我们看到了一个参数 estimate_percent ，它的值是dbms_stats.auto_sample_size, 这个参数值是 Oracle 9i 才开始使用的，这个参数值的出现极大方便了统计数据的分析产生。<br>我们知道，统计数据的质量越高，CBO产生最好执行计划的能力就越强，但是由于数据库统计采样大小的问题，对一个大型数据库系统做一个完整的统计数据分析产生将会耗时数天，最好的办法就是在高质量的统计数据和数据库统计采样大小之间得到一个平衡点。<br>在早一些的Oracle版本中，为了得到统计数据，DBA不得不猜测一个最好的数据采样大小百分比。但是从 Oracle 9i 开始，可以通过 dbms_stats 包来自己指定 estimate_percent 参数的值了，那就是dbms_stats.auto_sample_size<br>通过这种方式设置了自动采样大小以后，我们可以通过下列数据字典视图的 sample_size 字段来验证这些自动产生的统计采样大小。</p>
+<pre><code>DBA_ALL_TABLES
+DBA_INDEXES
+DBA_IND_PARTITIONS
+DBA_IND_SUBPARTITIONS
+DBA_OBJECT_TABLES
+DBA_PART_COL_STATISTICS
+DBA_SUBPART_COL_STATISTICS
+DBA_TABLES
+DBA_TAB_COLS
+DBA_TAB_COLUMNS
+DBA_TAB_COL_STATISTICS
+DBA_TAB_PARTITIONS
+DBA_TAB_SUBPARTITIONS
+</code></pre>
+<p>使用自动统计采样以后，Oracle会根据表的大小和列值的分布在5％到20％之间取值。记住：你的统计数据质量越高，CBO作出的决定就越对你有利。</p>
+<p>现在我们对CBO统计数据应该有一些了解了，下面来看看在一个成功的Oracle系统是如何管理CBO统计数据。</p>
+<p>2.4.3  CBO的正确环境<br>成功使用CBO的关键是稳定性，下面是一些成功使用CBO的基本事项。</p>
+<p>●只在必需的时候才进行统计数据的重新分析<br>Oracle DBA们最容易犯的一个普遍错误就是经常性的对系统的统计数据进行重新分析。记住：做这件事的唯一目的是改变SQL语句的执行计划，如果这个执行计划没有被破坏，就不要去修复它。如果你对SQL语句的性能还满意的话，重新分析产生统计数据以后可能会产生较大的性能问题，并给开发团队带来影响。实际运用中，也是极少数的Oracle系统才会周期性的对统计数据进行重新分析。<br>一般来讲，一个数据库应用系统的基本架构是不会轻易改变，大数据量的表仍然是很大，索引列的分布、基数值等等也很少变化。只有下列几种情况的数据库才可能经常对整个系统的统计数据重新分析：<br>1、用于数据分析的数据库<br>   有一些由于科学试验数据分析的数据库系统，经常会更换整个一套的试验数据，那么这种情况下当数据库重新load了一套数据以后，可以立即重新对统计数据进行分析。<br>2、高度变化的数据库<br>   这是极少数的例子，表的大小或者索引列的数据在剧烈的变化，比如一张表有100条记录，一周以后就变成10000条记录。这种情况下也可以考虑周期性的进行统计数据分析。</p>
+<p>●强迫开发人员调整自己的SQL<br>很多开发人员错误的认为，他们的任务就是编写SQL语句然后从数据库中获得正确的数据。但是实际上编写出SQL语句只是开发人员一半的工作，在一个成功的Oracle应用系统中，会要求开发人员的SQL语句采用最优化的方式访问数据库，并且保证SQL语句的执行计划在新的SQL之间的可移植性。<br>令人惊讶的是，在许多Oracle应用系统中都不怎么考虑具体SQL语句的执行计划，认为CBO是很智能的，无论如何都可以为我们提供最好的SQL语句执行计划。<br>同一个查询在SQL语句中可能有不同方式的写法，而每一种写法都可能有不同的执行计划。观察下面的例子，每一个查询的结果都是一样的，但是执行计划却相去甚远。</p>
+<p>– 使用了不正确的子查询</p>
+<pre><code>select
+  book_title
+from
+  book
+where
+  book_key not in (select book_key from sales);
+ 
+Execution Plan
+----------------------------------------------------------
+0      SELECT STATEMENT Optimizer=CHOOSE (Cost=1Card=1 Bytes=64)
+1    0   FILTER
+2    1     TABLE ACCESS (FULL) OF &#39;BOOK&#39;(Cost=1 Card=1 Bytes=64)
+3    1     TABLE ACCESS (FULL) OF &#39;SALES&#39;(Cost=1 Card=5 Bytes=25)
+</code></pre>
+<p>– 使用了两张表的外连接</p>
+<pre><code>select
+  book_title
+from
+  book  b,
+  sales  s
+where
+  b.book_key = s.book_key(+) 
+and
+  quantity is null;
+
+Execution Plan
+----------------------------------------------------------
+0   SELECT STATEMENT Optimizer=CHOOSE (Cost=3 Card=100 Bytes=8200)
+
+1  0 FILTER
+2  1   FILTER
+3  2     HASH JOIN (OUTER)
+4  3      TABLE ACCESS (FULL) OF &#39;BOOK&#39; (Cost=1Card=20 Bytes=1280)
+5  3      TABLE ACCESS (FULL) OF &#39;SALES&#39; (Cost=1Card=100 Bytes=1800)
+
+
+-- 使用了三个正确的子查询
+select
+  book_title
+from
+  book
+where
+  book_title not in (
+               select
+               distinct
+                 book_title
+               from
+                 book,
+                 sales
+               where
+                 book.book_key = sales.book_key
+               and
+                 quantity &gt; 0);
+
+Execution Plan
+----------------------------------------------------------
+0   SELECT STATEMENT Optimizer=CHOOSE (Cost=1 Card=1 Bytes=59)
+1  0  FILTER
+2  1   TABLE ACCESS (FULL) OF &#39;BOOK&#39; (Cost=1 Card=1 Bytes=59)
+3  1   FILTER
+4  3     NESTED LOOPS (Cost=6 Card=1 Bytes=82)
+5  4       TABLE ACCESS (FULL) OF &#39;SALES&#39;(Cost=1 Card=5 Bytes=90)
+6  4       TABLE ACCESS (BY INDEX ROWID) OF&#39;BOOK&#39; (Cost=1 Card=1)
+7  6         INDEX (UNIQUE SCAN)OF &#39;PK_BOOK&#39; (UNIQUE)
+</code></pre>
+<p>我们看到，正确的SQL语句写法产生的执行计划是如此的不同。明智的开发人员知道如何去编写能够产生最好执行计划的SQL语句，明智的Oracle应用系统也会主动训练开发人员去编写最有效的SQL语句。</p>
+<p>下面是一些帮助开发人员优化SQL语句的技巧：<br>1、 使用 autotrace 和 TKPROF 功能去分析SQL语句的执行计划；<br>2、 保证所有生产环境中的SQL语句都是在测试环境中经过优化的；<br>3、 制定一个性能优化的标准，而不是只要求开发人员编写出最快的SQL语句。根据这种标准，好的开发人员应该能够写出最有效的SQL语句。</p>
+<p>●谨慎管理CBO统计数据<br>成功的Oracle系统会谨慎管理他们的CBO统计数据，以保证CBO在测试环境和生产环境中以同样的方式工作。一个聪明的DBA会在得到高质量的CBO统计数据以后，把这些统计数据移植到测试环境中，这样SQL语句的执行计划在测试环境和生产环境中就是一样的了。</p>
+<p>对DBA来说，一个重要的工作就是收集和发布CBO统计数据，并随时保持一套当前运行环境的最精确的统计数据。在一些情况下，可能会有不止一套的优化统计数据。比如，对OLTP运行的最好的统计数据可能对数据仓库运行却不是最好的，在这种情况下，DBA就需要保持两套统计数据，并根据不同的运行条件导入系统。</p>
+<p>可以使用 dbms_stats 包中的 export_system_stats 存储过程来完成CBO统计数据的导出。下面的例子中，我们把当前CBO统计数据导出到一张名叫 stats_table_oltp的表中。<br>dbms_stats.export_system_stats(‘stats_table_oltp’)</p>
+<p>导出以后，我们就可以把这张表拷贝到别的实例中，当系统的运行模式改变以后，使用 dbms_stats 包中的 import_system_stats 存储过程来完成CBO统计数据的导入。<br>dbms_stats.import_system_stats(‘stats_table_oltp’)</p>
+<p>●千万不要随便改动CBO参数的值<br>改动CBO相关参数的值是非常危险的，因为一个小小的改动可能就会对整个系统的执行性能带来极大的负面影响，只有在经过严格的系统测试以后才能改动这些参数的值。可能带来极大影响的参数值包括：optimizer_mode, optimizer_index_cost_adj, andoptimizer_index_caching。而其他参数，比如 hash_area_size ,sort_area_size，参数值的改变就不是那么危险了，可以在会话级进行改变以帮助CBO优化查询。</p>
+<p>●保证静态的执行计划<br>成功的CBO应用会通过谨慎管理统计数据来锁定SQL执行计划，同时保证存储的优化计划的稳定性，或者在具体的SQL语句中加入一些细节上的提示。<br>记住：重新分析一个系统的统计数据，可能会导致成千上万的SQL语句改变其执行计划。许多Oracle应用系统要求所有的SQL语句在测试环境中经过验证，保证在功能上和生产环境是一致的。</p>
+<p>2.4.4  CBO的思考<br>尽管我们已经对CBO的不少细节有了了解，但是由于随着Oracle新版本的不断推出，CBO变得越来越强大，同时也越来越复杂，我们仍然有许多关于CBO的知识需要学习。<br>下面是一些关于CBO调整的提纲性的建议，供准备进行CBO调整的DBA们思考。</p>
+<p>●DBA可以提供一些Oracle参数的配置对CBO进行控制，但是只能在有限的环境下谨慎的改变这些参数；</p>
+<p>●CBO依靠统计数据来产生SQL语句的优化的执行计划，可以通过 dbms_stats 包来分析、产生统计数据；</p>
+<p>●DBA们的一项重要任务就是收集、管理CBO统计数据，这些数据可以被收集、存储，也可以在相关的实例中进行移植，以保证执行计划的连贯性。</p>
+<p>●在没有使用export_system_stats 存储过程导出原来的统计数据以前，重新对系统的统计数据进行分析是十分危险的，因为成千上万的SQL语句的执行计划将可能全部改变，而你却不能恢复原来的 SQL性能。只有在系统的数据发生巨大变化时，才可能需要对整个系统的统计数据进行重新分析。</p>
+<p>本小节是关于CBO的一些技术讨论，原文来自 Donald K. Burleson 在OTN上的一篇文章，具体URL路径是：<br><a target="_blank" rel="noopener" href="http://otn.oracle.com/oramag/webcolumns/2003/techarticles/burleson_cbo_pt1.html">http://otn.oracle.com/oramag/webcolumns/2003/techarticles/burleson_cbo_pt1.html</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/Oracle_zsq/article/details/79956538">https://blog.csdn.net/Oracle_zsq/article/details/79956538</a>
+ </p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Oracle/" rel="tag">Oracle</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-Java突击：03-Thread"
   class="article article-type-post"
   itemscope
@@ -1403,231 +2233,6 @@ CMS 工作机制相比其他的垃圾收集器来说更复杂，整个过程分�
     <footer class="article-footer">
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wiki/" rel="tag">wiki</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%99%BE%E7%A7%91/" rel="tag">百科</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-GO入门14：Windows下环境配置"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/04/11/GO%E5%85%A5%E9%97%A814%EF%BC%9AWindows%E4%B8%8B%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/"
-    >GO入门14：Windows下环境配置</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/04/11/GO%E5%85%A5%E9%97%A814%EF%BC%9AWindows%E4%B8%8B%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" class="article-date">
-  <time datetime="2023-04-11T03:40:26.000Z" itemprop="datePublished">2023-04-11</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="下载地址"><a href="#下载地址" class="headerlink" title="下载地址"></a>下载地址</h1><p>安装包下载地址为：<a target="_blank" rel="noopener" href="https://go.dev/dl/%E3%80%82">https://go.dev/dl/。</a></p>
-<p>如果打不开可以使用这个地址：<a target="_blank" rel="noopener" href="https://golang.google.cn/dl/%E3%80%82">https://golang.google.cn/dl/。</a></p>
-<h1 id="Windows-系统下安装"><a href="#Windows-系统下安装" class="headerlink" title="Windows 系统下安装"></a>Windows 系统下安装</h1><p>Windows 下可以使用 .msi 后缀(在下载列表中可以找到该文件，如go1.4.2.windows-amd64.msi)的安装包来安装。</p>
-<p>默认情况下 .msi 文件会安装在 c:\Go 目录下。你可以将 c:\Go\bin 目录添加到 Path 环境变量中。添加后你需要重启命令窗口才能生效。</p>
-<p>环境变量设置好后，可以通过 go env 命令来进行测试。</p>
-<pre><code>C:\Users\Administrator&gt;go env
-set GO111MODULE=
-set GOARCH=amd64
-set GOBIN=
-set GOCACHE=C:\Users\Administrator\AppData\Local\go-build
-set GOENV=C:\Users\Administrator\AppData\Roaming\go\env
-set GOEXE=.exe
-set GOFLAGS=
-set GOHOSTARCH=amd64
-set GOHOSTOS=windows
-set GONOPROXY=
-set GONOSUMDB=
-set GOOS=windows
-set GOPATH=C:\Users\Administrator\go
-set GOPRIVATE=
-set GOPROXY=https://proxy.golang.org,direct
-set GOROOT=c:\go
-. . .
-</code></pre>
-<p>上面只显示了部分结果，如果执行go env 命令后，出现类似上面的结果，说明我们的Go开发包已经安装成功了。</p>
-<h2 id="配置GOPROXY"><a href="#配置GOPROXY" class="headerlink" title="配置GOPROXY"></a>配置GOPROXY</h2><p>Go1.12版本之后，开始使用go mod模式来管理依赖环境了</p>
-<p>由于国内访问不到默认的GOPROXY配置链接，所以我们需要换一个PROXY，这里推荐使用 <a target="_blank" rel="noopener" href="https://goproxy.io/">https://goproxy.io</a> 或 <a target="_blank" rel="noopener" href="https://goproxy.cn/">https://goproxy.cn</a> 。</p>
-<p>可以执行下面的命令修改GOPROXY：</p>
-<pre><code>go env -w GOPROXY=https://goproxy.cn,direct
-</code></pre>
-<h2 id="GO-MOD设置"><a href="#GO-MOD设置" class="headerlink" title="GO MOD设置"></a>GO MOD设置</h2><p>要启用go module支持首先要设置环境变量GO111MODULE，通过它可以开启或关闭模块支持，它有三个可选值：off、on、auto，默认值是auto。</p>
-<pre><code>GO111MODULE=off禁用模块支持，编译时会从GOPATH和vendor文件夹中查找包。
-GO111MODULE=on启用模块支持，编译时会忽略GOPATH和vendor文件夹，只根据 go.mod下载依赖。
-GO111MODULE=auto，当项目在$GOPATH/src外且项目根目录有go.mod文件时，开启模块支持。
-</code></pre>
-<p>通过以下命令修改</p>
-<pre><code>go env -w GO111MODULE=on
-</code></pre>
-<p>使用go module模式新建项目时，我们需要通过go mod init 项目名命令对项目进行初始化，该命令会在项目根目录下生成go.mod文件。例如，我们使用hello作为我们第一个Go项目的名称，执行如下命令。</p>
-<pre><code>go mod init hello
-</code></pre>
-<p>运行之前可以使用​go mod tidy​命令将所需依赖添加到go.mod文件中，并且能去掉项目中不需要的依赖。</p>
-<h1 id="安装测试"><a href="#安装测试" class="headerlink" title="安装测试"></a>安装测试</h1><p>创建工作目录 C:&gt;Go_WorkSpace。</p>
-<p>文件名: test.go，代码如下：</p>
-<pre><code>package main
-
-import &quot;fmt&quot;
-
-func main() &#123;
-   fmt.Println(&quot;Hello, World!&quot;)
-&#125;
-</code></pre>
-<p>使用 go 命令执行以上代码输出结果如下：</p>
-<pre><code>C:\Go_WorkSpace&gt;go run test.go
-
-Hello, World!
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GO/" rel="tag">GO</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-GO入门13：结构体、数组、切片"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/04/10/GO%E5%85%A5%E9%97%A813%EF%BC%9A%E7%BB%93%E6%9E%84%E4%BD%93%E3%80%81%E6%95%B0%E7%BB%84%E3%80%81%E5%88%87%E7%89%87/"
-    >GO入门13：结构体、数组、切片</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/04/10/GO%E5%85%A5%E9%97%A813%EF%BC%9A%E7%BB%93%E6%9E%84%E4%BD%93%E3%80%81%E6%95%B0%E7%BB%84%E3%80%81%E5%88%87%E7%89%87/" class="article-date">
-  <time datetime="2023-04-10T13:30:05.000Z" itemprop="datePublished">2023-04-10</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>数组如作为函数参数，需要转为切片。<br>GO语言的切片等价于其他语言的vector。</p>
-<pre><code>package main
-
-import &quot;fmt&quot;
-
-type Books struct &#123;
-    title   string
-    author  string
-    subject string
-    book_id int
-&#125;
-
-func main() &#123;
-    var Book1 Books /* 声明 Book1 为 Books 类型 */
-    var Book2 Books /* 声明 Book2 为 Books 类型 */
-
-    /* book 1 描述 */
-    Book1.title = &quot;Go 语言&quot;
-    Book1.author = &quot;www.runoob.com&quot;
-    Book1.subject = &quot;Go 语言教程&quot;
-    Book1.book_id = 6495407
-
-    /* book 2 描述 */
-    Book2.title = &quot;Python 教程&quot;
-    Book2.author = &quot;www.runoob.com&quot;
-    Book2.subject = &quot;Python 语言教程&quot;
-    Book2.book_id = 6495700
-
-    var BookArr [2]Books
-    BookArr[0] = Book1
-    BookArr[1] = Book2
-
-    var BookSlice []Books
-    BookSlice = append(BookSlice, Book1, Book2)
-    BookSlice = append(BookSlice, Books&#123;&quot;Go++ 语言&quot;, &quot;www.runoob.com&quot;, &quot;Go 语言教程&quot;, 6495407&#125;)
-
-    /* 打印 Book1 信息 */
-    printBook(&amp;Book1)
-    printBook(&amp;Book2)
-    printBooks(BookArr[:])
-    printBooks(BookSlice)
-&#125;
-
-func printBook(book *Books) &#123;
-    fmt.Println(&quot;printBook----&quot;)
-    fmt.Printf(&quot;Book title : %s\n&quot;, book.title)
-    fmt.Printf(&quot;Book author : %s\n&quot;, book.author)
-    fmt.Printf(&quot;Book subject : %s\n&quot;, book.subject)
-    fmt.Printf(&quot;Book book_id : %d\n&quot;, book.book_id)
-    fmt.Println()
-&#125;
-
-func printBooks(arr []Books) &#123;
-    fmt.Println(&quot;printBooks----&quot;)
-    for i := 0; i &lt; len(arr); i++ &#123;
-        book := arr[i]
-        fmt.Printf(&quot;Book title : %s\n&quot;, book.title)
-        fmt.Printf(&quot;Book author : %s\n&quot;, book.author)
-        fmt.Printf(&quot;Book subject : %s\n&quot;, book.subject)
-        fmt.Printf(&quot;Book book_id : %d\n&quot;, book.book_id)
-    &#125;
-    fmt.Println()
-&#125;
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GO/" rel="tag">GO</a></li></ul>
 
     </footer>
   </div>

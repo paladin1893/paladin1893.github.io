@@ -154,6 +154,165 @@
     
     
     <article
+  id="post-Ubuntu用户列表：如何查看系统用户列表及其详细信息"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/11/11/Ubuntu%E7%94%A8%E6%88%B7%E5%88%97%E8%A1%A8%EF%BC%9A%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E7%B3%BB%E7%BB%9F%E7%94%A8%E6%88%B7%E5%88%97%E8%A1%A8%E5%8F%8A%E5%85%B6%E8%AF%A6%E7%BB%86%E4%BF%A1%E6%81%AF/"
+    >Ubuntu用户列表：如何查看系统用户列表及其详细信息</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/11/11/Ubuntu%E7%94%A8%E6%88%B7%E5%88%97%E8%A1%A8%EF%BC%9A%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E7%B3%BB%E7%BB%9F%E7%94%A8%E6%88%B7%E5%88%97%E8%A1%A8%E5%8F%8A%E5%85%B6%E8%AF%A6%E7%BB%86%E4%BF%A1%E6%81%AF/" class="article-date">
+  <time datetime="2023-11-11T13:14:23.000Z" itemprop="datePublished">2023-11-11</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p><a target="_blank" rel="noopener" href="https://www.python100.com/html/91575.html">https://www.python100.com/html/91575.html</a></p>
+<p>更新：2023-05-19 10:46</p>
+<p>在Linux系统中，管理用户和组是一个很重要的任务之一。在Ubuntu系统中，用户和组信息存储在/etc/passwd和/etc/group文件中。在本文中，我们将探讨如何在Ubuntu系统中查看用户列表及其详细信息。</p>
+<p>一、查看系统用户列表</p>
+<p>Ubuntu系统中默认有许多已创建的系统用户，例如root用户、guest用户等。我们需要查看系统中所有的用户列表，以确定是否有非法用户或潜在安全隐患。</p>
+<p>要查看系统中所有的用户列表，打开终端并输入以下命令：</p>
+<pre><code>cat /etc/passwd | cut -d&quot;:&quot; -f1
+</code></pre>
+<p>该命令将显示系统上所有用户的用户名。输出结果可能会很长，如果需要分页显示，可以使用以下命令：</p>
+<pre><code>cat /etc/passwd | cut -d&quot;:&quot; -f1 | less
+</code></pre>
+<p>现在你可以使用箭头键和Page Up/Page Down键在列表中导航。</p>
+<p>二、查看单个用户详细信息</p>
+<p>有时我们需要获悉一个特定用户的详细信息，例如UID、GID、主目录路径和Shell类型等等。可以使用以下命令来查看单个用户的详细信息：</p>
+<pre><code>id &lt;用户名&gt;
+</code></pre>
+<p>例如，我们想查看用户“ubuntu”的详细信息，可以输入以下命令：</p>
+<pre><code>id ubuntu
+</code></pre>
+<p>该命令将显示有关用户“ubuntu”的所有详细信息，包括UID、GID、组成员身份以及主目录和Shell类型。</p>
+<p>三、查看所有用户详细信息</p>
+<p>有时我们需要查看系统中所有用户的详细信息。可以使用以下命令获得系统中所有用户的完整信息列表：</p>
+<pre><code>cat /etc/passwd
+</code></pre>
+<p>该命令会在终端中显示所有系统用户的详细信息列表，包括每个用户的用户名、密码、UID、GID、用户全名、主目录路径和Shell类型等信息。</p>
+<p>如果需要对列表进行分页显示，可以使用以下命令：</p>
+<pre><code>cat /etc/passwd | less
+</code></pre>
+<p>现在你可以使用箭头键和Page Up/Page Down键在列表中浏览。如果要退出列表，请按“q”键。</p>
+<p>四、总结</p>
+<p>通过本文，我们学习了如何在Ubuntu系统中查看系统用户列表及其详细信息。我们可以使用不同的命令来查看用户列表、单个用户的详细信息以及系统中所有用户的详细信息列表。这些技巧对于用户管理和安全意识非常有用。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Ubuntu/" rel="tag">Ubuntu</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-macOS程序破解提示文件提示损坏解决办法"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/11/10/macOS%E7%A8%8B%E5%BA%8F%E7%A0%B4%E8%A7%A3%E6%8F%90%E7%A4%BA%E6%96%87%E4%BB%B6%E6%8F%90%E7%A4%BA%E6%8D%9F%E5%9D%8F%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/"
+    >macOS程序破解提示文件提示损坏解决办法</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/11/10/macOS%E7%A8%8B%E5%BA%8F%E7%A0%B4%E8%A7%A3%E6%8F%90%E7%A4%BA%E6%96%87%E4%BB%B6%E6%8F%90%E7%A4%BA%E6%8D%9F%E5%9D%8F%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" class="article-date">
+  <time datetime="2023-11-10T13:14:23.000Z" itemprop="datePublished">2023-11-10</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>文件提示损坏解决办法</p>
+<h1 id="方案一"><a href="#方案一" class="headerlink" title="方案一"></a>方案一</h1><p>解除隔离，绕过签名</p>
+<p>启动终端实用程序，使用命令：</p>
+<pre><code>sudo xattr -r -d com.apple.quarantine 
+</code></pre>
+<p>输入一个空格，然后将损坏的程序拖到终端窗口中。团队将添加它。</p>
+<h1 id="方案二"><a href="#方案二" class="headerlink" title="方案二"></a>方案二</h1><p>禁用 Gatekeeper：</p>
+<p>启动终端实用程序并运行命令</p>
+<p>对于 macOS 10.12 – 10.15.7，执行如下命令：</p>
+<pre><code>sudo spctl --master-disable
+</code></pre>
+<p>对于 macOS 11 及更高版本，执行如下命令：</p>
+<pre><code>sudo spctl --global-disable
+</code></pre>
+<p>无需将任何内容拖到终端中。要启用 Gatekeeper，请将“disable”替换为“enable”。</p>
+<h1 id="方案三"><a href="#方案三" class="headerlink" title="方案三"></a>方案三</h1><p>应用签名方法</p>
+<p>先安装Command Line Tools 工具，打开终端工具输入如下命令：</p>
+<pre><code>xcode-select --install
+</code></pre>
+<p>弹出安装窗口后选择继续安装，安装过程需要几分钟，请耐心等待。</p>
+<p>打开终端工具输入并执行如下命令对应用签名：</p>
+<pre><code>sudo codesign --force --deep --sign - (应用路径)
+</code></pre>
+<p>注意：应用路径是「访达（Finder）-&gt;应用程序」找到应用将其拖进终端命令 – 的后面，然后按下回车键，输入macOS的密码然后按回车(输入过程中密码是不显示的，输入完密码直接按回车键即可！)<br>出现 「replacing existing signature」 提示即成功！</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/macOS/" rel="tag">macOS</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-macOS命令添加用户、删除用户"
   class="article article-type-post"
   itemscope
@@ -527,244 +686,6 @@ git clone --depth 1 https://github.com/xiangyuecn/AreaCity-JsSpider-StatsGov.git
     <footer class="article-footer">
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%9C%B0%E7%90%86%E6%95%B0%E6%8D%AE/" rel="tag">地理数据</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-CentOS最小安装"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/11/05/CentOS%E6%9C%80%E5%B0%8F%E5%AE%89%E8%A3%85/"
-    >CentOS最小安装</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/11/05/CentOS%E6%9C%80%E5%B0%8F%E5%AE%89%E8%A3%85/" class="article-date">
-  <time datetime="2023-11-05T13:28:00.000Z" itemprop="datePublished">2023-11-05</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>1、将安装光盘插入服务器，开机时会读取系统安装程序，选择Install CentOS 7</p>
-<p>2、安装过程是图形界面,可以选择熟悉的语言执行安装程序</p>
-<p>3、选择SECURITY POLICY(安全策略)将其关闭</p>
-<p>4、把KDUMP(内核崩溃转储机制)也进行关闭</p>
-<p>5、接着配置网络,服务器的网线是已经连接好的</p>
-<p>打开以太网连接</p>
-<p>将IPv6设置 忽略</p>
-<p>配置好地址,搜索域是这台主机的网络地址.</p>
-<p>主机名也是网络标识,修改一下.</p>
-<p>可以打开新的TTY终端,进行网络的连通性测试.</p>
-<p>6、硬盘分区</p>
-<p>boot引导到分区根据系统进行配置,swap分区根据内存大小而定.</p>
-<p>7、时间配置</p>
-<p>选择时区,可以将网络时间打开.</p>
-<p>8、选择所安装的系统类型</p>
-<p>选择最小安装,将一些开发工具勾选.</p>
-<p>9、开始安装</p>
-<p>安装前配置好了,选择开始安装.</p>
-<p>10、给ROOT配置密码</p>
-<p>11、安装完成</p>
-<p>安装成功,重启进入系统.</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Centos7使用rpm离线安装PostgreSQL"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/11/04/Centos7%E4%BD%BF%E7%94%A8rpm%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85PostgreSQL/"
-    >Centos7使用rpm离线安装PostgreSQL</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/11/04/Centos7%E4%BD%BF%E7%94%A8rpm%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85PostgreSQL/" class="article-date">
-  <time datetime="2023-11-04T13:28:00.000Z" itemprop="datePublished">2023-11-04</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><p>使用一台能够联网的centos电脑</p>
-<p>安装postgresql源</p>
-<pre><code>yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
-</code></pre>
-<p>安装 yumdownloader工具</p>
-<pre><code>yum install yum-utils -y
-</code></pre>
-<p>Yumdownloader是一款简单，但是却十分有用的命令行工具，<em>它可以一次性下载任何 RPM 软件包及其所有依赖包</em>。</p>
-<h1 id="PostgreSQL"><a href="#PostgreSQL" class="headerlink" title="PostgreSQL"></a>PostgreSQL</h1><h2 id="下载离线包"><a href="#下载离线包" class="headerlink" title="下载离线包"></a>下载离线包</h2><p>postgresql14-server</p>
-<pre><code>yumdownloader --resolve postgresql14-server
-</code></pre>
-<p>postgresql14</p>
-<pre><code>yumdownloader --resolve postgresql14
-</code></pre>
-<p>这里我们需要的是 postgresql14-server的相关依赖，可看到postgresql14-server的依赖包含了postgresql14客户端的依赖</p>
-<h2 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h2><pre><code>rpm -ivh libicu-50.2-4.el7_7.x86_64.rpm postgresql14-libs-14.10-1PGDG.rhel7.x86_64.rpm postgresql14-14.10-1PGDG.rhel7.x86_64.rpm postgresql14-server-14.10-1PGDG.rhel7.x86_64.rpm 
-</code></pre>
-<h2 id="配置数据库"><a href="#配置数据库" class="headerlink" title="配置数据库"></a>配置数据库</h2><p>默认初始化</p>
-<pre><code># 默认初始化数据库
-sudo /usr/pgsql-14/bin/postgresql-14-setup initdb
-</code></pre>
-<p>开机启动postgresql数据库</p>
-<pre><code>sudo systemctl enable postgresql-14
-</code></pre>
-<p>启动postgresql数据库服务</p>
-<pre><code>sudo systemctl start postgresql-14
-</code></pre>
-<p>启动成功后，使用lsof -i:5432 可以看见相关进程</p>
-<p>修改初始化数据路径</p>
-<pre><code>mkdir -p /home/pg14/data
-chown -R postgres:postgres /home/pg14/data
-</code></pre>
-<p>这里使用systemctl ：</p>
-<pre><code>systemctl edit postgresql-14.service
-</code></pre>
-<p>在新空白页覆盖原服务配置</p>
-<pre><code>[Service]
-Environment=PGDATA=/home/pg14/data
-</code></pre>
-<p>这个文件默认放在 /etc/systemd/system/postgresql-14.service.d 目录下。<br>里面会有 override.conf 文件。</p>
-<p>停止之前的数据库</p>
-<pre><code>systemctl stop postgresql-14
-</code></pre>
-<p>启动数据库</p>
-<pre><code>sudo /usr/pgsql-14/bin/postgresql-14-setup initdb
-</code></pre>
-<p>查看日志</p>
-<pre><code>more /var/lib/pgsql/14/initdb.log
-</code></pre>
-<p>修改数据位置后，原先默认的配置文件就失效了，配置文件在新的数据文件夹下，这里是/home/pg14/data</p>
-<p>修改默认用户密码</p>
-<pre><code>#登陆postgresql
-sudo -u postgres psql
-
-#修改i登陆postgresql密码
-alter user postgres with password &#39;postgres&#39;;
-
-#查看数据库存储地址
-show data_directory;
-</code></pre>
-<p>开启远程访问</p>
-<p>修改数据文件目录的postgresql.conf配置文件，监听全部IP命令</p>
-<pre><code>vi /home/pg14/data/postgresql.conf
-listen_addresses = &#39;*&#39; 
-</code></pre>
-<p>允许远程访问，修改pg_hba.conf</p>
-<pre><code>vi /home/pg14/data/pg_hba.conf
-
-# TYPE  DATABASE        USER            ADDRESS                 METHOD
-
-# &quot;local&quot; is for Unix domain socket connections only
-local   all             all                                     trust
-# IPv4 local connections:
-host    all             all             127.0.0.1/32            trust
-host    all             all             0.0.0.0/0                 md5
-# IPv6 local connections:
-host    all             all             ::1/128                 trust
-# Allow replication connections from localhost, by a user with the
-# replication privilege.
-local   replication     all                                     trust
-host    replication     all             127.0.0.1/32            trust
-host    replication     all             ::1/128                 trust
-</code></pre>
-<p>重启启动postgresql数据库服务</p>
-<pre><code>sudo systemctl restart postgresql-14
-</code></pre>
-<h1 id="安裝PostGIS"><a href="#安裝PostGIS" class="headerlink" title="安裝PostGIS"></a>安裝PostGIS</h1><h2 id="下载依赖"><a href="#下载依赖" class="headerlink" title="下载依赖"></a>下载依赖</h2><p>EPEL存储库中有许多依赖项</p>
-<pre><code>yumdownloader --resolve epel-release
-</code></pre>
-<p>下载指定版本的postgis，这里我选用pg14的3.3版本</p>
-<pre><code>yumdownloader --resolve postgis33_14
-</code></pre>
-<p>下载的依赖很多</p>
-<h2 id="安装依赖-1"><a href="#安装依赖-1" class="headerlink" title="安装依赖"></a>安装依赖</h2><pre><code># 安装epel
-rpm -ivh epel-release-7-11.noarch.rpm
-
-# 安装当前目录下的所有rpm包（推荐）
-rpm -Uvh  *.rpm
-
-# 强制安装当前文件夹中所有的rpm包，忽略依赖去安装（这是上一步的备选方案，不推荐）
-rpm -Uvh  *.rpm  --nodeps  --force 
-</code></pre>
-<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><pre><code>-- 创建数据库
-CREATE DATABASE db_test;
--- 切换数据库
-\c db_test;
--- 创建postgis依赖
-CREATE EXTENSION postgis;
-</code></pre>
-<p>创建PostGIS扩展成功后、查看数据库插件</p>
-<pre><code>\dx
-</code></pre>
-<p>本文来自互联网用户投稿，该文观点仅代表作者本人，不代表本站立场。本站仅提供信息存储空间服务，不拥有所有权，不承担相关法律责任。如若转载，请注明出处：<a target="_blank" rel="noopener" href="http://www.bryh.cn/a/16064.html">http://www.bryh.cn/a/16064.html</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostGIS/" rel="tag">PostGIS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
 
     </footer>
   </div>

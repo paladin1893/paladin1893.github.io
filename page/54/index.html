@@ -154,6 +154,127 @@
     
     
     <article
+  id="post-Maven不能加载ojdbc14-jar的解决方法"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/02/12/Maven%E4%B8%8D%E8%83%BD%E5%8A%A0%E8%BD%BDojdbc14-jar%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/"
+    >Maven不能加载ojdbc14.jar的解决方法</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/02/12/Maven%E4%B8%8D%E8%83%BD%E5%8A%A0%E8%BD%BDojdbc14-jar%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" class="article-date">
+  <time datetime="2023-02-12T06:34:56.000Z" itemprop="datePublished">2023-02-12</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>首先电脑上得安装好maven。<br>1、先下载ojdbc14-10.2.0.4.0.jar。也可以本机或其他服务器安装的Oracle目录中寻找。<br>2、将ojdbc14-10.2.0.4.0.jar放到指定目录中，这里放在C:\mm\ojdbc14-10.2.0.4.0.jar下的。<br>3、打开 cmd运行</p>
+<pre><code>mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc14 -Dversion=10.2.0.4.0 -Dpackaging=jar -Dfile=C:\mm\ojdbc14-10.2.0.4.0.jar
+</code></pre>
+<p>4、如下在pom.xml文件中添加引用</p>
+<pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;com.oracle&lt;/groupId&gt;
+    &lt;artifactId&gt;ojdbc14&lt;/artifactId&gt;
+    &lt;version&gt;10.2.0.4.0&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MAVEN/" rel="tag">MAVEN</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OJDBC/" rel="tag">OJDBC</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-sanfran-urbansim地图可视化报错解决办法"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/02/11/sanfran-urbansim%E5%9C%B0%E5%9B%BE%E5%8F%AF%E8%A7%86%E5%8C%96%E6%8A%A5%E9%94%99%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/"
+    >sanfran_urbansim地图可视化报错解决办法</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/02/11/sanfran-urbansim%E5%9C%B0%E5%9B%BE%E5%8F%AF%E8%A7%86%E5%8C%96%E6%8A%A5%E9%94%99%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" class="article-date">
+  <time datetime="2023-02-11T13:38:32.000Z" itemprop="datePublished">2023-02-11</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>装anacond3，urabansim，下载sanfran_urbansim</p>
+<p>命令行ipython notebook启动后，执行Exploration.ipynb调取地图出不了图。</p>
+<p>分析后发现是dframe_explorer.html的问题，</p>
+<p>其中调取angular.min.js改为如下即可。</p>
+<script src="https://cdn.staticfile.org/angular.js/1.0.7/angular.min.js"></script>
+
+<p>过滤条件筛选也会报错，下一步处理。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/urbansim/" rel="tag">urbansim</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-Windows下安装Redis"
   class="article article-type-post"
   itemscope
@@ -457,118 +578,6 @@
     <footer class="article-footer">
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JDK/" rel="tag">JDK</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-node-sass-npm-ERR-command-failed-解决方法"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/02/09/node-sass-npm-ERR-command-failed-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/"
-    >node-sass npm ERR! command failed 解决方法</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/02/09/node-sass-npm-ERR-command-failed-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" class="article-date">
-  <time datetime="2023-02-09T13:28:42.000Z" itemprop="datePublished">2023-02-09</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>直接去 GitHub 上下载 node-sass 的二进制文件，然后设置环境变量：</p>
-<p>下载 node-sass 二进制 <a target="_blank" rel="noopener" href="https://github.com/sass/node-sass">https://github.com/sass/node-sass</a><br>下载时，需要注意以下你的 node 版本以及对应的 NODE_MODULE_VERSION 版本，版本映射查看说明文件。</p>
-<p>设置环境变量<br>    export SASS_BINARY_PATH=/yourPath/linux-x64-93_binding.node</p>
-<p>执行依赖安装<br>    npm i</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nodejs/" rel="tag">nodejs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/" rel="tag">软件开发</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-arcgisonline地图"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/02/08/arcgisonline%E5%9C%B0%E5%9B%BE/"
-    >arcgis online地图</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/02/08/arcgisonline%E5%9C%B0%E5%9B%BE/" class="article-date">
-  <time datetime="2023-02-08T13:21:12.000Z" itemprop="datePublished">2023-02-08</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>1、esri</p>
-<p><a target="_blank" rel="noopener" href="https://server.arcgisonline.com/arcgis/rest/services">https://server.arcgisonline.com/arcgis/rest/services</a></p>
-<p>2、ChinaOnlineCommunity地图服务</p>
-<p><a target="_blank" rel="noopener" href="http://map.geoq.cn/arcgis/rest/services/ChinaOnlineCommunity/MapServer">http://map.geoq.cn/arcgis/rest/services/ChinaOnlineCommunity/MapServer</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%9C%B0%E7%90%86%E6%95%B0%E6%8D%AE/" rel="tag">地理数据</a></li></ul>
 
     </footer>
   </div>

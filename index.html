@@ -154,6 +154,141 @@
     
     
     <article
+  id="post-windows使用cmd命令添加、删除和修改静态路由：route"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/12/11/windows%E4%BD%BF%E7%94%A8cmd%E5%91%BD%E4%BB%A4%E6%B7%BB%E5%8A%A0%E3%80%81%E5%88%A0%E9%99%A4%E5%92%8C%E4%BF%AE%E6%94%B9%E9%9D%99%E6%80%81%E8%B7%AF%E7%94%B1%EF%BC%9Aroute/"
+    >windows使用cmd命令添加、删除和修改静态路由：route</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/12/11/windows%E4%BD%BF%E7%94%A8cmd%E5%91%BD%E4%BB%A4%E6%B7%BB%E5%8A%A0%E3%80%81%E5%88%A0%E9%99%A4%E5%92%8C%E4%BF%AE%E6%94%B9%E9%9D%99%E6%80%81%E8%B7%AF%E7%94%B1%EF%BC%9Aroute/" class="article-date">
+  <time datetime="2023-12-11T12:25:23.000Z" itemprop="datePublished">2023-12-11</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>1、添加一条路由表<br>route add 192.168.20.0 mask 255.255.255.0 192.168.4.1 metric 2 if 2<br>命令说明：添加一条路由记录，所有到192.168.20.0/24网段的数据包，都通过2号接口（网卡）走192.168.4.1的网关，优先级为2。</p>
+<p>route add -p 192.168.100.0 mask 255.255.255.248 192.168.1.1 metric 3 if 2<br>#作用同上，-p参数表：该记录为永久路由，不会因为重启机器而丢失。<br>2、删除一条路由表<br>route delete 192.168.10.0<br>【语法】</p>
+<p>route delete 网络目的地址 [mask] [子网掩码]<br>route delete 112* ——-&gt;删除路由时用这种模糊匹配，表示删除以112开头的IP路由表中的所有路由；<br>命令说明：如果有两条192.168.10.0路由记录，即路由表中存在相同的“目的网络号”，则会将两条记录同时删除。如果只想删除其中某一条的话，请在删除后用route add命令再添加上其中一条。</p>
+<p>3、修改一条现有路由记录<br>route change 162.0.0.0 mask 255.255.0.0 162.54.10.5 metric 2 if 2<br>命令说明：CHANGE参数只能修改路由条目的“网关”和“跳数”。</p>
+<p>4、查看路由表<br>route print -4/-6</p>
+<p>路由表列说明：</p>
+<p>第一列是网络目的地址。列出了路由器连接的所有的网段。</p>
+<p>第二行网络掩码列提供这个网段本身的子网掩码，而不是连接到这个网段的网卡的子网掩码。这基本上能够让路由器确定目的网络的地址类。</p>
+<p>第三列是网关。一旦路由器确定它要把这个数据包转发到哪一个目的网络，路由器就要查看网关列表。网关表告诉路由器这个数据包应该转发到哪一个IP地址才能达到目的网络。</p>
+<p>第四列接口列告诉路由器哪一个网卡连接到了合适的目的网络。从技术上说，接口列仅告诉路由器分配给网卡的IP地址。那个网卡把路由器连接到目的网络。然而，路由器很聪明，知道这个地址绑定到哪一个物理网卡。</p>
+<p>第五列是测量，或跳数。测量本身是一种科学。该值越小的，可信度越高<br>【例子】</p>
+<p>Network Destination Netmask Gateway Interface Metric<br>0.0.0.0 0.0.0.0 116.69.106.120 116.69.106.1 1<br>上面信息表示发向任意网段的数据通过本机接口116.69.106.1被送往一个默认的网关：116.69.106.120，它的管理距离是1，管理距离指的是在路径选择的过程中信息的可信度，管理距离越小的，可信度越高。</p>
+<p>5、查看广播信息<br>arp -a<br>##查看查看与本地电脑连接的mac地址跟IP地址，即当前电脑上的ARP映射表。可以看到当前的ARP的映射关系是动态的还是静态的。</p>
+<p>arp -s w.x.y.z aa-bb-cc-dd-ee-ff<br>##添加静态ARP实现ARP绑定。其中w.x.y.z代表要绑定的IP地址，aa-bb-cc-dd-ee-ff代表其MAC地址</p>
+<p>arp -d InetAddr[IfaceAddr]<br>##删除指定的IP地址项，此处的InetAddr代表IP地址，要删除所有项，请使用星号（*）通配符代替。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/route/" rel="tag">route</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-route add -p 命令详解"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/12/10/route%20add%20-p%20%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/"
+    >route add -p 命令详解</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/12/10/route%20add%20-p%20%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/" class="article-date">
+  <time datetime="2023-12-10T12:25:23.000Z" itemprop="datePublished">2023-12-10</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p><code>route add</code>命令用于添加一条静态路由信息。在使用时，可以指定不同的子网掩码和其他参数来定义目的网络的路由条目。以下是一些示例用法：</p>
+<p>要添加一个指向特定目标的默认路由，可以使用如下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">route add 0.0.0.0 mask 0.0.0.0 [目标网关地址]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>若要在指定的子网掩码（如255.255.0.0）下为目标网络添加一个路由，可以使用类似的方法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">route add [目标网络前缀] mask [子网掩码] [目标网关地址]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>对于具有特定Metric值的路由，可以使用<code>metric</code>参数进行设置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">route add [目标网络前缀] mask [子网掩码] metric [Metric值] [目标网关地址]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>此外，<code>route add -p</code>命令用于添加一条永久路由。这通常用在网络中有多个网关地址的情况下，以便能够通过不同的网关访问同一组网络。</p>
+<p>例如，如果要将所有需要发送到130.0.0.0/8地址段的数据包都转发给134.32.80.1这个网关，可以使用以下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">route add -p 130.0.0.0 mask 255.0.0.0 134.32.80.1 metric 10</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，“-p”表示这是一个永久路由，而“130.0.0.0/8”是一个目标网络的前缀，其子网掩码被设置为“255.0.0.0”，目标网关地址是“134.32.80.1”，并且Metric值为“10”。</p>
+<p>需要注意的是，路由跳数（Metric值）通常是可选的，但在某些情况下可能需要指定以确保正确的路由优先级。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/route/" rel="tag">route</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-github国内镜像网址分享"
   class="article article-type-post"
   itemscope
@@ -395,256 +530,6 @@
     <footer class="article-footer">
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OSGeo4W/" rel="tag">OSGeo4W</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/QGIS/" rel="tag">QGIS</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-OSGeo4W 镜像仓库"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/12/05/OSGeo4W%20%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93/"
-    >OSGeo4W 镜像仓库</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/12/05/OSGeo4W%20%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93/" class="article-date">
-  <time datetime="2023-12-05T12:25:23.000Z" itemprop="datePublished">2023-12-05</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>注意：本仓库手动同步，不保证所有内容是最新的！</p>
-<p>使用方法</p>
-<p>打开 OSGeo4W Setup ，在 “Choose A Download Site” 页面的 User URL 中输入地址 <a target="_blank" rel="noopener" href="http://gwmodel.whu.edu.cn/mirrors/osgeo4w">http://gwmodel.whu.edu.cn/mirrors/osgeo4w</a> ，点击 Add 按钮，然后选择该镜像进行安装</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OSGeo4W/" rel="tag">OSGeo4W</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/QGIS/" rel="tag">QGIS</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-通过 Maven 仓库安装 Spire 系列 Java 产品"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/12/04/%E9%80%9A%E8%BF%87%20Maven%20%E4%BB%93%E5%BA%93%E5%AE%89%E8%A3%85%20Spire%20%E7%B3%BB%E5%88%97%20Java%20%E4%BA%A7%E5%93%81/"
-    >springboot指定配置文件启动</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/12/04/%E9%80%9A%E8%BF%87%20Maven%20%E4%BB%93%E5%BA%93%E5%AE%89%E8%A3%85%20Spire%20%E7%B3%BB%E5%88%97%20Java%20%E4%BA%A7%E5%93%81/" class="article-date">
-  <time datetime="2023-12-04T12:25:23.000Z" itemprop="datePublished">2023-12-04</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>只需简单配置，您就可以轻松将 Java 产品的 JAR 包通过 Maven 仓库安装到的 Maven 项目中。我们所有 Java 产品均可通过 Maven 安装。下面将详细说明如何在 Maven 程序中添加对 JAR 包的依赖。</p>
-<p>首先，在 pom.xml 文件中配置 Maven 仓库路径。</p>
-<pre><code>&lt;repositories&gt;
-        &lt;repository&gt;
-            &lt;id&gt;com.e-iceblue&lt;/id&gt;
-            &lt;name&gt;e-iceblue&lt;/name&gt;
-            &lt;url&gt;https://repo.e-iceblue.cn/repository/maven-public/&lt;/url&gt;
-        &lt;/repository&gt;
-&lt;/repositories&gt;
-</code></pre>
-<p>然后，在 pom.xml 文件中指定 Spire 产品的 Maven 依赖。如下列举了几种产品的配置方式，可参考使用。</p>
-<p>如果需要在同一个程序项目中操作多种文件格式，例如：同时操作 Word、Excel 和 PDF 或者其他多种文件格式时，请使用集合包 Spire.Office for Java。否则，在同一程序中使用多个 Spire Jar 包会引起程序冲突，导致异常报错。</p>
-<p>配置 Spire.PDF for Java</p>
-<pre><code>&lt;repositories&gt;
-    &lt;repository&gt;
-        &lt;id&gt;com.e-iceblue&lt;/id&gt;
-        &lt;name&gt;e-iceblue&lt;/name&gt;
-        &lt;url&gt;https://repo.e-iceblue.cn/repository/maven-public/&lt;/url&gt;
-    &lt;/repository&gt;
-&lt;/repositories&gt;
-
-&lt;dependencies&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;e-iceblue&lt;/groupId&gt;
-        &lt;artifactId&gt;spire.pdf&lt;/artifactId&gt;
-        &lt;version&gt;10.1.5&lt;/version&gt;
-    &lt;/dependency&gt;
-&lt;/dependencies&gt;
-</code></pre>
-<p>配置 Spire.Doc for Java</p>
-<pre><code>&lt;repositories&gt;
-    &lt;repository&gt;
-        &lt;id&gt;com.e-iceblue&lt;/id&gt;
-        &lt;name&gt;e-iceblue&lt;/name&gt;
-        &lt;url&gt;https://repo.e-iceblue.cn/repository/maven-public/&lt;/url&gt;
-    &lt;/repository&gt;
-&lt;/repositories&gt;
-
-&lt;dependencies&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;e-iceblue&lt;/groupId&gt;
-        &lt;artifactId&gt;spire.doc&lt;/artifactId&gt;
-        &lt;version&gt;12.1.10&lt;/version&gt;
-    &lt;/dependency&gt;
-&lt;/dependencies&gt;
-</code></pre>
-<p>配置 Spire.XLS for Java</p>
-<pre><code>&lt;repositories&gt;
-    &lt;repository&gt;
-        &lt;id&gt;com.e-iceblue&lt;/id&gt;
-        &lt;name&gt;e-iceblue&lt;/name&gt;
-        &lt;url&gt;https://repo.e-iceblue.cn/repository/maven-public/&lt;/url&gt;
-    &lt;/repository&gt;
-&lt;/repositories&gt;
-
-&lt;dependencies&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;e-iceblue&lt;/groupId&gt;
-        &lt;artifactId&gt;spire.xls&lt;/artifactId&gt;
-        &lt;version&gt;14.1.1&lt;/version&gt;
-    &lt;/dependency&gt;
-&lt;/dependencies&gt;
-</code></pre>
-<p>配置 Spire.Presentation for Java</p>
-<pre><code>&lt;repositories&gt;
-    &lt;repository&gt;
-        &lt;id&gt;com.e-iceblue&lt;/id&gt;
-        &lt;name&gt;e-iceblue&lt;/name&gt;
-        &lt;url&gt;https://repo.e-iceblue.cn/repository/maven-public/&lt;/url&gt;
-    &lt;/repository&gt;
-&lt;/repositories&gt;
-
-&lt;dependencies&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;e-iceblue&lt;/groupId&gt;
-        &lt;artifactId&gt;spire.presentation&lt;/artifactId&gt;
-        &lt;version&gt;8.12.1&lt;/version&gt;
-    &lt;/dependency&gt;
-&lt;/dependencies&gt;
-</code></pre>
-<p>配置 Spire.Office for Java</p>
-<pre><code>&lt;repositories&gt;
-    &lt;repository&gt;
-        &lt;id&gt;com.e-iceblue&lt;/id&gt;
-        &lt;name&gt;e-iceblue&lt;/name&gt;
-        &lt;url&gt;https://repo.e-iceblue.cn/repository/maven-public/&lt;/url&gt;
-    &lt;/repository&gt;
-&lt;/repositories&gt;
-
-&lt;dependencies&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;e-iceblue&lt;/groupId&gt;
-        &lt;artifactId&gt;spire.office&lt;/artifactId&gt;
-        &lt;version&gt;9.1.4&lt;/version&gt;
-    &lt;/dependency&gt;
-&lt;/dependencies&gt;
-</code></pre>
-<p>如需配置 Spire 产品的免费版本 jar 包，只需更改 artifactId 和 version 信息即可，如下配置方法：</p>
-<p>配置 Free Spire.PDF for Java</p>
-<pre><code>&lt;dependencies&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;e-iceblue&lt;/groupId&gt;
-        &lt;artifactId&gt;spire.pdf.free&lt;/artifactId&gt;
-        &lt;version&gt;5.1.0&lt;/version&gt;
-    &lt;/dependency&gt;
-&lt;/dependencies&gt;
-</code></pre>
-<p>配置 Free Spire.Doc for Java</p>
-<pre><code>&lt;dependencies&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;e-iceblue&lt;/groupId&gt;
-        &lt;artifactId&gt;spire.doc.free&lt;/artifactId&gt;
-        &lt;version&gt;5.3.1&lt;/version&gt;
-    &lt;/dependency&gt;
-&lt;/dependencies&gt;
-</code></pre>
-<p>配置 Free Spire.XLS for Java</p>
-<pre><code>&lt;dependencies&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;e-iceblue&lt;/groupId&gt;
-        &lt;artifactId&gt;spire.xls.free&lt;/artifactId&gt;
-        &lt;version&gt;5.1.0&lt;/version&gt;
-    &lt;/dependency&gt;
-&lt;/dependencies&gt;
-</code></pre>
-<p>配置 Free Spire.Presentation for Java</p>
-<pre><code>&lt;dependencies&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;e-iceblue&lt;/groupId&gt;
-        &lt;artifactId&gt;spire.presentation.free&lt;/artifactId&gt;
-        &lt;version&gt;5.1.0&lt;/version&gt;
-    &lt;/dependency&gt;
-&lt;/dependencies&gt;
-</code></pre>
-<p>配置 Free Spire.Office for Java</p>
-<pre><code>&lt;dependencies&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;e-iceblue&lt;/groupId&gt;
-        &lt;artifactId&gt;spire.office.free&lt;/artifactId&gt;
-        &lt;version&gt;5.3.1&lt;/version&gt;
-    &lt;/dependency&gt;
-&lt;/dependencies&gt;
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li></ul>
 
     </footer>
   </div>

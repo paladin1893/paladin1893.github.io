@@ -154,6 +154,181 @@
     
     
     <article
+  id="post-Linux命令：ss命令"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/11/23/Linux%E5%91%BD%E4%BB%A4%EF%BC%9Ass%E5%91%BD%E4%BB%A4/"
+    >Linux命令：ss命令</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/11/23/Linux%E5%91%BD%E4%BB%A4%EF%BC%9Ass%E5%91%BD%E4%BB%A4/" class="article-date">
+  <time datetime="2023-11-23T12:14:23.000Z" itemprop="datePublished">2023-11-23</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>ss功能：</p>
+<p>用来显示套接字信息的，类似于netstat，可以显示更多的信息，用于替代netstat。</p>
+<p>ss常用选项</p>
+<pre><code>-t：tcp协议的连接
+-u：udp协议的链接
+-w：裸套接字相关
+-x：unix sock相关
+-l：listen监听状态的连接
+-a：所有状态的连接
+-e：显示扩展信息
+-m：显示套接连接使用的内存信息
+-p：进程及UDP
+-n：数字格式显示
+-o：计时器信息
+</code></pre>
+<p>常用组合：</p>
+<pre><code>-tan, -tanl, -tanlp, -uan
+</code></pre>
+<p>TCP常见状态：</p>
+<p>LISTEN：监听</p>
+<pre><code>ESTABLISHED：已建立连接
+FIN_WAIT_1
+FIN_WAIT_2
+SYN_SENT
+SYN_RECV
+CLOSED
+</code></pre>
+<p>其他用法：</p>
+<pre><code>ss -l 显示本地打开的所有端口
+ss -pl 显示每个进程具体打开的socket
+ss -t -a 显示所有tcp socket
+ss -u -a 显示所有的UDP Socekt
+ss -o state established &#39;( dport = :ssh or sport = :ssh )&#39; 显示所有已建立的ssh连接
+ss -o state established &#39;( dport = :http or sport = :http )&#39; 显示所有已建立的HTTP连接
+ss -s 列出当前socket详细信息
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-CentOS系统安装JDK1.8 详细教程"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/11/22/CentOS%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85JDK1.8%20%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/"
+    >CentOS系统安装JDK1.8 详细教程</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/11/22/CentOS%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85JDK1.8%20%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/" class="article-date">
+  <time datetime="2023-11-22T12:14:23.000Z" itemprop="datePublished">2023-11-22</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>1、下载jdk</p>
+<pre><code>wget https://repo.huaweicloud.com/java/jdk/8u202-b08/jdk-8u241-linux-x64.tar.gz
+</code></pre>
+<p>2、创建安装目录</p>
+<pre><code>mkdir /usr/local/java/
+</code></pre>
+<p>3、解压至安装目录</p>
+<pre><code>tar -zxvf jdk-8u241-linux-x64.tar.gz -C /usr/local/java
+</code></pre>
+<p>4、配置环境变量</p>
+<pre><code>vim /etc/profile
+</code></pre>
+<p>在文本末尾添加</p>
+<pre><code>export JAVA_HOME=/usr/local/java/jdk1.8.0_241
+export JRE_HOME=$&#123;JAVA_HOME&#125;/jre
+export CLASSPATH=.:$&#123;JAVA_HOME&#125;/lib:$&#123;JRE_HOME&#125;/lib
+export PATH=$&#123;JAVA_HOME&#125;/bin:$PATH
+</code></pre>
+<p>5、保存并退出、按esc键、输入以下内容、按Enter键</p>
+<pre><code>:wq
+</code></pre>
+<p>6、使环境变量生效</p>
+<pre><code>source /etc/profile
+</code></pre>
+<p>7、添加软链接</p>
+<pre><code>ln -s /usr/local/java/jdk1.8.0_241/bin/java /usr/bin/java
+</code></pre>
+<p>8、检查jdk是否安装成功</p>
+<pre><code>java -version
+</code></pre>
+<p>执行结果：</p>
+<pre><code>java version &quot;1.8.0_241&quot;
+Java(TM) SE Runtime Environment (build 1.8.0_241-b07)
+Java HotSpot(TM) 64-Bit Server VM (build 25.241-b07, mixed mode)
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JDK/" rel="tag">JDK</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-CentOS 安装 nginx"
   class="article article-type-post"
   itemscope
@@ -713,239 +888,6 @@ sudo make install
     <footer class="article-footer">
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/g/" rel="tag">g++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gcc/" rel="tag">gcc</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Centos7下安装Redis5"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/11/17/Centos7%E4%B8%8B%E5%AE%89%E8%A3%85Redis5/"
-    >Centos7下安装Redis5</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/11/17/Centos7%E4%B8%8B%E5%AE%89%E8%A3%85Redis5/" class="article-date">
-  <time datetime="2023-11-17T13:14:23.000Z" itemprop="datePublished">2023-11-17</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><p>在安装Redis之前，请确保已经使用yum安装了以下基础组件：</p>
-<pre><code>make
-gcc
-gcc-c++
-kernel-devel
-</code></pre>
-<h1 id="Redis的安装"><a href="#Redis的安装" class="headerlink" title="Redis的安装#"></a>Redis的安装#</h1><p>开始下载Redis并进行编译安装：</p>
-<pre><code>cd /usr/local/redis
-wget http://download.redis.io/releases/redis-5.0.14.tar.gz
-tar -zxvf redis-5.0.14.tar.gz
-cd redis-5.0.14
-make &amp;&amp; make PREFIX=/usr/local/redis install
-
-mkdir /usr/local/redis/etc/
-cp redis.conf /usr/local/redis/etc/
-
-cd ..
-mkdir data
-#ln -s /usr/local/redis-5.0.14 /usr/local/redis
-</code></pre>
-<p>把Redis的sbin目录加入PATH：</p>
-<pre><code># vim /etc/profile
-
-export REDIS_HOME=/usr/local/redis
-export PATH=$PATH:$&#123;REDIS_HOME&#125;/bin
-
-# source /etc/profile
-</code></pre>
-<p>至此，Redis已经安装完毕。</p>
-<h1 id="修改redis-conf"><a href="#修改redis-conf" class="headerlink" title="修改redis.conf"></a>修改redis.conf</h1><pre><code>69行：
-#bind 127.0.0.1
-
-88行：
-protected-mode no
-
-136行：
-daemonize yes
-
-171行：
-logfile &quot;/usr/local/redis/data/redis_6379.log&quot;
-
-263行：
-dir /usr/local/redis/data
-
-507行：
-requirepass Your@Password
-
-699行：
-appendonly yes
-</code></pre>
-<h1 id="启动脚本"><a href="#启动脚本" class="headerlink" title="启动脚本"></a>启动脚本</h1><p>添加服务</p>
-<pre><code>vi /usr/lib/systemd/system/redis.service
-</code></pre>
-<p>配置如下：</p>
-<pre><code># 服务的说明
-[Unit]
-# 描述服务
-Description=redis
-# 描述服务类别
-After=network.target
-
-# 服务运行参数的设置
-[Service]
-# 后台运行的形式
-Type=forking
-# 启动命令
-ExecStart=/usr/local/redis/bin/redis-server /usr/local/redis/etc/redis.conf
-# 停止命令
-ExecStop=/usr/local/redis/bin/redis-cli shutdown
-# 自动重启
-Restart=always
-
-# 服务安装的设置
-[Install]
-# 用户的模式
-WantedBy=multi-user.target
-</code></pre>
-<p>服务启动关停：</p>
-<pre><code>systemctl daemon-reload
-# systemctl enable/disable xxx 指令设置/取消开机启动
-systemctl enable redis
-systemctl start redis
-systemctl stop redis
-systemctl status redis
-</code></pre>
-<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><p>直接</p>
-<pre><code>redis-cli ping
-</code></pre>
-<p>报错如下：</p>
-<pre><code>NOAUTH Authentication required
-</code></pre>
-<p>正确使用：</p>
-<pre><code>redis-cli
-auth Your@Password
-</code></pre>
-<h1 id="启动和停止"><a href="#启动和停止" class="headerlink" title="启动和停止"></a>启动和停止</h1><p>使用</p>
-<pre><code>ps -ef | grep redis
-</code></pre>
-<p>去查看redis的进程号，然后直接</p>
-<pre><code>kill -9 redis的进程号
-</code></pre>
-<p>它就可以停止了</p>
-<p>然后执行redis-server就可以启动了</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-MQTT网关连接各类工业物联设备，实现数据传输与控制"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/11/16/MQTT%E7%BD%91%E5%85%B3%E8%BF%9E%E6%8E%A5%E5%90%84%E7%B1%BB%E5%B7%A5%E4%B8%9A%E7%89%A9%E8%81%94%E8%AE%BE%E5%A4%87%EF%BC%8C%E5%AE%9E%E7%8E%B0%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E4%B8%8E%E6%8E%A7%E5%88%B6/"
-    >Homebrew&amp;Linuxbrew镜像使用帮助</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/11/16/MQTT%E7%BD%91%E5%85%B3%E8%BF%9E%E6%8E%A5%E5%90%84%E7%B1%BB%E5%B7%A5%E4%B8%9A%E7%89%A9%E8%81%94%E8%AE%BE%E5%A4%87%EF%BC%8C%E5%AE%9E%E7%8E%B0%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E4%B8%8E%E6%8E%A7%E5%88%B6/" class="article-date">
-  <time datetime="2023-11-16T13:14:23.000Z" itemprop="datePublished">2023-11-16</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>MQTT是一种轻量级的发布/订阅消息传输协议，专门为低带宽、高延迟或不稳定的网络环境设计。它支持离线消息存储，使客户端在未连接到服务器时也能接收到消息。MQTT网关是一种采用MQTT协议的网关设备，可以连接不同类型的工业物联设备，实现设备之间的数据传输和控制。随着物联网技术的不断发展，工业物联设备之间的互联互通和数据传输变得越来越重要。MQTT网关作为一种轻量级的发布/订阅消息传输协议，在连接各类工业物联设备、实现数据传输和控制方面具有广泛的应用价值。本文将介绍如何实现MQTT网关连接各类工业物联设备，实现数据传输与控制。</p>
-<h1 id="实现MQTT网关连接各类工业物联设备"><a href="#实现MQTT网关连接各类工业物联设备" class="headerlink" title="实现MQTT网关连接各类工业物联设备"></a>实现MQTT网关连接各类工业物联设备</h1><p>1、选择合适的MQTT网关</p>
-<p>首先，需要选择一款适合的MQTT网关。选择时需要考虑网关的硬件配置、网络接口、扩展接口以及是否支持目标云平台等因素。同时，还需要根据实际应用场景选择合适的网关尺寸、重量和防护等级等参数。</p>
-<p>2、连接设备与MQTT网关</p>
-<p>不同类型的工业物联设备可能有不同的连接方式，需要根据设备的通信协议和接口类型选择合适的连接方式。例如，一些设备可能使用串口或以太网接口进行连接。确保连接的可靠性和稳定性，以便实现设备与MQTT网关之间的数据传输。</p>
-<p>3、配置MQTT网关参数</p>
-<p>根据连接的工业物联设备的类型和数据传输需求，配置MQTT网关的参数。这些参数可能包括主题订阅、消息发布、连接参数等。确保配置的参数能够满足实际需求。</p>
-<p>4、数据传输与控制</p>
-<p>通过MQTT协议，MQTT网关可以与工业物联设备进行数据传输和控制。当设备需要发送数据时，可以将数据发布到特定的主题上，MQTT网关可以订阅这些主题以接收数据。同时，MQTT网关也可以向指定的主题发布命令或控制指令，以实现对设备的远程控制。</p>
-<p>5、数据处理与分析</p>
-<p>通过MQTT网关接收到的数据可以进行进一步的处理和分析。例如，可以解析和处理数据以监控设备运行状况、预测潜在问题、优化生产流程等。同时，也可以自定义生成报表和可视化数据，提高决策效率。</p>
-<p>6、远程控制与调试</p>
-<p>通过MQTT协议，MQTT网关还可以接收来自远程平台的控制指令，实现对设备的远程启停控制、远程编程调试和远程上下载程序等操作。这有助于提高运维效率与管理水平。</p>
-<h1 id="实现数据传输与控制"><a href="#实现数据传输与控制" class="headerlink" title="实现数据传输与控制"></a>实现数据传输与控制</h1><p>数据传输：MQTT网关可以采集各类工业物联设备的数据，并将其传输到云平台或其它应用系统。数据传输可以采用发布/订阅模式，设备或传感器发布数据，MQTT网关订阅数据并传输到目标位置。同时，MQTT网关也可以从云平台或其它应用系统发送数据到设备或传感器。</p>
-<p>数据处理与分析：MQTT网关可以对采集到的数据进行处理和分析，包括数据清洗、数据转换、数据挖掘等操作，以提高数据质量和可用性。同时，也可以自定义生成报表和可视化数据，为决策提供支持。</p>
-<p>控制：MQTT网关可以接收来自云平台或其它应用系统的控制指令，并将其发送到设备或传感器，实现对设备的远程控制。例如，可以控制设备的开关、调整设备的参数等。</p>
-<p>应用案例分析</p>
-<p>以一个智能制造车间为例，说明如何实现MQTT网关连接各类工业物联设备，实现数据传输与控制。在该车间中，传感器负责监测车间的温度、湿度、气压等环境参数；摄像头负责监控车间的生产线上各设备的运行状态；机器人负责执行生产任务。通过MQTT网关将这些设备连接起来，可以实现以下功能：</p>
-<p>数据采集：通过传感器采集车间的环境参数，如温度、湿度、气压等，并将数据发送到云平台进行存储和分析。同时，通过摄像头监控生产线上各设备的运行状态，将视频数据传输到云平台进行实时监控。</p>
-<p>数据传输：将采集到的数据通过MQTT协议发送到云平台上的数据处理系统进行分析和处理。同时，根据需要将数据传输到其他应用系统进行进一步的数据利用和价值挖掘。</p>
-<p>远程控制：通过MQTT协议，可以向设备发送控制指令，实现远程控制。例如，当监测到车间的温度过高时，可以向空调发送控制指令，调整温度至正常范围。同时，也可以根据生产计划自动发送控制指令给机器人，执行相应的生产任务。</p>
-<p>故障预警与诊断：通过分析采集到的数据，可以检测设备的故障或异常状态。当出现故障时，可以向维护人员发送预警信息，及时进行维修和保养。同时，通过对历史数据的分析，可以找出故障的原因和解决方案，提高生产效率。</p>
-<p>优化生产流程：通过对环境参数和设备运行数据的分析，可以优化生产流程。例如，根据车间的温度和湿度数据，可以调整生产线的运行速度和工艺参数，以提高产品质量和生产效率。</p>
-<p>人员管理：通过与人员定位系统结合，可以实时监测车间内员工的位置和活动情况。当出现紧急情况时，可以通过MQTT网关向员工发送紧急通知，引导他们快速疏散或采取必要的防护措施。</p>
-<p>节能减排：通过监测车间的能源消耗数据，可以分析能源浪费的原因并采取相应的节能措施。例如，根据车间的温度和湿度数据，可以调整空调和通风系统的运行参数，降低能源消耗。</p>
-<p>通过实现MQTT网关连接各类工业物联设备，可以实现数据采集、传输、控制等功能，提高生产效率、降低成本、保障人员安全等方面具有重要意义。这不仅有助于提高设备的智能化、远程化管理水平，还为企业的生产管理提供了实时数据支持，优化了生产流程，提高了产量和质量。同时，也有助于实现工业制造的数字化、智能化和绿色化转型。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%80%9A%E4%BF%A1/" rel="tag">通信</a></li></ul>
 
     </footer>
   </div>

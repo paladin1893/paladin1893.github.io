@@ -154,6 +154,304 @@
     
     
     <article
+  id="post-Python强制替换文件"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/10/24/Python%E5%BC%BA%E5%88%B6%E6%9B%BF%E6%8D%A2%E6%96%87%E4%BB%B6/"
+    >Python强制替换文件</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/10/24/Python%E5%BC%BA%E5%88%B6%E6%9B%BF%E6%8D%A2%E6%96%87%E4%BB%B6/" class="article-date">
+  <time datetime="2023-10-24T02:24:00.000Z" itemprop="datePublished">2023-10-24</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>1、检查文件是否存在</p>
+<p>首先，我们需要检查待替换的文件是否存在。如果文件存在，我们将执行替换操作；如果文件不存在，我们需要进行相应的处理逻辑，比如抛出异常或创建新文件。</p>
+<pre><code>import os
+
+file_path = &#39;/path/to/source/file.txt&#39;
+
+if os.path.exists(file_path):
+    # 文件存在的处理逻辑
+    pass
+else:
+    # 文件不存在的处理逻辑
+    pass
+</code></pre>
+<p>2、备份现有文件<br>接下来，我们需要备份原文件，以便在替换之后可以恢复。</p>
+<pre><code>import shutil
+
+source_file_path = &#39;/path/to/source/file.txt&#39;
+backup_file_path = &#39;/path/to/backup/file.txt&#39;
+
+shutil.copyfile(source_file_path, backup_file_path)
+</code></pre>
+<p>3、替换文件</p>
+<p>现在，我们可以将新文件替换原文件。</p>
+<pre><code>import shutil
+
+new_file_path = &#39;/path/to/new/file.txt&#39;
+source_file_path = &#39;/path/to/source/file.txt&#39;
+
+shutil.copyfile(new_file_path, source_file_path)
+</code></pre>
+<p>4、恢复备份</p>
+<p>如果在替换文件后遇到问题，我们可以使用备份文件恢复原文件。</p>
+<pre><code>import shutil
+
+backup_file_path = &#39;/path/to/backup/file.txt&#39;
+source_file_path = &#39;/path/to/source/file.txt&#39;
+
+shutil.copyfile(backup_file_path, source_file_path)
+</code></pre>
+<hr>
+<p>©著作权归作者所有：来自51CTO博客作者mob64ca12eab427的原创作品，请联系作者获取转载授权，否则将追究法律责任<br>python 强制替换文件<br><a target="_blank" rel="noopener" href="https://blog.51cto.com/u_16213408/7158206">https://blog.51cto.com/u_16213408/7158206</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-PyQt5密码输入框"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/10/23/PyQt5%E5%AF%86%E7%A0%81%E8%BE%93%E5%85%A5%E6%A1%86/"
+    >PyQt5密码输入框</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/10/23/PyQt5%E5%AF%86%E7%A0%81%E8%BE%93%E5%85%A5%E6%A1%86/" class="article-date">
+  <time datetime="2023-10-23T02:23:00.000Z" itemprop="datePublished">2023-10-23</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>大栗子<br>实现了三种密码输入框的方式：<br>1.输入的密码不可见；<br>2.输入的密码可见，但是鼠标点击其他控件后，密码不可见；<br>3.输入的密码不可见，同时为了更加的安全，屏蔽了鼠标右键、禁用复制、粘贴快捷键、鼠标在密码框中不可移动，不可全选。就类似我们在输入QQ密码的时候一样。</p>
+<p>PasswdDialog.py</p>
+<pre><code>&#39;&#39;&#39;
+其实大家从这段代码中我们可以看出，本质上就是QDialog的继承，加上自己希望的界面和实现的功能。因此QDialog所有的属性，我们自定义对话框PasswdDialog都会有，这样能够省掉我们不少的时间来。这个也就是面向对象编程的魅力所在了。
+&#39;&#39;&#39;
+# coding=utf-8
+from PyQt5.QtWidgets import QDialog, QApplication, QLineEdit, QLabel, QPushButton, QHBoxLayout, QVBoxLayout, QMessageBox
+from PyQt5.QtCore import Qt, QEvent, QRegExp, QObject
+from PyQt5.QtGui import QKeyEvent, QKeySequence, QRegExpValidator
+
+
+class PasswdDialog(QDialog):
+    def __init__(self):
+        super().__init__()
+        self.initUI()
+
+    def initUI(self):
+        self.resize(350, 100)
+        self.setWindowTitle(&quot;密码输入框&quot;)
+
+        self.lb = QLabel(&quot;请输入密码：&quot;, self)
+
+        self.edit = QLineEdit(self)
+        self.edit.installEventFilter(self)
+
+        self.bt1 = QPushButton(&quot;确定&quot;, self)
+        self.bt2 = QPushButton(&quot;取消&quot;, self)
+
+        hbox = QHBoxLayout()
+        hbox.addStretch(1)
+        hbox.addWidget(self.bt1)
+        hbox.addStretch(1)
+        hbox.addWidget(self.bt2)
+        hbox.addStretch(1)
+
+        vbox = QVBoxLayout()
+        vbox.addWidget(self.lb)
+        vbox.addWidget(self.edit)
+        vbox.addStretch(1)
+        vbox.addLayout(hbox)
+
+        self.setLayout(vbox)
+
+        &#39;&#39;&#39;
+        这个三个语句是给密码输入框增加一些属性
+        &#39;&#39;&#39;
+        self.edit.setContextMenuPolicy(Qt.NoContextMenu)  # 这个语句设置QLineEdit对象的上下文菜单的策略。复制，粘贴，。。。，是否可用
+        self.edit.setPlaceholderText(
+            &quot;密码不超15位，只能有数字和字母，必须以字母开头&quot;)  # 只要行编辑为空，设置此属性将使行编辑显示为灰色的占位符文本。默认情况下，此属性包含一个空字符串。这是非常好的使用方法，可以在用户输入密码前看到一些小提示信息，但是又不影响使用，非常棒这个方法。
+        self.edit.setEchoMode(QLineEdit.Password)  # 这条语句设置了如何限定输入框中显示其包含信息的方式，这里设置的是：密码方式，即输入的时候呈现出原点出来。
+
+        &#39;&#39;&#39;
+        这三段代码大体意思就是说，运用正则表达式限定密码输入框字符接收的条件：
+        长度不能超过15位；
+        字母开头；
+        后面跟着的字符只能是字母或者数字。
+        &#39;&#39;&#39;
+        regx = QRegExp(&quot;^[a-zA-Z][0-9A-Za-z]&#123;14&#125;$&quot;)  # 为给定的模式字符串构造一个正则表达式对象。
+        validator = QRegExpValidator(regx,
+                                     self.edit)  # 构造一个验证器，该父对象接受与正则表达式匹配的所有字符串。这里的父对象就是QLineEdit对象了。匹配是针对整个字符串; 例如：如果正则表达式是[A-Fa-f0-9]+将被视为^[A-Fa-f0-9]+$。
+        self.edit.setValidator(validator)  # 将密码输入框设置为仅接受符合验证器条件的输入。 这允许您对可能输入的文本设置任何约束条件。因此我们这里设置的就是符合上面描述的三种约束条件。
+
+        self.bt1.clicked.connect(self.Ok)
+        self.bt2.clicked.connect(self.Cancel)
+
+        object = QObject()
+
+        &#39;&#39;&#39;
+        事件过滤器可是一个非常重要的概念。根据Qt的官方文档，如果对象被安装已监视对象的事件过滤器，则过滤事件。如果要过滤事件，需重新实现此函数时，若停止进一步处理，返回true； 否则返回false。
+        如果一个对象安装多个事件过滤器，那么，最后安装的过滤器首先被激活。    
+        &#39;&#39;&#39;
+
+    def eventFilter(self, object, event):
+        if object == self.edit:  # 这里是对事件的判断。其中QKeyEvent类描述了一个关键事件。当按下或释放按键时，主要事件将发送到具有键盘输入焦点的小部件。然后运用matches方法匹配具体的按键。
+            if event.type() == QEvent.MouseMove or event.type() == QEvent.MouseButtonDblClick:
+                return True
+            elif event.type() == QEvent.KeyPress:
+                key = QKeyEvent(event)
+                if key.matches(QKeySequence.SelectAll) or key.matches(QKeySequence.Copy) or key.matches(
+                        QKeySequence.Paste):  # 然后进行事件判断与转换：鼠标移动对应的事件类型为QEvent.MouseMove，鼠标双击对应的事件类型为QEvent.MouseButtonDblClick，全选、复制、粘贴对应的事件类型为 QEvent.KeyPress，当接收到这些事件时，需要被过滤掉，所以返回true。
+                    return True
+        return QDialog.eventFilter(self, object, event)  # 继续传递该事件到被观察者，由其本身调用相应的事件
+
+    def Ok(self):
+        self.text = self.edit.text()
+        if len(self.text) == 0:
+            QMessageBox.warning(self, &quot;警告&quot;, &quot;密码为空&quot;)
+        elif len(self.text) &lt; 6:
+            QMessageBox.warning(self, &quot;警告&quot;, &quot;密码长度低于6位&quot;)
+        else:
+            self.done(1)  # 结束对话框返回1
+
+    def Cancel(self):
+        self.done(0)  # 结束对话框返回0
+</code></pre>
+<p>main.py</p>
+<pre><code># coding=utf-8
+
+from PyQt5.QtWidgets import (QApplication, QWidget, QPushButton, QLabel, QInputDialog, QTextBrowser, QLineEdit)
+from PasswdDialog import PasswdDialog
+import sys
+
+
+class Example(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.initUI()
+
+    def initUI(self):
+        self.resize(380, 180)
+        self.setWindowTitle(&#39;早点毕业吧--自定义密码输入对话框&#39;)
+
+        self.lb1 = QLabel(&#39;密码在此显示...&#39;, self)
+        self.lb1.move(20, 20)
+
+        self.bt1 = QPushButton(&#39;输入密码(普通型)&#39;, self)
+        self.bt1.move(20, 60)
+
+        self.bt2 = QPushButton(&#39;输入密码(普通加强型)&#39;, self)
+        self.bt2.move(20, 100)
+
+        self.bt3 = QPushButton(&#39;输入密码(特别加强型)&#39;, self)
+        self.bt3.move(20, 140)
+
+        self.show()
+
+        self.bt1.clicked.connect(self.showDialog)
+        self.bt2.clicked.connect(self.showDialog)
+        self.bt3.clicked.connect(self.showDialog)
+
+    def showDialog(self):
+        sender = self.sender()
+        if sender == self.bt1:
+            text, ok = QInputDialog.getText(self, &#39;密码输入框&#39;, &#39;请输入密码：&#39;, QLineEdit.Password)
+            if ok:
+                self.lb1.setText(text)
+        elif sender == self.bt2:
+            text, ok = QInputDialog.getText(self, &#39;密码输入框&#39;, &#39;请输入密码：&#39;, QLineEdit.PasswordEchoOnEdit)
+            if ok:
+                self.lb1.setText(text)
+        else:
+            pwd = PasswdDialog()
+            r = pwd.exec_()
+            if r:
+                self.lb1.setText(pwd.text)
+
+
+if __name__ == &#39;__main__&#39;:
+    app = QApplication(sys.argv)
+    ex = Example()
+    sys.exit(app.exec_())
+</code></pre>
+<p>具体运行结果参考：<br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/30152208">https://zhuanlan.zhihu.com/p/30152208</a><br>谢谢 “学点编程吧”<br>————————————————<br>版权声明：本文为CSDN博主「十三吖」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_40006058/article/details/80076669">https://blog.csdn.net/qq_40006058/article/details/80076669</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-QT对lineEdit添加图标"
   class="article article-type-post"
   itemscope
@@ -636,161 +934,6 @@ if __name__ == &#39;__main__&#39;:
     window.show()
     sys.exit(app.exec_())
 </code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-AttributeError module ‘backend_interagg‘ has no attribute ‘FigureCanvas‘的解决办法"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/10/18/AttributeError%20module%20%E2%80%98backend_interagg%E2%80%98%20has%20no%20attribute%20%E2%80%98FigureCanvas%E2%80%98%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/"
-    >AttributeError module ‘backend_interagg‘ has no attribute ‘FigureCanvas‘的解决办法</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/10/18/AttributeError%20module%20%E2%80%98backend_interagg%E2%80%98%20has%20no%20attribute%20%E2%80%98FigureCanvas%E2%80%98%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" class="article-date">
-  <time datetime="2023-10-18T02:18:00.000Z" itemprop="datePublished">2023-10-18</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h1><p>一开始我还以为是我的matoltlib和我的python版本不匹配后面发现真正原因其实是matplotlib 的 backend的默认渲染器是agg，agg是一个没有图形显示界面的终端，如果要图像正常显示，则需要切换为图形界面显示的终端TkAgg</p>
-<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>修改 backend 配置：</p>
-<pre><code>matplotlib.use(‘TkAgg’)
-</code></pre>
-<h1 id="原代码和修改后代码对比"><a href="#原代码和修改后代码对比" class="headerlink" title="原代码和修改后代码对比"></a>原代码和修改后代码对比</h1><h2 id="原代码："><a href="#原代码：" class="headerlink" title="原代码："></a>原代码：</h2><pre><code>import numpy as np
-
-import matplotlib.pyplot as plt
-
-x=np.linspace(0.0001,3,100)
-y=x**x
-plt.plot(x,y,&#39;r-&#39;,linewidth=3)
-plt.show()`
-</code></pre>
-<p>错误提示：</p>
-<pre><code>AttributeError: module &#39;backend_interagg&#39; has no attribute &#39;FigureCanvas&#39;. Did you mean: &#39;FigureCanvasAgg&#39;?
-</code></pre>
-<h2 id="修改后代码："><a href="#修改后代码：" class="headerlink" title="修改后代码："></a>修改后代码：</h2><pre><code>import numpy as np
-import matplotlib
-matplotlib.use(&#39;TkAgg&#39;)
-import matplotlib.pyplot as plt
-
-x=np.linspace(0.0001,3,100)
-y=x**x
-plt.plot(x,y,&#39;r-&#39;,linewidth=3)
-plt.show()
-</code></pre>
-<p>————————————————<br>版权声明：本文为CSDN博主「倚剑策马笑西风」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_51763547/article/details/126918669">https://blog.csdn.net/qq_51763547/article/details/126918669</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-“matplotlib.use(‘agg‘)“语句的作用机理"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/10/17/%E2%80%9Cmatplotlib.use(%E2%80%98agg%E2%80%98)%E2%80%9C%E8%AF%AD%E5%8F%A5%E7%9A%84%E4%BD%9C%E7%94%A8%E6%9C%BA%E7%90%86/"
-    >“matplotlib.use(‘agg‘)“语句的作用机理</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/10/17/%E2%80%9Cmatplotlib.use(%E2%80%98agg%E2%80%98)%E2%80%9C%E8%AF%AD%E5%8F%A5%E7%9A%84%E4%BD%9C%E7%94%A8%E6%9C%BA%E7%90%86/" class="article-date">
-  <time datetime="2023-10-17T02:17:00.000Z" itemprop="datePublished">2023-10-17</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><p>在很多使用 matplotlib 库的代码中出现了 matplotlib.use(‘agg’) 的语句。有些博客认为1，在导入matplotlib库后，且在matplotlib.pyplot库被导入前加“matplotlib.use(‘agg’)”语句的作用是在PyCharm中不显示绘图。例如1：</p>
-<pre><code>import numpy as np
-import matplotlib
-matplotlib.use(&#39;agg&#39;) 
-import matplotlib.pyplot as plt # matplotlib.use(&#39;agg&#39;)必须在本句执行前运行
-x = np.arange(0, 2*np.pi, 0.001) 
-y = np.sin(2 * np.pi * x) 
-plt.clf() 
-plt.plot(x,y) 
-l = plt.axhline(linewidth=1, color=&#39;black&#39;) 
-l = plt.axvline(linewidth=1, color=&#39;black&#39;) 
-plt.show()
-</code></pre>
-<p>在Pycharm里面运行就不会显示图。</p>
-<h1 id="原理分析"><a href="#原理分析" class="headerlink" title="原理分析"></a>原理分析</h1><p>实际上，这样的理解是表面的，这个语句确实会使得在Pycharm运行时无法显示图，但是必须注意，这是其原理导致的，而这个语句并不是设置Pycharm不显示图的语句，其实前述的代码中，删掉 plt.show() ，也不会显示图片。</p>
-<p>matplotlib的use()命令其实是用来配置matplotlib的backend （后端）的命令。所谓后端，就是一个渲染器，用于将前端代码渲染成我们想要的图像2。后端详细的解释可以参考博客： matplotlib中什么是后端 。</p>
-<p>对于用户接口，典型的渲染器是Agg，它是使用Anti-Grain Geometry C++库来产生光栅(像素)图。</p>
-<p>那么为什么这样设置Pycharm会导致其不显示图片呢？</p>
-<p>可以查看一下目前的后端设置。方法是执行下面代码。</p>
-<pre><code>import matplotlib
-matplotlib.get_backend()
-</code></pre>
-<p>在Pycharm的Terminal 里面输入该项命令，可以看到，Pycharm运行的时候，默认的后端是Qt5Agg。</p>
-<p>实际上，Agg 渲染器是非交互式的后端，没有GUI界面，所以不显示图片，它是用来生成图像文件。Qt5Agg 是意思是Agg渲染器输出到Qt5绘图面板，它是交互式的后端，拥有在屏幕上展示的能力3。</p>
  
       <!-- reward -->
       
