@@ -154,6 +154,325 @@
     
     
     <article
+  id="post-route add -p 命令详解"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/12/10/route%20add%20-p%20%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/"
+    >route add -p 命令详解</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/12/10/route%20add%20-p%20%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/" class="article-date">
+  <time datetime="2023-12-10T12:25:23.000Z" itemprop="datePublished">2023-12-10</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p><code>route add</code>命令用于添加一条静态路由信息。在使用时，可以指定不同的子网掩码和其他参数来定义目的网络的路由条目。以下是一些示例用法：</p>
+<p>要添加一个指向特定目标的默认路由，可以使用如下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">route add 0.0.0.0 mask 0.0.0.0 [目标网关地址]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>若要在指定的子网掩码（如255.255.0.0）下为目标网络添加一个路由，可以使用类似的方法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">route add [目标网络前缀] mask [子网掩码] [目标网关地址]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>对于具有特定Metric值的路由，可以使用<code>metric</code>参数进行设置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">route add [目标网络前缀] mask [子网掩码] metric [Metric值] [目标网关地址]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>此外，<code>route add -p</code>命令用于添加一条永久路由。这通常用在网络中有多个网关地址的情况下，以便能够通过不同的网关访问同一组网络。</p>
+<p>例如，如果要将所有需要发送到130.0.0.0/8地址段的数据包都转发给134.32.80.1这个网关，可以使用以下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">route add -p 130.0.0.0 mask 255.0.0.0 134.32.80.1 metric 10</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，“-p”表示这是一个永久路由，而“130.0.0.0/8”是一个目标网络的前缀，其子网掩码被设置为“255.0.0.0”，目标网关地址是“134.32.80.1”，并且Metric值为“10”。</p>
+<p>需要注意的是，路由跳数（Metric值）通常是可选的，但在某些情况下可能需要指定以确保正确的路由优先级。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/route/" rel="tag">route</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-github国内镜像网址分享"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/12/09/github%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F%E7%BD%91%E5%9D%80%E5%88%86%E4%BA%AB/"
+    >nohup命令</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/12/09/github%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F%E7%BD%91%E5%9D%80%E5%88%86%E4%BA%AB/" class="article-date">
+  <time datetime="2023-12-09T12:25:23.000Z" itemprop="datePublished">2023-12-09</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>hub.yzuu.cf/<br>hub.nuaa.cf/<br>hub.fgit.ml/</p>
+<p>使用chrome浏览器，不要使用360系列的浏览器。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Github/" rel="tag">Github</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-nohup命令"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/12/08/nohup%E5%91%BD%E4%BB%A4/"
+    >nohup命令</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/12/08/nohup%E5%91%BD%E4%BB%A4/" class="article-date">
+  <time datetime="2023-12-08T12:25:23.000Z" itemprop="datePublished">2023-12-08</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>nohup命令</p>
+<p>后台运行：</p>
+<pre><code>sh test.sh &amp;
+</code></pre>
+<p>关闭终端也运行：</p>
+<pre><code>nohup sh test.sh &amp;
+</code></pre>
+<p>一般使用：</p>
+<pre><code>nohup sh test.sh &gt; nohup.out  2&gt;&amp;1 &amp;
+</code></pre>
+<p>2&gt;&amp;1 解释：<br>将标准错误 2 重定向到标准输出 &amp;1 ，标准输出 &amp;1 再被重定向输入到 nohup.out 文件中。</p>
+<p>————————————————<br>版权声明：本文为CSDN博主「小赵小赵福星高照～」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/attemptendeavor/article/details/125501870">https://blog.csdn.net/attemptendeavor/article/details/125501870</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OSGeo4W/" rel="tag">OSGeo4W</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/QGIS/" rel="tag">QGIS</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-交互设计师必须get的场景化设计大解密，附详细案例"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/12/07/%E4%BA%A4%E4%BA%92%E8%AE%BE%E8%AE%A1%E5%B8%88%E5%BF%85%E9%A1%BBget%E7%9A%84%E5%9C%BA%E6%99%AF%E5%8C%96%E8%AE%BE%E8%AE%A1%E5%A4%A7%E8%A7%A3%E5%AF%86%EF%BC%8C%E9%99%84%E8%AF%A6%E7%BB%86%E6%A1%88%E4%BE%8B/"
+    >交互设计师必须get的场景化设计大解密，附详细案例</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/12/07/%E4%BA%A4%E4%BA%92%E8%AE%BE%E8%AE%A1%E5%B8%88%E5%BF%85%E9%A1%BBget%E7%9A%84%E5%9C%BA%E6%99%AF%E5%8C%96%E8%AE%BE%E8%AE%A1%E5%A4%A7%E8%A7%A3%E5%AF%86%EF%BC%8C%E9%99%84%E8%AF%A6%E7%BB%86%E6%A1%88%E4%BE%8B/" class="article-date">
+  <time datetime="2023-12-07T12:25:23.000Z" itemprop="datePublished">2023-12-07</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>交互设计师必须get的场景化设计大解密，附详细案例<br><a target="_blank" rel="noopener" href="https://www.zcool.com.cn/article/ZMTA1NTk0NA==.html">https://www.zcool.com.cn/article/ZMTA1NTk0NA==.html</a></p>
+<p>一、什么是场景化设计</p>
+<p>「场景」在百度百科里的定义是：戏剧、电影中的场面，泛指情景。情景又指(1) 感情与景色。(2) 情形；景象。(3) 环境：假设是在这个情景。在戏剧或影视剧里，场景由人物，时空，事件（行为），环境（社会环境和自然环境）等要素构成。</p>
+<p>互联网中的「场景」我把它分为两类，一类是为了实现用户目标而产生的场景，这种类型的场景需要明确用户目标，可能并不需要涵盖用户是怎么实现目标的，这类场景指根据用户的精准需求，为其提供精准服务，用明确的差异化服务给用户提供一个使用产品的动机。比如微博和微信，微信定位是熟人社交，微博则是陌生人社交；另一类是更加精细化的场景，这类场景需要明确用户操作流程。本文主要针对第二类场景展开。</p>
+<p>场景化设计指基于对场景的分析，得出用户痛点与需求，结合前后场景预判用户目标，通过设计提高用户效率，给予用户惊喜与感动。</p>
+<p>场景要素包括：4W+1H，即Who人、When时间、Where地点、What事件、How环境，什么人，在什么时候，在什么地方，做了什么事情，所处的环境如何。其中Where又包括线上地点和线下地点，线下指现实中的定位，可以通过手机信号塔数据（GPS），Wifi连接等获取；线上指用户所处的具体页面。</p>
+<p>如：用户（who）早上上班（when）在地铁上（where）看电子书（what），地铁上人多嘈杂且操作不方便（how）。再比如用户（who）中午（when）在办公室里（where）点外卖（what），肚子很饿还不知道吃什么（how）。五要素就像口诀，帮助我们全面快速的描述场景。</p>
+<p>二、有哪些场景化设计的例子</p>
+<p>为帮助大家更好的理解场景化设计，这里基于上面提到的场景五要素举一些例子：</p>
+<p>人是变量：用户不同，看到的信息不同。随着大数据和智能推荐技术的普及，越来越多的产品通过挖掘不同用户的喜好，生成用户画像，为每位用户提供“千人千面”的个性化内容。这样的产品大家都很熟悉，比如抖音，淘宝，微博，今日头条。</p>
+<p>时间是变量：时间不同，看到的信息不同。比如小米MIUI11的效率革新功能「智能出行」，当在出行类app上定好行程后，MIUI11就会自动将该行程记录在负一屏显示并同步日历，同时会根据出行的时间点，在通知栏实时更新提示：<br>再比如在Google Maps的app里开启导航时，如果目的地在预计到达时间还没有开门，或者快要/已经关门了的话，会有个弹窗提醒。</p>
+<p>还有蚂蚁森林的页面会根据用户打开的时间进行变化（白天与夜晚模式）等等，这些都是充分考虑了场景中时间这一变量，才有如此高效暖心的设计。</p>
+<p>地点是变量：同一个用户，在不同地点看到的信息不同。比如，大众点评APP当用户从常住地北京（where）定位成非常住地杭州（where）时，根据用户的上个场景与当前场景预测用户可能处于旅游状态，从而预测用户下一步的目标是在杭州「吃喝玩乐」，所以首页和攻略页的内容都发生了变化，为用户推荐旅行地的「吃喝玩乐」。<br>环境是变量：不同环境看到的信息不同，比如设备环境发生变化时：Ios13中的备忘录页面，将「添加」按钮移到了右下角，为什么？因为手机屏幕越来越大，把按钮从右上角移到右下角，更有利于用户单手操作。<br>再比如：我们在驾驶环境下，要保持注意力集中，避免或减少分心驾驶导致的交通事故，所以基于驾驶环境ios11上线了驾驶模式功能，当iphone与车内的USB或蓝牙连接，或iphone感知到人的移动速度时，iphone就会自动进入驾驶模式，在该模式下，任何人发短信，我们都不会收到提示，对方会收到“我正在驾驶，稍后回复您”的自动回复，同时，iphone会追加一条短信，提示对方只要回复“紧急”关键词，我们就能立刻接收到他们的消息提示。<br>三、为什么要基于场景做设计？<br>通过上面的举例想必大家已经了解到了基于场景做设计的好处。由于与用户的空间相隔，设计师无法感知用户在真实场景中使用产品的具体情况。通过场景化设计的方法，对用户使用场景进行分析与预期，可以帮助设计师找到用户与场景的内在联系，探索新的功能及交互方式。</p>
+<p>四、怎么进行场景化设计</p>
+<p>可以概括为以下四步：<br>1、根据用户使用流程和行为路径穷尽场景<br>根据用户的使用流程和行为路径列举场景，这里以乘坐飞机（手机购票）为例，列举乘坐飞机涉及到的关键场景：<br>①乘客（who）在航旅纵横页面（where）购票（what），航班多查找起来麻烦（how）。<br>②乘客（who）起大早拖着疲惫的身体（how）在去往机场的路上（where），又遇到早高峰堵车，内心焦躁烦闷（how）。<br>③起飞前（when）乘客（who）在机场（where）过安检（what），安检流程复杂，又检测出不符合登机规定的物品，让人心烦，手忙脚乱（how）。<br>④起飞前（when），乘客（who）在候机口（where）候机（what），人多嘈杂，没有座位，还背着繁重的行李，还要时刻关注航班信息（how）。<br>⑤起飞前40分钟（when），乘客（who）背着行李排着队（how），将登机牌（纸质/电子）和身份证出示给工作人员（what），工作人员（who）站在入口处（where）开始检查每位乘客的登机牌和身份证（what）。<br>⑥检完票后（when），乘客（who）拿着身份证和登机牌，背着行李（how）乘坐摆渡车（what），摆渡车上嘈杂、拥挤（how）。<br>⑦下摆渡车后（when），乘客拿出登机牌，背着行李（how）排队检票登机（what），工作人员（who）站在飞机前（where）开始检查每位乘客的登机牌（what）。<br>⑧在起飞前30分钟（when），乘客（who）登机（what），背着行李在狭窄拥挤的通道里（how）寻找自己的座位（what）。找到座位后，将沉重的行李艰难的（how）放到上方的置物架上（what）。放好行李后，坐到自己的座位上（what），系好安全带（what），调节座椅靠背（what），等待飞机起飞（what）。<br>⑨飞行过程中（when），气流导致飞机颠簸，乘客感到恐慌不适（how）。飞行过程中，乘客通过看电影，看书，睡觉打发时间（what）。<br>⑩到达目的地（when），乘客（who）从高处置物架上（how）取下行李（what），拿着沉重的行李（how）排队下飞机（what）。此时乘客对目的地的天气等其他情况都不清楚。<br>⑪乘客走出飞机到达航站楼后，在陌生的机场（where），跟着标牌指示艰难的找到自己的行李（what）。拿着行李跟着指示牌（how）困难的找出口（what）。</p>
+<p>通过对关键场景的详细描述，我们将摸不着的用户场景像过电影一样在眼前一一呈现，有利于我们发现很多想不到或者通过调研得不到的细节，帮助我们发现用户真正的痛点与需求，洞察设计机会点。</p>
+<p>2、根据场景挖掘机会点<br>完成了第一步的场景列举，我们对流程中涉及的场景有了深刻的了解，下一步就是对场景的判断与分析，挖掘机会点。机会点挖掘有两个方向，一是通过分析当前场景存在的痛点和需求挖掘机会点，二是通过对用户下一步目标的预判寻找机会点。<br>①通过分析当前场景存在的痛点和需求挖掘机会点<br>举例说明1：支付宝「朋友」界面，当用户输入某数值时，输入框上方会自动显示「给对方转账***元」按钮，用户可点击该按钮完成转账。这是因为经常有用户误以为输入数值发送即完成了转账，导致很多尴尬出现。基于该场景下的痛点与需求，支付宝做了这个改进，贴心又好用。<br>举例说明2：ios系统在切换APP操作时，会将一些金融类APP虚化，以此来保证用户信息安全。这一设计细节也是充分考虑了用户在切换APP时的场景，解除了用户在公告场合担心被窥屏而泄露个人财富信息的担忧。<br>还有，当我们用耳机听音乐或播放视频时，拔下耳机，声音就会自动停掉，这样就算在安静的场合听音乐或者看视频，耳机不小心掉下来也不会发出尴尬的声音，这些都是充分考虑了用户当前使用时的场景，才做出如何贴心的设计。</p>
+<p>②通过对用户下一步目标的预判寻找机会点<br>第二个方法是通过对用户当前场景的分析，预判用户下一步的行为与目标，从而寻找当前场景的机会点。<br>如何预期用户下一步目标？有三个方法：<br>1）通过成组动作进行预期，如复制—粘贴，编辑—保存。<br>2）通过用户认知流程预判，如，浏览时反向滑动→结束浏览/回到顶部；再比如谷歌翻译在发音时，第一遍是正常语速，第二遍语速变慢，第三遍又恢复到常速，是不是很贴心，很符合用户期望？<br>3）通过产品使用流程进行预期，如订外卖—取外卖—评价。<br>举例说明1：在谷歌浏览器，当我们打开多个浏览窗口时，通常需要手动一个个地关闭标签页。chrome充分考虑到了用户的该使用场景，当用户关闭一个标签页时，预期用户会关闭下一个标签页，所以当关闭一个标签时，相邻标签会自动靠近，保证关闭的按钮始终位于鼠标的当前位置，这样用户就不用移动鼠标关闭下一个标签页，提高了用户的使用效率。<br>3、机会点转化为落地的设计方案<br>在将机会点转化为具体的设计时，有两个可作为依据的设计原则，分别为高效，情感化。<br>实现高效有以下几个方法：<br>①行动点前置，通过对用户下一目标的预测，将用户目标在当前场景展示，缩短操作流程，达到高效的目标。如淘宝首页的tab栏会根据每个用户的浏览记录预测用户目标，千人千面个性化展现，缩短了用户查找商品的路径，提高商品购买效率。<br>②行动点置换，还是拿淘宝举例，淘宝底部的第一个导航，当用户滑动首页下方的商品流时，该按钮由首页变成置顶。<br>③行动点相关提示，意思是根据用户当前目标或下一步目标进行相关的提示。如支付宝朋友页面，当上滑时，会出现「找人转账」的提示，点击进入朋友列表的纯净模式（去掉了服务通知等跟转账无用的列表），提高了用户寻找的效率。<br>再比如，网易邮箱，当邮件中提到附件，但是没有上传附件时，点击发送后，系统弹出下方的提示，解决了用户常常忘记添加附件的困扰。<br>④突出行动点，根据用户当前目标或下一步目标突出关键按钮，帮助用户快速找到关键操作，吸引用户点击，降低了用户思考成本，提升效率。运用这个方法进行设计的例子太多了，比如淘宝的商品详情页用红色突出购买按钮等。<br>⑤直接执行，根据用户当前目标或下一步目标直接执行。比如滴滴的扫一扫界面，当检测到光线较暗时，手电筒会自动打开，提高了扫一扫的效率。<br>情感化<br>唐纳德·诺曼在《情感化设计》中提到设计的三个层次，分别为：本能的设计，行为的设计，反思的设计，情感化设计是能打动人的，它能传递感情，勾起回忆，给人惊喜，情感化设计帮助产品与用户之间建立情感的纽带，能强化用户对品牌的认知，培养对品牌的忠诚度。</p>
+<p>情感化设计的步骤依次为：提炼影响产品的的情感指标→聚焦用户对产品的情感诉求→产出设计方案→验证设计价值（来源于周姮—知乎蚂蚁金服体验技术部的一次分享）。</p>
+<p>举例说明1：在谷歌表格每列的开头依次输入「Pride」五个字母后，表格会变成彩虹样式</p>
+<p>举例说明2：网易云音乐在用户生日时会变成「生日快乐」的蛋糕样式，点击进去的音乐列表，第一首歌是生日歌，让人心里暖暖的。<br>4、设计检验<br>最后一步就是设计方案的验证，设计方案能否帮助用户缩短操作流程？降低用户思考成本？帮助用户高效的完成任务？是否能打动用户给他们带来惊喜与温暖？通过可用性测试及上线后的数据反馈，帮助我们更好的优化设计方案。<br>文章较长，我们再回顾一下：<br>一、什么是场景化设计？<br>场景五要素：4W+1H，即Who人、When时间、Where地点、What事件 、How环境，什么人，在什么时候，在什么地方，做了什么事情，所处的环境如何。<br>二、有哪些场景化设计的例子？<br>三、为什么要进行场景化设计？<br>四、怎么进行场景化设计？<br>1、根据使用流程和行为路径穷尽场景<br>2、根据场景挖掘设计机会点<br>3、将机会点转化为落地的设计方案<br>4、设计检验<br>好了，今天就说到这，文章较长，希望大家能耐心消化。<br>说明：文章部分内容引用了阿里中国站UED团队博客里的分享。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OSGeo4W/" rel="tag">OSGeo4W</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/QGIS/" rel="tag">QGIS</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-HEX、DEC、OCT 和 BIN 的含义"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/12/06/HEX%E3%80%81DEC%E3%80%81OCT%20%E5%92%8C%20BIN%20%E7%9A%84%E5%90%AB%E4%B9%89/"
+    >HEX、DEC、OCT 和 BIN 的含义</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/12/06/HEX%E3%80%81DEC%E3%80%81OCT%20%E5%92%8C%20BIN%20%E7%9A%84%E5%90%AB%E4%B9%89/" class="article-date">
+  <time datetime="2023-12-06T12:25:23.000Z" itemprop="datePublished">2023-12-06</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="HEX、DEC、OCT-和-BIN含义如下："><a href="#HEX、DEC、OCT-和-BIN含义如下：" class="headerlink" title="HEX、DEC、OCT 和 BIN含义如下："></a>HEX、DEC、OCT 和 BIN含义如下：</h1><p>HEX，英文全称 Hexadecimal，表示十六进制。</p>
+<p>DEC，英文全称 Decimal，表示十进制。</p>
+<p>OCT，英文全称 Octal，表示八进制。</p>
+<p>BIN，英文全称 Binary，表示二进制。</p>
+<h1 id="详解"><a href="#详解" class="headerlink" title="详解"></a>详解</h1><p>十六进制（简写为 hex 或下标 16）是一种基数为 16 的计数系统，是一种逢 16 进 1 的进位制。通常用数字 0、1、2、3、4、5、6、7、8、9 和字母 A、B、C、D、E、F（a、b、c、d、e、f）表示，其中: A<del>F 表示 10</del>15，这些称作十六进制数字。</p>
+<p>十进制数是组成以10为基础的数字系统，有 0，1，2，3， 4， 5， 6， 7， 8， 9 十个基本数字组成。十进制，英文名称为 Decimal System，来源于希腊文 Decem，意为十。十进制计数是由印度教教徒在 1500 年前发明的，由阿拉伯人传承至 11 世纪。</p>
+<p>八进制，Octal，缩写 OCT 或 O，一种以 8 为基数的计数法，采用 0，1，2，3，4，5，6，7 八个数字，逢八进 1。一些编程语言中常常以数字 0 开始表明该数字是八进制。八进制的数和二进制数可以按位对应（八进制一位对应二进制三位），因此常应用在计算机语言中。</p>
+<p>二进制是计算技术中广泛采用的一种数制。 二进制数据是用 0 和 1 两个数码来表示的数。 它的基数为2，进位规则是”逢二进一”，借位规则是”借一当二”。 二进制数（binaries）是逢2进位的进位制，0、1是基本算符 ；计算机运算基础采用二进制。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OSGeo4W/" rel="tag">OSGeo4W</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/QGIS/" rel="tag">QGIS</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-OSGeo4W 镜像仓库"
   class="article article-type-post"
   itemscope
@@ -208,605 +527,13 @@
 </article>
 
     
-    <article
-  id="post-通过 Maven 仓库安装 Spire 系列 Java 产品"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/12/04/%E9%80%9A%E8%BF%87%20Maven%20%E4%BB%93%E5%BA%93%E5%AE%89%E8%A3%85%20Spire%20%E7%B3%BB%E5%88%97%20Java%20%E4%BA%A7%E5%93%81/"
-    >springboot指定配置文件启动</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/12/04/%E9%80%9A%E8%BF%87%20Maven%20%E4%BB%93%E5%BA%93%E5%AE%89%E8%A3%85%20Spire%20%E7%B3%BB%E5%88%97%20Java%20%E4%BA%A7%E5%93%81/" class="article-date">
-  <time datetime="2023-12-04T12:25:23.000Z" itemprop="datePublished">2023-12-04</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>只需简单配置，您就可以轻松将 Java 产品的 JAR 包通过 Maven 仓库安装到的 Maven 项目中。我们所有 Java 产品均可通过 Maven 安装。下面将详细说明如何在 Maven 程序中添加对 JAR 包的依赖。</p>
-<p>首先，在 pom.xml 文件中配置 Maven 仓库路径。</p>
-<pre><code>&lt;repositories&gt;
-        &lt;repository&gt;
-            &lt;id&gt;com.e-iceblue&lt;/id&gt;
-            &lt;name&gt;e-iceblue&lt;/name&gt;
-            &lt;url&gt;https://repo.e-iceblue.cn/repository/maven-public/&lt;/url&gt;
-        &lt;/repository&gt;
-&lt;/repositories&gt;
-</code></pre>
-<p>然后，在 pom.xml 文件中指定 Spire 产品的 Maven 依赖。如下列举了几种产品的配置方式，可参考使用。</p>
-<p>如果需要在同一个程序项目中操作多种文件格式，例如：同时操作 Word、Excel 和 PDF 或者其他多种文件格式时，请使用集合包 Spire.Office for Java。否则，在同一程序中使用多个 Spire Jar 包会引起程序冲突，导致异常报错。</p>
-<p>配置 Spire.PDF for Java</p>
-<pre><code>&lt;repositories&gt;
-    &lt;repository&gt;
-        &lt;id&gt;com.e-iceblue&lt;/id&gt;
-        &lt;name&gt;e-iceblue&lt;/name&gt;
-        &lt;url&gt;https://repo.e-iceblue.cn/repository/maven-public/&lt;/url&gt;
-    &lt;/repository&gt;
-&lt;/repositories&gt;
-
-&lt;dependencies&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;e-iceblue&lt;/groupId&gt;
-        &lt;artifactId&gt;spire.pdf&lt;/artifactId&gt;
-        &lt;version&gt;10.1.5&lt;/version&gt;
-    &lt;/dependency&gt;
-&lt;/dependencies&gt;
-</code></pre>
-<p>配置 Spire.Doc for Java</p>
-<pre><code>&lt;repositories&gt;
-    &lt;repository&gt;
-        &lt;id&gt;com.e-iceblue&lt;/id&gt;
-        &lt;name&gt;e-iceblue&lt;/name&gt;
-        &lt;url&gt;https://repo.e-iceblue.cn/repository/maven-public/&lt;/url&gt;
-    &lt;/repository&gt;
-&lt;/repositories&gt;
-
-&lt;dependencies&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;e-iceblue&lt;/groupId&gt;
-        &lt;artifactId&gt;spire.doc&lt;/artifactId&gt;
-        &lt;version&gt;12.1.10&lt;/version&gt;
-    &lt;/dependency&gt;
-&lt;/dependencies&gt;
-</code></pre>
-<p>配置 Spire.XLS for Java</p>
-<pre><code>&lt;repositories&gt;
-    &lt;repository&gt;
-        &lt;id&gt;com.e-iceblue&lt;/id&gt;
-        &lt;name&gt;e-iceblue&lt;/name&gt;
-        &lt;url&gt;https://repo.e-iceblue.cn/repository/maven-public/&lt;/url&gt;
-    &lt;/repository&gt;
-&lt;/repositories&gt;
-
-&lt;dependencies&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;e-iceblue&lt;/groupId&gt;
-        &lt;artifactId&gt;spire.xls&lt;/artifactId&gt;
-        &lt;version&gt;14.1.1&lt;/version&gt;
-    &lt;/dependency&gt;
-&lt;/dependencies&gt;
-</code></pre>
-<p>配置 Spire.Presentation for Java</p>
-<pre><code>&lt;repositories&gt;
-    &lt;repository&gt;
-        &lt;id&gt;com.e-iceblue&lt;/id&gt;
-        &lt;name&gt;e-iceblue&lt;/name&gt;
-        &lt;url&gt;https://repo.e-iceblue.cn/repository/maven-public/&lt;/url&gt;
-    &lt;/repository&gt;
-&lt;/repositories&gt;
-
-&lt;dependencies&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;e-iceblue&lt;/groupId&gt;
-        &lt;artifactId&gt;spire.presentation&lt;/artifactId&gt;
-        &lt;version&gt;8.12.1&lt;/version&gt;
-    &lt;/dependency&gt;
-&lt;/dependencies&gt;
-</code></pre>
-<p>配置 Spire.Office for Java</p>
-<pre><code>&lt;repositories&gt;
-    &lt;repository&gt;
-        &lt;id&gt;com.e-iceblue&lt;/id&gt;
-        &lt;name&gt;e-iceblue&lt;/name&gt;
-        &lt;url&gt;https://repo.e-iceblue.cn/repository/maven-public/&lt;/url&gt;
-    &lt;/repository&gt;
-&lt;/repositories&gt;
-
-&lt;dependencies&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;e-iceblue&lt;/groupId&gt;
-        &lt;artifactId&gt;spire.office&lt;/artifactId&gt;
-        &lt;version&gt;9.1.4&lt;/version&gt;
-    &lt;/dependency&gt;
-&lt;/dependencies&gt;
-</code></pre>
-<p>如需配置 Spire 产品的免费版本 jar 包，只需更改 artifactId 和 version 信息即可，如下配置方法：</p>
-<p>配置 Free Spire.PDF for Java</p>
-<pre><code>&lt;dependencies&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;e-iceblue&lt;/groupId&gt;
-        &lt;artifactId&gt;spire.pdf.free&lt;/artifactId&gt;
-        &lt;version&gt;5.1.0&lt;/version&gt;
-    &lt;/dependency&gt;
-&lt;/dependencies&gt;
-</code></pre>
-<p>配置 Free Spire.Doc for Java</p>
-<pre><code>&lt;dependencies&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;e-iceblue&lt;/groupId&gt;
-        &lt;artifactId&gt;spire.doc.free&lt;/artifactId&gt;
-        &lt;version&gt;5.3.1&lt;/version&gt;
-    &lt;/dependency&gt;
-&lt;/dependencies&gt;
-</code></pre>
-<p>配置 Free Spire.XLS for Java</p>
-<pre><code>&lt;dependencies&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;e-iceblue&lt;/groupId&gt;
-        &lt;artifactId&gt;spire.xls.free&lt;/artifactId&gt;
-        &lt;version&gt;5.1.0&lt;/version&gt;
-    &lt;/dependency&gt;
-&lt;/dependencies&gt;
-</code></pre>
-<p>配置 Free Spire.Presentation for Java</p>
-<pre><code>&lt;dependencies&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;e-iceblue&lt;/groupId&gt;
-        &lt;artifactId&gt;spire.presentation.free&lt;/artifactId&gt;
-        &lt;version&gt;5.1.0&lt;/version&gt;
-    &lt;/dependency&gt;
-&lt;/dependencies&gt;
-</code></pre>
-<p>配置 Free Spire.Office for Java</p>
-<pre><code>&lt;dependencies&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;e-iceblue&lt;/groupId&gt;
-        &lt;artifactId&gt;spire.office.free&lt;/artifactId&gt;
-        &lt;version&gt;5.3.1&lt;/version&gt;
-    &lt;/dependency&gt;
-&lt;/dependencies&gt;
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-springboot指定配置文件启动"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/12/03/springboot%E6%8C%87%E5%AE%9A%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%90%AF%E5%8A%A8/"
-    >springboot指定配置文件启动</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/12/03/springboot%E6%8C%87%E5%AE%9A%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%90%AF%E5%8A%A8/" class="article-date">
-  <time datetime="2023-12-03T12:14:23.000Z" itemprop="datePublished">2023-12-03</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="IDE开发工具启动"><a href="#IDE开发工具启动" class="headerlink" title="IDE开发工具启动"></a>IDE开发工具启动</h1><p>在JetBrains IDEA开发工具的配置</p>
-<p>1.启动类启动方式</p>
-<p>idea active profiles方式</p>
-<p>2.main方法启动方式</p>
-<p>在IDEA中的program arguments配置此项–spring.profiles.active=dev命令</p>
-<p>3.JVM启动方式</p>
-<p>在IDEA中的VM options配置此项-Dspring.profiles.active=dev命令</p>
-<h1 id="jar包启动"><a href="#jar包启动" class="headerlink" title="jar包启动"></a>jar包启动</h1><p>1.指定配置环境</p>
-<p>nohup java -jar -Dfile.encoding=utf-8 -Dspring.profiles.active=dev example.jar &gt;/dev/null 2&gt;&amp;1 &amp;<br>该启动时方式会去加载Jar包中resource目录下application-dev.yml或application-dev.properties文件。同时需要注意的是通IDEA的启动方式一样。</p>
-<p>2.指定配置文件<br>yml文件</p>
-<pre><code>nohup java -jar -Dfile.encoding=utf-8 -Dspring.config.location=classpath:/application-dev.yml example.jar &gt;/dev/null 2&gt;&amp;1 &amp;
-</code></pre>
-<p>properties文件</p>
-<pre><code>nohup java -jar -Dfile.encoding=utf-8 -Dspring.config.location=classpath:/application-dev.properties example.jar &gt;/dev/null 2&gt;&amp;1 &amp;
-</code></pre>
-<p>若配置文件在Jar包外面，-Dspring.config.location=后面不用classpath，直接使用配置文件的相对或绝对路径即可：例如 </p>
-<pre><code>-Dspring.config.location=app-dev.yml-Dspring.config.location=/usr/local/soft/config/app-dev.yml
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-新型电力系统行动方案（2021-2030年），国网Vs南网 （一）"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/12/02/%E6%96%B0%E5%9E%8B%E7%94%B5%E5%8A%9B%E7%B3%BB%E7%BB%9F%E8%A1%8C%E5%8A%A8%E6%96%B9%E6%A1%88%EF%BC%882021-2030%E5%B9%B4%EF%BC%89%EF%BC%8C%E5%9B%BD%E7%BD%91Vs%E5%8D%97%E7%BD%91%20%EF%BC%88%E4%B8%80%EF%BC%89/"
-    >新型电力系统行动方案（2021-2030年），国网Vs南网 （一）</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/12/02/%E6%96%B0%E5%9E%8B%E7%94%B5%E5%8A%9B%E7%B3%BB%E7%BB%9F%E8%A1%8C%E5%8A%A8%E6%96%B9%E6%A1%88%EF%BC%882021-2030%E5%B9%B4%EF%BC%89%EF%BC%8C%E5%9B%BD%E7%BD%91Vs%E5%8D%97%E7%BD%91%20%EF%BC%88%E4%B8%80%EF%BC%89/" class="article-date">
-  <time datetime="2023-12-02T12:14:23.000Z" itemprop="datePublished">2023-12-02</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>今年，国家电网有限公司发布《构建以新能源为主体的新型电力系统行动方案（2021-2030 年）》、中国南方电网有限责任公司发布《建设新型电力系统行动方案（ 2021-2030 年 ）》。</p>
-<p>在两个方案中，都提及行动方案制定是“全面落实习近平总书记‘四个革命、一个合作’能源安全新战略，服务国家‘2030年碳达峰、2060年碳中和’目标要求，推动构建以新能源为主体的新型电力系统”等字样。</p>
-<p>关于新型电力系统的定义和实现路径</p>
-<p>国网认为,电源结构由可控连续出力的煤电装机占主导，向强不确定性、弱可控出力的新能源发电装机占主导转变。负荷特性由传统的刚性、纯消费型，向柔性、生产与消费兼具型转变。电网形态由单向逐级输电为主的传统电网，向包括交直流混联大电网、  微电网、局部直流电网和可调节负荷的能源互联网转变。技术基础由同步发电机为主导的机械电磁系统，向由电力电子设备 和同步机共同主导的混合系统转变。运行特性由源随荷动的实时平衡模式、大电网一体化控制模式，向源网荷储协同互动的非完全实时平衡模式、大电网与微电网协同控制模式转变。</p>
-<p>以新能源为主体的新型电力系统承载着能源转型的历史使命，是清洁低碳、安全高效能源体系的重要组成部分，是以新能源为供给主体、以确保能源电力安全为基本前提、以满足经济社会发展电力需求为首要目标，以坚强智能电网为枢纽平台，以源网荷储互动与多能互补为支撑，具有清洁低碳、安全可控、灵活高效、智能友好、开放互动基本特征的电力系统。</p>
-<p>南网则提出，建设新型电力系统是应对持续可靠供电、电网安全稳定运行、电网公司运营模式等挑战的必然选择。构建以新能源为主体的新型电力系统，将促进全行业产业链、 价值链上下游紧密协同，推动新能源技术创新发展和产业持续变革，是能源电力行业实现跨越式发展的重大战略机遇。南方电网 公司将牢牢把握建设新型电力系统的重大机遇，立足新发展阶段、 贯彻新发展理念、构建新发展格局，实施创新驱动战略，加快数 字化转型，通过数字技术与公司业务、管理深度融合，全面推动公司战略转型和高质量发展。</p>
-<p>建设总体目标</p>
-<p>国网预计：</p>
-<p>到2035年，基本建成新型电力系统，到2050年全面建成新型电力系统。2021-2035 年是建设期。新能源装机逐步成为第一大电源，常规电源逐步转变为调节性和保障性电源。电力系统总体维持较高转动惯量和交流同步运行特点，交流与直流、大电网与微电 网协调发展。系统储能、需求响应等规模不断扩大，发电机组出力和用电负荷初步实现解耦。</p>
-<p>2036-2060年是成熟期。新能源逐步成为电力电量供应主体,火电通过CCUS技术逐步实现净零排放，成为长周期调节电源。分布式电源、微电网、交直流组网与大电网融合发展。系统储能全面应用、负荷全面深入参与调节，发电机组出力和用电负荷逐步实现全面解耦。</p>
-<p>为此，国网提出要实现3个方式和3个模式的转变。在公司发展方式上，按照 “一体四翼” 发展布局，由传统电网企业向能源互联网企业转变，积极培育新业务、新业态、新模式，延伸产业链、价值链。在电网发展方式上，由以大电网为主，向大电网、微电网、局部直流电网融合发展转变，推进电网数字化、透明化，满足新能源优先就地消纳和全国优化配置需要。在电源发展方式上，推动新能源发电由以集中式开发为主，向集中式与分布式开发并举转变；推动煤电由支撑性电源向调节性电源转变。在营销服务模式上，由为客户提供单向供电服务，向发供一体、多元用能、多态服务转变，打造 “供电+能效服务”模式，创新构建 “互联网+”现代客户服务模式。在调度运行模式上，由以大电源大电网为主要控制对象、源随荷动的调度模式，向源网荷储协调控制、输配微网多级协同的调度模式转变。在技术创新模式上，由以企业自主开发为主，向跨行业跨领域合作开发转变，技术领域向源网荷储全链条延伸。</p>
-<p>南网提出的总体目标是：</p>
-<p>2025年前，大力支持新能源接入，具备支撑新能源新增装机1亿千瓦以上的接入消纳能力，初步建立以新能源为主体的源网荷储体系和市场机制，具备新型电力系统基本特征；</p>
-<p>2030年前，具备支撑新能源再新增装机1亿千瓦以上的接入消纳能力，推动新能源装机处于主导地位，源网荷储体系和市场 机制趋于完善，基本建成新型电力系统，有力支持南方五省区及 港澳地区全面实现碳达峰；</p>
-<p>2060年前，新型电力系统全面建成并不断发展，全面支撑南方五省区及港澳地区碳中和目标实现。</p>
-<p>重点任务一：提升清洁能源优化配置和消纳能力</p>
-<p>国网在2021-2030年重点任务中，提出：加快特高压电网建设，“十四五”500千伏及以上电网建设投资约7000亿元，2025年华北、华东、华中和西南特高压网架全面建成；提高跨省跨区输送清洁能源力度，到2025年，公司经营区跨省跨区输电能力约3.0亿千瓦，2030年约3.5亿千瓦，输送清洁能源占比达到50%以上；加大配电网建设投入，“十四五”配电网建设投资超过1.2万亿元，占电网建设总投资的60%以上。</p>
-<p>南网提出加快新能源接入电网建设。重点推进广东、广西海上风电，云南大滇中地区新能源，贵州黔西、黔西北地区新能源等配套工 程建设；建设“强简有序、灵活可靠、先进适用”的配电网，支 持分布式新能源接入。通过努力，到2025年，具备支撑新能源新增装机1亿千瓦以上的接入消纳能力，非化石能源占比达到60%以上；到2030年，具备支撑新能源再新增装机1亿千瓦以上的接入消纳能力。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%94%B5%E5%8A%9B/" rel="tag">电力</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-国家电网：构建以新能源为主体的新型电力系统行动方案（2021-2030 年）"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/12/01/%E5%9B%BD%E5%AE%B6%E7%94%B5%E7%BD%91%EF%BC%9A%E6%9E%84%E5%BB%BA%E4%BB%A5%E6%96%B0%E8%83%BD%E6%BA%90%E4%B8%BA%E4%B8%BB%E4%BD%93%E7%9A%84%E6%96%B0%E5%9E%8B%E7%94%B5%E5%8A%9B%E7%B3%BB%E7%BB%9F%E8%A1%8C%E5%8A%A8%E6%96%B9%E6%A1%88%EF%BC%882021-2030%20%E5%B9%B4%EF%BC%89/"
-    >国家电网：构建以新能源为主体的新型电力系统行动方案（2021-2030年）</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/12/01/%E5%9B%BD%E5%AE%B6%E7%94%B5%E7%BD%91%EF%BC%9A%E6%9E%84%E5%BB%BA%E4%BB%A5%E6%96%B0%E8%83%BD%E6%BA%90%E4%B8%BA%E4%B8%BB%E4%BD%93%E7%9A%84%E6%96%B0%E5%9E%8B%E7%94%B5%E5%8A%9B%E7%B3%BB%E7%BB%9F%E8%A1%8C%E5%8A%A8%E6%96%B9%E6%A1%88%EF%BC%882021-2030%20%E5%B9%B4%EF%BC%89/" class="article-date">
-  <time datetime="2023-12-01T12:14:23.000Z" itemprop="datePublished">2023-12-01</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>为深入贯彻习近平总书记关于碳达峰、碳中和重要讲话和指示精神，按照中央财经委员会第九次会议工作部署，根据国家“十四五”规划和2035年远景目标纲要，国家电网公司研究制定了构建以新能源为主体的新型电力系统行动方案，全力推动实现“双碳”目标。</p>
-<p>一、构建新型电力系统的重大意义</p>
-<p>2021年3月15日，习近平总书记在中央财经委第九次会议上提出，构建以新能源为主体的新型电力系统。这是自2014年6月总书记提出“四个革命、一个合作”能源安全新战略以来，再次对能源电力发展作出的系统阐述，明确了新型电力系统在实现“双碳”目标中的基础地位，为能源电力发展指明了科学方向、提供了根本遵循。</p>
-<p>国家电网公司深入学习贯彻习近平总书记重要指示和中央财经委第九次会议精神，我们深刻认识到，构建以新能源为主体的新型电力系统，是加快生态文明建设的战略选择。我国生态文明建设以降碳为重点战略方向，大力发展风电、太阳能发电等非化石能源，是能源领域降碳的主要途径。是保障国家能源安全的重要举措。能源安全关系国家安全，实现以新能源为供给主体，将大幅降低我国油气对外依存度，显著提高能源安全保障能力。是构建新发展格局的强大动力。以终端用能电气化推动能源利用节能提效，增强绿色发展内生动力，为全面建成社会主义现代化国家提供基础支撑和持续动能。是推动能源产业链转型升级的重要引擎。通过自主创新，集中突破能源电力领域核心和颠覆性技术，摆脱关键技术装备对外依赖，推动能源电力产业全链条自主可控和转型升级。</p>
-<p>实现碳达峰、碳中和，能源是主战场，电力是主力军，电网是排头兵。电网连接电力生产和消费，是重要的网络平台，是能源转型的中心环节。国家电网公司将充分发挥“大国重器”和“顶梁柱”作用，自觉肩负起责任使命，在构建以新能源为主体的新型电力系统、推动能源绿色低碳发展中争做引领者、推动者、先行者。</p>
-<p>二、新型电力系统特征、内涵和实施路径</p>
-<p>随着碳达峰、碳中和进程加快推进，能源生产加速清洁化、能源消费高度电气化、能源配置日趋平台化、能源利用日益高效化。能源格局的深刻调整，必将给电力系统带来深刻变化。</p>
-<p>电源结构由可控连续出力的煤电装机占主导，向强不确定性、弱可控出力的新能源发电装机占主导转变。负荷特性由传统的刚性、纯消费型，向柔性、生产与消费兼具型转变。电网形态由单向逐级输电为主的传统电网，向包括交直流混联大电网、微电网、局部直流电网和可调节负荷的能源互联网转变。技术基础由同步发电机为主导的机械电磁系统，向由电力电子设备和同步机共同主导的混合系统转变。运行特性由源随荷动的实时平衡模式、大电网一体化控制模式，向源网荷储协同互动的非完全实时平衡模式、大电网与微电网协同控制模式转变。</p>
-<p>以新能源为主体的新型电力系统承载着能源转型的历史使命，是清洁低碳、安全高效能源体系的重要组成部分，是以新能源为供给主体、以确保能源电力安全为基本前提、以满足经济社会发展电力需求为首要目标，以坚强智能电网为枢纽平台，以源网荷储互动与多能互补为支撑，具有清洁低碳、安全可控、灵活高效、智能友好、开放互动基本特征的电力系统。</p>
-<p>清洁低碳，形成清洁主导、电为中心的能源供应和消费体系，生产侧实现多元化清洁化低碳化、消费侧实现高效化减量化电气化。安全可控，新能源具备主动支撑能力，分布式、微电网可观可测可控，大电网规模合理、结构坚强，构建安全防御体系，增强系统韧性、弹性和自愈能力。灵活高效，发电侧、负荷侧调节能力强，电网侧资源配置能力强，实现各类能源互通互济、灵活转换，提升整体效率。智能友好，高度数字化、智慧化、网络化，实现对海量分散发供用对象的智能协调控制，实现源网荷储各要素友好协同。开放互动，适应各类新技术、新设备以及多元负荷大规模接入，与电力市场紧密融合，各类市场主体广泛参与、充分竞争、主动响应、双向互动。</p>
-<p>按照国家“双碳”目标和电力发展规划，预计到2035年，基本建成新型电力系统，到2050年全面建成新型电力系统。</p>
-<p>2021-2035年是建设期。新能源装机逐步成为第一大电源，常规电源逐步转变为调节性和保障性电源。电力系统总体维持较高转动惯量和交流同步运行特点，交流与直流、大电网与微电网协调发展。系统储能、需求响应等规模不断扩大，发电机组出力和用电负荷初步实现解耦。2036-2060年是成熟期。新能源逐步成为电力电量供应主体，火电通过CCUS技术逐步实现净零排放，成为长周期调节电源。分布式电源、微电网、交直流组网与大电网融合发展。系统储能全面应用、负荷全面深入参与调节，发电机组出力和用电负荷逐步实现全面解耦。</p>
-<p>构建新型电力系统，是一项极具挑战性、开创性的战略性工程，坚强智能电网是基础，源网荷储协同是关键，推动科技创新是引领，发挥制度优势是保证。国家电网公司将积极面对发展机遇和挑战，贯彻新发展理念，坚持系统观念，转变发展方式，落实国家战略，强化规划引领，统筹计划安排，全力推进构建新型电力系统。</p>
-<p>在公司发展方式上，按照“一体四翼”发展布局，由传统电网企业向能源互联网企业转变，积极培育新业务、新业态、新模式，延伸产业链、价值链。在电网发展方式上，由以大电网为主，向大电网、微电网、局部直流电网融合发展转变，推进电网数字化、透明化，满足新能源优先就地消纳和全国优化配置需要。在电源发展方式上，推动新能源发电由以集中式开发为主，向集中式与分布式开发并举转变；推动煤电由支撑性电源向调节性电源转变。</p>
-<p>在营销服务模式上，由为客户提供单向供电服务，向发供一体、多元用能、多态服务转变，打造“供电+能效服务”模式，创新构建“互联网+”现代客户服务模式。在调度运行模式上，由以大电源大电网为主要控制对象、源随荷动的调度模式，向源网荷储协调控制、输配微网多级协同的调度模式转变。在技术创新模式上，由以企业自主开发为主，向跨行业跨领域合作开发转变，技术领域向源网荷储全链条延伸。</p>
-<p>三、2021-2030年重点任务</p>
-<p>（一）加强各级电网协调发展，提升清洁能源优化配置和消纳能力</p>
-<p>1.加快特高压电网建设。在受端，扩展和完善华北、华东特高压网架，加快建设华中特高压网架，实现500千伏合理分层分区，构建风光水火资源优化配置平台。在送端，推进西南特高压网架建设，完善西北、东北750/500千伏网架，支撑跨区直流安全高效运行。“十四五”500千伏及以上电网建设投资约7000亿元，2025年华北、华东、华中和西南特高压网架全面建成。</p>
-<p>2.提高跨省跨区输送清洁能源力度。“十四五”，将持续提升已建输电通道利用效率，作为电网发展主要内容和重点任务，实现已建通道满功率运行，提升输电能力3527万千瓦。优化已建通道配套电源结构，提高输送清洁能源比重。“十四五”规划建成7回、开工建设一批、研究储备一批特高压直流，新增输电能力5600万千瓦。到2025年，公司经营区跨省跨区输电能力约3.0亿千瓦，2030年约3.5亿千瓦，输送清洁能源占比达到50以上。</p>
-<p>3.加大配电网建设投入。加强配电网规划体系建设，全面落实公司新版《配电网规划设计技术导则》，深化应用网格化规划方法，大力推广配电网典型模式、标准接线，提高配电网规划精细度和精准度，适应分布式电源、微电网、多元负荷规模化发展需要。落实国家区域协调发展、乡村振兴和新型城镇化战略，实施农村电网巩固提升工程，推进国际领先城市电网建设，按期完成“煤改电”配套和老旧小区、城中村改造等重点任务。“十四五”配电网建设投资超过1.2万亿元，占电网建设总投资的60以上，2025年城乡供电可靠率分别达到99.97、99.88。</p>
-<p>（二）加强电网数字化转型，提升能源互联网发展水平</p>
-<p>4.提升配电网智慧化水平。加大中压配电网智能终端部署、配电通信网建设和配电自动化实用化，并向低压配电网延伸，大幅提高可观性可测性可控性。推动应用新型储能、需求侧响应，通过多能互补、源网荷储一体化协调控制技术，提高配电网调节能力和适应能力，促进电力电量分层分级分群平衡。2025年，基本建成安全可靠、绿色智能、灵活互动、经济高效的智慧配电网。</p>
-<p>5.打造电网数字化平台。加快信息采集、感知、处理、应用等环节建设，构建连接全社会用户、各环节设备的智慧物联体系，推广人工智能、国网链、北斗等共性平台和创新应用，提高全息感知和泛在互联能力，实现电网、设备、客户状态的动态采集、实时感知和在线监测。加快国网云平台建设，推广网上电网等业务应用，打造数字孪生电网，加快推动电网向能源互联网升级。</p>
-<p>6.构建能源互联网生态圈。推动新能源云成为国家级能源云，完善新能源资源优化、碳中和支撑服务、新能源工业互联网、新型电力系统科技创新四大平台。建设能源大数据中心，推动能源数据统一汇聚与共享应用。建设能源工业云网，为产业链上下游企业提供“上云用数赋智”服务。依托电网平台，加大数据共享和价值挖掘，拓展新业务新业态新模式。</p>
-<p>（三）加强调节能力建设，提升系统灵活性水平</p>
-<p>7.加快建设抽水蓄能电站。落实公司加快抽水蓄能开发建设6项重要举措，推动抽水蓄能电站科学布局，向社会开放抽蓄项目，引导社会资本投资建设，多开多投。加快已开工的4133万千瓦抽水蓄能电站建设，“十四五”新开工2000万千瓦以上抽蓄电站，2025年公司经营区抽水蓄能装机超过5000万千瓦，2030年达到1亿千瓦。</p>
-<p>8.全力配合推进火电灵活性改造。推动各省明确改造规模、具体项目、进度安排，2025年力争“三北”地区累计完成2.2亿、东中部地区累计完成1亿千瓦改造任务。推动各省全面启动调峰辅助服务市场建设，尽快建立健全调峰、调频辅助服务机制，调动火电参与灵活性改造和调峰积极性。</p>
-<p>9.支持新型储能规模化应用。按照国家政策要求，大力支持电源侧储能建设，积极服务用户侧储能发展，提供技术咨询和并网服务。对符合国家规定的项目优先并网、充分利用。积极推动并参与制定新型储能规划设计、建设安装、并网调试、运行监测等全环节标准体系。2025年，公司经营区新型储能容量超过3000万千瓦，2030年1亿千瓦左右。</p>
-<p>10.扩大可调节负荷资源库。开展可调节负荷资源普查。建成27家省级智慧能源服务平台，聚合各类资源，积极参与需求响应市场、辅助服务市场和现货市场。推动各省出台需求响应支持政策和市场机制，通过市场机制合理分配成本和收益。配合政府编制有序用电方案，达到最大负荷20以上且覆盖最大电力缺口。到2025年、2030年，可调节负荷容量分别达到5900万、7000万千瓦。</p>
-<p>（四）加强电网调度转型升级，提升驾驭新型电力系统能力</p>
-<p>11.构建新型电力系统安全稳定控制体系。攻克新型电力系统基础理论和稳定机理，建设以多时间尺度、平台化、智能化为特征的电网仿真平台，掌握“双高”电力系统运行特性。构建新型电力系统故障防御体系，建设自主可控新一代变电站二次系统，推动安自装置标准化应用，巩固完善“三道防线”。结合IT新技术，建设“人机融合、群智开放、多级协同、自主可控”的新一代调度技术支持系统。</p>
-<p>12.建设适应电力绿色低碳转型的平衡控制和新能源调度体系。提高新能源预测精度，推广长周期资源评估和功率预测技术。研究适应分布式新能源大规模接入的负荷预测技术及标准。加强电网统一调度，充分发挥源网荷储各类调节资源作用，保障电力可靠有序供应。2025年，省级电网负荷、新能源、分布式日前预测准确率整体提升至97、90、85以上。</p>
-<p>13.建设适应分布式电源发展的新型配电调度体系。建设贯穿国分省地县的分布式电源调度管理系统，构建全景观测、精准控制、主配协同的新型有源配电网调度模式。推广5G+智能电网调控应用，满足海量分布式电源调度通信需求，实现广域源网荷储资源协调控制。研究基于先进通信的配电网保护配置、主动配电网运行分析及协调控制等技术，全面升级配电网二次系统，实现方式灵活调节和故障快速隔离。</p>
-<p>（五）加强源网协调发展，提升新能源开发利用水平</p>
-<p>14.做好新能源接网服务工作。针对新能源与送出工程建设周期不匹配问题，开辟风电、太阳能发电等新能源配套电网工程建设“绿色通道”，加快接网工程建设，确保电网电源同步投产。深化应用新能源云，为新能源规划、建设、并网、消纳、补贴等全流程业务提供一站式服务，实现全环节工作高效化透明化。到2025年，公司经营区风电、太阳能发电总装机容量将达到8亿千瓦以上，2030年达到12亿千瓦以上。</p>
-<p>15.支持分布式新能源和微电网发展。配合政府部门做好分布式电源规划，明确分省、分地市、分县的开发规模。完善公司服务分布式新能源发展指导意见，继续做好一站式全流程免费服务，实现“应并尽并、愿并尽并”。研究微电网功能定位、发展模式、运行机制，完善标准体系，制订典型设计，提供“三零”“三省”并网服务。到2025年，公司经营区分布式新能源装机达到1.8亿千瓦以上，2030年达到3.5亿千瓦以上。</p>
-<p>16.不断扩大清洁能源交易规模。“十四五”，推广中长期交易+现货交易+应急调度的新能源消纳模式，开展绿电交易、发电权交易、新能源优先替代等多种形式交易，强化市场协同运营。2025年、2030年，公司经营区新能源发电量占总发电量比例分别超过15、20。</p>
-<p>（六）加强全社会节能提效，提升终端消费电气化水平</p>
-<p>17.推动低碳节能生产和改造。落实国家能源双控政策，密切跟踪重点省份“两高”企业调整和转移情况，严格用户并网审核，严禁不符合环保要求项目并网，严格执行差别性电价政策。开展“两高”企业用能监测和分析，为政府监管考核提供支撑。全面实施电网节能管理，开展绿色采购和绿色建造。加强六氟化硫气体数字化管控。</p>
-<p>18.持续拓展电能替代广度深度。在工业、建筑、交通等领域，大力推进以电代煤、以电代油、以电代气。推动1000吨及以上码头岸电设施全覆盖、长江船舶靠港使用岸电常态化。推动燃煤自备电厂清洁替代，科学稳妥推进北方“煤改电”清洁取暖。做好充换电网络布局规划，形成高效、稳定、可持续的车网互动业务模式和市场运作机制。2021-2030年，累计替代电量超过1万亿千瓦时。</p>
-<p>19.开展综合能源服务。聚焦公共建筑、工业企业和农业农村等领域，积极拓展综合能源实体项目和增值服务。以能效提升、分布式新能源开发利用为重点，开展楼宇建筑能源托管、供冷供暖、智能运维等业务。依托省级智慧能源服务平台，定期向客户推送用电能效账单、综合能效诊断报告。“十四五”，力争实现10千伏及以上高压供电客户能效服务能力全覆盖。</p>
-<p>（七）加强能源电力技术创新，提升运行安全和效率水平</p>
-<p>20.实施科技攻关行动计划。制定并加快实施“新型电力系统科技攻关行动计划”，以“三加强”（加强源网荷储协同发展、绿色低碳市场体系构建、电力系统可观可测可控能力建设）、“三提升”（提升新能源发电主动支撑、系统安全稳定运行、终端互动调节）为攻关方向，统筹推进基础理论研究、关键技术攻关、标准研制、成果应用和工程示范。联合能源电力行业上下游高校院所、企业协同攻关，深化产研用协同，打造开放共享创新平台。2021-2030年，安排研发经费投入3000亿元以上。</p>
-<p>21.加快关键技术攻关。重点突破新能源发电主动支撑、智能调度运行控制、市场运营协同、多能互补运行等技术，开展多尺度电力电量平衡、源网荷储协调规划等理论研究，推进大容量电化学储能、需求侧互动响应、柔性输电等技术进步和规模化应用，试验示范直流组网、氢能绿色制取与高效利用、超导输电等技术。</p>
-<p>22.开展关键装备和标准研制。制定国家电网技术成熟度评价体系，遴选出一批前景广阔、成熟度高的新技术新产品，加快推广应用。编制“新型电力系统技术标准体系框架”，重点开展新型电力系统构建及运行控制、分布式新能源及微电网、新能源和储能并网、需求响应等标准制订。超前布局标准国际化方向。</p>
-<p>23.推进新型电力系统示范区建设。选择西藏藏中、新疆南疆、河北张家口作为地区级示范区，重点研究送端高比例新能源电力系统构建方案，推广“新能源+储能+调相机”发展模式。选择福建、浙江、青海作为省级示范区，重点研究送受端大电网与分布式、微电网融合发展方案，以及适应新能源发展的政策和市场机制。</p>
-<p>（八）加强配套政策机制建设，提升支撑和保障能力</p>
-<p>24.推动健全电力价格形成机制。研究新型电力系统构建新增成本和疏导问题，配合政府部门健全价格体系，按照“谁受益、谁承担”原则，由各市场主体共同承担转型成本。通过输配电价合理疏导电网建设运营成本，还原电力商品价值属性。研究碳价体系，计算其他行业向电力行业转移的减碳成本，推动建立向受益行业合理分摊传导电力系统成本的机制。</p>
-<p>25.推进全国统一电力市场建设。加快推动建设竞争充分、开放有序的统一电力市场，在全国范围优化配置清洁能源。完善中长期、现货和辅助服务衔接机制，探索容量市场交易机制，开展绿色电力交易，推动可再生能源参与电力市场。研究电力市场和碳市场协同机制、碳价格与电价联动机制。建立公司碳管理体系，促进绿色低碳产业发展，拓展碳金融、绿色金融业务。2030年，初步建成适应新能源为主体的全国统一电力市场。</p>
-<p>26.构建能源电力安全预警体系。预判重点行业用电需求增长，滚动分析未来2年电力供需和电网安全形势，及时向政府部门汇报和预警。推动建立政府、企业和社会各负其责的燃料供应储备体系，确保极端情景下电力供应。开展客户安全在线诊断，完善重要输电通道、关键信息基础设施安全预案，强化市场运营风险管控，建设全场景网络安全防护体系。</p>
-<p>（九）加强组织领导和交流合作，提升全行业发展凝聚力</p>
-<p>27.强化工作组织落实责任。充分发挥公司碳达峰、碳中和领导小组统筹协调作用，充实领导小组办公室力量，建立一体谋划、一体部署、一体推进、一体考核的协同工作机制，实现全公司“一盘棋”。各部门、各机构、各单位细化分解工作任务，落实责任分工，全力推进各项工作。</p>
-<p>28.深化宣传引导与开放合作。加强信息公开和对外宣传，积极与政府机构、行业协会、科研院所、产业链上下游企业研讨交流，集思广益、群策群力、凝聚共识、形成合力，推动新型电力系统高质量发展。</p>
-<p><a target="_blank" rel="noopener" href="http://mm.chinapower.com.cn/xw/zyxw/20210728/90959.html">http://mm.chinapower.com.cn/xw/zyxw/20210728/90959.html</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%94%B5%E5%8A%9B/" rel="tag">电力</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-国务院关于印发2030年前碳达峰行动方案的通知"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/11/30/%E5%9B%BD%E5%8A%A1%E9%99%A2%E5%85%B3%E4%BA%8E%E5%8D%B0%E5%8F%912030%E5%B9%B4%E5%89%8D%E7%A2%B3%E8%BE%BE%E5%B3%B0%E8%A1%8C%E5%8A%A8%E6%96%B9%E6%A1%88%E7%9A%84%E9%80%9A%E7%9F%A5/"
-    >国务院关于印发2030年前碳达峰行动方案的通知</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/11/30/%E5%9B%BD%E5%8A%A1%E9%99%A2%E5%85%B3%E4%BA%8E%E5%8D%B0%E5%8F%912030%E5%B9%B4%E5%89%8D%E7%A2%B3%E8%BE%BE%E5%B3%B0%E8%A1%8C%E5%8A%A8%E6%96%B9%E6%A1%88%E7%9A%84%E9%80%9A%E7%9F%A5/" class="article-date">
-  <time datetime="2023-11-30T12:14:23.000Z" itemprop="datePublished">2023-11-30</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>国务院关于印发2030年前碳达峰</p>
-<p>行动方案的通知</p>
-<p>国发〔2021〕23号</p>
-<p>各省、自治区、直辖市人民政府，国务院各部委、各直属机构：</p>
-<p>现将《2030年前碳达峰行动方案》印发给你们，请认真贯彻执行。</p>
-<p>国务院</p>
-<p>2021年10月24日</p>
-<p>（本文有删减）</p>
-<p>2030年前碳达峰行动方案</p>
-<p>为深入贯彻落实党中央、国务院关于碳达峰、碳中和的重大战略决策，扎实推进碳达峰行动，制定本方案。</p>
-<p>一、总体要求</p>
-<p>（一）指导思想。以习近平新时代中国特色社会主义思想为指导，全面贯彻党的十九大和十九届二中、三中、四中、五中全会精神，深入贯彻习近平生态文明思想，立足新发展阶段，完整、准确、全面贯彻新发展理念，构建新发展格局，坚持系统观念，处理好发展和减排、整体和局部、短期和中长期的关系，统筹稳增长和调结构，把碳达峰、碳中和纳入经济社会发展全局，坚持“全国统筹、节约优先、双轮驱动、内外畅通、防范风险”的总方针，有力有序有效做好碳达峰工作，明确各地区、各领域、各行业目标任务，加快实现生产生活方式绿色变革，推动经济社会发展建立在资源高效利用和绿色低碳发展的基础之上，确保如期实现2030年前碳达峰目标。</p>
-<p>（二）工作原则。</p>
-<p>——总体部署、分类施策。坚持全国一盘棋，强化顶层设计和各方统筹。各地区、各领域、各行业因地制宜、分类施策，明确既符合自身实际又满足总体要求的目标任务。</p>
-<p>——系统推进、重点突破。全面准确认识碳达峰行动对经济社会发展的深远影响，加强政策的系统性、协同性。抓住主要矛盾和矛盾的主要方面，推动重点领域、重点行业和有条件的地方率先达峰。</p>
-<p>——双轮驱动、两手发力。更好发挥政府作用，构建新型举国体制，充分发挥市场机制作用，大力推进绿色低碳科技创新，深化能源和相关领域改革，形成有效激励约束机制。</p>
-<p>——稳妥有序、安全降碳。立足我国富煤贫油少气的能源资源禀赋，坚持先立后破，稳住存量，拓展增量，以保障国家能源安全和经济发展为底线，争取时间实现新能源的逐渐替代，推动能源低碳转型平稳过渡，切实保障国家能源安全、产业链供应链安全、粮食安全和群众正常生产生活，着力化解各类风险隐患，防止过度反应，稳妥有序、循序渐进推进碳达峰行动，确保安全降碳。</p>
-<p>二、主要目标</p>
-<p>“十四五”期间，产业结构和能源结构调整优化取得明显进展，重点行业能源利用效率大幅提升，煤炭消费增长得到严格控制，新型电力系统加快构建，绿色低碳技术研发和推广应用取得新进展，绿色生产生活方式得到普遍推行，有利于绿色低碳循环发展的政策体系进一步完善。到2025年，非化石能源消费比重达到20%左右，单位国内生产总值能源消耗比2020年下降13.5%，单位国内生产总值二氧化碳排放比2020年下降18%，为实现碳达峰奠定坚实基础。</p>
-<p>“十五五”期间，产业结构调整取得重大进展，清洁低碳安全高效的能源体系初步建立，重点领域低碳发展模式基本形成，重点耗能行业能源利用效率达到国际先进水平，非化石能源消费比重进一步提高，煤炭消费逐步减少，绿色低碳技术取得关键突破，绿色生活方式成为公众自觉选择，绿色低碳循环发展政策体系基本健全。到2030年，非化石能源消费比重达到25%左右，单位国内生产总值二氧化碳排放比2005年下降65%以上，顺利实现2030年前碳达峰目标。</p>
-<p>三、重点任务</p>
-<p>将碳达峰贯穿于经济社会发展全过程和各方面，重点实施能源绿色低碳转型行动、节能降碳增效行动、工业领域碳达峰行动、城乡建设碳达峰行动、交通运输绿色低碳行动、循环经济助力降碳行动、绿色低碳科技创新行动、碳汇能力巩固提升行动、绿色低碳全民行动、各地区梯次有序碳达峰行动等“碳达峰十大行动”。</p>
-<p>（一）能源绿色低碳转型行动。</p>
-<p>能源是经济社会发展的重要物质基础，也是碳排放的最主要来源。要坚持安全降碳，在保障能源安全的前提下，大力实施可再生能源替代，加快构建清洁低碳安全高效的能源体系。</p>
-<p>1．推进煤炭消费替代和转型升级。加快煤炭减量步伐，“十四五”时期严格合理控制煤炭消费增长，“十五五”时期逐步减少。严格控制新增煤电项目，新建机组煤耗标准达到国际先进水平，有序淘汰煤电落后产能，加快现役机组节能升级和灵活性改造，积极推进供热改造，推动煤电向基础保障性和系统调节性电源并重转型。严控跨区外送可再生能源电力配套煤电规模，新建通道可再生能源电量比例原则上不低于50%。推动重点用煤行业减煤限煤。大力推动煤炭清洁利用，合理划定禁止散烧区域，多措并举、积极有序推进散煤替代，逐步减少直至禁止煤炭散烧。</p>
-<p>2．大力发展新能源。全面推进风电、太阳能发电大规模开发和高质量发展，坚持集中式与分布式并举，加快建设风电和光伏发电基地。加快智能光伏产业创新升级和特色应用，创新“光伏+”模式，推进光伏发电多元布局。坚持陆海并重，推动风电协调快速发展，完善海上风电产业链，鼓励建设海上风电基地。积极发展太阳能光热发电，推动建立光热发电与光伏发电、风电互补调节的风光热综合可再生能源发电基地。因地制宜发展生物质发电、生物质能清洁供暖和生物天然气。探索深化地热能以及波浪能、潮流能、温差能等海洋新能源开发利用。进一步完善可再生能源电力消纳保障机制。到2030年，风电、太阳能发电总装机容量达到12亿千瓦以上。</p>
-<p>3．因地制宜开发水电。积极推进水电基地建设，推动金沙江上游、澜沧江上游、雅砻江中游、黄河上游等已纳入规划、符合生态保护要求的水电项目开工建设，推进雅鲁藏布江下游水电开发，推动小水电绿色发展。推动西南地区水电与风电、太阳能发电协同互补。统筹水电开发和生态保护，探索建立水能资源开发生态保护补偿机制。“十四五”、“十五五”期间分别新增水电装机容量4000万千瓦左右，西南地区以水电为主的可再生能源体系基本建立。</p>
-<p>4．积极安全有序发展核电。合理确定核电站布局和开发时序，在确保安全的前提下有序发展核电，保持平稳建设节奏。积极推动高温气冷堆、快堆、模块化小型堆、海上浮动堆等先进堆型示范工程，开展核能综合利用示范。加大核电标准化、自主化力度，加快关键技术装备攻关，培育高端核电装备制造产业集群。实行最严格的安全标准和最严格的监管，持续提升核安全监管能力。</p>
-<p>5．合理调控油气消费。保持石油消费处于合理区间，逐步调整汽油消费规模，大力推进先进生物液体燃料、可持续航空燃料等替代传统燃油，提升终端燃油产品能效。加快推进页岩气、煤层气、致密油（气）等非常规油气资源规模化开发。有序引导天然气消费，优化利用结构，优先保障民生用气，大力推动天然气与多种能源融合发展，因地制宜建设天然气调峰电站，合理引导工业用气和化工原料用气。支持车船使用液化天然气作为燃料。</p>
-<p>6．加快建设新型电力系统。构建新能源占比逐渐提高的新型电力系统，推动清洁电力资源大范围优化配置。大力提升电力系统综合调节能力，加快灵活调节电源建设，引导自备电厂、传统高载能工业负荷、工商业可中断负荷、电动汽车充电网络、虚拟电厂等参与系统调节，建设坚强智能电网，提升电网安全保障水平。积极发展“新能源+储能”、源网荷储一体化和多能互补，支持分布式新能源合理配置储能系统。制定新一轮抽水蓄能电站中长期发展规划，完善促进抽水蓄能发展的政策机制。加快新型储能示范推广应用。深化电力体制改革，加快构建全国统一电力市场体系。到2025年，新型储能装机容量达到3000万千瓦以上。到2030年，抽水蓄能电站装机容量达到1.2亿千瓦左右，省级电网基本具备5%以上的尖峰负荷响应能力。</p>
-<p>（二）节能降碳增效行动。</p>
-<p>落实节约优先方针，完善能源消费强度和总量双控制度，严格控制能耗强度，合理控制能源消费总量，推动能源消费革命，建设能源节约型社会。</p>
-<p>1．全面提升节能管理能力。推行用能预算管理，强化固定资产投资项目节能审查，对项目用能和碳排放情况进行综合评价，从源头推进节能降碳。提高节能管理信息化水平，完善重点用能单位能耗在线监测系统，建立全国性、行业性节能技术推广服务平台，推动高耗能企业建立能源管理中心。完善能源计量体系，鼓励采用认证手段提升节能管理水平。加强节能监察能力建设，健全省、市、县三级节能监察体系，建立跨部门联动机制，综合运用行政处罚、信用监管、绿色电价等手段，增强节能监察约束力。</p>
-<p>2．实施节能降碳重点工程。实施城市节能降碳工程，开展建筑、交通、照明、供热等基础设施节能升级改造，推进先进绿色建筑技术示范应用，推动城市综合能效提升。实施园区节能降碳工程，以高耗能高排放项目（以下称“两高”项目）集聚度高的园区为重点，推动能源系统优化和梯级利用，打造一批达到国际先进水平的节能低碳园区。实施重点行业节能降碳工程，推动电力、钢铁、有色金属、建材、石化化工等行业开展节能降碳改造，提升能源资源利用效率。实施重大节能降碳技术示范工程，支持已取得突破的绿色低碳关键技术开展产业化示范应用。</p>
-<p>3．推进重点用能设备节能增效。以电机、风机、泵、压缩机、变压器、换热器、工业锅炉等设备为重点，全面提升能效标准。建立以能效为导向的激励约束机制，推广先进高效产品设备，加快淘汰落后低效设备。加强重点用能设备节能审查和日常监管，强化生产、经营、销售、使用、报废全链条管理，严厉打击违法违规行为，确保能效标准和节能要求全面落实。</p>
-<p>4．加强新型基础设施节能降碳。优化新型基础设施空间布局，统筹谋划、科学配置数据中心等新型基础设施，避免低水平重复建设。优化新型基础设施用能结构，采用直流供电、分布式储能、“光伏+储能”等模式，探索多样化能源供应，提高非化石能源消费比重。对标国际先进水平，加快完善通信、运算、存储、传输等设备能效标准，提升准入门槛，淘汰落后设备和技术。加强新型基础设施用能管理，将年综合能耗超过1万吨标准煤的数据中心全部纳入重点用能单位能耗在线监测系统，开展能源计量审查。推动既有设施绿色升级改造，积极推广使用高效制冷、先进通风、余热利用、智能化用能控制等技术，提高设施能效水平。</p>
-<p>（三）工业领域碳达峰行动。</p>
-<p>工业是产生碳排放的主要领域之一，对全国整体实现碳达峰具有重要影响。工业领域要加快绿色低碳转型和高质量发展，力争率先实现碳达峰。</p>
-<p>1．推动工业领域绿色低碳发展。优化产业结构，加快退出落后产能，大力发展战略性新兴产业，加快传统产业绿色低碳改造。促进工业能源消费低碳化，推动化石能源清洁高效利用，提高可再生能源应用比重，加强电力需求侧管理，提升工业电气化水平。深入实施绿色制造工程，大力推行绿色设计，完善绿色制造体系，建设绿色工厂和绿色工业园区。推进工业领域数字化智能化绿色化融合发展，加强重点行业和领域技术改造。</p>
-<p>2．推动钢铁行业碳达峰。深化钢铁行业供给侧结构性改革，严格执行产能置换，严禁新增产能，推进存量优化，淘汰落后产能。推进钢铁企业跨地区、跨所有制兼并重组，提高行业集中度。优化生产力布局，以京津冀及周边地区为重点，继续压减钢铁产能。促进钢铁行业结构优化和清洁能源替代，大力推进非高炉炼铁技术示范，提升废钢资源回收利用水平，推行全废钢电炉工艺。推广先进适用技术，深挖节能降碳潜力，鼓励钢化联产，探索开展氢冶金、二氧化碳捕集利用一体化等试点示范，推动低品位余热供暖发展。</p>
-<p>3．推动有色金属行业碳达峰。巩固化解电解铝过剩产能成果，严格执行产能置换，严控新增产能。推进清洁能源替代，提高水电、风电、太阳能发电等应用比重。加快再生有色金属产业发展，完善废弃有色金属资源回收、分选和加工网络，提高再生有色金属产量。加快推广应用先进适用绿色低碳技术，提升有色金属生产过程余热回收水平，推动单位产品能耗持续下降。</p>
-<p>4．推动建材行业碳达峰。加强产能置换监管，加快低效产能退出，严禁新增水泥熟料、平板玻璃产能，引导建材行业向轻型化、集约化、制品化转型。推动水泥错峰生产常态化，合理缩短水泥熟料装置运转时间。因地制宜利用风能、太阳能等可再生能源，逐步提高电力、天然气应用比重。鼓励建材企业使用粉煤灰、工业废渣、尾矿渣等作为原料或水泥混合材。加快推进绿色建材产品认证和应用推广，加强新型胶凝材料、低碳混凝土、木竹建材等低碳建材产品研发应用。推广节能技术设备，开展能源管理体系建设，实现节能增效。</p>
-<p>5．推动石化化工行业碳达峰。优化产能规模和布局，加大落后产能淘汰力度，有效化解结构性过剩矛盾。严格项目准入，合理安排建设时序，严控新增炼油和传统煤化工生产能力，稳妥有序发展现代煤化工。引导企业转变用能方式，鼓励以电力、天然气等替代煤炭。调整原料结构，控制新增原料用煤，拓展富氢原料进口来源，推动石化化工原料轻质化。优化产品结构，促进石化化工与煤炭开采、冶金、建材、化纤等产业协同发展，加强炼厂干气、液化气等副产气体高效利用。鼓励企业节能升级改造，推动能量梯级利用、物料循环利用。到2025年，国内原油一次加工能力控制在10亿吨以内，主要产品产能利用率提升至80%以上。</p>
-<p>6．坚决遏制“两高”项目盲目发展。采取强有力措施，对“两高”项目实行清单管理、分类处置、动态监控。全面排查在建项目，对能效水平低于本行业能耗限额准入值的，按有关规定停工整改，推动能效水平应提尽提，力争全面达到国内乃至国际先进水平。科学评估拟建项目，对产能已饱和的行业，按照“减量替代”原则压减产能；对产能尚未饱和的行业，按照国家布局和审批备案等要求，对标国际先进水平提高准入门槛；对能耗量较大的新兴产业，支持引导企业应用绿色低碳技术，提高能效水平。深入挖潜存量项目，加快淘汰落后产能，通过改造升级挖掘节能减排潜力。强化常态化监管，坚决拿下不符合要求的“两高”项目。</p>
-<p>（四）城乡建设碳达峰行动。</p>
-<p>加快推进城乡建设绿色低碳发展，城市更新和乡村振兴都要落实绿色低碳要求。</p>
-<p>1．推进城乡建设绿色低碳转型。推动城市组团式发展，科学确定建设规模，控制新增建设用地过快增长。倡导绿色低碳规划设计理念，增强城乡气候韧性，建设海绵城市。推广绿色低碳建材和绿色建造方式，加快推进新型建筑工业化，大力发展装配式建筑，推广钢结构住宅，推动建材循环利用，强化绿色设计和绿色施工管理。加强县城绿色低碳建设。推动建立以绿色低碳为导向的城乡规划建设管理机制，制定建筑拆除管理办法，杜绝大拆大建。建设绿色城镇、绿色社区。</p>
-<p>2．加快提升建筑能效水平。加快更新建筑节能、市政基础设施等标准，提高节能降碳要求。加强适用于不同气候区、不同建筑类型的节能低碳技术研发和推广，推动超低能耗建筑、低碳建筑规模化发展。加快推进居住建筑和公共建筑节能改造，持续推动老旧供热管网等市政基础设施节能降碳改造。提升城镇建筑和基础设施运行管理智能化水平，加快推广供热计量收费和合同能源管理，逐步开展公共建筑能耗限额管理。到2025年，城镇新建建筑全面执行绿色建筑标准。</p>
-<p>3．加快优化建筑用能结构。深化可再生能源建筑应用，推广光伏发电与建筑一体化应用。积极推动严寒、寒冷地区清洁取暖，推进热电联产集中供暖，加快工业余热供暖规模化应用，积极稳妥开展核能供热示范，因地制宜推行热泵、生物质能、地热能、太阳能等清洁低碳供暖。引导夏热冬冷地区科学取暖，因地制宜采用清洁高效取暖方式。提高建筑终端电气化水平，建设集光伏发电、储能、直流配电、柔性用电于一体的“光储直柔”建筑。到2025年，城镇建筑可再生能源替代率达到8%，新建公共机构建筑、新建厂房屋顶光伏覆盖率力争达到50%。</p>
-<p>4．推进农村建设和用能低碳转型。推进绿色农房建设，加快农房节能改造。持续推进农村地区清洁取暖，因地制宜选择适宜取暖方式。发展节能低碳农业大棚。推广节能环保灶具、电动农用车辆、节能环保农机和渔船。加快生物质能、太阳能等可再生能源在农业生产和农村生活中的应用。加强农村电网建设，提升农村用能电气化水平。</p>
-<p>（五）交通运输绿色低碳行动。</p>
-<p>加快形成绿色低碳运输方式，确保交通运输领域碳排放增长保持在合理区间。</p>
-<p>1．推动运输工具装备低碳转型。积极扩大电力、氢能、天然气、先进生物液体燃料等新能源、清洁能源在交通运输领域应用。大力推广新能源汽车，逐步降低传统燃油汽车在新车产销和汽车保有量中的占比，推动城市公共服务车辆电动化替代，推广电力、氢燃料、液化天然气动力重型货运车辆。提升铁路系统电气化水平。加快老旧船舶更新改造，发展电动、液化天然气动力船舶，深入推进船舶靠港使用岸电，因地制宜开展沿海、内河绿色智能船舶示范应用。提升机场运行电动化智能化水平，发展新能源航空器。到2030年，当年新增新能源、清洁能源动力的交通工具比例达到40%左右，营运交通工具单位换算周转量碳排放强度比2020年下降9.5%左右，国家铁路单位换算周转量综合能耗比2020年下降10%。陆路交通运输石油消费力争2030年前达到峰值。</p>
-<p>2．构建绿色高效交通运输体系。发展智能交通，推动不同运输方式合理分工、有效衔接，降低空载率和不合理客货运周转量。大力发展以铁路、水路为骨干的多式联运，推进工矿企业、港口、物流园区等铁路专用线建设，加快内河高等级航道网建设，加快大宗货物和中长距离货物运输“公转铁”、“公转水”。加快先进适用技术应用，提升民航运行管理效率，引导航空企业加强智慧运行，实现系统化节能降碳。加快城乡物流配送体系建设，创新绿色低碳、集约高效的配送模式。打造高效衔接、快捷舒适的公共交通服务体系，积极引导公众选择绿色低碳交通方式。“十四五”期间，集装箱铁水联运量年均增长15%以上。到2030年，城区常住人口100万以上的城市绿色出行比例不低于70%。</p>
-<p>3．加快绿色交通基础设施建设。将绿色低碳理念贯穿于交通基础设施规划、建设、运营和维护全过程，降低全生命周期能耗和碳排放。开展交通基础设施绿色化提升改造，统筹利用综合运输通道线位、土地、空域等资源，加大岸线、锚地等资源整合力度，提高利用效率。有序推进充电桩、配套电网、加注（气）站、加氢站等基础设施建设，提升城市公共交通基础设施水平。到2030年，民用运输机场场内车辆装备等力争全面实现电动化。</p>
-<p>（六）循环经济助力降碳行动。</p>
-<p>抓住资源利用这个源头，大力发展循环经济，全面提高资源利用效率，充分发挥减少资源消耗和降碳的协同作用。</p>
-<p>1．推进产业园区循环化发展。以提升资源产出率和循环利用率为目标，优化园区空间布局，开展园区循环化改造。推动园区企业循环式生产、产业循环式组合，组织企业实施清洁生产改造，促进废物综合利用、能量梯级利用、水资源循环利用，推进工业余压余热、废气废液废渣资源化利用，积极推广集中供气供热。搭建基础设施和公共服务共享平台，加强园区物质流管理。到2030年，省级以上重点产业园区全部实施循环化改造。</p>
-<p>2．加强大宗固废综合利用。提高矿产资源综合开发利用水平和综合利用率，以煤矸石、粉煤灰、尾矿、共伴生矿、冶炼渣、工业副产石膏、建筑垃圾、农作物秸秆等大宗固废为重点，支持大掺量、规模化、高值化利用，鼓励应用于替代原生非金属矿、砂石等资源。在确保安全环保前提下，探索将磷石膏应用于土壤改良、井下充填、路基修筑等。推动建筑垃圾资源化利用，推广废弃路面材料原地再生利用。加快推进秸秆高值化利用，完善收储运体系，严格禁烧管控。加快大宗固废综合利用示范建设。到2025年，大宗固废年利用量达到40亿吨左右；到2030年，年利用量达到45亿吨左右。</p>
-<p>3．健全资源循环利用体系。完善废旧物资回收网络，推行“互联网+”回收模式，实现再生资源应收尽收。加强再生资源综合利用行业规范管理，促进产业集聚发展。高水平建设现代化“城市矿产”基地，推动再生资源规范化、规模化、清洁化利用。推进退役动力电池、光伏组件、风电机组叶片等新兴产业废物循环利用。促进汽车零部件、工程机械、文办设备等再制造产业高质量发展。加强资源再生产品和再制造产品推广应用。到2025年，废钢铁、废铜、废铝、废铅、废锌、废纸、废塑料、废橡胶、废玻璃等9种主要再生资源循环利用量达到4.5亿吨，到2030年达到5.1亿吨。</p>
-<p>4．大力推进生活垃圾减量化资源化。扎实推进生活垃圾分类，加快建立覆盖全社会的生活垃圾收运处置体系，全面实现分类投放、分类收集、分类运输、分类处理。加强塑料污染全链条治理，整治过度包装，推动生活垃圾源头减量。推进生活垃圾焚烧处理，降低填埋比例，探索适合我国厨余垃圾特性的资源化利用技术。推进污水资源化利用。到2025年，城市生活垃圾分类体系基本健全，生活垃圾资源化利用比例提升至60%左右。到2030年，城市生活垃圾分类实现全覆盖，生活垃圾资源化利用比例提升至65%。</p>
-<p>（七）绿色低碳科技创新行动。</p>
-<p>发挥科技创新的支撑引领作用，完善科技创新体制机制，强化创新能力，加快绿色低碳科技革命。</p>
-<p>1．完善创新体制机制。制定科技支撑碳达峰碳中和行动方案，在国家重点研发计划中设立碳达峰碳中和关键技术研究与示范等重点专项，采取“揭榜挂帅”机制，开展低碳零碳负碳关键核心技术攻关。将绿色低碳技术创新成果纳入高等学校、科研单位、国有企业有关绩效考核。强化企业创新主体地位，支持企业承担国家绿色低碳重大科技项目，鼓励设施、数据等资源开放共享。推进国家绿色技术交易中心建设，加快创新成果转化。加强绿色低碳技术和产品知识产权保护。完善绿色低碳技术和产品检测、评估、认证体系。</p>
-<p>2．加强创新能力建设和人才培养。组建碳达峰碳中和相关国家实验室、国家重点实验室和国家技术创新中心，适度超前布局国家重大科技基础设施，引导企业、高等学校、科研单位共建一批国家绿色低碳产业创新中心。创新人才培养模式，鼓励高等学校加快新能源、储能、氢能、碳减排、碳汇、碳排放权交易等学科建设和人才培养，建设一批绿色低碳领域未来技术学院、现代产业学院和示范性能源学院。深化产教融合，鼓励校企联合开展产学合作协同育人项目，组建碳达峰碳中和产教融合发展联盟，建设一批国家储能技术产教融合创新平台。</p>
-<p>3．强化应用基础研究。实施一批具有前瞻性、战略性的国家重大前沿科技项目，推动低碳零碳负碳技术装备研发取得突破性进展。聚焦化石能源绿色智能开发和清洁低碳利用、可再生能源大规模利用、新型电力系统、节能、氢能、储能、动力电池、二氧化碳捕集利用与封存等重点，深化应用基础研究。积极研发先进核电技术，加强可控核聚变等前沿颠覆性技术研究。</p>
-<p>4．加快先进适用技术研发和推广应用。集中力量开展复杂大电网安全稳定运行和控制、大容量风电、高效光伏、大功率液化天然气发动机、大容量储能、低成本可再生能源制氢、低成本二氧化碳捕集利用与封存等技术创新，加快碳纤维、气凝胶、特种钢材等基础材料研发，补齐关键零部件、元器件、软件等短板。推广先进成熟绿色低碳技术，开展示范应用。建设全流程、集成化、规模化二氧化碳捕集利用与封存示范项目。推进熔盐储能供热和发电示范应用。加快氢能技术研发和示范应用，探索在工业、交通运输、建筑等领域规模化应用。</p>
-<p>（八）碳汇能力巩固提升行动。</p>
-<p>坚持系统观念，推进山水林田湖草沙一体化保护和修复，提高生态系统质量和稳定性，提升生态系统碳汇增量。</p>
-<p>1．巩固生态系统固碳作用。结合国土空间规划编制和实施，构建有利于碳达峰、碳中和的国土空间开发保护格局。严守生态保护红线，严控生态空间占用，建立以国家公园为主体的自然保护地体系，稳定现有森林、草原、湿地、海洋、土壤、冻土、岩溶等固碳作用。严格执行土地使用标准，加强节约集约用地评价，推广节地技术和节地模式。</p>
-<p>2．提升生态系统碳汇能力。实施生态保护修复重大工程。深入推进大规模国土绿化行动，巩固退耕还林还草成果，扩大林草资源总量。强化森林资源保护，实施森林质量精准提升工程，提高森林质量和稳定性。加强草原生态保护修复，提高草原综合植被盖度。加强河湖、湿地保护修复。整体推进海洋生态系统保护和修复，提升红树林、海草床、盐沼等固碳能力。加强退化土地修复治理，开展荒漠化、石漠化、水土流失综合治理，实施历史遗留矿山生态修复工程。到2030年，全国森林覆盖率达到25%左右，森林蓄积量达到190亿立方米。</p>
-<p>3．加强生态系统碳汇基础支撑。依托和拓展自然资源调查监测体系，利用好国家林草生态综合监测评价成果，建立生态系统碳汇监测核算体系，开展森林、草原、湿地、海洋、土壤、冻土、岩溶等碳汇本底调查、碳储量评估、潜力分析，实施生态保护修复碳汇成效监测评估。加强陆地和海洋生态系统碳汇基础理论、基础方法、前沿颠覆性技术研究。建立健全能够体现碳汇价值的生态保护补偿机制，研究制定碳汇项目参与全国碳排放权交易相关规则。</p>
-<p>4．推进农业农村减排固碳。大力发展绿色低碳循环农业，推进农光互补、“光伏+设施农业”、“海上风电+海洋牧场”等低碳农业模式。研发应用增汇型农业技术。开展耕地质量提升行动，实施国家黑土地保护工程，提升土壤有机碳储量。合理控制化肥、农药、地膜使用量，实施化肥农药减量替代计划，加强农作物秸秆综合利用和畜禽粪污资源化利用。</p>
-<p>（九）绿色低碳全民行动。</p>
-<p>增强全民节约意识、环保意识、生态意识，倡导简约适度、绿色低碳、文明健康的生活方式，把绿色理念转化为全体人民的自觉行动。</p>
-<p>1．加强生态文明宣传教育。将生态文明教育纳入国民教育体系，开展多种形式的资源环境国情教育，普及碳达峰、碳中和基础知识。加强对公众的生态文明科普教育，将绿色低碳理念有机融入文艺作品，制作文创产品和公益广告，持续开展世界地球日、世界环境日、全国节能宣传周、全国低碳日等主题宣传活动，增强社会公众绿色低碳意识，推动生态文明理念更加深入人心。</p>
-<p>2．推广绿色低碳生活方式。坚决遏制奢侈浪费和不合理消费，着力破除奢靡铺张的歪风陋习，坚决制止餐饮浪费行为。在全社会倡导节约用能，开展绿色低碳社会行动示范创建，深入推进绿色生活创建行动，评选宣传一批优秀示范典型，营造绿色低碳生活新风尚。大力发展绿色消费，推广绿色低碳产品，完善绿色产品认证与标识制度。提升绿色产品在政府采购中的比例。</p>
-<p>3．引导企业履行社会责任。引导企业主动适应绿色低碳发展要求，强化环境责任意识，加强能源资源节约，提升绿色创新水平。重点领域国有企业特别是中央企业要制定实施企业碳达峰行动方案，发挥示范引领作用。重点用能单位要梳理核算自身碳排放情况，深入研究碳减排路径，“一企一策”制定专项工作方案，推进节能降碳。相关上市公司和发债企业要按照环境信息依法披露要求，定期公布企业碳排放信息。充分发挥行业协会等社会团体作用，督促企业自觉履行社会责任。</p>
-<p>4．强化领导干部培训。将学习贯彻习近平生态文明思想作为干部教育培训的重要内容，各级党校（行政学院）要把碳达峰、碳中和相关内容列入教学计划，分阶段、多层次对各级领导干部开展培训，普及科学知识，宣讲政策要点，强化法治意识，深化各级领导干部对碳达峰、碳中和工作重要性、紧迫性、科学性、系统性的认识。从事绿色低碳发展相关工作的领导干部要尽快提升专业素养和业务能力，切实增强推动绿色低碳发展的本领。</p>
-<p>（十）各地区梯次有序碳达峰行动。</p>
-<p>各地区要准确把握自身发展定位，结合本地区经济社会发展实际和资源环境禀赋，坚持分类施策、因地制宜、上下联动，梯次有序推进碳达峰。</p>
-<p>1．科学合理确定有序达峰目标。碳排放已经基本稳定的地区要巩固减排成果，在率先实现碳达峰的基础上进一步降低碳排放。产业结构较轻、能源结构较优的地区要坚持绿色低碳发展，坚决不走依靠“两高”项目拉动经济增长的老路，力争率先实现碳达峰。产业结构偏重、能源结构偏煤的地区和资源型地区要把节能降碳摆在突出位置，大力优化调整产业结构和能源结构，逐步实现碳排放增长与经济增长脱钩，力争与全国同步实现碳达峰。</p>
-<p>2．因地制宜推进绿色低碳发展。各地区要结合区域重大战略、区域协调发展战略和主体功能区战略，从实际出发推进本地区绿色低碳发展。京津冀、长三角、粤港澳大湾区等区域要发挥高质量发展动力源和增长极作用，率先推动经济社会发展全面绿色转型。长江经济带、黄河流域和国家生态文明试验区要严格落实生态优先、绿色发展战略导向，在绿色低碳发展方面走在全国前列。中西部和东北地区要着力优化能源结构，按照产业政策和能耗双控要求，有序推动高耗能行业向清洁能源优势地区集中，积极培育绿色发展动能。</p>
-<p>3．上下联动制定地方达峰方案。各省、自治区、直辖市人民政府要按照国家总体部署，结合本地区资源环境禀赋、产业布局、发展阶段等，坚持全国一盘棋，不抢跑，科学制定本地区碳达峰行动方案，提出符合实际、切实可行的碳达峰时间表、路线图、施工图，避免“一刀切”限电限产或运动式“减碳”。各地区碳达峰行动方案经碳达峰碳中和工作领导小组综合平衡、审核通过后，由地方自行印发实施。</p>
-<p>4．组织开展碳达峰试点建设。加大中央对地方推进碳达峰的支持力度，选择100个具有典型代表性的城市和园区开展碳达峰试点建设，在政策、资金、技术等方面对试点城市和园区给予支持，加快实现绿色低碳转型，为全国提供可操作、可复制、可推广的经验做法。</p>
-<p>四、国际合作</p>
-<p>（一）深度参与全球气候治理。大力宣传习近平生态文明思想，分享中国生态文明、绿色发展理念与实践经验，为建设清洁美丽世界贡献中国智慧、中国方案、中国力量，共同构建人与自然生命共同体。主动参与全球绿色治理体系建设，坚持共同但有区别的责任原则、公平原则和各自能力原则，坚持多边主义，维护以联合国为核心的国际体系，推动各方全面履行《联合国气候变化框架公约》及其《巴黎协定》。积极参与国际航运、航空减排谈判。</p>
-<p>（二）开展绿色经贸、技术与金融合作。优化贸易结构，大力发展高质量、高技术、高附加值绿色产品贸易。加强绿色标准国际合作，推动落实合格评定合作和互认机制，做好绿色贸易规则与进出口政策的衔接。加强节能环保产品和服务进出口。加大绿色技术合作力度，推动开展可再生能源、储能、氢能、二氧化碳捕集利用与封存等领域科研合作和技术交流，积极参与国际热核聚变实验堆计划等国际大科学工程。深化绿色金融国际合作，积极参与碳定价机制和绿色金融标准体系国际宏观协调，与有关各方共同推动绿色低碳转型。</p>
-<p>（三）推进绿色“一带一路”建设。秉持共商共建共享原则，弘扬开放、绿色、廉洁理念，加强与共建“一带一路”国家的绿色基建、绿色能源、绿色金融等领域合作，提高境外项目环境可持续性，打造绿色、包容的“一带一路”能源合作伙伴关系，扩大新能源技术和产品出口。发挥“一带一路”绿色发展国际联盟等合作平台作用，推动实施《“一带一路”绿色投资原则》，推进“一带一路”应对气候变化南南合作计划和“一带一路”科技创新行动计划。</p>
-<p>五、政策保障</p>
-<p>（一）建立统一规范的碳排放统计核算体系。加强碳排放统计核算能力建设，深化核算方法研究，加快建立统一规范的碳排放统计核算体系。支持行业、企业依据自身特点开展碳排放核算方法学研究，建立健全碳排放计量体系。推进碳排放实测技术发展，加快遥感测量、大数据、云计算等新兴技术在碳排放实测技术领域的应用，提高统计核算水平。积极参与国际碳排放核算方法研究，推动建立更为公平合理的碳排放核算方法体系。</p>
-<p>（二）健全法律法规标准。构建有利于绿色低碳发展的法律体系，推动能源法、节约能源法、电力法、煤炭法、可再生能源法、循环经济促进法、清洁生产促进法等制定修订。加快节能标准更新，修订一批能耗限额、产品设备能效强制性国家标准和工程建设标准，提高节能降碳要求。健全可再生能源标准体系，加快相关领域标准制定修订。建立健全氢制、储、输、用标准。完善工业绿色低碳标准体系。建立重点企业碳排放核算、报告、核查等标准，探索建立重点产品全生命周期碳足迹标准。积极参与国际能效、低碳等标准制定修订，加强国际标准协调。</p>
-<p>（三）完善经济政策。各级人民政府要加大对碳达峰、碳中和工作的支持力度。建立健全有利于绿色低碳发展的税收政策体系，落实和完善节能节水、资源综合利用等税收优惠政策，更好发挥税收对市场主体绿色低碳发展的促进作用。完善绿色电价政策，健全居民阶梯电价制度和分时电价政策，探索建立分时电价动态调整机制。完善绿色金融评价机制，建立健全绿色金融标准体系。大力发展绿色贷款、绿色股权、绿色债券、绿色保险、绿色基金等金融工具，设立碳减排支持工具，引导金融机构为绿色低碳项目提供长期限、低成本资金，鼓励开发性政策性金融机构按照市场化法治化原则为碳达峰行动提供长期稳定融资支持。拓展绿色债券市场的深度和广度，支持符合条件的绿色企业上市融资、挂牌融资和再融资。研究设立国家低碳转型基金，支持传统产业和资源富集地区绿色转型。鼓励社会资本以市场化方式设立绿色低碳产业投资基金。</p>
-<p>（四）建立健全市场化机制。发挥全国碳排放权交易市场作用，进一步完善配套制度，逐步扩大交易行业范围。建设全国用能权交易市场，完善用能权有偿使用和交易制度，做好与能耗双控制度的衔接。统筹推进碳排放权、用能权、电力交易等市场建设，加强市场机制间的衔接与协调，将碳排放权、用能权交易纳入公共资源交易平台。积极推行合同能源管理，推广节能咨询、诊断、设计、融资、改造、托管等“一站式”综合服务模式。</p>
-<p>六、组织实施</p>
-<p>（一）加强统筹协调。加强党中央对碳达峰、碳中和工作的集中统一领导，碳达峰碳中和工作领导小组对碳达峰相关工作进行整体部署和系统推进，统筹研究重要事项、制定重大政策。碳达峰碳中和工作领导小组成员单位要按照党中央、国务院决策部署和领导小组工作要求，扎实推进相关工作。碳达峰碳中和工作领导小组办公室要加强统筹协调，定期对各地区和重点领域、重点行业工作进展情况进行调度，科学提出碳达峰分步骤的时间表、路线图，督促将各项目标任务落实落细。</p>
-<p>（二）强化责任落实。各地区各有关部门要深刻认识碳达峰、碳中和工作的重要性、紧迫性、复杂性，切实扛起责任，按照《中共中央国务院关于完整准确全面贯彻新发展理念做好碳达峰碳中和工作的意见》和本方案确定的主要目标和重点任务，着力抓好各项任务落实，确保政策到位、措施到位、成效到位，落实情况纳入中央和省级生态环境保护督察。各相关单位、人民团体、社会组织要按照国家有关部署，积极发挥自身作用，推进绿色低碳发展。</p>
-<p>（三）严格监督考核。实施以碳强度控制为主、碳排放总量控制为辅的制度，对能源消费和碳排放指标实行协同管理、协同分解、协同考核，逐步建立系统完善的碳达峰碳中和综合评价考核制度。加强监督考核结果应用，对碳达峰工作成效突出的地区、单位和个人按规定给予表彰奖励，对未完成目标任务的地区、部门依规依法实行通报批评和约谈问责。各省、自治区、直辖市人民政府要组织开展碳达峰目标任务年度评估，有关工作进展和重大问题要及时向碳达峰碳中和工作领导小组报告。</p>
-<p><a target="_blank" rel="noopener" href="https://www.gov.cn/zhengce/zhengceku/2021-10/26/content_5644984.htm">https://www.gov.cn/zhengce/zhengceku/2021-10/26/content_5644984.htm</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%94%B5%E5%8A%9B/" rel="tag">电力</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
   </article>
   
 
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/">上一页</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/57/">57</a><a class="extend next" rel="next" href="/page/3/">下一页</a>
+    <a class="extend prev" rel="prev" href="/">上一页</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/58/">58</a><a class="extend next" rel="next" href="/page/3/">下一页</a>
   </nav>
   
 </section>

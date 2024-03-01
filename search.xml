@@ -1,6 +1,202 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>为什么航天器、导弹喜欢用单片机，而不是嵌入式系统？</title>
+    <url>/2023/12/16/%E9%85%8D%E7%94%B5%E4%B8%8E%E9%85%8D%E7%BD%91%E7%9A%84%E5%BC%82%E5%90%8C%20-%20%E5%89%AF%E6%9C%AC/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>为什么航天器、导弹喜欢用单片机，而不是嵌入式系统？</p>
+<p><a href="https://zhuanlan.zhihu.com/p/357508551">https://zhuanlan.zhihu.com/p/357508551</a></p>
+<p>一、前言<br>前几天和一个在某研究所的发小聊天，他说：现在的航空、航天和导弹等武器装备中，控制系统几乎都是用单片机，而不是嵌入式系统。</p>
+<p>乍一听，和我们的直觉有矛盾啊：那么高大上的设备，其中的控制逻辑一定很复杂，不用嵌入式系统怎么来完成那么复杂的功能控制啊？然后仔细了解了一下，才明白答案是：安全+可控。</p>
+<p>这篇文章我们就来聊一下关于单片机与嵌入式、操作系统与 RTOS 之间的那些事！通过这篇文章，让你操作系统的实时性有一个系统、全面的理解！</p>
+<p>二、关于单片机与嵌入式系统之间界定</p>
+<p>说实话，关于它俩的区分，没有人可以给出一个标准的、正确的答案。每个人理解的单片机与嵌入式系统，都是略有差别的。</p>
+<p>抛开硬件，从应用程序开发的角度来看，我是这样来理解的：</p>
+<p>单片机：可以直接使用状态机来实现程序框架，也可以利用一些 RTOS(ucOS、FreeRTOS、vxWorks、RT-Thread)等来完成一些调度功能。</p>
+<p>嵌入式系统：利用嵌入式 Linux 操作系统以及一些变种来编写应用程序。</p>
+<p>我知道自己的理解可能是不对的，至少不严谨、范围狭隘，既然没有标准答案，那姑且引用维基百科中的定义吧，毕竟概念是死的，更重要的是我们如何根据实际的需要来进行选择。</p>
+<ol>
+<li>单片机<br>单片机，全称单片微型计算机（single-chip microcomputer），又称微控制器单元 MCU（microcontroller unit）。<br>把中央处理器、存储器、定时/计数器、各种输入输出接口等都集成在一块集成电路芯片上的微型计算机。<br>由于其发展非常迅速，旧的单片机的定义已不能满足，所以在很多应用场合被称为范围更广的微控制器；</li>
+<li>嵌入式系统<br>嵌入式系统（Embedded System），是一种嵌入机械或电气系统内部、具有专一功能和实时计算性能的计算机系统。<br>嵌入式系统常被用于高效控制许多常见设备，被嵌入的系统通常是包含数字硬件和机械部件的完整设备，例如汽车的防锁死刹车系统。<br>现代嵌入式系统通常是基于微控制器（如含集成内存和/或外设接口的中央处理单元）的，但在较复杂的系统中普通微处理器（使用外部存储芯片和外设接口电路）也很常见。</li>
+<li>嵌入式Linux<br>嵌入式Linux（英语：Embedded Linux）是一类嵌入式操作系统的概称，这类型的操作系统皆以Linux内核为基础，被设计来使用于嵌入式设备。<br>与电脑端运行的linux系统本质上是一样的，虽然经过了一些功能上的裁剪，但是本质上是一样的，主要利用 Linux 内核中的的任务调度、内存管理、硬件抽象等功能。</li>
+<li>RTOS<br>实时操作系统（RTOS），又称即时操作系统，它会按照排序运行、管理系统资源，并为开发应用程序提供一致的基础。<br>实时操作系统与一般的操作系统相比，最大的特色就是“实时性”，如果有一个任务需要执行，实时操作系统会马上（在较短时间内）执行该任务，不会有较长的延时。这种特性保证了各个任务的及时执行。</li>
+</ol>
+<p>三、非实时、软实时、硬实时</p>
+<p>首先要明白什么叫实时性？实时性考虑的不是速度、性能、吞吐量，而是确定性，也就是说：当一个事件发生的时候，可以确定性的保证在多长时间内得到处理，只要能满足这个要求，就可以成为硬实时。比如：</p>
+<p>操作系统1：当中断发生时，可以保证在 1 秒内得到这里，那么它就是硬实时系统，虽然响应时间长，但它是确定的；<br>操作系统2：当中断发生时，几乎都可以在 1 毫秒内完成，那么那就不能成为硬实系统，虽然响应时间短，但是它不确定。<br>也看到有文章说：应该取消软实时这个模棱两可的说法，要么是实时，要么是非实时！</p>
+<p>操作系统包含的功能很多：任务调度、内存管理、文件管理等等，其中最核心的就是任务调度，这也是非实时、软实时、硬实时的最大区别。</p>
+<p>也就是说，衡量实时性的指标就是：</p>
+<ol>
+<li>中断延时：一个外部事件引发的中断发生时，到相应的中断处理程序第一条指令被执行时，所经过的时间；</li>
+<li>任务抢占延时：当一个高优先级的任务准备就绪时，从正在执行的低优先级任务中抢夺 CPU 资源所经过的时间；</li>
+</ol>
+<p>不同的操作系统，其任务调度机制也是不一样的，而这个调度机制的策略，又是与实际的使用场景相关的。因此，并不存在哪个好、哪个不好这样的说法，合适的就是最好的！</p>
+<p>比如：我们的桌面系统，需要考虑的是多任务、并发，需要同时执行多个程序，哪个程序慢一点，用户无所谓，甚至觉察不到；但是对于一个导弹控制系统，当一个外部传感器输入信号，触发一个事件时，对应的处理必须立刻执行，否则耽搁 1 毫秒，结果可能就是差之千里！</p>
+<p>四、x86 Linux 系统的调度策略</p>
+<p>我们日常使用的 PC 机，它的主要目标是并行执行多任务，强调的是吞吐率(尽可能多的执行很多应用程序的代码)，因此，采用的是分时操作系统，也就是每个任务都有一个时间片，当一个任务分配的时间片用完了，就自动换出（调度），然后执行下一个任务。</p>
+<p>我们平常在写 x86 平台上写普通的客户端程序时，很少需要指定应用程序的调度策略和优先级，使用的是系统默认的调度机制。反过来说，也就是在某些需要的场合下，是可以设置进程的调度策略和优先级的。</p>
+<p>例如在 Linux 系统中，可以通过 sched_setscheduler() 系统函数 设置 3 种调度策略：</p>
+<p>SCHED_OTHER: 系统默认的调度策略，计算动态优先级（counter+20-nice），当时间片用完之后放在就绪队列尾；<br>SCHED_FIFO: 实时调度策略，根据优先级进行调度，一旦占用CPU就一直执行，直到自己放弃执行或者有更高优先级的任务需要执行；<br>SCHED_RR: 也是实时调度策略，在 SCHED_FIFO 的基础上添加了时间片。在执行时，可以被更高优先级的任务打断，如果没有更高优先级的任务，那么当任务的执行时间片用完之后，就会查找相同优先级的任务来执行。</p>
+<ol>
+<li>为什么 Linux 系统是软实时的？<br>可能有小伙伴会有疑问：既然 Linux 系统中提供了 SCHED_FIFO 基于优先级的调度策略，为什么仍然不能称之为真正的硬实时操作系统？这就要从 Linux 的发展历史说起了。</li>
+</ol>
+<p>Linux 操作系统在设计之初，就是为了桌面应用而开发的，在那个时代，多个终端(电传打字机和屏幕)连接到同一个电脑主机，需要处理的是多任务、并行操作，并不需要考虑实时性，因此，在 Linux 内核中的一些基因，严重影响了它的实时性，例如有如下几个因素：</p>
+<p>(1) 内核不可抢占</p>
+<p>我们知道，一个应用程序在执行时，可以在用户态和内核态执行(当调用一个系统函数，例如：write 时，就会进入内核态执行)，此时任务是不可抢占的。</p>
+<p>即使有优先级更高的任务准备就绪，当前的任务也不能立刻停止执行。而是必须等到当前这个任务返回到用户态，或者在内核态中需要等待某个资源而睡眠时，高优先级任务才可以执行。</p>
+<p>因此，这就很显然无法保证高优先级任务的实时性了。</p>
+<p>(2) 自旋锁</p>
+<p>自旋锁是用于多线程同步的一种锁，用来对共享资源的一种同步机制，线程反复检查锁变量是否可用。由于线程在这一过程中保持执行，因此是一种忙等待。一旦获取了自旋锁，线程会一直保持该锁，直至显式释放自旋锁。</p>
+<p>自旋锁避免了进程上下文的调度开销，因此对于线程只会阻塞很短时间的场合是有效的，也就是说，只能在阻塞很短的时间才适合使用自旋锁。</p>
+<p>但是，在自旋锁期间，任务抢占将会失效，这就是说，即使自旋锁的阻塞时间很短，但是这仍然会增加任务抢占延时，让调度变得不确定。</p>
+<p>(3) 中断的优先级是最高的</p>
+<p>任何时刻，只要中断发生，就会立刻执行中断服务程序，也就是中断的优先级是最高的。只有当所有的外部中断和软终端都处理结束了，正常的任务才能得到执行。</p>
+<p>这看起来是好事情，但是想一想，如果有比中断优先级更高的任务呢？假如系统在运行中，网口持续接收到数据，那么中断就一直被执行，那么其他任务就可能一直得不到执行的机会，这是影响 Linux 系统实时性的巨大挑战。</p>
+<p>(4) 同步操作时关闭中断</p>
+<p>如果去看 Linux 内核的代码，可以看到在很多地方都执行了关中断指令，如果在这期间发生了中断，那么中断响应时间就没法保证了。</p>
+<ol start="2">
+<li>Linux 系统如何改成硬实时？<br>以上描述的几个因素，对 Linux 实现真正的实时性构成了很大的障碍，但是现实世界又的确有很多场合需要 Linux 具有硬实时，那么就要针对上面的每一个因素提出解决方案。</li>
+</ol>
+<p>目前主流的解决方案有 2 个：</p>
+<p>单内核解决方案：给 Linux 内核打补丁，解决上面提到的几个问题，例如：RT-Preempt;<br>双内核解决方案：在硬件抽象层之上，运行 2 个内核：实时内核 + Linux 内核，它们分别向上层提供 API 函数，例如：Xenomai;<br>这 2 种解决方案分别有不同的实现，从调研情况来看，RT-Preempt 和 Xenomai 是使用比较多的，下面分别来看一下他们的优缺点。</p>
+<p>（1）RT-Preempt<br>这种方式主要是对 Linux 内核进行打补丁，解决了上面所说的几个问题：内核不可抢占、自旋锁、关中断以及终端优先级的问题。</p>
+<p>至于每一个问题是如何解决的，由于篇幅关系，这里就不介绍了，感兴趣的小伙伴如果需要的话，可以深入了解一下。</p>
+<p>由于是直接在 Linux 内核上打补丁(以后肯定会合并到主分支中的)，因此对于应用程序开发来说，操作系统向上层提供的 API 接口函数可以保持不变，这对应用程序开发来说是一件好事情。</p>
+<p>（2）Xenomai<br>Xenomai是一个 Linux 内核的实时开发框架，它希望通过无缝地集成到 Linux 环境中来给用户空间应用程序提供全面的，与接口无关的硬实时性能。下面是 Xenomai 的架构图：</p>
+<p>在硬件抽象层之上，是 2 个并列的域(内核)，这 2 个内核分别向上层提供自己的 API 接口函数。</p>
+<p>图中 glibc 是 Linux 系统提供的库函数，应用程序通过调用库函数和系统调用来编写程序。</p>
+<p>Xenomai 也提供了相应的库函数 libcobalt ，这个库函数是需要我们在用户层编译、安装的，就像安装第三方库一样。</p>
+<p>此外，Xenomai 还参考不同的操作系统风格，提供了好几套 API 函数(之前的说法是：皮肤)，API 接口函数在这里：</p>
+<p>从图中可以看到，Alchemy API 这套接口提供的功能更完善，提供了：定时器、内存管理、条件变量、事件、互斥锁、消息队列、任务(可以理解为线程)等 API 函数。 这一套 API 函数中具体的功能与 POSIX 标准大体相同，在一些细节上存在一些差异。</p>
+<p>由于 Xenomai 向应用层提供的 API 函数是独立的一套，因此，如果我们需要创建实时任务，那么就要调用这一套接口函数来创建任务，包括使用其中的一些资源(例如：内存分配)。而且文档中也提出了一些注意点，例如：某些资源不能在 Xenomai 与 Linux 系统之间混用。</p>
+<p>五、RTOS 的优势</p>
+<p>上面已经说到，Linux 桌面系统的主要目标是吞吐量，在单位时间内执行更多的代码。</p>
+<p>但是对于单片机来说，首要目标不是吞吐量，而是确定性，因此衡量一个实时操作系统坚固性的重要指标，是系统从接收一个任务，到完成该任务所需的时间。也就是说，任务调度才是第一考量要素。</p>
+<p>在单片机开发中，一般有 2 种编程模型：基于状态机(裸跑)，基于 RTOS。</p>
+<p>如果基于状态机，就不存在任务调度问题了，因为只有一个执行序列，所有的操作都是串行执行的，唯一需要注意的控制流程就是中断处理。</p>
+<p>如果基于 RTOS，主要利用的就是任务调度，实现真正的硬实时。这方面最牛逼的就是VxWorks了，当然价格也是非常可观的，有些公司购买之后，甚至会把除了任务调度模块之外的其他模块全部重写一遍，这也足以证明了 VxWorks 在任务调度处理上的确很厉害，这也是它的看家本领!</p>
+<p>当然，对于简单、需要严格控制执行序列的关键程序来说，使用有限状态机的编程框架，一切都在自己的掌握中。只要代码中没有 bug，那么理论上，一切行为都是在控制之中的，这也是为什么很多军事设备上使用单片机的原因！</p>
+<p>六、总结</p>
+<p>关于任务调度的问题，是一个操作系统的重中之重，其中需要学习的内容还有很多，最近刚买了一本陈海波老师的新书，也就是华为的鸿蒙系统背后的灵魂人物。</p>
+<p>如果有新的学习心得，再跟大家分享。</p>
+]]></content>
+      <categories>
+        <category>知识分享</category>
+      </categories>
+      <tags>
+        <tag>嵌入式</tag>
+        <tag>单片机</tag>
+        <tag>物联网</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>配电与配网的异同</title>
+    <url>/2023/12/15/%E9%85%8D%E7%94%B5%E4%B8%8E%E9%85%8D%E7%BD%91%E7%9A%84%E5%BC%82%E5%90%8C/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>配网与配电有何区别<br>2023年11月09日<br>一、配网和配电的定义</p>
+<p>配电是指将高压电能经过变压器逐级降压，最终输送给终端用户的一种电力传输方式。而配网则是指在配电系统中，将电能从配电变压器输送到终端用户，负责能量的传输和分配。简单来说，配电强调的是输电，而配网强调的是分电。</p>
+<p>二、配网和配电的功能</p>
+<p>配网的主要功能是将电力从变电站输送到城市和建筑物中，并为用户提供安全、可靠、高效、低成本的电力服务。配电则主要分为高压配电和低压配电，负责将电源的能量分配到用户终端并控制供电质量以保证稳定供电。</p>
+<p>三、配网和配电的应用范围</p>
+<p>配电主要是指把电压由高压状态变成响应的低压状态后，送入工业、农业、商业以及居民区域。而配网则负责把电能从配电变压器输送到用户终端，包括城市道路照明、商业建筑、工业用电等等。</p>
+<p>四、配电和配网的发展趋势</p>
+<p>随着社会的进步和经济的发展，人们对电力的需求不断增长，配电和配网也不断发展和完善。未来，配网技术将走向更加智能化和数字化，通过大数据和人工智能等新技术，实现对电力供应和需求的实时监测和智能调控，提高电力的可靠性、可持续性和效率。配电也将趋向一体化和集成化，探索新的电力生产和传输模式，提高电力的质量和效益。</p>
+<p>总之，配电和配网虽然存在一定的联系和关联，但它们的职能和作用有所不同。未来，随着科技的发展和社会的需求，配电和配网也会愈加完善和智能化，为人们生活和经济发展带来更多的便利和效益。</p>
+]]></content>
+      <categories>
+        <category>知识分享</category>
+      </categories>
+      <tags>
+        <tag>电力</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Qt实现简单的显示网页（QtWebkit、QtWebEngine、QAxWidget）</title>
+    <url>/2023/12/14/Qt%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84%E6%98%BE%E7%A4%BA%E7%BD%91%E9%A1%B5%EF%BC%88QtWebkit%E3%80%81QtWebEngine%E3%80%81QAxWidget%EF%BC%89/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>首先先说说QtWebkit、QtWebEngine、QAxWidget三种方式显示网页的应用场景<br>QtWebkit：在Qt5.6以前，都是使用QtWebkit组件，但Qt5.6以后，移除了QtWebkit这个组件<br>QtWebEngine：Qt5.6以后的MSVC版本，引进了基于Chromium的浏览器引擎 QtWebEngine<br>QAxWidget：Qt5.6以后的mingw版本，由于移除了QtWebkit，mingw版本不能使用QtWebEngine，因此只能使用QAxWidget控件</p>
+<h1 id="QtWebkit"><a href="#QtWebkit" class="headerlink" title="QtWebkit"></a>QtWebkit</h1><p>QtWebKit提供一个Web浏览器引擎，可以轻松地将来自万维网的内容嵌入到Qt应用程序中。同时，可以使用本机控件增强Web内容。<br>QtWebKit提供用于呈现超文本标记语言(HTML)、可扩展超文本标记语言(XHTML)和可伸缩矢量图形(SVG)文档的工具，这些文档使用级联样式表(CSS)样式，并使用JavaScript编写脚本。<br>JavaScript执行环境与Qt对象模型之间的桥梁使定制成为可能QObjects写剧本。有关详细文档，请参阅QtWebkit桥，通过与Qt网络模块的集成，可以透明地从Web服务器、本地文件系统甚至Qt资源系统加载Web页面。<br>除了提供纯呈现功能之外，还可以通过使用contenteditable属性设置在HTML元素上。<br>QtWebKit已经得到了增强，在移动领域也变得更有吸引力。有关更多信息，请参见QtWebKit Go Mobile.<br>QtWebKit是基于开放源码WebKit引擎。更多关于WebKit本身可以在WebKit开源项目网站。<br>关于交互部分需要与JavaScript联合使用，下面只简单的介绍如何显示网页。</p>
+<pre><code>QWebView view;
+view.load(QUrl(https://blog.csdn.net/qq_36651243));
+view.show();
+</code></pre>
+<h1 id="QtWebEngine"><a href="#QtWebEngine" class="headerlink" title="QtWebEngine"></a>QtWebEngine</h1><p>QtWebEngine模块提供了一个Web浏览器引擎，可以方便地在没有本地Web引擎的平台上将来自万维网的内容嵌入到Qt应用程序中。<br>QtWebEngine提供C+类和QML类型，用于呈现HTML、XHTML和SVG文档，样式为级联样式表(CSS)，并使用JavaScript编写脚本。用户可以通过使用contenteditable属性设置在HTML元素上。</p>
+<p>小编开发环境：Qt5.9.6+VS2015</p>
+<pre><code>QWebEngineView *LiveView = new QWebEngineView;
+LiveView-&gt;settings()-&gt;setAttribute(QWebEngineSettings::PluginsEnabled, true);
+LiveView-&gt;setAttribute(Qt::WA_DeleteOnClose);
+LiveView-&gt;load(QUrl(&quot;https://blog.csdn.net/qq_36651243&quot;));
+//LiveView-&gt;setWindowFlags(Qt::FramelessWindowHint);   //去除边框
+//LiveView-&gt;setAttribute(Qt::WA_TranslucentBackground, true); //透明
+LiveView-&gt;resize(1024, 768);
+LiveView-&gt;show();
+</code></pre>
+<h1 id="QAxWidget"><a href="#QAxWidget" class="headerlink" title="QAxWidget"></a>QAxWidget</h1><p>QAxWidget可以使用它应该包装的ActiveX控件的名称，或者使用指向ActiveX控件的现有接口指针，将其实例化为空对象。ActiveX控件的属性、方法和事件，这些属性、方法和事件仅使用QAxBase受支持的数据类型，可作为Qt属性、槽和信号使用。基类QAxBase控件直接访问ActiveX的API。IUnknown指针。</p>
+<p>小编开发环境：Qt5.9.6+VS2015<br>使用QAxWidget前需要注意两点：<br>1.QAxContainer.lib,QAxServer.lib库不可缺。<br>2.开发机本身具有相应的IE游览器（注册表文件一致）</p>
+<p>QAxContainer.lib,QAxServer.lib引用方式：</p>
+<p>关于注册表文件：</p>
+<pre><code>QAxWidget *flash = new QAxWidget(0, 0);      //QAxWidget使用的是ActiveX插件
+flash-&gt;resize(600, 400);                    //设置该控件的初始大小
+flash-&gt;setControl(QString::fromUtf8(&quot;&#123;8856F961-340A-11D0-A96B-00C04FD705A2&#125;&quot;));//注册组件ID
+flash-&gt;setProperty(&quot;DisplayAlerts&quot;, false);//不显示警告信息
+flash-&gt;setProperty(&quot;DisplayScrollBars&quot;, true);//不显示滚动条
+QString webstr = QString(&quot;www.baidu.com&quot;);//设置要打开的网页
+flash-&gt;dynamicCall(&quot;Navigate(const QString&amp;)&quot;, webstr);//显示网页
+flash-&gt;show();
+</code></pre>
+<h1 id="更多资料"><a href="#更多资料" class="headerlink" title="更多资料"></a>更多资料</h1><p><a href="https://doc.qt.io/archives/qt-4.8/qtwebkit-module.html">https://doc.qt.io/archives/qt-4.8/qtwebkit-module.html</a><br><a href="https://doc.qt.io/archives/qt-5.11/qtwebengine-overview.html">https://doc.qt.io/archives/qt-5.11/qtwebengine-overview.html</a><br><a href="https://doc.qt.io/archives/qt-5.11/qaxwidget.html">https://doc.qt.io/archives/qt-5.11/qaxwidget.html</a><br><a href="https://doc.qt.io/qt-5/qtwebenginewidgets-qtwebkitportingguide.html">https://doc.qt.io/qt-5/qtwebenginewidgets-qtwebkitportingguide.html</a></p>
+<p>————————————————</p>
+<p>版权声明：本文为博主原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接和本声明。<br>原文链接：<a href="https://blog.csdn.net/qq_36651243/article/details/93173395">https://blog.csdn.net/qq_36651243/article/details/93173395</a></p>
+]]></content>
+      <categories>
+        <category>软件开发</category>
+      </categories>
+      <tags>
+        <tag>Qt</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>QGIS加载XYZ地图</title>
+    <url>/2023/12/13/QGIS%E5%8A%A0%E8%BD%BDXYZ%E5%9C%B0%E5%9B%BE/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="一、添加XYZ-Tiles步骤，"><a href="#一、添加XYZ-Tiles步骤，" class="headerlink" title="一、添加XYZ Tiles步骤，"></a>一、添加XYZ Tiles步骤，</h1><p>第一步<br>在左侧面板中，右键 xyzTiles<br>点击 New Connection</p>
+<p>第二步<br>点击New Connection后，出现弹窗</p>
+<p>Name字段自定义命名，<br>url 输入<a href="http://www.google.cn/maps/vt?lyrs=s@820&amp;gl=cn&amp;x=%7Bx%7D&amp;y=%7By%7D&amp;z=%7Bz%7D">http://www.google.cn/maps/vt?lyrs=s@820&amp;gl=cn&amp;x={x}&amp;y={y}&amp;z={z}</a></p>
+<p>点击OK，<br>然后把xyzTile下面新建的Google图层，拖拽到下面Layer层中，就显示出来了。然后在其上新建图层，浏览查看，都没问题啦。</p>
+<h1 id="二、常用-Tiles-如下："><a href="#二、常用-Tiles-如下：" class="headerlink" title="二、常用 Tiles 如下："></a>二、常用 Tiles 如下：</h1><p>高德街道地图：<br><a href="https://wprd01.is.autonavi.com/appmaptile?x=%7Bx%7D&amp;y=%7By%7D&amp;z=%7Bz%7D&amp;lang=zh_cn&amp;size=1&amp;scl=1&amp;style=7">https://wprd01.is.autonavi.com/appmaptile?x={x}&amp;y={y}&amp;z={z}&amp;lang=zh_cn&amp;size=1&amp;scl=1&amp;style=7</a></p>
+<p>高德卫星影像<br><a href="https://webst01.is.autonavi.com/appmaptile?style=6&amp;x=%7Bx%7D&amp;y=%7By%7D&amp;z=%7Bz%7D">https://webst01.is.autonavi.com/appmaptile?style=6&amp;x={x}&amp;y={y}&amp;z={z}</a></p>
+<p>高德路网<br><a href="https://wprd01.is.autonavi.com/appmaptile?x=%7Bx%7D&amp;y=%7By%7D&amp;z=%7Bz%7D&amp;lang=zh_cn&amp;size=1&amp;scl=2&amp;style=8&amp;ltype=11">https://wprd01.is.autonavi.com/appmaptile?x={x}&amp;y={y}&amp;z={z}&amp;lang=zh_cn&amp;size=1&amp;scl=2&amp;style=8&amp;ltype=11</a></p>
+<h1 id="三、其他："><a href="#三、其他：" class="headerlink" title="三、其他："></a>三、其他：</h1><p>谷歌街道地图：<br><a href="http://mt2.google.com/vt/lyrs=m&amp;scale=2&amp;hl=zh-CN&amp;gl=cn&amp;x=%7Bx%7D&amp;y=%7By%7D&amp;z=%7Bz%7D">http://mt2.google.com/vt/lyrs=m&amp;scale=2&amp;hl=zh-CN&amp;gl=cn&amp;x={x}&amp;y={y}&amp;z={z}</a></p>
+<p>谷歌卫星地图：<br><a href="http://mt2.google.com/vt/lyrs=y&amp;scale=2&amp;hl=zh-CN&amp;gl=cn&amp;x=%7Bx%7D&amp;y=%7By%7D&amp;z=%7Bz%7D">http://mt2.google.com/vt/lyrs=y&amp;scale=2&amp;hl=zh-CN&amp;gl=cn&amp;x={x}&amp;y={y}&amp;z={z}</a></p>
+<p>Google Maps:<br><a href="https://mt1.google.com/vt/lyrs=r&amp;x=%7Bx%7D&amp;y=%7By%7D&amp;z=%7Bz%7D">https://mt1.google.com/vt/lyrs=r&amp;x={x}&amp;y={y}&amp;z={z}</a></p>
+<p>Google Satellite Hybrid:<br><a href="https://mt1.google.com/vt/lyrs=y&amp;x=%7Bx%7D&amp;y=%7By%7D&amp;z=%7Bz%7D">https://mt1.google.com/vt/lyrs=y&amp;x={x}&amp;y={y}&amp;z={z}</a></p>
+<p>Google Satellite<br><a href="https://mt1.google.com/vt/lyrs=s&amp;x=%7Bx%7D&amp;y=%7By%7D&amp;z=%7Bz%7D">https://mt1.google.com/vt/lyrs=s&amp;x={x}&amp;y={y}&amp;z={z}</a></p>
+<p>Google Terrain:<br><a href="https://mt1.google.com/vt/lyrs=t&amp;x=%7Bx%7D&amp;y=%7By%7D&amp;z=%7Bz%7D">https://mt1.google.com/vt/lyrs=t&amp;x={x}&amp;y={y}&amp;z={z}</a></p>
+<p>Google Roads:<br><a href="https://mt1.google.com/vt/lyrs=h&amp;x=%7Bx%7D&amp;y=%7By%7D&amp;z=%7Bz%7D">https://mt1.google.com/vt/lyrs=h&amp;x={x}&amp;y={y}&amp;z={z}</a></p>
+<p>Google Road<br><a href="https://mt1.google.com/vt/lyrs=m&amp;x=%7Bx%7D&amp;y=%7By%7D&amp;z=%7Bz%7D">https://mt1.google.com/vt/lyrs=m&amp;x={x}&amp;y={y}&amp;z={z}</a></p>
+<p>openstreetmap：<br><a href="http://a.tile.openstreetmap.org/%7Bz%7D/%7Bx%7D/%7By%7D.png">http://a.tile.openstreetmap.org/{z}/{x}/{y}.png</a></p>
+<p>OpenStreetMap<br><a href="http://tile.openstreetmap.org/%7Bz%7D/%7Bx%7D/%7By%7D.png">http://tile.openstreetmap.org/{z}/{x}/{y}.png</a></p>
+<p>OpenTopoMap<br><a href="https://tile.opentopomap.org/%7Bz%7D/%7Bx%7D/%7By%7D.png">https://tile.opentopomap.org/{z}/{x}/{y}.png</a></p>
+<p>Bing Aerial<br><a href="http://ecn.t3.tiles.virtualearth.net/tiles/a%7Bq%7D.jpeg?g=1">http://ecn.t3.tiles.virtualearth.net/tiles/a{q}.jpeg?g=1</a></p>
+]]></content>
+      <categories>
+        <category>部署运维</category>
+      </categories>
+      <tags>
+        <tag>QGIS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>windows好用的小工具</title>
+    <url>/2023/12/12/windows%E5%A5%BD%E7%94%A8%E7%9A%84%E5%B0%8F%E5%B7%A5%E5%85%B7/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>1、<br><a href="https://hub.nuaa.cf/zetaloop/ExplorerPatcher">https://hub.nuaa.cf/zetaloop/ExplorerPatcher</a><br><a href="https://hub.nuaa.cf/valinet/ExplorerPatcher">https://hub.nuaa.cf/valinet/ExplorerPatcher</a></p>
+<p>2、<br>Windows11轻松设置<br>Windows10径松设置（仅支持特64位Win10)<br>软件作者：快乐无极<br>软件版本：v1.08Beta<br>发布日期：2023-12-25<br>发布说明：比版本发布于PCBeta远景论坛Windows11版块。<br>本人的远景论坛ID号为：coolcool2013<br>比软件仅为测试使用Windows11/10而编写，使用者需自行承担风险。<br>本软件完全免费使用。如果能打赏便是对我最大的鼓励。<br>反馈联系邮箱：<a href="mailto:&#x6f;&#x79;&#x6b;&#115;&#x6f;&#x66;&#x74;&#x40;&#x67;&#109;&#97;&#x69;&#x6c;&#x2e;&#99;&#111;&#109;">&#x6f;&#x79;&#x6b;&#115;&#x6f;&#x66;&#x74;&#x40;&#x67;&#109;&#97;&#x69;&#x6c;&#x2e;&#99;&#111;&#109;</a></p>
+<p><a href="https://bbs.pcbeta.com/viewthread-1972024-1-2.html">https://bbs.pcbeta.com/viewthread-1972024-1-2.html</a></p>
+]]></content>
+      <categories>
+        <category>部署运维</category>
+      </categories>
+      <tags>
+        <tag>windows</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>windows使用cmd命令添加、删除和修改静态路由：route</title>
     <url>/2023/12/11/windows%E4%BD%BF%E7%94%A8cmd%E5%91%BD%E4%BB%A4%E6%B7%BB%E5%8A%A0%E3%80%81%E5%88%A0%E9%99%A4%E5%92%8C%E4%BF%AE%E6%94%B9%E9%9D%99%E6%80%81%E8%B7%AF%E7%94%B1%EF%BC%9Aroute/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>1、添加一条路由表<br>route add 192.168.20.0 mask 255.255.255.0 192.168.4.1 metric 2 if 2<br>命令说明：添加一条路由记录，所有到192.168.20.0/24网段的数据包，都通过2号接口（网卡）走192.168.4.1的网关，优先级为2。</p>
@@ -3876,6 +4072,7 @@ self.actionVisible.toggled.connect(self.setPasswordVisibility)
         <category>软件开发</category>
       </categories>
       <tags>
+        <tag>Qt</tag>
         <tag>python</tag>
       </tags>
   </entry>
@@ -3924,6 +4121,7 @@ if __name__ == &#39;__main__&#39;:
         <category>软件开发</category>
       </categories>
       <tags>
+        <tag>Qt</tag>
         <tag>python</tag>
       </tags>
   </entry>

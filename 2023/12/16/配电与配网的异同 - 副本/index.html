@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+       
+      <meta name="keywords" content="RS,GPS,GIS,QGIS,Opticks,QT,OpenCV,OSG" />
+       
+      <meta name="description" content="地理信息系统，遥感科学，卫星导航定位技术综合研究。" />
+      
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>为什么航天器、导弹喜欢用单片机，而不是嵌入式系统？ |  帕拉丁的游鱼</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/favicon.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    <link rel="alternate" href="/atom.xml" title="帕拉丁的游鱼" type="application/atom+xml">
+</head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-配电与配网的异同 - 副本"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  为什么航天器、导弹喜欢用单片机，而不是嵌入式系统？
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/12/16/%E9%85%8D%E7%94%B5%E4%B8%8E%E9%85%8D%E7%BD%91%E7%9A%84%E5%BC%82%E5%90%8C%20-%20%E5%89%AF%E6%9C%AC/" class="article-date">
+  <time datetime="2023-12-16T02:22:00.000Z" itemprop="datePublished">2023-12-16</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">4k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">13 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>为什么航天器、导弹喜欢用单片机，而不是嵌入式系统？</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/357508551">https://zhuanlan.zhihu.com/p/357508551</a></p>
+<p>一、前言<br>前几天和一个在某研究所的发小聊天，他说：现在的航空、航天和导弹等武器装备中，控制系统几乎都是用单片机，而不是嵌入式系统。</p>
+<p>乍一听，和我们的直觉有矛盾啊：那么高大上的设备，其中的控制逻辑一定很复杂，不用嵌入式系统怎么来完成那么复杂的功能控制啊？然后仔细了解了一下，才明白答案是：安全+可控。</p>
+<p>这篇文章我们就来聊一下关于单片机与嵌入式、操作系统与 RTOS 之间的那些事！通过这篇文章，让你操作系统的实时性有一个系统、全面的理解！</p>
+<p>二、关于单片机与嵌入式系统之间界定</p>
+<p>说实话，关于它俩的区分，没有人可以给出一个标准的、正确的答案。每个人理解的单片机与嵌入式系统，都是略有差别的。</p>
+<p>抛开硬件，从应用程序开发的角度来看，我是这样来理解的：</p>
+<p>单片机：可以直接使用状态机来实现程序框架，也可以利用一些 RTOS(ucOS、FreeRTOS、vxWorks、RT-Thread)等来完成一些调度功能。</p>
+<p>嵌入式系统：利用嵌入式 Linux 操作系统以及一些变种来编写应用程序。</p>
+<p>我知道自己的理解可能是不对的，至少不严谨、范围狭隘，既然没有标准答案，那姑且引用维基百科中的定义吧，毕竟概念是死的，更重要的是我们如何根据实际的需要来进行选择。</p>
+<ol>
+<li>单片机<br>单片机，全称单片微型计算机（single-chip microcomputer），又称微控制器单元 MCU（microcontroller unit）。<br>把中央处理器、存储器、定时/计数器、各种输入输出接口等都集成在一块集成电路芯片上的微型计算机。<br>由于其发展非常迅速，旧的单片机的定义已不能满足，所以在很多应用场合被称为范围更广的微控制器；</li>
+<li>嵌入式系统<br>嵌入式系统（Embedded System），是一种嵌入机械或电气系统内部、具有专一功能和实时计算性能的计算机系统。<br>嵌入式系统常被用于高效控制许多常见设备，被嵌入的系统通常是包含数字硬件和机械部件的完整设备，例如汽车的防锁死刹车系统。<br>现代嵌入式系统通常是基于微控制器（如含集成内存和/或外设接口的中央处理单元）的，但在较复杂的系统中普通微处理器（使用外部存储芯片和外设接口电路）也很常见。</li>
+<li>嵌入式Linux<br>嵌入式Linux（英语：Embedded Linux）是一类嵌入式操作系统的概称，这类型的操作系统皆以Linux内核为基础，被设计来使用于嵌入式设备。<br>与电脑端运行的linux系统本质上是一样的，虽然经过了一些功能上的裁剪，但是本质上是一样的，主要利用 Linux 内核中的的任务调度、内存管理、硬件抽象等功能。</li>
+<li>RTOS<br>实时操作系统（RTOS），又称即时操作系统，它会按照排序运行、管理系统资源，并为开发应用程序提供一致的基础。<br>实时操作系统与一般的操作系统相比，最大的特色就是“实时性”，如果有一个任务需要执行，实时操作系统会马上（在较短时间内）执行该任务，不会有较长的延时。这种特性保证了各个任务的及时执行。</li>
+</ol>
+<p>三、非实时、软实时、硬实时</p>
+<p>首先要明白什么叫实时性？实时性考虑的不是速度、性能、吞吐量，而是确定性，也就是说：当一个事件发生的时候，可以确定性的保证在多长时间内得到处理，只要能满足这个要求，就可以成为硬实时。比如：</p>
+<p>操作系统1：当中断发生时，可以保证在 1 秒内得到这里，那么它就是硬实时系统，虽然响应时间长，但它是确定的；<br>操作系统2：当中断发生时，几乎都可以在 1 毫秒内完成，那么那就不能成为硬实系统，虽然响应时间短，但是它不确定。<br>也看到有文章说：应该取消软实时这个模棱两可的说法，要么是实时，要么是非实时！</p>
+<p>操作系统包含的功能很多：任务调度、内存管理、文件管理等等，其中最核心的就是任务调度，这也是非实时、软实时、硬实时的最大区别。</p>
+<p>也就是说，衡量实时性的指标就是：</p>
+<ol>
+<li>中断延时：一个外部事件引发的中断发生时，到相应的中断处理程序第一条指令被执行时，所经过的时间；</li>
+<li>任务抢占延时：当一个高优先级的任务准备就绪时，从正在执行的低优先级任务中抢夺 CPU 资源所经过的时间；</li>
+</ol>
+<p>不同的操作系统，其任务调度机制也是不一样的，而这个调度机制的策略，又是与实际的使用场景相关的。因此，并不存在哪个好、哪个不好这样的说法，合适的就是最好的！</p>
+<p>比如：我们的桌面系统，需要考虑的是多任务、并发，需要同时执行多个程序，哪个程序慢一点，用户无所谓，甚至觉察不到；但是对于一个导弹控制系统，当一个外部传感器输入信号，触发一个事件时，对应的处理必须立刻执行，否则耽搁 1 毫秒，结果可能就是差之千里！</p>
+<p>四、x86 Linux 系统的调度策略</p>
+<p>我们日常使用的 PC 机，它的主要目标是并行执行多任务，强调的是吞吐率(尽可能多的执行很多应用程序的代码)，因此，采用的是分时操作系统，也就是每个任务都有一个时间片，当一个任务分配的时间片用完了，就自动换出（调度），然后执行下一个任务。</p>
+<p>我们平常在写 x86 平台上写普通的客户端程序时，很少需要指定应用程序的调度策略和优先级，使用的是系统默认的调度机制。反过来说，也就是在某些需要的场合下，是可以设置进程的调度策略和优先级的。</p>
+<p>例如在 Linux 系统中，可以通过 sched_setscheduler() 系统函数 设置 3 种调度策略：</p>
+<p>SCHED_OTHER: 系统默认的调度策略，计算动态优先级（counter+20-nice），当时间片用完之后放在就绪队列尾；<br>SCHED_FIFO: 实时调度策略，根据优先级进行调度，一旦占用CPU就一直执行，直到自己放弃执行或者有更高优先级的任务需要执行；<br>SCHED_RR: 也是实时调度策略，在 SCHED_FIFO 的基础上添加了时间片。在执行时，可以被更高优先级的任务打断，如果没有更高优先级的任务，那么当任务的执行时间片用完之后，就会查找相同优先级的任务来执行。</p>
+<ol>
+<li>为什么 Linux 系统是软实时的？<br>可能有小伙伴会有疑问：既然 Linux 系统中提供了 SCHED_FIFO 基于优先级的调度策略，为什么仍然不能称之为真正的硬实时操作系统？这就要从 Linux 的发展历史说起了。</li>
+</ol>
+<p>Linux 操作系统在设计之初，就是为了桌面应用而开发的，在那个时代，多个终端(电传打字机和屏幕)连接到同一个电脑主机，需要处理的是多任务、并行操作，并不需要考虑实时性，因此，在 Linux 内核中的一些基因，严重影响了它的实时性，例如有如下几个因素：</p>
+<p>(1) 内核不可抢占</p>
+<p>我们知道，一个应用程序在执行时，可以在用户态和内核态执行(当调用一个系统函数，例如：write 时，就会进入内核态执行)，此时任务是不可抢占的。</p>
+<p>即使有优先级更高的任务准备就绪，当前的任务也不能立刻停止执行。而是必须等到当前这个任务返回到用户态，或者在内核态中需要等待某个资源而睡眠时，高优先级任务才可以执行。</p>
+<p>因此，这就很显然无法保证高优先级任务的实时性了。</p>
+<p>(2) 自旋锁</p>
+<p>自旋锁是用于多线程同步的一种锁，用来对共享资源的一种同步机制，线程反复检查锁变量是否可用。由于线程在这一过程中保持执行，因此是一种忙等待。一旦获取了自旋锁，线程会一直保持该锁，直至显式释放自旋锁。</p>
+<p>自旋锁避免了进程上下文的调度开销，因此对于线程只会阻塞很短时间的场合是有效的，也就是说，只能在阻塞很短的时间才适合使用自旋锁。</p>
+<p>但是，在自旋锁期间，任务抢占将会失效，这就是说，即使自旋锁的阻塞时间很短，但是这仍然会增加任务抢占延时，让调度变得不确定。</p>
+<p>(3) 中断的优先级是最高的</p>
+<p>任何时刻，只要中断发生，就会立刻执行中断服务程序，也就是中断的优先级是最高的。只有当所有的外部中断和软终端都处理结束了，正常的任务才能得到执行。</p>
+<p>这看起来是好事情，但是想一想，如果有比中断优先级更高的任务呢？假如系统在运行中，网口持续接收到数据，那么中断就一直被执行，那么其他任务就可能一直得不到执行的机会，这是影响 Linux 系统实时性的巨大挑战。</p>
+<p>(4) 同步操作时关闭中断</p>
+<p>如果去看 Linux 内核的代码，可以看到在很多地方都执行了关中断指令，如果在这期间发生了中断，那么中断响应时间就没法保证了。</p>
+<ol start="2">
+<li>Linux 系统如何改成硬实时？<br>以上描述的几个因素，对 Linux 实现真正的实时性构成了很大的障碍，但是现实世界又的确有很多场合需要 Linux 具有硬实时，那么就要针对上面的每一个因素提出解决方案。</li>
+</ol>
+<p>目前主流的解决方案有 2 个：</p>
+<p>单内核解决方案：给 Linux 内核打补丁，解决上面提到的几个问题，例如：RT-Preempt;<br>双内核解决方案：在硬件抽象层之上，运行 2 个内核：实时内核 + Linux 内核，它们分别向上层提供 API 函数，例如：Xenomai;<br>这 2 种解决方案分别有不同的实现，从调研情况来看，RT-Preempt 和 Xenomai 是使用比较多的，下面分别来看一下他们的优缺点。</p>
+<p>（1）RT-Preempt<br>这种方式主要是对 Linux 内核进行打补丁，解决了上面所说的几个问题：内核不可抢占、自旋锁、关中断以及终端优先级的问题。</p>
+<p>至于每一个问题是如何解决的，由于篇幅关系，这里就不介绍了，感兴趣的小伙伴如果需要的话，可以深入了解一下。</p>
+<p>由于是直接在 Linux 内核上打补丁(以后肯定会合并到主分支中的)，因此对于应用程序开发来说，操作系统向上层提供的 API 接口函数可以保持不变，这对应用程序开发来说是一件好事情。</p>
+<p>（2）Xenomai<br>Xenomai是一个 Linux 内核的实时开发框架，它希望通过无缝地集成到 Linux 环境中来给用户空间应用程序提供全面的，与接口无关的硬实时性能。下面是 Xenomai 的架构图：</p>
+<p>在硬件抽象层之上，是 2 个并列的域(内核)，这 2 个内核分别向上层提供自己的 API 接口函数。</p>
+<p>图中 glibc 是 Linux 系统提供的库函数，应用程序通过调用库函数和系统调用来编写程序。</p>
+<p>Xenomai 也提供了相应的库函数 libcobalt ，这个库函数是需要我们在用户层编译、安装的，就像安装第三方库一样。</p>
+<p>此外，Xenomai 还参考不同的操作系统风格，提供了好几套 API 函数(之前的说法是：皮肤)，API 接口函数在这里：</p>
+<p>从图中可以看到，Alchemy API 这套接口提供的功能更完善，提供了：定时器、内存管理、条件变量、事件、互斥锁、消息队列、任务(可以理解为线程)等 API 函数。 这一套 API 函数中具体的功能与 POSIX 标准大体相同，在一些细节上存在一些差异。</p>
+<p>由于 Xenomai 向应用层提供的 API 函数是独立的一套，因此，如果我们需要创建实时任务，那么就要调用这一套接口函数来创建任务，包括使用其中的一些资源(例如：内存分配)。而且文档中也提出了一些注意点，例如：某些资源不能在 Xenomai 与 Linux 系统之间混用。</p>
+<p>五、RTOS 的优势</p>
+<p>上面已经说到，Linux 桌面系统的主要目标是吞吐量，在单位时间内执行更多的代码。</p>
+<p>但是对于单片机来说，首要目标不是吞吐量，而是确定性，因此衡量一个实时操作系统坚固性的重要指标，是系统从接收一个任务，到完成该任务所需的时间。也就是说，任务调度才是第一考量要素。</p>
+<p>在单片机开发中，一般有 2 种编程模型：基于状态机(裸跑)，基于 RTOS。</p>
+<p>如果基于状态机，就不存在任务调度问题了，因为只有一个执行序列，所有的操作都是串行执行的，唯一需要注意的控制流程就是中断处理。</p>
+<p>如果基于 RTOS，主要利用的就是任务调度，实现真正的硬实时。这方面最牛逼的就是VxWorks了，当然价格也是非常可观的，有些公司购买之后，甚至会把除了任务调度模块之外的其他模块全部重写一遍，这也足以证明了 VxWorks 在任务调度处理上的确很厉害，这也是它的看家本领!</p>
+<p>当然，对于简单、需要严格控制执行序列的关键程序来说，使用有限状态机的编程框架，一切都在自己的掌握中。只要代码中没有 bug，那么理论上，一切行为都是在控制之中的，这也是为什么很多军事设备上使用单片机的原因！</p>
+<p>六、总结</p>
+<p>关于任务调度的问题，是一个操作系统的重中之重，其中需要学习的内容还有很多，最近刚买了一本陈海波老师的新书，也就是华为的鸿蒙系统背后的灵魂人物。</p>
+<p>如果有新的学习心得，再跟大家分享。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://paladin1893.gitee.io/2023/12/16/%E9%85%8D%E7%94%B5%E4%B8%8E%E9%85%8D%E7%BD%91%E7%9A%84%E5%BC%82%E5%90%8C%20-%20%E5%89%AF%E6%9C%AC/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8D%95%E7%89%87%E6%9C%BA/" rel="tag">单片机</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F/" rel="tag">嵌入式</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%89%A9%E8%81%94%E7%BD%91/" rel="tag">物联网</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+    
+      <a href="/2023/12/15/%E9%85%8D%E7%94%B5%E4%B8%8E%E9%85%8D%E7%BD%91%E7%9A%84%E5%BC%82%E5%90%8C/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">配电与配网的异同</div>
+      </a>
+    
+  </nav>
+
+  
+   
+    
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2022-2024
+        <i class="ri-heart-fill heart_icon"></i> paladin1893
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="帕拉丁的游鱼"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/friends">友链</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

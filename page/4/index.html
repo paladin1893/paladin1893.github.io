@@ -154,6 +154,582 @@
     
     
     <article
+  id="post-Modbus RTU 协议概述"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/11/28/Modbus%20RTU%20%E5%8D%8F%E8%AE%AE%E6%A6%82%E8%BF%B0/"
+    >Modbus RTU 协议概述</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/11/28/Modbus%20RTU%20%E5%8D%8F%E8%AE%AE%E6%A6%82%E8%BF%B0/" class="article-date">
+  <time datetime="2023-11-28T12:14:23.000Z" itemprop="datePublished">2023-11-28</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="什么是-Modbus-RTU？"><a href="#什么是-Modbus-RTU？" class="headerlink" title="什么是 Modbus RTU？"></a>什么是 Modbus RTU？</h1><p>Modbus RTU 协议是一种开放的串行协议，广泛应用于当今的工业监控设备中。该协议使用 RS-232 或 RS-485 串行接口进行通信，并得到市场上几乎所有商业 SCADA、HMI、OPC 服务器和数据采集软件程序的支持。因此，很容易将 Modbus 兼容设备集成到新的或现有的监控应用程序中，并具有即时的软件支持。</p>
+<h1 id="Modbus-主-从技术"><a href="#Modbus-主-从技术" class="headerlink" title="Modbus 主/从技术"></a>Modbus 主/从技术</h1><p>Modbus RTU 协议使用主/从技术在设备之间进行通信。这意味着，任何使用 Modbus RTU 协议的应用程序都将有一个 Modbus 主站和至少一个 Modbus 从站。Modbus Master 通常是一台运行软件的主机监控计算机，它将与一个或多个 Modbus Slave 设备进行通信。</p>
+<p>Modbus 从设备是执行系统参数测量和控制系统中的开/关设备的设备。为了执行这些任务，主站向 Modbus 从站发送消息，请求执行特定任务。</p>
+<p>Modbus RTU 协议使用格式化的消息在主机和从机之间进行通信。消息由系统 Master 发起并发送到 Slave 设备。然后，从站以请求的数据进行响应，或者确认它执行了请求的功能。所有进出主站的消息都包含一个两字节（16 位）CRC（循环冗余校验）校验和值，用于错误检查。如果将无效请求传输到 Modbus 从站，则会返回一个字节（8 位）错误代码值，说明请求错误的原因。</p>
+<p>Modbus 主站消息包含几个重要的信息。每条消息都以接受消息的设备的从地址开始。接下来是要执行的功能编号（或命令）。后面是指定函数正确执行所需的任何数据。从地址是一个单字节（8 位）值，可用值范围在 0-247 之间。Modbus 功能号也是一个字节值，并且在协议中定义了许多标准化功能号。支持所请求功能所需的任何数据值的长度将是一个或多个字节。Modbus 从站响应消息将包含响应的从站地址、功能编号和主站请求的任何必要数据。</p>
+<h1 id="Modbus-RTU-是免版税且可定制的"><a href="#Modbus-RTU-是免版税且可定制的" class="headerlink" title="Modbus RTU 是免版税且可定制的"></a>Modbus RTU 是免版税且可定制的</h1><p>Modbus RTU 协议是一种开放协议，可以免版税使用。这允许制造商在其设备中使用通用 Modbus 协议结构，并添加自定义功能以访问其硬件中的功能。虽然这可能是一个很大的好处，但它可能会导致与不支持新定义功能的商业软件程序的兼容性问题。</p>
+<p>Modbus 协议包含当今市场上几乎所有 SCADA、HMI 和数据采集程序都支持的功能列表。以下是用于执行大多数 Modbus 设备读取和控制的协议功能的简要列表。从列表中，“线圈”通常是继电器或数字输出，“寄存器”代表从系统状态到模拟输入或输出信号值的任何内容。每个硬件供应商都有一个“寄存器映射”，详细说明每个寄存器位置和该寄存器的可能数据值。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%80%9A%E4%BF%A1/" rel="tag">通信</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-配电网在电力系统中的作用"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/11/27/%E9%85%8D%E7%94%B5%E7%BD%91%E5%9C%A8%E7%94%B5%E5%8A%9B%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E4%BD%9C%E7%94%A8/"
+    >配电网在电力系统中的作用</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/11/27/%E9%85%8D%E7%94%B5%E7%BD%91%E5%9C%A8%E7%94%B5%E5%8A%9B%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E4%BD%9C%E7%94%A8/" class="article-date">
+  <time datetime="2023-11-27T12:14:23.000Z" itemprop="datePublished">2023-11-27</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>电能是人民生产、生活等方面的主要能源。为了提高供电的可靠性和经济性，改善电能的质量，发电、供电和用电通常由发电厂、输配电线路、变电设备、配电设备和用户等组成有联系的总体。发电厂的电能除小部分供厂用电和附近用户外，大部分要经过升压变电站将电压升高，由高压输电线路送至距离较远的用户中心，然后经降压变电站降压，由配电网分配给用户。由此可见，配电网是电力系统的一个重要组成部分，它是由配电线路和配电变电站组成，其作用是将电能分配到工矿企业、城市和农村的用电电器中去。电压为10kV的高压大功率用户可从高压配电网络直接取得电能；380/220V的用户，需再经变压器将10kV电压再次降压后由低压配电网络供电。</p>
+<p>配电网是电力系统中非常重要的一部分，它主要的作用是将输送到配电网的电能分配给终端用户和各种电器设备，提供稳定、高效的电力供应服务。具体来说，配电网在电力系统中的作用如下：</p>
+<p>1、能源传输和分配：配电网通过电缆、电线和变压器等设备将输送到配电网的电能传输和分配到各个用电设备。在分配过程中还需要对电能进行升降压和分合开关等处理，以确保电能能够按照不同用电需要进行分配。</p>
+<p>2、安全保护和故障处理：配电网在运行中也需要保证安全，例如在供电过程中出现电流过载以及电力负荷过大等情况，需要通过保护设备进行保护，避免发生故障和危险事故。同时一旦配电网发生故障，需要及时处理维修，以确保电力供应的可靠、高效性。</p>
+<p>3、能源节约和环保：近年来，随着节能减排的需求和环保理念的普及，配电网也需要遵循能源节约和环保政策，实现低碳、绿色的能源转型。配电网也需要根据不同的用电需求，进行智能配电方案的设计，在保证高效能源供应的同时，也要注重环保。</p>
+<p>4、新技术创新：配电网还需要根据新能源的发展和智能化、联网等技术的应用，不断推进新技术的创新，探索有效的新配电方案。例如，可再生能源的应用、分布式能源的发展、微电网的应用等，都是当前配电网技术创新的领域。</p>
+<p>综上所述，配电网在电力系统中具有非常重要的作用，它不仅能够为用户提供稳定、高效的电力供应，也需要在技术革新和环保方向上不断推进和开拓。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%94%B5%E5%8A%9B/" rel="tag">电力</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-在Linux环境下运行jar文件"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/11/26/%E5%9C%A8Linux%E7%8E%AF%E5%A2%83%E4%B8%8B%E8%BF%90%E8%A1%8Cjar%E6%96%87%E4%BB%B6/"
+    >在Linux环境下运行jar文件</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/11/26/%E5%9C%A8Linux%E7%8E%AF%E5%A2%83%E4%B8%8B%E8%BF%90%E8%A1%8Cjar%E6%96%87%E4%BB%B6/" class="article-date">
+  <time datetime="2023-11-26T12:14:23.000Z" itemprop="datePublished">2023-11-26</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>在Linux环境下运行jar文件</p>
+<h1 id="方式一："><a href="#方式一：" class="headerlink" title="方式一："></a>方式一：</h1><p>命令：</p>
+<pre><code>java -jar xxxx.jar
+</code></pre>
+<p>特点：当前ssh窗口被锁定，可按ctrl+c打断程序运行，或直接关闭窗口，程序退出。</p>
+<h1 id="方式二："><a href="#方式二：" class="headerlink" title="方式二："></a>方式二：</h1><p>命令：</p>
+<pre><code>java -jar xxxx.jar &amp;
+</code></pre>
+<p>特点：&amp;表示在后台运行。当前ssh窗口不被锁定，但是当窗口关闭时，程序中止运行。</p>
+<h1 id="方式三："><a href="#方式三：" class="headerlink" title="方式三："></a>方式三：</h1><p>命令：</p>
+<pre><code>nohup java -jar xxxx.jar &amp;
+</code></pre>
+<p>特点：nohup 意思是不挂断运行命令，当账户退出或终端关闭时，程序仍然运行。当用 nohup 命令执行作业时，缺省情况下该作业的所有输出被重定向到nohup.out的文件中，除非另外指定了输出文件。</p>
+<h1 id="方式四："><a href="#方式四：" class="headerlink" title="方式四："></a>方式四：</h1><p>命令：</p>
+<pre><code>nohup java -jar xxxx.jar &gt;/log.file &amp;
+</code></pre>
+<p>特点：将日志输出到log.file指定的文件内。</p>
+<h2 id="shell-命令中，几个基本符号及其含义"><a href="#shell-命令中，几个基本符号及其含义" class="headerlink" title="shell 命令中，几个基本符号及其含义"></a>shell 命令中，几个基本符号及其含义</h2><pre><code>&gt;&gt;      输出重定向
+2&gt;&amp;1    (2)标准错误输出   (&gt;) 重定向到  (&amp;1)标准输出
+2&gt;&amp;1 标准错误输出重定向到标准输出
+&amp;       标识进程为后台进程
+</code></pre>
+<p>0 表示stdin标准输入 1 表示stdout标准输出 2 表示stderr标准错误</p>
+<h2 id="拓展"><a href="#拓展" class="headerlink" title="拓展:"></a>拓展:</h2><p>无论是否将 nohup 命令的输出重定向到终端，输出都将附加到当前目录的 nohup.out 文件中，如果当前目录的 nohup.out 文件不可写，输出重定向到 $HOME/nohup.out 文件中</p>
+<p>命令改为 nohup java -jar project.jar &gt;&gt; log.out 2&gt;&amp;1 &amp; 完美解决问题，日志追加到 log.out 文件中 ，且线程在后台不挂断运行</p>
+<p>报错nohup找不到java</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-Centos7 的 Systemctl 与 创建系统服务"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/11/25/Centos7%20%E7%9A%84%20Systemctl%20%E4%B8%8E%20%E5%88%9B%E5%BB%BA%E7%B3%BB%E7%BB%9F%E6%9C%8D%E5%8A%A1/"
+    >Centos7 的 Systemctl 与 创建系统服务</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/11/25/Centos7%20%E7%9A%84%20Systemctl%20%E4%B8%8E%20%E5%88%9B%E5%BB%BA%E7%B3%BB%E7%BB%9F%E6%9C%8D%E5%8A%A1/" class="article-date">
+  <time datetime="2023-11-25T12:14:23.000Z" itemprop="datePublished">2023-11-25</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="Systemctl"><a href="#Systemctl" class="headerlink" title="Systemctl"></a>Systemctl</h1><h2 id="systemctl-命令"><a href="#systemctl-命令" class="headerlink" title="systemctl 命令"></a>systemctl 命令</h2><pre><code># 启动
+systemctl start NAME.service
+# 停止
+systemctl stop NAME.service
+# 重启
+systemctl restart NAME.service
+# 查看状态
+systemctl status NAME.service
+# 查看所有激活系统服务
+systemctl list-units -t service
+# 查看所有系统服务
+systemctl list-units -t service -a
+# 设置开机自启动
+systemctl enable NAME.service
+# 禁止开机自启动
+systemctl disable NAME.service
+# 查看服务是否是开机自启动
+systemctl list-unit-files –t service
+# 查看某服务是否开机自启动
+systemctl is-enabled NAME.service
+</code></pre>
+<h2 id="systemctl-状态"><a href="#systemctl-状态" class="headerlink" title="systemctl 状态"></a>systemctl 状态</h2><pre><code>loaded：unit配置文件已处理
+active（running）：一次或多次持续处理的运行
+active（exited）：成功完成一次性配置
+active（waiting）：运行中，等待一个事件
+inactive：不运行
+enable：开机启动
+disable：开机不启动
+static：开机不启动，但可以被另一个启用的服务激活。
+</code></pre>
+<h2 id="systemctl-运行级别"><a href="#systemctl-运行级别" class="headerlink" title="systemctl 运行级别"></a>systemctl 运行级别</h2><pre><code>0 ：关机：poweroff.target
+1 ：单用户模式：rescue.target
+2 ：默认不启用NFS的多用户：multi-user.target
+3 ：完全的多用户：multi-user.target
+4 ：保留：mult-user.target
+5 ：图形：graphical.target
+6 ：重启：reboot.target
+</code></pre>
+<h1 id="自建服务"><a href="#自建服务" class="headerlink" title="自建服务"></a>自建服务</h1><h2 id="1、服务存放路径"><a href="#1、服务存放路径" class="headerlink" title="1、服务存放路径"></a>1、服务存放路径</h2><p>用户级系统服务：/usr/lib/systemd/system<br>系统级系统服务：/etc/systemd/system</p>
+<h2 id="2、编写一个系统服务"><a href="#2、编写一个系统服务" class="headerlink" title="2、编写一个系统服务"></a>2、编写一个系统服务</h2><p>创建系统服务文件的三个部分分别是：Unit 、 Service、 Install</p>
+<h3 id="Unit："><a href="#Unit：" class="headerlink" title="Unit："></a>Unit：</h3><p>Description：描述信息<br>After：定义unit的启动次序，表示当前unit应该晚于哪些unit启动，其功能与Before相反；<br>Requires：依赖到的其它units，强依赖，被依赖的units无法激活时，当前unit即无法激活；<br>Wants：依赖到的其它units，弱依赖；<br>Conflicts：定义units间的冲突关系。</p>
+<h3 id="Service："><a href="#Service：" class="headerlink" title="Service："></a>Service：</h3><p>Type：定义影响ExecStart及相关参数功能的unit进程启动类型；</p>
+<p>simple：默认值，这个daemon主要由ExecStart接的指令串来启动，启动后常驻于内存中；<br>forking：由ExacStart启动的程序透过spawns延伸出其它子程序来作为此deamon的主要服务。原生父程序在启动结束后就会终止。<br>oneshot：与simple类似，不过这个程序在完成工作后就结束，不常驻内存；<br>dbus：与simple类似，但这个daemon必须要在取得一个D-Bus的名称后，才会继续运作。因此通常也要同时设定BusName=才行；<br>notify：在启动完成后会发送一个通知消息。还需要配合NotifyAccess来让Systemd接收消息；<br>idle：与simple类似，要执行这个daemon必须要所有的工作都顺利执行完毕后才会执行。这类的daemon通常是开机到最后才执行即可的服务。</p>
+<p>EnvironmentFile：环境配置文件；<br>ExecStart：指明启动unit要运行命令或脚本的绝对路径；<br>ExecStartPre：在ExecStart之前运行的绝对路径；<br>ExecStartPost：在ExecStart之后运行的绝对路径；<br>ExecStop：指明停止unit要运行的命令或脚本的绝对路径；<br>Restart：当设定Restart=1时，则当次daemon服务意外终止后，会再次自动启动。</p>
+<p>PrivateTmp:true/false表示是否给服务分配独立的临时空间</p>
+<h3 id="Install："><a href="#Install：" class="headerlink" title="Install："></a>Install：</h3><p>Alias：别名，可使用systemctl command Alias.service<br>RequiredBy：被哪些units所依赖，强依赖；<br>WantedBy：被哪些units所依赖，弱依赖；<br>Also：安装本服务的时候还要安装别的相关服务。</p>
+<h1 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h1><p>创建服务</p>
+<pre><code>vim /usr/lib/systemd/system/wxybackend.service
+</code></pre>
+<p>编辑内容</p>
+<pre><code>[Unit]
+Description=backend service  
+After=docker.service
+
+[Service]
+Type=forking
+ExecStart=/home/project/xxx/syscmd.sh start
+ExecReload=/home/project/xxx/syscmd.sh restart
+ExecStop=/home/project/xxx/syscmd.sh stop
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+<p>退出编辑</p>
+<pre><code>：wq!
+</code></pre>
+<p>启动服务</p>
+<pre><code>systemctl daemon-reload 
+systemctl enable wxybackend.service 
+systemctl start wxybackend.service
+</code></pre>
+<p>syscmd.sh脚本内容</p>
+<pre><code>#!/bin/sh
+# start 启动 stop 停止 restart 重启 status 状态
+AppName=xxxx.jar
+AppPath=/home/project/xxx
+# JVM参数
+JVM_OPTS=&quot;-Dname=$AppName  -Duser.timezone=Asia/Shanghai -Xms2048m -Xmx2048m -XX:MetaspaceSize=512m -XX:MaxMetaspaceSize=1024m -XX:+HeapDumpOnOutOfMemoryError -XX:+PrintGCDateStamps  -XX:+PrintGCDetails -XX:NewRatio=1 -XX:SurvivorRatio=30 -XX:+UseParallelGC -XX:+UseParallelOldGC&quot;
+APP_HOME=`pwd`
+LOG_PATH=$AppPath/logs/$AppName.log
+
+if [ &quot;$1&quot; = &quot;&quot; ];
+then
+    echo -e &quot;\033[0;31m 未输入操作名 \033[0m  \033[0;34m &#123;start|stop|restart|status&#125; \033[0m&quot;
+    exit 1
+fi
+
+if [ &quot;$AppName&quot; = &quot;&quot; ];
+then
+    echo -e &quot;\033[0;31m 未输入应用名 \033[0m&quot;
+    exit 1
+fi
+
+function start()
+&#123;
+    PID=`ps -ef |grep java|grep $AppName|grep -v grep|awk &#39;&#123;print $2&#125;&#39;`
+
+    if [ x&quot;$PID&quot; != x&quot;&quot; ]; then
+        echo &quot;$AppName is running...&quot;
+    else
+        #输出日志
+        nohup java $JVM_OPTS -jar $AppPath/$AppName &gt;&gt; $AppPath/nohup.out 2&gt;&amp;1 &amp; 
+        #不输出日志
+        #nohup java $JVM_OPTS -jar $AppPath/$AppName  &amp;
+        echo &quot;Start $AppName success...&quot;
+        #tail -500f nohup.out
+    fi
+&#125;
+
+function stop()
+&#123;
+    echo &quot;Stop $AppName&quot;
+
+    PID=&quot;&quot;
+    query()&#123;
+        PID=`ps -ef |grep java|grep $AppName|grep -v grep|awk &#39;&#123;print $2&#125;&#39;`
+    &#125;
+
+    query
+    if [ x&quot;$PID&quot; != x&quot;&quot; ]; then
+        kill -TERM $PID
+        echo &quot;$AppName (pid:$PID) exiting...&quot;
+        while [ x&quot;$PID&quot; != x&quot;&quot; ]
+        do
+            sleep 1
+            query
+        done
+        echo &quot;$AppName exited.&quot;
+    else
+        echo &quot;$AppName already stopped.&quot;
+    fi
+&#125;
+
+function restart()
+&#123;
+    stop
+    sleep 2
+    start
+&#125;
+
+function status()
+&#123;
+    PID=`ps -ef |grep java|grep $AppName|grep -v grep|wc -l`
+    if [ $PID != 0 ];then
+        echo &quot;$AppName is running...&quot;
+    else
+        echo &quot;$AppName is not running...&quot;
+    fi
+&#125;
+
+case $1 in
+    start)
+    start;;
+    stop)
+    stop;;
+    restart)
+    restart;;
+    status)
+    status;;
+    *)
+
+esac
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-使用curl执行Http请求"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/11/24/%E4%BD%BF%E7%94%A8curl%E6%89%A7%E8%A1%8CHttp%E8%AF%B7%E6%B1%82/"
+    >使用curl执行Http请求</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/11/24/%E4%BD%BF%E7%94%A8curl%E6%89%A7%E8%A1%8CHttp%E8%AF%B7%E6%B1%82/" class="article-date">
+  <time datetime="2023-11-24T12:14:23.000Z" itemprop="datePublished">2023-11-24</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="curl命令"><a href="#curl命令" class="headerlink" title="curl命令"></a>curl命令</h1><p>curl（CommandLine Uniform Resource Locator或CommandLine URL），curl命令是在命令行方式下工作，利用URL的语法进行数据的传输或者文件的传输。是一个利用URL语法在命令行下工作的文件传输工具。curl设计为：在无用户交互下完成工作。</p>
+<p>curl支持的协议包括：DICT、FILE、FTP、FTPS、GOPHER、HTTP、HTTPS、IMAP、IMAPS、LDAP、LDAPS、POP3、POP3S、RTMP、RTSP、SCP、SFTP、SMTP、SMTPS、TELNET、TFTP。</p>
+<h1 id="curl用法"><a href="#curl用法" class="headerlink" title="curl用法"></a>curl用法</h1><pre><code>curl [options…] &lt;url&gt;
+</code></pre>
+<h1 id="curl参数"><a href="#curl参数" class="headerlink" title="curl参数"></a>curl参数</h1><h2 id="请求"><a href="#请求" class="headerlink" title="请求"></a>请求</h2><h3 id="H-“name-value”"><a href="#H-“name-value”" class="headerlink" title="-H “name: value”"></a>-H “name: value”</h3><pre><code>-H &quot;name: value&quot;
+--header &quot;name: value&quot;
+</code></pre>
+<p>(HTTP)添加一个http header(http请求头)</p>
+<h3 id="H-“name-”"><a href="#H-“name-”" class="headerlink" title="-H “name:”"></a>-H “name:”</h3><pre><code>-H &quot;name:&quot;
+--header &quot;name:&quot;
+</code></pre>
+<p>(HTTP)移除一个http header(http请求头)</p>
+<h3 id="A-“string”"><a href="#A-“string”" class="headerlink" title="-A “string”"></a>-A “string”</h3><pre><code>-A &quot;string&quot;
+--user-agent &quot;string&quot;
+</code></pre>
+<p>(HTTP)设置HTTP请求头User-Agent参数<br>服务器通过User-Agent可以判断客户端使用的浏览器名称和操作系统类型，伪造此参数能导致服务器做出错误判断</p>
+<h3 id="e"><a href="#e" class="headerlink" title="-e"></a>-e</h3><pre><code>-e
+--referer
+</code></pre>
+<p>(HTTP)设置访问时的来源页面，告诉http服务从哪个页面进入到此页面<br>例如：-e “aiezu.com”相当于“-H “Referer: <a target="_blank" rel="noopener" href="http://www.qq.com&quot;”;/">www.qq.com&quot;”；</a></p>
+<h3 id="G"><a href="#G" class="headerlink" title="-G"></a>-G</h3><pre><code>-G
+--get
+</code></pre>
+<p>(HTTP)使用HTTP GET方式</p>
+<h3 id="d"><a href="#d" class="headerlink" title="-d"></a>-d</h3><pre><code>-d @file
+-d &quot;string&quot;
+--data &quot;string&quot;
+--data-ascii &quot;string&quot;
+--data-binary &quot;string&quot;
+--data-urlencode &quot;string&quot;
+</code></pre>
+<p>(HTTP)使用HTTP POST方式发送“key/value对”数据<br>相当于（method=”POST”，enctype=”application/x-www-form-urlencoded”）</p>
+<pre><code>-d，--data：HTTP方式POST数据
+--data-ascii：HTTP方式POST ascii数据
+--data-binary：HTTP方式POST二进制数据
+--data-urlencode：HTTP方式POST数据（进行urlencode）
+</code></pre>
+<p>如果数据以“@”开头，后紧跟一个文件，将post文件内的内容；</p>
+<h3 id="F"><a href="#F" class="headerlink" title="-F"></a>-F</h3><pre><code>-F name=@file
+-F name=&lt;file
+-F name=content
+--form name=content
+--form-string &lt;key=value&gt;
+</code></pre>
+<p>(HTTP)使用HTTP POST方式发送类似“表单字段”的多类型数据<br>相当于同时设置浏览器表单属性（method=”POST”，enctype=”multipart/form-data”），可以使用此参数上传二进制文件。<br>如果字段内容以“@”开头，剩下的部分应该是文件名，curl将会上传此文件，如：</p>
+<pre><code>curl -F &quot;pic=@pic.jpg&quot; http://aiezu.com；
+curl -F &quot;page=@a.html;type=text/html&quot; http://aiezu.com
+curl -F &quot;page=@/tmp/a;filename=a.txt&quot; http://aiezu.com
+</code></pre>
+<p>如果字段内容以“&lt;”开头，剩下的部分应该是文件名，curl将从文件中获取作为此字段的值，如：curl -F “text=&lt;text.txt” <a target="_blank" rel="noopener" href="http://aiezu.com;/">http://aiezu.com；</a></p>
+<p>–form-string类似于“–form”，但是“@”、“&lt;”无特殊含义；</p>
+<h3 id="X"><a href="#X" class="headerlink" title="-X "></a>-X <command></h3><pre><code>-X &lt;command&gt;
+--request &lt;command&gt;
+</code></pre>
+<p>(HTTP)指定与服务器通信使用的请求方法<br>如：GET、PUT、POST、DELETE等</p>
+<h2 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h2><h3 id="b-name-data"><a href="#b-name-data" class="headerlink" title="-b name=data"></a>-b name=data</h3><pre><code>-b name=data
+--cookie name=data
+</code></pre>
+<p>(HTTP)发送cookie数据到HTTP服务器<br>数据格式为：”NAME1=VALUE1; NAME2=VALUE2”</p>
+<p>如果行中没有“=”，将把参数值当作cookie文件名</p>
+<p>这个cookie数据可以是由服务器的http响应头“Set-Cookie:”行发送过来的；</p>
+<h3 id="c-filename"><a href="#c-filename" class="headerlink" title="-c filename"></a>-c filename</h3><pre><code>-c filename
+--cookie-jar file name
+</code></pre>
+<p>(HTTP)完成操作后将服务器返回的cookies保存到指定的文件<br>指定参数值为“-”将定向到标准输出“如控制台”</p>
+<h3 id="j"><a href="#j" class="headerlink" title="-j"></a>-j</h3><pre><code>-j
+--junk-session-cookies
+</code></pre>
+<p>(HTTP)告诉curl放弃所有的”session cookies”.相当于重启浏览器</p>
+<h2 id="响应"><a href="#响应" class="headerlink" title="响应"></a>响应</h2><h3 id="I"><a href="#I" class="headerlink" title="-I"></a>-I</h3><pre><code>-I
+--head
+</code></pre>
+<p>(HTTP)只输出HTTP-header，不获取内容(HTTP/FTP/FILE)</p>
+<ol>
+<li>用于HTTP服务时，获取页面的http头,如：curl -I <a target="_blank" rel="noopener" href="http://aiezu.com/">http://aiezu.com</a></li>
+<li>用于FTP/FILE时，将会获取文件大小、最后修改时间，如：curl -I file://test.txt</li>
+</ol>
+<h3 id="i"><a href="#i" class="headerlink" title="-i"></a>-i</h3><pre><code>-i
+--include
+</code></pre>
+<p>(HTTP)输出HTTP头和返回内容</p>
+<h3 id="D"><a href="#D" class="headerlink" title="-D "></a>-D <file></file></h3><pre><code>-D &lt;file&gt;
+--dump-header &lt;file&gt;
+</code></pre>
+<p>(HTTP)转储http响应头到指定文件</p>
+<h1 id="curl举例"><a href="#curl举例" class="headerlink" title="curl举例"></a>curl举例</h1><h2 id="GET请求"><a href="#GET请求" class="headerlink" title="GET请求"></a>GET请求</h2><pre><code>curl &#39;http://127.0.0.1:8888/test&#39;
+curl -G &#39;http://127.0.0.1:8888/test&#39;
+curl --get &#39;http://127.0.0.1:8888/test&#39;
+curl -X GET &#39;http://127.0.0.1:8888/test&#39;
+curl --request GET &#39;http://127.0.0.1:8888/test&#39;
+</code></pre>
+<p>当有参数时，请进行URL编码，否则会可能会出错</p>
+<pre><code>curl -X GET &#39;http://127.0.0.1:8888/test2?date=2022-02-22 11:22:33&amp;bo=1&#39;
+</code></pre>
+<p>报错：HTTP Status 505 – HTTP Version Not Supported（因为参数带空格）</p>
+<p>正确写法(对空格URL编码)</p>
+<pre><code>curl -X GET &#39;http://127.0.0.1:8888/test2?date=2022-02-22%2011:22:33&amp;bo=1&#39;
+</code></pre>
+<h2 id="POST请求"><a href="#POST请求" class="headerlink" title="POST请求"></a>POST请求</h2><pre><code>curl -X POST &#39;http://127.0.0.1:8888/test2?date=2022-02-22%2011:22:33&amp;bo=11&#39;
+curl -X POST &#39;http://127.0.0.1:8888/test2&#39; -d &#39;date=2022-02-22 11:22:33&amp;bo=11&#39;
+curl -X POST &#39;http://127.0.0.1:8888/test2&#39; --data &#39;date=2022-02-22 11:22:33&amp;bo=11&#39;
+curl -X POST &#39;http://127.0.0.1:8888/test2&#39; --data-urlencode &#39;date=2022-02-22 11:22:33&#39; --data-urlencode &#39;bo=11&#39;
+curl -X POST  -H &#39;Content-Type: application/x-www-form-urlencoded&#39; &#39;http://127.0.0.1:8888/test2&#39; --data-urlencode &#39;date=2022-02-22 11:22:33&#39; --data-urlencode &#39;bo=11&#39;
+</code></pre>
+<p>POST请求默认Content-Type: application/x-www-form-urlencoded</p>
+<p>可以多次使用 -d、–data选项来指定多个传输参数，也可以使用一次 -d、–data选项来指定多个参数。当 Content-Type 为 application/x-www-form-urlencoded 时，-X POST 不可缺省。</p>
+<p>POST JSON请求</p>
+<pre><code>curl -X POST &#39;http://127.0.0.1:8888/test8&#39; -H &#39;Content-Type: application/json&#39; -d &#39;&#123;&quot;code&quot;: 123456789,&quot;name&quot;: 1646278385537&#125;&#39;
+curl &#39;http://127.0.0.1:8888/test8&#39; -H &#39;Content-Type: application/json&#39; -d &#39;&#123;&quot;code&quot;: 123456789,&quot;name&quot;: 1646278385537&#125;&#39;
+</code></pre>
+<p>Content-Type：application/json 时，默认以 POST 方式提交，此时 -X POST 可以缺省。</p>
+<p>————————————————<br>版权声明：本文为CSDN博主「骑个小蜗牛」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/jokerljg/article/details/126534526">https://blog.csdn.net/jokerljg/article/details/126534526</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-Linux命令：ss命令"
   class="article article-type-post"
   itemscope
@@ -241,669 +817,13 @@ ss -s 列出当前socket详细信息
 </article>
 
     
-    <article
-  id="post-CentOS系统安装JDK1.8 详细教程"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/11/22/CentOS%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85JDK1.8%20%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/"
-    >CentOS系统安装JDK1.8 详细教程</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/11/22/CentOS%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85JDK1.8%20%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/" class="article-date">
-  <time datetime="2023-11-22T12:14:23.000Z" itemprop="datePublished">2023-11-22</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>1、下载jdk</p>
-<pre><code>wget https://repo.huaweicloud.com/java/jdk/8u202-b08/jdk-8u241-linux-x64.tar.gz
-</code></pre>
-<p>2、创建安装目录</p>
-<pre><code>mkdir /usr/local/java/
-</code></pre>
-<p>3、解压至安装目录</p>
-<pre><code>tar -zxvf jdk-8u241-linux-x64.tar.gz -C /usr/local/java
-</code></pre>
-<p>4、配置环境变量</p>
-<pre><code>vim /etc/profile
-</code></pre>
-<p>在文本末尾添加</p>
-<pre><code>export JAVA_HOME=/usr/local/java/jdk1.8.0_241
-export JRE_HOME=$&#123;JAVA_HOME&#125;/jre
-export CLASSPATH=.:$&#123;JAVA_HOME&#125;/lib:$&#123;JRE_HOME&#125;/lib
-export PATH=$&#123;JAVA_HOME&#125;/bin:$PATH
-</code></pre>
-<p>5、保存并退出、按esc键、输入以下内容、按Enter键</p>
-<pre><code>:wq
-</code></pre>
-<p>6、使环境变量生效</p>
-<pre><code>source /etc/profile
-</code></pre>
-<p>7、添加软链接</p>
-<pre><code>ln -s /usr/local/java/jdk1.8.0_241/bin/java /usr/bin/java
-</code></pre>
-<p>8、检查jdk是否安装成功</p>
-<pre><code>java -version
-</code></pre>
-<p>执行结果：</p>
-<pre><code>java version &quot;1.8.0_241&quot;
-Java(TM) SE Runtime Environment (build 1.8.0_241-b07)
-Java HotSpot(TM) 64-Bit Server VM (build 25.241-b07, mixed mode)
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JDK/" rel="tag">JDK</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-CentOS 安装 nginx"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/11/21/CentOS%20%E5%AE%89%E8%A3%85%20nginx/"
-    >CentOS 安装 activeMq</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/11/21/CentOS%20%E5%AE%89%E8%A3%85%20nginx/" class="article-date">
-  <time datetime="2023-11-21T12:14:23.000Z" itemprop="datePublished">2023-11-21</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h1><p>安装依赖库</p>
-<pre><code>yum -y install make zlib zlib-devel gcc-c++ libtool  openssl openssl-devel pcre pcre-devel 
-</code></pre>
-<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><pre><code>cd /usr/local/nginx
-
-#创建nginx安装目录
-mkdir nginx
-
-#解压
-tar -zxvf nginx-1.24.0.tar.gz
-
-#进入解压文件夹
-cd nginx-1.24.0
-
-#添加www用户
-useradd -s /sbin/nologin -M www
-
-#指定配置
-./configure --prefix=/usr/local/nginx/nginx --user=www --group=www --with-http_ssl_module --with-http_stub_status_module
-
-#编译
-make &amp;&amp; make install
-</code></pre>
-<h1 id="nginx常用命令"><a href="#nginx常用命令" class="headerlink" title="nginx常用命令"></a>nginx常用命令</h1><pre><code># 启动。默认监听80端口，启动成功之后可以浏览器访问ip:80，出现4.2中图表示centos服务器上nginx启动成功
-/usr/local/nginx/nginx/sbin/nginx
-# 重新载入配置文件
-/usr/local/nginx/nginx/sbin/nginx -s reload           
-# 重启 Nginx
-/usr/local/nginx/nginx/sbin/nginx -s reopen
-# 强制停止 Nginx
-/usr/local/nginx/nginx/sbin/nginx -s stop      
-# 优雅停止 Nginx，在退出前完成已经接受的连接请求
-/usr/local/nginx/nginx/sbin/nginx -s quit 
-# 检查nginx.conf文件正确性
-/usr/local/nginx/nginx/sbin/nginx -t 
-# 显示版本信息；
-/usr/local/nginx/nginx/sbin/nginx -v
-</code></pre>
-<h1 id="服务配置"><a href="#服务配置" class="headerlink" title="服务配置"></a>服务配置</h1><p>添加到系统服务：</p>
-<pre><code>#vim /usr/lib/systemd/system/nginx.service
-
-[Unit]
-Description=nginx web service
-Documentation=http://nginx.org/en/docs/
-After=network.target
- 
-[Service]
-Type=forking
-PIDFile=/usr/local/nginx/nginx/logs/nginx.pid
-ExecStartPre=/usr/local/nginx/nginx/sbin/nginx -t -c /usr/local/nginx/nginx/conf/nginx.conf
-ExecStart=/usr/local/nginx/nginx/sbin/nginx
-ExecReload=/usr/local/nginx/nginx/sbin/nginx -s reload
-ExecStop=/usr/local/nginx/nginx/sbin/nginx -s stop
-PrivateTmp=true
- 
-[Install]
-WantedBy=default.target
-</code></pre>
-<p>启动关停命令</p>
-<pre><code>#重新加载系统服务
-systemctl daemon-reload
-
-#启动: 
-systemctl start nginx
-
-#停止: 
-systemctl stop nginx
-
-#重启: 
-systemctl restart nginx
-
-#重新加载配置文件: 
-systemctl reload nginx.service
-
-#查看nginx状态: 
-systemctl status nginx
-
-#开机启动: 
-systemctl enable nginx
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/activeMq/" rel="tag">activeMq</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-CentOS 安装 activeMq"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/11/20/CentOS%20%E5%AE%89%E8%A3%85%20activeMq/"
-    >CentOS 安装 activeMq</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/11/20/CentOS%20%E5%AE%89%E8%A3%85%20activeMq/" class="article-date">
-  <time datetime="2023-11-20T12:14:23.000Z" itemprop="datePublished">2023-11-20</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>Apache ActiveMQ是一个免费的开源消息代理和集成模式服务器。它支持来自JAVA、c++、C、Python、Perl、PHP等多种语言的客户端和协议。它提供了许多功能，如消息组、虚拟目的地、通配符和组合目的地等。它可以很容易地集成到spring应用程序中。</p>
-<p>工欲善其事必先利其器，那么再使用这个mq之前，我们得先安装activemq，那么我们就来看一下如何安装activemq。由于activemq是基于java开发的，所以环境上必须得安装jdk。</p>
-<h1 id="activeMq的安装"><a href="#activeMq的安装" class="headerlink" title="activeMq的安装"></a>activeMq的安装</h1><p>ActiveMQ为Unix系统提供了预先编译的二进制文件，可以直接使用。唯一需要的依赖项是在系统中安装JAVA。由于我们已经安装了JAVA，我们可以进一步下载ActiveMQ。您总是可以从Apache ActiveMQ的官方发布页面获得最新的稳定版本。</p>
-<h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><p>本次安装的版本是5.15.5.使用以下命令进行下载。</p>
-<p>wget <a target="_blank" rel="noopener" href="http://archive.apache.org/dist/activemq/5.15.5/apache-activemq-5.15.5-bin.tar.gz">http://archive.apache.org/dist/activemq/5.15.5/apache-activemq-5.15.5-bin.tar.gz</a></p>
-<p>下载完成之后，我们接着进行解压，把该压缩包解压到/opt目录下。</p>
-<pre><code>sudo tar -zvxf apache-activemq-5.15.12-bin.tar.gz -C /opt
-</code></pre>
-<p>接着为了方便起见，您可以创建一个与版本无关的软链接，指向当前Apache ActiveMQ版本所在的目录。这种做法对以后的更新很有帮助。这样的话，后续进行安装新的版本的话，只需要修改一下软连接对应的版本，就不要每次都把升级的文件全部移动到指定的文件夹下。</p>
-<pre><code>sudo ln -s /opt/apache-activemq-5.15.12/  /opt/activemq
-</code></pre>
-<p>接着创建完软连接之后，我们进入到对应的/opt/activemq目录下，进行启动mq。并且查看启动状态，以及如何停止mq。</p>
-<p>虽然可以使用上面的命令轻松运行ActiveMQ，但建议使用systemd服务来管理ActiveMQ进程。使用Systemd服务将确保ActiveMQ在启动时和故障时自动启动。</p>
-<h2 id="创建系统服务进行启动"><a href="#创建系统服务进行启动" class="headerlink" title="创建系统服务进行启动"></a>创建系统服务进行启动</h2><p>通过以下命令来创建系统服务，在/usr/lib/systemd/system/创建一个activemq.service的文件。</p>
-<pre><code>sudo vi /usr/lib/systemd/system/activemq.service
-</code></pre>
-<p>输入以下内容到文件中。</p>
-<pre><code>[Unit]
-Description=activemq message queue
-After=network.target
-
-[Service]
-PIDFile=/opt/activemq/data/activemq.pid
-ExecStart=/opt/activemq/bin/activemq start
-ExecStop=/opt/activemq/bin/activemq stop
-User=root
-Group=root
-Restart=always
-RestartSec=9
-StandardOutput=syslog
-StandardError=syslog
-SyslogIdentifier=activemq
- 
-[Install]
-WantedBy=multi-user.target
-</code></pre>
-<p>保存完毕，接着我们来检验一下启动是否能够成功，并且是否能够停止。</p>
-<p>sudo systemctl enable activemq<br>sudo systemctl start activemq<br>sudo systemctl status activemq<br>sudo systemctl stop activemq</p>
-<p>6，配置通过web进行展示</p>
-<p>安装完成之后，启动mq，接着我们可以通过web来访问mq的控制面板，在浏览器的地址栏输入：<a target="_blank" rel="noopener" href="http://xxxxxx:8161/admin.%E5%9C%A8%E8%AE%BF%E9%97%AE%E4%B9%8B%E5%89%8D%E5%BE%97%E6%89%93%E5%BC%80%E4%B8%80%E4%B8%8B%E7%AB%AF%E5%8F%A3%E3%80%82%E9%80%9A%E8%BF%87%E4%BB%A5%E4%B8%8B%E5%91%BD%E4%BB%A4%E3%80%82">http://xxxxxx:8161/admin.在访问之前得打开一下端口。通过以下命令。</a></p>
-<p>sudo firewall-cmd –zone=public –permanent –add-port=8161/tcp<br>sudo firewall-cmd –reload</p>
-<p>接着我们通过浏览器来访问一下。默认用户名密码是admin，进入之后可以修改。</p>
-<p>最后，听过以上步骤已经安装完成activemq。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/activeMq/" rel="tag">activeMq</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-CentOS 搭建 ElasticSearch"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/11/19/CentOS%20%E6%90%AD%E5%BB%BA%20ElasticSearch/"
-    >CentOS 搭建 ElasticSearch</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/11/19/CentOS%20%E6%90%AD%E5%BB%BA%20ElasticSearch/" class="article-date">
-  <time datetime="2023-11-19T12:14:23.000Z" itemprop="datePublished">2023-11-19</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>安装单机版 Elasticsearch</p>
-<p>进入 /usr/local</p>
-<h1 id="创建目录"><a href="#创建目录" class="headerlink" title="创建目录"></a>创建目录</h1><pre><code>mkdir elasticsearch
-</code></pre>
-<h1 id="安装包下载"><a href="#安装包下载" class="headerlink" title="安装包下载"></a>安装包下载</h1><p>下载地址：<a target="_blank" rel="noopener" href="https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.8.0.tar.gz">https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.8.0.tar.gz</a></p>
-<h1 id="进入elasticsearch，上传刚才下载的安装包，接着解压"><a href="#进入elasticsearch，上传刚才下载的安装包，接着解压" class="headerlink" title="进入elasticsearch，上传刚才下载的安装包，接着解压"></a>进入elasticsearch，上传刚才下载的安装包，接着解压</h1><pre><code>cd elasticsearch
-tar -zxvf elasticsearch-7.8.0.tar.gz
-</code></pre>
-<h1 id="进入elasticsearch-7-8-0目录，创建两个data和logs文件夹"><a href="#进入elasticsearch-7-8-0目录，创建两个data和logs文件夹" class="headerlink" title="进入elasticsearch-7.8.0目录，创建两个data和logs文件夹"></a>进入elasticsearch-7.8.0目录，创建两个data和logs文件夹</h1><pre><code>cd elasticsearch-7.8.0
-mkdir data
-mkdir logs
-</code></pre>
-<h1 id="修改config-elasticsearch-yml配置项"><a href="#修改config-elasticsearch-yml配置项" class="headerlink" title="修改config\elasticsearch.yml配置项"></a>修改config\elasticsearch.yml配置项</h1><p>在末尾添加如下：</p>
-<pre><code>cluster.name: elasticsearch
-node.name: node-1
-network.host: 0.0.0.0
-http.port: 9200
-cluster.initial_master_nodes: [&quot;node-1&quot;]
-</code></pre>
-<h1 id="修改-jvm-options配置项"><a href="#修改-jvm-options配置项" class="headerlink" title="修改\jvm.options配置项"></a>修改\jvm.options配置项</h1><p>第22行起，修改为如下：</p>
-<pre><code>-Xms4096m
--Xmx4096m
-</code></pre>
-<h1 id="修改bin-elasticsearch-env，使用内置jdk"><a href="#修改bin-elasticsearch-env，使用内置jdk" class="headerlink" title="修改bin\elasticsearch-env，使用内置jdk"></a>修改bin\elasticsearch-env，使用内置jdk</h1><p>第38行起，修改为如下： </p>
-<pre><code># now set the path to java
-#if [ ! -z &quot;$JAVA_HOME&quot; ]; then
-#  JAVA=&quot;$JAVA_HOME/bin/java&quot;
-#  JAVA_TYPE=&quot;JAVA_HOME&quot;
-#else
-  if [ &quot;$(uname -s)&quot; = &quot;Darwin&quot; ]; then
-    # macOS has a different structure
-    JAVA=&quot;$ES_HOME/jdk.app/Contents/Home/bin/java&quot;
-  else
-    JAVA=&quot;$ES_HOME/jdk/bin/java&quot;
-  fi
-  JAVA_TYPE=&quot;bundled jdk&quot;
-#fi
-</code></pre>
-<h1 id="配置linux系统环境，命令：vi-etc-security-limits-conf"><a href="#配置linux系统环境，命令：vi-etc-security-limits-conf" class="headerlink" title="配置linux系统环境，命令：vi /etc/security/limits.conf"></a>配置linux系统环境，命令：vi /etc/security/limits.conf</h1><p>在末尾添加如下：</p>
-<pre><code>* soft nofile 65536
-* hard nofile 131072
-* soft nproc 2048
-* hard nproc 4096
-</code></pre>
-<h1 id="修改配置sysctl-conf，命令：vi-etc-sysctl-conf"><a href="#修改配置sysctl-conf，命令：vi-etc-sysctl-conf" class="headerlink" title="修改配置sysctl.conf，命令：vi /etc/sysctl.conf"></a>修改配置sysctl.conf，命令：vi /etc/sysctl.conf</h1><p>添加下面配置：</p>
-<pre><code>vm.max_map_count=655360
-</code></pre>
-<p>并执行命令：sysctl -p</p>
-<p>注意：elasticsearch不能用root用户启动，需要创建一个普通用户去启动</p>
-<h1 id="创建普通用户，给es用户授权，以便访问elasticsearch目录"><a href="#创建普通用户，给es用户授权，以便访问elasticsearch目录" class="headerlink" title="创建普通用户，给es用户授权，以便访问elasticsearch目录"></a>创建普通用户，给es用户授权，以便访问elasticsearch目录</h1><pre><code># 创建用户
-adduser es 或者 useradd es
-# 给用户设置密码 
-passwd es
-# 文件件所有者
-chown -R es:es /usr/local/elasticsearch
-# 如果错了，可以删除在加
-userdel -r es
-</code></pre>
-<p>注意：修改密码会有复杂性检查，不必理会，输入两遍密码就会成功</p>
-<h1 id="切换到es用户，启动elasticsearch"><a href="#切换到es用户，启动elasticsearch" class="headerlink" title="切换到es用户，启动elasticsearch"></a>切换到es用户，启动elasticsearch</h1><pre><code># su es
-# bin/elasticsearch -d
-</code></pre>
-<p>注意：切换到es用户，需要属于密码，属于刚才创建的es密码，然后执行启动命令：bin/elasticsearch，看到如下启动成功</p>
-<h1 id="测试elasticsearch"><a href="#测试elasticsearch" class="headerlink" title="测试elasticsearch"></a>测试elasticsearch</h1><pre><code>curl http://localhost:9200
-</code></pre>
-<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><p>elasticsearch可以以下面这种方式启动：</p>
-<pre><code>bin/elasticsearch
-</code></pre>
-<p>在linux系统，这个命令将在前台启动进程。</p>
-<p>我们也可以在后台运行，以守护进程的方式，加上-d参数</p>
-<pre><code>bin/elasticsearch -d
-</code></pre>
-<p>在启动的时候可以指定es 进程pid写入的文件，这样可以方便的kill进程</p>
-<pre><code>bin/elasticsearch -d -p pid     pid是文件
-kill `cat pid`   杀死指定文件中pid的 es进程
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ElasticSearch/" rel="tag">ElasticSearch</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-CentOS7安装最新版 gcc g++"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/11/18/CentOS7%E5%AE%89%E8%A3%85%E6%9C%80%E6%96%B0%E7%89%88%20gcc%20g++/"
-    >CentOS7安装最新版 gcc g++</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/11/18/CentOS7%E5%AE%89%E8%A3%85%E6%9C%80%E6%96%B0%E7%89%88%20gcc%20g++/" class="article-date">
-  <time datetime="2023-11-18T12:14:23.000Z" itemprop="datePublished">2023-11-18</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="提示"><a href="#提示" class="headerlink" title="提示"></a>提示</h1><p>在使用yum时遇到这个错误</p>
-<pre><code>Another app is currently holding the yum lock; waiting for it to exit…
-</code></pre>
-<p>运行命令</p>
-<pre><code>rm -f /var/run/yum.pid    //    强制关掉yum进程
-</code></pre>
-<h1 id="一、第一种方式"><a href="#一、第一种方式" class="headerlink" title="一、第一种方式"></a>一、第一种方式</h1><h2 id="1、先卸载以前的旧版本"><a href="#1、先卸载以前的旧版本" class="headerlink" title="1、先卸载以前的旧版本"></a>1、先卸载以前的旧版本</h2><p>因为centOS默认自带4点几版本的gcc 、g++编译器，是比较老的版本的，所以先把老版本卸载掉。</p>
-<p>1.1、 先获取root权限<br>1.2、 查看当前的安装版本号</p>
-<pre><code>rpm -q gcc
-</code></pre>
-<p>1.3、卸载掉旧版本</p>
-<pre><code>rpm -e [第二步查到的版本号]
-</code></pre>
-<p>1.4、第三步可能会遇到如下错误，卸载失败</p>
-<pre><code>error: Failed dependencies:
-    gcc = 4.4.7-23.el6 is needed by (installed) gcc-c++-4.4.7-23.el6.x86_64
-    gcc = 4.4.4 is needed by (installed) libtool-2.2.6-15.5.el6.x86_64
-</code></pre>
-<p>提示要卸载的版本有两个依赖，要先卸载掉这两个依赖（注意：下面要卸载的版本号要和上面提示的两个依赖的版本号一致）</p>
-<pre><code>rpm -e gcc-c++-4.4.7-23.el6.x86_64
-rpm -e libtool-2.2.6-15.5.el6.x86_64
-</code></pre>
-<p>将这两个依赖卸载完成之后再次执行第3步就可卸载成功</p>
-<p>1.5、验证卸载</p>
-<pre><code>[root@123 /]# gcc -v
--bash: /usr/bin/gcc: No such file or directory
-[root@123 /]# g++ -v
--bash: /usr/bin/g++: No such file or directory
-</code></pre>
-<p>这样即为卸载成功</p>
-<h2 id="2、安装最新版本的gcc-、g"><a href="#2、安装最新版本的gcc-、g" class="headerlink" title="2、安装最新版本的gcc 、g++"></a>2、安装最新版本的gcc 、g++</h2><p>在安装之前，可以先去查询一下目前gcc 、g++的版本以及区别，本文用了第11版</p>
-<p>2.1、在系统中安装存储库</p>
-<pre><code>yum install centos-release-scl
-</code></pre>
-<p>2.2、安装gcc和g++包（注意版本号：11版）</p>
-<pre><code>yum install -y devtoolset-11-gcc devtoolset-11-gcc-c++
-</code></pre>
-<p>2.3、配置安装好的包（注意版本号：11版）</p>
-<pre><code>scl enable devtoolset-11 bash
-</code></pre>
-<p>2.4、验证安装</p>
-<pre><code>[root@123 /]# gcc -v
-Using built-in specs.
-COLLECT_GCC=gcc
-COLLECT_LTO_WRAPPER=/opt/rh/devtoolset-11/root/usr/libexec/gcc/x86_64-redhat-linux/11/lto-wrapper
-Target: x86_64-redhat-linux
-Configured with: ../configure --enable-bootstrap --enable-languages=c,c++,fortran,lto --prefix=/opt/rh/devtoolset-11/root/usr --mandir=/opt/rh/devtoolset-11/root/usr/share/man --infodir=/opt/rh/devtoolset-11/root/usr/share/info --with-bugurl=http://bugzilla.redhat.com/bugzilla --enable-shared --enable-threads=posix --enable-checking=release --enable-multilib --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-gcc-major-version-only --with-linker-hash-style=gnu --with-default-libstdcxx-abi=gcc4-compatible --enable-plugin --enable-initfini-array --with-isl=/builddir/build/BUILD/gcc-11.2.1-20210728/obj-x86_64-redhat-linux/isl-install --enable-gnu-indirect-function --with-tune=generic --with-arch_32=x86-64 --build=x86_64-redhat-linux
-Thread model: posix
-Supported LTO compression algorithms: zlib
-gcc version 11.2.1 20210728 (Red Hat 11.2.1-1) (GCC)
-
-[root@123 /]# g++ -v
-Using built-in specs.
-COLLECT_GCC=g++
-COLLECT_LTO_WRAPPER=/opt/rh/devtoolset-11/root/usr/libexec/gcc/x86_64-redhat-linux/11/lto-wrapper
-Target: x86_64-redhat-linux
-Configured with: ../configure --enable-bootstrap --enable-languages=c,c++,fortran,lto --prefix=/opt/rh/devtoolset-11/root/usr --mandir=/opt/rh/devtoolset-11/root/usr/share/man --infodir=/opt/rh/devtoolset-11/root/usr/share/info --with-bugurl=http://bugzilla.redhat.com/bugzilla --enable-shared --enable-threads=posix --enable-checking=release --enable-multilib --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-gcc-major-version-only --with-linker-hash-style=gnu --with-default-libstdcxx-abi=gcc4-compatible --enable-plugin --enable-initfini-array --with-isl=/builddir/build/BUILD/gcc-11.2.1-20210728/obj-x86_64-redhat-linux/isl-install --enable-gnu-indirect-function --with-tune=generic --with-arch_32=x86-64 --build=x86_64-redhat-linux
-Thread model: posix
-Supported LTO compression algorithms: zlib
-gcc version 11.2.1 20210728 (Red Hat 11.2.1-1) (GCC) 
-</code></pre>
-<p>2.5、配置环境变量</p>
-<p>因为不配置环境变量的话，每打开一个客户端，就需要执行一次上面的第三步配置安装包</p>
-<pre><code>//先查看gcc和g++安装位置
-[root@123 /]# which gcc
-/opt/rh/devtoolset-11/root/usr/bin/gcc
-[root@123 /]# which g++
-/opt/rh/devtoolset-11/root/usr/bin/g++
-</code></pre>
-<p>编辑文件</p>
-<pre><code>vim /etc/profile
-</code></pre>
-<p>在文件后面添加下面两行内容：</p>
-<pre><code>export GCC_HOME=/opt/rh/devtoolset-11/root/usr
-export PATH=$&#123;GCC_HOME&#125;/bin:$PATH
-</code></pre>
-<p>重新加载文件</p>
-<pre><code>source /etc/profile
-</code></pre>
-<h1 id="二、第二种方式：使用老版本编译新版本"><a href="#二、第二种方式：使用老版本编译新版本" class="headerlink" title="二、第二种方式：使用老版本编译新版本"></a>二、第二种方式：使用老版本编译新版本</h1><p>1、查看系统中有没有老版本</p>
-<p>centOS自带的是4点几的版本 : gcc -v 、g++ -v 两个命令查看，我的是4.8.5版本，如果有，跳到3、官网下载想要安装的gcc版本</p>
-<p>2、先用yum安装老版本gcc、g++</p>
-<pre><code>sudo yum install -y gcc                //安装gcc
-sudo yum install -y gcc-c++            //安装g++
-</code></pre>
-<p>3、官网下载想要安装的gcc版本</p>
-<p><a target="_blank" rel="noopener" href="http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/">http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/</a></p>
-<p>4、安装gcc需要的其他库</p>
-<p>mpfr、mpc、gmp三个库 编译之前还需准备以下：</p>
-<p>4.1、安装m4库</p>
-<pre><code>sudo yum install -y m4 //首先安装m4，否则configure gmp库时会报错**
-</code></pre>
-<p>4.2、安装以下三个库</p>
-<p><strong>一定要按照这三个顺序安装</strong></p>
-<p>4.2.1、gmp库  </p>
-<p>下载地址：<a target="_blank" rel="noopener" href="https://gmplib.org/download/gmp/gmp-6.2.1.tar.xz">https://gmplib.org/download/gmp/gmp-6.2.1.tar.xz</a></p>
-<pre><code>tar -Jxvf gmp-6.2.1.tar.xz    //解压
-cd gmp-6.2.1                //进入
-./configure --prefix=/usr      //指定编译完后要安装的路径，可以自定，示例用/usr
-make -j4                    //编译
-sudo make install            //安装
-</code></pre>
-<p>4.2.2、mpfr库 </p>
-<p>下载地址：<a target="_blank" rel="noopener" href="https://www.mpfr.org/mpfr-current/mpfr-4.2.0.tar.gz">https://www.mpfr.org/mpfr-current/mpfr-4.2.0.tar.gz</a></p>
-<pre><code>tar -zxvf mpfr-4.2.0.tar.gz    //解压
-cd mpfr-4.2.0                //进入
-./configure --prefix=/usr      //指定编译完后要安装的路径，可以自定，示例用/usr
-make -j4                    //编译
-sudo make install            //安装
-</code></pre>
-<p>4.2.3、mpc库 </p>
-<p>下载地址：<a target="_blank" rel="noopener" href="https://mirrors.aliyun.com/gnu/mpc/mpc-1.3.1.tar.gz?spm=a2c6h.25603864.0.0.60dd1a8cVMdT9B">https://mirrors.aliyun.com/gnu/mpc/mpc-1.3.1.tar.gz?spm=a2c6h.25603864.0.0.60dd1a8cVMdT9B</a><br>    tar -zxvf mpc-1.3.1.tar.gz    //解压<br>    cd     mpc-1.3.1                //进入<br>    ./configure –prefix=/usr      //指定编译完后要安装的路径，可以自定，示例用/usr<br>    make -j4                    //编译<br>    sudo make install            //安装</p>
-<p>5、编译安装gcc、g++</p>
-<p>编译gcc时需要cc1，系统中会有，但是编译时会报错找不到</p>
-<p>先到根目录下找：</p>
-<pre><code>cd /
-sudo find -name cc1
-</code></pre>
-<p>我的cc1在 /usr/libexec/gcc/x86_64-redhat-linux/4.8.2/cc1</p>
-<p>创建软连接到/usr/bin目录下</p>
-<pre><code>sudo ln -s /usr/libexec/gcc/x86_64-redhat-linux/4.8.2/cc1 /usr/bin/cc1
-</code></pre>
-<p>编译过程中可能会遇到这个错误，找不到libmpfr.so.6 这个库，但是系统中会有，所以要先创建一个软连接</p>
-<p>去根目录查找</p>
-<pre><code>cd /
-sudo find -name libmpfr.so.6 
-</code></pre>
-<p>我的这个文件在/usr/lib目录下</p>
-<p>在编译前先创建一个软连接到/usr/lib64目录下</p>
-<pre><code>//这个软连接一定要创建在/usr/lib64目录下
-sudo ln -s /usr/lib/libmpfr.so.6 /usr/lib64/libmpfr.so.6    
-</code></pre>
-<p>编译安装gcc、g++</p>
-<pre><code>tar -zxvf gcc-12.2.0.tar.gz     //解压
-cd gcc-12.2.0/                    //进入
-sudo ./configure --disable-multilib --prefix=/usr        
-//生成makefile，--prefix指定编译完之后的安装路径
-// /usr表示安装之后的gcc、g++在/usr/bin里面
-//如果路径中有CMakeLists.txt，则也可以使用cmake生成makefile
-//cmake . -G &quot;Unix Makefiles&quot; -DCMAKE_INSTALL_PREFIX=/usr
-//--enable-multilib 允许32位编译，如果系统中有32位的环境，一般不需要
-//--disable-multilib 只使用64位编译
-sudo make -j4                    //编译
-</code></pre>
-<p>在执行sudo make -j4时，我这里出现了一个报错</p>
-<p>这是由于在编译时内存不足造成的，</p>
-<p>5.1、如果是虚拟机，可以扩大虚拟机的内存</p>
-<p>5.2、创建swap分区（推荐）<br>建议看这篇文章<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44796670/article/details/121234446">https://blog.csdn.net/weixin_44796670/article/details/121234446</a><br>之后再执行sudo make -j4<br>编译安装完之后根据链接文章删除swap分区即可</p>
-<p>5.3、或者将sudo make -j4改为sudo make，减少同时进行的任务数量，但是编译时间会更长</p>
-<p>等待编译完成，时间比较长！！！</p>
-<p>6、删除创建的软连接，卸载yum安装的gcc、g++</p>
-<pre><code>//删除创建的软连接
-sudo rm -rf /usr/bin/cc1
-sudo rm -rf /usr/lib64/libmpfr.so.6
-
-//卸载yum安装的gcc、g++
-sudo yum remove gcc gcc-c++
-
-//gcc和g++安装到/usr/bin目录中了
-sudo make install 
-</code></pre>
-<p>————————————————<br>版权声明：本文为CSDN博主「cppbugboy」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_45316173/article/details/122018354">https://blog.csdn.net/qq_45316173/article/details/122018354</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/g/" rel="tag">g++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gcc/" rel="tag">gcc</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
   </article>
   
 
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/3/">上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/57/">57</a><a class="extend next" rel="next" href="/page/5/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/3/">上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/58/">58</a><a class="extend next" rel="next" href="/page/5/">下一页</a>
   </nav>
   
 </section>

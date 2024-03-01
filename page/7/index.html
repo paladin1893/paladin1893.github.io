@@ -154,6 +154,465 @@
     
     
     <article
+  id="post-macOS程序破解提示文件提示损坏解决办法"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/11/10/macOS%E7%A8%8B%E5%BA%8F%E7%A0%B4%E8%A7%A3%E6%8F%90%E7%A4%BA%E6%96%87%E4%BB%B6%E6%8F%90%E7%A4%BA%E6%8D%9F%E5%9D%8F%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/"
+    >macOS程序破解提示文件提示损坏解决办法</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/11/10/macOS%E7%A8%8B%E5%BA%8F%E7%A0%B4%E8%A7%A3%E6%8F%90%E7%A4%BA%E6%96%87%E4%BB%B6%E6%8F%90%E7%A4%BA%E6%8D%9F%E5%9D%8F%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" class="article-date">
+  <time datetime="2023-11-10T13:14:23.000Z" itemprop="datePublished">2023-11-10</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>文件提示损坏解决办法</p>
+<h1 id="方案一"><a href="#方案一" class="headerlink" title="方案一"></a>方案一</h1><p>解除隔离，绕过签名</p>
+<p>启动终端实用程序，使用命令：</p>
+<pre><code>sudo xattr -r -d com.apple.quarantine 
+</code></pre>
+<p>输入一个空格，然后将损坏的程序拖到终端窗口中。团队将添加它。</p>
+<h1 id="方案二"><a href="#方案二" class="headerlink" title="方案二"></a>方案二</h1><p>禁用 Gatekeeper：</p>
+<p>启动终端实用程序并运行命令</p>
+<p>对于 macOS 10.12 – 10.15.7，执行如下命令：</p>
+<pre><code>sudo spctl --master-disable
+</code></pre>
+<p>对于 macOS 11 及更高版本，执行如下命令：</p>
+<pre><code>sudo spctl --global-disable
+</code></pre>
+<p>无需将任何内容拖到终端中。要启用 Gatekeeper，请将“disable”替换为“enable”。</p>
+<h1 id="方案三"><a href="#方案三" class="headerlink" title="方案三"></a>方案三</h1><p>应用签名方法</p>
+<p>先安装Command Line Tools 工具，打开终端工具输入如下命令：</p>
+<pre><code>xcode-select --install
+</code></pre>
+<p>弹出安装窗口后选择继续安装，安装过程需要几分钟，请耐心等待。</p>
+<p>打开终端工具输入并执行如下命令对应用签名：</p>
+<pre><code>sudo codesign --force --deep --sign - (应用路径)
+</code></pre>
+<p>注意：应用路径是「访达（Finder）-&gt;应用程序」找到应用将其拖进终端命令 – 的后面，然后按下回车键，输入macOS的密码然后按回车(输入过程中密码是不显示的，输入完密码直接按回车键即可！)<br>出现 「replacing existing signature」 提示即成功！</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/macOS/" rel="tag">macOS</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-macOS命令添加用户、删除用户"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/11/09/macOS%E5%91%BD%E4%BB%A4%E6%B7%BB%E5%8A%A0%E7%94%A8%E6%88%B7%E3%80%81%E5%88%A0%E9%99%A4%E7%94%A8%E6%88%B7/"
+    >macOS命令添加用户、删除用户</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/11/09/macOS%E5%91%BD%E4%BB%A4%E6%B7%BB%E5%8A%A0%E7%94%A8%E6%88%B7%E3%80%81%E5%88%A0%E9%99%A4%E7%94%A8%E6%88%B7/" class="article-date">
+  <time datetime="2023-11-09T13:14:23.000Z" itemprop="datePublished">2023-11-09</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>使用dscl命令，以postgres用户为例</p>
+<h1 id="新增用户"><a href="#新增用户" class="headerlink" title="新增用户"></a>新增用户</h1><pre><code># 创建用户并指定Shell
+sudo dscl . -create /Users/postgres UserShell /bin/bash
+
+# 设置用户ID（需要唯一）、显示名称
+sudo dscl . -create /Users/postgres UniqueID &quot;5001&quot;
+sudo dscl . -create /Users/postgres RealName &quot;postgres&quot;
+
+# 将用户设置为管理员
+sudo dscl . -create /Users/postgres PrimaryGroupID 80
+
+# 修改密码
+sudo dscl . -passwd /Users/postgres 1024
+</code></pre>
+<h1 id="删除用户"><a href="#删除用户" class="headerlink" title="删除用户"></a>删除用户</h1><pre><code># 删除用户
+sudo dscl . -delete /Users/postgres
+
+# 删除用户主目录
+sudo rm -r /Users/postgres
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/macOS/" rel="tag">macOS</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-OpenCPN + Ubuntu 18.04 源码编译 + Codeblocks 调试 + wxFormBuilder 安装"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/11/08/OpenCPN%20+%20Ubuntu%2018.04%20%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91%20+%20Codeblocks%20%E8%B0%83%E8%AF%95%20+%20wxFormBuilder%20%E5%AE%89%E8%A3%85/"
+    >OpenCPN + Ubuntu 18.04 源码编译 + Codeblocks 调试 + wxFormBuilder 安装</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/11/08/OpenCPN%20+%20Ubuntu%2018.04%20%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91%20+%20Codeblocks%20%E8%B0%83%E8%AF%95%20+%20wxFormBuilder%20%E5%AE%89%E8%A3%85/" class="article-date">
+  <time datetime="2023-11-08T12:16:38.000Z" itemprop="datePublished">2023-11-08</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="一、参考资料"><a href="#一、参考资料" class="headerlink" title="一、参考资料"></a>一、参考资料</h1><p>OpenCPN - linux 编译参考链接。<br>wxFormBuilder-github 链接</p>
+<h1 id="二、源码编译流程"><a href="#二、源码编译流程" class="headerlink" title="二、源码编译流程"></a>二、源码编译流程</h1><p>安装依赖，没有报错。</p>
+<pre><code>sudo apt-get install build-essential cmake gettext git-core gpsd gpsd-clients libgps-dev wx-common libwxgtk3.0-dev libglu1-mesa-dev libgtk2.0-dev wx3.0-headers libbz2-dev libtinyxml-dev libportaudio2 portaudio19-dev libcurl4-openssl-dev libexpat1-dev libcairo2-dev libarchive-dev liblzma-dev libexif-dev libelf-dev libsqlite3-dev
+</code></pre>
+<p>下载源码，使用码云加速。</p>
+<pre><code>cd xxx #进入你想存放 opencpn 的文件夹
+git clone https://gitee.com/xxx/OpenCPN.git  #注意更换自己的码云仓库名 xxx
+</code></pre>
+<p>下载速度极慢，使用码云克隆加速github。</p>
+<p>注册码云，右上角新建仓库加号，选择从 Github/Gitlab 导入仓库菜单。<br>Git 仓库 URL填入想 clone的 Github仓库，这里就是<a target="_blank" rel="noopener" href="https://github.com/OpenCPN/OpenCPN%EF%BC%8C%E7%82%B9%E5%87%BB%E5%AF%BC%E5%85%A5%EF%BC%8C%E5%90%8E%E5%8F%B0%E5%A4%84%E7%90%86%E4%B8%80%E6%AE%B5%E6%97%B6%E9%97%B4%E5%90%8E%E9%A1%B5%E9%9D%A2%E8%87%AA%E5%8A%A8%E5%88%B7%E6%96%B0%E4%BC%9A%E5%87%BA%E7%8E%B0%E4%B8%80%E6%A8%A1%E4%B8%80%E6%A0%B7%E7%9A%84%E4%BB%93%E5%BA%93%E3%80%82">https://github.com/OpenCPN/OpenCPN，点击导入，后台处理一段时间后页面自动刷新会出现一模一样的仓库。</a><br>利用码云进行 git clone，因为这里我建立的是私有仓库，需要输入我的账户名和密码，输入后下载速度很快，直接达到带宽上限。<br>编译源码，cmake ../无问题，显示 Configuring done和 Generating done，继续 make。</p>
+<pre><code>cd OpenCPN  
+mkdir build &amp;&amp; cd build
+cmake ..  
+make
+</code></pre>
+<p>没有问题，编译成功，测试以下能否直接运行编译好的可执行文件，运行成功，没有问题。</p>
+<pre><code>./opencpn
+</code></pre>
+<h1 id="三、利用-IDE-编译"><a href="#三、利用-IDE-编译" class="headerlink" title="三、利用 IDE 编译"></a>三、利用 IDE 编译</h1><p>官方推荐了四个 IDE ( Code::Blocks / KDevelop / Eclipse / CDT )，我们按照官方命令，生成项目文件，使用 codeblocks 首先测试：</p>
+<pre><code>cmake -G &quot;CodeBlocks - Unix Makefiles&quot; ../
+</code></pre>
+<p>此时查看 build 文件夹下已经有了 OpenCPN.cbp 文件，这是 codeblocks 的工程文件。</p>
+<p>打开 codeblocks ，选择 File - open 找到刚才的 build 文件夹，选择 OpenCPN.cbp。</p>
+<p>如果系统未安装该 IDE，可以直接从源安装：</p>
+<pre><code>sudo apt-get install codeblocks
+</code></pre>
+<p>此时右侧项目是 all 的状态，点击菜单栏上的 build 黄色小齿轮进行编译，这里提示没有错误，准备运行 opencpn。</p>
+<p>Process terminated with status 0 (0 minute(s), 1 second(s))<br>0 error(s), 0 warning(s) (0 minute(s), 1 second(s))</p>
+<p>在右侧的下拉菜单中将 all 改选为 opencpn ，继续点击绿色三角 run 运行，可能弹出是否用 safe mode 运行，我选择了 yes 。</p>
+<p>出现 opencpn 界面，编译运行无问题。</p>
+<h1 id="四、利用-IDE-调试"><a href="#四、利用-IDE-调试" class="headerlink" title="四、利用 IDE 调试"></a>四、利用 IDE 调试</h1><p>利用 IDE 进行 debug ，我们选择航线相关的源文件 Route.cpp ，随便将断点加在某行，我这里加在了 92 行构造函数的末尾，想看一看新建航线时断点能否进入。此时，加好断点，点击菜单栏中的红色三角 Debug 进行调试运行。</p>
+<p>出现 opencpn 海图界面后，随便找个地方，右键选择 New Route… 新建航线， 成功进入断点。</p>
+<p>实际上，官方在这里补充了一段说明。大致的意思是如果要在不安装的情况下直接在 IDE 中运行 opencpn ，需要进行一些拷贝操作，我将其简单分段如下，前三个操作只是复制，非常好理解，最后一个暂时没找到正确的位置设置，但是好像不影响调试。</p>
+<p>In order to be able to run OpenCPN from inside the IDE without having it installed, you must:</p>
+<p>copy the following folders from the data subfolder of the source tree to your build folder: gshhs, s57data, tcdata.<br>You also must create a subfolder uidata in the build folder and copy the following files from src/bitmaps into it: styles.xml, toolicons_journeyman_flat.png, toolicons_journeyman.png, toolicons_traditional.png, plus.svg.<br>You should also copy authors.html and license.html from /data to your ‘build’ folder.<br>Then to ensure that your ‘build’ folder is used as the ‘source’ for the run/debug session you need to ensure that OpenCPN is started with ‘-p’ as a parameter. This sets OpenCPN into ‘portable’ mode and therefore looks in the location the ‘opencpn’ executable is run from, i.e. your ‘build’ directory.</p>
+<p>我把上面几句话写成了三句命令，首先 cd 进入你的 opencpn 源码路径下，执行如下命令即可。这些操作不做也可以进行编译调试，为了避免后面出现问题，最好还是按照官方指导来进行。</p>
+<pre><code>cp -r ./data/s57data ./data/gshhs ./data/tcdata  ./build/
+mkdir ./build/uidata &amp;&amp; cp ./src/bitmaps/styles.xml ./src/bitmaps/toolicons_journeyman_flat.png ./src/bitmaps/toolicons_journeyman.png ./src/bitmaps/toolicons_traditional.png ./src/bitmaps/plus.svg ./build/uidata 
+cp ./data/authors.html ./data/license.html ./build/
+</code></pre>
+<p>四、测试界面开发工具<br>官方推荐使用 wxFormBuilder-github 来开发 GUI 。</p>
+<p>编译这个东西，按照它作者提供的编译指南，先安装依赖，然后克隆源码，最后编译运行。</p>
+<pre><code>sudo apt install libwxgtk3.0-gtk3-dev libwxgtk-media3.0-gtk3-dev meson
+git clone --recursive --depth=1 https://github.com/wxFormBuilder/wxFormBuilder
+cd wxFormBuilder
+meson _build --prefix $PWD/_install --buildtype=release
+ninja -C _build install
+./_install/bin/wxformbuilder
+</code></pre>
+<p>运行到 ninja 编译，未通过，报错如下：</p>
+<pre><code>/usr/bin/ld: cannot find -lwx_gtk2u_media-3.0
+/usr/bin/ld: cannot find -lwx_gtk2u_media-3.0
+collect2: error: ld returned 1 exit status
+[61/67] Compiling C++ object &#39;additional@sha/plugins_additional_additional.cpp.o&#39;.
+ninja: build stopped: subcommand failed.
+</code></pre>
+<p>缺少库，安装对应的库：</p>
+<p>sudo apt-get install libwxgtk-media3.0-dev</p>
+<p>最后执行编译好的可执行文件</p>
+<pre><code>./_install/bin/wxformbuilder
+</code></pre>
+<p>报错，提示，经过查找 issues 发现有人提到了这个问题 #524，解决方案如下，注意替换路径，我是安装在我自建的Software文件夹：</p>
+<pre><code>cd ~/Software/wxFormBuilder/_install/lib/x86_64-linux-gnu
+cp -r wxformbuilder ../ 
+cd ~/Software/wxFormBuilder/_install/bin
+./wxformbuilder
+</code></pre>
+<p>成功解决，完事了，wxFormBuilder 的具体使用方法请自行探索。<br>————————————————<br>版权声明：本文为CSDN博主「银时大魔王」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/sinat_25923849/article/details/110232728">https://blog.csdn.net/sinat_25923849/article/details/110232728</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OpenCPN/" rel="tag">OpenCPN</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-【小沐学GIS】电子海图OpenCPN源代码编译和运行（VS2017 + Win10）"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/11/07/%E3%80%90%E5%B0%8F%E6%B2%90%E5%AD%A6GIS%E3%80%91%E7%94%B5%E5%AD%90%E6%B5%B7%E5%9B%BEOpenCPN%E6%BA%90%E4%BB%A3%E7%A0%81%E7%BC%96%E8%AF%91%E5%92%8C%E8%BF%90%E8%A1%8C%EF%BC%88VS2017%20+%20Win10%EF%BC%89/"
+    >【小沐学GIS】电子海图OpenCPN源代码编译和运行（VS2017 + Win10）</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/11/07/%E3%80%90%E5%B0%8F%E6%B2%90%E5%AD%A6GIS%E3%80%91%E7%94%B5%E5%AD%90%E6%B5%B7%E5%9B%BEOpenCPN%E6%BA%90%E4%BB%A3%E7%A0%81%E7%BC%96%E8%AF%91%E5%92%8C%E8%BF%90%E8%A1%8C%EF%BC%88VS2017%20+%20Win10%EF%BC%89/" class="article-date">
+  <time datetime="2023-11-07T12:16:38.000Z" itemprop="datePublished">2023-11-07</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>1、简介<br>免费的开源海图仪和船用GPS导航软件</p>
+<p><a target="_blank" rel="noopener" href="https://opencpn.org/">https://opencpn.org/</a></p>
+<p>1.1 OpenCPN概述<br>OpenCPN是一款自由软件（GPLv2），用于创建简洁的海图绘图仪和导航软件，可以在航行过程中使用或者作为计划工具。<br>OpenCPN提供大量免费海图下载，支持航线设计、航行监控，能接入GPS、AIS数据，能叠加雷达图像，还满足气象导航方面的要求，还有众多插件可供选择，且一直持续改进更新中。<br>OpenCPN由C++编写，遵从GPLv2协议，其源代码可以轻易的从github获取。</p>
+<p>1.2 OpenCPN功能</p>
+<p>2、下载和编译<br>OpenCPN由C++编写，遵从GPLv2协议，其源代码可以轻易的从github获取。在windows下编译方法windows下编译方法如下：<br><a target="_blank" rel="noopener" href="https://opencpn.org/wiki/dokuwiki/doku.php?id=opencpn:developer_manual:developer_guide:compiling_windows">https://opencpn.org/wiki/dokuwiki/doku.php?id=opencpn:developer_manual:developer_guide:compiling_windows</a></p>
+<p>2.1 Visual Studio 2017<br>安装Visual Studio 2017，添加C++及Windows XP C++功能。</p>
+<p>下载<br><a target="_blank" rel="noopener" href="https://visualstudio.microsoft.com/zh-hans/vs/older-downloads/">https://visualstudio.microsoft.com/zh-hans/vs/older-downloads/</a></p>
+<p>2.2 Git<br>安装Git:<br><a target="_blank" rel="noopener" href="https://git-scm.com/downloads">https://git-scm.com/downloads</a></p>
+<p>2.3 CMake<br>安装CMake:<br><a target="_blank" rel="noopener" href="https://cmake.org/download/">https://cmake.org/download/</a></p>
+<p>2.4 POedit<br>安装POedit，<br><a target="_blank" rel="noopener" href="https://poedit.net/">https://poedit.net/</a></p>
+<p>配置系统环境变量，在PATH中添加:</p>
+<pre><code>C:\Program Files (x86)\Poedit\GettextTools\bin
+</code></pre>
+<p>2.5 wxWidgets<br>（1）方法一：源代码编译<br>获取wxWidgets 3.1.2源码并生成，使用VS2017 x86 Native Tools下的命令行，运行如下命令：</p>
+<pre><code>cd C:\Users\tomcat\Desktop\test         //修改成自己的目录
+git clone -b v3.1.2 https://github.com/wxWidgets/wxWidgets
+cd wxWidgets
+git submodule init
+git submodule update
+
+cd build\msw
+nmake /f makefile.vc BUILD=release SHARED=1 CXXFLAGS=/D_USING_V141_SDK71_ CFLAGS=/D_USING_V141_SDK71_ LDFLAGS=/SUBSYSTEM:WINDOWS,5.01
+nmake /f makefile.vc BUILD=debug SHARED=1 CXXFLAGS=/D_USING_V141_SDK71_ CFLAGS=/D_USING_V141_SDK71_ LDFLAGS=/SUBSYSTEM:WINDOWS,5.01
+
+cd wxWidgets
+git submodule init
+git submodule update
+</code></pre>
+<p>设置环境变量wxWIDGETS_ROOT_DIR为wxWidgets 3.1.2源代码目录<br>将wxWidgets源代码目录下的路径lib\vc_dll\添加进系统变量。</p>
+<p>（2）方法二：使用二进制文件<br><a target="_blank" rel="noopener" href="https://github.com/wxWidgets/wxWidgets/releases?page=1">https://github.com/wxWidgets/wxWidgets/releases?page=1</a></p>
+<p>下载头文件</p>
+<p>下载库文件</p>
+<p>设置环境变量</p>
+<p>wxWIDGETS_ROOT_DIR：</p>
+<pre><code>wxWIDGETS_ROOT_DIR=C:/Users/tomcat/Desktop/test/wxWidgets-3.1.2
+</code></pre>
+<p>wxWidgets_LIBRARIES：</p>
+<pre><code>wxWidgets_LIBRARIES=C:\Users\tomcat\Desktop\test\wxMSW-3.1.2_vc141_Dev\lib\vc141_dll
+</code></pre>
+<p>2.6 OpenCPN<br>下载 OpenCPN源码：<br><a target="_blank" rel="noopener" href="https://github.com/OpenCPN/OpenCPN/releases?q=5.0.0&amp;expanded=true">https://github.com/OpenCPN/OpenCPN/releases?q=5.0.0&amp;expanded=true</a></p>
+<p>解压之后：</p>
+<p>下载 预编译Windows依赖 - OpenCPN_buildwin-4.99a.7z，<br><a target="_blank" rel="noopener" href="https://download.opencpn.org/s/oibxM3kzfzKcSc3/download">https://download.opencpn.org/s/oibxM3kzfzKcSc3/download</a><br>然后解压到C:\Users\tomcat\Desktop\test\OpenCPN-5.0.0\buildwin目录下。</p>
+<pre><code>cd C:\Users\tomcat\Desktop\test\OpenCPN-5.0.0
+mkdir build
+cd build
+cmake -G &quot;Visual Studio 15 2017&quot; -T v141_xp ..
+cmake --build .
+cmake --build . --config release
+cmake --build . --config release --target package
+</code></pre>
+<p>编译过程中，会出现一些错误。例如“正体字”改成“zhengti”即可等。<br>下载 Copyfiles.bat.doc，并删去后缀名 .doc移动到\xx\OpenCPN\下面后执行copyfiles.bat（这步不做可能还是会缺几个dll）。<br><a target="_blank" rel="noopener" href="https://opencpn.org/wiki/dokuwiki/lib/exe/fetch.php?media=opencpn:dev:copyfiles.bat.doc">https://opencpn.org/wiki/dokuwiki/lib/exe/fetch.php?media=opencpn:dev:copyfiles.bat.doc</a></p>
+<pre><code>C:\Users\tomcat\Desktop\test\OpenCPN-5.0.0\Copyfiles.bat
+</code></pre>
+<p>鼠标双击它，直接运行如下：</p>
+<p>打开文件夹“C:\Users\tomcat\Desktop\test\OpenCPN-5.0.0\build\Debug”，发现OpenCPN编译成功。</p>
+<p>3、运行<br>3.1 主界面<br>直接运行opencpn.exe。</p>
+<p>3.2 绘制路线（Route）<br>鼠标右键选择菜单“New Route…”，开始创建路线操作；</p>
+<p>创建多段路线如下：</p>
+<p>3.3 切换地图底色</p>
+<p>3.4 距离测量<br>鼠标右键选择菜单“Measure”，开始距离测量操作；</p>
+<p>鼠标右键选择菜单“Measure Off”，结束距离测量操作；</p>
+<p>3.5 添加图表<br>将下载好的图表数据放在文件夹里“D:\Program Files (x86)\OpenCPN\data”：</p>
+<p>然后通过界面更新按钮“Prepare all ENC Charts”。</p>
+<p>更新过程中如下：</p>
+<p>更新完成如下：</p>
+<p>————————————————<br>版权声明：本文为CSDN博主「爱看书的小沐」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/hhy321/article/details/134486900">https://blog.csdn.net/hhy321/article/details/134486900</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OpenCPN/" rel="tag">OpenCPN</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-省市区数据采集"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/11/06/%E7%9C%81%E5%B8%82%E5%8C%BA%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/"
+    >省市区数据分享</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/11/06/%E7%9C%81%E5%B8%82%E5%8C%BA%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/" class="article-date">
+  <time datetime="2023-11-06T12:16:38.000Z" itemprop="datePublished">2023-11-06</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>省市区数据采集并标注拼音、坐标和边界范围<br>【在线测试和预览】省市区乡镇四级行政区划数据：支持在线生成JSON、多级联动js；<br>【在线测试和预览】ECharts Map四级下钻在线测试和预览+代码生成：坐标边界范围在线测试和预览；<br>【转换工具】AreaCity-Geo格式转换工具软件：csv文件导入数据库，坐标、边界范围转换（支持转成sql、shp、geojson）；<br>【查询工具】AreaCity-Query-Geometry（Gitee镜像库）：高性能的坐标数据、边界数据查询工具，Java开源程序、带http查询接口，内存占用低（1秒可查1万个以上坐标对应的城市信息）。</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/xiangyuecn/p/17101051.html">https://www.cnblogs.com/xiangyuecn/p/17101051.html</a><br><a target="_blank" rel="noopener" href="https://gitee.com/xiangyuecn/AreaCity-JsSpider-StatsGov">https://gitee.com/xiangyuecn/AreaCity-JsSpider-StatsGov</a></p>
+<h1 id="数据说明"><a href="#数据说明" class="headerlink" title="数据说明"></a>数据说明</h1><p>当前最新版本：2023.230831.231211版，更新于2023-12-11，整合了 统计局2023-09-11、民政部2023-04-23、腾讯地图行政区划2023-08-31、高德地图行政区划采集当天 数据。</p>
+<p>【区划三级】省市区 三级行政区划 数据<br>【区划四级】省市区乡镇 四级行政区划 数据</p>
+<ul>
+<li>支持在线预览，在线生成JSON、多级联动js代码</li>
+<li>可用转换工具导入数据库、转成sql    线路一 / 线路二<br>【边界三级】省市区 坐标和边界 数据，解压后130M+</li>
+<li>支持在线预览，可用转换工具转成shp、geojson、sql格式、转换坐标系</li>
+<li>使用本库开源的高性能查询工具，1秒可查1万个以上坐标对应的城市信息    线路一 / 线路二<br>边界四级】乡镇级 坐标和边界 数据，导出后300M+</li>
+<li>付费数据、广告、闭源，支持在线预览，提供了部分免费数据供测试    点此下载<br>如果上面线路一和线路二都无法下载：可以到 Gitee Releases 下载，或到 GitHub Releases 下载最新发布数据文件。</li>
+</ul>
+<p>csv纯文本文件可以非常方便解析成其他格式；如果在使用csv文件过程中出现乱码、错乱等情况，需自行调对utf-8（带BOM）编码，文本限定符为”。</p>
+<p>通过本库提供的 AreaCity-Geo格式转换工具 可快速方便的将行政区划、坐标、边界范围csv文件导入数据库，并且提供格式转换功能（shp、geojson、sql），欢迎下载使用。边界导出成geojson后可通过 AreaCity-Query-Geometry Java开源程序进行高性能的坐标数据、边界数据查询。</p>
+<h1 id="Git仓库和存档"><a href="#Git仓库和存档" class="headerlink" title="Git仓库和存档"></a>Git仓库和存档</h1><p>由于仓库内的历史记录数据可能会很大，可以加上–depth 1提取最新版的数据即可。</p>
+<pre><code>//Gitee镜像仓库: 速度快
+git clone --depth 1 https://gitee.com/xiangyuecn/AreaCity-JsSpider-StatsGov.git
+
+//源GitHub仓库: 可能比较慢或无法访问
+git clone --depth 1 https://github.com/xiangyuecn/AreaCity-JsSpider-StatsGov.git
+</code></pre>
+<p>每当仓库增长到一定大小后，本仓库将会进行存档处理，同时将历史记录中的大文件进行清理，这将导致一些文件之前的历史丢失，请到存档仓库查阅更早的历史记录</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%9C%B0%E7%90%86%E6%95%B0%E6%8D%AE/" rel="tag">地理数据</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-CentOS最小安装"
   class="article article-type-post"
   itemscope
@@ -226,527 +685,13 @@
 </article>
 
     
-    <article
-  id="post-Centos7使用rpm离线安装PostgreSQL"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/11/04/Centos7%E4%BD%BF%E7%94%A8rpm%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85PostgreSQL/"
-    >Centos7使用rpm离线安装PostgreSQL</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/11/04/Centos7%E4%BD%BF%E7%94%A8rpm%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85PostgreSQL/" class="article-date">
-  <time datetime="2023-11-04T13:28:00.000Z" itemprop="datePublished">2023-11-04</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><p>使用一台能够联网的centos电脑</p>
-<p>安装postgresql源</p>
-<pre><code>yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
-</code></pre>
-<p>安装 yumdownloader工具</p>
-<pre><code>yum install yum-utils -y
-</code></pre>
-<p>Yumdownloader是一款简单，但是却十分有用的命令行工具，<em>它可以一次性下载任何 RPM 软件包及其所有依赖包</em>。</p>
-<h1 id="PostgreSQL"><a href="#PostgreSQL" class="headerlink" title="PostgreSQL"></a>PostgreSQL</h1><h2 id="下载离线包"><a href="#下载离线包" class="headerlink" title="下载离线包"></a>下载离线包</h2><p>postgresql14-server</p>
-<pre><code>yumdownloader --resolve postgresql14-server
-</code></pre>
-<p>postgresql14</p>
-<pre><code>yumdownloader --resolve postgresql14
-</code></pre>
-<p>这里我们需要的是 postgresql14-server的相关依赖，可看到postgresql14-server的依赖包含了postgresql14客户端的依赖</p>
-<h2 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h2><pre><code>rpm -ivh libicu-50.2-4.el7_7.x86_64.rpm postgresql14-libs-14.10-1PGDG.rhel7.x86_64.rpm postgresql14-14.10-1PGDG.rhel7.x86_64.rpm postgresql14-server-14.10-1PGDG.rhel7.x86_64.rpm 
-</code></pre>
-<h2 id="配置数据库"><a href="#配置数据库" class="headerlink" title="配置数据库"></a>配置数据库</h2><p>默认初始化</p>
-<pre><code># 默认初始化数据库
-sudo /usr/pgsql-14/bin/postgresql-14-setup initdb
-</code></pre>
-<p>开机启动postgresql数据库</p>
-<pre><code>sudo systemctl enable postgresql-14
-</code></pre>
-<p>启动postgresql数据库服务</p>
-<pre><code>sudo systemctl start postgresql-14
-</code></pre>
-<p>启动成功后，使用lsof -i:5432 可以看见相关进程</p>
-<p>修改初始化数据路径</p>
-<pre><code>mkdir -p /home/pg14/data
-chown -R postgres:postgres /home/pg14/data
-</code></pre>
-<p>这里使用systemctl ：</p>
-<pre><code>systemctl edit postgresql-14.service
-</code></pre>
-<p>在新空白页覆盖原服务配置</p>
-<pre><code>[Service]
-Environment=PGDATA=/home/pg14/data
-</code></pre>
-<p>这个文件默认放在 /etc/systemd/system/postgresql-14.service.d 目录下。<br>里面会有 override.conf 文件。</p>
-<p>停止之前的数据库</p>
-<pre><code>systemctl stop postgresql-14
-</code></pre>
-<p>启动数据库</p>
-<pre><code>sudo /usr/pgsql-14/bin/postgresql-14-setup initdb
-</code></pre>
-<p>查看日志</p>
-<pre><code>more /var/lib/pgsql/14/initdb.log
-</code></pre>
-<p>修改数据位置后，原先默认的配置文件就失效了，配置文件在新的数据文件夹下，这里是/home/pg14/data</p>
-<p>修改默认用户密码</p>
-<pre><code>#登陆postgresql
-sudo -u postgres psql
-
-#修改i登陆postgresql密码
-alter user postgres with password &#39;postgres&#39;;
-
-#查看数据库存储地址
-show data_directory;
-</code></pre>
-<p>开启远程访问</p>
-<p>修改数据文件目录的postgresql.conf配置文件，监听全部IP命令</p>
-<pre><code>vi /home/pg14/data/postgresql.conf
-listen_addresses = &#39;*&#39; 
-</code></pre>
-<p>允许远程访问，修改pg_hba.conf</p>
-<pre><code>vi /home/pg14/data/pg_hba.conf
-
-# TYPE  DATABASE        USER            ADDRESS                 METHOD
-
-# &quot;local&quot; is for Unix domain socket connections only
-local   all             all                                     trust
-# IPv4 local connections:
-host    all             all             127.0.0.1/32            trust
-host    all             all             0.0.0.0/0                 md5
-# IPv6 local connections:
-host    all             all             ::1/128                 trust
-# Allow replication connections from localhost, by a user with the
-# replication privilege.
-local   replication     all                                     trust
-host    replication     all             127.0.0.1/32            trust
-host    replication     all             ::1/128                 trust
-</code></pre>
-<p>重启启动postgresql数据库服务</p>
-<pre><code>sudo systemctl restart postgresql-14
-</code></pre>
-<h1 id="安裝PostGIS"><a href="#安裝PostGIS" class="headerlink" title="安裝PostGIS"></a>安裝PostGIS</h1><h2 id="下载依赖"><a href="#下载依赖" class="headerlink" title="下载依赖"></a>下载依赖</h2><p>EPEL存储库中有许多依赖项</p>
-<pre><code>yumdownloader --resolve epel-release
-</code></pre>
-<p>下载指定版本的postgis，这里我选用pg14的3.3版本</p>
-<pre><code>yumdownloader --resolve postgis33_14
-</code></pre>
-<p>下载的依赖很多</p>
-<h2 id="安装依赖-1"><a href="#安装依赖-1" class="headerlink" title="安装依赖"></a>安装依赖</h2><pre><code># 安装epel
-rpm -ivh epel-release-7-11.noarch.rpm
-
-# 安装当前目录下的所有rpm包（推荐）
-rpm -Uvh  *.rpm
-
-# 强制安装当前文件夹中所有的rpm包，忽略依赖去安装（这是上一步的备选方案，不推荐）
-rpm -Uvh  *.rpm  --nodeps  --force 
-</code></pre>
-<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><pre><code>-- 创建数据库
-CREATE DATABASE db_test;
--- 切换数据库
-\c db_test;
--- 创建postgis依赖
-CREATE EXTENSION postgis;
-</code></pre>
-<p>创建PostGIS扩展成功后、查看数据库插件</p>
-<pre><code>\dx
-</code></pre>
-<p>本文来自互联网用户投稿，该文观点仅代表作者本人，不代表本站立场。本站仅提供信息存储空间服务，不拥有所有权，不承担相关法律责任。如若转载，请注明出处：<a target="_blank" rel="noopener" href="http://www.bryh.cn/a/16064.html">http://www.bryh.cn/a/16064.html</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostGIS/" rel="tag">PostGIS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Centos7下安装Mysql8"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/11/03/Centos7%E4%B8%8B%E5%AE%89%E8%A3%85Mysql8/"
-    >Centos7下安装Mysql8</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/11/03/Centos7%E4%B8%8B%E5%AE%89%E8%A3%85Mysql8/" class="article-date">
-  <time datetime="2023-11-03T13:28:00.000Z" itemprop="datePublished">2023-11-03</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>MySQL是一个流行的开源关系型数据库管理系统，本教程将向您展示如何在Linux系统上安装MySQL 8.1.0版本。请按照以下步骤进行操作：</p>
-<p>1、下载MySQL安装包</p>
-<p>官方下载地址：<a target="_blank" rel="noopener" href="https://dev.mysql.com/downloads/mysql/">https://dev.mysql.com/downloads/mysql/</a></p>
-<p>首先，从MySQL官方网站或镜像站点下载MySQL 8.1.0的压缩包mysql-8.1.0-linux-glibc2.28-x86_64.tar.xz。确保下载的文件与您的Linux系统架构相匹配。</p>
-<p>2、安装依赖</p>
-<pre><code>sudo yum install libaio
-</code></pre>
-<p>3、上传、解压缩安装包</p>
-<p>使用以下命令解压缩下载的安装包：</p>
-<pre><code>tar -xf mysql-8.1.0-linux-glibc2.28-x86_64.tar.xz
-</code></pre>
-<p>4、移动MySQL目录</p>
-<p>解压缩后，将MySQL目录移动到适当的位置。通常，您可以将其移动到/usr/local目录下：</p>
-<pre><code>sudo mv mysql-8.1.0-linux-glibc2.28-x86_64 /usr/local/mysql
-</code></pre>
-<p>5、编辑my.cnf文件</p>
-<pre><code>vim /etc/my.cnf
-
-[mysqld]
-basedir = /usr/local/mysql
-datadir = /usr/local/mysql/data
-socket = /usr/local/mysql/mysql.sock
-character-set-server=utf8
-port = 3306
-sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
-lower_case_table_names=1
-
-[client]
-socket = /usr/local/mysql/mysql.sock
-default-character-set=utf8
-</code></pre>
-<p>6、初始化MySQL数据目录<br>在安装MySQL之前，需要初始化MySQL数据目录。首先，创建一个用于存储数据的目录，例如：</p>
-<pre><code>sudo mkdir -p /usr/local/mysql/data
-</code></pre>
-<p>7、创建 mysql 用户组和 mysql 用户</p>
-<pre><code>groupadd mysql
-useradd -g mysql mysql
-chown -R mysql.mysql /usr/local/mysql/
-</code></pre>
-<p>接下来，使用mysqld命令初始化MySQL数据目录：</p>
-<pre><code>sudo /usr/local/mysql/bin/mysqld --initialize --user=mysql --basedir=/usr/local/mysql --datadir=/usr/local/mysql/data
-</code></pre>
-<p>记录好自己的临时密码</p>
-<p>8、建立MySQL服务</p>
-<pre><code>cp /usr/local/mysql/support-files/mysql.server /etc/init.d/mysql
-chmod +x /etc/init.d/mysql
-</code></pre>
-<p>9、添加到系统服务</p>
-<pre><code>cp -a /usr/local/mysql/support-files/mysql.server /etc/init.d/mysqld
-chmod +x /etc/rc.d/init.d/mysqld    
-chkconfig --add mysqld
-</code></pre>
-<p>添加到开启启动项</p>
-<pre><code>sudo systemctl enable mysqld
-</code></pre>
-<p>检查服务是否生效</p>
-<pre><code>chkconfig  --list mysqld
-</code></pre>
-<p>10、添加到PATH环境变量</p>
-<p>配置全局环境变量 编辑 / etc/profile 文件</p>
-<pre><code>vi /etc/profile
-</code></pre>
-<p>在 profile 文件底部添加如下两行配置，保存后退出</p>
-<pre><code>export PATH=$PATH:/usr/local/mysql/bin:/usr/local/mysql/lib
-export PATH
-</code></pre>
-<p>设置环境变量立即生效</p>
-<pre><code>source /etc/profile
-</code></pre>
-<p>然后，重新加载配置文件或重新启动终端，使更改生效。</p>
-<p>11、启动MySQL服务</p>
-<p>启动MySQL服务：</p>
-<pre><code>systemctl start mysql
-</code></pre>
-<p>停止MySQL服务：</p>
-<pre><code>systemctl stop mysql
-</code></pre>
-<p>查看MySQL服务状态：</p>
-<pre><code>systemctl status mysql
-</code></pre>
-<p>这将以后台进程的形式启动MySQL服务器。</p>
-<p>12、设置MySQL root密码</p>
-<p>首次启动MySQL后，您需要设置root用户的密码。使用以下命令进入MySQL命令行：</p>
-<pre><code>mysql -uroot -p
-</code></pre>
-<p>在MySQL提示符下，运行以下命令设置root密码（将”your_new_password”替换为您想要的实际密码）：</p>
-<pre><code>ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;your_new_password&#39;;
-</code></pre>
-<p>13、设置可以远程登录</p>
-<p>先登录mysql，在mysql里操作</p>
-<pre><code>use mysql
-update user set host=&#39;%&#39; where user=&#39;root&#39; limit 1;
-</code></pre>
-<p>刷新权限</p>
-<pre><code>flush privileges;
-</code></pre>
-<p>恭喜！您已经在Linux系统上成功安装并初始化了MySQL 8.1.0版本。现在可以开始使用MySQL进行数据库操作。</p>
-<p>————————————————<br>版权声明：本文为CSDN博主「Terence全栈开发」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_39997939/article/details/131993593">https://blog.csdn.net/qq_39997939/article/details/131993593</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Centos7开放3306端口-iptables"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/11/02/Centos7%E5%BC%80%E6%94%BE3306%E7%AB%AF%E5%8F%A3-iptables/"
-    >Centos7开放端口-iptables</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/11/02/Centos7%E5%BC%80%E6%94%BE3306%E7%AB%AF%E5%8F%A3-iptables/" class="article-date">
-  <time datetime="2023-11-02T13:28:00.000Z" itemprop="datePublished">2023-11-02</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>CentOS防火墙也可以还原传统的管理方式使用 iptables</p>
-<pre><code>systemctl stop firewalld  
-systemctl mask firewalld  
-</code></pre>
-<p>安装 iptables-services</p>
-<pre><code>yum install iptables-services  
-</code></pre>
-<p>设置开机启动</p>
-<pre><code>systemctl enable iptables
-</code></pre>
-<p>操作命令</p>
-<pre><code>systemctl stop iptables  
-systemctl start iptables  
-systemctl restart iptables  
-systemctl reload iptables 
-</code></pre>
-<p>保存设置</p>
-<pre><code>service iptables save
-</code></pre>
-<p>开放某个端口<br>在 /etc/sysconfig/iptables 里添加</p>
-<pre><code>-A RH-Firewall-1-INPUT -m state --state NEW -m tcp -p tcp --dport 8080 -j ACCEPT
-</code></pre>
-<p>————————————————<br>版权声明：本文为CSDN博主「十&amp;年」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/xubenxismile/article/details/107835931">https://blog.csdn.net/xubenxismile/article/details/107835931</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NGINX/" rel="tag">NGINX</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Visual Studio 编译器警告：该文件包含不能在当前代码页（936）中表示的字符"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/11/01/Visual%20Studio%20%E7%BC%96%E8%AF%91%E5%99%A8%E8%AD%A6%E5%91%8A%EF%BC%9A%E8%AF%A5%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E4%B8%8D%E8%83%BD%E5%9C%A8%E5%BD%93%E5%89%8D%E4%BB%A3%E7%A0%81%E9%A1%B5%EF%BC%88936%EF%BC%89%E4%B8%AD%E8%A1%A8%E7%A4%BA%E7%9A%84%E5%AD%97%E7%AC%A6/"
-    >Visual Studio 编译器警告：该文件包含不能在当前代码页（936）中表示的字符。</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/11/01/Visual%20Studio%20%E7%BC%96%E8%AF%91%E5%99%A8%E8%AD%A6%E5%91%8A%EF%BC%9A%E8%AF%A5%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E4%B8%8D%E8%83%BD%E5%9C%A8%E5%BD%93%E5%89%8D%E4%BB%A3%E7%A0%81%E9%A1%B5%EF%BC%88936%EF%BC%89%E4%B8%AD%E8%A1%A8%E7%A4%BA%E7%9A%84%E5%AD%97%E7%AC%A6/" class="article-date">
-  <time datetime="2023-11-01T13:28:00.000Z" itemprop="datePublished">2023-11-01</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>Visual Studio 编译器警告：该文件包含不能在当前代码页（936）中表示的字符。 以 Unicode 格式保存该文件防止数据丢失。</p>
-<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在利用Visual Studio编译FreeType时，编译器报警告C4819：该文件包含不能在当前代码页（936）中表示的字符。 以 Unicode 格式保存该文件防止数据丢失。一般来说这种警告应该无伤大雅，忽视即可，但按FreeType的开发者们的说法，他们写的代码在编译时应该是一个警告都不会有：</p>
-<p>FreeType is written in industry-standard ANSI C and should compile easily with any compliant C or C++ compiler. We have even taken great care to eliminate all warnings when compiling with popular compilers like gcc, Visual C++, and Borland C++.<br>这勾起了我的好奇心，我想弄清楚如何以一种较为合理（优雅）的方式去消除这个警告。</p>
-<h1 id="分析与解决"><a href="#分析与解决" class="headerlink" title="分析与解决"></a>分析与解决</h1><p>按微软官方文档的说法：</p>
-<p>在不能表示文件中所有字符的代码页的系统上编译 ANSI 源文件时，出现 C4819。<br>C4819 occurs when you compile an ANSI source file on a system using a codepage that can’t represent all characters in the file.<br>代码页（code page）是一类字符的编码方案，编号为936的代码页对应的字符编码为GB2312（参见 Code Page Identifiers - Win32 apps | Microsoft Learn），所以我遇到的问题是：我的编程环境所用的编码是GB2312, 但我编译的源文件中却含有不能用GB2312表示的字符。按官方文档的说法，有如下三种解决方案：</p>
-<h2 id="方案1："><a href="#方案1：" class="headerlink" title="方案1："></a>方案1：</h2><p>将源文件里不能用GB2312表示的字符给删了，因为这种字符往往仅出现在注释中，删掉对编译没有什么影响。这种做法有些许简单粗暴，且仅适合用在不能表示的字符数量较少的情境中，不够优雅。</p>
-<h2 id="方案2："><a href="#方案2：" class="headerlink" title="方案2："></a>方案2：</h2><p>将源文件以Unicode格式保存，具体操作如下：</p>
-<p>在 Visual Studio 中，选择“文件”&gt;“另存为”。 在“将文件另存为”对话框中，选择“保存”按钮旁的下拉菜单，然后选择“保存时使用编码”。 如果保存到同一文件名，可能需要确认要替换该文件。 在“高级保存选项”对话框中，选择可表示该文件中所有字符的编码（例如，Unicode（带签名的 UTF-8）- Codepage 65001，然后选择“确定”。<br>不过我下载的FreeType源码应该本身就是以Unicode格式进行编码的，所以貌似不应该是这种解决方案。事实上这种方案也并没有解决该编译器警告问题。</p>
-<h2 id="方案3："><a href="#方案3：" class="headerlink" title="方案3："></a>方案3：</h2><p>将系统代码页设置为支持源代码使用的字符集，简单来说，就是让我们的Windows系统支持使用Unicode编码的字符。我认为这应该是最优雅的解决方式，毕竟作为程序员，Unicode与UTF-8应该是必须要熟悉与运用的，于情于理要让我们使用的系统支持使用Unicode。</p>
-<p>这里提一嘴Unicode与UTF-8的关系：Unicode标准定义的是一个字符到一个整数的映射关系，也就是将一个字符用一个数字进行唯一的编号；而UTF-8则可以看作Unicode在计算机中的实现，如何将这个整数用一个合适的01序列进行编码并储存在计算机中，就是UTF-8干的事；UTF-16也是Unicode的一种实现，但感觉还是UTF-8的应用更广泛一些。</p>
-<p>设置方法：Windows 设置&gt;时间&amp;语言&gt;区域&gt;管理语言设置&gt;更改系统区域设置，勾选Beta 版：使用 Unicode UTF-8 获取全球语言支持，然后要重启一下电脑，使更改生效。(图示版见封面)</p>
-<p>方案3成功解决了我的问题，不过根据评论区的建议，谨慎采用.</p>
-<h2 id="方案4："><a href="#方案4：" class="headerlink" title="方案4："></a>方案4：</h2><p>编译时，设置VC项目中的C/C++命令行 -&gt;其他选项，增加 /utf-8</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Visual-Studio/" rel="tag">Visual Studio</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-终端通讯规约类型"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/10/31/%E7%BB%88%E7%AB%AF%E9%80%9A%E8%AE%AF%E8%A7%84%E7%BA%A6%E7%B1%BB%E5%9E%8B/"
-    >终端通讯规约类型</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/10/31/%E7%BB%88%E7%AB%AF%E9%80%9A%E8%AE%AF%E8%A7%84%E7%BA%A6%E7%B1%BB%E5%9E%8B/" class="article-date">
-  <time datetime="2023-10-31T02:28:00.000Z" itemprop="datePublished">2023-10-31</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://www.techphant.cn/blog/2305.html">https://www.techphant.cn/blog/2305.html</a><br>终端通讯规约类型<br>作者： 技象物联网 / 行业百科 / 通信系统, 通讯规约 / 2023年9月16日 09:45:01</p>
-<p>终端通讯规约类型是一种用来控制和管理计算机网络上的数据传输的标准。它定义了发送和接收方如何在网络上传输数据，以及传输的数据格式、编码和传输时间。终端通讯规约类型可以帮助网络管理员更容易地管理网络，并且可以帮助网络用户更容易地使用网络。</p>
-<p>终端通讯规约类型关键词</p>
-<p>1.信息格式<br>信息格式是指网络上传输的数据的格式，它可以是文本、图像、声音或视频等。网络上的数据传输必须遵循一定的格式，以便发送方和接收方能够正确地识别和处理数据。</p>
-<p>2.编码方式<br>编码方式是指将信息转换成数字或字符码的方式。编码是为了使信息能够被网络传输，使发送方和接收方能够正确地识别和处理信息。</p>
-<p>3.传输时间<br>传输时间是指网络上传输数据的时间。它可以是实时传输，也可以是延迟传输。网络上传输数据的传输时间取决于网络带宽、网络负载和网络延迟等因素。</p>
-<p>总结<br>终端通讯规约类型是一种用来控制和管理计算机网络上的数据传输的标准。它定义了发送和接收方如何在网络上传输数据，以及传输的数据格式、编码和传输时间。终端通讯规约类型包括信息格式、编码方式和传输时间等关键词，它们可以帮助网络管理员更容易地管理网络，并且可以帮助网络用户更容易地使用网络。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%80%9A%E4%BF%A1/" rel="tag">通信</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
   </article>
   
 
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/6/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/57/">57</a><a class="extend next" rel="next" href="/page/8/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/6/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/58/">58</a><a class="extend next" rel="next" href="/page/8/">下一页</a>
   </nav>
   
 </section>
