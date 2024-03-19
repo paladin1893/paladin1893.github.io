@@ -154,6 +154,246 @@
     
     
     <article
+  id="post-GO入门10：移除所有空格"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/04/06/GO%E5%85%A5%E9%97%A810%EF%BC%9A%E7%A7%BB%E9%99%A4%E6%89%80%E6%9C%89%E7%A9%BA%E6%A0%BC/"
+    >GO入门10：移除所有空格</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/04/06/GO%E5%85%A5%E9%97%A810%EF%BC%9A%E7%A7%BB%E9%99%A4%E6%89%80%E6%9C%89%E7%A9%BA%E6%A0%BC/" class="article-date">
+  <time datetime="2023-04-06T07:40:48.000Z" itemprop="datePublished">2023-04-06</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>Golang unicode.IsSpace() Function with Examples<br>Golang | unicode.IsSpace() Function: Here, we are going to learn about the IsSpace() function of the unicode package with its usages, syntax, and examples.<br>Submitted by IncludeHelp, on September 17, 2021<br>unicode.IsSpace()<br>The IsSpace() function is an inbuilt function of the unicode package which is used to check whether the given rune r is a space character as defined by Unicode’s White Space property.</p>
+<p>It accepts one parameter (r rune) and returns true if rune r is a space character; false, otherwise.</p>
+<p>Syntax:</p>
+<pre><code>func IsSpace(r rune) bool
+</code></pre>
+<p>Parameter(s):</p>
+<pre><code>r : Rune type value to be checked whether it is a space character or not.
+</code></pre>
+<p>Return Value:</p>
+<p>The return type of the unicode.IsSpace() function is a bool, it returns true if rune r is a space character; false, otherwise.</p>
+<p>Example 1:</p>
+<pre><code>// Golang program to demonstrate the
+// example of unicode.IsSpace() Function
+
+package main
+
+import (
+    &quot;fmt&quot;
+    &quot;unicode&quot;
+)
+
+func main() &#123;
+    fmt.Println(&quot;unicode.IsSpace(&#39; &#39;):&quot;,
+        unicode.IsSpace(&#39; &#39;))
+    fmt.Println(&quot;unicode.IsSpace(&#39;\\t&#39;):&quot;,
+        unicode.IsSpace(&#39;\t&#39;))
+    fmt.Println(&quot;unicode.IsSpace(&#39;\\v&#39;):&quot;,
+        unicode.IsSpace(&#39;\v&#39;))
+    fmt.Println(&quot;unicode.IsSpace(&#39;\\f&#39;):&quot;,
+        unicode.IsSpace(&#39;\f&#39;))
+    fmt.Println(&quot;unicode.IsSpace(&#39;\\r&#39;)&quot;,
+        unicode.IsSpace(&#39;\r&#39;))
+    fmt.Println(&quot;unicode.IsSpace(&#39;G&#39;):&quot;,
+        unicode.IsSpace(&#39;G&#39;))
+    fmt.Println(&quot;unicode.IsSpace(&#39;\\a&#39;):&quot;,
+        unicode.IsSpace(&#39;\a&#39;))
+&#125;
+</code></pre>
+<p>Output:</p>
+<pre><code>unicode.IsSpace(&#39; &#39;): true
+unicode.IsSpace(&#39;\t&#39;): true
+unicode.IsSpace(&#39;\v&#39;): true
+unicode.IsSpace(&#39;\f&#39;): true
+unicode.IsSpace(&#39;\r&#39;) true
+unicode.IsSpace(&#39;G&#39;): false
+unicode.IsSpace(&#39;\a&#39;): false
+</code></pre>
+<p>Example 2:</p>
+<pre><code>// Golang program to demonstrate the
+// example of unicode.IsSpace() Function
+
+package main
+
+import (
+    &quot;fmt&quot;
+    &quot;unicode&quot;
+)
+
+func main() &#123;
+    var r rune
+    var result bool
+
+    r = &#39; &#39;
+    result = unicode.IsSpace(r)
+    if result == true &#123;
+        fmt.Printf(&quot;%c (%x) is a space character.\n&quot;, r, r)
+    &#125; else &#123;
+        fmt.Printf(&quot;%c (%x) is not a space character.\n&quot;, r, r)
+    &#125;
+
+    r = &#39;A&#39;
+    result = unicode.IsSpace(r)
+    if result == true &#123;
+        fmt.Printf(&quot;%c (%x) is a space character.\n&quot;, r, r)
+    &#125; else &#123;
+        fmt.Printf(&quot;%c (%x) is not a space character.\n&quot;, r, r)
+    &#125;
+
+    r = &#39;\t&#39;
+    result = unicode.IsSpace(r)
+    if result == true &#123;
+        fmt.Printf(&quot;%c (%x) is a space character.\n&quot;, r, r)
+    &#125; else &#123;
+        fmt.Printf(&quot;%c (%x) is not a space character.\n&quot;, r, r)
+    &#125;
+&#125;
+</code></pre>
+<p>Output:</p>
+<pre><code>  (20) is a space character.
+A (41) is not a space character.
+     (9) is a space character.
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GO/" rel="tag">GO</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-GO入门09：HTTP"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/04/05/GO%E5%85%A5%E9%97%A809%EF%BC%9AHTTP/"
+    >GO入门09：HTTP</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/04/05/GO%E5%85%A5%E9%97%A809%EF%BC%9AHTTP/" class="article-date">
+  <time datetime="2023-04-05T15:47:46.000Z" itemprop="datePublished">2023-04-05</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>POSTMAN可以看请求的代码实现，GO参考：</p>
+<pre><code>package main
+
+import (
+  &quot;fmt&quot;
+  &quot;strings&quot;
+  &quot;net/http&quot;
+  &quot;io/ioutil&quot;
+)
+
+func main() &#123;
+
+  url := &quot;http://192.168.2.198:27001/server/external&quot;
+  method := &quot;POST&quot;
+
+  payload := strings.NewReader(&quot;sysParams=%7B%22route%22%3A%22DefectController_getDevice%22%2C%22params%22%3A%7B%22deviceType%22%3A%22byq%22%2C%22objId%22%3A%22ffb950f8-3be3-456f-99e1-a5b5f505a80c%22%2C%22auth%22%3A%22all%22%2C%22uploadType%22%3A%22out%22%7D%7D&amp;code=crm&amp;token=0049D6EA-0D13-4890-BD6D-CF53873CD33C&quot;)
+
+  client := &amp;http.Client &#123;
+  &#125;
+  req, err := http.NewRequest(method, url, payload)
+
+  if err != nil &#123;
+    fmt.Println(err)
+    return
+  &#125;
+  req.Header.Add(&quot;Content-Type&quot;, &quot;application/x-www-form-urlencoded&quot;)
+  req.Header.Add(&quot;Cache-Control&quot;, &quot;no-cache&quot;)
+  req.Header.Add(&quot;Postman-Token&quot;, &quot;b2b58722-bac9-4a03-bee8-0e8378d0ec75&quot;)
+
+  res, err := client.Do(req)
+  if err != nil &#123;
+    fmt.Println(err)
+    return
+  &#125;
+  defer res.Body.Close()
+
+  body, err := ioutil.ReadAll(res.Body)
+  if err != nil &#123;
+    fmt.Println(err)
+    return
+  &#125;
+  fmt.Println(string(body))
+&#125;
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GO/" rel="tag">GO</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-GO入门08：写文件"
   class="article article-type-post"
   itemscope
@@ -716,364 +956,6 @@ func main() &#123;
     &#125; else &#123;
         fmt.Println(&quot;Facebook 站点不存在&quot;)
     &#125;
-&#125;
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GO/" rel="tag">GO</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-GO入门04：结构体"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/03/31/GO%E5%85%A5%E9%97%A804%EF%BC%9A%E7%BB%93%E6%9E%84%E4%BD%93/"
-    >GO入门04：结构体</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/03/31/GO%E5%85%A5%E9%97%A804%EF%BC%9A%E7%BB%93%E6%9E%84%E4%BD%93/" class="article-date">
-  <time datetime="2023-03-31T15:09:29.000Z" itemprop="datePublished">2023-03-31</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="Go-语言结构体"><a href="#Go-语言结构体" class="headerlink" title="Go 语言结构体"></a>Go 语言结构体</h1><p>Go 语言中数组可以存储同一类型的数据，但在结构体中我们可以为不同项定义不同的数据类型。</p>
-<p>结构体是由一系列具有相同类型或不同类型的数据构成的数据集合。</p>
-<p>结构体表示一项记录，比如保存图书馆的书籍记录，每本书有以下属性：</p>
-<pre><code>Title ：标题
-Author ： 作者
-Subject：学科
-ID：书籍ID
-</code></pre>
-<h1 id="定义结构体"><a href="#定义结构体" class="headerlink" title="定义结构体"></a>定义结构体</h1><p>结构体定义需要使用 type 和 struct 语句。struct 语句定义一个新的数据类型，结构体中有一个或多个成员。type 语句设定了结构体的名称。结构体的格式如下：</p>
-<pre><code>type struct_variable_type struct &#123;
-   member definition
-   member definition
-   ...
-   member definition
-&#125;
-</code></pre>
-<p>一旦定义了结构体类型，它就能用于变量的声明，语法格式如下：</p>
-<pre><code>variable_name := structure_variable_type &#123;value1, value2...valuen&#125;
-或
-variable_name := structure_variable_type &#123; key1: value1, key2: value2..., keyn: valuen&#125;
-</code></pre>
-<p>实例如下：</p>
-<pre><code>package main
-
-import &quot;fmt&quot;
-
-type Books struct &#123;
-   title string
-   author string
-   subject string
-   book_id int
-&#125;
-
-
-func main() &#123;
-
-    // 创建一个新的结构体
-    fmt.Println(Books&#123;&quot;Go 语言&quot;, &quot;www.runoob.com&quot;, &quot;Go 语言教程&quot;, 6495407&#125;)
-
-    // 也可以使用 key =&gt; value 格式
-    fmt.Println(Books&#123;title: &quot;Go 语言&quot;, author: &quot;www.runoob.com&quot;, subject: &quot;Go 语言教程&quot;, book_id: 6495407&#125;)
-
-    // 忽略的字段为 0 或 空
-   fmt.Println(Books&#123;title: &quot;Go 语言&quot;, author: &quot;www.runoob.com&quot;&#125;)
-&#125;
-</code></pre>
-<p>输出结果为：</p>
-<pre><code>&#123;Go 语言 www.runoob.com Go 语言教程 6495407&#125;
-&#123;Go 语言 www.runoob.com Go 语言教程 6495407&#125;
-&#123;Go 语言 www.runoob.com  0&#125;
-</code></pre>
-<h1 id="访问结构体成员"><a href="#访问结构体成员" class="headerlink" title="访问结构体成员"></a>访问结构体成员</h1><p>如果要访问结构体成员，需要使用点号 . 操作符，格式为：</p>
-<pre><code>结构体.成员名
-</code></pre>
-<p>结构体类型变量使用 struct 关键字定义，实例如下：</p>
-<pre><code>package main
-
-import &quot;fmt&quot;
-
-type Books struct &#123;
-   title string
-   author string
-   subject string
-   book_id int
-&#125;
-
-func main() &#123;
-   var Book1 Books        /* 声明 Book1 为 Books 类型 */
-   var Book2 Books        /* 声明 Book2 为 Books 类型 */
-
-   /* book 1 描述 */
-   Book1.title = &quot;Go 语言&quot;
-   Book1.author = &quot;www.runoob.com&quot;
-   Book1.subject = &quot;Go 语言教程&quot;
-   Book1.book_id = 6495407
-
-   /* book 2 描述 */
-   Book2.title = &quot;Python 教程&quot;
-   Book2.author = &quot;www.runoob.com&quot;
-   Book2.subject = &quot;Python 语言教程&quot;
-   Book2.book_id = 6495700
-
-   /* 打印 Book1 信息 */
-   fmt.Printf( &quot;Book 1 title : %s\n&quot;, Book1.title)
-   fmt.Printf( &quot;Book 1 author : %s\n&quot;, Book1.author)
-   fmt.Printf( &quot;Book 1 subject : %s\n&quot;, Book1.subject)
-   fmt.Printf( &quot;Book 1 book_id : %d\n&quot;, Book1.book_id)
-
-   /* 打印 Book2 信息 */
-   fmt.Printf( &quot;Book 2 title : %s\n&quot;, Book2.title)
-   fmt.Printf( &quot;Book 2 author : %s\n&quot;, Book2.author)
-   fmt.Printf( &quot;Book 2 subject : %s\n&quot;, Book2.subject)
-   fmt.Printf( &quot;Book 2 book_id : %d\n&quot;, Book2.book_id)
-&#125;
-</code></pre>
-<p>以上实例执行运行结果为：</p>
-<pre><code>Book 1 title : Go 语言
-Book 1 author : www.runoob.com
-Book 1 subject : Go 语言教程
-Book 1 book_id : 6495407
-Book 2 title : Python 教程
-Book 2 author : www.runoob.com
-Book 2 subject : Python 语言教程
-Book 2 book_id : 6495700
-</code></pre>
-<h1 id="结构体作为函数参数"><a href="#结构体作为函数参数" class="headerlink" title="结构体作为函数参数"></a>结构体作为函数参数</h1><p>你可以像其他数据类型一样将结构体类型作为参数传递给函数。并以以上实例的方式访问结构体变量：</p>
-<pre><code>package main
-
-import &quot;fmt&quot;
-
-type Books struct &#123;
-   title string
-   author string
-   subject string
-   book_id int
-&#125;
-
-func main() &#123;
-   var Book1 Books        /* 声明 Book1 为 Books 类型 */
-   var Book2 Books        /* 声明 Book2 为 Books 类型 */
-
-   /* book 1 描述 */
-   Book1.title = &quot;Go 语言&quot;
-   Book1.author = &quot;www.runoob.com&quot;
-   Book1.subject = &quot;Go 语言教程&quot;
-   Book1.book_id = 6495407
-
-   /* book 2 描述 */
-   Book2.title = &quot;Python 教程&quot;
-   Book2.author = &quot;www.runoob.com&quot;
-   Book2.subject = &quot;Python 语言教程&quot;
-   Book2.book_id = 6495700
-
-   /* 打印 Book1 信息 */
-   printBook(Book1)
-
-   /* 打印 Book2 信息 */
-   printBook(Book2)
-&#125;
-
-func printBook( book Books ) &#123;
-   fmt.Printf( &quot;Book title : %s\n&quot;, book.title)
-   fmt.Printf( &quot;Book author : %s\n&quot;, book.author)
-   fmt.Printf( &quot;Book subject : %s\n&quot;, book.subject)
-   fmt.Printf( &quot;Book book_id : %d\n&quot;, book.book_id)
-&#125;
-</code></pre>
-<p>以上实例执行运行结果为：</p>
-<pre><code>Book title : Go 语言
-Book author : www.runoob.com
-Book subject : Go 语言教程
-Book book_id : 6495407
-Book title : Python 教程
-Book author : www.runoob.com
-Book subject : Python 语言教程
-Book book_id : 6495700
-</code></pre>
-<h1 id="结构体指针"><a href="#结构体指针" class="headerlink" title="结构体指针"></a>结构体指针</h1><p>你可以定义指向结构体的指针类似于其他指针变量，格式如下：</p>
-<pre><code>var struct_pointer *Books
-</code></pre>
-<p>以上定义的指针变量可以存储结构体变量的地址。查看结构体变量地址，可以将 &amp; 符号放置于结构体变量前：</p>
-<pre><code>struct_pointer = &amp;Book1
-</code></pre>
-<p>使用结构体指针访问结构体成员，使用 “.” 操作符：</p>
-<pre><code>struct_pointer.title
-</code></pre>
-<p>接下来让我们使用结构体指针重写以上实例，代码如下：</p>
-<pre><code>package main
-
-import &quot;fmt&quot;
-
-type Books struct &#123;
-   title string
-   author string
-   subject string
-   book_id int
-&#125;
-
-func main() &#123;
-   var Book1 Books        /* 声明 Book1 为 Books 类型 */
-   var Book2 Books        /* 声明 Book2 为 Books 类型 */
-
-   /* book 1 描述 */
-   Book1.title = &quot;Go 语言&quot;
-   Book1.author = &quot;www.runoob.com&quot;
-   Book1.subject = &quot;Go 语言教程&quot;
-   Book1.book_id = 6495407
-
-   /* book 2 描述 */
-   Book2.title = &quot;Python 教程&quot;
-   Book2.author = &quot;www.runoob.com&quot;
-   Book2.subject = &quot;Python 语言教程&quot;
-   Book2.book_id = 6495700
-
-   /* 打印 Book1 信息 */
-   printBook(&amp;Book1)
-
-   /* 打印 Book2 信息 */
-   printBook(&amp;Book2)
-&#125;
-func printBook( book *Books ) &#123;
-   fmt.Printf( &quot;Book title : %s\n&quot;, book.title)
-   fmt.Printf( &quot;Book author : %s\n&quot;, book.author)
-   fmt.Printf( &quot;Book subject : %s\n&quot;, book.subject)
-   fmt.Printf( &quot;Book book_id : %d\n&quot;, book.book_id)
-&#125;
-</code></pre>
-<p>以上实例执行运行结果为：</p>
-<pre><code>Book title : Go 语言
-Book author : www.runoob.com
-Book subject : Go 语言教程
-Book book_id : 6495407
-Book title : Python 教程
-Book author : www.runoob.com
-Book subject : Python 语言教程
-Book book_id : 6495700
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GO/" rel="tag">GO</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-GO入门03：关系运算符"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/03/30/GO%E5%85%A5%E9%97%A803%EF%BC%9A%E5%85%B3%E7%B3%BB%E8%BF%90%E7%AE%97%E7%AC%A6/"
-    >GO入门03：关系运算符</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/03/30/GO%E5%85%A5%E9%97%A803%EF%BC%9A%E5%85%B3%E7%B3%BB%E8%BF%90%E7%AE%97%E7%AC%A6/" class="article-date">
-  <time datetime="2023-03-30T14:54:23.000Z" itemprop="datePublished">2023-03-30</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h1><pre><code>关系运算符
-</code></pre>
-<h1 id="示例代码："><a href="#示例代码：" class="headerlink" title="示例代码："></a>示例代码：</h1><pre><code>package main
-
-import &quot;fmt&quot;
-
-func main() &#123;
-   var a int = 21
-   var b int = 10
-
-   if( a == b ) &#123;
-      fmt.Printf(&quot;第一行 - a 等于 b\n&quot; )
-   &#125; else &#123;
-      fmt.Printf(&quot;第一行 - a 不等于 b\n&quot; )
-   &#125;
-   if ( a &lt; b ) &#123;
-      fmt.Printf(&quot;第二行 - a 小于 b\n&quot; )
-   &#125; else &#123;
-      fmt.Printf(&quot;第二行 - a 不小于 b\n&quot; )
-   &#125;
-   
-   if ( a &gt; b ) &#123;
-      fmt.Printf(&quot;第三行 - a 大于 b\n&quot; )
-   &#125; else &#123;
-      fmt.Printf(&quot;第三行 - a 不大于 b\n&quot; )
-   &#125;
-   /* Lets change value of a and b */
-   a = 5
-   b = 20
-   if ( a &lt;= b ) &#123;
-      fmt.Printf(&quot;第四行 - a 小于等于 b\n&quot; )
-   &#125;
-   if ( b &gt;= a ) &#123;
-      fmt.Printf(&quot;第五行 - b 大于等于 a\n&quot; )
-   &#125;
 &#125;
 </code></pre>
  

@@ -154,6 +154,145 @@
     
     
     <article
+  id="post-PNMP安装使用"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/08/08/PNMP%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/"
+    >PNMP安装使用</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/08/08/PNMP%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/" class="article-date">
+  <time datetime="2023-08-08T07:14:05.000Z" itemprop="datePublished">2023-08-08</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>简介</p>
+<p>pnpm是一种新起的包管理器，从npm的下载量看，目前还没有超过yarn，但它的实现方式值得主流包管理器学习，某些开发者极力推荐使用pnpm。</p>
+<p>从结果上来看，它具有以下优势：</p>
+<ol>
+<li>目前，安装效率高于npm和yarn的最新版</li>
+<li>极其简洁的node_modules目录</li>
+<li>避免了开发时使用间接依赖的问题</li>
+<li>能极大的降低磁盘空间的占用</li>
+</ol>
+<p>// 全局安装<br>npm install pnpm -g</p>
+<p>//查看源<br>pnpm config get registry<br>//切换淘宝源<br>pnpm config set registry <a target="_blank" rel="noopener" href="https://registry.npmmirror.com/">https://registry.npmmirror.com/</a></p>
+<p>// 使用<br>pnpm install 包 // 安装依赖<br>pnpm i  包      // 安装依赖<br>pnpm add 包     // -S  默认写入dependencies<br>pnpm add -D     // -D devDependencies<br>pnpm add -g     // 全局安装</p>
+<p>// 移除<br>pnpm remove 包               // 移除包<br>pnpm remove 包 –global      // 移除全局包</p>
+<p>// 更新<br>pnpm up                      // 更新所有依赖项<br>pnpm upgrade 包              // 更新包<br>pnpm upgrade 包 –global     // 更新全局包</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PNMP/" rel="tag">PNMP</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-finereport入门系列（四）"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/08/07/finereport%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97%EF%BC%88%E5%9B%9B%EF%BC%89/"
+    >finereport入门系列（四）</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/08/07/finereport%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97%EF%BC%88%E5%9B%9B%EF%BC%89/" class="article-date">
+  <time datetime="2023-08-07T05:02:05.000Z" itemprop="datePublished">2023-08-07</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="决策报表自动查询"><a href="#决策报表自动查询" class="headerlink" title="决策报表自动查询"></a>决策报表自动查询</h1><ol>
+<li>概述</li>
+<li>1 应用场景<br>在决策报表中，控件可以添加到参数界面使用「查询」按钮查询数据，也可以直接在 body 中使用，但是在 body 中使用时，控件是无法直接使用查询按钮来查询数据的，那我们要如何实现控件联动查询数据呢？</li>
+</ol>
+<p>例如：在 body 中的下拉框控件选择「地区」，其他使用了地区参数的组件能根据选择的地区展示对应数据。预期效果 </p>
+<p>1.2 实现思路<br>在数据集中定义地区参数为 $area ，将下拉框控件的名称修改为与地区参数相同的名称 area，即可使用参数联动控件实现自动查询。</p>
+<p>若想要实现在参数界面实现自动查询请参考：JS实现决策报表参数界面自动查询。</p>
+<ol start="2">
+<li>示例</li>
+<li>1 数据准备<br>1）点击设计器左上角「文件&gt;新建决策报表」，新建空白模板。</li>
+</ol>
+<p>2）新建一个数据库查询 ds1，SQL 查询语句为：</p>
+<pre><code>SELECT * FROM 销量 where 1=1 $&#123;if(len(area)=0,&quot;&quot;,&quot; and 地区=&#39;&quot;+area+&quot;&#39;&quot;)&#125;
+</code></pre>
+<p>即定义 area 参数，值为「地区」字段，且当 参数为空时展示全部数据 。</p>
+<p>2.2 决策报表设计<br>1）将 body 的布局方式修改为「绝对布局」，再向 body 中拖入「报表块」、「饼图」、「标签控件」和「下拉框控件」。 </p>
+<p>2）设置「标签控件」的控件值为「地区：」；「下拉框控件」的控件名称为「area」，即将下拉框控件与参数 $area 绑定。</p>
+<p>注：必须保证「下拉框控件」的控件名称与参数名称 area 保持一致。</p>
+<p>3）设置「下拉框控件」的数据字典为「数据库表」销量表，实际值和显示值均为「地区」。 </p>
+<p>2.3 设计报表块<br>双击报表块，进入报表块编辑界面，拖入「地区、销售员、销量」字段，设置 C2 单元格的数据设置为「汇总&gt;求和」。单元格样式可在「单元格属性&gt;样式」中自行设置。</p>
+<p>2.4 绑定图表数据<br>双击饼图，设置饼图的数据来源：数据集为 ds1，系列名为「销售员」，值为「销量」，汇总方式为「求和」。 </p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/finereport/" rel="tag">finereport</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-finereport入门系列（三）"
   class="article article-type-post"
   itemscope
@@ -429,128 +568,6 @@ cc.setValue(x);    //给控件赋值
     <footer class="article-footer">
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/xampp/" rel="tag">xampp</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-VeraCrypt好用的硬盘加密工具"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/08/02/VeraCrypt%E5%A5%BD%E7%94%A8%E7%9A%84%E7%A1%AC%E7%9B%98%E5%8A%A0%E5%AF%86%E5%B7%A5%E5%85%B7/"
-    >VeraCrypt好用的硬盘加密工具</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/08/02/VeraCrypt%E5%A5%BD%E7%94%A8%E7%9A%84%E7%A1%AC%E7%9B%98%E5%8A%A0%E5%AF%86%E5%B7%A5%E5%85%B7/" class="article-date">
-  <time datetime="2023-08-02T13:03:13.000Z" itemprop="datePublished">2023-08-02</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>VeraCrypt is a free open source disk encryption software for Windows, Mac OSX and Linux. Brought to you by IDRIX (<a target="_blank" rel="noopener" href="https://www.idrix.fr/">https://www.idrix.fr</a>) and based on TrueCrypt 7.1a.</p>
-<h1 id="VeraCrypt-main-features"><a href="#VeraCrypt-main-features" class="headerlink" title="VeraCrypt main features:"></a>VeraCrypt main features:</h1><ul>
-<li>Creates a virtual encrypted disk within a file and mounts it as a real disk.</li>
-<li>Encrypts an entire partition or storage device such as USB flash drive or hard drive.</li>
-<li>Encrypts a partition or drive where Windows is installed (pre-boot authentication).</li>
-<li>Encryption is automatic, real-time(on-the-fly) and transparent.</li>
-<li>Parallelization and pipelining allow data to be read and written as fast as if the drive was not encrypted.</li>
-<li>Encryption can be hardware-accelerated on modern processors.</li>
-<li>Provides plausible deniability, in case an adversary forces you to reveal the password: Hidden volume (steganography) and hidden operating system.</li>
-<li>More information about the features of VeraCrypt may be found in the documentation</li>
-</ul>
-<h1 id="What-does-VeraCrypt-bring-to-you"><a href="#What-does-VeraCrypt-bring-to-you" class="headerlink" title="What does VeraCrypt bring to you?"></a>What does VeraCrypt bring to you?</h1><p>VeraCrypt adds enhanced security to the algorithms used for system and partitions encryption making it immune to new developments in brute-force attacks.<br>VeraCrypt also solves many vulnerabilities and security issues found in TrueCrypt.</p>
-<p>As an example, when the system partition is encrypted, TrueCrypt uses PBKDF2-RIPEMD160 with 1000 iterations whereas in VeraCrypt we use 200000 iterations by default (can be increased using a custom PIM). And for standard containers and other partitions, TrueCrypt uses at most 2000 iterations but VeraCrypt uses 500000 iterations by default (can also be increased using a custom PIM).</p>
-<p>This enhanced security adds some delay only to the opening of encrypted partitions without any performance impact to the application use phase. This is acceptable to the legitimate owner but it makes it much harder for an attacker to gain access to the encrypted data.</p>
-<p>Starting from version 1.12, it is possible to use custom iterations through the PIM feature, which can be used to increase the encryption security.</p>
-<p>Starting from version 1.0f, VeraCrypt can load TrueCrypt volume. It also offers the possibility to convert TrueCrypt containers and non-system partitions to VeraCrypt format.</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9A%94%E7%A6%BB%E8%A3%85%E7%BD%AE/" rel="tag">隔离装置</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-C++工具库集合Harlinn.Windows"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/08/01/C++%E5%B7%A5%E5%85%B7%E5%BA%93%E9%9B%86%E5%90%88Harlinn.Windows/"
-    >C++工具库集合Harlinn.Windows</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/08/01/C++%E5%B7%A5%E5%85%B7%E5%BA%93%E9%9B%86%E5%90%88Harlinn.Windows/" class="article-date">
-  <time datetime="2023-08-01T12:32:41.000Z" itemprop="datePublished">2023-08-01</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>A collection of, mostly, C and C++ libraries</p>
-<p><a target="_blank" rel="noopener" href="https://github.com/Harlinn/Harlinn.Windows">https://github.com/Harlinn/Harlinn.Windows</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Harlinn-Windows/" rel="tag">Harlinn.Windows</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/libraries/" rel="tag">libraries</a></li></ul>
 
     </footer>
   </div>

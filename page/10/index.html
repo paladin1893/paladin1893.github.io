@@ -154,6 +154,315 @@
     
     
     <article
+  id="post-QSS美化控件教程"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/10/25/QSS%E7%BE%8E%E5%8C%96%E6%8E%A7%E4%BB%B6%E6%95%99%E7%A8%8B/"
+    >QSS美化控件教程</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/10/25/QSS%E7%BE%8E%E5%8C%96%E6%8E%A7%E4%BB%B6%E6%95%99%E7%A8%8B/" class="article-date">
+  <time datetime="2023-10-25T02:25:00.000Z" itemprop="datePublished">2023-10-25</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>在使用Qt开发界面程序时，常用控件的美化是一件繁琐的事情，收藏一些基本控件的美化样式，可以在项目开发时节省大量时间，本篇文章由此而出，收集常用的控件美化样式。<br>以下qss代码是直接在Qt Designer设计界面中样式表中添加或者使用QFile读取qss代码进行修改控件样式。</p>
+<h1 id="1、QPushButton美化"><a href="#1、QPushButton美化" class="headerlink" title="1、QPushButton美化"></a>1、QPushButton美化</h1><pre><code>QWidget#Widget&#123;
+background-color:#fff;
+&#125;
+
+QPushButton&#123;
+border:5px solid #fff;
+border-radius:8px;
+padding:1px 5px;
+min-width:120px;
+min-height:35px;
+&#125;
+
+QPushButton#first_btn&#123;
+color:#fff;
+background-color:#0d6efd;
+&#125;
+#first_btn:hover&#123;
+background-color:#0055ff;
+&#125;
+#first_btn:pressed&#123;
+border: 4px solid #98c1fe;
+&#125;
+
+QPushButton#second_btn&#123;
+color:#fff;
+background-color:#6c757d;
+&#125;
+
+#second_btn:hover&#123;
+background-color:#5c636a;
+&#125;
+#second_btn:pressed&#123;
+border:4px solid #c0c4c8;
+&#125;
+
+QPushButton#third_btn&#123;
+color:#fff;
+background-color:#198754;
+&#125;
+#third_btn:hover&#123;
+background-color:#157347;
+&#125;
+#third_btn:pressed&#123;
+border:4px solid #9dccb6;
+&#125;
+
+QPushButton#four_btn&#123;
+color:#fff;
+background-color:#dc3545;
+&#125;
+#four_btn:hover&#123;
+background-color:#bb2d3b;
+&#125;
+#four_btn:pressed&#123;
+border:4px solid #f0a9b0;
+&#125;
+QPushButton#five_btn&#123;
+color:#000;
+background-color:#ffc107;
+&#125;
+#five_btn:hover&#123;
+background-color:#ffca2c;
+&#125;
+#five_btn:pressed&#123;
+border:5px solid #ecd182;
+&#125;
+QPushButton#six_btn&#123;
+color:#000;
+background-color:#0dcaf0;
+&#125;
+#six_btn:hover&#123;
+background-color:#31d2f2;
+&#125;
+#six_btn:pressed&#123;
+border:54x solid #85d5e5;
+&#125;
+QPushButton#seven_btn&#123;
+color:#000;
+background-color:#f8f9fa;
+&#125;
+#seven_btn:hover&#123;
+background-color:#f9fafb;
+&#125;
+#seven_btn:pressed&#123;
+border:4px solid #e9e9ea;
+&#125;
+QPushButton#eight_btn&#123;
+color:#fff;
+background-color:#212529;
+&#125;
+#eight_btn:hover&#123;
+background-color:#1c1f23;
+&#125;
+#eight_btn:pressed&#123;
+border:4px solid #a0a2a4;
+&#125;
+QPushButton#nine_btn&#123;
+color:#fff;
+background-color:#d235d2;
+&#125;
+#nine_btn:hover&#123;
+background-color:#a600a6;
+&#125;
+#nine_btn:pressed&#123;
+border:4px solid #d25fd2;
+&#125;
+</code></pre>
+<h1 id="2、QComboBox美化"><a href="#2、QComboBox美化" class="headerlink" title="2、QComboBox美化"></a>2、QComboBox美化</h1><pre><code>#cbx&#123;
+border:1px #ced4da;
+border-radius:4px;
+padding-left:10px;
+&#125;
+#cbx::drop-down&#123;
+border:0px;
+&#125;
+
+#cbx::down-arrow&#123;
+    border-image: url(:/icons/down.png);
+    width:20px;
+    height:20px;
+    margin-right:20px;
+&#125;
+#cbx:on&#123;
+border:4px solid #c2dbfe;
+&#125;
+#cbx QListView&#123;
+font-size:16px;
+border:1px solid rgba(0,0,0,10%);
+padding:5px;
+background-color:#fff;
+outline:0px;
+&#125;
+#cbx QListView::item&#123;
+padding-left:10px;
+background-color:#fff;
+&#125;
+#cbx QListView::item:hover&#123;
+background-color:#1e90ff;
+&#125;
+#cbx QListView::item:selected&#123;
+background-color:#1e90ff;
+&#125;
+</code></pre>
+<h1 id="3、QLineEdit美化"><a href="#3、QLineEdit美化" class="headerlink" title="3、QLineEdit美化"></a>3、QLineEdit美化</h1><pre><code>QLineEdit&#123;
+color:#fff;
+border:2px solid rgb(37,39,48);
+border-radius:20px;
+padding-left:20px;
+padding-right:20px;
+background-color:rgb(34,36,44);
+&#125;
+QLineEdit:hover&#123;
+border:4px solid rgb(48,50,62);
+&#125;
+QLineEdit:focus&#123;
+border:4px solid rgb(85,170,255);
+background-color:rgb(43,45,56);
+&#125;
+#Widget&#123;
+background-color:rgb(37,39,48);
+&#125;
+</code></pre>
+<p>————————————————<br>版权声明：本文为CSDN博主「神威难藏泪~」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/Thinking777/article/details/130374425">https://blog.csdn.net/Thinking777/article/details/130374425</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-Python强制替换文件"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/10/24/Python%E5%BC%BA%E5%88%B6%E6%9B%BF%E6%8D%A2%E6%96%87%E4%BB%B6/"
+    >Python强制替换文件</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/10/24/Python%E5%BC%BA%E5%88%B6%E6%9B%BF%E6%8D%A2%E6%96%87%E4%BB%B6/" class="article-date">
+  <time datetime="2023-10-24T02:24:00.000Z" itemprop="datePublished">2023-10-24</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>1、检查文件是否存在</p>
+<p>首先，我们需要检查待替换的文件是否存在。如果文件存在，我们将执行替换操作；如果文件不存在，我们需要进行相应的处理逻辑，比如抛出异常或创建新文件。</p>
+<pre><code>import os
+
+file_path = &#39;/path/to/source/file.txt&#39;
+
+if os.path.exists(file_path):
+    # 文件存在的处理逻辑
+    pass
+else:
+    # 文件不存在的处理逻辑
+    pass
+</code></pre>
+<p>2、备份现有文件<br>接下来，我们需要备份原文件，以便在替换之后可以恢复。</p>
+<pre><code>import shutil
+
+source_file_path = &#39;/path/to/source/file.txt&#39;
+backup_file_path = &#39;/path/to/backup/file.txt&#39;
+
+shutil.copyfile(source_file_path, backup_file_path)
+</code></pre>
+<p>3、替换文件</p>
+<p>现在，我们可以将新文件替换原文件。</p>
+<pre><code>import shutil
+
+new_file_path = &#39;/path/to/new/file.txt&#39;
+source_file_path = &#39;/path/to/source/file.txt&#39;
+
+shutil.copyfile(new_file_path, source_file_path)
+</code></pre>
+<p>4、恢复备份</p>
+<p>如果在替换文件后遇到问题，我们可以使用备份文件恢复原文件。</p>
+<pre><code>import shutil
+
+backup_file_path = &#39;/path/to/backup/file.txt&#39;
+source_file_path = &#39;/path/to/source/file.txt&#39;
+
+shutil.copyfile(backup_file_path, source_file_path)
+</code></pre>
+<hr>
+<p>©著作权归作者所有：来自51CTO博客作者mob64ca12eab427的原创作品，请联系作者获取转载授权，否则将追究法律责任<br>python 强制替换文件<br><a target="_blank" rel="noopener" href="https://blog.51cto.com/u_16213408/7158206">https://blog.51cto.com/u_16213408/7158206</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-PyQt5密码输入框"
   class="article article-type-post"
   itemscope
@@ -694,232 +1003,6 @@ with fileinput.FileInput(file_path, inplace=True, backup=&#39;.bak&#39;) as f:
 </code></pre>
 <p>以上代码将文件D:/test/file.txt中的所有old_text替换为new_text，并保存到原来的文件中。使用inplace参数可以自动备份文件，使用print函数和end参数可以方便地处理文件的输出。</p>
 <h1 id="五、总结"><a href="#五、总结" class="headerlink" title="五、总结"></a>五、总结</h1><p>Python提供了很多方便的模块和函数来处理文件，以上介绍的os、shutil、re、fileinput模块是其中常用的几个。在实际开发中，可以根据实际需求选取相应的模块和函数来完成文件替换操作。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-如果单击眼睛图标显示隐藏密码（QPushButton）"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/10/19/%E5%A6%82%E6%9E%9C%E5%8D%95%E5%87%BB%E7%9C%BC%E7%9D%9B%E5%9B%BE%E6%A0%87%E6%98%BE%E7%A4%BA%E9%9A%90%E8%97%8F%E5%AF%86%E7%A0%81%EF%BC%88QPushButton%EF%BC%89/"
-    >如果单击眼睛图标显示隐藏密码（QPushButton）</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/10/19/%E5%A6%82%E6%9E%9C%E5%8D%95%E5%87%BB%E7%9C%BC%E7%9D%9B%E5%9B%BE%E6%A0%87%E6%98%BE%E7%A4%BA%E9%9A%90%E8%97%8F%E5%AF%86%E7%A0%81%EF%BC%88QPushButton%EF%BC%89/" class="article-date">
-  <time datetime="2023-10-19T02:19:00.000Z" itemprop="datePublished">2023-10-19</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://www.cnpython.com/qa/1374456">https://www.cnpython.com/qa/1374456</a></p>
-<h1 id="方案一"><a href="#方案一" class="headerlink" title="方案一"></a>方案一</h1><p>PyQt5的一大优点是它将自动将信号连接到方法。如果您的应用程序中有一个名为<mybutton>的按钮和一个名为on_<mybutton>_clicked的方法，loadUi将自动连接。所以模式是</mybutton></mybutton></p>
-<pre><code>on_&lt;widget_name&gt;_&lt;signal&gt;
-</code></pre>
-<p>如果我们将此应用于您的问题，您应该将“显示/隐藏”按钮设置为切换按钮。在Qt设计器中，将checkable属性设置为True（或dobtn_show_pwd.clicked.setChecked(True)）</p>
-<p>代码：</p>
-<pre><code>from PyQt5 import QtCore, QtGui, QtWidgets, uic
-from PyQt5.QtWidgets import QPushButton, QLineEdit
-import sys
-
-class MyWindow(QtWidgets.QMainWindow):
-    def __init__(self, maxWidth=None):
-        super(MyWindow, self).__init__()
-        uic.loadUi(&#39;test1.ui&#39;, self)
-
-        self.line_password.setEchoMode(QLineEdit.Password)
-
-    def on_btn_show_pwd_toggled(self, checked):
-        if checked:
-            self.line_password.setEchoMode(QLineEdit.Password)
-        else:
-            self.line_password.setEchoMode(QLineEdit.Normal)
-
-if __name__ == &#39;__main__&#39;:
-    app = QtWidgets.QApplication(sys.argv)
-    window = MyWindow()
-    window.show()
-    sys.exit(app.exec_())
-    
-</code></pre>
-<h1 id="方案二"><a href="#方案二" class="headerlink" title="方案二"></a>方案二</h1><p>另一种可能是将可检查的QAction添加到QLineEdit并连接到toggled（或triggered）信号</p>
-<pre><code>class MyWindow(QtWidgets.QMainWindow):
-    def __init__(self, maxWidth=None):
-        super(MyWindow, self).__init__()
-        uic.loadUi(&#39;MainWindow.ui&#39;, self)
-
-        icon = QtGui.QIcon(&#39;eye-icon.png&#39;)
-        self.showPassAction = QtWidgets.QAction(icon, &#39;Show password&#39;, self)
-        self.line_password.addAction(
-            self.showPassAction, QtWidgets.QLineEdit.TrailingPosition)
-        self.showPassAction.setCheckable(True)
-        self.showPassAction.toggled.connect(self.showPassword)
-
-    def showPassword(self, show):
-        self.line_password.setEchoMode(
-            QtWidgets.QLineEdit.Normal if show else QtWidgets.QLineEdit.Password)
-</code></pre>
-<p>如果只想在按下鼠标时显示密码，则不要连接到toggled信号，而是找到该操作的子QToolButton并连接到pressed和released。在这种情况下，操作不需要是可检查的</p>
-<pre><code>self.line_password.addAction(
-    self.showPassAction, QtWidgets.QLineEdit.TrailingPosition)
-showPassButton = self.line_password.findChild(QtWidgets.QAbstractButton)
-showPassButton.pressed.connect(lambda: self.showPassword(True))
-showPassButton.released.connect(lambda: self.showPassword(False))
-</code></pre>
-<h1 id="方案三"><a href="#方案三" class="headerlink" title="方案三"></a>方案三</h1><p>您可以创建单个函数并切换可见性，而不是创建两个单独的方法，如eyepass_show和eyepass_hide。另外，您正试图通过self.btn_show_pwd.clicked.connect(self.eyepass_hide)和self.btn_show_pwd.clicked.connect(self.eyepass_show)将同一信号两次连接到两种不同的方法</p>
-<p>试着这样做：</p>
-<pre><code>from PyQt5 import QtCore, QtGui, QtWidgets, uic
-from PyQt5.QtWidgets import QPushButton, QLineEdit
-import sys
-import pymysql
-pymysql.install_as_MySQLdb()
-
-class MyWindow(QtWidgets.QMainWindow):
-    def __init__(self, maxWidth=None):
-        super(MyWindow, self).__init__()
-        uic.loadUi(&#39;MainWindow.ui&#39;, self)
-
-        self.eyepass_show()
-        self.eyepass_hide()
-        self.btn_show_pwd.clicked.connect(self.toggleVisibility)
-        
-    def toggleVisibility(self):
-        if self.line_password.echoMode()==QLineEdit.Normal:
-            self.line_password.setEchoMode(QLineEdit.Password)
-        else:
-            self.line_password.setEchoMode(QLineEdit.Normal)
-
-    #     self.btn_show_pwd.clicked.connect(self.eyepass_hide)
-    #     self.btn_show_pwd.clicked.connect(self.eyepass_show)
-    # 
-    # def eyepass_show(self):
-    #     self.line_password.setEchoMode(QLineEdit.Normal)
-    #     print(&#39;show pass&#39;)
-    # 
-    # def eyepass_hide(self):
-    #     self.line_password.setEchoMode(QLineEdit.Password)
-    #     print(&#39;hide pass&#39;)
-
-
-if __name__ == &#39;__main__&#39;:
-    app = QtWidgets.QApplication(sys.argv)
-    window = MyWindow()
-    window.show()
-    sys.exit(app.exec_())
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-AttributeError module ‘backend_interagg‘ has no attribute ‘FigureCanvas‘的解决办法"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/10/18/AttributeError%20module%20%E2%80%98backend_interagg%E2%80%98%20has%20no%20attribute%20%E2%80%98FigureCanvas%E2%80%98%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/"
-    >AttributeError module ‘backend_interagg‘ has no attribute ‘FigureCanvas‘的解决办法</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/10/18/AttributeError%20module%20%E2%80%98backend_interagg%E2%80%98%20has%20no%20attribute%20%E2%80%98FigureCanvas%E2%80%98%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" class="article-date">
-  <time datetime="2023-10-18T02:18:00.000Z" itemprop="datePublished">2023-10-18</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h1><p>一开始我还以为是我的matoltlib和我的python版本不匹配后面发现真正原因其实是matplotlib 的 backend的默认渲染器是agg，agg是一个没有图形显示界面的终端，如果要图像正常显示，则需要切换为图形界面显示的终端TkAgg</p>
-<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>修改 backend 配置：</p>
-<pre><code>matplotlib.use(‘TkAgg’)
-</code></pre>
-<h1 id="原代码和修改后代码对比"><a href="#原代码和修改后代码对比" class="headerlink" title="原代码和修改后代码对比"></a>原代码和修改后代码对比</h1><h2 id="原代码："><a href="#原代码：" class="headerlink" title="原代码："></a>原代码：</h2><pre><code>import numpy as np
-
-import matplotlib.pyplot as plt
-
-x=np.linspace(0.0001,3,100)
-y=x**x
-plt.plot(x,y,&#39;r-&#39;,linewidth=3)
-plt.show()`
-</code></pre>
-<p>错误提示：</p>
-<pre><code>AttributeError: module &#39;backend_interagg&#39; has no attribute &#39;FigureCanvas&#39;. Did you mean: &#39;FigureCanvasAgg&#39;?
-</code></pre>
-<h2 id="修改后代码："><a href="#修改后代码：" class="headerlink" title="修改后代码："></a>修改后代码：</h2><pre><code>import numpy as np
-import matplotlib
-matplotlib.use(&#39;TkAgg&#39;)
-import matplotlib.pyplot as plt
-
-x=np.linspace(0.0001,3,100)
-y=x**x
-plt.plot(x,y,&#39;r-&#39;,linewidth=3)
-plt.show()
-</code></pre>
-<p>————————————————<br>版权声明：本文为CSDN博主「倚剑策马笑西风」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_51763547/article/details/126918669">https://blog.csdn.net/qq_51763547/article/details/126918669</a></p>
  
       <!-- reward -->
       

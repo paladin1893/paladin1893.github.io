@@ -154,6 +154,208 @@
     
     
     <article
+  id="post-flask实用入门案例04"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/08/14/flask%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B04/"
+    >flask实用入门案例04--endpoint</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/08/14/flask%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B04/" class="article-date">
+  <time datetime="2023-08-14T12:43:15.000Z" itemprop="datePublished">2023-08-14</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>在flask框架中，我们经常会遇到endpoint这个东西，最开始也没法理解这个到底是做什么的。最近正好在研究Flask的源码，也就顺带了解了一下这个endpoint<br>首先，我们看一个例子：</p>
+<pre><code>@app.route(&#39;/user/&lt;name&gt;&#39;)
+def user(name):
+  return &#39;Hello, %s&#39; % name
+</code></pre>
+<p>这个是我们在用flask框架写网站中最常用的。<br>通过看源码，我们可以发现：<br>函数等效于</p>
+<pre><code>def user(name)
+  return &#39;Hello, %s&#39; % name
+</code></pre>
+<p>app.add_url_rule(‘/user/<name>‘, ‘user’, user)</name></p>
+<p>这个add_url_rule函数在文档中是这样解释的：</p>
+<pre><code>add_url_rule(*args, **kwargs)
+ Connects a URL rule. Works exactly like the route() decorator. If a view_func is provided it will be registered with the endpoint.
+</code></pre>
+<p>add_url_rule有如下参数：</p>
+<pre><code>rule – the URL rule as string
+
+endpoint – the endpoint for the registered URL rule. Flask itself assumes the name of the view function as endpoint
+
+view_func – the function to call when serving a request to the provided endpoint
+options – the options to be forwarded to the underlying Rule object. A change to Werkzeug is handling of method options. methods is a list of methods this rule should be limited to (GET, POST etc.). By default a rule just listens for GET (and implicitly HEAD). Starting with Flask 0.6, OPTIONS is implicitly added and handled by the standard request handling.
+</code></pre>
+<p>抛开options这个参数不谈，我们看看前三个参数。</p>
+<p>rule：这个参数很简单，就是匹配的路由地址<br>view_func：这个参数就是我们写的视图函数<br>endpoint：这个参数就是我今天重点要讲的，endpoint</p>
+<p>很多人认为：假设用户访问<a target="_blank" rel="noopener" href="http://www.example.com/user/eric">http://www.example.com/user/eric</a><br>flask会找到该函数，并传递name=’eric’，执行这个函数并返回值。<br>但是实际中，Flask真的是直接根据路由查询视图函数么？<br>在源码中我们可以发现：</p>
+<p>每个应用程序app都有一个view_functions，这是一个字典，存储endpoint-view_func键值对。add_url_rule的第一个作用就是向view_functions中添加键值对(这件事在应用程序run之前就做好了)<br>每个应用程序app都有一个url_map，它是一个Map类(具体实现在werkzeug/routing.py中)，里面包含了一个列表，列表元素是Role的实例(werkzeug/routing.py中)。add_url_rule的第二个作用就是向url_map中添加Role的实例(它也是在应用程序run之前就做好了)</p>
+<p>我们可以通过一个例子来看：</p>
+<pre><code>app = Flask(__name__)
+ 
+@app.route(&#39;/test&#39;, endpoint=&#39;Test&#39;)
+def test():
+  pass
+ 
+ 
+@app.route(&#39;/&#39;, endpoint=&#39;index&#39;)
+def hello_world():
+  return &#39;Hello World!&#39;
+ 
+if __name__ == &#39;__main__&#39;:
+  print(app.view_functions)
+  print(app.url_map)
+  app.run()
+</code></pre>
+<p>运行这个程序，结果是：</p>
+<pre><code>&#123;&#39;static&#39;: &lt;bound method Flask.send_static_file of &lt;Flask &#39;flask-code&#39;&gt;&gt;, &#39;Test&#39;: &lt;function test at 0x10065e488&gt;, &#39;index&#39;: &lt;function hello_world at 0x10323d488&gt;&#125;
+Map([&lt;Rule &#39;/test&#39; (HEAD, OPTIONS, GET) -&gt; Test&gt;,
+ &lt;Rule &#39;/&#39; (HEAD, OPTIONS, GET) -&gt; index&gt;,
+ &lt;Rule &#39;/static/&lt;filename&gt;&#39; (HEAD, OPTIONS, GET) -&gt; static&gt;])
+ * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+</code></pre>
+<p>所以我们可以看出：这个url_map存储的是url与endpoint的映射!<br>回到flask接受用户请求地址并查询函数的问题。实际上，当请求传来一个url的时候，会先通过rule找到endpoint(url_map)，然后再根据endpoint再找到对应的view_func(view_functions)。通常，endpoint的名字都和视图函数名一样。</p>
+<p>这时候，这个endpoint也就好理解了：<br>实际上这个endpoint就是一个Identifier，每个视图函数都有一个endpoint，<br>当有请求来到的时候，用它来知道到底使用哪一个视图函数</p>
+<p>在实际应用中，当我们需要在一个视图中跳转到另一个视图中的时候，我们经常会使用url_for(endpoint)去查询视图，而不是把地址硬编码到函数中。<br>这个时候，我们就不能使用视图函数名当endpoint去查询了<br>我们举个例子来说明。比如：</p>
+<pre><code>app = Flask(__name__)
+app.register_blueprint(user, url_prefix=&#39;user&#39;)
+app.register_blueprint(file, url_prefix=&#39;file&#39;)
+</code></pre>
+<p>我们注册了2个蓝图。<br>在user中(省略初始化过程)：</p>
+<pre><code>@user.route(&#39;/article&#39;)
+def article():
+  pass
+</code></pre>
+<p>在file中(省略初始化过程)：</p>
+<pre><code>@file.route(&#39;/article&#39;)
+def article():
+  pass
+</code></pre>
+<p>这时候，我们发现，/article这个路由对应了两个函数名一样的函数，分别在两个蓝图中。当我们使用url_for(article)调用的时候(注意，url_for是通过endpoint查询url地址，然后找视图函数)，flask无法知道到底使用哪个蓝图下的endpoint，所以我们需要这样:</p>
+<pre><code>url_for(&#39;user.article&#39;)
+</code></pre>
+<p>以上就是本文的全部内容，希望对大家的学习有所帮助。</p>
+<p>来源：<a target="_blank" rel="noopener" href="https://www.jb51.net/article/176173.htm">https://www.jb51.net/article/176173.htm</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flask/" rel="tag">flask</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-flask实用入门案例03"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/08/13/flask%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B03/"
+    >flask实用入门案例03--Flask-RESTful</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/08/13/flask%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B03/" class="article-date">
+  <time datetime="2023-08-13T11:55:21.000Z" itemprop="datePublished">2023-08-13</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>使用flask可以快速开发restful风格的后台服务，下面展示几种常用实用接口案例。</p>
+<p>Flask-RESTful 提供的最主要的基础就是资源(resources)。资源(Resources)是构建在 Flask 可拔插视图 之上，只要在你的资源(resource)上定义方法就能够容易地访问多个 HTTP 方法.</p>
+<p>其实就是想表达，在资源路由上（resources）定义多个方法（get，post，put等），就可以实现多种效果</p>
+<pre><code>from flask import Flask, request
+from flask_restful import Api, Resource
+ 
+app = Flask(__name__)
+api = Api(app)
+ 
+todos = &#123;&#125;
+ 
+class TodoSimple(Resource):
+ def get(self, todo_id):
+  return &#123;todo_id: todos[todo_id]&#125;
+ 
+ def put(self, todo_id):
+  todos[todo_id] = request.form[&#39;data&#39;]
+  return &#123;todo_id: todos[todo_id]&#125;
+ 
+api.add_resource(TodoSimple, &#39;/&lt;string:todo_id&gt;&#39;)
+ 
+if __name__ == &#39;__main__&#39;:
+ app.run(debug=True)
+ 
+</code></pre>
+<p>解释：<br>（1）TodoSimple类定义了2种方法，最终地址/string:todo_id’下面，就可以实现2种请求方法<br>（2）add_resource方法中第一个参数：视图函数名；第二个参数：路由的具体地址，以及string:todo_id代表传递的是一个字符串，且是必要参数。<br>（3）request.form[‘data’]获取request里面，form表单的key为data的参数，如果request里面，没有data参数，那报错。如果有包含data的多个参数，那也只会取data这一个参数</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flask/" rel="tag">flask</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-flask实用入门案例02"
   class="article article-type-post"
   itemscope
@@ -460,145 +662,6 @@ if __name__ == &#39;__main__&#39;:
     <footer class="article-footer">
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%94%B5%E5%8A%9B/" rel="tag">电力</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-PNMP安装使用"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/08/08/PNMP%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/"
-    >PNMP安装使用</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/08/08/PNMP%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/" class="article-date">
-  <time datetime="2023-08-08T07:14:05.000Z" itemprop="datePublished">2023-08-08</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>简介</p>
-<p>pnpm是一种新起的包管理器，从npm的下载量看，目前还没有超过yarn，但它的实现方式值得主流包管理器学习，某些开发者极力推荐使用pnpm。</p>
-<p>从结果上来看，它具有以下优势：</p>
-<ol>
-<li>目前，安装效率高于npm和yarn的最新版</li>
-<li>极其简洁的node_modules目录</li>
-<li>避免了开发时使用间接依赖的问题</li>
-<li>能极大的降低磁盘空间的占用</li>
-</ol>
-<p>// 全局安装<br>npm install pnpm -g</p>
-<p>//查看源<br>pnpm config get registry<br>//切换淘宝源<br>pnpm config set registry <a target="_blank" rel="noopener" href="https://registry.npmmirror.com/">https://registry.npmmirror.com/</a></p>
-<p>// 使用<br>pnpm install 包 // 安装依赖<br>pnpm i  包      // 安装依赖<br>pnpm add 包     // -S  默认写入dependencies<br>pnpm add -D     // -D devDependencies<br>pnpm add -g     // 全局安装</p>
-<p>// 移除<br>pnpm remove 包               // 移除包<br>pnpm remove 包 –global      // 移除全局包</p>
-<p>// 更新<br>pnpm up                      // 更新所有依赖项<br>pnpm upgrade 包              // 更新包<br>pnpm upgrade 包 –global     // 更新全局包</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PNMP/" rel="tag">PNMP</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-finereport入门系列（四）"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/08/07/finereport%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97%EF%BC%88%E5%9B%9B%EF%BC%89/"
-    >finereport入门系列（四）</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/08/07/finereport%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97%EF%BC%88%E5%9B%9B%EF%BC%89/" class="article-date">
-  <time datetime="2023-08-07T05:02:05.000Z" itemprop="datePublished">2023-08-07</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="决策报表自动查询"><a href="#决策报表自动查询" class="headerlink" title="决策报表自动查询"></a>决策报表自动查询</h1><ol>
-<li>概述</li>
-<li>1 应用场景<br>在决策报表中，控件可以添加到参数界面使用「查询」按钮查询数据，也可以直接在 body 中使用，但是在 body 中使用时，控件是无法直接使用查询按钮来查询数据的，那我们要如何实现控件联动查询数据呢？</li>
-</ol>
-<p>例如：在 body 中的下拉框控件选择「地区」，其他使用了地区参数的组件能根据选择的地区展示对应数据。预期效果 </p>
-<p>1.2 实现思路<br>在数据集中定义地区参数为 $area ，将下拉框控件的名称修改为与地区参数相同的名称 area，即可使用参数联动控件实现自动查询。</p>
-<p>若想要实现在参数界面实现自动查询请参考：JS实现决策报表参数界面自动查询。</p>
-<ol start="2">
-<li>示例</li>
-<li>1 数据准备<br>1）点击设计器左上角「文件&gt;新建决策报表」，新建空白模板。</li>
-</ol>
-<p>2）新建一个数据库查询 ds1，SQL 查询语句为：</p>
-<pre><code>SELECT * FROM 销量 where 1=1 $&#123;if(len(area)=0,&quot;&quot;,&quot; and 地区=&#39;&quot;+area+&quot;&#39;&quot;)&#125;
-</code></pre>
-<p>即定义 area 参数，值为「地区」字段，且当 参数为空时展示全部数据 。</p>
-<p>2.2 决策报表设计<br>1）将 body 的布局方式修改为「绝对布局」，再向 body 中拖入「报表块」、「饼图」、「标签控件」和「下拉框控件」。 </p>
-<p>2）设置「标签控件」的控件值为「地区：」；「下拉框控件」的控件名称为「area」，即将下拉框控件与参数 $area 绑定。</p>
-<p>注：必须保证「下拉框控件」的控件名称与参数名称 area 保持一致。</p>
-<p>3）设置「下拉框控件」的数据字典为「数据库表」销量表，实际值和显示值均为「地区」。 </p>
-<p>2.3 设计报表块<br>双击报表块，进入报表块编辑界面，拖入「地区、销售员、销量」字段，设置 C2 单元格的数据设置为「汇总&gt;求和」。单元格样式可在「单元格属性&gt;样式」中自行设置。</p>
-<p>2.4 绑定图表数据<br>双击饼图，设置饼图的数据来源：数据集为 ds1，系列名为「销售员」，值为「销量」，汇总方式为「求和」。 </p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/finereport/" rel="tag">finereport</a></li></ul>
 
     </footer>
   </div>

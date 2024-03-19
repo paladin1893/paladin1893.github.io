@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+       
+      <meta name="keywords" content="RS,GPS,GIS,QGIS,Opticks,QT,OpenCV,OSG" />
+       
+      <meta name="description" content="地理信息系统，遥感科学，卫星导航定位技术综合研究。" />
+      
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>css中的减号或下划线 |  帕拉丁的游鱼</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/favicon.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    <link rel="alternate" href="/atom.xml" title="帕拉丁的游鱼" type="application/atom+xml">
+</head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-css中的减号或下划线"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  css中的减号或下划线
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/12/17/css%E4%B8%AD%E7%9A%84%E5%87%8F%E5%8F%B7%E6%88%96%E4%B8%8B%E5%88%92%E7%BA%BF/" class="article-date">
+  <time datetime="2023-12-17T02:22:00.000Z" itemprop="datePublished">2023-12-17</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">2.5k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">9 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>在CSS中，减号（-）和下划线（_）通常用于命名选择器和属性。它们在命名选择器和属性时具有不同的作用。</p>
+<p>减号（-）：</p>
+<p>在命名选择器中，减号用于连接多个单词，创建一个复合选择器。例如，.my-class表示一个类选择器，可以应用于HTML元素中的任何具有class=”my-class”属性的元素。</p>
+<p>在命名属性时，减号用于创建自定义属性。例如，data-my-attribute表示一个自定义属性，可以在HTML元素中使用data-my-attribute=”value”的方式进行设置和获取。</p>
+<p>下划线（_）：</p>
+<p>在命名选择器中，下划线通常用于表示状态或修饰符。例如，.is-active表示一个具有活动状态的元素，.is-hidden表示一个隐藏的元素。</p>
+<p>在命名属性时，下划线通常用于表示私有属性或内部属性。例如，_my-property表示一个私有属性，用于内部使用。</p>
+<p>这些命名约定主要用于提高代码的可读性和可维护性。通过使用减号和下划线，可以更清晰地表示选择器和属性的用途和含义。</p>
+<hr>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/kaiye/archive/2011/06/13/3039046.html">https://www.cnblogs.com/kaiye/archive/2011/06/13/3039046.html</a></p>
+<p>CSS样式名中的下划线与连字符</p>
+<p>这篇Blog将要讨论，在CSS的className中使用连字符“-”还是使用下划线“_”作为分隔符更适合？</p>
+<p>在切入主题之前，先看看Google在Webmaster Tools中URL structure章节中所说的一段话：</p>
+<p>Consider using punctuation in your URLs. The URL <a target="_blank" rel="noopener" href="http://www.example.com/green-dress.html">http://www.example.com/green-dress.html</a> is much more useful to us than <a target="_blank" rel="noopener" href="http://www.example.com/greendress.html">http://www.example.com/greendress.html</a>. We recommend that you use hyphens (-) instead of underscores (_) in your URLs.</p>
+<p>这段话的意思是，出于URL语义化的考虑，Google建议站点URL中使用连字符“-”来代替下划线“_”做分隔符。不知道是否是因为Google的这份文档，我们可以看到越来越多的国内外网站URL中开始使用“-”来作为分隔符，例如：</p>
+<p><a target="_blank" rel="noopener" href="http://net.tutsplus.com/articles/general/9-confusing-naming-conventions-for-beginners/">http://net.tutsplus.com/articles/general/9-confusing-naming-conventions-for-beginners/</a></p>
+<p><a target="_blank" rel="noopener" href="http://stackoverflow.com/questions/1686337/hyphens-or-underscores-in-css-and-html-identifiers">http://stackoverflow.com/questions/1686337/hyphens-or-underscores-in-css-and-html-identifiers</a></p>
+<p>以及我正在使用WordPress编辑的这篇BLOG的编辑地址是：<a target="_blank" rel="noopener" href="http://yekai.net/wp-admin/post.php?post=338&amp;action=edit">http://yekai.net/wp-admin/post.php?post=338&amp;action=edit</a></p>
+<p>申请过域名的人都知道，一个英文域名中，合法的字符只有数字0-9、字母a-z、符号“-”和“.”两个。其中“.”号用作域名层级分隔符，“-”号作为单词分隔符。从牛津词典中可以看到对连字符hyphen的解释：</p>
+<p>更多hyphen的应用场景，以及hyphen和dash以及minus符号的差异，感兴趣的同学可以去看wiki看看。</p>
+<p>结论显而易见，在英语中分隔符号即是hyphen的语义。</p>
+<p>这就不难理解，为什么当初在CSS1.0的草案中明确指出，在className中除了连字符“-”以外，包括下划线“_”在内的其他符号必须使用“\”符号转义之后才能使用。同时也不难理解为什么CSS属性的写法是“background-color”而不是“background_color”或者“backgroundColor”了。</p>
+<p>然而现实情况却并非如当初CSS1的规范制订的那样完美，很多开发者在写className中却因为某些原因，使用了“_”作为分隔符，并将此作为自己的代码规范。这使得W3C不得不在2001年CSS2的一次修订版本中将“_”定义为className中的合法字符，无须转义均可支持。这也是为什么在2001年前的浏览器如navigator 4.x、IE 5.x不支持className中的“_”未转义写法，而IE6及后来的firefox、chrome均能支持这种写法。</p>
+<p>从某种程度上来说，W3C标准对现实的妥协，也是导致前端开发工程师面对浏览器差异化的杯具结局的原因之一。至于W3C支持className中的“_”作为分隔符的原因就不难想象了：正如这种写法的支持者所说，在JS中下划线“_”才是公认的分隔符。例如，DOM中有一个id为“kaiye”的节点，在IE6中你可以通过document.all.kaiye集合获取到这个节点的引用。但如果这个ID被命名为“kai-ye”，使用document.all.kai-ye显然会抛出一个异常，因为基本在所有的编程语言中“-”代表的是“减号运算符”，JS也不例外，正如这篇《Web开发中初学者容易混淆的9个命名约定》中所说。正是由于这点原因，导致在id属性命名时，开发者通常会避免使用“-”，为了保持代码风格统一，className中也使用“_”作为分隔符。事实上，W3C并没有规定class属性和id属性命名约定必须相同，className中的“-”分隔符更是和运算符减号“-”风马牛不相及，CSS不是编程语言又何来减号运算符的冲突问题？</p>
+<p>同时这种命名约定却无形中挖了一个坑：通常在JS的命名约定中，你可以使用 _kaiye 来声明这是一个私有变量，但如果你在CSS中沿用这种命名习惯使用 _kaiye 来作为className将会导致这段声明在IE6中无效。不幸的是，我亲眼见到有人掉到这个坑里了，并且一定会有更多人因为这种命名约定掉到这个坑里，这也是我坚持不在className中使用“_”最重要的原因。</p>
+<p>08年当我刚入职支付宝那会，我跟着小黑做了支付宝的第一个浏览器兼容性项目─“Firefox交易流程兼容性项目”。我们修改了上百个交易创建、修改、付款、完成的页面，修复了其中大量HTML、CSS、JS的兼容性写法，并同时将记录汇总成一张bugfix list。结果发现为了使支付宝兼容Firefox，我们对DOM做的最多的修改是，将标签P修改为DIV，对JS修改最多的是将 document.all 的写法换成 document.getElementById 。这意味着如果你的产品需要提供更好的用户体验，兼容更多的浏览器，你应该像许多JS框架那样使用W3C标准的写法来编写你的JS。getElementById就是获取DOM对象的最佳实践，而这个方法接受的唯一参数是一个字符串，这个字符串允许你包含任意字符，当然也包括连字符“-”。也就是说，document.all方法将不会出现在一个需要跨浏览器支持的产品中，你可以在ID属性中使用“-”作为分隔符。</p>
+<p>Google、Yahoo、淘宝、豆瓣在他们的新CSS代码规范中推荐使用“-”作为className分隔符，这个自然就不难理解了。</p>
+<p>说到这里我们再对“_”的语义进行一番探讨。Oxford Dictionary对underscore的定义是underline，在单词下面画条线表示强调，这个其实也是<u>标签的来历。从wikipedia上可以看到underscore符号最先用于打字机中，用来给某个单词划线。第二种用法是，当需要打空格，而不能使用空格的时候，会使用underscore来代替。例如URL、filename、编程语言中的变量、表单填写项绘制等等。从这一点来看，className中的“_”可以给一个“空格”的语义。只是className中真正的空格符，作为class属性和CSS选择器时是两种完全不同的用法。</u></p>
+<p>为了避免“-”运算符的问题，开发者通常使用“_”来作为filename中的分隔符，以方便模块文件能进行正常的import、include操作。这大概是为何大多数URL仍然使用“_”分隔居多的原因。然而，为了遵守英语通用语义规则，为了提升只懂英文不懂编程的普通人的理解体验，Google制定了前文所提到的“推荐使用连字符”的SEO建议，MAC OSX操作系统推荐使用空格和连字符进行文件命名，Linux系统以及大多数编程语言的命名都提供了通过引号的方式规避文件名中“-”的冲突问题。而“_”分隔符就像“该字段不能为空”的错误提示一样充满着程序员的语言习惯。</p>
+<p>回到主题，在CSS的className中到底应该使用“-”还是“_”？虽然说“-”更符合语义，看起来代码更美观，但“_”也有它存在的合理性─开发者的习惯延续，以及双击全选的特性。就像stackoverflow上这个问题的最佳答案所说的那样：</p>
+<p>I think its just personal preference.</p>
+<p>而改变一个习惯通常不是一件容易的事情，对自己来说是如此，更别提改变他人。出于我前面所提到的那个坑（通常在JS的命名约定中，你可以使用 _kaiye 来声明这是一个私有变量，但如果你在CSS中沿用这种命名习惯使用 _kaiye 来作为className将会导致这段声明在IE6中无效。）以及语义化的原因，在IE6还未消亡的现在，我无法说服自己使用“_”来作分隔符，甚至我觉得，不仅仅是className，CSS、JS、图片、HTML的filename都应该使用“-”作为分隔符，因为这些资源均是普通用户看得到的URL。</p>
+<p>那么你的习惯呢？如果把自己当作一名前端开发新人，你又会如何选择呢？</p>
+<p>——————–20110613 update:———————-</p>
+<p>今天下午借W3C来公司交流的机会，私底下偷偷问Michael Smith，“Hyphen or underscore, which one do you prefer? ”，他的回答是“Neither, I like camelcase.”同时，从ytzong那里得知在CSS-tricks上这个问题讨论得也很happy，并且有了一个可供参考的投票结果。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://paladin1893.gitee.io/2023/12/17/css%E4%B8%AD%E7%9A%84%E5%87%8F%E5%8F%B7%E6%88%96%E4%B8%8B%E5%88%92%E7%BA%BF/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/css/" rel="tag">css</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2023/12/18/css%E5%91%BD%E5%90%8D%E8%A7%84%E8%8C%83/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            css命名规范
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2023/12/16/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%88%AA%E5%A4%A9%E5%99%A8%E3%80%81%E5%AF%BC%E5%BC%B9%E5%96%9C%E6%AC%A2%E7%94%A8%E5%8D%95%E7%89%87%E6%9C%BA%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%EF%BC%9F/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">为什么航天器、导弹喜欢用单片机，而不是嵌入式系统？</div>
+      </a>
+    
+  </nav>
+
+  
+   
+    
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2022-2024
+        <i class="ri-heart-fill heart_icon"></i> paladin1893
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="帕拉丁的游鱼"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/friends">友链</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

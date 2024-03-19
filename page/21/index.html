@@ -154,6 +154,428 @@
     
     
     <article
+  id="post-Vue按钮居中居左居右"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/08/20/Vue%E6%8C%89%E9%92%AE%E5%B1%85%E4%B8%AD%E5%B1%85%E5%B7%A6%E5%B1%85%E5%8F%B3/"
+    >Vue按钮居中居左居右</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/08/20/Vue%E6%8C%89%E9%92%AE%E5%B1%85%E4%B8%AD%E5%B1%85%E5%B7%A6%E5%B1%85%E5%8F%B3/" class="article-date">
+  <time datetime="2023-08-20T10:59:58.000Z" itemprop="datePublished">2023-08-20</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>在 Vue 中,如果需要将按钮居中显示,可以使用 CSS 中的 <code>text-align: center</code> 属性来实现。</p>
+<h1 id="一、按钮居中"><a href="#一、按钮居中" class="headerlink" title="一、按钮居中"></a>一、按钮居中</h1><p>在 Vue 中，如果需要将按钮居中显示，可以使用 CSS 中的 <code>text-align: center</code> 属性来实现。</p>
+<p>例如，可以在按钮所在的容器元素上添加 <code>text-align: center</code> 样式：</p>
+<pre><code>&lt;template&gt;
+  &lt;div class=&quot;button-container&quot;&gt;
+    &lt;el-button type=&quot;primary&quot;&gt;提交&lt;/el-button&gt;
+    &lt;el-button&gt;取消&lt;/el-button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+  
+&lt;style&gt;
+.button-container &#123;
+  text-align: center;
+&#125;
+&lt;/style&gt;
+</code></pre>
+<p>上面的代码中，我们在按钮所在的容器元素上添加了 <code>text-align: center</code> 样式，来实现按钮居中显示。</p>
+<p>另外，还可以使用 Flex 布局来实现。例如，将按钮所在的容器元素设置为 Flex 容器，并使用 <code>justify-content: center</code> 属性来实现水平居中显示。示例如下：</p>
+<pre><code>&lt;template&gt;
+  &lt;div class=&quot;button-container&quot;&gt;
+    &lt;el-button type=&quot;primary&quot;&gt;提交&lt;/el-button&gt;
+    &lt;el-button&gt;取消&lt;/el-button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+  
+&lt;style&gt;
+.button-container &#123;
+  display: flex;
+  justify-content: center;
+&#125;
+&lt;/style&gt;
+</code></pre>
+<p>上面的代码中，我们将按钮所在的容器元素设置为 Flex 容器，并使用 <code>justify-content: center</code> 属性来实现水平居中显示。</p>
+<h1 id="二、按钮居右"><a href="#二、按钮居右" class="headerlink" title="二、按钮居右"></a>二、按钮居右</h1><p>在 Vue 中，可以使用 flex 布局来实现按钮居右的效果。具体步骤如下：</p>
+<p>在按钮父元素上添加 display: flex; justify-content: flex-end; 样式，将子元素沿着横轴方向向右对齐。</p>
+<pre><code>&lt;div class=&quot;button-wrapper&quot;&gt;
+  &lt;button&gt;按钮&lt;/button&gt;
+&lt;/div&gt;
+
+.button-wrapper &#123;
+  display: flex;
+  justify-content: flex-end;
+&#125;
+</code></pre>
+<p>在按钮上添加 margin-left 样式，控制按钮与其左边兄弟元素之间的距离。</p>
+<pre><code>&lt;div class=&quot;button-wrapper&quot;&gt;
+  &lt;span&gt;左边的元素&lt;/span&gt;
+  &lt;button class=&quot;right-btn&quot;&gt;按钮&lt;/button&gt;
+&lt;/div&gt;
+
+.button-wrapper &#123;
+  display: flex;
+  justify-content: flex-end;
+&#125;
+.right-btn &#123;
+  margin-left: 10px; /* 调整按钮与左边元素之间的距离 */
+&#125;
+</code></pre>
+<p>这样就可以将按钮居右了。如果有多个元素需要靠右对齐，只需要将它们包裹在一个父元素中，并且在父元素上应用 display: flex; justify-content: flex-end; 样式即可。</p>
+<h1 id="三、按钮居左"><a href="#三、按钮居左" class="headerlink" title="三、按钮居左"></a>三、按钮居左</h1><p>1、方法1<br>在 Vue 中，可以使用 flex 布局来实现按钮居左的效果。具体步骤如下：</p>
+<p>在按钮父元素上添加 display: flex; 样式，启用 flex 布局。</p>
+<pre><code>&lt;div class=&quot;button-wrapper&quot;&gt;
+  &lt;button class=&quot;left-btn&quot;&gt;按钮&lt;/button&gt;
+&lt;/div&gt;
+
+.button-wrapper &#123;
+  display: flex;
+&#125;
+</code></pre>
+<p>在按钮上添加 margin-right 样式，控制按钮与其右边兄弟元素之间的距离。</p>
+<pre><code>&lt;div class=&quot;button-wrapper&quot;&gt;
+  &lt;button class=&quot;left-btn&quot;&gt;按钮&lt;/button&gt;
+  &lt;span&gt;右边的元素&lt;/span&gt;
+&lt;/div&gt;
+
+.button-wrapper &#123;
+  display: flex;
+&#125;
+.left-btn &#123;
+  margin-right: 10px; /* 调整按钮与右边的元素之间的距离 */
+&#125;
+</code></pre>
+<p>这样就可以将按钮居左了。如果有多个元素需要靠左对齐，只需要将它们包裹在一个父元素中，并且在父元素上应用 display: flex; 样式即可。使用 flex 布局时，元素的位置由 order 属性控制，而子元素的位置是由它们在父元素中出现的顺序决定的，因此靠前的元素会出现在靠左的位置。如果需要调整元素的位置，只需要在它的样式中添加 order 属性即可。</p>
+<p>2、方法2<br>在 Vue 中，可以通过给按钮元素添加 float: left; 样式来实现按钮居左的效果。具体步骤如下：</p>
+<pre><code>&lt;div class=&quot;button-container&quot;&gt;
+  &lt;button class=&quot;left-btn&quot;&gt;按钮&lt;/button&gt;
+&lt;/div&gt;
+</code></pre>
+<p>这样就可以将按钮居左了。如果按钮元素的父元素中还有其它元素，为避免按钮影响其他元素的布局，可以在父元素上添加 overflow: auto; 样式，使其包含浮动元素的布局上下文，从而避免对其它元素造成影响。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-Pandas实用入门案例03"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/08/19/Pandas%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B03/"
+    >Pandas实用入门案例03</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/08/19/Pandas%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B03/" class="article-date">
+  <time datetime="2023-08-19T11:56:48.000Z" itemprop="datePublished">2023-08-19</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>Python之Pandas的常用技能【索引的增、删、改、查】</p>
+<p>1、索引简介<br>索引（index）是数据处理中非常重要的工具。索引主要用来：</p>
+<p>1）标记数据；2）快速检索数据；</p>
+<p>Pandas中的索引，有两种：1）index（行索引）；2）columns（列索引）；</p>
+<p>数据准备</p>
+<pre><code>import pandas as pd
+#读取数据
+df = pd.read_excel(r&#39;C:\Users\XXXXXX\Desktop\pandas练习文档.xlsx&#39;,sheet_name=3)
+print(df)
+</code></pre>
+<p>2、设置索引的常用方法<br>2.1 读取数据时设置索引</p>
+<pre><code>import pandas as pd
+#读取数据，同时，使用index_col选取第一列作为索引列。
+df = pd.read_excel(r&#39;C:\Users\XXXXXX\Desktop\pandas练习文档.xlsx&#39;,sheet_name=3,index_col=0)
+print(df)
+</code></pre>
+<p>2.2 查看索引相关信息<br>2.2.1 df.index</p>
+<pre><code>import pandas as pd
+#读取数据时，设置了index
+df = pd.read_excel(r&#39;C:\Users\XXXXXX\Desktop\pandas练习文档.xlsx&#39;,sheet_name=3,index_col=1)
+print(df)
+print(&#39;\n&#39;)
+print(df.index)
+</code></pre>
+<p>2.3 设置索引列的名称<br>2.3.1 df.rename_axis()</p>
+<pre><code>import pandas as pd
+#读取数据
+df = pd.read_excel(r&#39;C:\Users\XXXXXX\Desktop\pandas练习文档.xlsx&#39;,sheet_name=3)
+print(df)
+print(&#39;\n&#39;)
+df = df.rename_axis(&#39;index_col&#39;)
+print(df)
+</code></pre>
+<p>2.3.2 df.index.name</p>
+<pre><code>import pandas as pd
+#读取数据
+df = pd.read_excel(r&#39;C:\Users\XXXXXX\Desktop\pandas练习文档.xlsx&#39;,sheet_name=3)
+print(df)
+print(&#39;\n&#39;)
+df.index.name = &#39;index_col&#39;
+print(df)
+</code></pre>
+<p>2.3.3 df.index.names = []</p>
+<pre><code>import pandas as pd
+#读取数据
+df = pd.read_excel(r&#39;C:\Users\XXXXXX\Desktop\pandas练习文档.xlsx&#39;,sheet_name=3)
+#set_index()是设置索引列，reset_index()可以将索引列变成数据列。
+df = df.set_index(keys=[&#39;id&#39;,&#39;name&#39;],drop=True,append=True)
+df_new = df.reset_index(level=1,drop=False)
+print(df_new)
+print(&#39;\n&#39;)
+df_new.index.names = [&#39;x&#39;,&#39;y&#39;]
+print(df_new)
+</code></pre>
+<p>2.3.4 df.columns=values</p>
+<pre><code>import pandas as pd
+#先设置多级别index
+index = pd.MultiIndex.from_tuples([(&#39;girl&#39;,&#39;Lucy&#39;),
+                                    (&#39;girl&#39;,&#39;Rose&#39;),
+                                    (&#39;boy&#39;,&#39;Tom&#39;),
+                                   (&#39;boy&#39;,&#39;Jack&#39;),
+
+                                   ],
+                                  names=[&#39;gender&#39;,&#39;name&#39;])
+#设置columns，一列一个元组，如果是多级别，在一个元组内。
+columns = pd.MultiIndex.from_tuples([(&#39;math&#39;,),
+                                     (&#39;english&#39;,)])
+#构造数据。
+df = pd.DataFrame([
+    (99,78),
+    (87,32),
+    (23,89),
+    (28,81)
+],
+index=index,
+columns=columns)
+print(df)
+df.columns=[&#39;数学&#39;,&#39;英语&#39;]
+print(&#39;\n&#39;)
+print(df)
+</code></pre>
+<p>2.4 重置索引：df.index=values<br>使用赋值的方法。</p>
+<p>【注：重置索引后，不会将原来的索引列作为新的一列保留。】</p>
+<pre><code>import pandas as pd
+#读取数据,同时，使用index_col选取第一列作为索引列。
+df = pd.read_excel(r&#39;C:\Users\XXXXXX\Desktop\pandas练习文档.xlsx&#39;,sheet_name=3,index_col=0)
+df.index = range(len(df))
+print(df)
+</code></pre>
+<p>2.5 重置索引：df.reset_index()<br>2.5.1 df.reset_index()参数详情</p>
+<pre><code>df.reset_index(
+level=None, #如果索引有多个层级，仅从索引中删除level指定的列。默认为删除所有的列。
+drop=False, #重置索引后，是否将原来的索引列作为新的一列保留。默认为False，即保留。
+col_level=0, #如果列有多个级别，确定将这一索引列插入到哪一个级别。默认情况为0，即插入到第一级别。
+col_fill=&#39;&#39; ,#确定如何命名其他级别。
+inplace=False#是否要用新的DataFrame替换原来的DataFrame，一般默认为False。
+)
+</code></pre>
+<p>2.5.2 修改索引，并保留原来的索引列为新的一列</p>
+<pre><code>import pandas as pd
+#读取数据
+df = pd.read_excel(r&#39;C:\Users\XXXXXX\Desktop\pandas练习文档.xlsx&#39;,sheet_name=3,index_col=0)
+#重置索引,会将原来的索引列，变成新的一列。
+df_new = df.reset_index()
+print(df,df_new,sep=&#39;\n&#39;)
+</code></pre>
+<p>2.5.3 删除索引：将索引的列的第二列，变成数据列的第二列</p>
+<pre><code>import pandas as pd
+#读取数据
+df = pd.read_excel(r&#39;C:\Users\XXXXXX\Desktop\pandas练习文档.xlsx&#39;,sheet_name=3)
+#先用set_index()增加几个索引
+df = df.set_index(keys=[&#39;id&#39;,&#39;name&#39;],drop=True,append=True)
+print(df)
+</code></pre>
+<p>使用df.reset_index（）将id列变成数据列</p>
+<pre><code>import pandas as pd
+#读取数据
+df = pd.read_excel(r&#39;C:\Users\XXXXXX\Desktop\pandas练习文档.xlsx&#39;,sheet_name=3)
+#set_index()是设置索引列，reset_index()可以将索引列变成数据列。
+df = df.set_index(keys=[&#39;id&#39;,&#39;name&#39;],drop=True,append=True)
+df_new = df.reset_index(level=1,drop=False)
+print(df,df_new,sep=&#39;\n&#39;)
+</code></pre>
+<p>2.5.4 多级别索引的处理</p>
+<p>1）使用MultiIndex构造多级别索引</p>
+<pre><code>import pandas as pd
+#先设置多级别index
+index = pd.MultiIndex.from_tuples([(&#39;girl&#39;,&#39;Lucy&#39;),
+                                    (&#39;girl&#39;,&#39;Rose&#39;),
+                                    (&#39;boy&#39;,&#39;Tom&#39;),
+                                   (&#39;boy&#39;,&#39;Jack&#39;),
+
+                                   ],
+                                  names=[&#39;gender&#39;,&#39;name&#39;])
+#设置columns，一列一个元组，如果是多级别，在一个元组内。
+columns = pd.MultiIndex.from_tuples([(&#39;math&#39;,),
+                                     (&#39;english&#39;,)])
+#构造数据。
+df = pd.DataFrame([
+    (99,78),
+    (87,32),
+    (23,89),
+    (28,81)
+],
+index=index,
+columns=columns)
+print(df)
+</code></pre>
+<p>将索引”gender”当成数据列。</p>
+<pre><code>df = df.reset_index(level=&#39;gender&#39;)
+print(df)
+</code></pre>
+<p>2.6 重置索引：df.set_index()<br>2.6.1 df.set_index()参数详解</p>
+<pre><code>df.set_index(
+keys, #要设置索引的列名。
+drop=True, #将设置索引的列删除，默认为True，即不保留。
+append=False, #是否保留原索引。默认为False。
+inplace=False, #是否在替换原来的DataFrame。默认为False。
+verify_integrity=False#是否检查索引有无重复，默认为False。
+)
+
+
+import pandas as pd
+#读取数据
+df = pd.read_excel(r&#39;C:\Users\XXXXXX\Desktop\pandas练习文档.xlsx&#39;,sheet_name=3)
+#先用set_index()增加几个索引
+df = df.set_index(keys=[&#39;id&#39;,&#39;name&#39;],drop=False,append=True)
+print(df)
+</code></pre>
+<p>2.7 重置索引：df.reindex()<br>2.7.1 df.reindex()参数详解</p>
+<p>【注：这个参数对其中某些值如method，即使按照官网上的操作，还是报错。我也没弄特别清楚】</p>
+<pre><code>pandas.DataFrame.reindex &amp;#8212; pandas 1.5.2 documentation
+
+df.reindex(
+keywords for axes, #列标签，行标签。即index=,columns等。
+method=None, #默认为None。针对填入的数据是向前，向后，向左，还是向右。&#123;None， &#39;backfill&#39;/&#39;bfill&#39;， &#39;pad&#39;/&#39;ffill&#39;， &#39;nearest&#39;&#125;
+copy=True, 
+level=None, #多级别索引时使用。
+fill_value=nan, #一般默认填入NaN。可以设置。
+limit=None, #向前或向后填入的最大连续数。
+tolerance=None
+</code></pre>
+<p>2.7.2 基本用法</p>
+<pre><code>import pandas as pd
+df = pd.DataFrame([
+    (99,78),
+    (87,32),
+    (23,89),
+    (28,81)
+])
+print(df)
+
+print(&#39;\n&#39;)
+#使用df.reindex()重新赋值索引。
+df = df.reindex([0,&#39;B&#39;,3,&#39;D&#39;])
+print(df)
+
+fill_value的使用
+
+import pandas as pd
+df = pd.DataFrame([
+    (99,78),
+    (87,32),
+    (23,89),
+    (28,81)
+])
+print(df)
+
+print(&#39;\n&#39;)
+#使用df.reindex()重新赋值索引。
+df = df.reindex([0,&#39;B&#39;,3,&#39;D&#39;],fill_value=&#39;--&#39;)
+print(df)
+</code></pre>
+<p>修改columns</p>
+<pre><code>import pandas as pd
+df = pd.DataFrame([
+    (99,78),
+    (87,32),
+    (23,89),
+    (28,81)
+],columns=[&#39;math&#39;,&#39;english&#39;])
+print(df)
+
+print(&#39;\n&#39;)
+#使用df.reindex()重新赋值索引。
+df = df.reindex(columns=[&#39;math&#39;,&#39;english&#39;,&#39;music&#39;],fill_value=&#39;100&#39;)
+#或者使用
+print(df)
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pandas/" rel="tag">pandas</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-Pandas实用入门案例02"
   class="article article-type-post"
   itemscope
@@ -568,208 +990,6 @@ if __name__ == &#39;__main__&#39;:
 </code></pre>
 <p>解释：<br>（1）通过url传递参数，给视图函数，这种方式一般用在get请求，post请求通过form表单形式比较实用<br>（2）通过url传递参数，需要定义函数时候，使用形参t_id,且在使用add_resource（）函数的使用，url参数形式最后添加<t_id>变量，例如’/update_delete/<t_id>‘这个形式。<br>（3）delete这个函数，最终执行删除是成功的，但是最终并没有返回return的字符串”delete success”，具体原因不详，可能是用法不对，后续再更新中说明.<br>(return ‘delete success’, 204 将 204去掉即可)</t_id></t_id></p>
 <p><a target="_blank" rel="noopener" href="https://www.jb51.net/article/176172.htm">https://www.jb51.net/article/176172.htm</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flask/" rel="tag">flask</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-flask实用入门案例04"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/08/14/flask%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B04/"
-    >flask实用入门案例04--endpoint</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/08/14/flask%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B04/" class="article-date">
-  <time datetime="2023-08-14T12:43:15.000Z" itemprop="datePublished">2023-08-14</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>在flask框架中，我们经常会遇到endpoint这个东西，最开始也没法理解这个到底是做什么的。最近正好在研究Flask的源码，也就顺带了解了一下这个endpoint<br>首先，我们看一个例子：</p>
-<pre><code>@app.route(&#39;/user/&lt;name&gt;&#39;)
-def user(name):
-  return &#39;Hello, %s&#39; % name
-</code></pre>
-<p>这个是我们在用flask框架写网站中最常用的。<br>通过看源码，我们可以发现：<br>函数等效于</p>
-<pre><code>def user(name)
-  return &#39;Hello, %s&#39; % name
-</code></pre>
-<p>app.add_url_rule(‘/user/<name>‘, ‘user’, user)</name></p>
-<p>这个add_url_rule函数在文档中是这样解释的：</p>
-<pre><code>add_url_rule(*args, **kwargs)
- Connects a URL rule. Works exactly like the route() decorator. If a view_func is provided it will be registered with the endpoint.
-</code></pre>
-<p>add_url_rule有如下参数：</p>
-<pre><code>rule – the URL rule as string
-
-endpoint – the endpoint for the registered URL rule. Flask itself assumes the name of the view function as endpoint
-
-view_func – the function to call when serving a request to the provided endpoint
-options – the options to be forwarded to the underlying Rule object. A change to Werkzeug is handling of method options. methods is a list of methods this rule should be limited to (GET, POST etc.). By default a rule just listens for GET (and implicitly HEAD). Starting with Flask 0.6, OPTIONS is implicitly added and handled by the standard request handling.
-</code></pre>
-<p>抛开options这个参数不谈，我们看看前三个参数。</p>
-<p>rule：这个参数很简单，就是匹配的路由地址<br>view_func：这个参数就是我们写的视图函数<br>endpoint：这个参数就是我今天重点要讲的，endpoint</p>
-<p>很多人认为：假设用户访问<a target="_blank" rel="noopener" href="http://www.example.com/user/eric">http://www.example.com/user/eric</a><br>flask会找到该函数，并传递name=’eric’，执行这个函数并返回值。<br>但是实际中，Flask真的是直接根据路由查询视图函数么？<br>在源码中我们可以发现：</p>
-<p>每个应用程序app都有一个view_functions，这是一个字典，存储endpoint-view_func键值对。add_url_rule的第一个作用就是向view_functions中添加键值对(这件事在应用程序run之前就做好了)<br>每个应用程序app都有一个url_map，它是一个Map类(具体实现在werkzeug/routing.py中)，里面包含了一个列表，列表元素是Role的实例(werkzeug/routing.py中)。add_url_rule的第二个作用就是向url_map中添加Role的实例(它也是在应用程序run之前就做好了)</p>
-<p>我们可以通过一个例子来看：</p>
-<pre><code>app = Flask(__name__)
- 
-@app.route(&#39;/test&#39;, endpoint=&#39;Test&#39;)
-def test():
-  pass
- 
- 
-@app.route(&#39;/&#39;, endpoint=&#39;index&#39;)
-def hello_world():
-  return &#39;Hello World!&#39;
- 
-if __name__ == &#39;__main__&#39;:
-  print(app.view_functions)
-  print(app.url_map)
-  app.run()
-</code></pre>
-<p>运行这个程序，结果是：</p>
-<pre><code>&#123;&#39;static&#39;: &lt;bound method Flask.send_static_file of &lt;Flask &#39;flask-code&#39;&gt;&gt;, &#39;Test&#39;: &lt;function test at 0x10065e488&gt;, &#39;index&#39;: &lt;function hello_world at 0x10323d488&gt;&#125;
-Map([&lt;Rule &#39;/test&#39; (HEAD, OPTIONS, GET) -&gt; Test&gt;,
- &lt;Rule &#39;/&#39; (HEAD, OPTIONS, GET) -&gt; index&gt;,
- &lt;Rule &#39;/static/&lt;filename&gt;&#39; (HEAD, OPTIONS, GET) -&gt; static&gt;])
- * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
-</code></pre>
-<p>所以我们可以看出：这个url_map存储的是url与endpoint的映射!<br>回到flask接受用户请求地址并查询函数的问题。实际上，当请求传来一个url的时候，会先通过rule找到endpoint(url_map)，然后再根据endpoint再找到对应的view_func(view_functions)。通常，endpoint的名字都和视图函数名一样。</p>
-<p>这时候，这个endpoint也就好理解了：<br>实际上这个endpoint就是一个Identifier，每个视图函数都有一个endpoint，<br>当有请求来到的时候，用它来知道到底使用哪一个视图函数</p>
-<p>在实际应用中，当我们需要在一个视图中跳转到另一个视图中的时候，我们经常会使用url_for(endpoint)去查询视图，而不是把地址硬编码到函数中。<br>这个时候，我们就不能使用视图函数名当endpoint去查询了<br>我们举个例子来说明。比如：</p>
-<pre><code>app = Flask(__name__)
-app.register_blueprint(user, url_prefix=&#39;user&#39;)
-app.register_blueprint(file, url_prefix=&#39;file&#39;)
-</code></pre>
-<p>我们注册了2个蓝图。<br>在user中(省略初始化过程)：</p>
-<pre><code>@user.route(&#39;/article&#39;)
-def article():
-  pass
-</code></pre>
-<p>在file中(省略初始化过程)：</p>
-<pre><code>@file.route(&#39;/article&#39;)
-def article():
-  pass
-</code></pre>
-<p>这时候，我们发现，/article这个路由对应了两个函数名一样的函数，分别在两个蓝图中。当我们使用url_for(article)调用的时候(注意，url_for是通过endpoint查询url地址，然后找视图函数)，flask无法知道到底使用哪个蓝图下的endpoint，所以我们需要这样:</p>
-<pre><code>url_for(&#39;user.article&#39;)
-</code></pre>
-<p>以上就是本文的全部内容，希望对大家的学习有所帮助。</p>
-<p>来源：<a target="_blank" rel="noopener" href="https://www.jb51.net/article/176173.htm">https://www.jb51.net/article/176173.htm</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flask/" rel="tag">flask</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-flask实用入门案例03"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/08/13/flask%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B03/"
-    >flask实用入门案例03--Flask-RESTful</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/08/13/flask%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B03/" class="article-date">
-  <time datetime="2023-08-13T11:55:21.000Z" itemprop="datePublished">2023-08-13</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>使用flask可以快速开发restful风格的后台服务，下面展示几种常用实用接口案例。</p>
-<p>Flask-RESTful 提供的最主要的基础就是资源(resources)。资源(Resources)是构建在 Flask 可拔插视图 之上，只要在你的资源(resource)上定义方法就能够容易地访问多个 HTTP 方法.</p>
-<p>其实就是想表达，在资源路由上（resources）定义多个方法（get，post，put等），就可以实现多种效果</p>
-<pre><code>from flask import Flask, request
-from flask_restful import Api, Resource
- 
-app = Flask(__name__)
-api = Api(app)
- 
-todos = &#123;&#125;
- 
-class TodoSimple(Resource):
- def get(self, todo_id):
-  return &#123;todo_id: todos[todo_id]&#125;
- 
- def put(self, todo_id):
-  todos[todo_id] = request.form[&#39;data&#39;]
-  return &#123;todo_id: todos[todo_id]&#125;
- 
-api.add_resource(TodoSimple, &#39;/&lt;string:todo_id&gt;&#39;)
- 
-if __name__ == &#39;__main__&#39;:
- app.run(debug=True)
- 
-</code></pre>
-<p>解释：<br>（1）TodoSimple类定义了2种方法，最终地址/string:todo_id’下面，就可以实现2种请求方法<br>（2）add_resource方法中第一个参数：视图函数名；第二个参数：路由的具体地址，以及string:todo_id代表传递的是一个字符串，且是必要参数。<br>（3）request.form[‘data’]获取request里面，form表单的key为data的参数，如果request里面，没有data参数，那报错。如果有包含data的多个参数，那也只会取data这一个参数</p>
  
       <!-- reward -->
       

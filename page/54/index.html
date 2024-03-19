@@ -154,6 +154,148 @@
     
     
     <article
+  id="post-Linux下查看tomcat占用端口"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/02/13/Linux%E4%B8%8B%E6%9F%A5%E7%9C%8Btomcat%E5%8D%A0%E7%94%A8%E7%AB%AF%E5%8F%A3/"
+    >Linux下查看tomcat占用端口</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/02/13/Linux%E4%B8%8B%E6%9F%A5%E7%9C%8Btomcat%E5%8D%A0%E7%94%A8%E7%AB%AF%E5%8F%A3/" class="article-date">
+  <time datetime="2023-02-13T01:21:59.000Z" itemprop="datePublished">2023-02-13</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>1、先查看tomcat的进程号</p>
+<p>ps -ef | grep tomcat*</p>
+<p>后面带*号，是为了查看多个tomcat，例如tomcat6，tomcat7。</p>
+<p>2、根据进程号查看端口号</p>
+<p>netstat -anop | grep 15161</p>
+<p>可以看到8865、8866、8867端口号被占用</p>
+<p>3、此外，还可以通过端口号，查看其所属的进程号相关信息</p>
+<p>查找到两种方式：</p>
+<p>（1）lsof -i: 8866</p>
+<p>（2）netstat -tunlp|grep 端口号，用于查看指定端口号的进程情况，</p>
+<p>如查看22端口的情况，netstat -tunlp|grep 22</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tomcat/" rel="tag">tomcat</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-Linux下修改tomcat端口号"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/02/13/Linux%E4%B8%8B%E4%BF%AE%E6%94%B9tomcat%E7%AB%AF%E5%8F%A3%E5%8F%B7/"
+    >Linux下修改tomcat端口号</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/02/13/Linux%E4%B8%8B%E4%BF%AE%E6%94%B9tomcat%E7%AB%AF%E5%8F%A3%E5%8F%B7/" class="article-date">
+  <time datetime="2023-02-13T01:20:14.000Z" itemprop="datePublished">2023-02-13</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>1、首先cd进tomcat目录里的conf文件夹，vi打开server.xml配置文件</p>
+<pre><code>[root@localhost soft]# ls
+download redis solrhome tomcat-sina-8081 tomcat-souhu-8082
+jdk redis-3.0.0.gem tomcat tomcat-solr zookeeper-3.4.6
+[root@localhost soft]# cd tomcat-solr/
+[root@localhost tomcat-solr]# cd conf/
+[root@localhost conf]# ls
+Catalina catalina.properties logging.properties tomcat-users.xml
+catalina.policy context.xml server.xml web.xml
+[root@localhost conf]# vim server.xml
+</code></pre>
+<p>2、改动之一<br>8005改成了8885</p>
+<pre><code>&lt;Server port=”8885″ shutdown=”SHUTDOWN”&gt;
+&lt;!– Security listener. Documentation at /docs/config/listeners.html
+&lt;Listener className=”org.apache.catalina.security.SecurityListener” /&gt;
+</code></pre>
+<p>3、改动之二<br>8080改成了8888</p>
+<pre><code>&lt;Connector port=”8888″ protocol=”HTTP/1.1″
+connectionTimeout=”20000″
+redirectPort=”8443″ /&gt;
+</code></pre>
+<p>4、改动之三<br>8009改成了8889</p>
+<pre><code>&lt;!– Define an AJP 1.3 Connector on port 8009 –&gt;
+&lt;Connector port=”8889″ protocol=”AJP/1.3″ redirectPort=”8443″ /&gt;
+</code></pre>
+<p>5、wq保存退出</p>
+<p>6、最后在tomcat的bin目录./startup.sh启动一下试试：OK</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tomcat/" rel="tag">tomcat</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-Linux下启动tomcat服务"
   class="article article-type-post"
   itemscope
@@ -380,145 +522,6 @@ grant create any view to yyyy;
     <footer class="article-footer">
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Oracle/" rel="tag">Oracle</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-MySql改密码"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/02/12/MySql%E6%94%B9%E5%AF%86%E7%A0%81/"
-    >MySql改密码</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/02/12/MySql%E6%94%B9%E5%AF%86%E7%A0%81/" class="article-date">
-  <time datetime="2023-02-12T06:39:56.000Z" itemprop="datePublished">2023-02-12</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="root密码测试只能一句一句的改。"><a href="#root密码测试只能一句一句的改。" class="headerlink" title="root密码测试只能一句一句的改。"></a>root密码测试只能一句一句的改。</h1><pre><code>alter user ‘root’@’localhost’ identified by ‘MySql@123’;
-alter user ‘root’@’127.0.01’ identified by ‘MySql@123’;
-alter user ‘root’@’::1′ identified by ‘MySql@123’;
-</code></pre>
-<h1 id="Reset-the-MySQL-MariaDB-Root-Password"><a href="#Reset-the-MySQL-MariaDB-Root-Password" class="headerlink" title="Reset the MySQL/MariaDB Root Password"></a>Reset the MySQL/MariaDB Root Password</h1><p>By default, the MySQL/MariaDB installation that ships with XAMPP has an empty root password. This is a serious security risk, especially if you plan to use XAMPP in production scenarios.</p>
-<p>To change the MySQL/MariaDB root password, follow these steps:</p>
-<p>Ensure that the MySQL/MariaDB server is running.<br>Open your Windows command prompt by clicking the “Shell” button in the XAMPP control panel.</p>
-<p><img src="https://c2.im5i.com/2023/02/12/nxDoU.png" alt="nxDoU.png"></p>
-<p>Use the mysqladmin command-line utility to alter the MySQL/MariaDB password, using the following syntax:</p>
-<pre><code>mysqladmin --user=root password &quot;newpassword&quot;
-</code></pre>
-<p>For example, to change the MySQL/MariaDB root password from its default empty value to the password gue55me, you would execute:</p>
-<pre><code>mysqladmin --user=root password &quot;gue55me&quot;
-</code></pre>
-<p><img src="https://c2.im5i.com/2023/02/12/nxaOw.png" alt="nxaOw.png"></p>
-<p>Or, if a password has already been previously set and you’d like to change it to a new one, you can use the following syntax:</p>
-<pre><code>mysqladmin --user=root --password=oldpassword password &quot;newpassword&quot;
-</code></pre>
-<p>For example, to change the root password from 12345 to gue55me, you would execute:</p>
-<pre><code>mysqladmin --user=root --password=12345 password &quot;gue55me&quot;
-</code></pre>
-<p>Test that your password change has been accepted, by attempting to connect to the MySQL/MariaDB server using the mysql command-line client in the same directory. For example, you could use the command below to connect to the server and return the results of a calculation:</p>
-<pre><code>mysql --user=root --password=gue55me -e &quot;SELECT 1+1&quot;
-</code></pre>
-<p><img src="https://c2.im5i.com/2023/02/12/nx0J8.png" alt="nx0J8.png"></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Maven不能加载ojdbc14-jar的解决方法"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/02/12/Maven%E4%B8%8D%E8%83%BD%E5%8A%A0%E8%BD%BDojdbc14-jar%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/"
-    >Maven不能加载ojdbc14.jar的解决方法</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/02/12/Maven%E4%B8%8D%E8%83%BD%E5%8A%A0%E8%BD%BDojdbc14-jar%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" class="article-date">
-  <time datetime="2023-02-12T06:34:56.000Z" itemprop="datePublished">2023-02-12</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>首先电脑上得安装好maven。<br>1、先下载ojdbc14-10.2.0.4.0.jar。也可以本机或其他服务器安装的Oracle目录中寻找。<br>2、将ojdbc14-10.2.0.4.0.jar放到指定目录中，这里放在C:\mm\ojdbc14-10.2.0.4.0.jar下的。<br>3、打开 cmd运行</p>
-<pre><code>mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc14 -Dversion=10.2.0.4.0 -Dpackaging=jar -Dfile=C:\mm\ojdbc14-10.2.0.4.0.jar
-</code></pre>
-<p>4、如下在pom.xml文件中添加引用</p>
-<pre><code>&lt;dependency&gt;
-    &lt;groupId&gt;com.oracle&lt;/groupId&gt;
-    &lt;artifactId&gt;ojdbc14&lt;/artifactId&gt;
-    &lt;version&gt;10.2.0.4.0&lt;/version&gt;
-&lt;/dependency&gt;
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MAVEN/" rel="tag">MAVEN</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OJDBC/" rel="tag">OJDBC</a></li></ul>
 
     </footer>
   </div>

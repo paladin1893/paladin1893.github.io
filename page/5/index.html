@@ -154,6 +154,258 @@
     
     
     <article
+  id="post-使用curl执行Http请求"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/11/24/%E4%BD%BF%E7%94%A8curl%E6%89%A7%E8%A1%8CHttp%E8%AF%B7%E6%B1%82/"
+    >使用curl执行Http请求</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/11/24/%E4%BD%BF%E7%94%A8curl%E6%89%A7%E8%A1%8CHttp%E8%AF%B7%E6%B1%82/" class="article-date">
+  <time datetime="2023-11-24T12:14:23.000Z" itemprop="datePublished">2023-11-24</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="curl命令"><a href="#curl命令" class="headerlink" title="curl命令"></a>curl命令</h1><p>curl（CommandLine Uniform Resource Locator或CommandLine URL），curl命令是在命令行方式下工作，利用URL的语法进行数据的传输或者文件的传输。是一个利用URL语法在命令行下工作的文件传输工具。curl设计为：在无用户交互下完成工作。</p>
+<p>curl支持的协议包括：DICT、FILE、FTP、FTPS、GOPHER、HTTP、HTTPS、IMAP、IMAPS、LDAP、LDAPS、POP3、POP3S、RTMP、RTSP、SCP、SFTP、SMTP、SMTPS、TELNET、TFTP。</p>
+<h1 id="curl用法"><a href="#curl用法" class="headerlink" title="curl用法"></a>curl用法</h1><pre><code>curl [options…] &lt;url&gt;
+</code></pre>
+<h1 id="curl参数"><a href="#curl参数" class="headerlink" title="curl参数"></a>curl参数</h1><h2 id="请求"><a href="#请求" class="headerlink" title="请求"></a>请求</h2><h3 id="H-“name-value”"><a href="#H-“name-value”" class="headerlink" title="-H “name: value”"></a>-H “name: value”</h3><pre><code>-H &quot;name: value&quot;
+--header &quot;name: value&quot;
+</code></pre>
+<p>(HTTP)添加一个http header(http请求头)</p>
+<h3 id="H-“name-”"><a href="#H-“name-”" class="headerlink" title="-H “name:”"></a>-H “name:”</h3><pre><code>-H &quot;name:&quot;
+--header &quot;name:&quot;
+</code></pre>
+<p>(HTTP)移除一个http header(http请求头)</p>
+<h3 id="A-“string”"><a href="#A-“string”" class="headerlink" title="-A “string”"></a>-A “string”</h3><pre><code>-A &quot;string&quot;
+--user-agent &quot;string&quot;
+</code></pre>
+<p>(HTTP)设置HTTP请求头User-Agent参数<br>服务器通过User-Agent可以判断客户端使用的浏览器名称和操作系统类型，伪造此参数能导致服务器做出错误判断</p>
+<h3 id="e"><a href="#e" class="headerlink" title="-e"></a>-e</h3><pre><code>-e
+--referer
+</code></pre>
+<p>(HTTP)设置访问时的来源页面，告诉http服务从哪个页面进入到此页面<br>例如：-e “aiezu.com”相当于“-H “Referer: <a target="_blank" rel="noopener" href="http://www.qq.com&quot;”;/">www.qq.com&quot;”；</a></p>
+<h3 id="G"><a href="#G" class="headerlink" title="-G"></a>-G</h3><pre><code>-G
+--get
+</code></pre>
+<p>(HTTP)使用HTTP GET方式</p>
+<h3 id="d"><a href="#d" class="headerlink" title="-d"></a>-d</h3><pre><code>-d @file
+-d &quot;string&quot;
+--data &quot;string&quot;
+--data-ascii &quot;string&quot;
+--data-binary &quot;string&quot;
+--data-urlencode &quot;string&quot;
+</code></pre>
+<p>(HTTP)使用HTTP POST方式发送“key/value对”数据<br>相当于（method=”POST”，enctype=”application/x-www-form-urlencoded”）</p>
+<pre><code>-d，--data：HTTP方式POST数据
+--data-ascii：HTTP方式POST ascii数据
+--data-binary：HTTP方式POST二进制数据
+--data-urlencode：HTTP方式POST数据（进行urlencode）
+</code></pre>
+<p>如果数据以“@”开头，后紧跟一个文件，将post文件内的内容；</p>
+<h3 id="F"><a href="#F" class="headerlink" title="-F"></a>-F</h3><pre><code>-F name=@file
+-F name=&lt;file
+-F name=content
+--form name=content
+--form-string &lt;key=value&gt;
+</code></pre>
+<p>(HTTP)使用HTTP POST方式发送类似“表单字段”的多类型数据<br>相当于同时设置浏览器表单属性（method=”POST”，enctype=”multipart/form-data”），可以使用此参数上传二进制文件。<br>如果字段内容以“@”开头，剩下的部分应该是文件名，curl将会上传此文件，如：</p>
+<pre><code>curl -F &quot;pic=@pic.jpg&quot; http://aiezu.com；
+curl -F &quot;page=@a.html;type=text/html&quot; http://aiezu.com
+curl -F &quot;page=@/tmp/a;filename=a.txt&quot; http://aiezu.com
+</code></pre>
+<p>如果字段内容以“&lt;”开头，剩下的部分应该是文件名，curl将从文件中获取作为此字段的值，如：curl -F “text=&lt;text.txt” <a target="_blank" rel="noopener" href="http://aiezu.com;/">http://aiezu.com；</a></p>
+<p>–form-string类似于“–form”，但是“@”、“&lt;”无特殊含义；</p>
+<h3 id="X"><a href="#X" class="headerlink" title="-X "></a>-X <command></h3><pre><code>-X &lt;command&gt;
+--request &lt;command&gt;
+</code></pre>
+<p>(HTTP)指定与服务器通信使用的请求方法<br>如：GET、PUT、POST、DELETE等</p>
+<h2 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h2><h3 id="b-name-data"><a href="#b-name-data" class="headerlink" title="-b name=data"></a>-b name=data</h3><pre><code>-b name=data
+--cookie name=data
+</code></pre>
+<p>(HTTP)发送cookie数据到HTTP服务器<br>数据格式为：”NAME1=VALUE1; NAME2=VALUE2”</p>
+<p>如果行中没有“=”，将把参数值当作cookie文件名</p>
+<p>这个cookie数据可以是由服务器的http响应头“Set-Cookie:”行发送过来的；</p>
+<h3 id="c-filename"><a href="#c-filename" class="headerlink" title="-c filename"></a>-c filename</h3><pre><code>-c filename
+--cookie-jar file name
+</code></pre>
+<p>(HTTP)完成操作后将服务器返回的cookies保存到指定的文件<br>指定参数值为“-”将定向到标准输出“如控制台”</p>
+<h3 id="j"><a href="#j" class="headerlink" title="-j"></a>-j</h3><pre><code>-j
+--junk-session-cookies
+</code></pre>
+<p>(HTTP)告诉curl放弃所有的”session cookies”.相当于重启浏览器</p>
+<h2 id="响应"><a href="#响应" class="headerlink" title="响应"></a>响应</h2><h3 id="I"><a href="#I" class="headerlink" title="-I"></a>-I</h3><pre><code>-I
+--head
+</code></pre>
+<p>(HTTP)只输出HTTP-header，不获取内容(HTTP/FTP/FILE)</p>
+<ol>
+<li>用于HTTP服务时，获取页面的http头,如：curl -I <a target="_blank" rel="noopener" href="http://aiezu.com/">http://aiezu.com</a></li>
+<li>用于FTP/FILE时，将会获取文件大小、最后修改时间，如：curl -I file://test.txt</li>
+</ol>
+<h3 id="i"><a href="#i" class="headerlink" title="-i"></a>-i</h3><pre><code>-i
+--include
+</code></pre>
+<p>(HTTP)输出HTTP头和返回内容</p>
+<h3 id="D"><a href="#D" class="headerlink" title="-D "></a>-D <file></file></h3><pre><code>-D &lt;file&gt;
+--dump-header &lt;file&gt;
+</code></pre>
+<p>(HTTP)转储http响应头到指定文件</p>
+<h1 id="curl举例"><a href="#curl举例" class="headerlink" title="curl举例"></a>curl举例</h1><h2 id="GET请求"><a href="#GET请求" class="headerlink" title="GET请求"></a>GET请求</h2><pre><code>curl &#39;http://127.0.0.1:8888/test&#39;
+curl -G &#39;http://127.0.0.1:8888/test&#39;
+curl --get &#39;http://127.0.0.1:8888/test&#39;
+curl -X GET &#39;http://127.0.0.1:8888/test&#39;
+curl --request GET &#39;http://127.0.0.1:8888/test&#39;
+</code></pre>
+<p>当有参数时，请进行URL编码，否则会可能会出错</p>
+<pre><code>curl -X GET &#39;http://127.0.0.1:8888/test2?date=2022-02-22 11:22:33&amp;bo=1&#39;
+</code></pre>
+<p>报错：HTTP Status 505 – HTTP Version Not Supported（因为参数带空格）</p>
+<p>正确写法(对空格URL编码)</p>
+<pre><code>curl -X GET &#39;http://127.0.0.1:8888/test2?date=2022-02-22%2011:22:33&amp;bo=1&#39;
+</code></pre>
+<h2 id="POST请求"><a href="#POST请求" class="headerlink" title="POST请求"></a>POST请求</h2><pre><code>curl -X POST &#39;http://127.0.0.1:8888/test2?date=2022-02-22%2011:22:33&amp;bo=11&#39;
+curl -X POST &#39;http://127.0.0.1:8888/test2&#39; -d &#39;date=2022-02-22 11:22:33&amp;bo=11&#39;
+curl -X POST &#39;http://127.0.0.1:8888/test2&#39; --data &#39;date=2022-02-22 11:22:33&amp;bo=11&#39;
+curl -X POST &#39;http://127.0.0.1:8888/test2&#39; --data-urlencode &#39;date=2022-02-22 11:22:33&#39; --data-urlencode &#39;bo=11&#39;
+curl -X POST  -H &#39;Content-Type: application/x-www-form-urlencoded&#39; &#39;http://127.0.0.1:8888/test2&#39; --data-urlencode &#39;date=2022-02-22 11:22:33&#39; --data-urlencode &#39;bo=11&#39;
+</code></pre>
+<p>POST请求默认Content-Type: application/x-www-form-urlencoded</p>
+<p>可以多次使用 -d、–data选项来指定多个传输参数，也可以使用一次 -d、–data选项来指定多个参数。当 Content-Type 为 application/x-www-form-urlencoded 时，-X POST 不可缺省。</p>
+<p>POST JSON请求</p>
+<pre><code>curl -X POST &#39;http://127.0.0.1:8888/test8&#39; -H &#39;Content-Type: application/json&#39; -d &#39;&#123;&quot;code&quot;: 123456789,&quot;name&quot;: 1646278385537&#125;&#39;
+curl &#39;http://127.0.0.1:8888/test8&#39; -H &#39;Content-Type: application/json&#39; -d &#39;&#123;&quot;code&quot;: 123456789,&quot;name&quot;: 1646278385537&#125;&#39;
+</code></pre>
+<p>Content-Type：application/json 时，默认以 POST 方式提交，此时 -X POST 可以缺省。</p>
+<p>————————————————<br>版权声明：本文为CSDN博主「骑个小蜗牛」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/jokerljg/article/details/126534526">https://blog.csdn.net/jokerljg/article/details/126534526</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-Linux命令：ss命令"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/11/23/Linux%E5%91%BD%E4%BB%A4%EF%BC%9Ass%E5%91%BD%E4%BB%A4/"
+    >Linux命令：ss命令</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/11/23/Linux%E5%91%BD%E4%BB%A4%EF%BC%9Ass%E5%91%BD%E4%BB%A4/" class="article-date">
+  <time datetime="2023-11-23T12:14:23.000Z" itemprop="datePublished">2023-11-23</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>ss功能：</p>
+<p>用来显示套接字信息的，类似于netstat，可以显示更多的信息，用于替代netstat。</p>
+<p>ss常用选项</p>
+<pre><code>-t：tcp协议的连接
+-u：udp协议的链接
+-w：裸套接字相关
+-x：unix sock相关
+-l：listen监听状态的连接
+-a：所有状态的连接
+-e：显示扩展信息
+-m：显示套接连接使用的内存信息
+-p：进程及UDP
+-n：数字格式显示
+-o：计时器信息
+</code></pre>
+<p>常用组合：</p>
+<pre><code>-tan, -tanl, -tanlp, -uan
+</code></pre>
+<p>TCP常见状态：</p>
+<p>LISTEN：监听</p>
+<pre><code>ESTABLISHED：已建立连接
+FIN_WAIT_1
+FIN_WAIT_2
+SYN_SENT
+SYN_RECV
+CLOSED
+</code></pre>
+<p>其他用法：</p>
+<pre><code>ss -l 显示本地打开的所有端口
+ss -pl 显示每个进程具体打开的socket
+ss -t -a 显示所有tcp socket
+ss -u -a 显示所有的UDP Socekt
+ss -o state established &#39;( dport = :ssh or sport = :ssh )&#39; 显示所有已建立的ssh连接
+ss -o state established &#39;( dport = :http or sport = :http )&#39; 显示所有已建立的HTTP连接
+ss -s 列出当前socket详细信息
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-CentOS系统安装JDK1.8 详细教程"
   class="article article-type-post"
   itemscope
@@ -586,375 +838,6 @@ kill `cat pid`   杀死指定文件中pid的 es进程
     <footer class="article-footer">
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ElasticSearch/" rel="tag">ElasticSearch</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-CentOS7安装最新版 gcc g++"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/11/18/CentOS7%E5%AE%89%E8%A3%85%E6%9C%80%E6%96%B0%E7%89%88%20gcc%20g++/"
-    >CentOS7安装最新版 gcc g++</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/11/18/CentOS7%E5%AE%89%E8%A3%85%E6%9C%80%E6%96%B0%E7%89%88%20gcc%20g++/" class="article-date">
-  <time datetime="2023-11-18T12:14:23.000Z" itemprop="datePublished">2023-11-18</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="提示"><a href="#提示" class="headerlink" title="提示"></a>提示</h1><p>在使用yum时遇到这个错误</p>
-<pre><code>Another app is currently holding the yum lock; waiting for it to exit…
-</code></pre>
-<p>运行命令</p>
-<pre><code>rm -f /var/run/yum.pid    //    强制关掉yum进程
-</code></pre>
-<h1 id="一、第一种方式"><a href="#一、第一种方式" class="headerlink" title="一、第一种方式"></a>一、第一种方式</h1><h2 id="1、先卸载以前的旧版本"><a href="#1、先卸载以前的旧版本" class="headerlink" title="1、先卸载以前的旧版本"></a>1、先卸载以前的旧版本</h2><p>因为centOS默认自带4点几版本的gcc 、g++编译器，是比较老的版本的，所以先把老版本卸载掉。</p>
-<p>1.1、 先获取root权限<br>1.2、 查看当前的安装版本号</p>
-<pre><code>rpm -q gcc
-</code></pre>
-<p>1.3、卸载掉旧版本</p>
-<pre><code>rpm -e [第二步查到的版本号]
-</code></pre>
-<p>1.4、第三步可能会遇到如下错误，卸载失败</p>
-<pre><code>error: Failed dependencies:
-    gcc = 4.4.7-23.el6 is needed by (installed) gcc-c++-4.4.7-23.el6.x86_64
-    gcc = 4.4.4 is needed by (installed) libtool-2.2.6-15.5.el6.x86_64
-</code></pre>
-<p>提示要卸载的版本有两个依赖，要先卸载掉这两个依赖（注意：下面要卸载的版本号要和上面提示的两个依赖的版本号一致）</p>
-<pre><code>rpm -e gcc-c++-4.4.7-23.el6.x86_64
-rpm -e libtool-2.2.6-15.5.el6.x86_64
-</code></pre>
-<p>将这两个依赖卸载完成之后再次执行第3步就可卸载成功</p>
-<p>1.5、验证卸载</p>
-<pre><code>[root@123 /]# gcc -v
--bash: /usr/bin/gcc: No such file or directory
-[root@123 /]# g++ -v
--bash: /usr/bin/g++: No such file or directory
-</code></pre>
-<p>这样即为卸载成功</p>
-<h2 id="2、安装最新版本的gcc-、g"><a href="#2、安装最新版本的gcc-、g" class="headerlink" title="2、安装最新版本的gcc 、g++"></a>2、安装最新版本的gcc 、g++</h2><p>在安装之前，可以先去查询一下目前gcc 、g++的版本以及区别，本文用了第11版</p>
-<p>2.1、在系统中安装存储库</p>
-<pre><code>yum install centos-release-scl
-</code></pre>
-<p>2.2、安装gcc和g++包（注意版本号：11版）</p>
-<pre><code>yum install -y devtoolset-11-gcc devtoolset-11-gcc-c++
-</code></pre>
-<p>2.3、配置安装好的包（注意版本号：11版）</p>
-<pre><code>scl enable devtoolset-11 bash
-</code></pre>
-<p>2.4、验证安装</p>
-<pre><code>[root@123 /]# gcc -v
-Using built-in specs.
-COLLECT_GCC=gcc
-COLLECT_LTO_WRAPPER=/opt/rh/devtoolset-11/root/usr/libexec/gcc/x86_64-redhat-linux/11/lto-wrapper
-Target: x86_64-redhat-linux
-Configured with: ../configure --enable-bootstrap --enable-languages=c,c++,fortran,lto --prefix=/opt/rh/devtoolset-11/root/usr --mandir=/opt/rh/devtoolset-11/root/usr/share/man --infodir=/opt/rh/devtoolset-11/root/usr/share/info --with-bugurl=http://bugzilla.redhat.com/bugzilla --enable-shared --enable-threads=posix --enable-checking=release --enable-multilib --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-gcc-major-version-only --with-linker-hash-style=gnu --with-default-libstdcxx-abi=gcc4-compatible --enable-plugin --enable-initfini-array --with-isl=/builddir/build/BUILD/gcc-11.2.1-20210728/obj-x86_64-redhat-linux/isl-install --enable-gnu-indirect-function --with-tune=generic --with-arch_32=x86-64 --build=x86_64-redhat-linux
-Thread model: posix
-Supported LTO compression algorithms: zlib
-gcc version 11.2.1 20210728 (Red Hat 11.2.1-1) (GCC)
-
-[root@123 /]# g++ -v
-Using built-in specs.
-COLLECT_GCC=g++
-COLLECT_LTO_WRAPPER=/opt/rh/devtoolset-11/root/usr/libexec/gcc/x86_64-redhat-linux/11/lto-wrapper
-Target: x86_64-redhat-linux
-Configured with: ../configure --enable-bootstrap --enable-languages=c,c++,fortran,lto --prefix=/opt/rh/devtoolset-11/root/usr --mandir=/opt/rh/devtoolset-11/root/usr/share/man --infodir=/opt/rh/devtoolset-11/root/usr/share/info --with-bugurl=http://bugzilla.redhat.com/bugzilla --enable-shared --enable-threads=posix --enable-checking=release --enable-multilib --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-gcc-major-version-only --with-linker-hash-style=gnu --with-default-libstdcxx-abi=gcc4-compatible --enable-plugin --enable-initfini-array --with-isl=/builddir/build/BUILD/gcc-11.2.1-20210728/obj-x86_64-redhat-linux/isl-install --enable-gnu-indirect-function --with-tune=generic --with-arch_32=x86-64 --build=x86_64-redhat-linux
-Thread model: posix
-Supported LTO compression algorithms: zlib
-gcc version 11.2.1 20210728 (Red Hat 11.2.1-1) (GCC) 
-</code></pre>
-<p>2.5、配置环境变量</p>
-<p>因为不配置环境变量的话，每打开一个客户端，就需要执行一次上面的第三步配置安装包</p>
-<pre><code>//先查看gcc和g++安装位置
-[root@123 /]# which gcc
-/opt/rh/devtoolset-11/root/usr/bin/gcc
-[root@123 /]# which g++
-/opt/rh/devtoolset-11/root/usr/bin/g++
-</code></pre>
-<p>编辑文件</p>
-<pre><code>vim /etc/profile
-</code></pre>
-<p>在文件后面添加下面两行内容：</p>
-<pre><code>export GCC_HOME=/opt/rh/devtoolset-11/root/usr
-export PATH=$&#123;GCC_HOME&#125;/bin:$PATH
-</code></pre>
-<p>重新加载文件</p>
-<pre><code>source /etc/profile
-</code></pre>
-<h1 id="二、第二种方式：使用老版本编译新版本"><a href="#二、第二种方式：使用老版本编译新版本" class="headerlink" title="二、第二种方式：使用老版本编译新版本"></a>二、第二种方式：使用老版本编译新版本</h1><p>1、查看系统中有没有老版本</p>
-<p>centOS自带的是4点几的版本 : gcc -v 、g++ -v 两个命令查看，我的是4.8.5版本，如果有，跳到3、官网下载想要安装的gcc版本</p>
-<p>2、先用yum安装老版本gcc、g++</p>
-<pre><code>sudo yum install -y gcc                //安装gcc
-sudo yum install -y gcc-c++            //安装g++
-</code></pre>
-<p>3、官网下载想要安装的gcc版本</p>
-<p><a target="_blank" rel="noopener" href="http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/">http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/</a></p>
-<p>4、安装gcc需要的其他库</p>
-<p>mpfr、mpc、gmp三个库 编译之前还需准备以下：</p>
-<p>4.1、安装m4库</p>
-<pre><code>sudo yum install -y m4 //首先安装m4，否则configure gmp库时会报错**
-</code></pre>
-<p>4.2、安装以下三个库</p>
-<p><strong>一定要按照这三个顺序安装</strong></p>
-<p>4.2.1、gmp库  </p>
-<p>下载地址：<a target="_blank" rel="noopener" href="https://gmplib.org/download/gmp/gmp-6.2.1.tar.xz">https://gmplib.org/download/gmp/gmp-6.2.1.tar.xz</a></p>
-<pre><code>tar -Jxvf gmp-6.2.1.tar.xz    //解压
-cd gmp-6.2.1                //进入
-./configure --prefix=/usr      //指定编译完后要安装的路径，可以自定，示例用/usr
-make -j4                    //编译
-sudo make install            //安装
-</code></pre>
-<p>4.2.2、mpfr库 </p>
-<p>下载地址：<a target="_blank" rel="noopener" href="https://www.mpfr.org/mpfr-current/mpfr-4.2.0.tar.gz">https://www.mpfr.org/mpfr-current/mpfr-4.2.0.tar.gz</a></p>
-<pre><code>tar -zxvf mpfr-4.2.0.tar.gz    //解压
-cd mpfr-4.2.0                //进入
-./configure --prefix=/usr      //指定编译完后要安装的路径，可以自定，示例用/usr
-make -j4                    //编译
-sudo make install            //安装
-</code></pre>
-<p>4.2.3、mpc库 </p>
-<p>下载地址：<a target="_blank" rel="noopener" href="https://mirrors.aliyun.com/gnu/mpc/mpc-1.3.1.tar.gz?spm=a2c6h.25603864.0.0.60dd1a8cVMdT9B">https://mirrors.aliyun.com/gnu/mpc/mpc-1.3.1.tar.gz?spm=a2c6h.25603864.0.0.60dd1a8cVMdT9B</a><br>    tar -zxvf mpc-1.3.1.tar.gz    //解压<br>    cd     mpc-1.3.1                //进入<br>    ./configure –prefix=/usr      //指定编译完后要安装的路径，可以自定，示例用/usr<br>    make -j4                    //编译<br>    sudo make install            //安装</p>
-<p>5、编译安装gcc、g++</p>
-<p>编译gcc时需要cc1，系统中会有，但是编译时会报错找不到</p>
-<p>先到根目录下找：</p>
-<pre><code>cd /
-sudo find -name cc1
-</code></pre>
-<p>我的cc1在 /usr/libexec/gcc/x86_64-redhat-linux/4.8.2/cc1</p>
-<p>创建软连接到/usr/bin目录下</p>
-<pre><code>sudo ln -s /usr/libexec/gcc/x86_64-redhat-linux/4.8.2/cc1 /usr/bin/cc1
-</code></pre>
-<p>编译过程中可能会遇到这个错误，找不到libmpfr.so.6 这个库，但是系统中会有，所以要先创建一个软连接</p>
-<p>去根目录查找</p>
-<pre><code>cd /
-sudo find -name libmpfr.so.6 
-</code></pre>
-<p>我的这个文件在/usr/lib目录下</p>
-<p>在编译前先创建一个软连接到/usr/lib64目录下</p>
-<pre><code>//这个软连接一定要创建在/usr/lib64目录下
-sudo ln -s /usr/lib/libmpfr.so.6 /usr/lib64/libmpfr.so.6    
-</code></pre>
-<p>编译安装gcc、g++</p>
-<pre><code>tar -zxvf gcc-12.2.0.tar.gz     //解压
-cd gcc-12.2.0/                    //进入
-sudo ./configure --disable-multilib --prefix=/usr        
-//生成makefile，--prefix指定编译完之后的安装路径
-// /usr表示安装之后的gcc、g++在/usr/bin里面
-//如果路径中有CMakeLists.txt，则也可以使用cmake生成makefile
-//cmake . -G &quot;Unix Makefiles&quot; -DCMAKE_INSTALL_PREFIX=/usr
-//--enable-multilib 允许32位编译，如果系统中有32位的环境，一般不需要
-//--disable-multilib 只使用64位编译
-sudo make -j4                    //编译
-</code></pre>
-<p>在执行sudo make -j4时，我这里出现了一个报错</p>
-<p>这是由于在编译时内存不足造成的，</p>
-<p>5.1、如果是虚拟机，可以扩大虚拟机的内存</p>
-<p>5.2、创建swap分区（推荐）<br>建议看这篇文章<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44796670/article/details/121234446">https://blog.csdn.net/weixin_44796670/article/details/121234446</a><br>之后再执行sudo make -j4<br>编译安装完之后根据链接文章删除swap分区即可</p>
-<p>5.3、或者将sudo make -j4改为sudo make，减少同时进行的任务数量，但是编译时间会更长</p>
-<p>等待编译完成，时间比较长！！！</p>
-<p>6、删除创建的软连接，卸载yum安装的gcc、g++</p>
-<pre><code>//删除创建的软连接
-sudo rm -rf /usr/bin/cc1
-sudo rm -rf /usr/lib64/libmpfr.so.6
-
-//卸载yum安装的gcc、g++
-sudo yum remove gcc gcc-c++
-
-//gcc和g++安装到/usr/bin目录中了
-sudo make install 
-</code></pre>
-<p>————————————————<br>版权声明：本文为CSDN博主「cppbugboy」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_45316173/article/details/122018354">https://blog.csdn.net/qq_45316173/article/details/122018354</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/g/" rel="tag">g++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gcc/" rel="tag">gcc</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Centos7下安装Redis5"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/11/17/Centos7%E4%B8%8B%E5%AE%89%E8%A3%85Redis5/"
-    >Centos7下安装Redis5</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/11/17/Centos7%E4%B8%8B%E5%AE%89%E8%A3%85Redis5/" class="article-date">
-  <time datetime="2023-11-17T13:14:23.000Z" itemprop="datePublished">2023-11-17</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><p>在安装Redis之前，请确保已经使用yum安装了以下基础组件：</p>
-<pre><code>make
-gcc
-gcc-c++
-kernel-devel
-</code></pre>
-<h1 id="Redis的安装"><a href="#Redis的安装" class="headerlink" title="Redis的安装#"></a>Redis的安装#</h1><p>开始下载Redis并进行编译安装：</p>
-<pre><code>cd /usr/local/redis
-wget http://download.redis.io/releases/redis-5.0.14.tar.gz
-tar -zxvf redis-5.0.14.tar.gz
-cd redis-5.0.14
-make &amp;&amp; make PREFIX=/usr/local/redis install
-
-mkdir /usr/local/redis/etc/
-cp redis.conf /usr/local/redis/etc/
-
-cd ..
-mkdir data
-#ln -s /usr/local/redis-5.0.14 /usr/local/redis
-</code></pre>
-<p>把Redis的sbin目录加入PATH：</p>
-<pre><code># vim /etc/profile
-
-export REDIS_HOME=/usr/local/redis
-export PATH=$PATH:$&#123;REDIS_HOME&#125;/bin
-
-# source /etc/profile
-</code></pre>
-<p>至此，Redis已经安装完毕。</p>
-<h1 id="修改redis-conf"><a href="#修改redis-conf" class="headerlink" title="修改redis.conf"></a>修改redis.conf</h1><pre><code>69行：
-#bind 127.0.0.1
-
-88行：
-protected-mode no
-
-136行：
-daemonize yes
-
-171行：
-logfile &quot;/usr/local/redis/data/redis_6379.log&quot;
-
-263行：
-dir /usr/local/redis/data
-
-507行：
-requirepass Your@Password
-
-699行：
-appendonly yes
-</code></pre>
-<h1 id="启动脚本"><a href="#启动脚本" class="headerlink" title="启动脚本"></a>启动脚本</h1><p>添加服务</p>
-<pre><code>vi /usr/lib/systemd/system/redis.service
-</code></pre>
-<p>配置如下：</p>
-<pre><code># 服务的说明
-[Unit]
-# 描述服务
-Description=redis
-# 描述服务类别
-After=network.target
-
-# 服务运行参数的设置
-[Service]
-# 后台运行的形式
-Type=forking
-# 启动命令
-ExecStart=/usr/local/redis/bin/redis-server /usr/local/redis/etc/redis.conf
-# 停止命令
-ExecStop=/usr/local/redis/bin/redis-cli shutdown
-# 自动重启
-Restart=always
-
-# 服务安装的设置
-[Install]
-# 用户的模式
-WantedBy=multi-user.target
-</code></pre>
-<p>服务启动关停：</p>
-<pre><code>systemctl daemon-reload
-# systemctl enable/disable xxx 指令设置/取消开机启动
-systemctl enable redis
-systemctl start redis
-systemctl stop redis
-systemctl status redis
-</code></pre>
-<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><p>直接</p>
-<pre><code>redis-cli ping
-</code></pre>
-<p>报错如下：</p>
-<pre><code>NOAUTH Authentication required
-</code></pre>
-<p>正确使用：</p>
-<pre><code>redis-cli
-auth Your@Password
-</code></pre>
-<h1 id="启动和停止"><a href="#启动和停止" class="headerlink" title="启动和停止"></a>启动和停止</h1><p>使用</p>
-<pre><code>ps -ef | grep redis
-</code></pre>
-<p>去查看redis的进程号，然后直接</p>
-<pre><code>kill -9 redis的进程号
-</code></pre>
-<p>它就可以停止了</p>
-<p>然后执行redis-server就可以启动了</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
 
     </footer>
   </div>

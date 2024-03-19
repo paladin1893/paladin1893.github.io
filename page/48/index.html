@@ -154,6 +154,126 @@
     
     
     <article
+  id="post-PostgreSQL更改字段默认值、设置字段默认值、删除字段默认值"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/03/13/PostgreSQL%E6%9B%B4%E6%94%B9%E5%AD%97%E6%AE%B5%E9%BB%98%E8%AE%A4%E5%80%BC%E3%80%81%E8%AE%BE%E7%BD%AE%E5%AD%97%E6%AE%B5%E9%BB%98%E8%AE%A4%E5%80%BC%E3%80%81%E5%88%A0%E9%99%A4%E5%AD%97%E6%AE%B5%E9%BB%98%E8%AE%A4%E5%80%BC/"
+    >Postgresql更改字段默认值、设置字段默认值、删除字段默认值</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/03/13/PostgreSQL%E6%9B%B4%E6%94%B9%E5%AD%97%E6%AE%B5%E9%BB%98%E8%AE%A4%E5%80%BC%E3%80%81%E8%AE%BE%E7%BD%AE%E5%AD%97%E6%AE%B5%E9%BB%98%E8%AE%A4%E5%80%BC%E3%80%81%E5%88%A0%E9%99%A4%E5%AD%97%E6%AE%B5%E9%BB%98%E8%AE%A4%E5%80%BC/" class="article-date">
+  <time datetime="2023-03-13T15:10:25.000Z" itemprop="datePublished">2023-03-13</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>Postgresql更改字段默认值：<br>alter table  t_report ALTER   COLUMN reportno set DEFAULT  gen_random_uuid();  </p>
+<p>Postgresql添加字段默认值：<br>ALTER TABLE tablename ADD COLUMN name1 INTEGER  DEFAULT 1;</p>
+<p>Postgresql删除字段默认值：<br>ALTER TABLE tablename ALTER COLUMN name1 DROP DEFAULT;</p>
+<p>Postgresql删除字段：<br>ALTER TABLE tablename  DROP COLUMN if exists name1 ;</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-SpringBoot逻辑删除之基本条件"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/03/12/SpringBoot%E9%80%BB%E8%BE%91%E5%88%A0%E9%99%A4%E4%B9%8B%E5%9F%BA%E6%9C%AC%E6%9D%A1%E4%BB%B6/"
+    >springboot逻辑删除之基本条件</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/03/12/SpringBoot%E9%80%BB%E8%BE%91%E5%88%A0%E9%99%A4%E4%B9%8B%E5%9F%BA%E6%9C%AC%E6%9D%A1%E4%BB%B6/" class="article-date">
+  <time datetime="2023-03-12T14:50:22.000Z" itemprop="datePublished">2023-03-12</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>SpringBoot 配置方式：</p>
+<p>application.yml 加入配置(如果你的默认值和mp默认的一样,该配置可无):</p>
+<pre><code>mybatis-plus:
+  global-config:
+    db-config:
+      logic-delete-field: deleted # 全局逻辑删除的实体字段名(since 3.3.0,配置后可以忽略不配置步骤2)
+      logic-delete-value: 1 # 逻辑已删除值(默认为 1)
+      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
+</code></pre>
+<p>Postgresql更改字段默认值：</p>
+<pre><code>alter table sys_user ALTER COLUMN deleted set DEFAULT 0; 
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SpringBoot/" rel="tag">SpringBoot</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-vue正则验证（二）"
   class="article article-type-post"
   itemscope
@@ -704,168 +824,6 @@ Process finished with exit code 0
     <footer class="article-footer">
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SpringBoot/" rel="tag">SpringBoot</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Springboot-Postgresql-FastAutoGenerator-1"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/03/07/Springboot-Postgresql-FastAutoGenerator-1/"
-    >Springboot+Postgresql+FastAutoGenerator（一）</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/03/07/Springboot-Postgresql-FastAutoGenerator-1/" class="article-date">
-  <time datetime="2023-03-07T06:57:38.000Z" itemprop="datePublished">2023-03-07</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>Postgreql默认是public，需要手动指定schema。<br>URL指定schema也不行，必须单独构造一个DataSourceConfig.Builder进行指定。</p>
-<pre><code>package com.goland.gis;
-
-import com.baomidou.mybatisplus.generator.FastAutoGenerator;
-import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
-import com.baomidou.mybatisplus.generator.config.OutputFile;
-import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
-
-import java.util.Collections;
-
-public class CodeGenerator &#123;
-
-    public static void main(String[] args) &#123;
-
-        String url =&quot;jdbc:postgresql://localhost:5432/power?currentSchema=system&quot;;
-        String username = &quot;postgres&quot;;
-        String password = &quot;postgres&quot;;
-
-        String moduleName = &quot;sys&quot;;
-        String mapperLocation = &quot;E:\\Java\\work4\\grid\\gis\\src\\main\\resources\\mapper\\&quot; + moduleName;
-        String tableNames = &quot;sys_user,sys_menu,sys_role,sys_role_menu,sys_user_role&quot;;
-
-        DataSourceConfig.Builder builderOutSide = new DataSourceConfig.Builder(url, username, password);
-        builderOutSide.schema(&quot;system&quot;);
-
-        FastAutoGenerator.create(builderOutSide)
-                .globalConfig(builder -&gt; &#123;
-                    builder.author(&quot;zhangsmile1893&quot;) // 设置作者
-                            //.enableSwagger() // 开启 swagger 模式
-                            //.fileOverride() // 覆盖已生成文件
-                            .outputDir(&quot;E:\\Java\\work4\\grid\\gis\\src\\main\\java&quot;); // 指定输出目录
-                &#125;)
-                .packageConfig(builder -&gt; &#123;
-                    builder.parent(&quot;com.goland.gis&quot;) // 设置父包名
-                            .moduleName(moduleName) // 设置父包模块名
-                            .pathInfo(Collections.singletonMap(OutputFile.xml, mapperLocation)); // 设置mapperXml生成路径
-                &#125;)
-                .strategyConfig(builder -&gt; &#123;
-                    builder.addInclude(tableNames) // 设置需要生成的表名
-                            .addTablePrefix(&quot;sys_&quot;); // 设置过滤表前缀
-                &#125;)
-                .templateEngine(new FreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板
-                .execute();
-    &#125;
-&#125;
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SpringBoot/" rel="tag">SpringBoot</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-关于数据库模式切换问题"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/03/06/%E5%85%B3%E4%BA%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A8%A1%E5%BC%8F%E5%88%87%E6%8D%A2%E9%97%AE%E9%A2%98/"
-    >关于数据库模式切换问题</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/03/06/%E5%85%B3%E4%BA%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A8%A1%E5%BC%8F%E5%88%87%E6%8D%A2%E9%97%AE%E9%A2%98/" class="article-date">
-  <time datetime="2023-03-06T06:27:10.000Z" itemprop="datePublished">2023-03-06</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>现在流行的数据库都有 Schema 的概念，一般作为数据库对象(表，函数，存储过程等)的命名空间。所以在数据库端往往存在实例/数据库/Schema 这样层级划分。对于DB2 和 Oracle 用客户端创建一个新的数据库并非易事，灵活的在数据库中较轻量的划分隔离空间的办法因数据库类型而异。</p>
-<p>MySQL： Mysql 的体系架构是单实例多库，一个用户可以访问多个数据库，然后指定当前数据库写 SQL 的时候就不用带上数据库名，MySQL 中 database 和 schema是一个概念，它靠 database 来隔离数据库对象。创建数据库(create database)，create schema 是 create database 的别名。</p>
-<p>PostgreSQL： create database 创建新的数据库，或在当前数据库下用 create schema 创建 schema。PostgreSQL 的函数或存储过程中对未指定 schema 的数据库对象的访问的规则是在调用时动态绑定到当前会话中的 schema。</p>
-<p>达梦 8： 达梦的体系架构是单库多实例的，也就是没有多个数据库的概念，从 Mysql转到达梦，就需要建多个用户+表空间来对应 Mysql的多个数据库。每个用户有一个默认的同名的模式，访问自己模式下的表、视图等不需要加模式名，访问其他模式下的对象需要加上模式名。</p>
-<p>Oracle： create schema 较麻烦，涉及到 authorization。但可以通过 create user 创建新用户后就有了对应的新 schema。Oracle 中采取用户来隔离数据库对象。</p>
-<p>实际应用过程中研发交付团队可能使用模式来进行租户间的数据隔离或根据业务功能划分不同的模式，这里就涉及一个服务需要同时连接并查询多种模式的问题，<br>一种方案是直接在 sql 中的表名前添加模式名前缀，这种适合一句 sql 需要跨多个模式进行联合查询的场景，属于定制型 sql。<br>一种方案是在会话层面指定模式，这样 sql中的表名不需要指定默认的前缀，对于不在当前模式下的表才需要添加模式前缀，这种适合多模式下相同表名存储数据的切换。</p>
-<p>MySQL 的连接串直接指定具体数据库，其实已经是会话层面的模式切换</p>
-<p>PostgreSQL 的连接串在没有指定当前模式下，例如<br>jdbc:postgresql://localhost:5432/postgresql 默认使用的是 postgresql 数据库的 public模式。</p>
-<p>PostgreSQL 从 9.4 版本开始通过关键字 currentSchema 指定模式<br>jdbc:postgresql://localhost:5432/postgresql?currentSchema=myschema</p>
-<p>旧版本通过 searchpath 指定<br>jdbc:postgresql://localhost:5432/postgresql?searchpath=myschema</p>
-<p>达梦 8 的连接串在没有指定当前模式时，使用的是与用户同名的模式，可通过scheme 指定当前模式，例如：<br>jdbc:dm://localhost:5236?schema=myschema</p>
-<p>————————————————<br>版权声明：本文为CSDN博主「雪影风痕」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_48805880/article/details/128385835">https://blog.csdn.net/m0_48805880/article/details/128385835</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a></li></ul>
 
     </footer>
   </div>

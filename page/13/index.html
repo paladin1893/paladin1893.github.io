@@ -154,6 +154,172 @@
     
     
     <article
+  id="post-LambdaUpdateWrapper和LambdaQueryWrapper的区别"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/10/07/LambdaUpdateWrapper%E5%92%8CLambdaQueryWrapper%E7%9A%84%E5%8C%BA%E5%88%AB/"
+    >LambdaUpdateWrapper和LambdaQueryWrapper的区别</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/10/07/LambdaUpdateWrapper%E5%92%8CLambdaQueryWrapper%E7%9A%84%E5%8C%BA%E5%88%AB/" class="article-date">
+  <time datetime="2023-10-07T02:07:00.000Z" itemprop="datePublished">2023-10-07</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>LambdaQueryWrapper是查询时候给条件,例如</p>
+<pre><code>/**
+ * lambda链式编程
+ */
+@Test
+public void test88()&#123;
+    QueryWrapper&lt;User&gt; queryWrapper = new QueryWrapper&lt;&gt;();
+    queryWrapper.lambda()
+            .between(User::getAge,30,60)
+            .orderByDesc(User::getId);
+    List&lt;User&gt; list = userService.list(queryWrapper);
+    list.forEach(System.out::println);
+&#125;
+</code></pre>
+<p>LambdaUpdateWrapper是修改的时候给的条件,例如:</p>
+<pre><code>/**
+ * 测试链式编程更新操作
+ */
+@Test
+public void test99()&#123;
+    UpdateWrapper&lt;User&gt; updateWrapper = new UpdateWrapper&lt;&gt;();
+    updateWrapper.lambda()
+            .le(User::getAge, 30)
+            .setSql(&quot;email = &#39;le30@duck.top&#39;&quot;);
+    userService.update(updateWrapper);
+&#125;
+</code></pre>
+<p>————————————————<br>版权声明：本文为CSDN博主「z子豪」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/a864034462/article/details/123980761">https://blog.csdn.net/a864034462/article/details/123980761</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-LambdaQueryWrapper如何正确使用or或者and"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/10/06/LambdaQueryWrapper%E5%A6%82%E4%BD%95%E6%AD%A3%E7%A1%AE%E4%BD%BF%E7%94%A8or%E6%88%96%E8%80%85and/"
+    >LambdaQueryWrapper如何正确使用or或者and</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/10/06/LambdaQueryWrapper%E5%A6%82%E4%BD%95%E6%AD%A3%E7%A1%AE%E4%BD%BF%E7%94%A8or%E6%88%96%E8%80%85and/" class="article-date">
+  <time datetime="2023-10-06T02:06:00.000Z" itemprop="datePublished">2023-10-06</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="例子1"><a href="#例子1" class="headerlink" title="例子1:"></a>例子1:</h1><pre><code>LambdaQueryWrapper&lt;SysUser&gt; lambdaQueryWrapper = new LambdaQueryWrapper&lt;&gt;();
+lambdaQueryWrapper.or((wrapper)-&gt;&#123;
+    wrapper.eq(SysUser::getUserName, idUserPayBalUserName).or();
+    wrapper.eq(SysUser::getPhonenumber, idUserPayBalUserName);
+    &#125;);
+lambdaQueryWrapper.and((wrapper)-&gt;&#123;
+    wrapper.eq(SysUser::getNickName, idUserPayBalName);
+        &#125;
+            );
+SysUser one = userService.getOne(lambdaQueryWrapper);
+</code></pre>
+<p>sql语句为</p>
+<pre><code>SELECT *
+ FROM sys_user
+ WHERE ((user_name = &#39;15666666669&#39; OR phonenumber = &#39;15666666669&#39;) AND (nick_name = &#39;15666666669&#39;));
+</code></pre>
+<p>也就是说,使用or()包裹的代码执行后是在sql语句的括号内,再次使用or()或者and()则另起一个括号.</p>
+<h1 id="例子2"><a href="#例子2" class="headerlink" title="例子2:"></a>例子2:</h1><pre><code>LambdaQueryWrapper&lt;SysUser&gt; lambdaQueryWrapper = new LambdaQueryWrapper&lt;&gt;();
+    lambdaQueryWrapper.eq(SysUser::getUserName, idUserPayBalUserName).or();
+    lambdaQueryWrapper.eq(SysUser::getPhonenumber, idUserPayBalUserName);
+    lambdaQueryWrapper.eq(SysUser::getNickName, idUserPayBalName);
+    SysUser one = userService.getOne(lambdaQueryWrapper);
+</code></pre>
+<p>sql语句为</p>
+<pre><code>SELECT *
+ FROM sys_user
+ WHERE (user_name = &#39;15666666669&#39; OR phonenumber = &#39;15666666669&#39; AND nick_name = &#39;123&#39;);
+</code></pre>
+<p>可以理解为如下这个语句👇,所以这个sql和上面的例子的sql执行后的结果是完全不一样的.</p>
+<pre><code>SELECT *
+ FROM sys_user
+ WHERE (user_name = &#39;15666666669&#39; OR (phonenumber = &#39;15666666669&#39; AND nick_name = &#39;123&#39;));
+</code></pre>
+<p>————————————————<br>版权声明：本文为CSDN博主「z子豪」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/a864034462/article/details/123980761">https://blog.csdn.net/a864034462/article/details/123980761</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-Mybatis-Plus高级查询LambdaQueryWrapper&amp;QueryWrapper"
   class="article article-type-post"
   itemscope
@@ -1189,160 +1355,6 @@ const option = &#123;
     <footer class="article-footer">
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-修改conda虚拟环境安装路径"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/10/01/%E4%BF%AE%E6%94%B9conda%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85%E8%B7%AF%E5%BE%84/"
-    >修改conda虚拟环境安装路径</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/10/01/%E4%BF%AE%E6%94%B9conda%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85%E8%B7%AF%E5%BE%84/" class="article-date">
-  <time datetime="2023-10-01T02:01:00.000Z" itemprop="datePublished">2023-10-01</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>前言<br>第一次创建conda虚拟环境时，发现默认安装路径是C盘。为了避免后期装的包越来越多，虚拟环境占用空间太大导致C盘爆满的问题，需要修改conda的安装路径。在网上仔细学习，总结出如下有效的解决方法。</p>
-<p>下载Miniconda<br>因为我希望能够根据实际需要装包，所以选择了轻量化的miniconda。话不多说，下面先放上miniconda的下载地址。</p>
-<p>官方地址：<a target="_blank" rel="noopener" href="https://conda.io/en/latest/miniconda.html">https://conda.io/en/latest/miniconda.html</a></p>
-<p>清华镜像网址：<a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/">https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/</a></p>
-<p>下载后-右键-“以管理员身份运行”</p>
-<p>这一步建议选择“All Users”</p>
-<p>这一步记得修改安装路径到D盘，最好自己提前新建一个文件夹然后装到里面</p>
-<p>后面应该问题不大，一直“next”到最后“finish”就好。</p>
-<p>安装完成后，打开Anaconda Prompt(conda)，输入conda –version如果正确显示版本号说明安装成功。</p>
-<p>准备工作</p>
-<p>首先在D盘新建一个文件夹，命名任意（我命名为conda_base），然后在这个文件夹里面再新建两个文件夹，命名分别为envs和pkgs。</p>
-<p>打开Anaconda Prompt(conda)，输入以下代码（一行一行复制）</p>
-<pre><code>conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
-conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
-conda config --set show_channel_urls yes
-</code></pre>
-<p>接着，打开路径“C:\Users[用户名]\，找到文件夹中的.condarc文件，使用记事本打开。打开后会看到里面的内容如下：</p>
-<p>现在我们在最下面加入以下内容：（路径按照自己实际情况修改 ）</p>
-<pre><code>envs_dirs:
-  - D:\conda_base\envs
-pkgs_dirs:
-  - D:\conda_base\pkgs
-</code></pre>
-<p>加入后保存即可退出。</p>
-<p>创建环境</p>
-<p>打开Anaconda Prompt(conda)，输入以下内容：</p>
-<pre><code>conda create --name kennn python=3.9 -y
-</code></pre>
-<p>其中“kennn”是环境名字，python版本可根据需要更改“=”后的版本号即可</p>
-<p>点击回车，自动创建环境，至此教程结束。</p>
-<p>conda常用指令</p>
-<p>进入某个环境：conda activate [环境名]（一开始打开Anaconda Prompt默认处于base环境）</p>
-<p>退出当前环境：conda deactivate</p>
-<p>已创建环境目录：conda info –envs</p>
-<p>————————————————<br>版权声明：本文为CSDN博主「黯岚岚岚岚岚」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_59209871/article/details/134674607">https://blog.csdn.net/weixin_59209871/article/details/134674607</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Anaconda与Miniconda之间的选择"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/09/30/Anaconda%E4%B8%8EMiniconda%E4%B9%8B%E9%97%B4%E7%9A%84%E9%80%89%E6%8B%A9/"
-    >Anaconda与Miniconda之间的选择</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/09/30/Anaconda%E4%B8%8EMiniconda%E4%B9%8B%E9%97%B4%E7%9A%84%E9%80%89%E6%8B%A9/" class="article-date">
-  <time datetime="2023-09-30T02:40:35.000Z" itemprop="datePublished">2023-09-30</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>导言</p>
-<p>Python语言因其灵活性、易用性和强大的数据处理能力在科学计算和数据分析领域受到广泛欢迎。然而，Python的一大挑战是库的管理和环境的隔离。解决这个问题的一个方案是使用分布式管理系统，如Anaconda或Miniconda。本文将深入探讨这两者的相似之处、差异和应用场景。</p>
-<p>Anaconda和Miniconda的基本概念</p>
-<p>Anaconda和Miniconda都是Continuum Analytics的开源项目，用于管理Python的环境和包。两者都有用于创建和管理虚拟环境的Conda包管理器，这使得在不同的项目之间切换和隔离变得简单。但是，两者之间存在一些重要的区别。</p>
-<p>Anaconda是一个包含了conda、Python和超过150个科学包及其依赖项的科学Python发行版。它具有可视化图形用户界面（Anaconda Navigator）并且为了方便新手使用，预先包含了大量的库，如NumPy, Pandas, Scipy, Matplotlib等。</p>
-<p>相较之下，Miniconda更加轻量级。它只包含了Python和Conda，但并没有预装其他的库。Miniconda用户需要手动安装他们需要的包，这使得Miniconda的环境更为简洁，可以根据实际需求来安装必要的包，避免不必要的存储占用。</p>
-<p>对比Anaconda和Miniconda</p>
-<p>首先，我们看到Anaconda和Miniconda最显著的区别在于他们所包含的包的数量。Anaconda预安装了大量科学计算和数据分析所需的库，使得用户可以立即开始工作。而Miniconda只包含了Python和conda，它的轻量级特性使得它在需要快速部署Python环境，或者在磁盘空间有限、网络环境较差、或者需要定制特定环境的情况下具有优势。</p>
-<p>其次，Anaconda提供了Anaconda Navigator这样的图形用户界面，它使得库的安装、环境的创建和管理变得更为简单直观。这对于新手用户来说是非常有帮助的，尤其是对于那些不习惯使用命令行的用户。而Miniconda没有这样的用户界面，所有的操作都需要通过命令行来完成。</p>
-<p>最后，由于Anaconda包含了大量的预装库，因此它的安装文件非常大，而Miniconda则相对较小。这可能会影响到安装的速度和存储空间的占用。</p>
-<p>选择Anaconda还是Miniconda？</p>
-<p>选择Anaconda还是Miniconda主要取决于你的具体需求。如果你是Python新手，或者你需要的所有库都在Anaconda的预装库中，那么Anaconda可能是更好的选择。它可以让你迅速开始你的项目，而无需担心库的安装和管理。</p>
-<p>然而，如果你需要定制你的Python环境，或者你需要在有限的资源下工作，那么Miniconda可能是更好的选择。它允许你只安装你需要的库，避免了不必要的存储占用。此外，由于Miniconda的安装文件更小，因此它的安装速度通常更快。</p>
-<p>总结</p>
-<p>无论你选择Anaconda还是Miniconda，都能获得强大的Python环境管理功能。你的选择应基于你的具体需求和资源状况。不论选择哪一个，都能通过conda进行库的管理和环境的隔离，大大提升Python开发和科学计算的效率。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
 
     </footer>
   </div>

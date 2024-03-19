@@ -154,7 +154,7 @@
     
     
     <article
-  id="post-配电与配网的异同 - 副本"
+  id="post-css命名规范"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -165,7 +165,297 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/12/16/%E9%85%8D%E7%94%B5%E4%B8%8E%E9%85%8D%E7%BD%91%E7%9A%84%E5%BC%82%E5%90%8C%20-%20%E5%89%AF%E6%9C%AC/"
+  <a class="article-title" href="/2023/12/18/css%E5%91%BD%E5%90%8D%E8%A7%84%E8%8C%83/"
+    >css命名规范</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/12/18/css%E5%91%BD%E5%90%8D%E8%A7%84%E8%8C%83/" class="article-date">
+  <time datetime="2023-12-18T02:22:00.000Z" itemprop="datePublished">2023-12-18</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>BEM 命名规范</p>
+<p>什么是 BEM 命名规范 </p>
+<p>Bem 是块(block)、元素(element)、修饰符(modifier)的简写，由 Yandex 团队提出的一种前端 CSS 命名方法论。</p>
+<pre><code>- 中划线 ：仅作为连字符使用，表示某个块或者某个子元素的多单词之间的连接记号。
+-- 双中线 代表不同的状态，类型。
+__ 双下划线: 双下划线用来连接块和块的子元素
+_ 单下划线：单下划线用来描述一个块或者块的子元素的一种状态
+</code></pre>
+<p>BEM 是一个简单又非常有用的命名约定。让你的前端代码更容易阅读和理解，更容易协作，更容易控制，更加健壮和明确，而且更加严密。</p>
+<p>书写方式</p>
+<pre><code>.block &#123;&#125; /** 代表了更高级别的抽象或组件。 **/
+.block__element &#123;&#125; /** 代表 .block 的后代，用于形成一个完整的 .block 的整体。 **/
+.block-name &#123; &#125;     /** 代表 .blocak 连字符  **/
+.block--modifier &#123;&#125; /** 代表 .block 的不同状态或不同版本。 ** /
+</code></pre>
+<p>推荐写法</p>
+<pre><code>.form &#123; &#125;
+.form--theme-xmas &#123; &#125;
+.form--simple &#123; &#125;
+.form__input &#123; &#125;
+.form__submit &#123; &#125;
+.form__submit--disabled &#123; &#125;
+ 
+//对应的HTML结构如下：
+&lt;form class=&quot;form form--theme-xmas form--simple&quot;&gt;
+  &lt;input class=&quot;form__input&quot; type=&quot;text&quot; /&gt;
+  &lt;input
+    class=&quot;form__submit form__submit--disabled&quot;
+    type=&quot;submit&quot; /&gt;
+&lt;/form&gt;
+</code></pre>
+<p>常用的css命名</p>
+<p>常用的CSS命名规则</p>
+<pre><code>头：header
+内容：content/container
+尾：footer
+导航：nav
+侧栏：sidebar
+栏目：column
+页面外围控制整体?丫挚矶龋?rapper
+左右中：left right center
+登录条：loginbar
+标志：logo
+广告：banner
+页面主体：main
+热点：hot
+新闻：news
+下载：download
+子导航：subnav
+菜单：menu
+子菜单：submenu
+搜索：search
+友情链接：friendlink
+页脚：footer
+版权：copyright
+滚动：scroll
+内容：content
+标签：tags
+文章列表：list
+提示信息：msg
+小技巧：tips
+栏目标题：title
+加入：joinus
+指南：guide
+服务：service
+注册：regsiter
+状态：status
+投票：vote
+合作伙伴：partner
+ 
+注释的写法:
+/* Header */
+内容区
+/* End Header */
+ 
+id的命名:
+1)页面结构
+ 
+容器: container
+页头：header
+内容：content/container
+页面主体：main
+页尾：footer
+导航：nav
+侧栏：sidebar
+栏目：column
+页面外围控制整体?丫挚矶龋?rapper
+左右中：left right center
+ 
+(2)导航
+ 
+导航：nav
+主导航：mainnav
+子导航：subnav
+顶导航：topnav
+边导航：sidebar
+左导航：leftsidebar
+右导航：rightsidebar
+菜单：menu
+子菜单：submenu
+标题: title
+摘要: summary
+ 
+(3)功能
+ 
+标志：logo
+广告：banner
+登陆：login
+登录条：loginbar
+注册：register
+搜索：search
+功能区：shop
+标题：title
+加入：joinus
+状态：status
+按钮：btn
+滚动：scroll
+标?页：tab
+文章列表：list
+提示信息：msg
+当前的: current
+小技巧：tips
+图标: icon
+注释：note
+指南：guild
+服务：service
+热点：hot
+新闻：news
+下载：download
+投票：vote
+合作伙伴：partner
+友情链接：link
+版权：copyright
+</code></pre>
+<p>注意事项::</p>
+<p>1.一律小写;<br>2.尽量用英文;<br>3.不加中??和下划线;<br>4.尽量不缩写，除非一看就明白的单词。</p>
+<p>CSS样式表文件命名</p>
+<pre><code>主要的 master.css
+模块 module.css
+基本共用 base.css
+布局、版面 layout.css
+主题 themes.css
+专栏 columns.css
+文字 font.css
+表单 forms.css
+补丁 mend.css
+打印 print.css
+</code></pre>
+<p>————————————————</p>
+<p>版权声明：本文为博主原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接和本声明。</p>
+<p>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_27104997/article/details/124474762">https://blog.csdn.net/qq_27104997/article/details/124474762</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/css/" rel="tag">css</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-css中的减号或下划线"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/12/17/css%E4%B8%AD%E7%9A%84%E5%87%8F%E5%8F%B7%E6%88%96%E4%B8%8B%E5%88%92%E7%BA%BF/"
+    >css中的减号或下划线</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/12/17/css%E4%B8%AD%E7%9A%84%E5%87%8F%E5%8F%B7%E6%88%96%E4%B8%8B%E5%88%92%E7%BA%BF/" class="article-date">
+  <time datetime="2023-12-17T02:22:00.000Z" itemprop="datePublished">2023-12-17</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>在CSS中，减号（-）和下划线（_）通常用于命名选择器和属性。它们在命名选择器和属性时具有不同的作用。</p>
+<p>减号（-）：</p>
+<p>在命名选择器中，减号用于连接多个单词，创建一个复合选择器。例如，.my-class表示一个类选择器，可以应用于HTML元素中的任何具有class=”my-class”属性的元素。</p>
+<p>在命名属性时，减号用于创建自定义属性。例如，data-my-attribute表示一个自定义属性，可以在HTML元素中使用data-my-attribute=”value”的方式进行设置和获取。</p>
+<p>下划线（_）：</p>
+<p>在命名选择器中，下划线通常用于表示状态或修饰符。例如，.is-active表示一个具有活动状态的元素，.is-hidden表示一个隐藏的元素。</p>
+<p>在命名属性时，下划线通常用于表示私有属性或内部属性。例如，_my-property表示一个私有属性，用于内部使用。</p>
+<p>这些命名约定主要用于提高代码的可读性和可维护性。通过使用减号和下划线，可以更清晰地表示选择器和属性的用途和含义。</p>
+<hr>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/kaiye/archive/2011/06/13/3039046.html">https://www.cnblogs.com/kaiye/archive/2011/06/13/3039046.html</a></p>
+<p>CSS样式名中的下划线与连字符</p>
+<p>这篇Blog将要讨论，在CSS的className中使用连字符“-”还是使用下划线“_”作为分隔符更适合？</p>
+<p>在切入主题之前，先看看Google在Webmaster Tools中URL structure章节中所说的一段话：</p>
+<p>Consider using punctuation in your URLs. The URL <a target="_blank" rel="noopener" href="http://www.example.com/green-dress.html">http://www.example.com/green-dress.html</a> is much more useful to us than <a target="_blank" rel="noopener" href="http://www.example.com/greendress.html">http://www.example.com/greendress.html</a>. We recommend that you use hyphens (-) instead of underscores (_) in your URLs.</p>
+<p>这段话的意思是，出于URL语义化的考虑，Google建议站点URL中使用连字符“-”来代替下划线“_”做分隔符。不知道是否是因为Google的这份文档，我们可以看到越来越多的国内外网站URL中开始使用“-”来作为分隔符，例如：</p>
+<p><a target="_blank" rel="noopener" href="http://net.tutsplus.com/articles/general/9-confusing-naming-conventions-for-beginners/">http://net.tutsplus.com/articles/general/9-confusing-naming-conventions-for-beginners/</a></p>
+<p><a target="_blank" rel="noopener" href="http://stackoverflow.com/questions/1686337/hyphens-or-underscores-in-css-and-html-identifiers">http://stackoverflow.com/questions/1686337/hyphens-or-underscores-in-css-and-html-identifiers</a></p>
+<p>以及我正在使用WordPress编辑的这篇BLOG的编辑地址是：<a target="_blank" rel="noopener" href="http://yekai.net/wp-admin/post.php?post=338&amp;action=edit">http://yekai.net/wp-admin/post.php?post=338&amp;action=edit</a></p>
+<p>申请过域名的人都知道，一个英文域名中，合法的字符只有数字0-9、字母a-z、符号“-”和“.”两个。其中“.”号用作域名层级分隔符，“-”号作为单词分隔符。从牛津词典中可以看到对连字符hyphen的解释：</p>
+<p>更多hyphen的应用场景，以及hyphen和dash以及minus符号的差异，感兴趣的同学可以去看wiki看看。</p>
+<p>结论显而易见，在英语中分隔符号即是hyphen的语义。</p>
+<p>这就不难理解，为什么当初在CSS1.0的草案中明确指出，在className中除了连字符“-”以外，包括下划线“_”在内的其他符号必须使用“\”符号转义之后才能使用。同时也不难理解为什么CSS属性的写法是“background-color”而不是“background_color”或者“backgroundColor”了。</p>
+<p>然而现实情况却并非如当初CSS1的规范制订的那样完美，很多开发者在写className中却因为某些原因，使用了“_”作为分隔符，并将此作为自己的代码规范。这使得W3C不得不在2001年CSS2的一次修订版本中将“_”定义为className中的合法字符，无须转义均可支持。这也是为什么在2001年前的浏览器如navigator 4.x、IE 5.x不支持className中的“_”未转义写法，而IE6及后来的firefox、chrome均能支持这种写法。</p>
+<p>从某种程度上来说，W3C标准对现实的妥协，也是导致前端开发工程师面对浏览器差异化的杯具结局的原因之一。至于W3C支持className中的“_”作为分隔符的原因就不难想象了：正如这种写法的支持者所说，在JS中下划线“_”才是公认的分隔符。例如，DOM中有一个id为“kaiye”的节点，在IE6中你可以通过document.all.kaiye集合获取到这个节点的引用。但如果这个ID被命名为“kai-ye”，使用document.all.kai-ye显然会抛出一个异常，因为基本在所有的编程语言中“-”代表的是“减号运算符”，JS也不例外，正如这篇《Web开发中初学者容易混淆的9个命名约定》中所说。正是由于这点原因，导致在id属性命名时，开发者通常会避免使用“-”，为了保持代码风格统一，className中也使用“_”作为分隔符。事实上，W3C并没有规定class属性和id属性命名约定必须相同，className中的“-”分隔符更是和运算符减号“-”风马牛不相及，CSS不是编程语言又何来减号运算符的冲突问题？</p>
+<p>同时这种命名约定却无形中挖了一个坑：通常在JS的命名约定中，你可以使用 _kaiye 来声明这是一个私有变量，但如果你在CSS中沿用这种命名习惯使用 _kaiye 来作为className将会导致这段声明在IE6中无效。不幸的是，我亲眼见到有人掉到这个坑里了，并且一定会有更多人因为这种命名约定掉到这个坑里，这也是我坚持不在className中使用“_”最重要的原因。</p>
+<p>08年当我刚入职支付宝那会，我跟着小黑做了支付宝的第一个浏览器兼容性项目─“Firefox交易流程兼容性项目”。我们修改了上百个交易创建、修改、付款、完成的页面，修复了其中大量HTML、CSS、JS的兼容性写法，并同时将记录汇总成一张bugfix list。结果发现为了使支付宝兼容Firefox，我们对DOM做的最多的修改是，将标签P修改为DIV，对JS修改最多的是将 document.all 的写法换成 document.getElementById 。这意味着如果你的产品需要提供更好的用户体验，兼容更多的浏览器，你应该像许多JS框架那样使用W3C标准的写法来编写你的JS。getElementById就是获取DOM对象的最佳实践，而这个方法接受的唯一参数是一个字符串，这个字符串允许你包含任意字符，当然也包括连字符“-”。也就是说，document.all方法将不会出现在一个需要跨浏览器支持的产品中，你可以在ID属性中使用“-”作为分隔符。</p>
+<p>Google、Yahoo、淘宝、豆瓣在他们的新CSS代码规范中推荐使用“-”作为className分隔符，这个自然就不难理解了。</p>
+<p>说到这里我们再对“_”的语义进行一番探讨。Oxford Dictionary对underscore的定义是underline，在单词下面画条线表示强调，这个其实也是<u>标签的来历。从wikipedia上可以看到underscore符号最先用于打字机中，用来给某个单词划线。第二种用法是，当需要打空格，而不能使用空格的时候，会使用underscore来代替。例如URL、filename、编程语言中的变量、表单填写项绘制等等。从这一点来看，className中的“_”可以给一个“空格”的语义。只是className中真正的空格符，作为class属性和CSS选择器时是两种完全不同的用法。</u></p>
+<p>为了避免“-”运算符的问题，开发者通常使用“_”来作为filename中的分隔符，以方便模块文件能进行正常的import、include操作。这大概是为何大多数URL仍然使用“_”分隔居多的原因。然而，为了遵守英语通用语义规则，为了提升只懂英文不懂编程的普通人的理解体验，Google制定了前文所提到的“推荐使用连字符”的SEO建议，MAC OSX操作系统推荐使用空格和连字符进行文件命名，Linux系统以及大多数编程语言的命名都提供了通过引号的方式规避文件名中“-”的冲突问题。而“_”分隔符就像“该字段不能为空”的错误提示一样充满着程序员的语言习惯。</p>
+<p>回到主题，在CSS的className中到底应该使用“-”还是“_”？虽然说“-”更符合语义，看起来代码更美观，但“_”也有它存在的合理性─开发者的习惯延续，以及双击全选的特性。就像stackoverflow上这个问题的最佳答案所说的那样：</p>
+<p>I think its just personal preference.</p>
+<p>而改变一个习惯通常不是一件容易的事情，对自己来说是如此，更别提改变他人。出于我前面所提到的那个坑（通常在JS的命名约定中，你可以使用 _kaiye 来声明这是一个私有变量，但如果你在CSS中沿用这种命名习惯使用 _kaiye 来作为className将会导致这段声明在IE6中无效。）以及语义化的原因，在IE6还未消亡的现在，我无法说服自己使用“_”来作分隔符，甚至我觉得，不仅仅是className，CSS、JS、图片、HTML的filename都应该使用“-”作为分隔符，因为这些资源均是普通用户看得到的URL。</p>
+<p>那么你的习惯呢？如果把自己当作一名前端开发新人，你又会如何选择呢？</p>
+<p>——————–20110613 update:———————-</p>
+<p>今天下午借W3C来公司交流的机会，私底下偷偷问Michael Smith，“Hyphen or underscore, which one do you prefer? ”，他的回答是“Neither, I like camelcase.”同时，从ytzong那里得知在CSS-tricks上这个问题讨论得也很happy，并且有了一个可供参考的投票结果。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/css/" rel="tag">css</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-为什么航天器、导弹喜欢用单片机，而不是嵌入式系统？"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/12/16/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%88%AA%E5%A4%A9%E5%99%A8%E3%80%81%E5%AF%BC%E5%BC%B9%E5%96%9C%E6%AC%A2%E7%94%A8%E5%8D%95%E7%89%87%E6%9C%BA%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%EF%BC%9F/"
     >为什么航天器、导弹喜欢用单片机，而不是嵌入式系统？</a> 
 </h2>
  
@@ -174,7 +464,7 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2023/12/16/%E9%85%8D%E7%94%B5%E4%B8%8E%E9%85%8D%E7%BD%91%E7%9A%84%E5%BC%82%E5%90%8C%20-%20%E5%89%AF%E6%9C%AC/" class="article-date">
+      <a href="/2023/12/16/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%88%AA%E5%A4%A9%E5%99%A8%E3%80%81%E5%AF%BC%E5%BC%B9%E5%96%9C%E6%AC%A2%E7%94%A8%E5%8D%95%E7%89%87%E6%9C%BA%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%EF%BC%9F/" class="article-date">
   <time datetime="2023-12-16T02:22:00.000Z" itemprop="datePublished">2023-12-16</time>
 </a> 
   <div class="article-category">
@@ -488,128 +778,6 @@ flash-&gt;show();
     <footer class="article-footer">
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/QGIS/" rel="tag">QGIS</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-windows好用的小工具"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/12/12/windows%E5%A5%BD%E7%94%A8%E7%9A%84%E5%B0%8F%E5%B7%A5%E5%85%B7/"
-    >windows好用的小工具</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/12/12/windows%E5%A5%BD%E7%94%A8%E7%9A%84%E5%B0%8F%E5%B7%A5%E5%85%B7/" class="article-date">
-  <time datetime="2023-12-12T12:25:23.000Z" itemprop="datePublished">2023-12-12</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>1、<br><a target="_blank" rel="noopener" href="https://hub.nuaa.cf/zetaloop/ExplorerPatcher">https://hub.nuaa.cf/zetaloop/ExplorerPatcher</a><br><a target="_blank" rel="noopener" href="https://hub.nuaa.cf/valinet/ExplorerPatcher">https://hub.nuaa.cf/valinet/ExplorerPatcher</a></p>
-<p>2、<br>Windows11轻松设置<br>Windows10径松设置（仅支持特64位Win10)<br>软件作者：快乐无极<br>软件版本：v1.08Beta<br>发布日期：2023-12-25<br>发布说明：比版本发布于PCBeta远景论坛Windows11版块。<br>本人的远景论坛ID号为：coolcool2013<br>比软件仅为测试使用Windows11/10而编写，使用者需自行承担风险。<br>本软件完全免费使用。如果能打赏便是对我最大的鼓励。<br>反馈联系邮箱：<a href="mailto:&#x6f;&#x79;&#x6b;&#115;&#x6f;&#x66;&#x74;&#x40;&#x67;&#109;&#97;&#x69;&#x6c;&#x2e;&#99;&#111;&#109;">&#x6f;&#x79;&#x6b;&#115;&#x6f;&#x66;&#x74;&#x40;&#x67;&#109;&#97;&#x69;&#x6c;&#x2e;&#99;&#111;&#109;</a></p>
-<p><a target="_blank" rel="noopener" href="https://bbs.pcbeta.com/viewthread-1972024-1-2.html">https://bbs.pcbeta.com/viewthread-1972024-1-2.html</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/windows/" rel="tag">windows</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-windows使用cmd命令添加、删除和修改静态路由：route"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/12/11/windows%E4%BD%BF%E7%94%A8cmd%E5%91%BD%E4%BB%A4%E6%B7%BB%E5%8A%A0%E3%80%81%E5%88%A0%E9%99%A4%E5%92%8C%E4%BF%AE%E6%94%B9%E9%9D%99%E6%80%81%E8%B7%AF%E7%94%B1%EF%BC%9Aroute/"
-    >windows使用cmd命令添加、删除和修改静态路由：route</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/12/11/windows%E4%BD%BF%E7%94%A8cmd%E5%91%BD%E4%BB%A4%E6%B7%BB%E5%8A%A0%E3%80%81%E5%88%A0%E9%99%A4%E5%92%8C%E4%BF%AE%E6%94%B9%E9%9D%99%E6%80%81%E8%B7%AF%E7%94%B1%EF%BC%9Aroute/" class="article-date">
-  <time datetime="2023-12-11T12:25:23.000Z" itemprop="datePublished">2023-12-11</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>1、添加一条路由表<br>route add 192.168.20.0 mask 255.255.255.0 192.168.4.1 metric 2 if 2<br>命令说明：添加一条路由记录，所有到192.168.20.0/24网段的数据包，都通过2号接口（网卡）走192.168.4.1的网关，优先级为2。</p>
-<p>route add -p 192.168.100.0 mask 255.255.255.248 192.168.1.1 metric 3 if 2<br>#作用同上，-p参数表：该记录为永久路由，不会因为重启机器而丢失。<br>2、删除一条路由表<br>route delete 192.168.10.0<br>【语法】</p>
-<p>route delete 网络目的地址 [mask] [子网掩码]<br>route delete 112* ——-&gt;删除路由时用这种模糊匹配，表示删除以112开头的IP路由表中的所有路由；<br>命令说明：如果有两条192.168.10.0路由记录，即路由表中存在相同的“目的网络号”，则会将两条记录同时删除。如果只想删除其中某一条的话，请在删除后用route add命令再添加上其中一条。</p>
-<p>3、修改一条现有路由记录<br>route change 162.0.0.0 mask 255.255.0.0 162.54.10.5 metric 2 if 2<br>命令说明：CHANGE参数只能修改路由条目的“网关”和“跳数”。</p>
-<p>4、查看路由表<br>route print -4/-6</p>
-<p>路由表列说明：</p>
-<p>第一列是网络目的地址。列出了路由器连接的所有的网段。</p>
-<p>第二行网络掩码列提供这个网段本身的子网掩码，而不是连接到这个网段的网卡的子网掩码。这基本上能够让路由器确定目的网络的地址类。</p>
-<p>第三列是网关。一旦路由器确定它要把这个数据包转发到哪一个目的网络，路由器就要查看网关列表。网关表告诉路由器这个数据包应该转发到哪一个IP地址才能达到目的网络。</p>
-<p>第四列接口列告诉路由器哪一个网卡连接到了合适的目的网络。从技术上说，接口列仅告诉路由器分配给网卡的IP地址。那个网卡把路由器连接到目的网络。然而，路由器很聪明，知道这个地址绑定到哪一个物理网卡。</p>
-<p>第五列是测量，或跳数。测量本身是一种科学。该值越小的，可信度越高<br>【例子】</p>
-<p>Network Destination Netmask Gateway Interface Metric<br>0.0.0.0 0.0.0.0 116.69.106.120 116.69.106.1 1<br>上面信息表示发向任意网段的数据通过本机接口116.69.106.1被送往一个默认的网关：116.69.106.120，它的管理距离是1，管理距离指的是在路径选择的过程中信息的可信度，管理距离越小的，可信度越高。</p>
-<p>5、查看广播信息<br>arp -a<br>##查看查看与本地电脑连接的mac地址跟IP地址，即当前电脑上的ARP映射表。可以看到当前的ARP的映射关系是动态的还是静态的。</p>
-<p>arp -s w.x.y.z aa-bb-cc-dd-ee-ff<br>##添加静态ARP实现ARP绑定。其中w.x.y.z代表要绑定的IP地址，aa-bb-cc-dd-ee-ff代表其MAC地址</p>
-<p>arp -d InetAddr[IfaceAddr]<br>##删除指定的IP地址项，此处的InetAddr代表IP地址，要删除所有项，请使用星号（*）通配符代替。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/route/" rel="tag">route</a></li></ul>
 
     </footer>
   </div>

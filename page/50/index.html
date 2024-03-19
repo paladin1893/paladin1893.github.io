@@ -154,6 +154,151 @@
     
     
     <article
+  id="post-PostgreSQL-Connection-URIs"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/03/01/PostgreSQL-Connection-URIs/"
+    >PostgreSQL Connection URIs</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/03/01/PostgreSQL-Connection-URIs/" class="article-date">
+  <time datetime="2023-03-01T15:13:43.000Z" itemprop="datePublished">2023-03-01</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>The general form for a connection URI is:</p>
+<pre><code>postgresql://[userspec@][hostspec][/dbname][?paramspec]
+</code></pre>
+<p>where userspec is:</p>
+<pre><code>user[:password]
+</code></pre>
+<p>and hostspec is:</p>
+<pre><code>[host][:port][,...]
+</code></pre>
+<p>and paramspec is:</p>
+<pre><code>name=value[&amp;...]
+</code></pre>
+<p>The URI scheme designator can be either postgresql:// or postgres://. Each of the remaining URI parts is optional. The following examples illustrate valid URI syntax:</p>
+<pre><code>postgresql://
+postgresql://localhost
+postgresql://localhost:5433
+postgresql://localhost/mydb
+postgresql://user@localhost
+postgresql://user:secret@localhost
+postgresql://other@localhost/otherdb?connect_timeout=10&amp;application_name=myapp
+postgresql://host1:123,host2:456/somedb?target_session_attrs=any&amp;application_name=myapp
+</code></pre>
+<p>Values that would normally appear in the hierarchical part of the URI can alternatively be given as named parameters. For example:</p>
+<pre><code>postgresql:///mydb?host=localhost&amp;port=5433
+</code></pre>
+<p>All named parameters must match key words listed in Section 34.1.2, except that for compatibility with JDBC connection URIs, instances of ssl=true are translated into sslmode=require.</p>
+<p>The connection URI needs to be encoded with percent-encoding if it includes symbols with special meaning in any of its parts. Here is an example where the equal sign (=) is replaced with %3D and the space character with %20:</p>
+<pre><code>postgresql://user@localhost:5433/mydb?options=-c%20synchronous_commit%3Doff
+</code></pre>
+<p>The host part may be either a host name or an IP address. To specify an IPv6 address, enclose it in square brackets:</p>
+<pre><code>postgresql://[2001:db8::1234]/database
+</code></pre>
+<p>The host part is interpreted as described for the parameter host. In particular, a Unix-domain socket connection is chosen if the host part is either empty or looks like an absolute path name, otherwise a TCP/IP connection is initiated. Note, however, that the slash is a reserved character in the hierarchical part of the URI. So, to specify a non-standard Unix-domain socket directory, either omit the host part of the URI and specify the host as a named parameter, or percent-encode the path in the host part of the URI:</p>
+<pre><code>postgresql:///dbname?host=/var/lib/postgresql
+postgresql://%2Fvar%2Flib%2Fpostgresql/dbname
+</code></pre>
+<p>It is possible to specify multiple host components, each with an optional port component, in a single URI. A URI of the form postgresql://host1:port1,host2:port2,host3:port3/ is equivalent to a connection string of the form host=host1,host2,host3 port=port1,port2,port3. As further described below, each host will be tried in turn until a connection is successfully established.</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-PostgreSQL-Password-File"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/02/28/PostgreSQL-Password-File/"
+    >PostgreSQL Password File</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/02/28/PostgreSQL-Password-File/" class="article-date">
+  <time datetime="2023-02-28T15:09:41.000Z" itemprop="datePublished">2023-02-28</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>The file .pgpass in a user’s home directory can contain passwords to be used if the connection requires a password (and no password has been specified otherwise). On Microsoft Windows the file is named %APPDATA%\postgresql\pgpass.conf (where %APPDATA% refers to the Application Data subdirectory in the user’s profile). Alternatively, the password file to use can be specified using the connection parameter passfile or the environment variable PGPASSFILE.</p>
+<p>This file should contain lines of the following format:</p>
+<p>hostname:port:database:username:password<br>(You can add a reminder comment to the file by copying the line above and preceding it with #.) Each of the first four fields can be a literal value, or *, which matches anything. The password field from the first line that matches the current connection parameters will be used. (Therefore, put more-specific entries first when you are using wildcards.) If an entry needs to contain : or , escape this character with . The host name field is matched to the host connection parameter if that is specified, otherwise to the hostaddr parameter if that is specified; if neither are given then the host name localhost is searched for. The host name localhost is also searched for when the connection is a Unix-domain socket connection and the host parameter matches libpq’s default socket directory path. In a standby server, a database field of replication matches streaming replication connections made to the primary server. The database field is of limited usefulness otherwise, because users have the same password for all databases in the same cluster.</p>
+<p>On Unix systems, the permissions on a password file must disallow any access to world or group; achieve this by a command such as chmod 0600 ~/.pgpass. If the permissions are less strict than this, the file will be ignored. On Microsoft Windows, it is assumed that the file is stored in a directory that is secure, so no special permissions check is made.</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-PostgreSQL-Parameter-Key-Words"
   class="article article-type-post"
   itemscope
@@ -552,222 +697,6 @@ test=#
 </code></pre>
 <p>Actually a pg_service.conf file is a pretty convenient thing to have. Maybe I should reconsider my behavior and use this thing more often.</p>
 <p>this paper from <a target="_blank" rel="noopener" href="https://www.cybertec-postgresql.com/en/pg_service-conf-the-forgotten-config-file/">https://www.cybertec-postgresql.com/en/pg_service-conf-the-forgotten-config-file/</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-QGIS服务器从PostgreSQL数据库读取项目"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/02/23/QGIS%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%8EPostgreSQL%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AF%BB%E5%8F%96%E9%A1%B9%E7%9B%AE/"
-    >QGIS服务器从Postgresql数据库读取项目</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/02/23/QGIS%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%8EPostgreSQL%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AF%BB%E5%8F%96%E9%A1%B9%E7%9B%AE/" class="article-date">
-  <time datetime="2023-02-23T06:29:45.000Z" itemprop="datePublished">2023-02-23</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>你可以使用存储在数据库中的项目文件（在我的情况下是postgres）。我是怎么做到的。</p>
-<p>我在包含数据库连接凭据的主目录中创建了一个pg_service文件，让我们仅指定服务名称即可连接到数据库，例如，使用psql可以psql service=myservicename 在nginx上连接并设置fastcgi参数 fastcgi_param PGSERVICEFILE /home/qgis/.pg_service.conf;</p>
-<p>我从qgis桌面连接到postgres数据库，并指定了我在服务文件中设置的服务名称。</p>
-<p>已将项目文件保存在数据库中。通过这样做，该项目文件将包含通过服务名称进行的数据库连接。</p>
-<p>为项目名称设置fastcgi_param<br>location / {<br>    add_header ‘Access-Control-Allow-Origin’ ‘*’;<br>    add_header ‘Access-Control-Allow-Methods’ ‘GET, POST, OPTIONS’;<br>    add_header ‘Access-Control-Allow-Headers’ ‘DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range’;<br>    add_header ‘Access-Control-Expose-Headers’ ‘Content-Length,Content-Range’;<br>    gzip off;<br>    include fastcgi_params;<br>    fastcgi_param QGIS_PROJECT_FILE postgresql:///?service=myservicename&amp;schema=public&amp;project=testproject;<br>    fastcgi_pass unix:/var/run/fcgiwrap.socket;;<br>    }</p>
-<p>你可以通过url在Web应用程序的前端中设置默认的qgis项目，这并不困难。</p>
-<hr>
-<p>you can use project files stored in a database (in my case it is postgres). How I did it.</p>
-<p>I created a pg_service file on a home directory which contains database connection credentials and let us to connect to database just specifying service name, for example using psql you can connect psql service=myservicename and set fastcgi params on nginx fastcgi_param  PGSERVICEFILE /home/qgis/.pg_service.conf;</p>
-<p>I connected from qgis desktop to postgres database specifying the service name which I set in service file.</p>
-<p>Saved project file in database. By doing like this project file will contain database connection via service name.</p>
-<p>Set fastcgi_param for project name<br>location / {<br>    add_header ‘Access-Control-Allow-Origin’ ‘*’;<br>    add_header ‘Access-Control-Allow-Methods’ ‘GET, POST, OPTIONS’;<br>    add_header ‘Access-Control-Allow-Headers’ ‘DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range’;<br>    add_header ‘Access-Control-Expose-Headers’ ‘Content-Length,Content-Range’;<br>    gzip           off;<br>    include        fastcgi_params;<br>    fastcgi_param  QGIS_PROJECT_FILE postgresql:///?service=myservicename&amp;schema=public&amp;project=testproject;<br>    fastcgi_pass   unix:/var/run/fcgiwrap.socket;;<br>    }<br>Default qgis project you can set in frontend of your web application via url, that is not difficult.</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/QGIS/" rel="tag">QGIS</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-PostgreSQL-psql命令详解"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/02/22/PostgreSQL-psql%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/"
-    >PostgreSQL-psql命令详解</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/02/22/PostgreSQL-psql%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/" class="article-date">
-  <time datetime="2023-02-22T06:59:26.000Z" itemprop="datePublished">2023-02-22</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="psql命令"><a href="#psql命令" class="headerlink" title="psql命令"></a>psql命令</h1><p>psql是PostgreSQL的一个命令行交互式客户端工具，它具有非常丰富的功能，类似于Oracle的命令行工具sqlplus。</p>
-<h2 id="元命令"><a href="#元命令" class="headerlink" title="元命令"></a>元命令</h2><ul>
-<li>连接数据库</li>
-</ul>
-<p>连接指定服务器上的数据库</p>
-<pre><code>psql -h 192.168.1.210 -p 5432 -U hr -d hr_db
-
--h后面的IP地址（192.168.1.210）是数据库所在的IP地址
--p后面的端口（5432）是数据库的监听端口
--U后面的参数（hr）是创建的用户名
--d后面的参数（hr_db）是创建的数据库名称
-</code></pre>
-<ul>
-<li><p>断开psql客户端</p>
-<p>  按Ctrl+D组合键</p>
-<p>  \q</p>
-</li>
-</ul>
-<h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><h3 id="“-c”命令"><a href="#“-c”命令" class="headerlink" title="“\c”命令"></a>“\c”命令</h3><ul>
-<li><p>查看所有数据库</p>
-<p>  \l</p>
-</li>
-<li><p>切换数据库</p>
-<p>  \c gis</p>
-</li>
-</ul>
-<h3 id="“-d”命令"><a href="#“-d”命令" class="headerlink" title="“\d”命令"></a>“\d”命令</h3><ul>
-<li><p>查看当前数据库中所有表、视图、序列</p>
-<p>  \d</p>
-</li>
-<li><p>在”\d”命令后面接表名，则可以查看该表的表定义</p>
-<p>  \d pgbench_accounts</p>
-</li>
-</ul>
-<h3 id="“-db”命令"><a href="#“-db”命令" class="headerlink" title="“\db”命令"></a>“\db”命令</h3><ul>
-<li><p>查看表空间的信息</p>
-<p>  \db</p>
-</li>
-</ul>
-<h3 id="“-dn”命令"><a href="#“-dn”命令" class="headerlink" title="“\dn”命令"></a>“\dn”命令</h3><ul>
-<li><p>可以查看所有的模式信息</p>
-<p>  \dn</p>
-</li>
-</ul>
-<h3 id="“-du”命令或”-dg”命令"><a href="#“-du”命令或”-dg”命令" class="headerlink" title="“\du”命令或”\dg”命令"></a>“\du”命令或”\dg”命令</h3><ul>
-<li><p>可以查看数据库中的所有角色或用户</p>
-<p>  \du</p>
-</li>
-</ul>
-<h3 id="“-x”命令"><a href="#“-x”命令" class="headerlink" title="“\x”命令"></a>“\x”命令</h3><ul>
-<li><p>可以设置查询结果的输出模式</p>
-<p>  \x</p>
-</li>
-</ul>
-<h3 id="“-”命令"><a href="#“-”命令" class="headerlink" title="“?”命令"></a>“?”命令</h3><ul>
-<li><p>可以查询PostgreSQL支持的所有命令</p>
-<p>  ?</p>
-</li>
-</ul>
-<h2 id="其他常用命令"><a href="#其他常用命令" class="headerlink" title="其他常用命令"></a>其他常用命令</h2><ul>
-<li><p>查看数据库</p>
-<p>  \l </p>
-</li>
-<li><p>查看表定义</p>
-<p>  \d tablename</p>
-</li>
-<li><p>查看表大小</p>
-<p>  \dt+ tablename</p>
-</li>
-<li><p>查看索引大小</p>
-<p>  \di+ tablename</p>
-</li>
-<li><p>查看函数代码 \sf random_range</p>
-<p>  \sf functionName<br>  \sf functionName(integer,integer)</p>
-</li>
-<li><p>查看SQL命令语法</p>
-<p>  \h<br>  \h create database</p>
-</li>
-<li><p>显示SQL语句执行时间，（再执行一次关闭）</p>
-<p>  \timing</p>
-</li>
-</ul>
-<h1 id="使用技巧"><a href="#使用技巧" class="headerlink" title="使用技巧"></a>使用技巧</h1><ul>
-<li><p>获取元命令对应的SQL代码<br>psql执行元命令，实质上是转换成对应的SQL语句来执行的。如果要获取这些SQL语句，则需要在psql连接数据库时增加“-E”选项</p>
-<p>  psql -h 127.0.0.1 -p 5432 -U postgres -d postgres -E </p>
-</li>
-<li><p>使用上下键翻动历史命令<br>psql支持使用上下键获取执行过的历史命令</p>
-</li>
-<li><p>自动补全功能<br>psql的自动补全功能使用起来非常方便。在执行语句时，不需要完全输入数据对象的名称，使用Tab键可以自动补全</p>
-</li>
-<li><p>显示SQL语句执行时间<br>使用“\timing”命令，可以打开显示SQL语句执行时间的开关。再使用一次“\timing”命令，则关掉该开关</p>
-</li>
-<li><p>日常维护语句<br>查询活动会话(active_session)</p>
-<p>  select pid,usename,datname,query,client_addr from pg_stat_activity where pid &lt;&gt; pg_backend_pid() and state=’active’ order by query;</p>
-</li>
-<li><p>查询等待事件(wait_event)</p>
-<p>  select wait_event_type,wait_event,state,query,a.* from pg_stat_activity a where query like ‘insert%’;</p>
-</li>
-</ul>
-<p>————————————————<br>版权声明：本文为CSDN博主「孙霸天」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36213352/article/details/125145033">https://blog.csdn.net/qq_36213352/article/details/125145033</a></p>
  
       <!-- reward -->
       

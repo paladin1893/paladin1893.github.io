@@ -154,6 +154,298 @@
     
     
     <article
+  id="post-Oracle监控的关键指标"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/06/11/Oracle%E7%9B%91%E6%8E%A7%E7%9A%84%E5%85%B3%E9%94%AE%E6%8C%87%E6%A0%87/"
+    >Oracle监控的关键指标</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/06/11/Oracle%E7%9B%91%E6%8E%A7%E7%9A%84%E5%85%B3%E9%94%AE%E6%8C%87%E6%A0%87/" class="article-date">
+  <time datetime="2023-06-11T12:27:38.000Z" itemprop="datePublished">2023-06-11</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>1、监控事例的等待</p>
+<pre><code>select event,
+       sum(decode(wait_Time, 0, 0, 1)) &quot;Prev&quot;,
+       sum(decode(wait_Time, 0, 1, 0)) &quot;Curr&quot;,
+       count(*) &quot;Tot&quot;
+  from v$session_Wait
+ group by event
+ order by 4;
+</code></pre>
+<p>2、回滚段的争用情况</p>
+<pre><code>select name, waits, gets, waits / gets &quot;Ratio&quot;
+  from v$rollstat a, v$rollname b
+ where a.usn = b.usn;
+</code></pre>
+<p>3、监控表空间的 I/O 比例</p>
+<pre><code>select df.tablespace_name name,
+       df.file_name       &quot;file&quot;,
+       f.phyrds           pyr,
+       f.phyblkrd         pbr,
+       f.phywrts          pyw,
+       f.phyblkwrt        pbw
+  from v$filestat f, dba_data_files df
+ where f.file# = df.file_id
+ order by df.tablespace_name;
+</code></pre>
+<p>4、监控文件系统的 I/O 比例</p>
+<pre><code>select substr(a.file#, 1, 2) &quot;#&quot;,
+       substr(a.name, 1, 30) &quot;Name&quot;,
+       a.status,
+       a.bytes,
+       b.phyrds,
+       b.phywrts
+  from v$datafile a, v$filestat b
+ where a.file# = b.file#;
+</code></pre>
+<p>5、在某个用户下找所有的索引</p>
+<pre><code>select user_indexes.table_name,
+       user_indexes.index_name,
+       uniqueness,
+       column_name
+  from user_ind_columns, user_indexes
+ where user_ind_columns.index_name = user_indexes.index_name
+   and user_ind_columns.table_name = user_indexes.table_name
+ order by user_indexes.table_type,
+          user_indexes.table_name,
+          user_indexes.index_name,
+          column_position;
+</code></pre>
+<p>6、监控 SGA 的命中率</p>
+<pre><code>select a.value + b.value &quot;logical_reads&quot;,
+       c.value &quot;phys_reads&quot;,
+       round(100 * ((a.value + b.value) - c.value) / (a.value + b.value)) &quot;BUFFER HIT RATIO&quot;
+  from v$sysstat a, v$sysstat b, v$sysstat c
+ where a.statistic# = 38
+   and b.statistic# = 39
+   and c.statistic# = 40;
+</code></pre>
+<p>7、监控 SGA 中字典缓冲区的命中率</p>
+<pre><code>select parameter,
+       gets,
+       Getmisses,
+       getmisses / (gets + getmisses) * 100 &quot;miss ratio&quot;,
+       (1 - (sum(getmisses) / (sum(gets) + sum(getmisses)))) * 100 &quot;Hit ratio&quot;
+  from v$rowcache
+ where gets + getmisses &lt;&gt; 0
+ group by parameter, gets, getmisses;
+</code></pre>
+<p>8、监控 SGA 中共享缓存区的命中率，应该小于1%</p>
+<pre><code>select sum(pins) &quot;Total Pins&quot;,
+       sum(reloads) &quot;Total Reloads&quot;,
+       sum(reloads) / sum(pins) * 100 libcache
+  from v$librarycache;
+
+select sum(pinhits - reloads) / sum(pins) &quot;hit radio&quot;,
+       sum(reloads) / sum(pins) &quot;reload percent&quot;
+  from v$librarycache;
+</code></pre>
+<p>9、显示所有数据库对象的类别和大小</p>
+<pre><code>select count(name) num_instances,
+       type,
+       sum(source_size) source_size,
+       sum(parsed_size) parsed_size,
+       sum(code_size) code_size,
+       sum(error_size) error_size,
+       sum(source_size) + sum(parsed_size) + sum(code_size) +
+       sum(error_size) size_required
+  from dba_object_size
+ group by type
+ order by 2;
+</code></pre>
+<p>10、监控 SGA 中重做日志缓存区的命中率，应该小于1%</p>
+<pre><code>SELECT name,
+       gets,
+       misses,
+       immediate_gets,
+       immediate_misses,
+       Decode(gets, 0, 0, misses / gets * 100) ratio1,
+       Decode(immediate_gets + immediate_misses,
+              0,
+              0,
+              immediate_misses / (immediate_gets + immediate_misses) * 100) ratio2
+  FROM v$latch
+ WHERE name IN (&#39;redo allocation&#39;, &#39;redo copy&#39;);
+</code></pre>
+<p>11、监控内存和硬盘的排序比率<br>最好使它小于 .10，增加 sort_area_size</p>
+<pre><code>SELECT name, value FROM v$sysstat WHERE name IN (&#39;sorts (memory)&#39;, &#39;sorts (disk)&#39;);    
+</code></pre>
+<p>12、监控当前数据库谁在运行什么SQL语句</p>
+<pre><code>SELECT osuser, username, sql_text
+  from v$session a, v$sqltext b
+ where a.sql_address = b.address
+ order by address, piece;
+</code></pre>
+<p>13、监控字典缓冲区</p>
+<pre><code>SELECT (SUM(PINS - RELOADS)) / SUM(PINS) &quot;LIB CACHE&quot; FROM V$LIBRARYCACHE;
+SELECT (SUM(GETS - GETMISSES - USAGE - FIXED)) / SUM(GETS) &quot;ROW CACHE&quot;
+  FROM V$ROWCACHE;
+SELECT SUM(PINS) &quot;EXECUTIONS&quot;, SUM(RELOADS) &quot;CACHE MISSES WHILE EXECUTING&quot;
+  FROM V$LIBRARYCACHE;
+</code></pre>
+<p>后者除以前者，此比率小于1%，接近0%为好。</p>
+<pre><code>  SELECT SUM(GETS) &quot;DICTIONARY GETS&quot;,
+         SUM(GETMISSES) &quot;DICTIONARY CACHE GET MISSES&quot;
+    FROM V$ROWCACHE
+</code></pre>
+<p>14、找ORACLE字符集</p>
+<pre><code>select * from sys.props$ where name=&#39;NLS_CHARACTERSET&#39;;   
+</code></pre>
+<p>15、监控 MTS</p>
+<pre><code>select busy / (busy + idle) &quot;shared servers busy&quot; from v$dispatcher;
+</code></pre>
+<p>此值大于0.5时，参数需加大</p>
+<pre><code>  select sum(wait) / sum(totalq) &quot;dispatcher waits&quot;
+    from v$queue
+   where type = &#39;dispatcher&#39;;
+select count(*) from v$dispatcher;
+select servers_highwater from v$mts;
+</code></pre>
+<p>servers_highwater接近mts_max_servers时，参数需加大</p>
+<p>16、碎片程度</p>
+<pre><code>select tablespace_name,count(tablespace_name) from dba_free_space group by tablespace_name      
+having count(tablespace_name)&gt;10;     
+ 
+alter tablespace name coalesce;     
+alter table name deallocate unused;     
+ 
+create or replace view ts_blocks_v as     
+select tablespace_name,block_id,bytes,blocks,&#39;free space&#39; segment_name from dba_free_space     
+union all     
+select tablespace_name,block_id,bytes,blocks,segment_name from dba_extents;     
+ 
+select * from ts_blocks_v;     
+ 
+select tablespace_name,sum(bytes),max(bytes),count(block_id) from dba_free_space      
+group by tablespace_name;     
+</code></pre>
+<p>查看碎片程度高的表     </p>
+<pre><code>SELECT segment_name table_name , COUNT(*) extents     
+FROM dba_segments WHERE owner NOT IN (&#39;SYS&#39;, &#39;SYSTEM&#39;) GROUP BY segment_name     
+HAVING COUNT(*) = (SELECT MAX( COUNT(*) ) FROM dba_segments GROUP BY segment_name);  
+</code></pre>
+<p>17、表、索引的存储情况检查</p>
+<pre><code>select segment_name,sum(bytes),count(*) ext_quan from dba_extents where      
+tablespace_name=&#39;&amp;tablespace_name&#39; and segment_type=&#39;TABLE&#39; group by tablespace_name,segment_name;     
+
+select segment_name,count(*) from dba_extents where segment_type=&#39;INDEX&#39; and owner=&#39;&amp;owner&#39;     
+group by segment_name;
+</code></pre>
+<p>18、找使用CPU多的用户session</p>
+<pre><code>select a.sid,spid,status,substr(a.program,1,10) prog,a.terminal,osuser,value/60/100 value     
+from v$session a,v$process b,v$sesstat c     
+where c.statistic#=12 and c.sid=a.sid and a.paddr=b.addr order by value desc
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Oracle/" rel="tag">Oracle</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-REST模式：POST，GET，PUT，DELETE，PATCH的含义与区别"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/06/10/REST%E6%A8%A1%E5%BC%8F%EF%BC%9APOST%EF%BC%8CGET%EF%BC%8CPUT%EF%BC%8CDELETE%EF%BC%8CPATCH%E7%9A%84%E5%90%AB%E4%B9%89%E4%B8%8E%E5%8C%BA%E5%88%AB/"
+    >REST模式：POST，GET，PUT，DELETE，PATCH的含义与区别</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/06/10/REST%E6%A8%A1%E5%BC%8F%EF%BC%9APOST%EF%BC%8CGET%EF%BC%8CPUT%EF%BC%8CDELETE%EF%BC%8CPATCH%E7%9A%84%E5%90%AB%E4%B9%89%E4%B8%8E%E5%8C%BA%E5%88%AB/" class="article-date">
+  <time datetime="2023-06-10T02:15:20.000Z" itemprop="datePublished">2023-06-10</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>根据HTTP规范:</p>
+<ol>
+<li><p>GET 用于信息获取，而且是安全的和幂等的<br>GET请求是安全的。所谓安全是指不管进行多少次操作，资源的状态都不会改变。该请求就像数据库的select操作一样，只是用来查询一下数据，不会修改、增加数据，不会影响资源的内容，即该请求不会产生副作用。无论进行多少次操作，结果都是一样的。</p>
+</li>
+<li><p>POST 用于创建数据，不是安全和幂等的<br>POST请求既不是安全的，也不是幂等的，比如常见的POST重复加载问题：当我们多次发出同样的POST请求后，其结果是创建出了若干的资源。</p>
+</li>
+<li><p>PUT 用于创建或完整更新数据，而且是安全和幂等的<br>PUT请求是向服务器端发送数据的，从而改变信息，该请求就像数据库的update操作一样，用来修改完整的数据内容，但是不会增加数据的种类等，也就是说无论进行多少次PUT操作，其结果并没有不同。</p>
+</li>
+<li><p>DELETE 用于删除数据，而且是安全和幂等的<br>DELETE请求顾名思义，就是用来删除某一个资源的，该请求就像数据库的delete操作，无论进行多少次DELETE操作，其结果并没有不同。</p>
+</li>
+<li><p>PATCH 用于更新部分数据，不是安全和幂等的<br>PATCH请求是对PUT请求的补充，一般用来对已知资源部分更新，是后来新出的标准，GitHub Api也开始使用。</p>
+</li>
+</ol>
+<p>更多详细的介绍可以参考RESTful[<a target="_blank" rel="noopener" href="http://sofish.github.io/restcookbook/]%E6%89%8B%E5%86%8C">http://sofish.github.io/restcookbook/]手册</a></p>
+<p>————————————————<br>版权声明：本文为CSDN博主「Marsin_csdn」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/Marsin_csdn/article/details/123956033">https://blog.csdn.net/Marsin_csdn/article/details/123956033</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTTP/" rel="tag">HTTP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/REST/" rel="tag">REST</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-政策再加码，国办发文让充电更方便"
   class="article article-type-post"
   itemscope
@@ -417,179 +709,6 @@
 <p>2022年，公安部会同商务部等部门推出系列便利二手车交易登记改革新措施，全面实行经销二手车“单独签注、核发临牌”，异地直接办理交易登记的二手小客车310万辆，更好促进二手车流通。</p>
 <p>据介绍，截至2022年底，全国机动车驾驶人数量达5.02亿人，其中汽车驾驶人4.64亿人，占驾驶人总数92.54%。2022年，全国新领证驾驶人2923万人。</p>
 <p>2022年4月1日起实施的《机动车驾驶证申领和使用规定》(公安部令第162号)新增“轻型牵引挂车”准驾车型(C6)，目前已取得C6准驾车型驾驶人数量达44万人，更好满足民众驾驶小型旅居挂车出行需求，促进房车旅游新业态发展。(完)</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%94%B5%E5%8A%9B/" rel="tag">电力</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-2023年中国充电桩行业市场规模、行业发展运行现状分析"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/06/05/2023%E5%B9%B4%E4%B8%AD%E5%9B%BD%E5%85%85%E7%94%B5%E6%A1%A9%E8%A1%8C%E4%B8%9A%E5%B8%82%E5%9C%BA%E8%A7%84%E6%A8%A1%E3%80%81%E8%A1%8C%E4%B8%9A%E5%8F%91%E5%B1%95%E8%BF%90%E8%A1%8C%E7%8E%B0%E7%8A%B6%E5%88%86%E6%9E%90/"
-    >2023年中国充电桩行业市场规模、行业发展运行现状分析</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/06/05/2023%E5%B9%B4%E4%B8%AD%E5%9B%BD%E5%85%85%E7%94%B5%E6%A1%A9%E8%A1%8C%E4%B8%9A%E5%B8%82%E5%9C%BA%E8%A7%84%E6%A8%A1%E3%80%81%E8%A1%8C%E4%B8%9A%E5%8F%91%E5%B1%95%E8%BF%90%E8%A1%8C%E7%8E%B0%E7%8A%B6%E5%88%86%E6%9E%90/" class="article-date">
-  <time datetime="2023-06-05T03:14:39.000Z" itemprop="datePublished">2023-06-05</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>充电桩，功能类似于加油站里面的加油机，可以固定在地面或墙壁，安装于公共建筑(公共楼宇、商场、公共停车场等)和居民小区停车场或充电站内，可以根据不同的电压等级为各种型号的电动汽车充电。</p>
-<p>2023年中国充电桩行业市场规模 中国充电桩行业发展运行现状分析</p>
-<p>充电桩的输入端与交流电网直接连接，输出端都装有充电插头用于为电动汽车充电。充电桩一般提供常规充电和快速充电两种充电方式，人们可以使用特定的充电卡在充电桩提供的人机交互操作界面上刷卡使用，进行相应的充电方式、充电时间、费用数据打印等操作，充电桩显示屏能显示充电量、费用、充电时间等数据。根据《国民经济行业分类与代码》(GB_T_4754-2011)的分类标准，充电桩所属行业可归类为：C制造业C38电气机械和器材制造业C382输配电及控制设备制造C3829其他输配电及控制设备制造。</p>
-<p>作为推动新能源汽车持续发展的重要基础，充电桩是我国城市新型基础设施建设的重点方向之一。未来随着新能源汽车渗透率水平持续提升，将倒逼相关基础设施的加速建设与完善，充电桩行业将进一步发展与扩张，市场前景广阔。根据相关数据，2023年中国充电桩行业市场规模能突破1000亿元的水平。</p>
-<p>根据中研普华产业研究院发布的《2023-2028年中国充电桩行业深度分析与投资战略研究报告》显示：</p>
-<p>中国充电桩行业运行现状分析</p>
-<p>第一节 中国充电桩行业发展状况分析</p>
-<p>一、中国充电桩行业发展概况及特点</p>
-<p>观望期(2010年及以前)：2009年1月财政部、科技部、工业和信息化部、发展改革委等四部门于2009年1月共同启动十城千辆节能与新能源汽车示范推广应用工程，计划用3年左右的时间，每年发展10个城市，每个城市推出1000辆新能源汽车开展示范运行。然而，科技部《“十城千辆”节能与新能源汽车示范推广试点工程2010年工作报告》显示，2010年25个城市新增新能源汽车5888辆，2009-2010年合计约1万辆，其中电动汽车仅2842辆。在这一阶段，充电设施建设主体——国家电网主要进行集中式充换电场站建设，截至2010年共建设充电站76座，充电桩1122个，桩车比仅约10%。</p>
-<p>快速增长期(2011-2012年)：充电站和充电桩数量快速增长，尤其是2011年充电桩保有量由2010年的1122个增长至6800个，年增长率超过406%。桩车比逐年提高，2012年达到54.9%(EVI统计的新能源汽车及充电桩数量均偏低，桩车比为70.1%，有一定出入)，呈现出充电设施超前于新能源汽车发展的态势。</p>
-<p>回落期(2013年)：2012年是新能源汽车“十城千辆”示范推广工作的最后一年，由于推广成果远远落后于预期(原计划至2012年全国新能源汽车的运营规模占到汽车市场份额的10%)，加上充电站盈利模式尚未明晰，大部分充电站处于亏本运营状态，充电设施建设速度明显回落。2013年新增充电站和充电桩的数量分别为68座和4872个，同比增长分别为-75.9%和-55.1%。</p>
-<p>重新加速期(2014年)：政策和市场的双轮驱动充电设施建设。政策方面，2013年底和2014年初两批新能源汽车推广应用城市的确定，加速了各地充电设施建设规划的集中出台;市场方面，2014年新能源汽车销量的快速增长，尤其是比亚迪插电式混合动力车——秦的爆发式增长，催生了充电设施需求的增长，2014年充电站和充电桩的同比增长率分别为282.4%和72.1%。</p>
-<p>2015年及以后：充电设施建设将大幅提速。《关于新能源汽车充电设施建设奖励的通知》、《关于电动汽车用电价格政策有关问题的通知》及《关于加快推进新能源汽车在交通运输行业推广应用的实施意见》等重磅政策的密集发布，以及比亚迪插电式混合动力车唐、江淮iEV5、众泰及北汽EV200等一系列具有市场竞争力的车型的上市，驱动充电设施在2015年迎来第二次超前建设。</p>
-<p>早在2017年，新能源桩车比(充电桩与车辆数量之比)已经从2015年的1:12提升到了1:3.8，这就意味着平均不到4辆新能源车共用1个充电桩。而在目前，新能源充电桩的数量依旧在飞速地提升中。按照国家发展规划，2020年将有480万个充电桩落地，这当中投入的金额为1440亿元。</p>
-<p>2018年底，国家电网、南方电网、特来电、蓝天伟业、万帮充电等充电设施运营龙头企业，共同发起设立一家合资公司——河北雄安联行网络科技股份有限公司，希望成为能够接入全国90%以上充电桩的平台。这次“国家队”与民营龙头玩家的合作，或许意味着电动汽车充电服务行业正展开一轮整合大潮，产业集中度将进一步提高。近几年，中国私人充电桩数量超过公共类充电桩数量。</p>
-<p>受下游新能源汽车市场驱动，中国充电桩需求快速增长。随着新能源电动汽车终端销量和渗透率高速增长，配套设备充电桩需求快速增长。且我国人口密度大、高速公路里程长的人口及道路特点对国内充电站和充电桩的数量以及充电效率提出了更高的要求。“十四五”规划明确充电桩建设目标，为各省市充电桩行业发展提供重要动力。2022年1月21日国家发改委、国家能源局等十部门近日印发《关于进一步提升电动汽车充电基础设施服务保障能力的实施意见》，明确到“十四五”末，我国电动汽车充电保障能力进一步提升，可满足超过2000万辆电动汽车充电需求。随后，31个省市相继出台了一系列相关政策和规划为中国充电桩行业的发展提供了重要动力，其中北京、广东、上海、海南等省市明确规划了2025年充电桩建设规模，进一步推动中国充电桩行业的快速发展。</p>
-<p>我国充电基础设施建设基本满足新能源汽车需求。2022年我国充电基础设施保有量达到521万台，新能源汽车保有量为1310万辆，车桩比为2.5:1。从增量角度看，2022年我国充电基础设施增量为259.3万台，新能源汽车销量为688.7万辆，车桩增量比为2.7:1。其中，公共充电桩增量为65.1万台，同比上升91.6%，随车配建私人充电桩增量为194.2万台，同比上升225.5%。公共充电桩占比下滑至34.5%。从电流类型来看，公共充电桩直流占比为42.4%。</p>
-<p>二、中国充电桩行业发展存在的问题及对策</p>
-<p>1、接口标准待统一，成本支出巨大，影响了充电桩行业的快速发展。</p>
-<p>目前国际上最主要的充电标准有两种：CCS和CHAde-MO，前者是欧美国家通行的直流快速联合充电标准系统(Combo Charg-ing System，简称CCS);后者是日本电动汽车协会和日本电动车充电协会推出的标准。这也是美国市场目前在使用的两种直流快充标准。就目前而言，日本标准CHAde-MO的势头很猛，除了日系车在美国的高占有率直接带动了CHAdeMO标准的使用，日本政府的推广力度也大大加强了日系充电标准的接受度。而欧盟也从最初的打压，到不得不接受。</p>
-<p>也就在CHAdeMO与CCS争夺谁是国际标准进行如火如荼之季，我国充电国标却迟迟未能出台，这不可避免地导致国内已经建成的大批充电桩因为充电接口的不兼容而利用率低下，资源浪费严重，且导致提前布局的相关经营企业盈利情况不容乐观。</p>
-<p>充电桩属于公共设施，牵涉多个利益相关方，投入大，产出少，其实更适合垄断企业运营。充电桩类似于电信行业的基站，投资成本巨大，它只有覆盖更多的用户，才能有效降低成本。</p>
-<p>更改接口标准不仅是对单一的接口部件作出改变，由于各种标准的接口直径不同，差之分毫就可能出现安全隐患，因此往往需要将整块铁板拆下来重新安装，人力费和材料费都是新增成本。针对快充充电机改造还要对充电设施内部的电缆、配电设施进行多方调整，这个成本不亚于重新投资。</p>
-<p>纯从数字角度来看，中日联合能取得压倒性优势，即使相对倾向欧洲立场的美国，在中日新标准成为事实上的世界标准之后，很可能也会采用中日新标准。</p>
-<p>2、国内低端生产企业的恶性竞争制约了电源、充电桩行业的发展</p>
-<p>我国低研发能力、低创新能力及低制造能力的电源、充电桩生产企业过多，低水平重复建设现象严重。这些企业往往通过恶性的价格竞争获取市场，价格战的结果使得电源、充电桩行业利润普遍降低，企业积累利润的速度减慢，致使装备升级和研发投入不足，企业发展缺乏后劲。</p>
-<p>3、研发投入不足，产业持续发展能力较弱</p>
-<p>我国目前电源产品技术含量不高，缺乏核心自主知识产权，并且由于资金和技术实力不足的限制很难进行新产品的研发，在短期利益的驱使下企业开展新产品的深入研究和开发动力不足，产品技术含量低，导致电源行业技术含量提升缓慢，提高自主创新能力，有利于充电桩行业的发展。</p>
-<p>三、新能源汽车仍存在“充电慢”的核心痛点</p>
-<p>随着整车带电量和续航里程提升，充电便利性成为制约电动车使用体验提升的一大因素。以部分热销纯电动车型为例，支持快充的纯电动车平均理论充电倍率约为1C，即实现SOC30%-80%(StateofCharge，即荷电状态，用来反映电池的剩余容量)需要充电约30分钟。而在实践中，大部分纯电车实现SOC30%-80%需要充电40-50分钟、仅可行驶约150-200km，“充电慢”依然是纯电动乘用车行业的核心痛点。</p>
-<p>四、高压快充已成为充电难题的重要解决方案</p>
-<p>为提升消费者充电体验，可通过继续改善车桩比，或大幅缩减充电时间，来满足消费者快充的需求。而在快充方面，目前两条技术路线：提高充电电流和提升充电电压。从不同的实践来看，高压快充能够在更宽范围内实现最大功率充电，更能匹配未来快充需求：</p>
-<p>1)大电流路线：推广程度低，对热管理要求高。根据焦耳定律(公式Q=I2Rt)，电流的提升将大幅增加充电过程中的热量，对散热要求很高，例如特斯拉大电流快充方案，其V3超充桩峰值工作电流超过600A，需要使用更粗的线束，同时对散热技术要求更高，且仅能在5%-27%SOC实现250kW最大充电功率，高效充电并非全程覆盖。目前国内车厂并没有在散热方案上做大幅定制化改动，且大电流充电桩很大程度上依赖自建体系，推广成本高。</p>
-<p>2)高电压路线：是目前车厂普遍采用的模式，可兼顾降低能耗、提高续航、减少重量、节省空间等优点。目前受限于硅基IGBT功率器件的耐压能力，车企普遍采用的快充方案是400V高压平台，即以250A电流可以实现100kW的充电功率(100kW功率充电10min可行驶约100km)。自保时捷推出800V高电压平台后(实现300KW功率，高压线束减少一半)，此后各大车企开启对800V高压平台的研究与布局。800V电压平台相较于400V平台，工作电流更小，进而节省线束体积、降低电路内阻损耗，变相提升了功率密度和能量使用效率。</p>
-<p>五、中国充电桩行业商业模式分析</p>
-<p>目前，我国充电桩的商业模式主要有“充电桩+商品零售+服务消费”模式，“充电APP+云服务+远程智能管理”模式，“整车厂商+设备制造商+运营商+用户”模式。</p>
-<p>电改放开后，充电设施建设实现市场化，民营资本等有望进入，而充电桩企业具备熟悉市场的优势，同时转向下游环节所带来的协同效应也将充分显现。随着各界资本纷纷进入充电运营领域，设备企业+资本进行的转型将带来各种运营模式的创新。当前，我国充电桩行业的创新商业模式有常州众筹模式、“电桩”模式、PPP模式、特锐德模式、华贸中心模式等等。另外，目前国际主流的充电桩运营模式有三种，分别是政府为主导的充电桩运营模式、电网企业为主导的充电桩运营模式、汽车厂商为主导的充电桩运营模式。</p>
-<p>充电桩的建设需要大量资金，目前看来，政府以及电网、民营资本、汽车企业等多个渠道均有资金注入这个业务。但充电桩业务仍需探索明朗的盈利模式，才能吸引更多社会资本参与到充电设施的建设中。</p>
-<p>目前全球充电桩行业的主要盈利模式有：借力电改，批发+零售电力盈利模式;中规中矩，收取充电服务费盈利模式;换个思路，瞄准停车市场蓝海模式;开放思维，充电服务生态系统盈利模式;众人拾柴，众筹建桩;美国的免费充电桩模式等等。</p>
-<p>行业的商业模式是以新能源汽车充电设备、电气设备、电力设备、电源设备制造为主业，以电源及充电桩产品应用中先进的解决方案系统集成、制造技术为保障，以为国内外电源及新能源行业提供技术服务为补充，实现销售以获取利润。</p>
-<p>在为客户提供技术支持的同时，行业还提供电源产品及充电设备。行业的商业模式整合了的研发能力、可靠的质量控制、稳定的顾客资源，保障行业在市场竞争中处于有利地位。</p>
-<p>(一)行业的经营模式行业以新能源汽车产业链为企业战略业务核心，利用产品和技术优势，与产品用户保持稳定的伙伴关系，在合作中实现共赢。围绕新能源电动汽车生产使用的各种测试、生产电源设备以及充电设备进行产业分布。</p>
-<p>行业在经营模式上，借鉴阿米巴经营模式(把行业细分成所谓“阿米巴”的小集体，并委以经营重任，从而培育出许多具有经营者意识的领导者)等先进经营模式，结合行业实际情况，为更进一步解放发展生产力，力求全员参与经营，形成了具有行业本身特色的经营模式。</p>
-<p>行业内部以客户需求为核心，按照业务流程设置岗位节点，以需求供给关系确定组织架构，即每个岗位节点即为上个岗位节点的供给方，同时也承担着下一个岗位节点的需求任务。</p>
-<p>(二)行业的销售模式行业产品的销售采用“订单销售”模式。行业销售中心签订销售合同，合同签订后，销售中心根据合同，编制产品制造单，下发到品保部、采购部、事业部，各部门根据产品制造单的要求制定各自的作业计划并实施，保证产品如期按时完成。生产完成由品保部终检，产品合格后，通知销售中心，销售中心联系物流部门进行产品发运。</p>
-<p>(三)行业的盈利模式行业通过研发、生产满足客户要求的电源、充电桩产品实现业务收入。盈利增长点来自于产品加工增值，行业通过优良的产品品质和良好的服务，保障了行业稳定的客户群和稳步增长的业务收入。</p>
-<p>1、改进工艺流程，降低成本，提高利润行业通过不断改进产品的加工工艺流程，采用新技术、新方法提高生产效率，降低废品率，提高材料利用率，降低人工成本及固定成本费用，进而提升利润空间。</p>
-<p>2、利用技术优势，为客户提供整体解决方案，创造新的利润增长点行业主要的竞争优势就是技术优势、研发优势，行业能够利用自身优势，为客户提供整体解决方案，在出售产品的同时，取得超过产品本身的超附加值，从而提升行业的整体效益。</p>
-<p>3、争取政府科技攻关项目，取得政府科技资金的支持行业具备较强的研发实力，已完成多项政府科技创新项目，取得了政府科技资金的支持。随着国家对实体经济支持力度的加大，有研发能力的优秀企业，必将会继续得到政府科技基金的支持。行业将加大科技研发的投入，争取更多政府科研项目资金的支持。</p>
-<p>第二节 充电桩行业发展现状分析</p>
-<p>一、充电桩行业投资现状</p>
-<p>1、充电桩投资规模分析</p>
-<p>充电桩行业投资分为公共充电桩和私人充电桩两大类。因私人购车比重提高，私人充电桩建设投资占比提高。2020年受“新基建”政策推动，充电站与公共充电桩新增数量大幅增长，行业投资规模显著回升，2022我国充电桩投资规模达到了369.09亿元，其中公共充电桩投资规模大幅增长至281.66亿元，私人桩投资规模增长至87.43亿元。</p>
-<p>2、充电桩检测投资规模分析</p>
-<p>由于新基建的提出，充电桩成为助力国家稳增长的重要力量，充电桩投建速度有望加快，整体充电桩制造市场呈现周期向上的特征。同属于新基建范畴内的5G，大数据和人工智能的应用都可以加快新能源汽车的推广，从而带动充电桩建设，加速推动充电桩行业发展;窗口期也将缩短，优胜劣汰即将加速。2022年充电桩检测投资规模达到89.2亿元。</p>
-<p>二、充电桩行业市场规模分析</p>
-<p>1、充电设施市场规模分析</p>
-<p>2022年我国充电基础设施继续高速增长，年增长数量达到260万台左右，累计数量约520万台。</p>
-<p>2、充电桩市场规模分析</p>
-<p>图表：2020-2022年中国充电桩行业市场规模(单位：亿元)</p>
-<p>数据来源：中研普华产业研究院</p>
-<p>新能源汽车充电问题被认为是新能源汽车推广的“最后一公里”，对于推广发展新能源汽车至关重要。近年来，中国新能源充电桩行业市场规模一直保持增长趋势，市场规模从2017年的72亿元增长至2021年的418.7亿元，复合年均增长率高达42.2%。2022年市场规模达到809.6亿元。随着新能源汽车的超预期增长，充电桩产业链有望迎来风口，2023年市场规模将突破千亿元。</p>
-<p>本报告由中研普华咨询公司领衔撰写，在大量周密的市场调研基础上，主要依据了国家统计局、国家商务部、国家发改委、国家经济信息中心、国务院发展研究中心、工信部、中国行业研究网、全国及海外多种相关报纸杂志的基础信息等公布和提供的大量资料和数据，客观、多角度地对中国充电桩市场进行了分析研究。</p>
-<p>报告在总结中国充电桩发展历程的基础上，结合新时期的各方面因素，对中国充电桩的发展趋势给予了细致和审慎的预测论证。报告资料详实，图表丰富，既有深入的分析，又有直观的比较，为充电桩企业在激烈的市场竞争中洞察先机，能准确及时的针对自身环境调整经营策略。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%94%B5%E5%8A%9B/" rel="tag">电力</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-充电设施分类"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/06/04/%E5%85%85%E7%94%B5%E8%AE%BE%E6%96%BD%E5%88%86%E7%B1%BB/"
-    >充电设施分类</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/06/04/%E5%85%85%E7%94%B5%E8%AE%BE%E6%96%BD%E5%88%86%E7%B1%BB/" class="article-date">
-  <time datetime="2023-06-03T16:45:19.000Z" itemprop="datePublished">2023-06-04</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>1、以安装条件进行分类，主要分为立式充电桩和壁挂充电桩立式充电桩无需靠墙，适用于户外停车位或小区停车位，而壁挂式充电桩必须依靠墙体固定，适用于室内和地下停车位。</p>
-<p>2、以服务对象进行分类，主要分为公共充电桩、专用充电桩和自用充电桩。公共充电桩由政府机关等具有公共服务性质的机构置办，服务对象面向任何电动汽车车主，例如公共停车场。而专用充电桩多为企业建造，服务对象为客户和内部人员，例如商场停车场。自用充电桩为私人充电桩，安装于私人领域，不对外开放</p>
-<p>3、以安装地点防护等级进行分类,主要分为室内充电桩和室外充电桩</p>
-<p>4、以充电接口的数量进行分类，主要分为一桩一充和一桩多充。目前市场上充电桩以一桩一充式为主，在公交停车场这样大型停车场中，需要多充式充电桩,同步支持多台电动车充电,不但加快充电效率，也节省了人工。</p>
-<p>5、以充电类型进行分类，主要分为交流充电桩和直流充电桩。交流充电桩一般是小电流、桩体较小、安装灵活、充满电一般在6-8个小时，适用于小型乘用电动车，多应用于公共停车场、大型购物中心和社区车库中，家用充电桩也多为交流充电桩。而直流充电桩一般是大电流,短时间内充电量更大、桩体较大、占用面积大(散热)。直流充电桩适用于电动大巴、中巴、混合动力公交车、电动轿车、出租车、工程车等快速直流充电。</p>
  
       <!-- reward -->
       

@@ -154,6 +154,145 @@
     
     
     <article
+  id="post-MySql改密码"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/02/12/MySql%E6%94%B9%E5%AF%86%E7%A0%81/"
+    >MySql改密码</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/02/12/MySql%E6%94%B9%E5%AF%86%E7%A0%81/" class="article-date">
+  <time datetime="2023-02-12T06:39:56.000Z" itemprop="datePublished">2023-02-12</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="root密码测试只能一句一句的改。"><a href="#root密码测试只能一句一句的改。" class="headerlink" title="root密码测试只能一句一句的改。"></a>root密码测试只能一句一句的改。</h1><pre><code>alter user ‘root’@’localhost’ identified by ‘MySql@123’;
+alter user ‘root’@’127.0.01’ identified by ‘MySql@123’;
+alter user ‘root’@’::1′ identified by ‘MySql@123’;
+</code></pre>
+<h1 id="Reset-the-MySQL-MariaDB-Root-Password"><a href="#Reset-the-MySQL-MariaDB-Root-Password" class="headerlink" title="Reset the MySQL/MariaDB Root Password"></a>Reset the MySQL/MariaDB Root Password</h1><p>By default, the MySQL/MariaDB installation that ships with XAMPP has an empty root password. This is a serious security risk, especially if you plan to use XAMPP in production scenarios.</p>
+<p>To change the MySQL/MariaDB root password, follow these steps:</p>
+<p>Ensure that the MySQL/MariaDB server is running.<br>Open your Windows command prompt by clicking the “Shell” button in the XAMPP control panel.</p>
+<p><img src="https://c2.im5i.com/2023/02/12/nxDoU.png" alt="nxDoU.png"></p>
+<p>Use the mysqladmin command-line utility to alter the MySQL/MariaDB password, using the following syntax:</p>
+<pre><code>mysqladmin --user=root password &quot;newpassword&quot;
+</code></pre>
+<p>For example, to change the MySQL/MariaDB root password from its default empty value to the password gue55me, you would execute:</p>
+<pre><code>mysqladmin --user=root password &quot;gue55me&quot;
+</code></pre>
+<p><img src="https://c2.im5i.com/2023/02/12/nxaOw.png" alt="nxaOw.png"></p>
+<p>Or, if a password has already been previously set and you’d like to change it to a new one, you can use the following syntax:</p>
+<pre><code>mysqladmin --user=root --password=oldpassword password &quot;newpassword&quot;
+</code></pre>
+<p>For example, to change the root password from 12345 to gue55me, you would execute:</p>
+<pre><code>mysqladmin --user=root --password=12345 password &quot;gue55me&quot;
+</code></pre>
+<p>Test that your password change has been accepted, by attempting to connect to the MySQL/MariaDB server using the mysql command-line client in the same directory. For example, you could use the command below to connect to the server and return the results of a calculation:</p>
+<pre><code>mysql --user=root --password=gue55me -e &quot;SELECT 1+1&quot;
+</code></pre>
+<p><img src="https://c2.im5i.com/2023/02/12/nx0J8.png" alt="nx0J8.png"></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-Maven不能加载ojdbc14-jar的解决方法"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/02/12/Maven%E4%B8%8D%E8%83%BD%E5%8A%A0%E8%BD%BDojdbc14-jar%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/"
+    >Maven不能加载ojdbc14.jar的解决方法</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/02/12/Maven%E4%B8%8D%E8%83%BD%E5%8A%A0%E8%BD%BDojdbc14-jar%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" class="article-date">
+  <time datetime="2023-02-12T06:34:56.000Z" itemprop="datePublished">2023-02-12</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>首先电脑上得安装好maven。<br>1、先下载ojdbc14-10.2.0.4.0.jar。也可以本机或其他服务器安装的Oracle目录中寻找。<br>2、将ojdbc14-10.2.0.4.0.jar放到指定目录中，这里放在C:\mm\ojdbc14-10.2.0.4.0.jar下的。<br>3、打开 cmd运行</p>
+<pre><code>mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc14 -Dversion=10.2.0.4.0 -Dpackaging=jar -Dfile=C:\mm\ojdbc14-10.2.0.4.0.jar
+</code></pre>
+<p>4、如下在pom.xml文件中添加引用</p>
+<pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;com.oracle&lt;/groupId&gt;
+    &lt;artifactId&gt;ojdbc14&lt;/artifactId&gt;
+    &lt;version&gt;10.2.0.4.0&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MAVEN/" rel="tag">MAVEN</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OJDBC/" rel="tag">OJDBC</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-sanfran-urbansim地图可视化报错解决办法"
   class="article article-type-post"
   itemscope
@@ -442,136 +581,6 @@
     <footer class="article-footer">
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%9C%B0%E7%90%86%E6%95%B0%E6%8D%AE/" rel="tag">地理数据</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-各种JDK版本大集合"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/02/09/%E5%90%84%E7%A7%8DJDK%E7%89%88%E6%9C%AC%E5%A4%A7%E9%9B%86%E5%90%88/"
-    >各种JDK版本大集合</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/02/09/%E5%90%84%E7%A7%8DJDK%E7%89%88%E6%9C%AC%E5%A4%A7%E9%9B%86%E5%90%88/" class="article-date">
-  <time datetime="2023-02-09T13:31:17.000Z" itemprop="datePublished">2023-02-09</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <ul>
-<li><p>OracleJDK:<br>Oracle公司成立于1977年，是全球最大的企业级软件公司，总部位于美国加利福尼亚州的红木滩。2009年就以7.4B$收购了Sun公司。2013年超越 IBM ，成为 继 Microsoft 后全球第二大软件公司。<br>警告:生产环境中OracleJDK的使用请注意法律风险! <a target="_blank" rel="noopener" href="https://www.oracle.com/java/technologies/javase-downloads.html">https://www.oracle.com/java/technologies/javase-downloads.html</a></p>
-</li>
-<li><p>OpenJDK:<br>OpenJDK原是Sun Microsystems公司为Java平台构建的Java开发环境（JDK）的开源版本，完全自由，开放源码。 Sun Microsystems公司在2006年的JavaOne大会上称将对Java开放源代码，于2009年4月15日正式发布OpenJDK。 甲骨文在2010年收购Sun Microsystem之后接管了这个项目。<a target="_blank" rel="noopener" href="http://openjdk.java.net/">http://openjdk.java.net</a></p>
-</li>
-<li><p>RedHat Open JDK:<br>RedHat开源扛把子红帽出品，值得信赖。仅有windows。Linux请从源里下载。仅更新最新维护版。<a target="_blank" rel="noopener" href="https://developers.redhat.com/products/openjdk/download">https://developers.redhat.com/products/openjdk/download</a></p>
-</li>
-<li><p>AdoptOpenJDK:<br>2017年开始采用OpenJDK.net，建立在多个平台上普遍缺乏一个开放的、可复制的OpenJDK源代码构建和测试系统。 adoptionopenjdk为Java生态系统提供了坚如磐石的OpenJDK二进制文件，还为任何平台上的OpenJDK构建者提供了作为代码的基础设施和构建场。<a target="_blank" rel="noopener" href="https://adoptopenjdk.net/">https://adoptopenjdk.net</a></p>
-</li>
-<li><p>Dragonwell:<br>作为OpenJDK的下游，alibaba Dragonwell是阿里巴巴内部OpenJDK定制版AJDK的开源版本，AJDK为在线电商、金融、物流做了结合业务场景的优化，运行在超大规模的，100,000+ 服务器的阿里巴巴数据中心。<br>国产之光,大家有机会还是尝试下优化的还不错，相对于OpenJDK更省内存和并发更高启动更快，作者测试过 <a target="_blank" rel="noopener" href="https://github.com/alibaba/dragonwell8">https://github.com/alibaba/dragonwell8</a></p>
-</li>
-<li><p>GraalVM:<br>GraalVM是一个通用的虚拟机，用于运行以JavaScript、Pytho n、Ruby、R、JVM等语言编写的应用程序，如Java、Scala、Groovy、Kotlin 、Crojule和基于LLVM的语言，如C和C++。GraalVM消除了编程语言之间的隔离，并在共 享运行时启用互操作性。它可以独立运行，也可 以在OpenJDK、Node.js或Oracle数据库的上下文中运行。<a target="_blank" rel="noopener" href="https://www.graalvm.org/">https://www.graalvm.org</a></p>
-</li>
-<li><p>ZuluJDK:<br>Azul Systems为需要为其面向网络的客 户（旅游、在线零售、游戏、SaaS）提供基于服务器的Java应 用程序的公司提供服务，满足实时业务系统（广告网络、资本市场、通信）的特定 延迟目标，确保对重要应用程序进行及时维护或安全更新，或者为嵌入式和物联网用例提 供基于Java的系统。<a target="_blank" rel="noopener" href="https://www.azul.com/downloads/zulu-community/?&amp;architecture=x86-64-bit&amp;package=jdk#">https://www.azul.com/downloads/zulu-community/?&amp;architecture=x86-64-bit&amp;package=jdk#</a></p>
-</li>
-<li><p>Liberica:<br>Liberica是一个100% 开源Java实现。它是由BellSoft贡献的O penJDK构建的，经过了彻底的测试，并通过了OpenJDK许可下 提供的JCK。Standard为常规用途，full版本包含JavaFX，lite为精简的OpenJDK。文件体积Full &gt; Standard &gt; lite。<br><a target="_blank" rel="noopener" href="https://bell-sw.com/pages/downloads/#/java-14-current">https://bell-sw.com/pages/downloads/#/java-14-current</a></p>
-</li>
-<li><p>SapMachine:<br>SAP SE是一家 德国跨国软件公司，它生产企业软件 来管理业务运营和客户关系。SAP总部位于德国巴登-符腾 堡的沃尔多夫，在180个国家设有区域办事处。SapMachine是OpenJDK 项目的下游版本。它用于为希望使用OpenJDK运行其应用程序的SAP客户和合作伙 伴构建和维护支持SAP的OpenJDK版本。SAP致力于确保Java平台的持续成功。<a target="_blank" rel="noopener" href="https://sap.github.io/SapMachine">https://sap.github.io/SapMachine</a></p>
-</li>
-<li><p>Corretto:<br>Amazon Corretto是一个免费的 、多平台的、面向生产的开放Java开发工具包（OpenJDK） 发行版。Corretto提供长期支持，包括性能增强和安全修复。亚马逊在数 个生产服务上运行Corretto，并且Corretto被证明与Java SE标准兼容。使用Corretto，您 可以在流行的操作系统（包括Linux、Windows和macOS）上开发和运行Java应用程序。<a target="_blank" rel="noopener" href="https://amazonaws-china.com/cn/corretto">https://amazonaws-china.com/cn/corretto</a></p>
-</li>
-</ul>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JDK/" rel="tag">JDK</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-node-sass-npm-ERR-command-failed-解决方法"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/02/09/node-sass-npm-ERR-command-failed-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/"
-    >node-sass npm ERR! command failed 解决方法</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/02/09/node-sass-npm-ERR-command-failed-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" class="article-date">
-  <time datetime="2023-02-09T13:28:42.000Z" itemprop="datePublished">2023-02-09</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>直接去 GitHub 上下载 node-sass 的二进制文件，然后设置环境变量：</p>
-<p>下载 node-sass 二进制 <a target="_blank" rel="noopener" href="https://github.com/sass/node-sass">https://github.com/sass/node-sass</a><br>下载时，需要注意以下你的 node 版本以及对应的 NODE_MODULE_VERSION 版本，版本映射查看说明文件。</p>
-<p>设置环境变量<br>    export SASS_BINARY_PATH=/yourPath/linux-x64-93_binding.node</p>
-<p>执行依赖安装<br>    npm i</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nodejs/" rel="tag">nodejs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/" rel="tag">软件开发</a></li></ul>
 
     </footer>
   </div>

@@ -154,6 +154,232 @@
     
     
     <article
+  id="post-如果单击眼睛图标显示隐藏密码（QPushButton）"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/10/19/%E5%A6%82%E6%9E%9C%E5%8D%95%E5%87%BB%E7%9C%BC%E7%9D%9B%E5%9B%BE%E6%A0%87%E6%98%BE%E7%A4%BA%E9%9A%90%E8%97%8F%E5%AF%86%E7%A0%81%EF%BC%88QPushButton%EF%BC%89/"
+    >如果单击眼睛图标显示隐藏密码（QPushButton）</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/10/19/%E5%A6%82%E6%9E%9C%E5%8D%95%E5%87%BB%E7%9C%BC%E7%9D%9B%E5%9B%BE%E6%A0%87%E6%98%BE%E7%A4%BA%E9%9A%90%E8%97%8F%E5%AF%86%E7%A0%81%EF%BC%88QPushButton%EF%BC%89/" class="article-date">
+  <time datetime="2023-10-19T02:19:00.000Z" itemprop="datePublished">2023-10-19</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p><a target="_blank" rel="noopener" href="https://www.cnpython.com/qa/1374456">https://www.cnpython.com/qa/1374456</a></p>
+<h1 id="方案一"><a href="#方案一" class="headerlink" title="方案一"></a>方案一</h1><p>PyQt5的一大优点是它将自动将信号连接到方法。如果您的应用程序中有一个名为<mybutton>的按钮和一个名为on_<mybutton>_clicked的方法，loadUi将自动连接。所以模式是</mybutton></mybutton></p>
+<pre><code>on_&lt;widget_name&gt;_&lt;signal&gt;
+</code></pre>
+<p>如果我们将此应用于您的问题，您应该将“显示/隐藏”按钮设置为切换按钮。在Qt设计器中，将checkable属性设置为True（或dobtn_show_pwd.clicked.setChecked(True)）</p>
+<p>代码：</p>
+<pre><code>from PyQt5 import QtCore, QtGui, QtWidgets, uic
+from PyQt5.QtWidgets import QPushButton, QLineEdit
+import sys
+
+class MyWindow(QtWidgets.QMainWindow):
+    def __init__(self, maxWidth=None):
+        super(MyWindow, self).__init__()
+        uic.loadUi(&#39;test1.ui&#39;, self)
+
+        self.line_password.setEchoMode(QLineEdit.Password)
+
+    def on_btn_show_pwd_toggled(self, checked):
+        if checked:
+            self.line_password.setEchoMode(QLineEdit.Password)
+        else:
+            self.line_password.setEchoMode(QLineEdit.Normal)
+
+if __name__ == &#39;__main__&#39;:
+    app = QtWidgets.QApplication(sys.argv)
+    window = MyWindow()
+    window.show()
+    sys.exit(app.exec_())
+    
+</code></pre>
+<h1 id="方案二"><a href="#方案二" class="headerlink" title="方案二"></a>方案二</h1><p>另一种可能是将可检查的QAction添加到QLineEdit并连接到toggled（或triggered）信号</p>
+<pre><code>class MyWindow(QtWidgets.QMainWindow):
+    def __init__(self, maxWidth=None):
+        super(MyWindow, self).__init__()
+        uic.loadUi(&#39;MainWindow.ui&#39;, self)
+
+        icon = QtGui.QIcon(&#39;eye-icon.png&#39;)
+        self.showPassAction = QtWidgets.QAction(icon, &#39;Show password&#39;, self)
+        self.line_password.addAction(
+            self.showPassAction, QtWidgets.QLineEdit.TrailingPosition)
+        self.showPassAction.setCheckable(True)
+        self.showPassAction.toggled.connect(self.showPassword)
+
+    def showPassword(self, show):
+        self.line_password.setEchoMode(
+            QtWidgets.QLineEdit.Normal if show else QtWidgets.QLineEdit.Password)
+</code></pre>
+<p>如果只想在按下鼠标时显示密码，则不要连接到toggled信号，而是找到该操作的子QToolButton并连接到pressed和released。在这种情况下，操作不需要是可检查的</p>
+<pre><code>self.line_password.addAction(
+    self.showPassAction, QtWidgets.QLineEdit.TrailingPosition)
+showPassButton = self.line_password.findChild(QtWidgets.QAbstractButton)
+showPassButton.pressed.connect(lambda: self.showPassword(True))
+showPassButton.released.connect(lambda: self.showPassword(False))
+</code></pre>
+<h1 id="方案三"><a href="#方案三" class="headerlink" title="方案三"></a>方案三</h1><p>您可以创建单个函数并切换可见性，而不是创建两个单独的方法，如eyepass_show和eyepass_hide。另外，您正试图通过self.btn_show_pwd.clicked.connect(self.eyepass_hide)和self.btn_show_pwd.clicked.connect(self.eyepass_show)将同一信号两次连接到两种不同的方法</p>
+<p>试着这样做：</p>
+<pre><code>from PyQt5 import QtCore, QtGui, QtWidgets, uic
+from PyQt5.QtWidgets import QPushButton, QLineEdit
+import sys
+import pymysql
+pymysql.install_as_MySQLdb()
+
+class MyWindow(QtWidgets.QMainWindow):
+    def __init__(self, maxWidth=None):
+        super(MyWindow, self).__init__()
+        uic.loadUi(&#39;MainWindow.ui&#39;, self)
+
+        self.eyepass_show()
+        self.eyepass_hide()
+        self.btn_show_pwd.clicked.connect(self.toggleVisibility)
+        
+    def toggleVisibility(self):
+        if self.line_password.echoMode()==QLineEdit.Normal:
+            self.line_password.setEchoMode(QLineEdit.Password)
+        else:
+            self.line_password.setEchoMode(QLineEdit.Normal)
+
+    #     self.btn_show_pwd.clicked.connect(self.eyepass_hide)
+    #     self.btn_show_pwd.clicked.connect(self.eyepass_show)
+    # 
+    # def eyepass_show(self):
+    #     self.line_password.setEchoMode(QLineEdit.Normal)
+    #     print(&#39;show pass&#39;)
+    # 
+    # def eyepass_hide(self):
+    #     self.line_password.setEchoMode(QLineEdit.Password)
+    #     print(&#39;hide pass&#39;)
+
+
+if __name__ == &#39;__main__&#39;:
+    app = QtWidgets.QApplication(sys.argv)
+    window = MyWindow()
+    window.show()
+    sys.exit(app.exec_())
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-AttributeError module ‘backend_interagg‘ has no attribute ‘FigureCanvas‘的解决办法"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/10/18/AttributeError%20module%20%E2%80%98backend_interagg%E2%80%98%20has%20no%20attribute%20%E2%80%98FigureCanvas%E2%80%98%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/"
+    >AttributeError module ‘backend_interagg‘ has no attribute ‘FigureCanvas‘的解决办法</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/10/18/AttributeError%20module%20%E2%80%98backend_interagg%E2%80%98%20has%20no%20attribute%20%E2%80%98FigureCanvas%E2%80%98%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" class="article-date">
+  <time datetime="2023-10-18T02:18:00.000Z" itemprop="datePublished">2023-10-18</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h1><p>一开始我还以为是我的matoltlib和我的python版本不匹配后面发现真正原因其实是matplotlib 的 backend的默认渲染器是agg，agg是一个没有图形显示界面的终端，如果要图像正常显示，则需要切换为图形界面显示的终端TkAgg</p>
+<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>修改 backend 配置：</p>
+<pre><code>matplotlib.use(‘TkAgg’)
+</code></pre>
+<h1 id="原代码和修改后代码对比"><a href="#原代码和修改后代码对比" class="headerlink" title="原代码和修改后代码对比"></a>原代码和修改后代码对比</h1><h2 id="原代码："><a href="#原代码：" class="headerlink" title="原代码："></a>原代码：</h2><pre><code>import numpy as np
+
+import matplotlib.pyplot as plt
+
+x=np.linspace(0.0001,3,100)
+y=x**x
+plt.plot(x,y,&#39;r-&#39;,linewidth=3)
+plt.show()`
+</code></pre>
+<p>错误提示：</p>
+<pre><code>AttributeError: module &#39;backend_interagg&#39; has no attribute &#39;FigureCanvas&#39;. Did you mean: &#39;FigureCanvasAgg&#39;?
+</code></pre>
+<h2 id="修改后代码："><a href="#修改后代码：" class="headerlink" title="修改后代码："></a>修改后代码：</h2><pre><code>import numpy as np
+import matplotlib
+matplotlib.use(&#39;TkAgg&#39;)
+import matplotlib.pyplot as plt
+
+x=np.linspace(0.0001,3,100)
+y=x**x
+plt.plot(x,y,&#39;r-&#39;,linewidth=3)
+plt.show()
+</code></pre>
+<p>————————————————<br>版权声明：本文为CSDN博主「倚剑策马笑西风」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_51763547/article/details/126918669">https://blog.csdn.net/qq_51763547/article/details/126918669</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-“matplotlib.use(‘agg‘)“语句的作用机理"
   class="article article-type-post"
   itemscope
@@ -1219,227 +1445,6 @@ shutil.rmtree(dir_path)
 </code></pre>
 <p>如果你只想删除非空目录，你可以使用shutil模块的rmtree()函数。请注意，该函数可以删除目录和其中的所有文件和子目录。</p>
 <p>通过上述5种方法，你可以选择最适用于你的需求的方法来删除指定目录下的所有文件。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Python判断文件是否存在并且删除"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/10/13/Python%E5%88%A4%E6%96%AD%E6%96%87%E4%BB%B6%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8%E5%B9%B6%E4%B8%94%E5%88%A0%E9%99%A4/"
-    >Python判断文件是否存在并且删除</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/10/13/Python%E5%88%A4%E6%96%AD%E6%96%87%E4%BB%B6%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8%E5%B9%B6%E4%B8%94%E5%88%A0%E9%99%A4/" class="article-date">
-  <time datetime="2023-10-13T02:13:00.000Z" itemprop="datePublished">2023-10-13</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://www.python100.com/html/4XI33HW03WL0.html">https://www.python100.com/html/4XI33HW03WL0.html</a></p>
-<p>对于不熟悉Python文件操作的开发者来说，如何判断文件是否存在并删除是一件常见的问题。本文将会详细介绍Python如何判断文件是否存在，并通过多个方面介绍如何删除指定文件。</p>
-<p>一、Python如何判断文件是否存在？</p>
-<p>在Python中，使用os和os.path模块可以判断文件是否存在。下面是一个判断文件是否存在的代码：</p>
-<pre><code>import os
-
-if os.path.isfile(&#39;test.txt&#39;):
-    print(&quot;File exists&quot;)
-else:
-    print(&quot;File not exists&quot;)
-</code></pre>
-<p>上面的代码通过isfile()函数判断指定文件是否存在，如果存在则输出”File exists”，否则输出”File not exists”。</p>
-<pre><code>import os
-
-if os.path.exists(&#39;/path/to/file&#39;):
-    print(&#39;文件存在&#39;)
-else:
-    print(&#39;文件不存在&#39;)
-</code></pre>
-<p>以上代码中，/path/to/file是要检测的文件路径。如果文件存在，就会输出文件存在，否则输出文件不存在。</p>
-<p>二、Python如何删除文件？</p>
-<p>如果我们需要删除文件，可以使用Python的os模块中的remove函数。下面是一个删除文件的代码：</p>
-<pre><code>import os
-
-if os.path.isfile(&#39;test.txt&#39;):
-    os.remove(&#39;test.txt&#39;)
-    print(&quot;File removed&quot;)
-else:
-    print(&quot;File not exists&quot;)
-</code></pre>
-<p>上面的代码会检查文件是否存在，如果存在则删除文件，并输出”File removed”，否则输出”File not exists”。</p>
-<p>三、Python如何删除目录？</p>
-<p>如果我们需要删除整个目录，可以使用Python的os模块中的rmdir函数或者shutil模块中的rmtree函数。下面是一个使用rmdir函数删除目录的代码：</p>
-<pre><code>import os
-
-if os.path.isdir(&#39;test&#39;):
-    os.rmdir(&#39;test&#39;)
-    print(&quot;Directory removed&quot;)
-else:
-    print(&quot;Directory not exists&quot;)
-</code></pre>
-<p>上面的代码会检查目录是否存在，如果存在则删除目录，并输出”Directory removed”，否则输出”Directory not exists”。</p>
-<p>使用shutil模块的rmtree函数可以删除整个目录，包括目录下的所有文件和子目录。下面是一个使用rmtree函数删除目录的代码：</p>
-<pre><code>import shutil
-
-if os.path.exists(&#39;test&#39;):
-    shutil.rmtree(&#39;test&#39;)
-    print(&quot;Directory removed&quot;)
-else:
-    print(&quot;Directory not exists&quot;)
-</code></pre>
-<p>上面的代码会检查目录是否存在，如果存在则删除目录，并输出”Directory removed”，否则输出”Directory not exists”。</p>
-<p>四、Python如何删除特定类型的文件？</p>
-<p>如果我们需要删除特定类型的文件，可以通过glob模块来获取所有指定类型的文件，然后使用os模块中的remove函数删除它们。下面是一个删除所有txt文件的代码：</p>
-<pre><code>import glob, os
-
-for file in glob.glob(&quot;*.txt&quot;):
-    os.remove(file)
-    print(&quot;File removed: %s&quot; % file)
-</code></pre>
-<p>上面的代码会列出所有txt文件，并依次删除它们。删除每个文件时，代码会输出”File removed: file.txt”，其中file.txt是被删除的文件名。</p>
-<p>五、总结</p>
-<p>本文详细介绍了如何在Python中判断文件是否存在并删除。从多个方面介绍了如何删除文件和目录，以及如何删除特定类型的文件。为Python开发者提供了解决类似问题的思路和代码示例，希望本文对您有所帮助。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Python中查找文件是否存在"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/10/12/Python%E4%B8%AD%E6%9F%A5%E6%89%BE%E6%96%87%E4%BB%B6%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8/"
-    >Python中查找文件是否存在</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/10/12/Python%E4%B8%AD%E6%9F%A5%E6%89%BE%E6%96%87%E4%BB%B6%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8/" class="article-date">
-  <time datetime="2023-10-12T02:12:00.000Z" itemprop="datePublished">2023-10-12</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://www.python100.com/html/14E0N1LV1S5V.html">https://www.python100.com/html/14E0N1LV1S5V.html</a></p>
-<p>在Python编程中，我们经常需要查找文件是否存在。这个功能在文件处理、数据分析、系统管理等各个领域都非常有用。在本文中，我们将以Python作为中心，详细介绍如何使用Python来查找文件是否存在。</p>
-<p>一、使用os模块的方法</p>
-<p>Python的标准库中的os模块提供了一些方法来操作文件和目录。其中，os.path模块提供了一些判断文件或目录是否存在的函数。</p>
-<pre><code>import os
-
-# 检查文件是否存在
-def file_exists(path):
-    return os.path.exists(path)
-
-# 检查目录是否存在
-def directory_exists(path):
-    return os.path.isdir(path)
-</code></pre>
-<p>使用os.path.exists函数可以判断文件是否存在，返回值为True或False。如果文件存在，则返回True；如果文件不存在，则返回False。</p>
-<p>使用os.path.isdir函数可以判断目录是否存在，返回值同样为True或False。如果目录存在，则返回True；如果目录不存在，则返回False。</p>
-<p>二、使用glob模块的方法</p>
-<p>除了os模块，Python还提供了一个强大的文件和目录操作模块glob。glob模块可以使用通配符来查找文件。</p>
-<pre><code>import glob
-
-# 查找指定目录下的所有文件
-def find_files(directory, pattern):
-    return glob.glob(os.path.join(directory, pattern))
-
-# 判断文件是否存在
-def file_exists(path):
-    return len(find_files(os.path.dirname(path), os.path.basename(path))) &gt; 0
-</code></pre>
-<p>使用glob.glob函数可以根据通配符模式查找符合条件的文件。在find_files函数中，我们使用os.path.join函数将目录和文件名拼接在一起，然后使用glob.glob函数查找匹配的文件。</p>
-<p>在file_exists函数中，我们调用find_files函数查找指定文件并返回匹配到的文件列表，然后用len函数来判断文件列表的长度。如果长度大于0，则表示文件存在；如果长度等于0，则表示文件不存在。</p>
-<p>三、使用pathlib模块的方法</p>
-<p>Python 3.4及以上版本引入的pathlib模块提供了一种更简洁的方式来查找文件。</p>
-<pre><code>from pathlib import Path
-
-# 检查文件是否存在
-def file_exists(path):
-    return Path(path).is_file()
-
-# 检查目录是否存在
-def directory_exists(path):
-    return Path(path).is_dir()
-</code></pre>
-<p>在pathlib模块中，我们可以使用Path类的is_file方法来判断文件是否存在，使用is_dir方法来判断目录是否存在。这些方法返回值同样为True或False。</p>
-<p>四、其他注意事项<br>在使用Python查找文件是否存在时，还有一些注意事项需要注意：</p>
-<ol>
-<li><p>文件路径的表示：在使用文件路径时，我们需要注意使用不同的表示方式，如绝对路径、相对路径、转义字符等。</p>
-</li>
-<li><p>文件权限的问题：有时候文件存在，但是由于权限问题，我们无法操作或读取该文件。</p>
-</li>
-<li><p>文件名和文件后缀：有时候文件名或文件后缀的大小写问题可能导致文件找不到。</p>
-</li>
-</ol>
-<p>总结来说，使用Python查找文件是否存在需要借助os模块、glob模块或pathlib模块，根据具体的需求选择合适的方法。同时，在使用过程中还需注意文件路径、文件权限和文件名后缀等问题。</p>
-<p>希望本文对你理解Python中查找文件是否存在有所帮助！</p>
  
       <!-- reward -->
       

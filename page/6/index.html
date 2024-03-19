@@ -154,6 +154,375 @@
     
     
     <article
+  id="post-CentOS7安装最新版 gcc g++"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/11/18/CentOS7%E5%AE%89%E8%A3%85%E6%9C%80%E6%96%B0%E7%89%88%20gcc%20g++/"
+    >CentOS7安装最新版 gcc g++</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/11/18/CentOS7%E5%AE%89%E8%A3%85%E6%9C%80%E6%96%B0%E7%89%88%20gcc%20g++/" class="article-date">
+  <time datetime="2023-11-18T12:14:23.000Z" itemprop="datePublished">2023-11-18</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="提示"><a href="#提示" class="headerlink" title="提示"></a>提示</h1><p>在使用yum时遇到这个错误</p>
+<pre><code>Another app is currently holding the yum lock; waiting for it to exit…
+</code></pre>
+<p>运行命令</p>
+<pre><code>rm -f /var/run/yum.pid    //    强制关掉yum进程
+</code></pre>
+<h1 id="一、第一种方式"><a href="#一、第一种方式" class="headerlink" title="一、第一种方式"></a>一、第一种方式</h1><h2 id="1、先卸载以前的旧版本"><a href="#1、先卸载以前的旧版本" class="headerlink" title="1、先卸载以前的旧版本"></a>1、先卸载以前的旧版本</h2><p>因为centOS默认自带4点几版本的gcc 、g++编译器，是比较老的版本的，所以先把老版本卸载掉。</p>
+<p>1.1、 先获取root权限<br>1.2、 查看当前的安装版本号</p>
+<pre><code>rpm -q gcc
+</code></pre>
+<p>1.3、卸载掉旧版本</p>
+<pre><code>rpm -e [第二步查到的版本号]
+</code></pre>
+<p>1.4、第三步可能会遇到如下错误，卸载失败</p>
+<pre><code>error: Failed dependencies:
+    gcc = 4.4.7-23.el6 is needed by (installed) gcc-c++-4.4.7-23.el6.x86_64
+    gcc = 4.4.4 is needed by (installed) libtool-2.2.6-15.5.el6.x86_64
+</code></pre>
+<p>提示要卸载的版本有两个依赖，要先卸载掉这两个依赖（注意：下面要卸载的版本号要和上面提示的两个依赖的版本号一致）</p>
+<pre><code>rpm -e gcc-c++-4.4.7-23.el6.x86_64
+rpm -e libtool-2.2.6-15.5.el6.x86_64
+</code></pre>
+<p>将这两个依赖卸载完成之后再次执行第3步就可卸载成功</p>
+<p>1.5、验证卸载</p>
+<pre><code>[root@123 /]# gcc -v
+-bash: /usr/bin/gcc: No such file or directory
+[root@123 /]# g++ -v
+-bash: /usr/bin/g++: No such file or directory
+</code></pre>
+<p>这样即为卸载成功</p>
+<h2 id="2、安装最新版本的gcc-、g"><a href="#2、安装最新版本的gcc-、g" class="headerlink" title="2、安装最新版本的gcc 、g++"></a>2、安装最新版本的gcc 、g++</h2><p>在安装之前，可以先去查询一下目前gcc 、g++的版本以及区别，本文用了第11版</p>
+<p>2.1、在系统中安装存储库</p>
+<pre><code>yum install centos-release-scl
+</code></pre>
+<p>2.2、安装gcc和g++包（注意版本号：11版）</p>
+<pre><code>yum install -y devtoolset-11-gcc devtoolset-11-gcc-c++
+</code></pre>
+<p>2.3、配置安装好的包（注意版本号：11版）</p>
+<pre><code>scl enable devtoolset-11 bash
+</code></pre>
+<p>2.4、验证安装</p>
+<pre><code>[root@123 /]# gcc -v
+Using built-in specs.
+COLLECT_GCC=gcc
+COLLECT_LTO_WRAPPER=/opt/rh/devtoolset-11/root/usr/libexec/gcc/x86_64-redhat-linux/11/lto-wrapper
+Target: x86_64-redhat-linux
+Configured with: ../configure --enable-bootstrap --enable-languages=c,c++,fortran,lto --prefix=/opt/rh/devtoolset-11/root/usr --mandir=/opt/rh/devtoolset-11/root/usr/share/man --infodir=/opt/rh/devtoolset-11/root/usr/share/info --with-bugurl=http://bugzilla.redhat.com/bugzilla --enable-shared --enable-threads=posix --enable-checking=release --enable-multilib --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-gcc-major-version-only --with-linker-hash-style=gnu --with-default-libstdcxx-abi=gcc4-compatible --enable-plugin --enable-initfini-array --with-isl=/builddir/build/BUILD/gcc-11.2.1-20210728/obj-x86_64-redhat-linux/isl-install --enable-gnu-indirect-function --with-tune=generic --with-arch_32=x86-64 --build=x86_64-redhat-linux
+Thread model: posix
+Supported LTO compression algorithms: zlib
+gcc version 11.2.1 20210728 (Red Hat 11.2.1-1) (GCC)
+
+[root@123 /]# g++ -v
+Using built-in specs.
+COLLECT_GCC=g++
+COLLECT_LTO_WRAPPER=/opt/rh/devtoolset-11/root/usr/libexec/gcc/x86_64-redhat-linux/11/lto-wrapper
+Target: x86_64-redhat-linux
+Configured with: ../configure --enable-bootstrap --enable-languages=c,c++,fortran,lto --prefix=/opt/rh/devtoolset-11/root/usr --mandir=/opt/rh/devtoolset-11/root/usr/share/man --infodir=/opt/rh/devtoolset-11/root/usr/share/info --with-bugurl=http://bugzilla.redhat.com/bugzilla --enable-shared --enable-threads=posix --enable-checking=release --enable-multilib --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-gcc-major-version-only --with-linker-hash-style=gnu --with-default-libstdcxx-abi=gcc4-compatible --enable-plugin --enable-initfini-array --with-isl=/builddir/build/BUILD/gcc-11.2.1-20210728/obj-x86_64-redhat-linux/isl-install --enable-gnu-indirect-function --with-tune=generic --with-arch_32=x86-64 --build=x86_64-redhat-linux
+Thread model: posix
+Supported LTO compression algorithms: zlib
+gcc version 11.2.1 20210728 (Red Hat 11.2.1-1) (GCC) 
+</code></pre>
+<p>2.5、配置环境变量</p>
+<p>因为不配置环境变量的话，每打开一个客户端，就需要执行一次上面的第三步配置安装包</p>
+<pre><code>//先查看gcc和g++安装位置
+[root@123 /]# which gcc
+/opt/rh/devtoolset-11/root/usr/bin/gcc
+[root@123 /]# which g++
+/opt/rh/devtoolset-11/root/usr/bin/g++
+</code></pre>
+<p>编辑文件</p>
+<pre><code>vim /etc/profile
+</code></pre>
+<p>在文件后面添加下面两行内容：</p>
+<pre><code>export GCC_HOME=/opt/rh/devtoolset-11/root/usr
+export PATH=$&#123;GCC_HOME&#125;/bin:$PATH
+</code></pre>
+<p>重新加载文件</p>
+<pre><code>source /etc/profile
+</code></pre>
+<h1 id="二、第二种方式：使用老版本编译新版本"><a href="#二、第二种方式：使用老版本编译新版本" class="headerlink" title="二、第二种方式：使用老版本编译新版本"></a>二、第二种方式：使用老版本编译新版本</h1><p>1、查看系统中有没有老版本</p>
+<p>centOS自带的是4点几的版本 : gcc -v 、g++ -v 两个命令查看，我的是4.8.5版本，如果有，跳到3、官网下载想要安装的gcc版本</p>
+<p>2、先用yum安装老版本gcc、g++</p>
+<pre><code>sudo yum install -y gcc                //安装gcc
+sudo yum install -y gcc-c++            //安装g++
+</code></pre>
+<p>3、官网下载想要安装的gcc版本</p>
+<p><a target="_blank" rel="noopener" href="http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/">http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/</a></p>
+<p>4、安装gcc需要的其他库</p>
+<p>mpfr、mpc、gmp三个库 编译之前还需准备以下：</p>
+<p>4.1、安装m4库</p>
+<pre><code>sudo yum install -y m4 //首先安装m4，否则configure gmp库时会报错**
+</code></pre>
+<p>4.2、安装以下三个库</p>
+<p><strong>一定要按照这三个顺序安装</strong></p>
+<p>4.2.1、gmp库  </p>
+<p>下载地址：<a target="_blank" rel="noopener" href="https://gmplib.org/download/gmp/gmp-6.2.1.tar.xz">https://gmplib.org/download/gmp/gmp-6.2.1.tar.xz</a></p>
+<pre><code>tar -Jxvf gmp-6.2.1.tar.xz    //解压
+cd gmp-6.2.1                //进入
+./configure --prefix=/usr      //指定编译完后要安装的路径，可以自定，示例用/usr
+make -j4                    //编译
+sudo make install            //安装
+</code></pre>
+<p>4.2.2、mpfr库 </p>
+<p>下载地址：<a target="_blank" rel="noopener" href="https://www.mpfr.org/mpfr-current/mpfr-4.2.0.tar.gz">https://www.mpfr.org/mpfr-current/mpfr-4.2.0.tar.gz</a></p>
+<pre><code>tar -zxvf mpfr-4.2.0.tar.gz    //解压
+cd mpfr-4.2.0                //进入
+./configure --prefix=/usr      //指定编译完后要安装的路径，可以自定，示例用/usr
+make -j4                    //编译
+sudo make install            //安装
+</code></pre>
+<p>4.2.3、mpc库 </p>
+<p>下载地址：<a target="_blank" rel="noopener" href="https://mirrors.aliyun.com/gnu/mpc/mpc-1.3.1.tar.gz?spm=a2c6h.25603864.0.0.60dd1a8cVMdT9B">https://mirrors.aliyun.com/gnu/mpc/mpc-1.3.1.tar.gz?spm=a2c6h.25603864.0.0.60dd1a8cVMdT9B</a><br>    tar -zxvf mpc-1.3.1.tar.gz    //解压<br>    cd     mpc-1.3.1                //进入<br>    ./configure –prefix=/usr      //指定编译完后要安装的路径，可以自定，示例用/usr<br>    make -j4                    //编译<br>    sudo make install            //安装</p>
+<p>5、编译安装gcc、g++</p>
+<p>编译gcc时需要cc1，系统中会有，但是编译时会报错找不到</p>
+<p>先到根目录下找：</p>
+<pre><code>cd /
+sudo find -name cc1
+</code></pre>
+<p>我的cc1在 /usr/libexec/gcc/x86_64-redhat-linux/4.8.2/cc1</p>
+<p>创建软连接到/usr/bin目录下</p>
+<pre><code>sudo ln -s /usr/libexec/gcc/x86_64-redhat-linux/4.8.2/cc1 /usr/bin/cc1
+</code></pre>
+<p>编译过程中可能会遇到这个错误，找不到libmpfr.so.6 这个库，但是系统中会有，所以要先创建一个软连接</p>
+<p>去根目录查找</p>
+<pre><code>cd /
+sudo find -name libmpfr.so.6 
+</code></pre>
+<p>我的这个文件在/usr/lib目录下</p>
+<p>在编译前先创建一个软连接到/usr/lib64目录下</p>
+<pre><code>//这个软连接一定要创建在/usr/lib64目录下
+sudo ln -s /usr/lib/libmpfr.so.6 /usr/lib64/libmpfr.so.6    
+</code></pre>
+<p>编译安装gcc、g++</p>
+<pre><code>tar -zxvf gcc-12.2.0.tar.gz     //解压
+cd gcc-12.2.0/                    //进入
+sudo ./configure --disable-multilib --prefix=/usr        
+//生成makefile，--prefix指定编译完之后的安装路径
+// /usr表示安装之后的gcc、g++在/usr/bin里面
+//如果路径中有CMakeLists.txt，则也可以使用cmake生成makefile
+//cmake . -G &quot;Unix Makefiles&quot; -DCMAKE_INSTALL_PREFIX=/usr
+//--enable-multilib 允许32位编译，如果系统中有32位的环境，一般不需要
+//--disable-multilib 只使用64位编译
+sudo make -j4                    //编译
+</code></pre>
+<p>在执行sudo make -j4时，我这里出现了一个报错</p>
+<p>这是由于在编译时内存不足造成的，</p>
+<p>5.1、如果是虚拟机，可以扩大虚拟机的内存</p>
+<p>5.2、创建swap分区（推荐）<br>建议看这篇文章<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44796670/article/details/121234446">https://blog.csdn.net/weixin_44796670/article/details/121234446</a><br>之后再执行sudo make -j4<br>编译安装完之后根据链接文章删除swap分区即可</p>
+<p>5.3、或者将sudo make -j4改为sudo make，减少同时进行的任务数量，但是编译时间会更长</p>
+<p>等待编译完成，时间比较长！！！</p>
+<p>6、删除创建的软连接，卸载yum安装的gcc、g++</p>
+<pre><code>//删除创建的软连接
+sudo rm -rf /usr/bin/cc1
+sudo rm -rf /usr/lib64/libmpfr.so.6
+
+//卸载yum安装的gcc、g++
+sudo yum remove gcc gcc-c++
+
+//gcc和g++安装到/usr/bin目录中了
+sudo make install 
+</code></pre>
+<p>————————————————<br>版权声明：本文为CSDN博主「cppbugboy」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_45316173/article/details/122018354">https://blog.csdn.net/qq_45316173/article/details/122018354</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/g/" rel="tag">g++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gcc/" rel="tag">gcc</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-Centos7下安装Redis5"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/11/17/Centos7%E4%B8%8B%E5%AE%89%E8%A3%85Redis5/"
+    >Centos7下安装Redis5</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/11/17/Centos7%E4%B8%8B%E5%AE%89%E8%A3%85Redis5/" class="article-date">
+  <time datetime="2023-11-17T13:14:23.000Z" itemprop="datePublished">2023-11-17</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><p>在安装Redis之前，请确保已经使用yum安装了以下基础组件：</p>
+<pre><code>make
+gcc
+gcc-c++
+kernel-devel
+</code></pre>
+<h1 id="Redis的安装"><a href="#Redis的安装" class="headerlink" title="Redis的安装#"></a>Redis的安装#</h1><p>开始下载Redis并进行编译安装：</p>
+<pre><code>cd /usr/local/redis
+wget http://download.redis.io/releases/redis-5.0.14.tar.gz
+tar -zxvf redis-5.0.14.tar.gz
+cd redis-5.0.14
+make &amp;&amp; make PREFIX=/usr/local/redis install
+
+mkdir /usr/local/redis/etc/
+cp redis.conf /usr/local/redis/etc/
+
+cd ..
+mkdir data
+#ln -s /usr/local/redis-5.0.14 /usr/local/redis
+</code></pre>
+<p>把Redis的sbin目录加入PATH：</p>
+<pre><code># vim /etc/profile
+
+export REDIS_HOME=/usr/local/redis
+export PATH=$PATH:$&#123;REDIS_HOME&#125;/bin
+
+# source /etc/profile
+</code></pre>
+<p>至此，Redis已经安装完毕。</p>
+<h1 id="修改redis-conf"><a href="#修改redis-conf" class="headerlink" title="修改redis.conf"></a>修改redis.conf</h1><pre><code>69行：
+#bind 127.0.0.1
+
+88行：
+protected-mode no
+
+136行：
+daemonize yes
+
+171行：
+logfile &quot;/usr/local/redis/data/redis_6379.log&quot;
+
+263行：
+dir /usr/local/redis/data
+
+507行：
+requirepass Your@Password
+
+699行：
+appendonly yes
+</code></pre>
+<h1 id="启动脚本"><a href="#启动脚本" class="headerlink" title="启动脚本"></a>启动脚本</h1><p>添加服务</p>
+<pre><code>vi /usr/lib/systemd/system/redis.service
+</code></pre>
+<p>配置如下：</p>
+<pre><code># 服务的说明
+[Unit]
+# 描述服务
+Description=redis
+# 描述服务类别
+After=network.target
+
+# 服务运行参数的设置
+[Service]
+# 后台运行的形式
+Type=forking
+# 启动命令
+ExecStart=/usr/local/redis/bin/redis-server /usr/local/redis/etc/redis.conf
+# 停止命令
+ExecStop=/usr/local/redis/bin/redis-cli shutdown
+# 自动重启
+Restart=always
+
+# 服务安装的设置
+[Install]
+# 用户的模式
+WantedBy=multi-user.target
+</code></pre>
+<p>服务启动关停：</p>
+<pre><code>systemctl daemon-reload
+# systemctl enable/disable xxx 指令设置/取消开机启动
+systemctl enable redis
+systemctl start redis
+systemctl stop redis
+systemctl status redis
+</code></pre>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><p>直接</p>
+<pre><code>redis-cli ping
+</code></pre>
+<p>报错如下：</p>
+<pre><code>NOAUTH Authentication required
+</code></pre>
+<p>正确使用：</p>
+<pre><code>redis-cli
+auth Your@Password
+</code></pre>
+<h1 id="启动和停止"><a href="#启动和停止" class="headerlink" title="启动和停止"></a>启动和停止</h1><p>使用</p>
+<pre><code>ps -ef | grep redis
+</code></pre>
+<p>去查看redis的进程号，然后直接</p>
+<pre><code>kill -9 redis的进程号
+</code></pre>
+<p>它就可以停止了</p>
+<p>然后执行redis-server就可以启动了</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-MQTT网关连接各类工业物联设备，实现数据传输与控制"
   class="article article-type-post"
   itemscope
@@ -618,162 +987,6 @@ custom_channels:
     <footer class="article-footer">
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-python更换国内镜像源三种实用方法"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/11/12/python%E6%9B%B4%E6%8D%A2%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F%E6%BA%90%E4%B8%89%E7%A7%8D%E5%AE%9E%E7%94%A8%E6%96%B9%E6%B3%95/"
-    >python更换国内镜像源三种实用方法</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/11/12/python%E6%9B%B4%E6%8D%A2%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F%E6%BA%90%E4%B8%89%E7%A7%8D%E5%AE%9E%E7%94%A8%E6%96%B9%E6%B3%95/" class="article-date">
-  <time datetime="2023-11-12T13:14:23.000Z" itemprop="datePublished">2023-11-12</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="方法1：（永久更改）"><a href="#方法1：（永久更改）" class="headerlink" title="方法1：（永久更改）"></a>方法1：（永久更改）</h1><p>在python的命令提示符中运行以下语句，该条语句将pip的下载源永久更改为某个镜像站，这里以清华大学开源镜像站为例：</p>
-<pre><code>pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple/
-</code></pre>
-<h1 id="方法2：（永久更改）"><a href="#方法2：（永久更改）" class="headerlink" title="方法2：（永久更改）"></a>方法2：（永久更改）</h1><p>windows环境下，在用户目录中创建一个文件夹，该文件夹的命名为pip；在该pip文件夹中新建一个文件pip.ini，pip.ini的内容如下：（完整路径：C:\Users\用户名\pip\pip.ini）</p>
-<pre><code>[global]
-index-url=https://pypi.tuna.tsinghua.edu.cn/simple 
-[install]  
-trusted-host=pypi.tuna.tsinghua.edu.cn
-disable-pip-version-check = true  
-timeout = 6000
-</code></pre>
-<h1 id="方法3：（临时性使用）"><a href="#方法3：（临时性使用）" class="headerlink" title="方法3：（临时性使用）"></a>方法3：（临时性使用）</h1><p>在安装库的时候，临时需要用到某个镜像，这里以清华大学镜像为例下载pandas库：</p>
-<pre><code>pip install pandas -i https://pypi.tuna.tsinghua.edu.cn/simple/
-</code></pre>
-<p>备注：pip下载源常用的国内镜像如下：</p>
-<pre><code>豆瓣：http://pypi.douban.com/simple/
-阿里云：http://mirrors.aliyun.com/pypi/simple/
-华为云：https://repo.huaweicloud.com/repository/pypi/simple
-清华大学：https://pypi.tuna.tsinghua.edu.cn/simple
-中科大：https://pypi.mirrors.ustc.edu.cn/simple/
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Ubuntu用户列表：如何查看系统用户列表及其详细信息"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/11/11/Ubuntu%E7%94%A8%E6%88%B7%E5%88%97%E8%A1%A8%EF%BC%9A%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E7%B3%BB%E7%BB%9F%E7%94%A8%E6%88%B7%E5%88%97%E8%A1%A8%E5%8F%8A%E5%85%B6%E8%AF%A6%E7%BB%86%E4%BF%A1%E6%81%AF/"
-    >Ubuntu用户列表：如何查看系统用户列表及其详细信息</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/11/11/Ubuntu%E7%94%A8%E6%88%B7%E5%88%97%E8%A1%A8%EF%BC%9A%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E7%B3%BB%E7%BB%9F%E7%94%A8%E6%88%B7%E5%88%97%E8%A1%A8%E5%8F%8A%E5%85%B6%E8%AF%A6%E7%BB%86%E4%BF%A1%E6%81%AF/" class="article-date">
-  <time datetime="2023-11-11T13:14:23.000Z" itemprop="datePublished">2023-11-11</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://www.python100.com/html/91575.html">https://www.python100.com/html/91575.html</a></p>
-<p>更新：2023-05-19 10:46</p>
-<p>在Linux系统中，管理用户和组是一个很重要的任务之一。在Ubuntu系统中，用户和组信息存储在/etc/passwd和/etc/group文件中。在本文中，我们将探讨如何在Ubuntu系统中查看用户列表及其详细信息。</p>
-<p>一、查看系统用户列表</p>
-<p>Ubuntu系统中默认有许多已创建的系统用户，例如root用户、guest用户等。我们需要查看系统中所有的用户列表，以确定是否有非法用户或潜在安全隐患。</p>
-<p>要查看系统中所有的用户列表，打开终端并输入以下命令：</p>
-<pre><code>cat /etc/passwd | cut -d&quot;:&quot; -f1
-</code></pre>
-<p>该命令将显示系统上所有用户的用户名。输出结果可能会很长，如果需要分页显示，可以使用以下命令：</p>
-<pre><code>cat /etc/passwd | cut -d&quot;:&quot; -f1 | less
-</code></pre>
-<p>现在你可以使用箭头键和Page Up/Page Down键在列表中导航。</p>
-<p>二、查看单个用户详细信息</p>
-<p>有时我们需要获悉一个特定用户的详细信息，例如UID、GID、主目录路径和Shell类型等等。可以使用以下命令来查看单个用户的详细信息：</p>
-<pre><code>id &lt;用户名&gt;
-</code></pre>
-<p>例如，我们想查看用户“ubuntu”的详细信息，可以输入以下命令：</p>
-<pre><code>id ubuntu
-</code></pre>
-<p>该命令将显示有关用户“ubuntu”的所有详细信息，包括UID、GID、组成员身份以及主目录和Shell类型。</p>
-<p>三、查看所有用户详细信息</p>
-<p>有时我们需要查看系统中所有用户的详细信息。可以使用以下命令获得系统中所有用户的完整信息列表：</p>
-<pre><code>cat /etc/passwd
-</code></pre>
-<p>该命令会在终端中显示所有系统用户的详细信息列表，包括每个用户的用户名、密码、UID、GID、用户全名、主目录路径和Shell类型等信息。</p>
-<p>如果需要对列表进行分页显示，可以使用以下命令：</p>
-<pre><code>cat /etc/passwd | less
-</code></pre>
-<p>现在你可以使用箭头键和Page Up/Page Down键在列表中浏览。如果要退出列表，请按“q”键。</p>
-<p>四、总结</p>
-<p>通过本文，我们学习了如何在Ubuntu系统中查看系统用户列表及其详细信息。我们可以使用不同的命令来查看用户列表、单个用户的详细信息以及系统中所有用户的详细信息列表。这些技巧对于用户管理和安全意识非常有用。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Ubuntu/" rel="tag">Ubuntu</a></li></ul>
 
     </footer>
   </div>
