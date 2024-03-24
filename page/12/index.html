@@ -154,6 +154,116 @@
     
     
     <article
+  id="post-Python删除目录下的所有文件"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/10/14/Python%E5%88%A0%E9%99%A4%E7%9B%AE%E5%BD%95%E4%B8%8B%E7%9A%84%E6%89%80%E6%9C%89%E6%96%87%E4%BB%B6/"
+    >Python删除目录下的所有文件</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/10/14/Python%E5%88%A0%E9%99%A4%E7%9B%AE%E5%BD%95%E4%B8%8B%E7%9A%84%E6%89%80%E6%9C%89%E6%96%87%E4%BB%B6/" class="article-date">
+  <time datetime="2023-10-14T02:14:00.000Z" itemprop="datePublished">2023-10-14</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p><a target="_blank" rel="noopener" href="https://www.python100.com/html/4XI33HW03WL0.html">https://www.python100.com/html/4XI33HW03WL0.html</a></p>
+<p>一、Python删除目录及目录下文件</p>
+<pre><code>import shutil
+import os
+
+dir_path = &#39;/path/to/directory&#39;
+
+# 删除目录
+shutil.rmtree(dir_path)
+</code></pre>
+<p>当你想要删除一个目录以及里面所有的文件时，你可以使用shutil模块中的rmtree()函数。该函数可以删除整个目录，包括其所有的文件和子目录。这是最便捷的方法，但是请确保你真的需要这么做。</p>
+<p>二、Python删除目录中所有内容</p>
+<pre><code>import os
+
+dir_path = &#39;/path/to/directory&#39;
+
+# 删除目录中所有的文件
+for filename in os.listdir(dir_path):
+    file_path = os.path.join(dir_path, filename)
+    if os.path.isfile(file_path) or os.path.islink(file_path):
+        os.unlink(file_path)
+    elif os.path.isdir(file_path):
+        shutil.rmtree(file_path)
+
+# 删除目录本身
+os.rmdir(dir_path)
+</code></pre>
+<p>如果你想要删除目录中所有内容，但是保留目录本身，你可以使用os模块中listdir()和unlink()函数来遍历该目录中的所有文件并逐个删除。在删除文件夹之前，必须先删除所有文件和子目录。</p>
+<p>三、Python os删除目录</p>
+<pre><code>import os
+
+dir_path = &#39;/path/to/directory&#39;
+
+# 删除目录
+os.removedirs(dir_path)
+</code></pre>
+<p>os.removedirs()函数可以删除指定的目录。如果该目录是一个空目录，则可以直接删除它。如果该目录不是空目录，则需要递归地删除其所有子目录和文件。</p>
+<p>四、Python删除指定目录下的文件</p>
+<pre><code>import os
+
+dir_path = &#39;/path/to/directory&#39;
+
+# 删除指定格式的文件
+for filename in os.listdir(dir_path):
+    if filename.endswith(&#39;.txt&#39;):
+        os.unlink(os.path.join(dir_path, filename))
+</code></pre>
+<p>如果你只想删除指定格式的文件，你可以使用listdir()和endswith()函数来列出该目录中满足指定格式的所有文件，并逐个删除。</p>
+<p>五、Python删除非空目录</p>
+<pre><code>import shutil
+
+dir_path = &#39;/path/to/directory&#39;
+
+# 删除非空目录
+shutil.rmtree(dir_path)
+</code></pre>
+<p>如果你只想删除非空目录，你可以使用shutil模块的rmtree()函数。请注意，该函数可以删除目录和其中的所有文件和子目录。</p>
+<p>通过上述5种方法，你可以选择最适用于你的需求的方法来删除指定目录下的所有文件。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-Python判断文件是否存在并且删除"
   class="article article-type-post"
   itemscope
@@ -618,107 +728,6 @@ pip install PyQtWebEngine -i https://pypi.tuna.tsinghua.edu.cn/simple
     <footer class="article-footer">
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-MyBatis-Plus 通用IService使用时的一些方法"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/10/08/MyBatis-Plus%20%E9%80%9A%E7%94%A8IService%E4%BD%BF%E7%94%A8%E6%97%B6%E7%9A%84%E4%B8%80%E4%BA%9B%E6%96%B9%E6%B3%95/"
-    >MyBatis-Plus 通用IService使用时的一些方法</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/10/08/MyBatis-Plus%20%E9%80%9A%E7%94%A8IService%E4%BD%BF%E7%94%A8%E6%97%B6%E7%9A%84%E4%B8%80%E4%BA%9B%E6%96%B9%E6%B3%95/" class="article-date">
-  <time datetime="2023-10-08T02:08:00.000Z" itemprop="datePublished">2023-10-08</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="普通方法"><a href="#普通方法" class="headerlink" title="普通方法:"></a>普通方法:</h1><pre><code>//查询所有
-userService .list();
-//根据查询条件查询一个返回实体类对象
-userService.getOne(lambdaQueryWrapper);
-//分页查询所有
-userService.page(pageInfo,lambdaQueryWrapper);
-//查询数量
-userService .count();
-//根据ID查list集合
-userService .listByIds();
-//根据ID删除
-userService .removeById();
-userService .removeByIds();
-//修改
-userService .update();
-userMapper.updateById(实体类);
-//新增
-userService .save();
-userMapper.insert(实体类);
-//批量新增
-userService .saveBatch(集合);
-</code></pre>
-<h1 id="getOne"><a href="#getOne" class="headerlink" title="getOne()"></a>getOne()</h1><p>这个是方法返回结果不止一条则会抛出异常，如果想默认取第一条结果，可以给这方法传第二个参数为false。</p>
-<pre><code>User one = userService.getOne(Wrappers.&lt;User&gt;lambdaQuery().eq(User::getAge, 11),false);
-</code></pre>
-<h1 id="saveOrUpdateBatch"><a href="#saveOrUpdateBatch" class="headerlink" title="saveOrUpdateBatch()"></a>saveOrUpdateBatch()</h1><p>批量新增或者修改方法,判断ID是否存在，如果ID不存在执行新增，如果ID存在先执行查询语句，查询结果为空新增，否则修改。</p>
-<pre><code>boolean b = userService.saveOrUpdateBatch(users);
-</code></pre>
-<h1 id="传值为null的时候不查询"><a href="#传值为null的时候不查询" class="headerlink" title="传值为null的时候不查询"></a>传值为null的时候不查询</h1><p>如果传值为null的时候不查询，有值才查询怎么做？<br>这里用到了hutool的ObjectUtil.isNotEmpty来判非空</p>
-<pre><code>//查询时间范围
-LambdaQueryWrapper&lt;ProductKhtm&gt; productKhtmLambdaQueryWrapper = new LambdaQueryWrapper&lt;&gt;();
-productKhtmLambdaQueryWrapper.between(
-ObjectUtil.isNotEmpty(productKhtmhz.getParams().get(&quot;endDbilldate&quot;)),
-ProductKhtm::getDbilldate,
-productKhtmhz.getParams().get(&quot;beginDbilldate&quot;),
-productKhtmhz.getParams().get(&quot;endDbilldate&quot;)
-);
-
-productKhtmService.list(productKhtmLambdaQueryWrapper);
-</code></pre>
-<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><p>如果sql语句后面想补充一句sql语句应该怎么办？用last</p>
-<pre><code>lambdaQueryWrapper.last(&quot;OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY&quot;);
-</code></pre>
-<p>注意这个自定义慎用，会有sql注入的风险</p>
-<p>如果sql查询条件全部都想自定义怎么办？</p>
-<pre><code>lambdaQueryWrapper.apply(&quot;YEAR(tijiao_time) = &#123;0&#125;&quot;,year);
-</code></pre>
-<p>注意这个自定义慎用，会有sql注入的风险</p>
-<p>————————————————<br>版权声明：本文为CSDN博主「z子豪」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/a864034462/article/details/123980761">https://blog.csdn.net/a864034462/article/details/123980761</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li></ul>
 
     </footer>
   </div>

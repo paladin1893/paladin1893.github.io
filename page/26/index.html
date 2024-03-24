@@ -154,6 +154,114 @@
     
     
     <article
+  id="post-CentOS7下的GItLab安装与删除"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/07/22/CentOS7%E4%B8%8B%E7%9A%84GItLab%E5%AE%89%E8%A3%85%E4%B8%8E%E5%88%A0%E9%99%A4/"
+    >CentOS7下的GitLab安装与删除</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/07/22/CentOS7%E4%B8%8B%E7%9A%84GItLab%E5%AE%89%E8%A3%85%E4%B8%8E%E5%88%A0%E9%99%A4/" class="article-date">
+  <time datetime="2023-07-22T04:04:33.000Z" itemprop="datePublished">2023-07-22</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="一-GitLab-安装"><a href="#一-GitLab-安装" class="headerlink" title="一. GitLab 安装"></a>一. GitLab 安装</h1><h2 id="1-安装和配置必须的依赖项"><a href="#1-安装和配置必须的依赖项" class="headerlink" title="1. 安装和配置必须的依赖项"></a>1. 安装和配置必须的依赖项</h2><pre><code>sudo yum install -y curl policycoreutils-python openssh-server perl
+sudo systemctl enable sshd
+sudo systemctl start sshd
+sudo firewall-cmd --permanent --add-service=http
+sudo firewall-cmd --permanent --add-service=https
+sudo systemctl reload firewalld
+
+sudo yum install postfix
+sudo systemctl enable postfix
+sudo systemctl start postfix
+</code></pre>
+<h2 id="2-下载-安装极狐GitLab"><a href="#2-下载-安装极狐GitLab" class="headerlink" title="2. 下载/安装极狐GitLab"></a>2. 下载/安装极狐GitLab</h2><p>配置极狐GitLab 软件源镜像。</p>
+<ul>
+<li><p>旗舰版、官网教程</p>
+<p>  curl -fsSL <a target="_blank" rel="noopener" href="https://packages.gitlab.cn/repository/raw/scripts/setup.sh">https://packages.gitlab.cn/repository/raw/scripts/setup.sh</a> | /bin/bash<br>  sudo EXTERNAL_URL=”<a href="https://192.168.10.33:9998&quot;">https://192.168.10.33:9998&quot;</a> yum install -y gitlab-jh</p>
+</li>
+<li><p>社区版，CSDN参考</p>
+<p>  curl <a target="_blank" rel="noopener" href="https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh">https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh</a> | sudo bash<br>  sudo EXTERNAL_URL=”<a href="http://192.168.10.33:9998&quot;">http://192.168.10.33:9998&quot;</a> yum install -y gitlab-ce</p>
+<p>  gitlab-ctl reconfigure</p>
+<p>  gitlab-ctl start || gitlab-ctl restart</p>
+</li>
+</ul>
+<h2 id="4-设置开机自启动"><a href="#4-设置开机自启动" class="headerlink" title="4 设置开机自启动"></a>4 设置开机自启动</h2><pre><code>sudo systemctl enable gitlab-runsvdir.service
+</code></pre>
+<h2 id="5-切换目录使用命令进入控制台修改用户状态"><a href="#5-切换目录使用命令进入控制台修改用户状态" class="headerlink" title="5.切换目录使用命令进入控制台修改用户状态"></a>5.切换目录使用命令进入控制台修改用户状态</h2><pre><code>1) 切换到相应路径下: cd /opt/gitlab/bin/
+2) 打开控制台: sudo gitlab-rails console -e production
+3) 查询用户账号信息并赋值给u: u=User.where(id:1).first
+4) 设置该用户名的密码: u.password=&#39;Demo9999&#39;
+5) 确认密码: u.password_confirmation=&#39;Demo9999&#39;
+6) 保存信息： u.save 
+7) 退出: exit
+</code></pre>
+<h1 id="二-GitLab-卸载"><a href="#二-GitLab-卸载" class="headerlink" title="二. GitLab 卸载"></a>二. GitLab 卸载</h1><h2 id="1、停止-gitlab服务"><a href="#1、停止-gitlab服务" class="headerlink" title="1、停止 gitlab服务"></a>1、停止 gitlab服务</h2><pre><code>gitlab-ctl stop
+</code></pre>
+<h2 id="2、卸载-gitlab（社区版）"><a href="#2、卸载-gitlab（社区版）" class="headerlink" title="2、卸载 gitlab（社区版）"></a>2、卸载 gitlab（社区版）</h2><pre><code>rpm -e gitlab-ce 或者  yum remove gitlab-ce
+</code></pre>
+<h2 id="3、查看-gitlab-进程"><a href="#3、查看-gitlab-进程" class="headerlink" title="3、查看 gitlab 进程"></a>3、查看 gitlab 进程</h2><pre><code>ps aux | grep gitlab 
+</code></pre>
+<h2 id="4、杀掉gitlab-service进程，该进程与runsvdir相关（带有好多…………-的进程）"><a href="#4、杀掉gitlab-service进程，该进程与runsvdir相关（带有好多…………-的进程）" class="headerlink" title="4、杀掉gitlab service进程，该进程与runsvdir相关（带有好多…………. 的进程）"></a>4、杀掉gitlab service进程，该进程与runsvdir相关（带有好多…………. 的进程）</h2><pre><code>kill -9 xxxxxx
+</code></pre>
+<p>其实就是强杀/opt/gitlab/service进程</p>
+<p>如果还不知道怎么杀，就重启服务器也行。</p>
+<h2 id="5、查找并删除所有包含-gitlab-的遗留文件"><a href="#5、查找并删除所有包含-gitlab-的遗留文件" class="headerlink" title="5、查找并删除所有包含 gitlab 的遗留文件"></a>5、查找并删除所有包含 gitlab 的遗留文件</h2><pre><code>find / -name *gitlab*|xargs rm -rf  
+find / -name gitlab |xargs rm -rf 
+
+find / -name postgres |xargs rm -rf 
+
+删除gitlab-ctl uninstall时自动在root下备份的配置文件（ls /root/gitlab* 看看有没有，有也删除）
+</code></pre>
+<h2 id="6、根据上面列出来的目录清单主要删除一下目录"><a href="#6、根据上面列出来的目录清单主要删除一下目录" class="headerlink" title="6、根据上面列出来的目录清单主要删除一下目录"></a>6、根据上面列出来的目录清单主要删除一下目录</h2><pre><code>rm -rf /etc/gitlab
+rm -rf /opt/gitlab
+rm -rf /log/gitlab
+rm -rf /var/opt/gitlab
+rm -rf /var/log/gitlab
+rm -rf /run/gitlab
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GitLab/" rel="tag">GitLab</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-WinRar删除文件有妙用"
   class="article article-type-post"
   itemscope
@@ -518,61 +626,6 @@
 <p>3</p>
 <p>但总体来说需谨慎分析市场规模，并考虑市场规则变化和政策不完善的投资风险。</p>
 <p>转载请注明来源：光储充一体化电站</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%94%B5%E5%8A%9B/" rel="tag">电力</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-IEEE-33节点配电网"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/07/16/IEEE-33%E8%8A%82%E7%82%B9%E9%85%8D%E7%94%B5%E7%BD%91/"
-    >IEEE-33节点配电网</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/07/16/IEEE-33%E8%8A%82%E7%82%B9%E9%85%8D%E7%94%B5%E7%BD%91/" class="article-date">
-  <time datetime="2023-07-16T01:03:09.000Z" itemprop="datePublished">2023-07-16</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="回答1："><a href="#回答1：" class="headerlink" title="回答1："></a>回答1：</h1><p>IEEE-33节点配电网是一种典型的低压配电网结构，是电力系统中最常见的一种网络形式。该网络包括33个节点，其中包括三个变压器节点，30个负荷节点以及6个发电节点。该低压配电网结构通常被用于用电负荷较小的城市、乡村和工业园区的配电系统中。<br>IEEE-33节点配电网的设计理念是建立一个高效、稳定和经济的电力系统，以满足用户对电能的需求。其特点是节约空间、成本低廉、可靠性高以及维护成本低。这种网络结构具有较好的电压控制能力和电流平衡能力，可以满足用户对电力质量的要求。<br>在该低压配电网结构中，用户可以根据自己的需求选择不同的供电方式，包括单相电、双相电和三相电。同时，该网络还支持多种负荷类型，包括住宅、商业、工业和公共事业等不同用电负荷类型，可以更好地满足用户的要求。<br>总之，IEEE-33节点配电网作为一种低压配电网结构，具有版本性能、高效可靠、成本低廉等优点，可以为城市、乡村和工业园区的电力供应提供稳健的保障和支持。</p>
-<h1 id="回答2："><a href="#回答2：" class="headerlink" title="回答2："></a>回答2：</h1><p>IEEE-33节点配电网是一个经典的电力系统仿真测试算例，广泛地应用于电力行业的研究、教学和实践。该配电网由33个节点组成，包含了传统配电网中的多种元件和设备，如变压器、开关、负荷、发电机等，以及典型的配电网拓扑结构，如环网、大量支路和单回路等。<br>在IEEE-33节点配电网中，每个节点都有独立的电压和电流参数，它们之间通过各种线路和设备相互连接。这些元件的特性参数，如阻抗、电容、电感等都是有限的，因此，在实际使用中，需要根据实际情况进行改动和修正，使其能更好地反映实际的配电网运行情况。<br>在研究IEEE-33节点配电网时，可以采用不同的仿真工具和算法，如潮流计算、短路计算、故障分析、保护设置等，用来评估和探究配电网的性能和特性，指导配电网的运行和管理，提高供电质量和可靠性等方面。同时，还可以用该配电网设计各种控制策略、保护方案、新能源接入等方面的应用研究。<br>总的来说，IEEE-33节点配电网是一个非常重要的电力系统仿真案例，它不仅具有较强的理论价值和实践意义，还为电力工程的发展和创新提供了重要的支撑和参考。</p>
-<h1 id="回答3："><a href="#回答3：" class="headerlink" title="回答3："></a>回答3：</h1><p>IEEE-33节点配电网是指基于IEEE标准的33节点配电系统模型，该模型是研究和测试配电系统可靠性和稳定性的重要工具之一。这个模型包括33个节点、32条联接线路和3个高压源节点。<br>配电系统是指将高电压变压器输出的电能分配到低电压终端用户的系统。在现代城市和农村，配电系统越来越重要，配电安全和稳定运行对于经济和社会的发展都是至关重要的。因此，研究配电系统的可靠性、负荷调节、故障保护和能源管理等问题尤为重要，而IEEE33节点配电网模型为研究这些问题提供了良好的基础。<br>通过对IEEE-33节点配电网模型的研究，可以深入了解配电系统的运行机理和性能，提高配电系统的效率和可靠性。此外，该模型还可以用于测试和调整各种智能配电网应用程序和技术，如能量管理、分布式发电、电池储能和可靠性优化等。<br>总的来说，IEEE-33节点配电网模型是一个重要的工具，可以帮助研究者和工程师深入探究配电系统的运行特性，解决各种配电问题和优化能源管理。</p>
  
       <!-- reward -->
       

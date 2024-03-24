@@ -154,6 +154,105 @@
     
     
     <article
+  id="post-Python替换文件"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/10/20/Python%E6%9B%BF%E6%8D%A2%E6%96%87%E4%BB%B6/"
+    >Python替换文件</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/10/20/Python%E6%9B%BF%E6%8D%A2%E6%96%87%E4%BB%B6/" class="article-date">
+  <time datetime="2023-10-20T02:20:00.000Z" itemprop="datePublished">2023-10-20</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p><a target="_blank" rel="noopener" href="https://www.python100.com/html/W14O5WJ56I2U.html">https://www.python100.com/html/W14O5WJ56I2U.html</a></p>
+<p>Python是一种多用途、高效的编程语言，它具有广泛的应用场景。文件处理是其中一个领域，Python提供了很多方便的模块和函数来处理文本、二进制数据、CSV、JSON等文件类型。本文将介绍Python如何使用常用的模块和函数来替换文件。</p>
+<h1 id="一、os模块"><a href="#一、os模块" class="headerlink" title="一、os模块"></a>一、os模块</h1><p>os模块提供了与操作系统交互的接口。使用该模块可以方便地访问文件系统、环境变量等系统资源。os模块中的replace()函数可以用来替换文件名和路径。</p>
+<p>示例代码：</p>
+<pre><code>import os
+
+file_path = &#39;D:/test/file.txt&#39;
+new_path = &#39;D:/test/new_file.txt&#39;
+os.replace(file_path, new_path)
+</code></pre>
+<p>以上代码将文件D:/test/file.txt替换为D:/test/new_file.txt。该函数可以自动处理文件名重复等情况。</p>
+<h1 id="二、shutil模块"><a href="#二、shutil模块" class="headerlink" title="二、shutil模块"></a>二、shutil模块</h1><p>shutil模块是Python的一个标准库，提供了高级的文件操作接口。它可以实现复制、移动、重命名等文件操作。shutil模块中的move()函数也可以用来替换文件。</p>
+<p>示例代码：</p>
+<pre><code>import shutil
+
+file_path = &#39;D:/test/file.txt&#39;
+new_path = &#39;D:/test/new_file.txt&#39;
+shutil.move(file_path, new_path)
+</code></pre>
+<p>以上代码将文件D:/test/file.txt替换为D:/test/new_file.txt。该函数也可以自动处理文件名重复等情况。</p>
+<h1 id="三、re模块"><a href="#三、re模块" class="headerlink" title="三、re模块"></a>三、re模块</h1><p>re模块是Python的一个标准库，提供了正则表达式的功能。正则表达式可以用来匹配和替换字符串。在替换文件中，如果需要根据某些特定的规则替换文件内容，可以使用re模块。</p>
+<p>示例代码：</p>
+<pre><code>import re
+
+file_path = &#39;D:/test/file.txt&#39;
+new_path = &#39;D:/test/new_file.txt&#39;
+
+with open(file_path, &#39;r&#39;) as f:
+    content = f.read()
+    new_content = re.sub(&#39;old_text&#39;, &#39;new_text&#39;, content)
+
+with open(new_path, &#39;w&#39;) as f:
+    f.write(new_content)
+</code></pre>
+<p>以上代码将文件D:/test/file.txt中的所有old_text替换为new_text，并将结果保存到D:/test/new_file.txt中。用with语句打开文件可以更加方便地处理文件的读写操作。</p>
+<h1 id="四、fileinput模块"><a href="#四、fileinput模块" class="headerlink" title="四、fileinput模块"></a>四、fileinput模块</h1><p>fileinput模块也是Python的一个标准库，提供了一种通用的方法来处理文件输入和输出。它可以将多个文件作为一个整体来处理，并且可以自动备份文件。</p>
+<p>示例代码：</p>
+<pre><code>import fileinput
+
+file_path = &#39;D:/test/file.txt&#39;
+new_path = &#39;D:/test/new_file.txt&#39;
+with fileinput.FileInput(file_path, inplace=True, backup=&#39;.bak&#39;) as f:
+    for line in f:
+        print(line.replace(&#39;old_text&#39;, &#39;new_text&#39;), end=&#39;&#39;)
+</code></pre>
+<p>以上代码将文件D:/test/file.txt中的所有old_text替换为new_text，并保存到原来的文件中。使用inplace参数可以自动备份文件，使用print函数和end参数可以方便地处理文件的输出。</p>
+<h1 id="五、总结"><a href="#五、总结" class="headerlink" title="五、总结"></a>五、总结</h1><p>Python提供了很多方便的模块和函数来处理文件，以上介绍的os、shutil、re、fileinput模块是其中常用的几个。在实际开发中，可以根据实际需求选取相应的模块和函数来完成文件替换操作。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-如果单击眼睛图标显示隐藏密码（QPushButton）"
   class="article article-type-post"
   itemscope
@@ -1335,116 +1434,6 @@ if __name__ == &#39;__name__&#39;:
         print(&quot;    &#123;0&#125;&quot;.format(zip_file_fullname))
         zip_folder(os.path.join(in_path, folder_name), zip_file_fullname)
 </code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Python删除目录下的所有文件"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/10/14/Python%E5%88%A0%E9%99%A4%E7%9B%AE%E5%BD%95%E4%B8%8B%E7%9A%84%E6%89%80%E6%9C%89%E6%96%87%E4%BB%B6/"
-    >Python删除目录下的所有文件</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/10/14/Python%E5%88%A0%E9%99%A4%E7%9B%AE%E5%BD%95%E4%B8%8B%E7%9A%84%E6%89%80%E6%9C%89%E6%96%87%E4%BB%B6/" class="article-date">
-  <time datetime="2023-10-14T02:14:00.000Z" itemprop="datePublished">2023-10-14</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://www.python100.com/html/4XI33HW03WL0.html">https://www.python100.com/html/4XI33HW03WL0.html</a></p>
-<p>一、Python删除目录及目录下文件</p>
-<pre><code>import shutil
-import os
-
-dir_path = &#39;/path/to/directory&#39;
-
-# 删除目录
-shutil.rmtree(dir_path)
-</code></pre>
-<p>当你想要删除一个目录以及里面所有的文件时，你可以使用shutil模块中的rmtree()函数。该函数可以删除整个目录，包括其所有的文件和子目录。这是最便捷的方法，但是请确保你真的需要这么做。</p>
-<p>二、Python删除目录中所有内容</p>
-<pre><code>import os
-
-dir_path = &#39;/path/to/directory&#39;
-
-# 删除目录中所有的文件
-for filename in os.listdir(dir_path):
-    file_path = os.path.join(dir_path, filename)
-    if os.path.isfile(file_path) or os.path.islink(file_path):
-        os.unlink(file_path)
-    elif os.path.isdir(file_path):
-        shutil.rmtree(file_path)
-
-# 删除目录本身
-os.rmdir(dir_path)
-</code></pre>
-<p>如果你想要删除目录中所有内容，但是保留目录本身，你可以使用os模块中listdir()和unlink()函数来遍历该目录中的所有文件并逐个删除。在删除文件夹之前，必须先删除所有文件和子目录。</p>
-<p>三、Python os删除目录</p>
-<pre><code>import os
-
-dir_path = &#39;/path/to/directory&#39;
-
-# 删除目录
-os.removedirs(dir_path)
-</code></pre>
-<p>os.removedirs()函数可以删除指定的目录。如果该目录是一个空目录，则可以直接删除它。如果该目录不是空目录，则需要递归地删除其所有子目录和文件。</p>
-<p>四、Python删除指定目录下的文件</p>
-<pre><code>import os
-
-dir_path = &#39;/path/to/directory&#39;
-
-# 删除指定格式的文件
-for filename in os.listdir(dir_path):
-    if filename.endswith(&#39;.txt&#39;):
-        os.unlink(os.path.join(dir_path, filename))
-</code></pre>
-<p>如果你只想删除指定格式的文件，你可以使用listdir()和endswith()函数来列出该目录中满足指定格式的所有文件，并逐个删除。</p>
-<p>五、Python删除非空目录</p>
-<pre><code>import shutil
-
-dir_path = &#39;/path/to/directory&#39;
-
-# 删除非空目录
-shutil.rmtree(dir_path)
-</code></pre>
-<p>如果你只想删除非空目录，你可以使用shutil模块的rmtree()函数。请注意，该函数可以删除目录和其中的所有文件和子目录。</p>
-<p>通过上述5种方法，你可以选择最适用于你的需求的方法来删除指定目录下的所有文件。</p>
  
       <!-- reward -->
       

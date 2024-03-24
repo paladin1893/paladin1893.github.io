@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Dev-cpp及其衍生系列</title>
+    <url>/2023/12/19/Dev-cpp%E5%8F%8A%E5%85%B6%E8%A1%8D%E7%94%9F%E7%B3%BB%E5%88%97/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><a href="http://wxdsgn.sourceforge.net/">http://wxdsgn.sourceforge.net/</a><br>wxDev-C++ is an opensource wxWidgets Dialog designer that mimics the Delphi/Borland C++ Builder designer.</p>
+<p>wxDev-C++，last update: 2012</p>
+<p><a href="https://sourceforge.net/projects/dev-cpp/">https://sourceforge.net/projects/dev-cpp/</a><br>这个是最老的，2005年就停了</p>
+<p>Dev-cpp有相当历史，可以追溯到win98时代，1998年就已经发布第一版本了，其中4.9.9.2版本是最经典的。</p>
+<p>Dev-C++ is a full-featured Integrated Development Environment (IDE) for Win32. It uses GCC, Mingw or Cygwin as compiler and libraries set. It supports Windows 98, NT, 2000 &amp; XP.</p>
+<p>This is the original Dev-C++ software as published by Colin Laplace and this repository is frozen to version 4.9.9.2.</p>
+<p><a href="https://sourceforge.net/projects/orwelldevcpp/">https://sourceforge.net/projects/orwelldevcpp/</a><br>这个是上一代的，2016年就停了<br>A new and improved fork of Bloodshed Dev-C++，last update: 2016</p>
+<p><a href="https://sourceforge.net/projects/embarcadero-devcpp/">https://sourceforge.net/projects/embarcadero-devcpp/</a><br><a href="https://github.com/Embarcadero/Dev-Cpp/">https://github.com/Embarcadero/Dev-Cpp/</a><br>这个是最新的，2020年才开始更新，项目名称改成了“Dev-C++ for Windows 10/8/7”，软件更新为：Embarcadero Dev-C++ ，Embarcadero 这个名字应该不陌生，他也是c++ builder的东家啊～看来devC++已经归属他的门下了</p>
+<p>Embarcadero Dev-C++ is a new and improved fork (sponsored by Embarcadero) of Bloodshed Dev-C++ and Orwell Dev-C++. It is a full-featured Integrated Development Environment (IDE) and code editor for the C/C++ programming language. It uses Mingw port of GCC (GNU Compiler Collection) as its compiler. Embarcadero Dev-C++ can also be used in combination with Cygwin or any other GCC based compiler. Embarcadero Dev-C++ is built using the latest version of Embarcadero Delphi. Embarcadero Dev-C++ has a low memory footprint because it is a native Windows application and does not use Electron.</p>
+<p><a href="https://sourceforge.net/projects/redpanda-cpp">https://sourceforge.net/projects/redpanda-cpp</a><br><a href="https://royqh.net/devcpp/">https://royqh.net/devcpp/</a></p>
+<p>小熊猫Dev-C++，Red Panda Dev C++ C/C++ 集成开发环境，Red Panda Dev C++，是一个小巧的开源C/C++ 集成开发环境，基于 Dev-C++ 开发，非常适合于C/C++ 语言的初学者使用。</p>
+<p>Red Panda C++ is a lightweight yet powerful C/C++/GNU Assembly IDE.<br>It provides users with coding experiences like vs code and CLion, but is much lightweighted than them.</p>
+]]></content>
+      <categories>
+        <category>软件开发</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>css命名规范</title>
     <url>/2023/12/18/css%E5%91%BD%E5%90%8D%E8%A7%84%E8%8C%83/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>BEM 命名规范</p>
@@ -13127,6 +13150,7 @@ cc.setValue(x);    //给控件赋值
       <tags>
         <tag>Harlinn.Windows</tag>
         <tag>libraries</tag>
+        <tag>C++</tag>
       </tags>
   </entry>
   <entry>

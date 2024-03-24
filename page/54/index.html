@@ -154,6 +154,64 @@
     
     
     <article
+  id="post-windows命令行查看文件的MD5、SHA1、SHA256"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/02/14/windows%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E7%9A%84MD5%E3%80%81SHA1%E3%80%81SHA256/"
+    >windows命令行查看文件的MD5、SHA1、SHA256</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/02/14/windows%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E7%9A%84MD5%E3%80%81SHA1%E3%80%81SHA256/" class="article-date">
+  <time datetime="2023-02-14T02:47:52.000Z" itemprop="datePublished">2023-02-14</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>win10打开Powershell，命令格式certutil -hashfile  &lt;文件名&gt;  &lt;hash类型&gt;</p>
+<p>样例：</p>
+<pre><code>certutil -hashfile D:\test.txt MD5
+certutil -hashfile D:\test.txt SHA1
+certutil -hashfile D:\test.txt SHA256
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MD5/" rel="tag">MD5</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SHA1/" rel="tag">SHA1</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SHA256/" rel="tag">SHA256</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/windows/" rel="tag">windows</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-Linux下查看tomcat占用端口"
   class="article article-type-post"
   itemscope
@@ -447,81 +505,6 @@ redirectPort=”8443″ /&gt;
     <footer class="article-footer">
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/FME/" rel="tag">FME</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Oracle-RAC建表空间"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/02/12/Oracle-RAC%E5%BB%BA%E8%A1%A8%E7%A9%BA%E9%97%B4/"
-    >Oracle RAC建表空间</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/02/12/Oracle-RAC%E5%BB%BA%E8%A1%A8%E7%A9%BA%E9%97%B4/" class="article-date">
-  <time datetime="2023-02-12T06:45:15.000Z" itemprop="datePublished">2023-02-12</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>一、建表空间</p>
-<p>1、RAC</p>
-<pre><code>create tablespace TS_YYYY datafile size 500M autoextend on next 50M maxsize unlimited;
-</code></pre>
-<p>2、单实例</p>
-<pre><code>create tablespace TS_YYYY datafile ‘/u01/app/oracle/oradata/pmsgeo/yxyk.dbf’ size 500M autoextend on next 50M maxsize unlimited;
-</code></pre>
-<p>二、建用户</p>
-<pre><code>create user yxyk identified by yyyy default tablespace TS_YYYY;
-</code></pre>
-<p>三、赋权限</p>
-<pre><code>grant connect,resource to yyyy;
-grant debug connect session to yyyy;
-grant create any sequence to yyyy;
-grant create any table to yyyy;
-grant delete any table to yyyy;
-grant insert any table to yyyy;
-grant select any table to yyyy;
-grant unlimited tablespace to yyyy;
-grant execute any procedure to yyyy;
-grant update any table to yyyy;
-grant create any view to yyyy;
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Oracle/" rel="tag">Oracle</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
 
     </footer>
   </div>

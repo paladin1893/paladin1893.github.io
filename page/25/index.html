@@ -154,6 +154,93 @@
     
     
     <article
+  id="post-最新docker部署gitlab指南"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/07/28/%E6%9C%80%E6%96%B0docker%E9%83%A8%E7%BD%B2gitlab%E6%8C%87%E5%8D%97/"
+    >最新docker部署gitlab指南</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/07/28/%E6%9C%80%E6%96%B0docker%E9%83%A8%E7%BD%B2gitlab%E6%8C%87%E5%8D%97/" class="article-date">
+  <time datetime="2023-07-28T06:21:15.000Z" itemprop="datePublished">2023-07-28</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><p><a target="_blank" rel="noopener" href="https://docs.gitlab.cn/jh/install/docker.html">极狐GitLab Docker 镜像</a></p>
+<h1 id="拉取镜像"><a href="#拉取镜像" class="headerlink" title="拉取镜像"></a>拉取镜像</h1><pre><code>sudo docker pull gitlab/gitlab-ce:latest
+</code></pre>
+<h1 id="安装容器"><a href="#安装容器" class="headerlink" title="安装容器"></a>安装容器</h1><pre><code>sudo docker run --detach \
+  --hostname 192.168.10.33 \
+  --publish 9443:443 --publish 9980:80 --publish 9822:22 \
+  --name gitlab \
+  --restart always \
+  --volume /home/gitlab/config:/etc/gitlab \
+  --volume /home/gitlab/logs:/var/log/gitlab \
+  --volume /home/gitlab/data:/var/opt/gitlab \
+  gitlab/gitlab-ce:latest
+</code></pre>
+<h1 id="查看日志"><a href="#查看日志" class="headerlink" title="查看日志"></a>查看日志</h1><pre><code>，可以用容器名，也可以用容器id
+
+sudo docker logs -f gitlab
+</code></pre>
+<h1 id="进入容器"><a href="#进入容器" class="headerlink" title="进入容器"></a>进入容器</h1><pre><code>sudo docker exec -it gitlab /bin/bash
+</code></pre>
+<h1 id="修改root密码"><a href="#修改root密码" class="headerlink" title="修改root密码"></a>修改root密码</h1><ol>
+<li>切换到相应路径下: cd /opt/gitlab/bin/</li>
+<li>打开控制台: gitlab-rails console -e production</li>
+<li>查询用户账号信息并赋值给u: u=User.where(id:1).first</li>
+<li>设置该用户名的密码: u.password=’Demo9999’</li>
+<li>确认密码: u.password_confirmation=’Demo9999’</li>
+<li>保存信息： u.save </li>
+<li>退出: exit</li>
+</ol>
+<h1 id="修改外部访问地址"><a href="#修改外部访问地址" class="headerlink" title="修改外部访问地址"></a>修改外部访问地址</h1><pre><code>vi /etc/gitlab/gitlab.rb
+
+external_url &#39;http://192.168.10.33:9980&#39;
+gitlab_rails[&#39;gitlab_ssh_host&#39;]=&#39;192.168.10.33&#39;
+gitlab_rails[&#39;gitlab_shell_ssh_port&#39;]=&#39;9822&#39;
+gitlab_rails[&#39;time_zone&#39;] = &#39;Asia/Shanghai&#39;
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/" rel="tag">Docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GitLab/" rel="tag">GitLab</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-最新centos部署docker指南"
   class="article article-type-post"
   itemscope
@@ -574,114 +661,6 @@ systemctl restart firewalld.service     //重启防火墙
     <footer class="article-footer">
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OpenSource/" rel="tag">OpenSource</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebGIS/" rel="tag">WebGIS</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-CentOS7下的GItLab安装与删除"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/07/22/CentOS7%E4%B8%8B%E7%9A%84GItLab%E5%AE%89%E8%A3%85%E4%B8%8E%E5%88%A0%E9%99%A4/"
-    >CentOS7下的GitLab安装与删除</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/07/22/CentOS7%E4%B8%8B%E7%9A%84GItLab%E5%AE%89%E8%A3%85%E4%B8%8E%E5%88%A0%E9%99%A4/" class="article-date">
-  <time datetime="2023-07-22T04:04:33.000Z" itemprop="datePublished">2023-07-22</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="一-GitLab-安装"><a href="#一-GitLab-安装" class="headerlink" title="一. GitLab 安装"></a>一. GitLab 安装</h1><h2 id="1-安装和配置必须的依赖项"><a href="#1-安装和配置必须的依赖项" class="headerlink" title="1. 安装和配置必须的依赖项"></a>1. 安装和配置必须的依赖项</h2><pre><code>sudo yum install -y curl policycoreutils-python openssh-server perl
-sudo systemctl enable sshd
-sudo systemctl start sshd
-sudo firewall-cmd --permanent --add-service=http
-sudo firewall-cmd --permanent --add-service=https
-sudo systemctl reload firewalld
-
-sudo yum install postfix
-sudo systemctl enable postfix
-sudo systemctl start postfix
-</code></pre>
-<h2 id="2-下载-安装极狐GitLab"><a href="#2-下载-安装极狐GitLab" class="headerlink" title="2. 下载/安装极狐GitLab"></a>2. 下载/安装极狐GitLab</h2><p>配置极狐GitLab 软件源镜像。</p>
-<ul>
-<li><p>旗舰版、官网教程</p>
-<p>  curl -fsSL <a target="_blank" rel="noopener" href="https://packages.gitlab.cn/repository/raw/scripts/setup.sh">https://packages.gitlab.cn/repository/raw/scripts/setup.sh</a> | /bin/bash<br>  sudo EXTERNAL_URL=”<a href="https://192.168.10.33:9998&quot;">https://192.168.10.33:9998&quot;</a> yum install -y gitlab-jh</p>
-</li>
-<li><p>社区版，CSDN参考</p>
-<p>  curl <a target="_blank" rel="noopener" href="https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh">https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh</a> | sudo bash<br>  sudo EXTERNAL_URL=”<a href="http://192.168.10.33:9998&quot;">http://192.168.10.33:9998&quot;</a> yum install -y gitlab-ce</p>
-<p>  gitlab-ctl reconfigure</p>
-<p>  gitlab-ctl start || gitlab-ctl restart</p>
-</li>
-</ul>
-<h2 id="4-设置开机自启动"><a href="#4-设置开机自启动" class="headerlink" title="4 设置开机自启动"></a>4 设置开机自启动</h2><pre><code>sudo systemctl enable gitlab-runsvdir.service
-</code></pre>
-<h2 id="5-切换目录使用命令进入控制台修改用户状态"><a href="#5-切换目录使用命令进入控制台修改用户状态" class="headerlink" title="5.切换目录使用命令进入控制台修改用户状态"></a>5.切换目录使用命令进入控制台修改用户状态</h2><pre><code>1) 切换到相应路径下: cd /opt/gitlab/bin/
-2) 打开控制台: sudo gitlab-rails console -e production
-3) 查询用户账号信息并赋值给u: u=User.where(id:1).first
-4) 设置该用户名的密码: u.password=&#39;Demo9999&#39;
-5) 确认密码: u.password_confirmation=&#39;Demo9999&#39;
-6) 保存信息： u.save 
-7) 退出: exit
-</code></pre>
-<h1 id="二-GitLab-卸载"><a href="#二-GitLab-卸载" class="headerlink" title="二. GitLab 卸载"></a>二. GitLab 卸载</h1><h2 id="1、停止-gitlab服务"><a href="#1、停止-gitlab服务" class="headerlink" title="1、停止 gitlab服务"></a>1、停止 gitlab服务</h2><pre><code>gitlab-ctl stop
-</code></pre>
-<h2 id="2、卸载-gitlab（社区版）"><a href="#2、卸载-gitlab（社区版）" class="headerlink" title="2、卸载 gitlab（社区版）"></a>2、卸载 gitlab（社区版）</h2><pre><code>rpm -e gitlab-ce 或者  yum remove gitlab-ce
-</code></pre>
-<h2 id="3、查看-gitlab-进程"><a href="#3、查看-gitlab-进程" class="headerlink" title="3、查看 gitlab 进程"></a>3、查看 gitlab 进程</h2><pre><code>ps aux | grep gitlab 
-</code></pre>
-<h2 id="4、杀掉gitlab-service进程，该进程与runsvdir相关（带有好多…………-的进程）"><a href="#4、杀掉gitlab-service进程，该进程与runsvdir相关（带有好多…………-的进程）" class="headerlink" title="4、杀掉gitlab service进程，该进程与runsvdir相关（带有好多…………. 的进程）"></a>4、杀掉gitlab service进程，该进程与runsvdir相关（带有好多…………. 的进程）</h2><pre><code>kill -9 xxxxxx
-</code></pre>
-<p>其实就是强杀/opt/gitlab/service进程</p>
-<p>如果还不知道怎么杀，就重启服务器也行。</p>
-<h2 id="5、查找并删除所有包含-gitlab-的遗留文件"><a href="#5、查找并删除所有包含-gitlab-的遗留文件" class="headerlink" title="5、查找并删除所有包含 gitlab 的遗留文件"></a>5、查找并删除所有包含 gitlab 的遗留文件</h2><pre><code>find / -name *gitlab*|xargs rm -rf  
-find / -name gitlab |xargs rm -rf 
-
-find / -name postgres |xargs rm -rf 
-
-删除gitlab-ctl uninstall时自动在root下备份的配置文件（ls /root/gitlab* 看看有没有，有也删除）
-</code></pre>
-<h2 id="6、根据上面列出来的目录清单主要删除一下目录"><a href="#6、根据上面列出来的目录清单主要删除一下目录" class="headerlink" title="6、根据上面列出来的目录清单主要删除一下目录"></a>6、根据上面列出来的目录清单主要删除一下目录</h2><pre><code>rm -rf /etc/gitlab
-rm -rf /opt/gitlab
-rm -rf /log/gitlab
-rm -rf /var/opt/gitlab
-rm -rf /var/log/gitlab
-rm -rf /run/gitlab
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GitLab/" rel="tag">GitLab</a></li></ul>
 
     </footer>
   </div>

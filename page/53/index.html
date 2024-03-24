@@ -154,6 +154,60 @@
     
     
     <article
+  id="post-windows下注册和取消PostgreSQL服务的方法"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/02/16/windows%E4%B8%8B%E6%B3%A8%E5%86%8C%E5%92%8C%E5%8F%96%E6%B6%88PostgreSQL%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%96%B9%E6%B3%95/"
+    >windows下注册和取消PostgreSQL服务的方法</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/02/16/windows%E4%B8%8B%E6%B3%A8%E5%86%8C%E5%92%8C%E5%8F%96%E6%B6%88PostgreSQL%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%96%B9%E6%B3%95/" class="article-date">
+  <time datetime="2023-02-16T04:16:04.000Z" itemprop="datePublished">2023-02-16</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="（一）"><a href="#（一）" class="headerlink" title="（一）"></a>（一）</h1><p>pg_ctl register [-N servicename] [-U username] [-P password] [-D datadir] [-w][-t seconds] [-o options]<br>pg_ctl unregister [-N servicename]<br>参数说明如下：<br>-N servicename：要注册的系统服务的名字。这个名字将用于服务名和 显示名。<br>-P password：用于启动服务的密码<br>-U：用于启动服务的用户名。如果是域用户，需要使用“DOMAIN\username”的格式<br>使用举例如下：<br>删除一个服务：<br>pg_ctl unregister -N postgresql-9.2<br>增加一个服务：<br>pg_ctl register -D “C:\Program Files\Postgresql\9.2\data”</p>
+<h1 id="（二）"><a href="#（二）" class="headerlink" title="（二）"></a>（二）</h1><p>重新注册服务，其实比重新安装还简单了；执行命令就可以了，<br>第一步：进入到数据库的安装目录，cd D:\PostgreSQL\bin；<br>第二部：执行服务注册：pg_ctl register -N pg921 -D D:\PostgreSQL\data -S auto -w -t 10 -l D:/PostgreSQL/pg921.log -o “-p 5432”,<br>-N pg921 代表注册服务的名称 ，-D代表数据库文件目录 ，-S代表服务启动方式auto自动，demand手动，-o “-p 5432”指启动服务端口；（可以通过pg_ctl –help命令查看使用方法）<br>第三步：启动服务，net start pg921；<br>通过上面的的方法就成功的注册了服务器，以后每次开机都可以使用数据库了；<br>但是postgresql自带的一个管理工具pgAdmin3还是不能正常使用，需要我们配置，配置方法见下图：<br>注意：服务项不需要填写，主机填写localhost，如果填写真实的ip，必须在数据库配置文件中配置ip权限，否则不能连接；</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-Enabling-PostGIS"
   class="article article-type-post"
   itemscope
@@ -481,64 +535,6 @@ cd idea-IU-202.7660.26/bin/
     <footer class="article-footer">
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tomcat/" rel="tag">tomcat</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-windows命令行查看文件的MD5、SHA1、SHA256"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/02/14/windows%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E7%9A%84MD5%E3%80%81SHA1%E3%80%81SHA256/"
-    >windows命令行查看文件的MD5、SHA1、SHA256</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/02/14/windows%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E7%9A%84MD5%E3%80%81SHA1%E3%80%81SHA256/" class="article-date">
-  <time datetime="2023-02-14T02:47:52.000Z" itemprop="datePublished">2023-02-14</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>win10打开Powershell，命令格式certutil -hashfile  &lt;文件名&gt;  &lt;hash类型&gt;</p>
-<p>样例：</p>
-<pre><code>certutil -hashfile D:\test.txt MD5
-certutil -hashfile D:\test.txt SHA1
-certutil -hashfile D:\test.txt SHA256
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MD5/" rel="tag">MD5</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SHA1/" rel="tag">SHA1</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SHA256/" rel="tag">SHA256</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/windows/" rel="tag">windows</a></li></ul>
 
     </footer>
   </div>

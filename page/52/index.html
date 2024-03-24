@@ -154,6 +154,132 @@
     
     
     <article
+  id="post-Notepad-正则表达式"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/02/18/Notepad-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"
+    >Notepad++正则表达式</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/02/18/Notepad-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="article-date">
+  <time datetime="2023-02-18T01:59:10.000Z" itemprop="datePublished">2023-02-18</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>则表达式是一个查询的字符串，它包含一般的字符和一些特殊的字符，特殊字符可以扩展查找字符串的能力，正则表达式在查找和替换字符串的作用不可忽视，它 能很好提高工作效率。</p>
+<p>EditPlus的查找，替换，文件中查找支持以下的正则表达式：</p>
+<p>表达式 说明<br>/t 制表符.<br>/n 新行.<br>. 匹配任意字符.<br>| 匹配表达式左边和右边的字符. 例如, “ab|bc” 匹配 “ab” 或者 “bc”.<br>[] 匹配列表之中的任何单个字符. 例如, “[ab]” 匹配 “a” 或者 “b”. “[0-9]” 匹配任意数字.<br>[^] 匹配列表之外的任何单个字符. 例如, “[^ab]” 匹配 “a” 和 “b” 以外的字符. “[^0-9]” 匹配任意非数字字符.</p>
+<ul>
+<li>其左边的字符被匹配任意次(0次，或者多次). 例如 “be*” 匹配 “b”, “be” 或者 “bee”.</li>
+</ul>
+<ul>
+<li>其左边的字符被匹配至少一次(1次，或者多次). 例如 “be+” 匹配 “be” 或者 “bee” 但是不匹配 “b”.<br>? 其左边的字符被匹配0次或者1次. 例如 “be?” 匹配 “b” 或者 “be” 但是不匹配 “bee”.<br>^ 其右边的表达式被匹配在一行的开始. 例如 “^A” 仅仅匹配以 “A” 开头的行.<br>$ 其左边的表达式被匹配在一行的结尾. 例如 “e$” 仅仅匹配以 “e” 结尾的行.<br>() 影响表达式匹配的顺序，并且用作表达式的分组标记.<br>/ 转义字符. 如果你要使用 “/“ 本身, 则应该使用 “//“.</li>
+</ul>
+<p>例子：</p>
+<p>原始串<br>str[1]abc[991];<br>str[2]abc[992];<br>str[11]abc[993];<br>str[22]abc[994];<br>str[111]abc[995];<br>str[222]abc[996];<br>str[1111]abc[997];<br>str[2222]abc[999];</p>
+<p>目标串：<br>abc[1];<br>abc[2];<br>abc[11];<br>abc[22];<br>abc[111];<br>abc[222];<br>abc[1111];<br>abc[2222];</p>
+<p>处理：<br>查找串：str/[([0-9]+)/]abc/[[0-9]+/]<br>替换串：abc[/1]</p>
+<p>一、包含“hello word”的行</p>
+<p>^.<em>hello word.</em>$</p>
+<p>二、以“hello word”开始的行</p>
+<p>^hello word.*$</p>
+<p>三、以“hello word”结尾的行</p>
+<p>.*hello word$</p>
+<p>查找目标\n([a-zA-Z0-9])</p>
+<p>或者\r([a-zA-Z0-9])</p>
+<p>替换目标$1(http前面的换行变成 ‘,’ ,然后再加其他的)</p>
+<p>【1】正则表达式应用——替换指定内容到行尾<br>原始文本如下面两行<br>abc aaaaa<br>123 abc 444</p>
+<p>希望每次遇到“abc”，则替换“abc”以及其后到行尾的内容为“abc efg”<br>即上面的文本最终替换为：<br>abc efg<br>123 abc efg</p>
+<p>解决：<br>① 在替换对话框，查找内容里输入“abc.<em>”<br>② 同时勾选“正则表达式”复选框，然后点击“全部替换”按钮<br>其中，符号的含义如下：<br>“.” ＝匹配任意字符<br>“</em>” ＝匹配0次或更多</p>
+<p>注意：其实就是正则表达式替换，这里只是把一些曾经提出的问题加以整理，单纯从正则表达式本身来说，就可以引申出成千上万种特例。</p>
+<p>【2】正则表达式应用——数字替换<br>希望把<br>asdadas123asdasdas456asdasdasd789asdasd<br>替换为:<br>asdadas[123]asdasdas[456]asdasdasd[789]asdasd</p>
+<p>在替换对话框里面，勾选“正则表达式”复选框；<br>在查找内容里面输入“[0-9][0-9][0-9]”，不含引号<br>“替换为:”里面输入“[/0/1/2]”，不含引号<br>范围为你所操作的范围，然后选择替换即可。</p>
+<p>实际上这也是正则表达式的使用特例，“[0-9]”表示匹配0～9之间的任何特例，同样“[a-z]”就表示匹配a～z之间的任何特例<br>上面重复使用了“[0-9]”，表示连续出现的三个数字<br>“/0”代表第一个“[0-9]”对应的原型，“/1”代表第二个“[0-9]”对应的原型，依此类推<br>“[”、“]”为单纯的字符，表示添加“[”或“]”，如果输入“其它/0/1/2其它”，则替换结果为：</p>
+<p>asdadas其它123其它asdasdas其它456其它asdasdasd其它789其它asdasd</p>
+<p>功能增强（by jiuk2k）：<br>如果将查找内容“[0-9][0-9][0-9]”改为“[0-9]*[0-9]”，对应1 或 123 或 12345 或 …<br>大家根据需要定制</p>
+<p>相关内容还有很多，可以自己参考正则表达式的语法仔细研究一下</p>
+<p>【3】正则表达式应用——删除每一行行尾的指定字符<br>因为这几个字符在行中也是出现的,所以肯定不能用简单的替换实现<br>比如<br>12345 1265345<br>2345<br>需要删除每行末尾的“345”<br>这个也算正则表达式的用法，其实仔细看正则表达式应该比较简单，不过既然有这个问题提出，说明对正则表达式还得有个认识过程，解决方法如下<br>解决：<br>在替换对话框中，启用“正则表达式”复选框<br>在查找内容里面输入“345$”<br>这里“$”表示从行尾匹配</p>
+<p>如果从行首匹配，可以用“^”来实现，不过 EditPlus 有另一个功能可以很简单的删除行首的字符串<br>a. 选择要操作的行<br>b. 编辑－格式－删除行注释<br>c. 在弹出对话框里面输入要清除的行首字符，确定</p>
+<p>【4】正则表达式应用——替换带有半角括号的多行<br>几百个网页中都有下面一段代码：<br>/n<br>在替换对话框启用“正则表达式”选项，这时就可以完成替换了</p>
+<p>【5】正则表达式应用——删除空行<br>启动EditPlus，打开待处理的文本类型文件。<br>①、选择“查找”菜单的“替换”命令，弹出文本替换对话框。选中“正则表达式”复选框，表明我们要在查找、替换中使用正则表达式。然后，选中“替换范围” 中的“当前文件”，表明对当前文件操作。<br>②、单击“查找内容”组合框右侧的按钮，出现下拉菜单。<br>③、下面的操作添加正则表达式，该表达式代表待查找的空行。（技巧提示：空行仅包括空格符、制表符、回车符，且必须以这三个符号之一作为一行的开头，并且 以回车符结尾，查找空行的关键是构造代表空行的正则表达式）。<br>直接在”查找”中输入正则表达式“^[ /t]<em>/n”，注意/t前有空格符。<br>（1）选择“从行首开始匹配”，“查找内容”组合框中出现字符“^”，表示待查找字符串必须出现在文本中一行的行首。<br>（2）选择“字符在范围中”，那么在“^”后会增加一对括号“[]”，当前插入点在括号中。括号在正则表达式中表示，文本中的字符匹配括号中任意一个字符 即符合查找条件。<br>（3）按一下空格键，添加空格符。空格符是空行的一个组成成分。<br>（4）选择“制表符”，添加代表制表符的“/t”。<br>（5）移动光标，将当前插入点移到“]”之后，然后选择“匹配 0 次或更多”，该操作会添加星号字符“</em>”。星号表示，其前面的括号“[]”内的空格符或制表符，在一行中出现0个或多个。<br>（6）选择“换行符”，插入“/n”，表示回车符。<br>④、“替换为”组合框保持空，表示删除查找到的内容。单击“替换”按钮逐个行删除空行，或单击“全部替换”按钮删除全部空行（注意：EditPlus有时 存在“全部替换”不能一次性完全删除空行的问题，可能是程序BUG，需要多按几次按钮）。</p>
+<p>1.在汉化的时候，是否经常碰到这样的语句需要翻译：</p>
+<p>Code:<br>“Error adding the post!”;<br>“Error adding the comment!”;<br>“Error adding the user!”;</p>
+<p>如果有很多类似的文件一个一个翻译显然很累而且感觉很无聊。</p>
+<p>其实可以这样处理，在Editplus里面用 替换 功能，在替换对话框选中“正则表达式”复选框：<br>查找原文件：</p>
+<p>Code:<br>“Error adding ([^!|”|;]*)</p>
+<p>替换成：</p>
+<p>Code:<br>“在增加/1时发生错误</p>
+<p>这样替换之后发生了什么？结果是：</p>
+<p>Code:<br>“在增加the post时发生错误!”;<br>“在增加the comment时发生错误!”;<br>“在增加the user时发生错误!”;</p>
+<p>ok，接下来你会怎么做？当然再替换一次把the post、the comment、the user替换成你要翻译的词。得到最后的结果：</p>
+<p>Code:<br>“在增加帖子时发生错误!”;<br>“在增加评论时发生错误!”;<br>“在增加用户时发生错误!”;</p>
+<p>2.要提取的单词在中间，比如：</p>
+<p>Code:<br>can not be deleted because<br>can not be added because<br>can not be updating because</p>
+<p>可以用这种方式：<br>在Editplus里面用 替换 功能，在替换对话框选中“正则表达式”复选框：<br>查找原文件：</p>
+<p>Code:<br>can not be ([^ ]*) because</p>
+<p>替换成：</p>
+<p>Code:<br>无法被/1因为</p>
+<p>这样替换之后发生了什么？结果是：</p>
+<p>Code:<br>无法被deleted因为<br>无法被added因为<br>无法被updating因为</p>
+<p>其余步骤如上。</p>
+<p>在汉化量很大而且句式比较单调的情况下对效率的提高很明显！</p>
+<p>解释一下：([^!|”|;]*) 的意思是 不等于 ! 和 ” 和 ; 中的任何一个，意思就是这3个字符之外的所有字符将被选中（替换区域）；<br>/1 即被选中的替换区域所在的新位置（复制到这个新位置）。</p>
+<p>3.经常手工清理一行一行地删除文本文件里面的空白行，其实可以交给Editplus更好的完成，在Editplus里面用替换功能，在替换对话框选中 “正则表达式”复选框：<br>查找原文件：</p>
+<p>Code:<br>^[ /t]*/n</p>
+<p>替换部分为空就可以删除空白行了，执行一下看看：）</p>
+<p>abandon[2’’b9nd2n]v.抛弃，放弃<br>abandonment[2’’b9nd2nm2nt]n.放弃<br>abbreviation[2bri:vi’’ei62n]n.缩写<br>abeyance[2’’bei2ns]n.缓办，中止<br>abide[2’’baid]v.遵守<br>ability[2’’biliti]n.能力<br>able[‘’eibl]adj.有能力的，能干的<br>abnormal[9b’’n0:m2l]adj.反常的，变态的<br>aboard[2’’b0:d]adv.船(车)上</p>
+<p>1.<br>查找: (^[a-zA-Z0-0/-]+)(/[<em>.</em>/]+)(.*)<br>替换: @@@@@”/1″,”/2″,”/3″,<br>效果:<br>@@@@@”abandon”,”[2’’b9nd2n]“,”v.抛弃，放弃”,<br>@@@@@”abandonment”,”[2’’b9nd2nm2nt]“,”n.放弃”,<br>@@@@@”abbreviation”,”[2bri:vi’’ei62n]“,”n.缩写”,<br>@@@@@”abeyance”,”[2’’bei2ns]“,”n.缓办，中止”,<br>@@@@@”abide”,”[2’’baid]“,”v.遵守”,<br>@@@@@”ability”,”[2’’biliti]“,”n.能力”,<br>@@@@@”able”,”[‘’eibl]“,”adj.有能力的，能干的”,<br>@@@@@”abnormal”,”[9b’’n0:m2l]“,”adj.反常的，变态的”,<br>@@@@@”aboard”,”[2’’b0:d]“,”adv.船(车)上”,</p>
+<p>2.<br>查找: /n<br>替换:<br>注: 要次替换内容为空<br>效果:<br>@@@@@”abandon”,”[2’’b9nd2n]“,”v.抛弃，放弃 ”,@@@@@”abandonment”,”[2’’b9nd2nm2nt]“,”n.放弃 ”,@@@@@”abbreviation”,”[2bri:vi’’ei62n]“,”n.缩写 ”,@@@@@”abeyance”,”[2’’bei2ns]“,”n.缓办，中止”,@@@@@”abide”,”[2’’baid]“,”v.遵守 ”,@@@@@”ability”,”[2’’biliti]“,”n.能力”,@@@@@”able”,”[‘’eibl]“,”adj.有能力的，能 干的 ”,@@@@@”abnormal”,”[9b’’n0:m2l]“,”adj.反常的，变态的 ”,@@@@@”aboard”,”[2’’b0:d]“,”adv.船(车)上”,@@@@@”abolish”,”[2’’b0li6]“,”v.废 除，取消”,@@@@@”abolition”,”[9b2’’li62n]“,”n.废除，取消”</p>
+<p>3.<br>查找: @@@@@<br>替换: /n<br>效果:<br>“abandon”,”[2’’b9nd2n]“,”v.抛弃，放弃”,<br>“abandonment”,”[2’’b9nd2nm2nt]“,”n.放弃”,<br>“abbreviation”,”[2bri:vi’’ei62n]“,”n.缩写”,<br>“abeyance”,”[2’’bei2ns]“,”n.缓办，中止”,<br>“abide”,”[2’’baid]“,”v.遵守”,<br>“ability”,”[2’’biliti]“,”n.能力”,<br>“able”,”[‘’eibl]“,”adj.有能力的，能干的”,<br>“abnormal”,”[9b’’n0:m2l]“,”adj.反常的，变态的”,<br>“aboard”,”[2’’b0:d]“,”adv.船(车)上”,<br>“abolish”,”[2’’b0li6]“,”v.废除，取消”,</p>
+<ol start="4">
+<li>任务完成</li>
+</ol>
+<p>一、删除空行（不包括有空格类符号的空行）<br>1、\r\n转义符替换<br>按ctrl+h，跳出搜索替换框，把查找模式定义为扩展（\n，\r…）<br>查找目标：\r\n\r\n<br>替换为：\r\n</p>
+<p>有编程基础的读者应该知道是什么意思了。</p>
+<p>2、Textfx插件<br>先选中要删部分文本内容，如果是整个文件那就全选Ctrl+A，然后使用Notepad++自带的Textfx插件，在长长的列表中找到Delete Blank Lines，点击即可。</p>
+<p>注意Notepad++的正则表达式与转义符等之间不兼容，所以局限性较大，不可以直接用正则表达式替换。</p>
+<p>二、删除有空格的空行<br>1、先删除空格，后删除空行<br>如何删除只有空格行的空格？<br>在菜单编辑中找到Blank Operations（行编辑），点击移除行尾空白，再用上面的方法删除空行。</p>
+<p>2、使用正则表达式删除空格行空格<br>替换中查找模式选择正则表达式^ +$，替换为空（就是什么都不填），再用上面的方法删除空行。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-如何查看雷电模拟器里的sqilte数据"
   class="article article-type-post"
   itemscope
@@ -454,60 +580,6 @@ SELECT NEXTVAL(&#39;ALL_BOU1_4L_GID_SEQ&#39;);
        
   <p>（一）备份数据库，步骤如下：<br>（1）开始-运行-cmd 弹出dos控制台；然后 在控制台里，进入PostgreSQL安装目录bin下：<br>    cd C:\Program Files\PostgreSQL\9.0\bin<br>    pg_dump -h localhost -U postgres databasename &gt; D:\databasename.bak</p>
 <p>（二）恢复数据库，步骤如下：<br>（1）预先建好数据库databasename，<br>（2）开始-运行-cmd 弹出dos控制台；然后 在控制台里，进入PostgreSQL安装目录bin下：<br>    cd C:\Program Files\PostgreSQL\9.0\bin<br>    psql -h localhost -U postgres -d databasename &lt; D:\databasename.bak</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-windows下注册和取消PostgreSQL服务的方法"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/02/16/windows%E4%B8%8B%E6%B3%A8%E5%86%8C%E5%92%8C%E5%8F%96%E6%B6%88PostgreSQL%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%96%B9%E6%B3%95/"
-    >windows下注册和取消PostgreSQL服务的方法</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/02/16/windows%E4%B8%8B%E6%B3%A8%E5%86%8C%E5%92%8C%E5%8F%96%E6%B6%88PostgreSQL%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%96%B9%E6%B3%95/" class="article-date">
-  <time datetime="2023-02-16T04:16:04.000Z" itemprop="datePublished">2023-02-16</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="（一）"><a href="#（一）" class="headerlink" title="（一）"></a>（一）</h1><p>pg_ctl register [-N servicename] [-U username] [-P password] [-D datadir] [-w][-t seconds] [-o options]<br>pg_ctl unregister [-N servicename]<br>参数说明如下：<br>-N servicename：要注册的系统服务的名字。这个名字将用于服务名和 显示名。<br>-P password：用于启动服务的密码<br>-U：用于启动服务的用户名。如果是域用户，需要使用“DOMAIN\username”的格式<br>使用举例如下：<br>删除一个服务：<br>pg_ctl unregister -N postgresql-9.2<br>增加一个服务：<br>pg_ctl register -D “C:\Program Files\Postgresql\9.2\data”</p>
-<h1 id="（二）"><a href="#（二）" class="headerlink" title="（二）"></a>（二）</h1><p>重新注册服务，其实比重新安装还简单了；执行命令就可以了，<br>第一步：进入到数据库的安装目录，cd D:\PostgreSQL\bin；<br>第二部：执行服务注册：pg_ctl register -N pg921 -D D:\PostgreSQL\data -S auto -w -t 10 -l D:/PostgreSQL/pg921.log -o “-p 5432”,<br>-N pg921 代表注册服务的名称 ，-D代表数据库文件目录 ，-S代表服务启动方式auto自动，demand手动，-o “-p 5432”指启动服务端口；（可以通过pg_ctl –help命令查看使用方法）<br>第三步：启动服务，net start pg921；<br>通过上面的的方法就成功的注册了服务器，以后每次开机都可以使用数据库了；<br>但是postgresql自带的一个管理工具pgAdmin3还是不能正常使用，需要我们配置，配置方法见下图：<br>注意：服务项不需要填写，主机填写localhost，如果填写真实的ip，必须在数据库配置文件中配置ip权限，否则不能连接；</p>
  
       <!-- reward -->
       

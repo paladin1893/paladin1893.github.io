@@ -154,6 +154,65 @@
     
     
     <article
+  id="post-xampp-mysql-FEEDBACK-is-disabled修复"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/08/03/xampp-mysql-FEEDBACK-is-disabled%E4%BF%AE%E5%A4%8D/"
+    >xampp-mysql-FEEDBACK-is-disabled修复</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/08/03/xampp-mysql-FEEDBACK-is-disabled%E4%BF%AE%E5%A4%8D/" class="article-date">
+  <time datetime="2023-08-03T11:41:31.000Z" itemprop="datePublished">2023-08-03</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>前一天还能正常使用的 xampp，再一次使用时，无端端地无法启用 mysql 服务，启用 mysql 服务时提示 MySQL 意外关闭（Error: MySQL shutdown unexpectedly.）</p>
+<p>查看 mysql 错误日志文件 mysql_error.log 发现有一行提示 “Plugin ‘FEEDBACK’ is disabled.”</p>
+<p>看字面意思是 “FEEDBACK” 这个插件被禁用，查找到的解决方法如下：</p>
+<h1 id="解决方法："><a href="#解决方法：" class="headerlink" title="解决方法："></a>解决方法：</h1><p>1、先备份/xampp/mysql/data/中的所有文件。</p>
+<p>2、将/xampp/mysql/backup/中所有文件复制并覆盖/xampp/mysql/data/中的所有文件，重启 xampp 后 mysql 启动成功。</p>
+<p>或者复制xampp/mysql/backup里的所有文件除了ibdata1文件，覆盖掉xampp/mysql/data里的所有文件。</p>
+<p>3、文件覆盖后，phpmyadmin的登录密码变回初始密码（即没有密码），需要进入 phpmyadmin 管理中重新修改 root 帐号密码，原来的网站才能正常连接数据库。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/xampp/" rel="tag">xampp</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-VeraCrypt好用的硬盘加密工具"
   class="article article-type-post"
   itemscope
@@ -265,7 +324,7 @@
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Harlinn-Windows/" rel="tag">Harlinn.Windows</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/libraries/" rel="tag">libraries</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Harlinn-Windows/" rel="tag">Harlinn.Windows</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/libraries/" rel="tag">libraries</a></li></ul>
 
     </footer>
   </div>
@@ -486,93 +545,6 @@ docker run --name owncloud -p 10080:80 -v /home/owncloud/owncloud:/var/www/html/
     <footer class="article-footer">
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/" rel="tag">Docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ownCloud/" rel="tag">ownCloud</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-最新docker部署gitlab指南"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/07/28/%E6%9C%80%E6%96%B0docker%E9%83%A8%E7%BD%B2gitlab%E6%8C%87%E5%8D%97/"
-    >最新docker部署gitlab指南</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/07/28/%E6%9C%80%E6%96%B0docker%E9%83%A8%E7%BD%B2gitlab%E6%8C%87%E5%8D%97/" class="article-date">
-  <time datetime="2023-07-28T06:21:15.000Z" itemprop="datePublished">2023-07-28</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><p><a target="_blank" rel="noopener" href="https://docs.gitlab.cn/jh/install/docker.html">极狐GitLab Docker 镜像</a></p>
-<h1 id="拉取镜像"><a href="#拉取镜像" class="headerlink" title="拉取镜像"></a>拉取镜像</h1><pre><code>sudo docker pull gitlab/gitlab-ce:latest
-</code></pre>
-<h1 id="安装容器"><a href="#安装容器" class="headerlink" title="安装容器"></a>安装容器</h1><pre><code>sudo docker run --detach \
-  --hostname 192.168.10.33 \
-  --publish 9443:443 --publish 9980:80 --publish 9822:22 \
-  --name gitlab \
-  --restart always \
-  --volume /home/gitlab/config:/etc/gitlab \
-  --volume /home/gitlab/logs:/var/log/gitlab \
-  --volume /home/gitlab/data:/var/opt/gitlab \
-  gitlab/gitlab-ce:latest
-</code></pre>
-<h1 id="查看日志"><a href="#查看日志" class="headerlink" title="查看日志"></a>查看日志</h1><pre><code>，可以用容器名，也可以用容器id
-
-sudo docker logs -f gitlab
-</code></pre>
-<h1 id="进入容器"><a href="#进入容器" class="headerlink" title="进入容器"></a>进入容器</h1><pre><code>sudo docker exec -it gitlab /bin/bash
-</code></pre>
-<h1 id="修改root密码"><a href="#修改root密码" class="headerlink" title="修改root密码"></a>修改root密码</h1><ol>
-<li>切换到相应路径下: cd /opt/gitlab/bin/</li>
-<li>打开控制台: gitlab-rails console -e production</li>
-<li>查询用户账号信息并赋值给u: u=User.where(id:1).first</li>
-<li>设置该用户名的密码: u.password=’Demo9999’</li>
-<li>确认密码: u.password_confirmation=’Demo9999’</li>
-<li>保存信息： u.save </li>
-<li>退出: exit</li>
-</ol>
-<h1 id="修改外部访问地址"><a href="#修改外部访问地址" class="headerlink" title="修改外部访问地址"></a>修改外部访问地址</h1><pre><code>vi /etc/gitlab/gitlab.rb
-
-external_url &#39;http://192.168.10.33:9980&#39;
-gitlab_rails[&#39;gitlab_ssh_host&#39;]=&#39;192.168.10.33&#39;
-gitlab_rails[&#39;gitlab_shell_ssh_port&#39;]=&#39;9822&#39;
-gitlab_rails[&#39;time_zone&#39;] = &#39;Asia/Shanghai&#39;
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/" rel="tag">Docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GitLab/" rel="tag">GitLab</a></li></ul>
 
     </footer>
   </div>

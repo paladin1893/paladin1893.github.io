@@ -154,6 +154,97 @@
     
     
     <article
+  id="post-GO入门11：字符串拼接"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/04/07/GO%E5%85%A5%E9%97%A811%EF%BC%9A%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8B%BC%E6%8E%A5/"
+    >GO入门10：字符串拼接</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/04/07/GO%E5%85%A5%E9%97%A811%EF%BC%9A%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8B%BC%E6%8E%A5/" class="article-date">
+  <time datetime="2023-04-07T08:04:50.000Z" itemprop="datePublished">2023-04-07</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>拼接</p>
+<pre><code>func main() &#123;
+    s1 := &quot;hello&quot;
+    s2 := &quot;word&quot;
+    s3 := s1 + s2
+    fmt.Print(s3) //s3 = &quot;helloword&quot;
+&#125;
+</code></pre>
+<p>Sprintf函数</p>
+<pre><code>s1 := &quot;hello&quot;
+s2 := &quot;word&quot;
+s3 := fmt.Sprintf(&quot;%s%s&quot;, s1, s2) //s3 = &quot;helloword&quot;
+</code></pre>
+<p>Join函数</p>
+<p>使用Join函数我们需要先引入strings包才能调用Join函数。Join函数会先根据字符串数组的内容，计算出一个拼接之后的长度，然后申请对应大小的内存，一个一个字符串填入，在已有一个数组的情况下，这种效率会很高，如果没有的话效率也不高。我一般用来切片转字符串使用。</p>
+<pre><code>s1 := &quot;hello&quot;
+s2 := &quot;word&quot;
+var str []string = []string&#123;s1, s2&#125;
+s3 := strings.Join(str, &quot;&quot;)
+fmt.Print(s3)
+</code></pre>
+<p>buffer.Buildbuffer.WriteString函数</p>
+<pre><code>s1 := &quot;hello&quot;
+s2 := &quot;word&quot;
+var bt bytes.Buffer
+bt.WriteString(s1)
+bt.WriteString(s2)
+s3 := bt.String()
+fmt.Println(s3)
+</code></pre>
+<p>buffer.Builder函数</p>
+<pre><code>s1 := &quot;hello&quot;
+s2 := &quot;word&quot;
+var build strings.Builder
+build.WriteString(s1)
+build.WriteString(s2)
+s3 := build.String()
+fmt.Println(s3)
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GO/" rel="tag">GO</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-GO入门10：移除所有空格"
   class="article article-type-post"
   itemscope
@@ -870,94 +961,6 @@ func main() &#123;
 &#125;
 </code></pre>
 <p>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/xmcy001122/article/details/126835290">https://blog.csdn.net/xmcy001122/article/details/126835290</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GO/" rel="tag">GO</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-GO入门05：MAP集合"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/04/01/GO%E5%85%A5%E9%97%A805%EF%BC%9AMAP%E9%9B%86%E5%90%88/"
-    >GO入门06：MAP集合</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/04/01/GO%E5%85%A5%E9%97%A805%EF%BC%9AMAP%E9%9B%86%E5%90%88/" class="article-date">
-  <time datetime="2023-04-01T15:05:20.000Z" itemprop="datePublished">2023-04-01</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>Map 是一种无序的键值对的集合。<br>Map 最重要的一点是通过 key 来快速检索数据，key 类似于索引，指向数据的值。<br>Map 是无序的，遍历 Map 时返回的键值对的顺序是不确定的。<br>在获取 Map 的值时，如果键不存在，返回该类型的零值，例如 int 类型的零值是 0，string 类型的零值是 “”。<br>Map 是引用类型，如果将一个 Map 传递给一个函数或赋值给另一个变量，它们都指向同一个底层数据结构，因此对 Map 的修改会影响到所有引用它的变量。</p>
-<h1 id="定义-Map"><a href="#定义-Map" class="headerlink" title="定义 Map"></a>定义 Map</h1><p>可以使用内建函数 make 或使用 map 关键字来定义 Map:</p>
-<pre><code>/* 使用 make 函数 */
-map_variable := make(map[KeyType]ValueType, initialCapacity)
-</code></pre>
-<p>其中 KeyType 是键的类型，ValueType 是值的类型，initialCapacity 是可选的参数，用于指定 Map 的初始容量。Map 的容量是指 Map 中可以保存的键值对的数量，当 Map 中的键值对数量达到容量时，Map 会自动扩容。如果不指定 initialCapacity，Go 语言会根据实际情况选择一个合适的值。</p>
-<h1 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h1><pre><code>package main
-
-import &quot;fmt&quot;
-
-func main() &#123;
-    var siteMap map[string]string /*创建集合 */
-    siteMap = make(map[string]string)
-
-    /* map 插入 key - value 对,各个国家对应的首都 */
-    siteMap [ &quot;Google&quot; ] = &quot;谷歌&quot;
-    siteMap [ &quot;Runoob&quot; ] = &quot;菜鸟教程&quot;
-    siteMap [ &quot;Baidu&quot; ] = &quot;百度&quot;
-    siteMap [ &quot;Wiki&quot; ] = &quot;维基百科&quot;
-
-    /*使用键输出地图值 */
-    for site := range siteMap &#123;
-        fmt.Println(site, &quot;首都是&quot;, siteMap [site])
-    &#125;
-
-    /*查看元素在集合中是否存在 */
-    name, ok := siteMap [ &quot;Facebook&quot; ] /*如果确定是真实的,则存在,否则不存在 */
-    /*fmt.Println(capital) */
-    /*fmt.Println(ok) */
-    if (ok) &#123;
-        fmt.Println(&quot;Facebook 的 站点是&quot;, name)
-    &#125; else &#123;
-        fmt.Println(&quot;Facebook 站点不存在&quot;)
-    &#125;
-&#125;
-</code></pre>
  
       <!-- reward -->
       

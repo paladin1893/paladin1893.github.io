@@ -154,6 +154,576 @@
     
     
     <article
+  id="post-PYQT5实现图片显示"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/10/26/PYQT5%E5%AE%9E%E7%8E%B0%E5%9B%BE%E7%89%87%E6%98%BE%E7%A4%BA/"
+    >PYQT5实现图片显示</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/10/26/PYQT5%E5%AE%9E%E7%8E%B0%E5%9B%BE%E7%89%87%E6%98%BE%E7%A4%BA/" class="article-date">
+  <time datetime="2023-10-26T02:26:00.000Z" itemprop="datePublished">2023-10-26</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="版本一"><a href="#版本一" class="headerlink" title="版本一"></a>版本一</h1><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/TM0831/p/12733571.html">https://www.cnblogs.com/TM0831/p/12733571.html</a></p>
+<pre><code>import sys
+
+from PyQt5.QtGui import QImageReader
+from PyQt5.QtWidgets import QWidget, QApplication, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QFileDialog
+from PyQt5.Qt import QPixmap, QPoint, Qt, QPainter, QIcon
+from PyQt5.QtCore import QSize
+
+class ImageBox(QWidget):
+    def __init__(self):
+        super(ImageBox, self).__init__()
+        self.img = None
+        self.scaled_img = None
+        self.point = QPoint(0, 0)
+        self.start_pos = None
+        self.end_pos = None
+        self.left_click = False
+        self.scale = 1
+
+    def init_ui(self):
+        self.setWindowTitle(&quot;ImageBox&quot;)
+
+    def set_image(self, img_path):
+        &quot;&quot;&quot;
+        open image file
+        :param img_path: image file path
+        :return:
+        &quot;&quot;&quot;
+        # img = QImageReader(img_path)
+        # img.setScaledSize(QSize(self.size().width(), self.size().height()))
+        # img = img.read()
+        self.img = QPixmap(img_path)
+        self.scaled_img = self.img
+
+    def paintEvent(self, e):
+        &quot;&quot;&quot;
+        receive paint events
+        :param e: QPaintEvent
+        :return:
+        &quot;&quot;&quot;
+        if self.scaled_img:
+            painter = QPainter()
+            painter.begin(self)
+            painter.scale(self.scale, self.scale)
+            painter.drawPixmap(self.point, self.scaled_img)
+            painter.end()
+
+    def mouseMoveEvent(self, e):
+        &quot;&quot;&quot;
+        mouse move events for the widget
+        :param e: QMouseEvent
+        :return:
+        &quot;&quot;&quot;
+        if self.left_click:
+            size = self.size().width()
+            self.end_pos = e.pos() - self.start_pos
+            self.point = self.point + self.end_pos
+            self.start_pos = e.pos()
+            self.repaint()
+
+    def mousePressEvent(self, e):
+        &quot;&quot;&quot;
+        mouse press events for the widget
+        :param e: QMouseEvent
+        :return:
+        &quot;&quot;&quot;
+        if e.button() == Qt.LeftButton:
+            self.left_click = True
+            self.start_pos = e.pos()
+
+    def mouseReleaseEvent(self, e):
+        &quot;&quot;&quot;
+        mouse release events for the widget
+        :param e: QMouseEvent
+        :return:
+        &quot;&quot;&quot;
+        if e.button() == Qt.LeftButton:
+            self.left_click = False
+
+class MainDemo(QWidget):
+    def __init__(self):
+        super(MainDemo, self).__init__()
+
+        self.setWindowTitle(&quot;Image Viewer&quot;)
+        self.setFixedSize(1000, 600)
+
+        self.open_file = QPushButton(&quot;Open Image&quot;)
+        self.open_file.setToolTip(&quot;Open the image to view.&quot;)
+        self.open_file.clicked.connect(self.open_image)
+        self.open_file.setFixedSize(150, 30)
+
+        self.zoom_in = QPushButton(&quot;&quot;)
+        self.zoom_in.clicked.connect(self.large_click)
+        self.zoom_in.setFixedSize(30, 30)
+        in_icon = QIcon(&quot;icons/zoomIn.png&quot;)
+        self.zoom_in.setIcon(in_icon)
+        self.zoom_in.setIconSize(QSize(30, 30))
+
+        self.zoom_out = QPushButton(&quot;&quot;)
+        self.zoom_out.clicked.connect(self.small_click)
+        self.zoom_out.setFixedSize(30, 30)
+        out_icon = QIcon(&quot;icons/zoomOut.png&quot;)
+        self.zoom_out.setIcon(out_icon)
+        self.zoom_out.setIconSize(QSize(30, 30))
+
+        w = QWidget(self)
+        layout = QHBoxLayout()
+        layout.addWidget(self.open_file)
+        layout.addWidget(self.zoom_in)
+        layout.addWidget(self.zoom_out)
+        layout.setAlignment(Qt.AlignLeft)
+        w.setLayout(layout)
+        w.setFixedSize(300, 50)
+
+        self.box = ImageBox()
+        self.box.setFixedSize(500,500)
+
+        layout = QVBoxLayout()
+        layout.addWidget(w)
+        layout.addWidget(self.box)
+        self.setLayout(layout)
+
+    def open_image(self):
+        &quot;&quot;&quot;
+        select image file and open it
+        :return:
+        &quot;&quot;&quot;
+        # img_name, _ = QFileDialog.getOpenFileName(self, &quot;打开图片&quot;, &quot;&quot;, &quot;All Files(*);;*.jpg;;*.png&quot;)
+        img_name, _ = QFileDialog.getOpenFileName(self, &quot;Open Image File&quot;,&quot;&quot;,&quot;All Files(*);;*.jpg;;*.png;;*.jpeg&quot;)
+        self.box.set_image(img_name)
+
+    def large_click(self):
+        &quot;&quot;&quot;
+        used to enlarge image
+        :return:
+        &quot;&quot;&quot;
+        if self.box.scale &lt; 2:
+            self.box.scale += 0.1
+            self.box.adjustSize()
+            self.update()
+
+    def small_click(self):
+        &quot;&quot;&quot;
+        used to reduce image
+        :return:
+        &quot;&quot;&quot;
+        if self.box.scale &gt; 0.3:
+            self.box.scale -= 0.2
+            self.box.adjustSize()
+            self.update()
+
+if __name__ == &#39;__main__&#39;:
+    app = QApplication(sys.argv)
+    box = MainDemo()
+    box.show()
+    app.exec_()
+</code></pre>
+<h1 id="版本二"><a href="#版本二" class="headerlink" title="版本二"></a>版本二</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_42743778/article/details/118567409">https://blog.csdn.net/qq_42743778/article/details/118567409</a></p>
+<pre><code># -*- coding: utf-8 -*-
+
+# Form implementation generated from reading ui file &#39;top-half.ui&#39;
+#
+# Created by: PyQt5 UI code generator 5.15.4
+#
+# WARNING: Any manual changes made to this file will be lost when pyuic5 is
+# run again.  Do not edit this file unless you know what you are doing.
+
+import sys
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtGui import QImageReader
+from PyQt5.QtWidgets import QWidget, QApplication, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QFileDialog
+from PyQt5.Qt import QPixmap, QPoint, Qt, QPainter, QIcon
+from PyQt5.QtCore import QSize
+
+
+class ImageBox(QWidget):
+    def __init__(self):
+        super(ImageBox, self).__init__()
+        self.img = None
+        self.scaled_img = None
+        self.point = QPoint(0, 0)
+        self.start_pos = None
+        self.end_pos = None
+        self.left_click = False
+        self.scale = 1
+
+    def init_ui(self):
+        self.setWindowTitle(&quot;ImageBox&quot;)
+
+    def set_image(self, img_path):
+        &quot;&quot;&quot;
+        open image file
+        :param img_path: image file path
+        :return:
+        &quot;&quot;&quot;
+        # img = QImageReader(img_path)
+        # img.setScaledSize(QSize(self.size().width(), self.size().height()))
+        # img = img.read()
+        self.img = QPixmap(img_path)
+        self.scaled_img = self.img
+
+    def paintEvent(self, e):
+        &quot;&quot;&quot;
+        receive paint events
+        :param e: QPaintEvent
+        :return:
+        &quot;&quot;&quot;
+        if self.scaled_img:
+            painter = QPainter()
+            painter.begin(self)
+            painter.scale(self.scale, self.scale)
+            painter.drawPixmap(self.point, self.scaled_img)
+            painter.end()
+
+    def wheelEvent(self, event):
+        angle = event.angleDelta() / 8  # 返回QPoint对象，为滚轮转过的数值，单位为1/8度
+        angleY = angle.y()
+        # 获取当前鼠标相对于view的位置
+        if angleY &gt; 0:
+            self.scale *= 1.1
+        else:  # 滚轮下滚
+            self.scale *= 0.9
+        self.adjustSize()
+        self.update()
+
+
+    def mouseMoveEvent(self, e):
+        &quot;&quot;&quot;
+        mouse move events for the widget
+        :param e: QMouseEvent
+        :return:
+        &quot;&quot;&quot;
+        if self.left_click:
+            self.end_pos = e.pos() - self.start_pos
+            self.point = self.point + self.end_pos
+            self.start_pos = e.pos()
+            self.repaint()
+
+    def mousePressEvent(self, e):
+        &quot;&quot;&quot;
+        mouse press events for the widget
+        :param e: QMouseEvent
+        :return:
+        &quot;&quot;&quot;
+        if e.button() == Qt.LeftButton:
+            self.left_click = True
+            self.start_pos = e.pos()
+
+    def mouseReleaseEvent(self, e):
+        &quot;&quot;&quot;
+        mouse release events for the widget
+        :param e: QMouseEvent
+        :return:
+        &quot;&quot;&quot;
+        if e.button() == Qt.LeftButton:
+            self.left_click = False
+
+class Ui_Form(QWidget):
+    def setupUi(self, Form):
+        Form.setObjectName(&quot;Form&quot;)
+        Form.resize(1020, 726)
+        self.scrollArea = QtWidgets.QScrollArea(Form)
+        self.scrollArea.setGeometry(QtCore.QRect(240, 50, 719, 309))
+        self.scrollArea.setWidgetResizable(True)
+        self.scrollArea.setObjectName(&quot;scrollArea&quot;)
+        self.scrollAreaWidgetContents = QtWidgets.QWidget()
+        self.box = ImageBox()
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, self.box.width(), self.box.height()))
+        self.scrollAreaWidgetContents.setMinimumSize(QtCore.QSize(719, 309))
+        self.scrollAreaWidgetContents.setObjectName(&quot;scrollAreaWidgetContents&quot;)
+        self.gridLayout = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
+        self.gridLayout.setObjectName(&quot;gridLayout&quot;)
+
+        self.gridLayout.addWidget(self.box, 0, 0, 1, 1)
+        self.scrollArea.setWidget(self.scrollAreaWidgetContents)
+        self.open_file = QtWidgets.QPushButton(Form)
+        self.open_file.setGeometry(QtCore.QRect(30, 100, 81, 41))
+        font = QtGui.QFont()
+        font.setFamily(&quot;Aharoni&quot;)
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.open_file.setFont(font)
+        self.open_file.setObjectName(&quot;open_file&quot;)
+        self.open_file.clicked.connect(self.open_image)
+        self.progressBar = QtWidgets.QProgressBar(Form)
+        self.progressBar.setGeometry(QtCore.QRect(240, 370, 751, 23))
+        self.progressBar.setProperty(&quot;value&quot;, 24)
+        self.progressBar.setObjectName(&quot;progressBar&quot;)
+        self.line = QtWidgets.QFrame(Form)
+        self.line.setGeometry(QtCore.QRect(50, 410, 911, 16))
+        self.line.setFrameShape(QtWidgets.QFrame.HLine)
+        self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.line.setObjectName(&quot;line&quot;)
+        self.start_check = QtWidgets.QPushButton(Form)
+        self.start_check.setGeometry(QtCore.QRect(130, 100, 81, 41))
+        font = QtGui.QFont()
+        font.setFamily(&quot;Aharoni&quot;)
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.start_check.setFont(font)
+        self.start_check.setObjectName(&quot;start_check&quot;)
+        self.label = QtWidgets.QLabel(Form)
+        self.label.setGeometry(QtCore.QRect(40, 170, 61, 31))
+        font = QtGui.QFont()
+        font.setFamily(&quot;Aharoni&quot;)
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label.setFont(font)
+        self.label.setObjectName(&quot;label&quot;)
+        self.label_2 = QtWidgets.QLabel(Form)
+        self.label_2.setGeometry(QtCore.QRect(40, 300, 61, 31))
+        font = QtGui.QFont()
+        font.setFamily(&quot;Aharoni&quot;)
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_2.setFont(font)
+        self.label_2.setObjectName(&quot;label_2&quot;)
+
+
+        self.retranslateUi(Form)
+        QtCore.QMetaObject.connectSlotsByName(Form)
+
+    def retranslateUi(self, Form):
+        _translate = QtCore.QCoreApplication.translate
+        Form.setWindowTitle(_translate(&quot;Form&quot;, &quot;Form&quot;))
+        self.open_file.setText(_translate(&quot;Form&quot;, &quot;选择文件&quot;))
+        self.start_check.setText(_translate(&quot;Form&quot;, &quot;开始检测&quot;))
+        self.label.setText(_translate(&quot;Form&quot;, &quot;文件名称：&quot;))
+        self.label_2.setText(_translate(&quot;Form&quot;, &quot;检测状态:&quot;))
+
+    def open_image(self):
+        &quot;&quot;&quot;
+        select image file and open it
+        :return:
+        &quot;&quot;&quot;
+        # img_name, _ = QFileDialog.getOpenFileName(self, &quot;打开图片&quot;, &quot;&quot;, &quot;All Files(*);;*.jpg;;*.png&quot;)
+        img_name, _ = QFileDialog.getOpenFileName(None, &quot;Open Image File&quot;,&quot;&quot;,&quot;All Files(*);;*.jpg;;*.png;;*.jpeg&quot;)
+        img = QPixmap(img_name)
+        print(img.width(),&quot;+&quot;,img.height())
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, img.width(), img.height()))
+        self.box.set_image(img_name)
+
+if __name__ == &quot;__main__&quot;:
+    app = QtWidgets.QApplication(sys.argv)
+    MainWindow = QtWidgets.QMainWindow()
+    ui = Ui_Form()
+    ui.setupUi(MainWindow)
+    MainWindow.show()
+    sys.exit(app.exec_())
+</code></pre>
+<h1 id="版本三"><a href="#版本三" class="headerlink" title="版本三"></a>版本三</h1><p><a target="_blank" rel="noopener" href="https://huaweicloud.csdn.net/63808365dacf622b8df894dc.html">https://huaweicloud.csdn.net/63808365dacf622b8df894dc.html</a></p>
+<pre><code># -*- coding: utf-8 -*-
+import sys
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtGui import QImageReader
+from PyQt5.QtWidgets import QWidget, QApplication, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QFileDialog
+from PyQt5.Qt import QPixmap, QPoint, Qt, QPainter, QIcon
+from PyQt5.QtCore import QSize
+
+
+class ImageBox(QWidget):
+    def __init__(self):
+        super(ImageBox, self).__init__()
+        self.img = None
+        self.scaled_img = None
+        self.start_pos = None
+        self.end_pos = None
+        self.left_click = False
+        self.wheel_flag = False
+
+        self.scale = 1
+        self.old_scale = 1
+        self.point = QPoint(0, 0)
+        self.x = -1
+        self.y = -1
+        self.new_height = -1
+        self.new_width = -1
+
+    def init_ui(self):
+        self.setWindowTitle(&quot;ImageBox&quot;)
+
+    def set_image(self, img_path):
+        self.img = QPixmap(img_path)
+        width, height = self.img.width(), self.img.height()
+        if height / width &gt; 990 / 660:
+            new_height = 990
+            new_width = width * 990 / height
+        else:
+            new_height = height * 660 / width
+            new_width = 660
+        self.point = QPoint(int((660 - new_width) * 0.5), int((990 - new_height) * 0.5))
+        self.img = self.img.scaled(new_width, new_height, Qt.KeepAspectRatio)
+        self.scaled_img = self.img
+
+        self.new_height = new_height
+        self.new_width = new_width
+        self.scale = 1
+
+    def paintEvent(self, e):
+        if self.scaled_img:
+            painter = QPainter()
+            painter.begin(self)
+            painter.scale(self.scale, self.scale)
+            if self.wheel_flag:        # 定点缩放
+                self.wheel_flag = False
+                # 判断当前鼠标pos在不在图上
+                this_left_x = self.point.x() * self.old_scale
+                this_left_y = self.point.y() * self.old_scale
+                this_scale_width = self.new_width * self.old_scale
+                this_scale_height = self.new_height * self.old_scale
+
+                # 鼠标点在图上，以鼠标点为中心动作
+                gap_x = self.x - this_left_x
+                gap_y = self.y - this_left_y
+                if 0 &lt; gap_x &lt; this_scale_width and 0 &lt; gap_y &lt; this_scale_height:
+                    new_left_x = int(self.x / self.scale - gap_x / self.old_scale)
+                    new_left_y = int(self.y / self.scale - gap_y / self.old_scale)
+                    self.point = QPoint(new_left_x, new_left_y)
+                # 鼠标点不在图上，固定左上角进行缩放
+                else:
+                    true_left_x = int(self.point.x() * self.old_scale / self.scale)
+                    true_left_y = int(self.point.y() * self.old_scale / self.scale)
+                    self.point = QPoint(true_left_x, true_left_y)
+            painter.drawPixmap(self.point, self.scaled_img)  # 此函数中还会用scale对point进行处理
+            painter.end()
+
+    def wheelEvent(self, event):
+        angle = event.angleDelta() / 8  # 返回QPoint对象，为滚轮转过的数值，单位为1/8度
+        angleY = angle.y()
+        self.old_scale = self.scale
+        self.x, self.y = event.x(), event.y()
+        self.wheel_flag = True
+        # 获取当前鼠标相对于view的位置
+        if angleY &gt; 0:
+            self.scale *= 1.08
+        else:  # 滚轮下滚
+            self.scale *= 0.92
+        if self.scale &lt; 0.3:
+            self.scale = 0.3
+        self.adjustSize()
+        self.update()
+
+    def mouseMoveEvent(self, e):
+        if self.left_click:
+            self.end_pos = e.pos() - self.start_pos                    # 当前位置-起始位置=差值
+            self.point = self.point + self.end_pos / self.scale        # 左上角的距离变化
+            self.start_pos = e.pos()
+            self.repaint()
+
+    def mousePressEvent(self, e):
+        if e.button() == Qt.LeftButton:
+            self.left_click = True
+            self.start_pos = e.pos()
+
+    def mouseReleaseEvent(self, e):
+        if e.button() == Qt.LeftButton:
+            self.left_click = False
+
+
+class Ui_Form(QWidget):
+    def setupUi(self, Form):
+        Form.setObjectName(&quot;Form&quot;)
+        Form.resize(900, 1080)
+        self.scrollArea = QtWidgets.QScrollArea(Form)
+        self.scrollArea.setGeometry(QtCore.QRect(150, 10, 680, 990))
+        self.scrollArea.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.scrollArea.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        # self.scrollArea.setWidgetResizable(True)
+        self.scrollArea.setObjectName(&quot;scrollArea&quot;)
+
+        self.scrollAreaWidgetContents = QtWidgets.QWidget()
+        self.box = ImageBox()
+
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 680, 990))
+        self.scrollAreaWidgetContents.setMinimumSize(QtCore.QSize(100, 100))
+        self.scrollAreaWidgetContents.setObjectName(&quot;scrollAreaWidgetContents&quot;)
+        self.gridLayout = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
+        self.gridLayout.setObjectName(&quot;gridLayout&quot;)
+
+        self.gridLayout.addWidget(self.box, 0, 0, 1, 1)
+        self.scrollArea.setWidget(self.scrollAreaWidgetContents)
+
+        self.open_file = QtWidgets.QPushButton(Form)
+        self.open_file.setGeometry(QtCore.QRect(30, 100, 81, 41))
+        font = QtGui.QFont()
+        font.setFamily(&quot;Aharoni&quot;)
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.open_file.setFont(font)
+        self.open_file.setObjectName(&quot;open_file&quot;)
+        self.open_file.clicked.connect(self.open_image)
+
+        self.retranslateUi(Form)
+        QtCore.QMetaObject.connectSlotsByName(Form)
+
+    def retranslateUi(self, Form):
+        _translate = QtCore.QCoreApplication.translate
+        Form.setWindowTitle(_translate(&quot;Form&quot;, &quot;Form&quot;))
+        self.open_file.setText(_translate(&quot;Form&quot;, &quot;选择文件&quot;))
+
+    def open_image(self):
+        img_name, _ = QFileDialog.getOpenFileName(None, &quot;Open Image File&quot;,&quot;&quot;,&quot;All Files(*);;*.jpg;;*.png;;*.jpeg&quot;)
+        self.box.set_image(img_name)
+
+
+if __name__ == &quot;__main__&quot;:
+    app = QtWidgets.QApplication(sys.argv)
+    MainWindow = QtWidgets.QMainWindow()
+    ui = Ui_Form()
+    ui.setupUi(MainWindow)
+    MainWindow.show()
+    sys.exit(app.exec_())
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-QSS美化控件教程"
   class="article article-type-post"
   itemscope
@@ -915,105 +1485,6 @@ if __name__ == &#39;__main__&#39;:
     <footer class="article-footer">
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Qt/" rel="tag">Qt</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Python替换文件"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/10/20/Python%E6%9B%BF%E6%8D%A2%E6%96%87%E4%BB%B6/"
-    >Python替换文件</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/10/20/Python%E6%9B%BF%E6%8D%A2%E6%96%87%E4%BB%B6/" class="article-date">
-  <time datetime="2023-10-20T02:20:00.000Z" itemprop="datePublished">2023-10-20</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><a target="_blank" rel="noopener" href="https://www.python100.com/html/W14O5WJ56I2U.html">https://www.python100.com/html/W14O5WJ56I2U.html</a></p>
-<p>Python是一种多用途、高效的编程语言，它具有广泛的应用场景。文件处理是其中一个领域，Python提供了很多方便的模块和函数来处理文本、二进制数据、CSV、JSON等文件类型。本文将介绍Python如何使用常用的模块和函数来替换文件。</p>
-<h1 id="一、os模块"><a href="#一、os模块" class="headerlink" title="一、os模块"></a>一、os模块</h1><p>os模块提供了与操作系统交互的接口。使用该模块可以方便地访问文件系统、环境变量等系统资源。os模块中的replace()函数可以用来替换文件名和路径。</p>
-<p>示例代码：</p>
-<pre><code>import os
-
-file_path = &#39;D:/test/file.txt&#39;
-new_path = &#39;D:/test/new_file.txt&#39;
-os.replace(file_path, new_path)
-</code></pre>
-<p>以上代码将文件D:/test/file.txt替换为D:/test/new_file.txt。该函数可以自动处理文件名重复等情况。</p>
-<h1 id="二、shutil模块"><a href="#二、shutil模块" class="headerlink" title="二、shutil模块"></a>二、shutil模块</h1><p>shutil模块是Python的一个标准库，提供了高级的文件操作接口。它可以实现复制、移动、重命名等文件操作。shutil模块中的move()函数也可以用来替换文件。</p>
-<p>示例代码：</p>
-<pre><code>import shutil
-
-file_path = &#39;D:/test/file.txt&#39;
-new_path = &#39;D:/test/new_file.txt&#39;
-shutil.move(file_path, new_path)
-</code></pre>
-<p>以上代码将文件D:/test/file.txt替换为D:/test/new_file.txt。该函数也可以自动处理文件名重复等情况。</p>
-<h1 id="三、re模块"><a href="#三、re模块" class="headerlink" title="三、re模块"></a>三、re模块</h1><p>re模块是Python的一个标准库，提供了正则表达式的功能。正则表达式可以用来匹配和替换字符串。在替换文件中，如果需要根据某些特定的规则替换文件内容，可以使用re模块。</p>
-<p>示例代码：</p>
-<pre><code>import re
-
-file_path = &#39;D:/test/file.txt&#39;
-new_path = &#39;D:/test/new_file.txt&#39;
-
-with open(file_path, &#39;r&#39;) as f:
-    content = f.read()
-    new_content = re.sub(&#39;old_text&#39;, &#39;new_text&#39;, content)
-
-with open(new_path, &#39;w&#39;) as f:
-    f.write(new_content)
-</code></pre>
-<p>以上代码将文件D:/test/file.txt中的所有old_text替换为new_text，并将结果保存到D:/test/new_file.txt中。用with语句打开文件可以更加方便地处理文件的读写操作。</p>
-<h1 id="四、fileinput模块"><a href="#四、fileinput模块" class="headerlink" title="四、fileinput模块"></a>四、fileinput模块</h1><p>fileinput模块也是Python的一个标准库，提供了一种通用的方法来处理文件输入和输出。它可以将多个文件作为一个整体来处理，并且可以自动备份文件。</p>
-<p>示例代码：</p>
-<pre><code>import fileinput
-
-file_path = &#39;D:/test/file.txt&#39;
-new_path = &#39;D:/test/new_file.txt&#39;
-with fileinput.FileInput(file_path, inplace=True, backup=&#39;.bak&#39;) as f:
-    for line in f:
-        print(line.replace(&#39;old_text&#39;, &#39;new_text&#39;), end=&#39;&#39;)
-</code></pre>
-<p>以上代码将文件D:/test/file.txt中的所有old_text替换为new_text，并保存到原来的文件中。使用inplace参数可以自动备份文件，使用print函数和end参数可以方便地处理文件的输出。</p>
-<h1 id="五、总结"><a href="#五、总结" class="headerlink" title="五、总结"></a>五、总结</h1><p>Python提供了很多方便的模块和函数来处理文件，以上介绍的os、shutil、re、fileinput模块是其中常用的几个。在实际开发中，可以根据实际需求选取相应的模块和函数来完成文件替换操作。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
 
     </footer>
   </div>

@@ -154,6 +154,178 @@
     
     
     <article
+  id="post-flask实用入门案例05"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/08/15/flask%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B05/"
+    >flask实用入门案例05--参数解析</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/08/15/flask%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B05/" class="article-date">
+  <time datetime="2023-08-15T14:00:00.000Z" itemprop="datePublished">2023-08-15</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>官方文档：<br>（1）尽管 Flask 能够简单地访问请求数据(比如查询字符串或者 POST 表单编码的数据)，验证表单数据仍然很痛苦。Flask-RESTful 内置了支持验证请求数据，它使用了一个类似 argparse 的库。<br>（2）需要注意地是与 argparse 模块不同，reqparse.RequestParser.parse_args() 返回一个 Python 字典而不是一个自定义的数据结构。</p>
+<pre><code>from flask import Flask
+from flask_restful import reqparse, abort, Api, Resource
+ 
+app = Flask(__name__)
+api = Api(app)
+ 
+parser = reqparse.RequestParser()
+parser.add_argument(&#39;task&#39;, type=str)
+parser.add_argument(&#39;name&#39;, type=str)
+ 
+ 
+# 获取 &amp; 更新
+class Get_Modify(Resource):
+ def post(self):
+  args = parser.parse_args()
+  print(args)
+  return args, 201
+ 
+ 
+api.add_resource(Get_Modify, &#39;/get_modify&#39;)
+ 
+if __name__ == &#39;__main__&#39;:
+ app.run(debug=True)
+ 
+</code></pre>
+<p>上例中，即使传递其他参数，最终也只会读取定义的2个参数的值<br>通过如上代码说明：reqparse.RequestParser.parse_args()，即如上的args可以获取到request的form表单的参数，最终是一个字典。</p>
+<pre><code>from flask import Flask
+from flask_restful import reqparse, abort, Api, Resource
+
+app = Flask(__name__)
+api = Api(app)
+
+Tasks = &#123;
+ &#39;t1&#39;: &#123;&#39;task&#39;: &#39;eat an app&#39;&#125;,
+ &#39;t2&#39;: &#123;&#39;task&#39;: &#39;play football&#39;&#125;,
+ &#39;t3&#39;: &#123;&#39;task&#39;: &#39;watching TV&#39;&#125;,
+&#125;
+
+def abort_if_todo_doesnt_exist(t_id):
+ if t_id not in Tasks:
+  abort(404, message=&quot;Todo &#123;&#125; doesn&#39;t exist&quot;.format(t_id))
+
+
+parser = reqparse.RequestParser()
+parser.add_argument(&#39;task&#39;, type=str)
+
+
+# 获取 &amp; 更新
+class Get_Modify(Resource):
+ def get(self):
+  return Tasks
+
+ def post(self):
+  args = parser.parse_args()
+  t_id = int(max(Tasks.keys()).lstrip(&#39;t&#39;)) + 1
+  t_id = &#39;t%i&#39; % t_id
+  Tasks[t_id] = &#123;&#39;task&#39;: args[&#39;task&#39;]&#125;
+  return Tasks[t_id], 201
+
+
+# 设置每个视图函数的访问格式
+api.add_resource(Get_Modify, &#39;/get_modify&#39;)
+
+if __name__ == &#39;__main__&#39;:
+ app.run(debug=True)
+</code></pre>
+<p>解释：<br>（1）如上的函数，get是获取总的列表Tasks<br>（2）post是添加最新的一个key的值，且key的值是以“t”开头，数字自增的一种形式<br>（3）max(Tasks.keys())这个可以获取到Tasks列表里面，索引最大的key值，在没添加的时候，索引最大为t3<br>（4）x_string.lstrip（‘t’）,这个可以截取x_string字符串里面以’t’开始的剩余字符串。例如t3最终得到3，最终int(max(Tasks.keys()).lstrip(‘t’)) + 1这一行的意思是，得到列表最大的一个key的索引，然后自增到下一个。<br>（5）在希望在form表单里面传递参数，需要在函数里面，使用args = parser.parse_args()接收传递的参数，具体key值通过add_argument函数设置 </p>
+<pre><code>from flask import Flask
+from flask_restful import reqparse, abort, Api, Resource
+
+app = Flask(__name__)
+api = Api(app)
+
+Tasks = &#123;
+ &#39;t1&#39;: &#123;&#39;task&#39;: &#39;eat an app&#39;&#125;,
+ &#39;t2&#39;: &#123;&#39;task&#39;: &#39;play football&#39;&#125;,
+ &#39;t3&#39;: &#123;&#39;task&#39;: &#39;watching TV&#39;&#125;,
+&#125;
+
+
+def abort_if_todo_doesnt_exist(t_id):
+ if t_id not in Tasks:
+  abort(404, message=&quot;Todo &#123;&#125; doesn&#39;t exist&quot;.format(t_id))
+
+
+parser = reqparse.RequestParser()
+parser.add_argument(&#39;task&#39;, type=str)
+
+
+# 更新 &amp; 删除 任务
+class Updata_Delete(Resource):
+ def get(self, t_id):    # 根据t_id获取对应的value
+  abort_if_todo_doesnt_exist(t_id)
+  return Tasks[t_id]
+
+ def delete(self, t_id):   # 根据t_id删除对应的value
+  abort_if_todo_doesnt_exist(t_id)
+  del Tasks[t_id]
+  return &#39;delete success&#39;, 204
+
+ def post(self, t_id):   # 判断t_id是否存在，并返回Tasks整个列表
+  abort_if_todo_doesnt_exist(t_id)
+  return Tasks,201
+
+ def put(self, t_id):   # 根据t_id添加对应的value，并返回所有值
+  args = parser.parse_args()
+  task = &#123;&#39;task&#39;: args[&#39;task&#39;]&#125;
+  Tasks[t_id] = task
+  return Tasks, 201
+
+
+api.add_resource(Updata_Delete, &#39;/update_delete/&lt;t_id&gt;&#39;)
+
+if __name__ == &#39;__main__&#39;:
+ app.run(debug=True)
+ 
+</code></pre>
+<p>解释：<br>（1）通过url传递参数，给视图函数，这种方式一般用在get请求，post请求通过form表单形式比较实用<br>（2）通过url传递参数，需要定义函数时候，使用形参t_id,且在使用add_resource（）函数的使用，url参数形式最后添加<t_id>变量，例如’/update_delete/<t_id>‘这个形式。<br>（3）delete这个函数，最终执行删除是成功的，但是最终并没有返回return的字符串”delete success”，具体原因不详，可能是用法不对，后续再更新中说明.<br>(return ‘delete success’, 204 将 204去掉即可)</t_id></t_id></p>
+<p><a target="_blank" rel="noopener" href="https://www.jb51.net/article/176172.htm">https://www.jb51.net/article/176172.htm</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flask/" rel="tag">flask</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-flask实用入门案例04"
   class="article article-type-post"
   itemscope
@@ -596,72 +768,6 @@ if __name__ == &#39;__main__&#39;:
     <footer class="article-footer">
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-SF6气体"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/08/09/SF6%E6%B0%94%E4%BD%93/"
-    >SF6气体</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/08/09/SF6%E6%B0%94%E4%BD%93/" class="article-date">
-  <time datetime="2023-08-09T09:42:32.000Z" itemprop="datePublished">2023-08-09</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>如果您是从事高压电力工作的小伙伴，您可能会接触到气体绝缘开关装置。这三个字母是气体绝缘全封闭复合装置的英文缩写。它也可以称为“SF6全封闭开关设备”。为什么会这样？</p>
-<p>最初，当充满SF6气体时，气体绝缘开关设备可以实现导体对护套、相间和断口之间的可靠绝缘。</p>
-<p>那么，什么是SF6气体？为什么它具有良好的绝缘和灭弧性能？本文作者将带你一起去揭开他的秘密。</p>
-<h2 id="SF6气体的基本特性"><a href="#SF6气体的基本特性" class="headerlink" title="SF6气体的基本特性"></a>SF6气体的基本特性</h2><p>六氟化硫，化学式为SF6，是一种无色、无臭、无毒、不燃的稳定气体，分子量为146.06，在20℃和0.1MPa时密度为6.1kg/m3，约为空气密度的5倍，六氟化硫在常温常压下为气态。</p>
-<p>SF6气体是目前最好的绝缘介质和灭弧剂，其绝缘和灭弧性能远优于绝缘油。</p>
-<p>其分子结构为完全对称的八面体结构，尖端有六个氟原子，中心有硫原子共价键合。</p>
-<p>物理性质：无色、无味、无味、无毒、不易燃，临界温度45.6℃；它不溶于水，在某些有机溶剂中具有很高的溶解度。</p>
-<p>化学性质：非常稳定。通常，在室温下，甚至在电气设备最高允许温度的150℃范围内，不会发生化学反应。超过150℃时，与塑料发生弱化学反应。超过200℃时，它与铜和铝反应缓慢，在500℃时开始分解。</p>
-<p>导热性：导热性差，导热系数仅为空气的2/3，但表面传热系数为15，为空气的2.5倍。总的来说，其散热性能优于空气。</p>
-<p>电负性：分子容易吸收自由电子形成负离子。由于F的最外层是7个电子，因此很容易吸收一个电子，使其成为稳定的8个电子。</p>
-<p>灭弧原理：SF6的负电荷形成负离子，与电弧中的正离子结合，使电弧中的击穿迅速减少，电弧的击穿电压升高，电弧迅速恢复。</p>
-<p>制造工艺：s+3f2→sf6+q（放热），合成原料经水洗、碱洗、热解、吸附剂吸附等一系列清洗处理后，放入钢瓶中进行液体输送。</p>
-<p>气体绝缘开关设备安装后，应清除各种杂质和水分。其标准由国际电工委员会（IEC）和各国制定。</p>
-<p>由于SF6气体的分子量较大，用公式p=rt计算温度、压力和密度三个状态参数的偏差很大。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%94%B5%E5%8A%9B/" rel="tag">电力</a></li></ul>
 
     </footer>
   </div>

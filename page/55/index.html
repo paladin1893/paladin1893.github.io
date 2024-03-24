@@ -154,6 +154,81 @@
     
     
     <article
+  id="post-Oracle-RAC建表空间"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/02/12/Oracle-RAC%E5%BB%BA%E8%A1%A8%E7%A9%BA%E9%97%B4/"
+    >Oracle RAC建表空间</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/02/12/Oracle-RAC%E5%BB%BA%E8%A1%A8%E7%A9%BA%E9%97%B4/" class="article-date">
+  <time datetime="2023-02-12T06:45:15.000Z" itemprop="datePublished">2023-02-12</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>一、建表空间</p>
+<p>1、RAC</p>
+<pre><code>create tablespace TS_YYYY datafile size 500M autoextend on next 50M maxsize unlimited;
+</code></pre>
+<p>2、单实例</p>
+<pre><code>create tablespace TS_YYYY datafile ‘/u01/app/oracle/oradata/pmsgeo/yxyk.dbf’ size 500M autoextend on next 50M maxsize unlimited;
+</code></pre>
+<p>二、建用户</p>
+<pre><code>create user yxyk identified by yyyy default tablespace TS_YYYY;
+</code></pre>
+<p>三、赋权限</p>
+<pre><code>grant connect,resource to yyyy;
+grant debug connect session to yyyy;
+grant create any sequence to yyyy;
+grant create any table to yyyy;
+grant delete any table to yyyy;
+grant insert any table to yyyy;
+grant select any table to yyyy;
+grant unlimited tablespace to yyyy;
+grant execute any procedure to yyyy;
+grant update any table to yyyy;
+grant create any view to yyyy;
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Oracle/" rel="tag">Oracle</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-MySql改密码"
   class="article article-type-post"
   itemscope
@@ -508,66 +583,6 @@ alter user ‘root’@’::1′ identified by ‘MySql@123’;
 <li><p>x<br>.x文件是微软为DX开发提供的一种3D文件.包括顶点\纹理、动作。</p>
 </li>
 <li><p>xyz<br>.xyz格式的三维点云可以用OpenCV生成，显示使用VTK库，需要自己编译，然后用OpenCV viz模块显示，介绍 <a target="_blank" rel="noopener" href="https://blog.csdn.net/stq054188/article/details/104799702">https://blog.csdn.net/stq054188/article/details/104799702</a></p>
-</li>
-</ul>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%9C%B0%E7%90%86%E6%95%B0%E6%8D%AE/" rel="tag">地理数据</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-常用的几种在线地图"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/02/10/%E5%B8%B8%E7%94%A8%E7%9A%84%E5%87%A0%E7%A7%8D%E5%9C%A8%E7%BA%BF%E5%9C%B0%E5%9B%BE/"
-    >常用的几种在线地图</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/02/10/%E5%B8%B8%E7%94%A8%E7%9A%84%E5%87%A0%E7%A7%8D%E5%9C%A8%E7%BA%BF%E5%9C%B0%E5%9B%BE/" class="article-date">
-  <time datetime="2023-02-10T13:33:50.000Z" itemprop="datePublished">2023-02-10</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <ul>
-<li><p>（1）天地图：CGCS2000，2000国家大地坐标系；<br>我们其实很多时候直接用WGS84的坐标来代替CGCS2000坐标。因为CGCS2000的定义与WGS84实质一样。采用的参考椭球非常接近。扁率差异引起椭球面上的纬度和高度变化最大达0.1mm。当前测量精度范围内，可以忽略这点差异。可以说两者相容至cm级水平，但若一点的坐标精度达不到cm水平，则不认为CGCS2000和WGS84的坐标是相容的。</p>
-</li>
-<li><p>（2）百度地图：bd09II坐标。<br>首先了解一下火星坐标，它是在国际标准坐标WGS-84上进行的一次加密，由于国内的电子地图都要至少使用火星坐标进行一次加密，百度直接就任性一些，直接自己又研究了一套加密算法，来了个二次加密，这就是我们所熟知的百度坐标(BD-09)。</p>
-</li>
-<li><p>（3）高德地图：gcj02坐标，也称为火星坐标。<br>火星坐标是国家测绘局为了国家安全在原始坐标的基础上进行偏移得到的坐标，基本国内的电子地图、导航设备都是采用的这一坐标系或在这一坐标的基础上进行二次加密得到的。</p>
 </li>
 </ul>
  

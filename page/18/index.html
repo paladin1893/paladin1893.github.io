@@ -154,6 +154,83 @@
     
     
     <article
+  id="post-Vue2传值方式详解08"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/09/08/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A308/"
+    >Vue2传值方式详解08-路由传值</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/09/08/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A308/" class="article-date">
+  <time datetime="2023-09-08T04:24:36.000Z" itemprop="datePublished">2023-09-08</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>路由传值</p>
+<p>*使用问号传值</p>
+<p>A页面跳转B页面时使用 this.r o u t e r . p u s h ( ’ / B ? n a m e = d a n s e e k ’ ) B 页面可以使用 t h i s . router.push(’/B?name=danseek’) B页面可以使用 this.router.push(’/B?name=danseek’)B页面可以使用this.route.query.name 来获取A页面传过来的值<br>上面要注意router和route的区别</p>
+<p>*使用冒号传值</p>
+<p>配置如下路由：</p>
+<pre><code>&#123;
+    path: &#39;/b/:name&#39;,
+    name: &#39;b&#39;,
+    component: () =&gt; import( &#39;../views/B.vue&#39;)
+&#125;,
+</code></pre>
+<p>在B页面可以通过 this.$route.params.name 来获取路由传入的name的值</p>
+<p>*使用父子组件传值</p>
+<p>由于router-view本身也是一个组件，所以我们也可以使用父子组件传值方式传值，然后在对应的子页面里加上props，因为type更新后没有刷新路由，所以不能直接在子页面的mounted钩子里直接获取最新type的值，而要使用watch</p>
+<pre><code>&lt;router-view :type=&quot;type&quot;&gt;&lt;/router-view&gt;
+ 
+// 子页面
+props: [&#39;type&#39;]
+watch: &#123;
+       type()&#123;
+           // console.log(&quot;在这个方法可以时刻获取最新的数据:type=&quot;,this.type)
+       &#125;,
+&#125;,
+</code></pre>
+<p>————————————————<br>版权声明：本文为CSDN博主「小毕学习代码」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_70703397/article/details/132201160">https://blog.csdn.net/qq_70703397/article/details/132201160</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-Vue2传值方式详解07"
   class="article article-type-post"
   itemscope
@@ -648,105 +725,6 @@ export default &#123;
 &lt;/script&gt;
 </code></pre>
 <p>————————————————<br>版权声明：本文为CSDN博主「codeCat!」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_60547084/article/details/124408513">https://blog.csdn.net/weixin_60547084/article/details/124408513</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Vue2传值方式详解02"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/09/02/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A302/"
-    >Vue2传值方式详解02-子传父传递</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/09/02/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A302/" class="article-date">
-  <time datetime="2023-09-02T12:34:26.000Z" itemprop="datePublished">2023-09-02</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>（1）在父组件的子组件标签上自定义一个事件，然后调用需要的方法<br>（2）在子组件的方法中通过 this.$emit(“事件”)来触发在父组件中定义的事件，数据是以参数的形式进行传递的</p>
-<p>代码示例：</p>
-<p>父组件</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    &lt;i&gt;父组件&lt;/i&gt;
-    &lt;!--页面使用--&gt;
-    &lt;son @lcclick=&quot;lcclick&quot;&gt;&lt;/son&gt;//自定义一个事件
-  &lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-import son from &quot;./son.vue&quot;; //导入父组件
-export default &#123;
-  components: &#123; son &#125;, //注册组件
-  name: &quot;父组件&quot;,
-  data() &#123;
-    return &#123;&#125;;
-  &#125;,
-  methods: &#123;
-    lcclick()&#123;
-      alert(&#39;子传父&#39;)
-    &#125;
-  &#125;,
-&#125;;
-&lt;/script&gt;
-</code></pre>
-<p>子组件</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    &lt;button @click=&quot;lcalter&quot;&gt;点我&lt;/button&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-export default &#123;
-components: &#123; &#125;,
-  name: &#39;子组件&#39;,
-  methods: &#123;
-    lcalter()&#123;
-      this.$emit(&#39;lcclick&#39;)//通过emit来触发事件
-    &#125;
-  &#125;,
-&#125;;
-&lt;/script&gt;
-</code></pre>
-<p>————————————————<br>版权声明：本文为CSDN博主「小毕学习代码」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_70703397/article/details/132201160">https://blog.csdn.net/qq_70703397/article/details/132201160</a></p>
  
       <!-- reward -->
       

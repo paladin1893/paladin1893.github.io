@@ -154,6 +154,122 @@
     
     
     <article
+  id="post-Oracle查看表空间使用情况"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/06/12/Oracle%E6%9F%A5%E7%9C%8B%E8%A1%A8%E7%A9%BA%E9%97%B4%E4%BD%BF%E7%94%A8%E6%83%85%E5%86%B5/"
+    >Oracle查看表空间使用情况</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/06/12/Oracle%E6%9F%A5%E7%9C%8B%E8%A1%A8%E7%A9%BA%E9%97%B4%E4%BD%BF%E7%94%A8%E6%83%85%E5%86%B5/" class="article-date">
+  <time datetime="2023-06-12T12:47:21.000Z" itemprop="datePublished">2023-06-12</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="Part1"><a href="#Part1" class="headerlink" title="Part1"></a>Part1</h1><p>1、查看所有表空间大小</p>
+<pre><code>select tablespace_name,sum(bytes)/1024/1024 from dba_data_files group by tablespace_name;
+</code></pre>
+<p>2、未使用的表空间大小</p>
+<pre><code>select tablespace_name,sum(bytes)/1024/1024 from dba_free_space   
+group by tablespace_name;   
+</code></pre>
+<p>3、所以使用空间可以这样计算</p>
+<pre><code>select a.tablespace_name,total,free,total-free used from   
+( select tablespace_name,sum(bytes)/1024/1024 total from dba_data_files   
+group by tablespace_name) a,   
+( select tablespace_name,sum(bytes)/1024/1024 free from dba_free_space   
+group by tablespace_name) b   
+where a.tablespace_name=b.tablespace_name;   
+</code></pre>
+<p>4、还有在命令行情况下如何将结果放到一个文件里。</p>
+<pre><code>SQL&gt; spool out.txt   
+SQL&gt; select * from v$database;   
+SQL&gt; spool off
+</code></pre>
+<p>5、查询所有的表空间</p>
+<pre><code>select tablespace_name from dba_tablespaces  
+</code></pre>
+<p>6、查看表空间中分布的用户信息</p>
+<pre><code>select tablespace_name, owner,sum(bytes) from dba_segments   
+group by tablespace_name, owner   
+</code></pre>
+<h1 id="Part2"><a href="#Part2" class="headerlink" title="Part2"></a>Part2</h1><p>查看Oracle数据库表空间大小，是否需要增加表空间的数据文件<br>在数据库管理中，磁盘空间不足是DBA都会遇到的问题，问题比较常见。</p>
+<p>1、查看表空间已经使用的百分比</p>
+<pre><code>select a.tablespace_name,a.bytes/1024/1024 &quot;Sum MB&quot;,(a.bytes-b.bytes)/1024/1024 &quot;used MB&quot;,b.bytes/1024/1024 &quot;free MB&quot;,round(((a.bytes-b.bytes)/a.bytes)*100,2) &quot;percent_used&quot;  
+from  
+(select tablespace_name,sum(bytes) bytes from dba_data_files group by tablespace_name) a,   
+(select tablespace_name,sum(bytes) bytes,max(bytes) largest from dba_free_space group by tablespace_name) b   
+where a.tablespace_name=b.tablespace_name   
+order by ((a.bytes-b.bytes)/a.bytes) desc  
+</code></pre>
+<p>“Sum MB”表示表空间所有的数据文件总共在操作系统占用磁盘空间的大小<br>比如：test表空间有2个数据文件，datafile1为300MB，datafile2为400MB，那么test表空间的“Sum MB”就是700MB<br>“userd MB”表示表空间已经使用了多少<br>“free MB”表示表空间剩余多少<br>“percent_user”表示已经使用的百分比</p>
+<p>2、比如从1中查看到MLOG_NORM_SPACE表空间已使用百分比达到90%以上，可以查看该表空间总共有几个数</p>
+<p>据文件，每个数据文件是否自动扩展，可以自动扩展的最大值。</p>
+<pre><code>select file_name,tablespace_name,bytes/1024/1024 &quot;bytes MB&quot;,maxbytes/1024/1024 &quot;maxbytes MB&quot; from dba_data_files  
+  where tablespace_name=&#39;MLOG_NORM_SPACE&#39;;   
+</code></pre>
+<p>2.1、查看 xxx 表空间是否为自动扩展</p>
+<pre><code>select file_id,file_name,tablespace_name,autoextensible,increment_by from dba_data_files order by file_id desc;  
+select file_id,file_name,tablespace_name,autoextensible,increment_by from dba_data_files order by file_id desc;
+</code></pre>
+<p>3、比如MLOG_NORM_SPACE表空间目前的大小为19GB，但最大每个数据文件只能为20GB，数据文件快要写满，可以增加表空间的数据文件<br>用操作系统UNIX、Linux中的df -g命令(查看下可以使用的磁盘空间大小)<br>获取创建表空间的语句：</p>
+<pre><code>select    dbms_metadata.get_ddl(&#39;TABLESPACE&#39;,&#39;MLOG_NORM_SPACE&#39;)   from    dual;  
+select dbms_metadata.get_ddl(&#39;TABLESPACE&#39;,&#39;MLOG_NORM_SPACE&#39;) from dual;
+</code></pre>
+<p>4、确认磁盘空间足够，增加一个数据文件</p>
+<pre><code>alter    tablespace    MLOG_NORM_SPACE   
+add    datafile   &#39;/oracle/oms/oradata/mlog/Mlog_Norm_data001.dbf&#39;  
+size    10M    autoextend   on    maxsize    20G 
+</code></pre>
+<p>5、验证已经增加的数据文件</p>
+<pre><code>select    file_name,file_id,tablespace_name   from    dba_data_files   
+where    tablespace_name=&#39;MLOG_NORM_SPACE&#39; 
+</code></pre>
+<p>6、如果删除表空间数据文件，如下：</p>
+<pre><code>alter    tablespace    MLOG_NORM_SPACE   
+drop     datafile &#39;/oracle/oms/oradata/mlog/Mlog_Norm_data001.dbf&#39;  
+</code></pre>
+<p>转自<a target="_blank" rel="noopener" href="http://space.itpub.net/12778571/viewspace-582695">http://space.itpub.net/12778571/viewspace-582695</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Oracle/" rel="tag">Oracle</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-Oracle监控的关键指标"
   class="article article-type-post"
   itemscope
@@ -659,67 +775,6 @@ where c.statistic#=12 and c.sid=a.sid and a.paddr=b.addr order by value desc
     <footer class="article-footer">
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%80%A7%E8%83%BD/" rel="tag">服务器性能</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%9B%91%E6%8E%A7%E6%8C%87%E6%A0%87/" rel="tag">监控指标</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-2022年中国新能源汽车保有量达1310万辆，同比增长67-13"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/06/06/2022%E5%B9%B4%E4%B8%AD%E5%9B%BD%E6%96%B0%E8%83%BD%E6%BA%90%E6%B1%BD%E8%BD%A6%E4%BF%9D%E6%9C%89%E9%87%8F%E8%BE%BE1310%E4%B8%87%E8%BE%86%EF%BC%8C%E5%90%8C%E6%AF%94%E5%A2%9E%E9%95%BF67-13/"
-    >2022年中国新能源汽车保有量达1310万辆，同比增长67.13%</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/06/06/2022%E5%B9%B4%E4%B8%AD%E5%9B%BD%E6%96%B0%E8%83%BD%E6%BA%90%E6%B1%BD%E8%BD%A6%E4%BF%9D%E6%9C%89%E9%87%8F%E8%BE%BE1310%E4%B8%87%E8%BE%86%EF%BC%8C%E5%90%8C%E6%AF%94%E5%A2%9E%E9%95%BF67-13/" class="article-date">
-  <time datetime="2023-06-06T01:43:15.000Z" itemprop="datePublished">2023-06-06</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>中新社北京1月11日电 (记者 郭超凯)记者11日从中国公安部获悉，据统计，2022年全国机动车保有量达4.17亿辆，机动车驾驶人达5.02亿人；全国新能源汽车保有量达1310万辆，同比增长67.13%。</p>
-<p>截至2022年底，全国机动车保有量达4.17亿辆，扣除报废注销量比2021年增加2129万辆，增长5.39%，2022年全国新注册登记机动车3478万辆。汽车保有量达3.19亿辆，占机动车总量76.59%，比2021年增加1752万辆，增长5.81%，全国新注册登记汽车2323万辆。摩托车保有量达8072万辆，占机动车总量19.38%，比2021年增加513万辆，增长6.79%，全国新注册登记摩托车1130万辆。</p>
-<p>全国有84个城市的汽车保有量超过百万辆，同比增加5个城市，39个城市超200万辆，21个城市超300万辆。其中，北京、成都、重庆、上海超过500万辆，苏州、郑州、西安、武汉超过400万辆。</p>
-<p>据知，截至2022年底，全国新能源汽车保有量达1310万辆，占汽车总量的4.10%，扣除报废注销量比2021年增加526万辆，增长67.13%。其中，纯电动汽车保有量1045万辆，占新能源汽车总量的79.78%。</p>
-<p>2022年全国新注册登记新能源汽车535万辆，占新注册登记汽车总量的23.05%，与上年相比增加240万辆，增长81.48%。新注册登记新能源汽车数量从2018年的107万辆到2022年的535万辆，呈高速增长态势。</p>
-<p>汽车转让登记数量持续增长，二手车交易市场活跃。截至2022年底，全国公安交管部门共办理机动车转让登记业务3027万笔。其中，汽车转移登记业务2869万笔，占94.80%。近五年，二手汽车转让登记与汽车新车注册登记数量的比例由0.77上升至1.24，超过汽车新车注册登记量。</p>
-<p>2022年，公安部会同商务部等部门推出系列便利二手车交易登记改革新措施，全面实行经销二手车“单独签注、核发临牌”，异地直接办理交易登记的二手小客车310万辆，更好促进二手车流通。</p>
-<p>据介绍，截至2022年底，全国机动车驾驶人数量达5.02亿人，其中汽车驾驶人4.64亿人，占驾驶人总数92.54%。2022年，全国新领证驾驶人2923万人。</p>
-<p>2022年4月1日起实施的《机动车驾驶证申领和使用规定》(公安部令第162号)新增“轻型牵引挂车”准驾车型(C6)，目前已取得C6准驾车型驾驶人数量达44万人，更好满足民众驾驶小型旅居挂车出行需求，促进房车旅游新业态发展。(完)</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%94%B5%E5%8A%9B/" rel="tag">电力</a></li></ul>
 
     </footer>
   </div>

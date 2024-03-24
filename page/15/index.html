@@ -154,6 +154,78 @@
     
     
     <article
+  id="post-conda、python环境配置"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/09/26/conda%E3%80%81python%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/"
+    >conda、python环境配置</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/09/26/conda%E3%80%81python%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" class="article-date">
+  <time datetime="2023-09-26T09:36:43.000Z" itemprop="datePublished">2023-09-26</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>新建虚拟环境</p>
+<pre><code>conda create -n python36 python=3.6
+</code></pre>
+<p>设为当前环境</p>
+<pre><code>conda activate python36
+</code></pre>
+<p>删除虚拟环境</p>
+<pre><code>conda remove -n python36 --all
+</code></pre>
+<p>安装必要的包</p>
+<pre><code>pip install -i https://pypi.tuna.tsinghua.edu.cn/simple xgboost==1.5.2
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple xlrd==1.2.0
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple pandas==1.1.4
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple openpyxl==3.0.10
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple Flask==2.0.2
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple Flask-Cors==3.0.10
+</code></pre>
+<p>导出依赖配置</p>
+<pre><code>pip freeze &gt; requirements.txt
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-flask部署的几种常见方式，部署流程及问题总结"
   class="article article-type-post"
   itemscope
@@ -1041,74 +1113,6 @@ export default &#123;
 <p>在这个示例中，我们首先定义了文件所在的文件夹路径folderPath，然后通过拼接文件夹路径和文件名来构建完整的文件URL地址fileUrl。接着，我们创建一个<a>标签，并设置其href属性为文件URL，download属性为要下载的文件名。最后，通过调用click()方法触发链接的点击事件，实现文件的下载。</a></p>
 <p>以上是六种常用的在Vue中实现文件下载的方式，请根据项目需求选择合适的方式来完成文件下载功能。</p>
 <p><a target="_blank" rel="noopener" href="https://www.jb51.net/javascript/2987938qn.htm">https://www.jb51.net/javascript/2987938qn.htm</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-使用elmentUI里面el-button按钮替换input type=“file“ 默认按钮"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/09/20/%E4%BD%BF%E7%94%A8elmentUI%E9%87%8C%E9%9D%A2el-button%E6%8C%89%E9%92%AE%E6%9B%BF%E6%8D%A2input%20type=%E2%80%9Cfile%E2%80%9C%20%E9%BB%98%E8%AE%A4%E6%8C%89%E9%92%AE/"
-    >使用elmentUI里面el-button按钮替换input type=“file“ 默认按钮</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/09/20/%E4%BD%BF%E7%94%A8elmentUI%E9%87%8C%E9%9D%A2el-button%E6%8C%89%E9%92%AE%E6%9B%BF%E6%8D%A2input%20type=%E2%80%9Cfile%E2%80%9C%20%E9%BB%98%E8%AE%A4%E6%8C%89%E9%92%AE/" class="article-date">
-  <time datetime="2023-09-20T12:40:59.000Z" itemprop="datePublished">2023-09-20</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>先隐藏input的默认按钮，再把el-button的点击事件指向input的点击事件</p>
-<pre><code>&lt;form name=&quot;formInput&quot;&gt;
-    &lt;input type=&quot;file&quot; 
-           id=&quot;fileDemo&quot;
-           class=&quot;input&quot; 
-           style=&quot;position:absolute; clip:rect(0 0 0 0);&quot;   //隐藏样式
-           @change=&quot;changeFileDemo&quot;&gt;
-&lt;/form&gt;
-&lt;el-button size=&quot;small&quot; 
-        type=&quot;primary&quot; 
-        plain 
-        onclick=&quot;document.formInput.fileDemo.click()&quot;&gt;选择文件  //点击事件指向input
-&lt;/el-button&gt;
-</code></pre>
-<p>formInput 为<form>里面name的值</form></p>
-<p>fileDemo 为<input>里面id的值<br>————————————————<br>版权声明：本文为CSDN博主「前端小蔡姬」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/x_nweBorder01k/article/details/124715048">https://blog.csdn.net/x_nweBorder01k/article/details/124715048</a></p>
  
       <!-- reward -->
       

@@ -154,6 +154,107 @@
     
     
     <article
+  id="post-MyBatis-Plus 通用IService使用时的一些方法"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/10/08/MyBatis-Plus%20%E9%80%9A%E7%94%A8IService%E4%BD%BF%E7%94%A8%E6%97%B6%E7%9A%84%E4%B8%80%E4%BA%9B%E6%96%B9%E6%B3%95/"
+    >MyBatis-Plus 通用IService使用时的一些方法</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/10/08/MyBatis-Plus%20%E9%80%9A%E7%94%A8IService%E4%BD%BF%E7%94%A8%E6%97%B6%E7%9A%84%E4%B8%80%E4%BA%9B%E6%96%B9%E6%B3%95/" class="article-date">
+  <time datetime="2023-10-08T02:08:00.000Z" itemprop="datePublished">2023-10-08</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="普通方法"><a href="#普通方法" class="headerlink" title="普通方法:"></a>普通方法:</h1><pre><code>//查询所有
+userService .list();
+//根据查询条件查询一个返回实体类对象
+userService.getOne(lambdaQueryWrapper);
+//分页查询所有
+userService.page(pageInfo,lambdaQueryWrapper);
+//查询数量
+userService .count();
+//根据ID查list集合
+userService .listByIds();
+//根据ID删除
+userService .removeById();
+userService .removeByIds();
+//修改
+userService .update();
+userMapper.updateById(实体类);
+//新增
+userService .save();
+userMapper.insert(实体类);
+//批量新增
+userService .saveBatch(集合);
+</code></pre>
+<h1 id="getOne"><a href="#getOne" class="headerlink" title="getOne()"></a>getOne()</h1><p>这个是方法返回结果不止一条则会抛出异常，如果想默认取第一条结果，可以给这方法传第二个参数为false。</p>
+<pre><code>User one = userService.getOne(Wrappers.&lt;User&gt;lambdaQuery().eq(User::getAge, 11),false);
+</code></pre>
+<h1 id="saveOrUpdateBatch"><a href="#saveOrUpdateBatch" class="headerlink" title="saveOrUpdateBatch()"></a>saveOrUpdateBatch()</h1><p>批量新增或者修改方法,判断ID是否存在，如果ID不存在执行新增，如果ID存在先执行查询语句，查询结果为空新增，否则修改。</p>
+<pre><code>boolean b = userService.saveOrUpdateBatch(users);
+</code></pre>
+<h1 id="传值为null的时候不查询"><a href="#传值为null的时候不查询" class="headerlink" title="传值为null的时候不查询"></a>传值为null的时候不查询</h1><p>如果传值为null的时候不查询，有值才查询怎么做？<br>这里用到了hutool的ObjectUtil.isNotEmpty来判非空</p>
+<pre><code>//查询时间范围
+LambdaQueryWrapper&lt;ProductKhtm&gt; productKhtmLambdaQueryWrapper = new LambdaQueryWrapper&lt;&gt;();
+productKhtmLambdaQueryWrapper.between(
+ObjectUtil.isNotEmpty(productKhtmhz.getParams().get(&quot;endDbilldate&quot;)),
+ProductKhtm::getDbilldate,
+productKhtmhz.getParams().get(&quot;beginDbilldate&quot;),
+productKhtmhz.getParams().get(&quot;endDbilldate&quot;)
+);
+
+productKhtmService.list(productKhtmLambdaQueryWrapper);
+</code></pre>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><p>如果sql语句后面想补充一句sql语句应该怎么办？用last</p>
+<pre><code>lambdaQueryWrapper.last(&quot;OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY&quot;);
+</code></pre>
+<p>注意这个自定义慎用，会有sql注入的风险</p>
+<p>如果sql查询条件全部都想自定义怎么办？</p>
+<pre><code>lambdaQueryWrapper.apply(&quot;YEAR(tijiao_time) = &#123;0&#125;&quot;,year);
+</code></pre>
+<p>注意这个自定义慎用，会有sql注入的风险</p>
+<p>————————————————<br>版权声明：本文为CSDN博主「z子豪」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/a864034462/article/details/123980761">https://blog.csdn.net/a864034462/article/details/123980761</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-LambdaUpdateWrapper和LambdaQueryWrapper的区别"
   class="article article-type-post"
   itemscope
@@ -1066,295 +1167,6 @@ List&lt;User&gt; user = userMapper.selectList(lambdaQueryWrapper)
     <footer class="article-footer">
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Avue-crud 常用方法、属性"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/10/02/Avue-crud%20%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E3%80%81%E5%B1%9E%E6%80%A7/"
-    >Avue-crud 常用方法、属性</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/10/02/Avue-crud%20%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E3%80%81%E5%B1%9E%E6%80%A7/" class="article-date">
-  <time datetime="2023-10-02T02:02:00.000Z" itemprop="datePublished">2023-10-02</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>Avue的v2版本是一个基于element-ui低代码前端框架，Avue的v3是一个基于element-plus低代码前端框架，它使用 JSON 配置来生成页面，可以减少页面开发工作量，极大提升效率。avue对于后台管理系统的开发极其便捷，就是配置不容易记住，熟练该框架配置来开发会好点，不然真不如直接用element来开发的好，以下以v2为例。</p>
-<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>npm、yarn安装</p>
-<pre><code>npm i @smallwei/avue -S
-yarn add @smallwei/avue -S
-</code></pre>
-<p>或<br>CDN在线安装</p>
-<pre><code>&lt;!-- 引入样式文件 --&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@smallwei/avue/lib/index.css&quot;/&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://unpkg.com/element-ui/lib/theme-chalk/index.css&quot;/&gt;
-&lt;!-- 引入相关JS 文件 --&gt;
-&lt;script src=&quot;https://unpkg.com/vue/dist/vue.js&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;https://unpkg.com/element-ui/lib/index.js&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;https://cdn.jsdelivr.net/npm/@smallwei/avue/lib/avue.min.js&quot;&gt;&lt;/script&gt;
-</code></pre>
-<h1 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h1><p>通过CDN安装的，会挂载在全局属性AVUE下，通过 Vue.use(AVUE) 注册。</p>
-<pre><code>import Avue from &#39;@smallwei/avue&#39;;
-import &#39;@smallwei/avue/lib/index.css&#39;;
-Vue.use(Avue);
-</code></pre>
-<h1 id="全局配置"><a href="#全局配置" class="headerlink" title="全局配置"></a>全局配置</h1><pre><code>Vue.use(AVUE,&#123;
-  size:&#39;&#39;, // 组件的尺寸，默认small。可选值 small/mini/medium
-  tableSize:&#39;&#39;, // 
-  formSize:&#39;&#39;, // 
-  appendToBody:true, //
-  modalAppendToBody:true, // 
-  menuType:&#39;&#39;, // 用于改变操作栏菜单按钮类型性，属性的组件的默认尺寸均为 text。可选值 button/icon/text/menu
-  qiniu:&#123; // 七牛云配置
-    AK: &#39;&#39;,
-    SK: &#39;&#39;,
-    scope: &#39;&#39;,
-    url: &#39;&#39;,
-    deadline: 1
-  &#125;,
-  ali:&#123; // 阿里云配置
-    region: &#39;&#39;,
-    endpoint: &#39;&#39;,
-    accessKeyId: &#39;&#39;,
-    accessKeySecret: &#39;&#39;,
-    bucket: &#39;&#39;,
-  &#125;,
-  theme:&#39;&#39;, // 主题颜色配置，属性的组件的默认白色。可选值 dark
-  canvas:&#123; // 水印配置
-    text: &#39;avuejs.com&#39;,
-    fontFamily: &#39;microsoft yahei&#39;,
-    color: &quot;#999&quot;,
-    fontSize: 16,
-    opacity: 100,
-    bottom: 10,
-    right: 10,
-    ratio: 1
-  &#125;,
-&#125;);
-</code></pre>
-<h1 id="国际化"><a href="#国际化" class="headerlink" title="国际化"></a>国际化</h1><p>Avue 采用中文作为默认语言，同时支持多语言切换</p>
-<pre><code>import Vue from &#39;vue&#39;
-import Avue from &#39;@smallwei/avue&#39;
-import zhLocale from &#39;@smallwei/avue/lib/locale/lang/zh&#39;
-import enLocale from &#39;@smallwei/avue/lib/locale/lang/en&#39;
- 
-Vue.use(Avue, &#123; enLocale &#125;)
-</code></pre>
-<h1 id="全局api"><a href="#全局api" class="headerlink" title="全局api"></a>全局api</h1><pre><code>$DialogForm弹窗表单
-$Clipboard复制到剪切板
-$ImagePreview图片预览
-$Print 打印插件
-$Export excel导出
-watermark全局水印
-downFile文件下载
-deepClone对象深拷贝
-validatenull判断空
-findNode数组中寻找对象
-findArray数组中寻找对象下标
-</code></pre>
-<h1 id="crud-配置项-option"><a href="#crud-配置项-option" class="headerlink" title="crud 配置项 option"></a>crud 配置项 option</h1><p>crud 表格回调函数事件</p>
-<p>on-load：这个事件会在表格所在的组件加载时就会执行，初始化表格数据。当表格翻页、页码变化时候也会自动执行该方法，使用了这个方法可以省略表格的current-change 、size-change两个回调函数。</p>
-<p>current-change：表格页码发生变化时触发，第一个参数为当前页码。</p>
-<p>size-change：表格页容量变化时触发，第一个参数就是当前页容量大小。</p>
-<p>search-change ：表格查询按钮回调函数，默认有两个参数 form与done， form为搜索框的值，done为关闭搜索的刷新状态回调函数。</p>
-<p>row-save ：表格新增表单确定按钮的回调函数，默认有三个参数分别为：row（表单的值），done（用于关闭表单回调函数），loading（页面loading状态） 。</p>
-<p>row-update ：表格行编辑确定按钮的回调，默认四个参数 row（当前行），index（索引），done（关闭弹框回调函数），loading（页面loading状态）。</p>
-<p>row-del：表格操作行删除按钮回调函数，默认两个参数，row（当前行数据），index（当前索引） 。</p>
-<p>refresh-change：表格的刷新按钮回调函数。</p>
-<p>current-row-change：当前表格行被点击时的回调函数，第一个参数是当前行数据。</p>
-<p>tree-load：表格行展开的懒加载回调，带三个参数 row（当前展开行的数据），treeNode（展开行节点数据），resolve（行懒加载的成功回调函数，在resolve里面将懒加载的数据传出去表格进行渲染）。</p>
-<p>before-close：打开前的回调函数，两个参数done（用于关闭Dialog），type（当前窗口类型）。</p>
-<p>before-close：关闭前的回调函数，done（用于关闭Dialog），type（当前窗口的类型）。</p>
-<p>search-reset：点击清空按钮触发，清空搜索框回调函数。</p>
-<p>selection-change：当表格选择项勾选发生变化时会触发该回调函数。</p>
-<p>dateChange：dateBtn为true时的选择日期回调函数。</p>
-<pre><code>&lt;avue-crud
-  ref=&quot;crud&quot;
-  data=&quot;data&quot; // 表格显示的数据
-  :option=&quot;option&quot; // 表格配置项
-  :page.sync=&quot;page&quot;
-  :permission=&quot;permission&quot; // 表格按钮权限控制
-  @on-load=&quot;onLoad&quot;
-  @current-change=&quot;currentChange&quot;
-  @size-change=&quot;pageSizeChange&quot;
-  @search-change=&quot;searchChange&quot;
-  @row-save=&quot;rowSave&quot;
-  @row-update=&quot;rowUpdate&quot;
-  @row-del=&quot;rowDel&quot;
-  @refresh-change=&quot;refreshChange&quot;
-  @current-row-change=&quot;handleCurrentRowChange&quot;
-  @tree-load=&quot;treeLoad&quot;
-  @before-open=&quot;beforeOpen&quot;
-  @before-close=&quot;beforeClose&quot;
-  @search-reset=&quot;searchReset&quot;
-/&gt;
-const option = &#123;
-    &#39;table-loading&#39;:&#39;&#39;, // 表格等待框的控制
-    size:&#39;&#39;, // 组件尺寸
-    maxHeight:&#39;&#39;, // 表格的最大高度
-    index:&#39;&#39;, // 是否有序号
-    indexWidth:&#39;&#39;, // 序号列宽度
-    indexFixed:&#39;&#39;, // 序号列是否冻结列
-    menu:&#39;&#39;, // 是否有操作栏
-    menuWidth:&#39;&#39;, // 操作栏宽度
-    menuTitle:&#39;&#39;, // 操作栏标题
-    menuFixed:&#39;&#39;, // 操作栏列冻结列
-    menuType:&#39;&#39;, // 操作栏按钮样式
-    menuHeaderAlign:&#39;&#39;, // 操作栏表头的对齐方式
-    title:&#39;&#39;, // 表格标题
-    addBtn:&#39;&#39;, // 表格新增按钮；edit（修改）、del（删除）、view（查看）、update（修改）、save（保存）、cancel（取消）、search（查询）、empty（清空）
-    addBtnText:&#39;&#39;, // 表格新增按钮文案
-    addBtnIcon:&#39;&#39;, // 表格新增按钮图标
-    printBtn:&#39;&#39;, // 表格打印按钮
-    excelBtn:&#39;&#39;, // 表格导出按钮
-    filterBtn:&#39;&#39;, // 表格自定义过滤按钮
-    refreshBtn:&#39;&#39;, // 表格刷新数据按钮
-    columnBtn:&#39;&#39;, // 表格列操作按钮
-    searchShowBtn:&#39;&#39;, // 表格搜索显隐按钮
-    copyBtn:&#39;&#39;, // 表格复制数据按钮
-    addTitle:&#39;&#39;, // 表格新增弹窗标题 edit（修改）、view（查看）
-    dialogDrag:&#39;&#39;, // 表格弹窗是否可以拖拽
-    searchIndex:&#39;&#39;, // 表格搜索半收缩个数
-    searchPlaceholder:&#39;&#39;, // 搜索项辅助文字
-    searchSpan:&#39;&#39;, // 搜索项框栅列
-    searchGutter:&#39;&#39;, // 搜索项框间距
-    searchLabelWidth:&#39;&#39;, // 搜索项标题宽度
-    searchLabelPosition:&#39;&#39;, // 搜索项标题位置
-    column:[ // 表格列配置
-        &#123;
-            label:&#39;&#39;, // 列标题
-            prop:&#39;&#39;, // 列标题的内容属性名称
-            type:&#39;&#39;, // 
-            width:&#39;&#39;, // 对应列的宽度
-            minWidth:&#39;&#39;, // 对应列的最小宽度
-            fixed:&#39;&#39;, // 列固定
-            sortable:&#39;&#39;, // 对应列是否可以排序，监听 sort-change 回调，true, false, &#39;custom&#39;
-            formatter:&#39;&#39;, // 格式化列内容，(row, value, row, column)
-            overHidden:&#39;&#39;, // 当内容过长被隐藏时显示 tooltip
-            align:&#39;&#39;, // 对齐方式
-            headerAlign:&#39;&#39;, // 表头对齐方式
-            filters:&#39;&#39;, // 数据过滤的选项
-            search:&#39;&#39;, // 是否为搜索项
-            searchValue:&#39;&#39;, // 搜索项初始化值
-            searchPlaceholder:&#39;&#39;, // 搜索项辅助文字
-            searchSpan:&#39;&#39;, // 搜索项框栅列
-            searchOrder:&#39;&#39;, // 搜索项位置排序，序号越大越靠前
-            searchLabelWidth:&#39;&#39;, // 搜索项标题宽度
-            searchClearable:&#39;&#39;, // 搜索项清除
-            searchMultiple:&#39;&#39;, // 搜索项是否多选
-            searchTags:&#39;&#39;, // 搜索项将选中值按文字的形式展示
-            display:&#39;&#39;, // 弹出表单是否显示
-            disabled:&#39;&#39;, // 弹出表单是否禁止
-            addDisabled:&#39;&#39;, // 表单新增时项是否禁止，edit（编辑）、view（查看）
-            addDisplay:&#39;&#39;, // 表单新增时项是否显示，edit（编辑）、view（查看）
-            resizable:&#39;&#39;, // 对应列是否可以通过拖动改变宽度（需要在option中border属性为真）
-            searchClearable:&#39;&#39;, // 搜索项清除
-            searchClearable:&#39;&#39;, // 搜索项清除
-            searchClearable:&#39;&#39;, // 搜索项清除
-            dicData:[ // 下拉项字典枚举
-                &#123;label:&#39;A&#39;,value: &#39;a&#39;&#125;,
-            ],
-            rules:[ // 表单字段校验规则
-                &#123;equired: true,message: &quot;请输入姓名&quot;,trigger: &quot;blur&quot;&#125;,
-            ],
-            hide: false, // 隐藏列
-        &#125;
-    ],
-&#125;;
-</code></pre>
-<h1 id="自定义内容"><a href="#自定义内容" class="headerlink" title="自定义内容"></a>自定义内容</h1><pre><code>&lt;avue-crud :data=&quot;data&quot; :option=&quot;option&quot; ref=&quot;crud&quot;&gt;
-  &lt;!-- 左边插槽 --&gt;
-  &lt;template slot-scope=&quot;scope&quot; slot=&quot;menuLeft&quot;&gt;
-    &lt;el-button type=&quot;danger&quot; @click=&quot;$refs.crud.rowAdd()&quot;&gt;新增&lt;/el-button&gt;
-  &lt;/template&gt;
-  &lt;!-- 右边插槽 --&gt;
-  &lt;template slot-scope=&quot;scope&quot; slot=&quot;menuRight&quot;&gt;
-    &lt;el-button type=&quot;danger&quot; @click=() =&gt; &#123;&#125;&quot;&gt;刷新&lt;/el-button&gt;
-  &lt;/template&gt;
-  &lt;!-- 自定义行内操作栏插槽 --&gt;
-  &lt;template slot-scope=&quot;&#123;row,index&#125;&quot; slot=&quot;menu&quot;&gt;
-     &lt;el-button @click=&quot;$refs.crud.rowEdit(row,index)&quot;&gt;编辑&lt;/el-button&gt;
-     &lt;el-button @click=&quot;$refs.crud.rowDel(row,index)&quot;&gt;删除&lt;/el-button&gt;
-  &lt;/template&gt;
-  &lt;!-- 自定义弹窗内按钮插槽 --&gt;
-  &lt;template slot-scope=&quot;&#123;row,index,type&#125;&quot; slot=&quot;menuForm&quot;&gt;
-    &lt;el-button v-if=&quot;type==&#39;add&#39;&quot; @click=&quot;$refs.crud.rowSave()&quot;&gt;自定义新增&lt;/el-button&gt;
-    &lt;el-button v-if=&quot;type==&#39;edit&#39;&quot; @click=&quot;$refs.crud.rowUpdate()&gt;自定义修改&lt;/el-button&gt;
-    &lt;el-button @click=&quot;$refs.crud.closeDialog()&quot;&gt;取消&lt;/el-button&gt;
-  &lt;/template&gt;
-  &lt;!-- 自定义表单插槽，slot=&quot;propForm&quot; --&gt;
-  &lt;template slot-scope=&quot;&#123;type,disabled&#125;&quot; slot=&quot;nameForm&quot;&gt; // column: [&#123;prop:&#39;name&#39;,formslot:true&#125;]
-      &lt;el-tag v-if=&quot;type==&#39;add&#39;&quot;&gt;新增&lt;/el-tag&gt;
-      &lt;el-tag v-else-if=&quot;type==&#39;edit&#39;&quot;&gt;修改&lt;/el-tag&gt;
-      &lt;el-tag v-else-if=&quot;type==&#39;view&#39;&quot;&gt;查看&lt;/el-tag&gt;
-      &lt;el-tag&gt;&#123;&#123;user.name?user.name:'暂时没有内容'&#125;&#125;&lt;/el-tag&gt;
-      &lt;el-input :disabled=&quot;disabled&quot; v-model=&quot;user.name&quot;&gt;&lt;/el-input&gt;
-  &lt;/template&gt;
-  &lt;!-- 自定义表单错误提示插槽，slot=&quot;propError&quot; --&gt;
-  &lt;template slot-scope=&quot;&#123;error&#125;&quot; slot=&quot;nameError&quot;&gt; // column: [&#123;prop:&#39;name&#39;,labelslot:true&#125;]
-      &lt;p style=&quot;color:green&quot;&gt;自定义提示&#123;&#123;error&#125;&#125;&lt;/p&gt;
-  &lt;/template&gt;
-  &lt;!-- 自定义表单标题，slot=&quot;propLabel&quot; --&gt;
-  &lt;template slot-scope=&quot;scope&quot; slot=&quot;nameLabel&quot;&gt; // column: [&#123;prop:&#39;name&#39;,errorslot:true&#125;]
-     &lt;span&gt;姓名&amp;nbsp;&amp;nbsp;&lt;/span&gt;
-     &lt;el-tooltip class=&quot;item&quot; effect=&quot;dark&quot; content=&quot;文字提示&quot; placement=&quot;top-start&quot;&gt;
-      &lt;i class=&quot;el-icon-warning&quot;&gt;&lt;/i&gt;
-    &lt;/el-tooltip&gt;
-  &lt;/template&gt;
-  &lt;!-- 向搜索表单插入一个额外的（column中没有的字段）输入框 --&gt;
-  &lt;template slot=&quot;search&quot;&gt;
-      &lt;el-form-item label=&quot;状态&quot;&gt;
-          &lt;el-input placeholder=&quot;状态&quot; v-model=&quot;search.value&quot;/&gt;
-      &lt;/el-form-item&gt;
-  &lt;/template&gt;
-  &lt;!-- 向表单中插入一个额外的输入框 --&gt;
-  &lt;template slot=&quot;menuForm&quot;&gt;
-      &lt;el-form-item label=&quot;维修&quot;&gt;
-          &lt;el-input placeholder=&quot;维修&quot; v-model=&quot;search.value&quot;/&gt;
-      &lt;/el-form-item&gt;
-  &lt;/template&gt;
-&lt;/avue-crud&gt;
-</code></pre>
-<p>————————————————<br>版权声明：本文为CSDN博主「my__flower」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/my__flower/article/details/129419199">https://blog.csdn.net/my__flower/article/details/129419199</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
 
     </footer>
   </div>

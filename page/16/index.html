@@ -154,6 +154,74 @@
     
     
     <article
+  id="post-使用elmentUI里面el-button按钮替换input type=“file“ 默认按钮"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/09/20/%E4%BD%BF%E7%94%A8elmentUI%E9%87%8C%E9%9D%A2el-button%E6%8C%89%E9%92%AE%E6%9B%BF%E6%8D%A2input%20type=%E2%80%9Cfile%E2%80%9C%20%E9%BB%98%E8%AE%A4%E6%8C%89%E9%92%AE/"
+    >使用elmentUI里面el-button按钮替换input type=“file“ 默认按钮</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/09/20/%E4%BD%BF%E7%94%A8elmentUI%E9%87%8C%E9%9D%A2el-button%E6%8C%89%E9%92%AE%E6%9B%BF%E6%8D%A2input%20type=%E2%80%9Cfile%E2%80%9C%20%E9%BB%98%E8%AE%A4%E6%8C%89%E9%92%AE/" class="article-date">
+  <time datetime="2023-09-20T12:40:59.000Z" itemprop="datePublished">2023-09-20</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>先隐藏input的默认按钮，再把el-button的点击事件指向input的点击事件</p>
+<pre><code>&lt;form name=&quot;formInput&quot;&gt;
+    &lt;input type=&quot;file&quot; 
+           id=&quot;fileDemo&quot;
+           class=&quot;input&quot; 
+           style=&quot;position:absolute; clip:rect(0 0 0 0);&quot;   //隐藏样式
+           @change=&quot;changeFileDemo&quot;&gt;
+&lt;/form&gt;
+&lt;el-button size=&quot;small&quot; 
+        type=&quot;primary&quot; 
+        plain 
+        onclick=&quot;document.formInput.fileDemo.click()&quot;&gt;选择文件  //点击事件指向input
+&lt;/el-button&gt;
+</code></pre>
+<p>formInput 为<form>里面name的值</form></p>
+<p>fileDemo 为<input>里面id的值<br>————————————————<br>版权声明：本文为CSDN博主「前端小蔡姬」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/x_nweBorder01k/article/details/124715048">https://blog.csdn.net/x_nweBorder01k/article/details/124715048</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-Vue3 点击el-button 触发input type=“file“ 选择本地文件 并修改样式"
   class="article article-type-post"
   itemscope
@@ -1676,197 +1744,6 @@ export default &#123;
 &lt;/script&gt;
 </code></pre>
 <p>————————————————<br>版权声明：本文为CSDN博主「慕白Lee」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/libusi001/article/details/131668644">https://blog.csdn.net/libusi001/article/details/131668644</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Vue组件间数据同步刷新解决方案--全局事件总线"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/09/14/Vue%E7%BB%84%E4%BB%B6%E9%97%B4%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5%E5%88%B7%E6%96%B0%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88--%E5%85%A8%E5%B1%80%E4%BA%8B%E4%BB%B6%E6%80%BB%E7%BA%BF/"
-    >Vue组件间数据同步刷新解决方案--全局事件总线</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/09/14/Vue%E7%BB%84%E4%BB%B6%E9%97%B4%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5%E5%88%B7%E6%96%B0%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88--%E5%85%A8%E5%B1%80%E4%BA%8B%E4%BB%B6%E6%80%BB%E7%BA%BF/" class="article-date">
-  <time datetime="2023-09-14T06:28:42.000Z" itemprop="datePublished">2023-09-14</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>Vue工程很多时候需要我们保持数据的一致性。举个例子，我在一个组件A的事件中请求后端接口修改了某个数据，并且后端接口响应我修改成功了。这时候界面上另外一个组件B也在展示该数据，这时候就需要使得这个B组件也进行显示数据的刷新，否则A组件与B组件的数据就不同步，很容易被测试提bug。</p>
-<p>如果A组件与B组件是父子关系的话，那么只需要利用父子组件之间的通讯即可完成数据的同步。但是如果这两个组件之间没有任何关系，那么如何进行跨组件之间的数据同步呢？</p>
-<h1 id="方法一：Vuex状态管理，配合组件计算属性使用"><a href="#方法一：Vuex状态管理，配合组件计算属性使用" class="headerlink" title="方法一：Vuex状态管理，配合组件计算属性使用"></a>方法一：Vuex状态管理，配合组件计算属性使用</h1><p>简要介绍一下步骤思路：</p>
-<p>1、将项目中很多地方都需要用到的数据提取到Vuex的state中；并用getters方法返回该值； </p>
-<p>2、在组件中使用计算属性返回Vuex的getters获取数据；</p>
-<p>3、组件中通过watch监听计算属性值的变化，一旦有变化，则重新赋值；</p>
-<p>4、通过Vuex中的mutations方法修改state中数据值；</p>
-<p>上诉步骤即可实现在任一组件中修改数据触发其他组件实时刷新的效果。但是实现过程较为繁琐。</p>
-<h1 id="方法二：全局事件总线"><a href="#方法二：全局事件总线" class="headerlink" title="方法二：全局事件总线"></a>方法二：全局事件总线</h1><p>全局事件总线是解决前端数据同步问题的一种架构思维，或者说是一种重要的编程“模式”，因为他不局限于任何一种前端框架，无论是Vue，React还是Flutter，甚至游戏编程。它都经常出现并应用。只需要学会这一套路，并通过语法变通举一反三，那么你就能轻松在各种框架上使用并解决一些列问题。而我们这里就只以Vue为例说明一下具体实现。</p>
-<p>全局事件总线运用编程中两大模式：单例模式，观察者模式。</p>
-<p>1、首先在任一位置新建总线类，并且该类为单例，有且只能有一个实例；以下是简单实现</p>
-<pre><code>class eventbus&#123;
-    constructor() &#123;
-        if (!eventbus.Instance) &#123;
-            //内存中存储所有事件的处理函数
-            this.eventMap = &#123;&#125;;
-            eventbus.Instance = this;
-        &#125;
-        return eventbus.Instance
-    &#125;
-    /**
-     * 注册事件      
-     * key         事件名
-     * page        组件(页面)名
-     * callback    注册的事件
-     */
-    on(key,page,callback)&#123;
-        //将函数通过事件名key，页面(组件)名的形式进行注册
-        this.eventMap[key] = this.eventMap[key] || &#123;&#125;;
-        this.eventMap[key][page] = callback;
-    &#125;
-    /**
-     * 事件通知      
-     * key         事件名
-     * data        通知的数据
-     * page        组件(页面)名
-     */
-    emit(key,data,page=null)&#123;
-        if(key &amp;&amp; this.eventMap[key])&#123;
-            if(page)&#123;
-                //如果参数中有页面名(组件名)，则将data通知单个页面(组件)注册的函数进行处理
-                this.eventMap[key][page] &amp;&amp; this.eventMap[key][page](data);
-            &#125;else&#123;
-                //通知该事件名下的所有页面(组件)注册的函数进行处理
-                for(let sub in this.eventMap[key]) &#123; 
-                    this.eventMap[key][sub](data);
-                &#125;
-            &#125;
-        &#125;else&#123;
-            //该事件名下没有注册任何函数
-        &#125;
-    &#125;,
-    /**
-     * 事件销毁，一般在页面(组件销毁时同步销毁)      
-     * key         事件名
-     * page        组件(页面)名
-     */
-    destroy(key,page)&#123;
-        if(this.eventMap[key] &amp;&amp; this.eventMap[key][page])&#123;
-            //删除单个页面事件
-            delete this.eventMap[key][page];
-        &#125;
-        if(this.eventMap[key] == &#123;&#125;)&#123;
-            delete this.eventMap[key];
-        &#125;
-    &#125;,
-    /**
-     * 事件销毁，销毁全部     
-     * key         事件名
-     * page        组件(页面)名
-     */
-    destroyAll(key)&#123;
-        if(this.eventMap[key] == &#123;&#125;)&#123;
-            //删除所有
-            delete this.eventMap[key];
-        &#125;
-    &#125;
-&#125;
-export default new eventbus()
-</code></pre>
-<p>2、在A组件中注册监听事件</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;&#123;&#123;user&#125;&#125;&lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-//引入全局总线类
-import event from &quot;@/Eventbus.js&quot;;
-export default &#123;
-   name: &quot;ComA&quot;,
-   data () &#123;
-      return &#123;
-        user:&quot;我是A&quot;
-      &#125;;
-    &#125;,
-    created() &#123;
-        //注册监听事件,事件名：changeUser,组件名:ComA
-        event.on(&quot;changeUser&quot;,&quot;ComA&quot;,(data)=&gt;&#123;
-            if(data)&#123;
-                this.user = data;
-            &#125;
-        &#125;)
-    &#125;,
-    destroyed() &#123;
-        //销毁事件
-        event.destroyed(&quot;changeUser&quot;,&quot;ComA&quot;);
-    &#125;
-&#125;
-&lt;/script&gt;
-</code></pre>
-<p>3、B组件发送监听，使A组件变量一起刷新</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;&#123;&#123;user&#125;&#125;&lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-//引入全局总线类
-import event from &quot;@/Eventbus.js&quot;;
-export default &#123;
-   name: &quot;ComB&quot;,
-   data () &#123;
-      return &#123;
-        user:&quot;我是B&quot;
-      &#125;;
-    &#125;,
-    methods: &#123;
-        updateUser()&#123;
-            let data = &quot;改成C&quot;;
-            this.user = data;
-            //通知所有组件(页面)刷新
-            event.emit(&quot;changeUser&quot;,data);
-            //只通知组件A刷新
-            event.emit(&quot;changeUser&quot;,data,&quot;ComA&quot;)
-        &#125;
-    &#125; 
-&#125;
-&lt;/script&gt;
-</code></pre>
-<p>————————————————<br>版权声明：本文为CSDN博主「Ajucy」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/Ajucy/article/details/130194549">https://blog.csdn.net/Ajucy/article/details/130194549</a></p>
  
       <!-- reward -->
       

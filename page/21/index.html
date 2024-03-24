@@ -154,6 +154,164 @@
     
     
     <article
+  id="post-Flex 布局教程"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/08/21/Flex%20%E5%B8%83%E5%B1%80%E6%95%99%E7%A8%8B/"
+    >Flex 布局教程</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/08/21/Flex%20%E5%B8%83%E5%B1%80%E6%95%99%E7%A8%8B/" class="article-date">
+  <time datetime="2023-08-21T11:47:36.000Z" itemprop="datePublished">2023-08-21</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="什么是弹性布局？"><a href="#什么是弹性布局？" class="headerlink" title="什么是弹性布局？"></a>什么是弹性布局？</h1><p>弹性布局（Flex布局）是一种现代的CSS布局方式，通过使用display: flex属性来创建一个弹性容器，并在其中使用灵活的盒子模型来进行元素的排列和定位。</p>
+<h1 id="弹性布局的特点？"><a href="#弹性布局的特点？" class="headerlink" title="弹性布局的特点？"></a>弹性布局的特点？</h1><p>弹性布局具有以下特点：</p>
+<p>*主轴与交叉轴：<br>弹性容器具有主轴（main axis）和交叉轴（cross axis）。默认情况下，主轴是水平方向，交叉轴是垂直方向。</p>
+<p>*弹性容器：<br>通过将父元素的display属性设置为flex或inline-flex来创建弹性容器。</p>
+<p>*子元素的弹性项目：<br>弹性容器中的每个子元素都成为弹性项目。子元素可以指定各自在主轴和交叉轴上的大小、顺序以及对齐方式等。</p>
+<p>*主轴对齐：<br>弹性项目可以在主轴上按照一定比例分配空间，也可以使用justify-content属性定义主轴的对齐方式。</p>
+<p>*交叉轴对齐：<br>弹性项目可以在交叉轴上进行对齐，包括顶部对齐、底部对齐、居中对齐等，使用align-items属性定义交叉轴对齐方式。</p>
+<p>*换行与自动调整：<br>可控制弹性项目是否换行，并且具备自动调整元素大小的能力。<br>弹性布局简化了网页布局的开发过程，提供了更灵活、响应式的布局方式。它适用于各种屏幕尺寸和设备类型，并能够快速适应不同的布局需求。</p>
+<h1 id="容器的属性"><a href="#容器的属性" class="headerlink" title="容器的属性"></a>容器的属性</h1><h2 id="justify-content"><a href="#justify-content" class="headerlink" title="justify-content"></a>justify-content</h2><p>justify-content属性定义了项目在主轴上的对齐方式。</p>
+<pre><code>.box &#123;
+  justify-content: flex-start | flex-end | center | space-between | space-around;
+&#125;
+</code></pre>
+<p>它可能取5个值，具体对齐方式与轴的方向有关。下面假设主轴为从左到右。</p>
+<pre><code>flex-start（默认值）：左对齐
+flex-end：右对齐
+center： 居中
+space-between：两端对齐，项目之间的间隔都相等。
+space-around：每个项目两侧的间隔相等。所以，项目之间的间隔比项目与边框的间隔大一倍。
+</code></pre>
+<h2 id="align-items"><a href="#align-items" class="headerlink" title="align-items"></a>align-items</h2><p>align-items属性定义项目在交叉轴上如何对齐。</p>
+<pre><code>.box &#123;
+  align-items: flex-start | flex-end | center | baseline | stretch;
+&#125;
+</code></pre>
+<p>它可能取5个值。具体的对齐方式与交叉轴的方向有关，下面假设交叉轴从上到下。</p>
+<pre><code>flex-start：交叉轴的起点对齐。
+flex-end：交叉轴的终点对齐。
+center：交叉轴的中点对齐。
+baseline: 项目的第一行文字的基线对齐。
+stretch（默认值）：如果项目未设置高度或设为auto，将占满整个容器的高度。
+</code></pre>
+<h2 id="flex-direction"><a href="#flex-direction" class="headerlink" title="flex-direction"></a>flex-direction</h2><p>决定主轴的方向，水平或者垂直</p>
+<pre><code>.box &#123;
+  flex-direction: row | row-reverse | column | column-reverse;
+&#125;
+
+row（默认值）：主轴为水平方向，起点在左端。
+row-reverse：主轴为水平方向，起点在右端。
+column：主轴为垂直方向，起点在上沿。
+column-reverse：主轴为垂直方向，起点在下沿。
+</code></pre>
+<h2 id="flex-wrap"><a href="#flex-wrap" class="headerlink" title="flex-wrap"></a>flex-wrap</h2><p>换行不换行以及换行的方向</p>
+<pre><code>.box&#123;
+  flex-wrap: nowrap | wrap | wrap-reverse;
+&#125;
+
+nowrap（默认）：不换行
+wrap：换行，第一行在上方。
+wrap-reverse：换行，第一行在下方。
+</code></pre>
+<h2 id="flex-flow"><a href="#flex-flow" class="headerlink" title="flex-flow"></a>flex-flow</h2><p>以上两种的简写方式</p>
+<pre><code>.box &#123;
+  flex-flow: &lt;flex-direction&gt; || &lt;flex-wrap&gt;;
+&#125;
+</code></pre>
+<h2 id="align-content"><a href="#align-content" class="headerlink" title="align-content"></a>align-content</h2><p>align-content属性定义了多根轴线的对齐方式。如果项目只有一根轴线，该属性不起作用。</p>
+<pre><code>.box &#123;
+  align-content: flex-start | flex-end | center | space-between | space-around | stretch;
+&#125;
+
+flex-start：与交叉轴的起点对齐。
+flex-end：与交叉轴的终点对齐。
+center：与交叉轴的中点对齐。
+space-between：与交叉轴两端对齐，轴线之间的间隔平均分布。
+space-around：每根轴线两侧的间隔都相等。所以，轴线之间的间隔比轴线与边框的间隔大一倍。
+stretch（默认值）：轴线占满整个交叉轴。
+</code></pre>
+<h2 id="order属性"><a href="#order属性" class="headerlink" title="order属性"></a>order属性</h2><p>order属性定义项目的排列顺序。数值越小，排列越靠前，默认为0。</p>
+<pre><code>.item &#123;
+  order: &lt;integer&gt;;
+&#125;
+</code></pre>
+<h2 id="flex-grow属性"><a href="#flex-grow属性" class="headerlink" title="flex-grow属性"></a>flex-grow属性</h2><p>flex-grow属性定义项目的放大比例，默认为0，即如果存在剩余空间，也不放大。</p>
+<pre><code>.item &#123;
+  flex-grow: &lt;number&gt;; /* default 0 */
+&#125;
+</code></pre>
+<p>如果所有项目的flex-grow属性都为1，则它们将等分剩余空间（如果有的话）。如果一个项目的flex-grow属性为2，其他项目都为1，则前者占据的剩余空间将比其他项多一倍。</p>
+<h2 id="flex-shrink属性"><a href="#flex-shrink属性" class="headerlink" title="flex-shrink属性"></a>flex-shrink属性</h2><p>flex-shrink属性定义了项目的缩小比例，默认为1，即如果空间不足，该项目将缩小。</p>
+<pre><code>.item &#123;
+  flex-shrink: &lt;number&gt;; /* default 1 */
+&#125;
+</code></pre>
+<p>如果所有项目的flex-shrink属性都为1，当空间不足时，都将等比例缩小。如果一个项目的flex-shrink属性为0，其他项目都为1，则空间不足时，前者不缩小。</p>
+<p>负值对该属性无效。</p>
+<h2 id="flex-basis属性"><a href="#flex-basis属性" class="headerlink" title="flex-basis属性"></a>flex-basis属性</h2><p>flex-basis属性定义了在分配多余空间之前，项目占据的主轴空间（main size）。浏览器根据这个属性，计算主轴是否有多余空间。它的默认值为auto，即项目的本来大小。</p>
+<pre><code>.item &#123;
+  flex-basis: &lt;length&gt; | auto; /* default auto */
+&#125;
+</code></pre>
+<p>它可以设为跟width或height属性一样的值（比如350px），则项目将占据固定空间。</p>
+<h2 id="flex属性"><a href="#flex属性" class="headerlink" title="flex属性"></a>flex属性</h2><p>flex属性是flex-grow, flex-shrink 和 flex-basis的简写，默认值为0 1 auto。后两个属性可选。</p>
+<pre><code>.item &#123;
+  flex: none | [ &lt;&#39;flex-grow&#39;&gt; &lt;&#39;flex-shrink&#39;&gt;? || &lt;&#39;flex-basis&#39;&gt; ]
+&#125;
+</code></pre>
+<p>该属性有两个快捷值：auto (1 1 auto) 和 none (0 0 auto)。</p>
+<p>建议优先使用这个属性，而不是单独写三个分离的属性，因为浏览器会推算相关值。</p>
+<h2 id="align-self属性"><a href="#align-self属性" class="headerlink" title="align-self属性"></a>align-self属性</h2><p>align-self属性允许单个项目有与其他项目不一样的对齐方式，可覆盖align-items属性。默认值为auto，表示继承父元素的align-items属性，如果没有父元素，则等同于stretch。</p>
+<pre><code>.item &#123;
+  align-self: auto | flex-start | flex-end | center | baseline | stretch;
+&#125;
+</code></pre>
+<p>该属性可能取6个值，除了auto，其他都与align-items属性完全一致。</p>
+<p>————————————————<br>版权声明：本文为CSDN博主「奶糖 肥晨」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_48998573/article/details/131240067">https://blog.csdn.net/weixin_48998573/article/details/131240067</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-Vue按钮居中居左居右"
   class="article article-type-post"
   itemscope
@@ -818,178 +976,6 @@ def hello_world():  # put application&#39;s code here
 if __name__ == &#39;__main__&#39;:
     app.run()
 </code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flask/" rel="tag">flask</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-flask实用入门案例05"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/08/15/flask%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B05/"
-    >flask实用入门案例05--参数解析</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/08/15/flask%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B05/" class="article-date">
-  <time datetime="2023-08-15T14:00:00.000Z" itemprop="datePublished">2023-08-15</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>官方文档：<br>（1）尽管 Flask 能够简单地访问请求数据(比如查询字符串或者 POST 表单编码的数据)，验证表单数据仍然很痛苦。Flask-RESTful 内置了支持验证请求数据，它使用了一个类似 argparse 的库。<br>（2）需要注意地是与 argparse 模块不同，reqparse.RequestParser.parse_args() 返回一个 Python 字典而不是一个自定义的数据结构。</p>
-<pre><code>from flask import Flask
-from flask_restful import reqparse, abort, Api, Resource
- 
-app = Flask(__name__)
-api = Api(app)
- 
-parser = reqparse.RequestParser()
-parser.add_argument(&#39;task&#39;, type=str)
-parser.add_argument(&#39;name&#39;, type=str)
- 
- 
-# 获取 &amp; 更新
-class Get_Modify(Resource):
- def post(self):
-  args = parser.parse_args()
-  print(args)
-  return args, 201
- 
- 
-api.add_resource(Get_Modify, &#39;/get_modify&#39;)
- 
-if __name__ == &#39;__main__&#39;:
- app.run(debug=True)
- 
-</code></pre>
-<p>上例中，即使传递其他参数，最终也只会读取定义的2个参数的值<br>通过如上代码说明：reqparse.RequestParser.parse_args()，即如上的args可以获取到request的form表单的参数，最终是一个字典。</p>
-<pre><code>from flask import Flask
-from flask_restful import reqparse, abort, Api, Resource
-
-app = Flask(__name__)
-api = Api(app)
-
-Tasks = &#123;
- &#39;t1&#39;: &#123;&#39;task&#39;: &#39;eat an app&#39;&#125;,
- &#39;t2&#39;: &#123;&#39;task&#39;: &#39;play football&#39;&#125;,
- &#39;t3&#39;: &#123;&#39;task&#39;: &#39;watching TV&#39;&#125;,
-&#125;
-
-def abort_if_todo_doesnt_exist(t_id):
- if t_id not in Tasks:
-  abort(404, message=&quot;Todo &#123;&#125; doesn&#39;t exist&quot;.format(t_id))
-
-
-parser = reqparse.RequestParser()
-parser.add_argument(&#39;task&#39;, type=str)
-
-
-# 获取 &amp; 更新
-class Get_Modify(Resource):
- def get(self):
-  return Tasks
-
- def post(self):
-  args = parser.parse_args()
-  t_id = int(max(Tasks.keys()).lstrip(&#39;t&#39;)) + 1
-  t_id = &#39;t%i&#39; % t_id
-  Tasks[t_id] = &#123;&#39;task&#39;: args[&#39;task&#39;]&#125;
-  return Tasks[t_id], 201
-
-
-# 设置每个视图函数的访问格式
-api.add_resource(Get_Modify, &#39;/get_modify&#39;)
-
-if __name__ == &#39;__main__&#39;:
- app.run(debug=True)
-</code></pre>
-<p>解释：<br>（1）如上的函数，get是获取总的列表Tasks<br>（2）post是添加最新的一个key的值，且key的值是以“t”开头，数字自增的一种形式<br>（3）max(Tasks.keys())这个可以获取到Tasks列表里面，索引最大的key值，在没添加的时候，索引最大为t3<br>（4）x_string.lstrip（‘t’）,这个可以截取x_string字符串里面以’t’开始的剩余字符串。例如t3最终得到3，最终int(max(Tasks.keys()).lstrip(‘t’)) + 1这一行的意思是，得到列表最大的一个key的索引，然后自增到下一个。<br>（5）在希望在form表单里面传递参数，需要在函数里面，使用args = parser.parse_args()接收传递的参数，具体key值通过add_argument函数设置 </p>
-<pre><code>from flask import Flask
-from flask_restful import reqparse, abort, Api, Resource
-
-app = Flask(__name__)
-api = Api(app)
-
-Tasks = &#123;
- &#39;t1&#39;: &#123;&#39;task&#39;: &#39;eat an app&#39;&#125;,
- &#39;t2&#39;: &#123;&#39;task&#39;: &#39;play football&#39;&#125;,
- &#39;t3&#39;: &#123;&#39;task&#39;: &#39;watching TV&#39;&#125;,
-&#125;
-
-
-def abort_if_todo_doesnt_exist(t_id):
- if t_id not in Tasks:
-  abort(404, message=&quot;Todo &#123;&#125; doesn&#39;t exist&quot;.format(t_id))
-
-
-parser = reqparse.RequestParser()
-parser.add_argument(&#39;task&#39;, type=str)
-
-
-# 更新 &amp; 删除 任务
-class Updata_Delete(Resource):
- def get(self, t_id):    # 根据t_id获取对应的value
-  abort_if_todo_doesnt_exist(t_id)
-  return Tasks[t_id]
-
- def delete(self, t_id):   # 根据t_id删除对应的value
-  abort_if_todo_doesnt_exist(t_id)
-  del Tasks[t_id]
-  return &#39;delete success&#39;, 204
-
- def post(self, t_id):   # 判断t_id是否存在，并返回Tasks整个列表
-  abort_if_todo_doesnt_exist(t_id)
-  return Tasks,201
-
- def put(self, t_id):   # 根据t_id添加对应的value，并返回所有值
-  args = parser.parse_args()
-  task = &#123;&#39;task&#39;: args[&#39;task&#39;]&#125;
-  Tasks[t_id] = task
-  return Tasks, 201
-
-
-api.add_resource(Updata_Delete, &#39;/update_delete/&lt;t_id&gt;&#39;)
-
-if __name__ == &#39;__main__&#39;:
- app.run(debug=True)
- 
-</code></pre>
-<p>解释：<br>（1）通过url传递参数，给视图函数，这种方式一般用在get请求，post请求通过form表单形式比较实用<br>（2）通过url传递参数，需要定义函数时候，使用形参t_id,且在使用add_resource（）函数的使用，url参数形式最后添加<t_id>变量，例如’/update_delete/<t_id>‘这个形式。<br>（3）delete这个函数，最终执行删除是成功的，但是最终并没有返回return的字符串”delete success”，具体原因不详，可能是用法不对，后续再更新中说明.<br>(return ‘delete success’, 204 将 204去掉即可)</t_id></t_id></p>
-<p><a target="_blank" rel="noopener" href="https://www.jb51.net/article/176172.htm">https://www.jb51.net/article/176172.htm</a></p>
  
       <!-- reward -->
       

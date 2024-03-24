@@ -154,6 +154,134 @@
     
     
     <article
+  id="post-CentOS 搭建 ElasticSearch"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/11/19/CentOS%20%E6%90%AD%E5%BB%BA%20ElasticSearch/"
+    >CentOS 搭建 ElasticSearch</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/11/19/CentOS%20%E6%90%AD%E5%BB%BA%20ElasticSearch/" class="article-date">
+  <time datetime="2023-11-19T12:14:23.000Z" itemprop="datePublished">2023-11-19</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>安装单机版 Elasticsearch</p>
+<p>进入 /usr/local</p>
+<h1 id="创建目录"><a href="#创建目录" class="headerlink" title="创建目录"></a>创建目录</h1><pre><code>mkdir elasticsearch
+</code></pre>
+<h1 id="安装包下载"><a href="#安装包下载" class="headerlink" title="安装包下载"></a>安装包下载</h1><p>下载地址：<a target="_blank" rel="noopener" href="https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.8.0.tar.gz">https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.8.0.tar.gz</a></p>
+<h1 id="进入elasticsearch，上传刚才下载的安装包，接着解压"><a href="#进入elasticsearch，上传刚才下载的安装包，接着解压" class="headerlink" title="进入elasticsearch，上传刚才下载的安装包，接着解压"></a>进入elasticsearch，上传刚才下载的安装包，接着解压</h1><pre><code>cd elasticsearch
+tar -zxvf elasticsearch-7.8.0.tar.gz
+</code></pre>
+<h1 id="进入elasticsearch-7-8-0目录，创建两个data和logs文件夹"><a href="#进入elasticsearch-7-8-0目录，创建两个data和logs文件夹" class="headerlink" title="进入elasticsearch-7.8.0目录，创建两个data和logs文件夹"></a>进入elasticsearch-7.8.0目录，创建两个data和logs文件夹</h1><pre><code>cd elasticsearch-7.8.0
+mkdir data
+mkdir logs
+</code></pre>
+<h1 id="修改config-elasticsearch-yml配置项"><a href="#修改config-elasticsearch-yml配置项" class="headerlink" title="修改config\elasticsearch.yml配置项"></a>修改config\elasticsearch.yml配置项</h1><p>在末尾添加如下：</p>
+<pre><code>cluster.name: elasticsearch
+node.name: node-1
+network.host: 0.0.0.0
+http.port: 9200
+cluster.initial_master_nodes: [&quot;node-1&quot;]
+</code></pre>
+<h1 id="修改-jvm-options配置项"><a href="#修改-jvm-options配置项" class="headerlink" title="修改\jvm.options配置项"></a>修改\jvm.options配置项</h1><p>第22行起，修改为如下：</p>
+<pre><code>-Xms4096m
+-Xmx4096m
+</code></pre>
+<h1 id="修改bin-elasticsearch-env，使用内置jdk"><a href="#修改bin-elasticsearch-env，使用内置jdk" class="headerlink" title="修改bin\elasticsearch-env，使用内置jdk"></a>修改bin\elasticsearch-env，使用内置jdk</h1><p>第38行起，修改为如下： </p>
+<pre><code># now set the path to java
+#if [ ! -z &quot;$JAVA_HOME&quot; ]; then
+#  JAVA=&quot;$JAVA_HOME/bin/java&quot;
+#  JAVA_TYPE=&quot;JAVA_HOME&quot;
+#else
+  if [ &quot;$(uname -s)&quot; = &quot;Darwin&quot; ]; then
+    # macOS has a different structure
+    JAVA=&quot;$ES_HOME/jdk.app/Contents/Home/bin/java&quot;
+  else
+    JAVA=&quot;$ES_HOME/jdk/bin/java&quot;
+  fi
+  JAVA_TYPE=&quot;bundled jdk&quot;
+#fi
+</code></pre>
+<h1 id="配置linux系统环境，命令：vi-etc-security-limits-conf"><a href="#配置linux系统环境，命令：vi-etc-security-limits-conf" class="headerlink" title="配置linux系统环境，命令：vi /etc/security/limits.conf"></a>配置linux系统环境，命令：vi /etc/security/limits.conf</h1><p>在末尾添加如下：</p>
+<pre><code>* soft nofile 65536
+* hard nofile 131072
+* soft nproc 2048
+* hard nproc 4096
+</code></pre>
+<h1 id="修改配置sysctl-conf，命令：vi-etc-sysctl-conf"><a href="#修改配置sysctl-conf，命令：vi-etc-sysctl-conf" class="headerlink" title="修改配置sysctl.conf，命令：vi /etc/sysctl.conf"></a>修改配置sysctl.conf，命令：vi /etc/sysctl.conf</h1><p>添加下面配置：</p>
+<pre><code>vm.max_map_count=655360
+</code></pre>
+<p>并执行命令：sysctl -p</p>
+<p>注意：elasticsearch不能用root用户启动，需要创建一个普通用户去启动</p>
+<h1 id="创建普通用户，给es用户授权，以便访问elasticsearch目录"><a href="#创建普通用户，给es用户授权，以便访问elasticsearch目录" class="headerlink" title="创建普通用户，给es用户授权，以便访问elasticsearch目录"></a>创建普通用户，给es用户授权，以便访问elasticsearch目录</h1><pre><code># 创建用户
+adduser es 或者 useradd es
+# 给用户设置密码 
+passwd es
+# 文件件所有者
+chown -R es:es /usr/local/elasticsearch
+# 如果错了，可以删除在加
+userdel -r es
+</code></pre>
+<p>注意：修改密码会有复杂性检查，不必理会，输入两遍密码就会成功</p>
+<h1 id="切换到es用户，启动elasticsearch"><a href="#切换到es用户，启动elasticsearch" class="headerlink" title="切换到es用户，启动elasticsearch"></a>切换到es用户，启动elasticsearch</h1><pre><code># su es
+# bin/elasticsearch -d
+</code></pre>
+<p>注意：切换到es用户，需要属于密码，属于刚才创建的es密码，然后执行启动命令：bin/elasticsearch，看到如下启动成功</p>
+<h1 id="测试elasticsearch"><a href="#测试elasticsearch" class="headerlink" title="测试elasticsearch"></a>测试elasticsearch</h1><pre><code>curl http://localhost:9200
+</code></pre>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><p>elasticsearch可以以下面这种方式启动：</p>
+<pre><code>bin/elasticsearch
+</code></pre>
+<p>在linux系统，这个命令将在前台启动进程。</p>
+<p>我们也可以在后台运行，以守护进程的方式，加上-d参数</p>
+<pre><code>bin/elasticsearch -d
+</code></pre>
+<p>在启动的时候可以指定es 进程pid写入的文件，这样可以方便的kill进程</p>
+<pre><code>bin/elasticsearch -d -p pid     pid是文件
+kill `cat pid`   杀死指定文件中pid的 es进程
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ElasticSearch/" rel="tag">ElasticSearch</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-CentOS7安装最新版 gcc g++"
   class="article article-type-post"
   itemscope
@@ -884,98 +1012,6 @@ conda config --set show_channel_urls yes
 <p>移除指定 package</p>
 <pre><code>conda remove package_name 
 </code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Anaconda 镜像使用帮助"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/11/13/Anaconda%20%E9%95%9C%E5%83%8F%E4%BD%BF%E7%94%A8%E5%B8%AE%E5%8A%A9/"
-    >Anaconda 镜像使用帮助</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/11/13/Anaconda%20%E9%95%9C%E5%83%8F%E4%BD%BF%E7%94%A8%E5%B8%AE%E5%8A%A9/" class="article-date">
-  <time datetime="2023-11-13T13:14:23.000Z" itemprop="datePublished">2023-11-13</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="Anaconda-镜像使用帮助"><a href="#Anaconda-镜像使用帮助" class="headerlink" title="Anaconda 镜像使用帮助"></a>Anaconda 镜像使用帮助</h1><p>Anaconda 是一个用于科学计算的 Python 发行版，支持 Linux, Mac, Windows, 包含了众多流行的科学计算、数据分析的 Python 包。</p>
-<p>Anaconda 安装包可以到 <a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/">https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/</a> 下载。</p>
-<p>TUNA 还提供了 Anaconda 仓库与第三方源（conda-forge、msys2、pytorch等，查看完整列表，更多第三方源可以前往校园网联合镜像站查看）的镜像，各系统都可以通过修改用户目录下的 .condarc 文件来使用 TUNA 镜像源。</p>
-<h1 id="换源"><a href="#换源" class="headerlink" title="换源"></a>换源</h1><p>Windows 用户无法直接创建名为 .condarc 的文件，可先执行 conda config –set show_channel_urls yes 生成该文件之后再修改。</p>
-<p>注：由于更新过快难以同步，我们不同步pytorch-nightly, pytorch-nightly-cpu, ignite-nightly这三个包。</p>
-<pre><code>channels:
-  - defaults
-show_channel_urls: true
-default_channels:
-  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main
-  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r
-  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/msys2
-custom_channels:
-  conda-forge: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
-  msys2: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
-  bioconda: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
-  menpo: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
-  pytorch: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
-  pytorch-lts: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
-  simpleitk: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
-  deepmodeling: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/
-</code></pre>
-<p>即可添加 Anaconda Python 免费仓库。</p>
-<p>运行 conda clean -i 清除索引缓存，保证用的是镜像站提供的索引。</p>
-<p>运行 conda create -n myenv numpy 测试一下吧。</p>
-<h1 id="Miniconda-镜像使用帮助"><a href="#Miniconda-镜像使用帮助" class="headerlink" title="Miniconda 镜像使用帮助"></a>Miniconda 镜像使用帮助</h1><p>Miniconda 是一个 Anaconda 的轻量级替代，默认只包含了 python 和 conda，但是可以通过 pip 和 conda 来安装所需要的包。</p>
-<p>Miniconda 安装包可以到 <a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/">https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/</a> 下载。</p>
-<h1 id="其他三方源"><a href="#其他三方源" class="headerlink" title="其他三方源"></a>其他三方源</h1><p>对于conda的其他三方源，如有需要请修改 anaconda.py 文件，并提交pull request，我们会综合考虑多方因素来酌情增减。</p>
-<h1 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h1><p>下载普通包，以numpy为例</p>
-<pre><code>conda install numpy
-</code></pre>
-<p>下载pytorch</p>
-<pre><code>conda install pytorch torchvision torchaudio cpuonly -c pytorch
-</code></pre>
-<p>关键点：</p>
-<p>换源后需要加 -c pytorch 。</p>
-<p>因为我们在.condarc中添加了</p>
-<pre><code>custom_channels:pytorch: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
-</code></pre>
-<p>只有使用 -c(hannels) 才会实现使用清华源下载pytorch</p>
  
       <!-- reward -->
       

@@ -154,6 +154,71 @@
     
     
     <article
+  id="post-Visual Studio 编译器警告：该文件包含不能在当前代码页（936）中表示的字符"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/11/01/Visual%20Studio%20%E7%BC%96%E8%AF%91%E5%99%A8%E8%AD%A6%E5%91%8A%EF%BC%9A%E8%AF%A5%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E4%B8%8D%E8%83%BD%E5%9C%A8%E5%BD%93%E5%89%8D%E4%BB%A3%E7%A0%81%E9%A1%B5%EF%BC%88936%EF%BC%89%E4%B8%AD%E8%A1%A8%E7%A4%BA%E7%9A%84%E5%AD%97%E7%AC%A6/"
+    >Visual Studio 编译器警告：该文件包含不能在当前代码页（936）中表示的字符。</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/11/01/Visual%20Studio%20%E7%BC%96%E8%AF%91%E5%99%A8%E8%AD%A6%E5%91%8A%EF%BC%9A%E8%AF%A5%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E4%B8%8D%E8%83%BD%E5%9C%A8%E5%BD%93%E5%89%8D%E4%BB%A3%E7%A0%81%E9%A1%B5%EF%BC%88936%EF%BC%89%E4%B8%AD%E8%A1%A8%E7%A4%BA%E7%9A%84%E5%AD%97%E7%AC%A6/" class="article-date">
+  <time datetime="2023-11-01T13:28:00.000Z" itemprop="datePublished">2023-11-01</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>Visual Studio 编译器警告：该文件包含不能在当前代码页（936）中表示的字符。 以 Unicode 格式保存该文件防止数据丢失。</p>
+<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在利用Visual Studio编译FreeType时，编译器报警告C4819：该文件包含不能在当前代码页（936）中表示的字符。 以 Unicode 格式保存该文件防止数据丢失。一般来说这种警告应该无伤大雅，忽视即可，但按FreeType的开发者们的说法，他们写的代码在编译时应该是一个警告都不会有：</p>
+<p>FreeType is written in industry-standard ANSI C and should compile easily with any compliant C or C++ compiler. We have even taken great care to eliminate all warnings when compiling with popular compilers like gcc, Visual C++, and Borland C++.<br>这勾起了我的好奇心，我想弄清楚如何以一种较为合理（优雅）的方式去消除这个警告。</p>
+<h1 id="分析与解决"><a href="#分析与解决" class="headerlink" title="分析与解决"></a>分析与解决</h1><p>按微软官方文档的说法：</p>
+<p>在不能表示文件中所有字符的代码页的系统上编译 ANSI 源文件时，出现 C4819。<br>C4819 occurs when you compile an ANSI source file on a system using a codepage that can’t represent all characters in the file.<br>代码页（code page）是一类字符的编码方案，编号为936的代码页对应的字符编码为GB2312（参见 Code Page Identifiers - Win32 apps | Microsoft Learn），所以我遇到的问题是：我的编程环境所用的编码是GB2312, 但我编译的源文件中却含有不能用GB2312表示的字符。按官方文档的说法，有如下三种解决方案：</p>
+<h2 id="方案1："><a href="#方案1：" class="headerlink" title="方案1："></a>方案1：</h2><p>将源文件里不能用GB2312表示的字符给删了，因为这种字符往往仅出现在注释中，删掉对编译没有什么影响。这种做法有些许简单粗暴，且仅适合用在不能表示的字符数量较少的情境中，不够优雅。</p>
+<h2 id="方案2："><a href="#方案2：" class="headerlink" title="方案2："></a>方案2：</h2><p>将源文件以Unicode格式保存，具体操作如下：</p>
+<p>在 Visual Studio 中，选择“文件”&gt;“另存为”。 在“将文件另存为”对话框中，选择“保存”按钮旁的下拉菜单，然后选择“保存时使用编码”。 如果保存到同一文件名，可能需要确认要替换该文件。 在“高级保存选项”对话框中，选择可表示该文件中所有字符的编码（例如，Unicode（带签名的 UTF-8）- Codepage 65001，然后选择“确定”。<br>不过我下载的FreeType源码应该本身就是以Unicode格式进行编码的，所以貌似不应该是这种解决方案。事实上这种方案也并没有解决该编译器警告问题。</p>
+<h2 id="方案3："><a href="#方案3：" class="headerlink" title="方案3："></a>方案3：</h2><p>将系统代码页设置为支持源代码使用的字符集，简单来说，就是让我们的Windows系统支持使用Unicode编码的字符。我认为这应该是最优雅的解决方式，毕竟作为程序员，Unicode与UTF-8应该是必须要熟悉与运用的，于情于理要让我们使用的系统支持使用Unicode。</p>
+<p>这里提一嘴Unicode与UTF-8的关系：Unicode标准定义的是一个字符到一个整数的映射关系，也就是将一个字符用一个数字进行唯一的编号；而UTF-8则可以看作Unicode在计算机中的实现，如何将这个整数用一个合适的01序列进行编码并储存在计算机中，就是UTF-8干的事；UTF-16也是Unicode的一种实现，但感觉还是UTF-8的应用更广泛一些。</p>
+<p>设置方法：Windows 设置&gt;时间&amp;语言&gt;区域&gt;管理语言设置&gt;更改系统区域设置，勾选Beta 版：使用 Unicode UTF-8 获取全球语言支持，然后要重启一下电脑，使更改生效。(图示版见封面)</p>
+<p>方案3成功解决了我的问题，不过根据评论区的建议，谨慎采用.</p>
+<h2 id="方案4："><a href="#方案4：" class="headerlink" title="方案4："></a>方案4：</h2><p>编译时，设置VC项目中的C/C++命令行 -&gt;其他选项，增加 /utf-8</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Visual-Studio/" rel="tag">Visual Studio</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-终端通讯规约类型"
   class="article article-type-post"
   itemscope
@@ -536,576 +601,6 @@ def startAction(self):
     self.label_4.setPixmap(imgShow)
 </code></pre>
 <p>————————————————<br>版权声明：本文为CSDN博主「༄༄小半生༅࿐」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_47682721/article/details/123928585">https://blog.csdn.net/m0_47682721/article/details/123928585</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-PYQT5实现图片显示"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/10/26/PYQT5%E5%AE%9E%E7%8E%B0%E5%9B%BE%E7%89%87%E6%98%BE%E7%A4%BA/"
-    >PYQT5实现图片显示</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/10/26/PYQT5%E5%AE%9E%E7%8E%B0%E5%9B%BE%E7%89%87%E6%98%BE%E7%A4%BA/" class="article-date">
-  <time datetime="2023-10-26T02:26:00.000Z" itemprop="datePublished">2023-10-26</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="版本一"><a href="#版本一" class="headerlink" title="版本一"></a>版本一</h1><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/TM0831/p/12733571.html">https://www.cnblogs.com/TM0831/p/12733571.html</a></p>
-<pre><code>import sys
-
-from PyQt5.QtGui import QImageReader
-from PyQt5.QtWidgets import QWidget, QApplication, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QFileDialog
-from PyQt5.Qt import QPixmap, QPoint, Qt, QPainter, QIcon
-from PyQt5.QtCore import QSize
-
-class ImageBox(QWidget):
-    def __init__(self):
-        super(ImageBox, self).__init__()
-        self.img = None
-        self.scaled_img = None
-        self.point = QPoint(0, 0)
-        self.start_pos = None
-        self.end_pos = None
-        self.left_click = False
-        self.scale = 1
-
-    def init_ui(self):
-        self.setWindowTitle(&quot;ImageBox&quot;)
-
-    def set_image(self, img_path):
-        &quot;&quot;&quot;
-        open image file
-        :param img_path: image file path
-        :return:
-        &quot;&quot;&quot;
-        # img = QImageReader(img_path)
-        # img.setScaledSize(QSize(self.size().width(), self.size().height()))
-        # img = img.read()
-        self.img = QPixmap(img_path)
-        self.scaled_img = self.img
-
-    def paintEvent(self, e):
-        &quot;&quot;&quot;
-        receive paint events
-        :param e: QPaintEvent
-        :return:
-        &quot;&quot;&quot;
-        if self.scaled_img:
-            painter = QPainter()
-            painter.begin(self)
-            painter.scale(self.scale, self.scale)
-            painter.drawPixmap(self.point, self.scaled_img)
-            painter.end()
-
-    def mouseMoveEvent(self, e):
-        &quot;&quot;&quot;
-        mouse move events for the widget
-        :param e: QMouseEvent
-        :return:
-        &quot;&quot;&quot;
-        if self.left_click:
-            size = self.size().width()
-            self.end_pos = e.pos() - self.start_pos
-            self.point = self.point + self.end_pos
-            self.start_pos = e.pos()
-            self.repaint()
-
-    def mousePressEvent(self, e):
-        &quot;&quot;&quot;
-        mouse press events for the widget
-        :param e: QMouseEvent
-        :return:
-        &quot;&quot;&quot;
-        if e.button() == Qt.LeftButton:
-            self.left_click = True
-            self.start_pos = e.pos()
-
-    def mouseReleaseEvent(self, e):
-        &quot;&quot;&quot;
-        mouse release events for the widget
-        :param e: QMouseEvent
-        :return:
-        &quot;&quot;&quot;
-        if e.button() == Qt.LeftButton:
-            self.left_click = False
-
-class MainDemo(QWidget):
-    def __init__(self):
-        super(MainDemo, self).__init__()
-
-        self.setWindowTitle(&quot;Image Viewer&quot;)
-        self.setFixedSize(1000, 600)
-
-        self.open_file = QPushButton(&quot;Open Image&quot;)
-        self.open_file.setToolTip(&quot;Open the image to view.&quot;)
-        self.open_file.clicked.connect(self.open_image)
-        self.open_file.setFixedSize(150, 30)
-
-        self.zoom_in = QPushButton(&quot;&quot;)
-        self.zoom_in.clicked.connect(self.large_click)
-        self.zoom_in.setFixedSize(30, 30)
-        in_icon = QIcon(&quot;icons/zoomIn.png&quot;)
-        self.zoom_in.setIcon(in_icon)
-        self.zoom_in.setIconSize(QSize(30, 30))
-
-        self.zoom_out = QPushButton(&quot;&quot;)
-        self.zoom_out.clicked.connect(self.small_click)
-        self.zoom_out.setFixedSize(30, 30)
-        out_icon = QIcon(&quot;icons/zoomOut.png&quot;)
-        self.zoom_out.setIcon(out_icon)
-        self.zoom_out.setIconSize(QSize(30, 30))
-
-        w = QWidget(self)
-        layout = QHBoxLayout()
-        layout.addWidget(self.open_file)
-        layout.addWidget(self.zoom_in)
-        layout.addWidget(self.zoom_out)
-        layout.setAlignment(Qt.AlignLeft)
-        w.setLayout(layout)
-        w.setFixedSize(300, 50)
-
-        self.box = ImageBox()
-        self.box.setFixedSize(500,500)
-
-        layout = QVBoxLayout()
-        layout.addWidget(w)
-        layout.addWidget(self.box)
-        self.setLayout(layout)
-
-    def open_image(self):
-        &quot;&quot;&quot;
-        select image file and open it
-        :return:
-        &quot;&quot;&quot;
-        # img_name, _ = QFileDialog.getOpenFileName(self, &quot;打开图片&quot;, &quot;&quot;, &quot;All Files(*);;*.jpg;;*.png&quot;)
-        img_name, _ = QFileDialog.getOpenFileName(self, &quot;Open Image File&quot;,&quot;&quot;,&quot;All Files(*);;*.jpg;;*.png;;*.jpeg&quot;)
-        self.box.set_image(img_name)
-
-    def large_click(self):
-        &quot;&quot;&quot;
-        used to enlarge image
-        :return:
-        &quot;&quot;&quot;
-        if self.box.scale &lt; 2:
-            self.box.scale += 0.1
-            self.box.adjustSize()
-            self.update()
-
-    def small_click(self):
-        &quot;&quot;&quot;
-        used to reduce image
-        :return:
-        &quot;&quot;&quot;
-        if self.box.scale &gt; 0.3:
-            self.box.scale -= 0.2
-            self.box.adjustSize()
-            self.update()
-
-if __name__ == &#39;__main__&#39;:
-    app = QApplication(sys.argv)
-    box = MainDemo()
-    box.show()
-    app.exec_()
-</code></pre>
-<h1 id="版本二"><a href="#版本二" class="headerlink" title="版本二"></a>版本二</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_42743778/article/details/118567409">https://blog.csdn.net/qq_42743778/article/details/118567409</a></p>
-<pre><code># -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file &#39;top-half.ui&#39;
-#
-# Created by: PyQt5 UI code generator 5.15.4
-#
-# WARNING: Any manual changes made to this file will be lost when pyuic5 is
-# run again.  Do not edit this file unless you know what you are doing.
-
-import sys
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtGui import QImageReader
-from PyQt5.QtWidgets import QWidget, QApplication, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QFileDialog
-from PyQt5.Qt import QPixmap, QPoint, Qt, QPainter, QIcon
-from PyQt5.QtCore import QSize
-
-
-class ImageBox(QWidget):
-    def __init__(self):
-        super(ImageBox, self).__init__()
-        self.img = None
-        self.scaled_img = None
-        self.point = QPoint(0, 0)
-        self.start_pos = None
-        self.end_pos = None
-        self.left_click = False
-        self.scale = 1
-
-    def init_ui(self):
-        self.setWindowTitle(&quot;ImageBox&quot;)
-
-    def set_image(self, img_path):
-        &quot;&quot;&quot;
-        open image file
-        :param img_path: image file path
-        :return:
-        &quot;&quot;&quot;
-        # img = QImageReader(img_path)
-        # img.setScaledSize(QSize(self.size().width(), self.size().height()))
-        # img = img.read()
-        self.img = QPixmap(img_path)
-        self.scaled_img = self.img
-
-    def paintEvent(self, e):
-        &quot;&quot;&quot;
-        receive paint events
-        :param e: QPaintEvent
-        :return:
-        &quot;&quot;&quot;
-        if self.scaled_img:
-            painter = QPainter()
-            painter.begin(self)
-            painter.scale(self.scale, self.scale)
-            painter.drawPixmap(self.point, self.scaled_img)
-            painter.end()
-
-    def wheelEvent(self, event):
-        angle = event.angleDelta() / 8  # 返回QPoint对象，为滚轮转过的数值，单位为1/8度
-        angleY = angle.y()
-        # 获取当前鼠标相对于view的位置
-        if angleY &gt; 0:
-            self.scale *= 1.1
-        else:  # 滚轮下滚
-            self.scale *= 0.9
-        self.adjustSize()
-        self.update()
-
-
-    def mouseMoveEvent(self, e):
-        &quot;&quot;&quot;
-        mouse move events for the widget
-        :param e: QMouseEvent
-        :return:
-        &quot;&quot;&quot;
-        if self.left_click:
-            self.end_pos = e.pos() - self.start_pos
-            self.point = self.point + self.end_pos
-            self.start_pos = e.pos()
-            self.repaint()
-
-    def mousePressEvent(self, e):
-        &quot;&quot;&quot;
-        mouse press events for the widget
-        :param e: QMouseEvent
-        :return:
-        &quot;&quot;&quot;
-        if e.button() == Qt.LeftButton:
-            self.left_click = True
-            self.start_pos = e.pos()
-
-    def mouseReleaseEvent(self, e):
-        &quot;&quot;&quot;
-        mouse release events for the widget
-        :param e: QMouseEvent
-        :return:
-        &quot;&quot;&quot;
-        if e.button() == Qt.LeftButton:
-            self.left_click = False
-
-class Ui_Form(QWidget):
-    def setupUi(self, Form):
-        Form.setObjectName(&quot;Form&quot;)
-        Form.resize(1020, 726)
-        self.scrollArea = QtWidgets.QScrollArea(Form)
-        self.scrollArea.setGeometry(QtCore.QRect(240, 50, 719, 309))
-        self.scrollArea.setWidgetResizable(True)
-        self.scrollArea.setObjectName(&quot;scrollArea&quot;)
-        self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.box = ImageBox()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, self.box.width(), self.box.height()))
-        self.scrollAreaWidgetContents.setMinimumSize(QtCore.QSize(719, 309))
-        self.scrollAreaWidgetContents.setObjectName(&quot;scrollAreaWidgetContents&quot;)
-        self.gridLayout = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
-        self.gridLayout.setObjectName(&quot;gridLayout&quot;)
-
-        self.gridLayout.addWidget(self.box, 0, 0, 1, 1)
-        self.scrollArea.setWidget(self.scrollAreaWidgetContents)
-        self.open_file = QtWidgets.QPushButton(Form)
-        self.open_file.setGeometry(QtCore.QRect(30, 100, 81, 41))
-        font = QtGui.QFont()
-        font.setFamily(&quot;Aharoni&quot;)
-        font.setPointSize(10)
-        font.setBold(True)
-        font.setWeight(75)
-        self.open_file.setFont(font)
-        self.open_file.setObjectName(&quot;open_file&quot;)
-        self.open_file.clicked.connect(self.open_image)
-        self.progressBar = QtWidgets.QProgressBar(Form)
-        self.progressBar.setGeometry(QtCore.QRect(240, 370, 751, 23))
-        self.progressBar.setProperty(&quot;value&quot;, 24)
-        self.progressBar.setObjectName(&quot;progressBar&quot;)
-        self.line = QtWidgets.QFrame(Form)
-        self.line.setGeometry(QtCore.QRect(50, 410, 911, 16))
-        self.line.setFrameShape(QtWidgets.QFrame.HLine)
-        self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
-        self.line.setObjectName(&quot;line&quot;)
-        self.start_check = QtWidgets.QPushButton(Form)
-        self.start_check.setGeometry(QtCore.QRect(130, 100, 81, 41))
-        font = QtGui.QFont()
-        font.setFamily(&quot;Aharoni&quot;)
-        font.setPointSize(10)
-        font.setBold(True)
-        font.setWeight(75)
-        self.start_check.setFont(font)
-        self.start_check.setObjectName(&quot;start_check&quot;)
-        self.label = QtWidgets.QLabel(Form)
-        self.label.setGeometry(QtCore.QRect(40, 170, 61, 31))
-        font = QtGui.QFont()
-        font.setFamily(&quot;Aharoni&quot;)
-        font.setPointSize(10)
-        font.setBold(True)
-        font.setWeight(75)
-        self.label.setFont(font)
-        self.label.setObjectName(&quot;label&quot;)
-        self.label_2 = QtWidgets.QLabel(Form)
-        self.label_2.setGeometry(QtCore.QRect(40, 300, 61, 31))
-        font = QtGui.QFont()
-        font.setFamily(&quot;Aharoni&quot;)
-        font.setPointSize(10)
-        font.setBold(True)
-        font.setWeight(75)
-        self.label_2.setFont(font)
-        self.label_2.setObjectName(&quot;label_2&quot;)
-
-
-        self.retranslateUi(Form)
-        QtCore.QMetaObject.connectSlotsByName(Form)
-
-    def retranslateUi(self, Form):
-        _translate = QtCore.QCoreApplication.translate
-        Form.setWindowTitle(_translate(&quot;Form&quot;, &quot;Form&quot;))
-        self.open_file.setText(_translate(&quot;Form&quot;, &quot;选择文件&quot;))
-        self.start_check.setText(_translate(&quot;Form&quot;, &quot;开始检测&quot;))
-        self.label.setText(_translate(&quot;Form&quot;, &quot;文件名称：&quot;))
-        self.label_2.setText(_translate(&quot;Form&quot;, &quot;检测状态:&quot;))
-
-    def open_image(self):
-        &quot;&quot;&quot;
-        select image file and open it
-        :return:
-        &quot;&quot;&quot;
-        # img_name, _ = QFileDialog.getOpenFileName(self, &quot;打开图片&quot;, &quot;&quot;, &quot;All Files(*);;*.jpg;;*.png&quot;)
-        img_name, _ = QFileDialog.getOpenFileName(None, &quot;Open Image File&quot;,&quot;&quot;,&quot;All Files(*);;*.jpg;;*.png;;*.jpeg&quot;)
-        img = QPixmap(img_name)
-        print(img.width(),&quot;+&quot;,img.height())
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, img.width(), img.height()))
-        self.box.set_image(img_name)
-
-if __name__ == &quot;__main__&quot;:
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_Form()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())
-</code></pre>
-<h1 id="版本三"><a href="#版本三" class="headerlink" title="版本三"></a>版本三</h1><p><a target="_blank" rel="noopener" href="https://huaweicloud.csdn.net/63808365dacf622b8df894dc.html">https://huaweicloud.csdn.net/63808365dacf622b8df894dc.html</a></p>
-<pre><code># -*- coding: utf-8 -*-
-import sys
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtGui import QImageReader
-from PyQt5.QtWidgets import QWidget, QApplication, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QFileDialog
-from PyQt5.Qt import QPixmap, QPoint, Qt, QPainter, QIcon
-from PyQt5.QtCore import QSize
-
-
-class ImageBox(QWidget):
-    def __init__(self):
-        super(ImageBox, self).__init__()
-        self.img = None
-        self.scaled_img = None
-        self.start_pos = None
-        self.end_pos = None
-        self.left_click = False
-        self.wheel_flag = False
-
-        self.scale = 1
-        self.old_scale = 1
-        self.point = QPoint(0, 0)
-        self.x = -1
-        self.y = -1
-        self.new_height = -1
-        self.new_width = -1
-
-    def init_ui(self):
-        self.setWindowTitle(&quot;ImageBox&quot;)
-
-    def set_image(self, img_path):
-        self.img = QPixmap(img_path)
-        width, height = self.img.width(), self.img.height()
-        if height / width &gt; 990 / 660:
-            new_height = 990
-            new_width = width * 990 / height
-        else:
-            new_height = height * 660 / width
-            new_width = 660
-        self.point = QPoint(int((660 - new_width) * 0.5), int((990 - new_height) * 0.5))
-        self.img = self.img.scaled(new_width, new_height, Qt.KeepAspectRatio)
-        self.scaled_img = self.img
-
-        self.new_height = new_height
-        self.new_width = new_width
-        self.scale = 1
-
-    def paintEvent(self, e):
-        if self.scaled_img:
-            painter = QPainter()
-            painter.begin(self)
-            painter.scale(self.scale, self.scale)
-            if self.wheel_flag:        # 定点缩放
-                self.wheel_flag = False
-                # 判断当前鼠标pos在不在图上
-                this_left_x = self.point.x() * self.old_scale
-                this_left_y = self.point.y() * self.old_scale
-                this_scale_width = self.new_width * self.old_scale
-                this_scale_height = self.new_height * self.old_scale
-
-                # 鼠标点在图上，以鼠标点为中心动作
-                gap_x = self.x - this_left_x
-                gap_y = self.y - this_left_y
-                if 0 &lt; gap_x &lt; this_scale_width and 0 &lt; gap_y &lt; this_scale_height:
-                    new_left_x = int(self.x / self.scale - gap_x / self.old_scale)
-                    new_left_y = int(self.y / self.scale - gap_y / self.old_scale)
-                    self.point = QPoint(new_left_x, new_left_y)
-                # 鼠标点不在图上，固定左上角进行缩放
-                else:
-                    true_left_x = int(self.point.x() * self.old_scale / self.scale)
-                    true_left_y = int(self.point.y() * self.old_scale / self.scale)
-                    self.point = QPoint(true_left_x, true_left_y)
-            painter.drawPixmap(self.point, self.scaled_img)  # 此函数中还会用scale对point进行处理
-            painter.end()
-
-    def wheelEvent(self, event):
-        angle = event.angleDelta() / 8  # 返回QPoint对象，为滚轮转过的数值，单位为1/8度
-        angleY = angle.y()
-        self.old_scale = self.scale
-        self.x, self.y = event.x(), event.y()
-        self.wheel_flag = True
-        # 获取当前鼠标相对于view的位置
-        if angleY &gt; 0:
-            self.scale *= 1.08
-        else:  # 滚轮下滚
-            self.scale *= 0.92
-        if self.scale &lt; 0.3:
-            self.scale = 0.3
-        self.adjustSize()
-        self.update()
-
-    def mouseMoveEvent(self, e):
-        if self.left_click:
-            self.end_pos = e.pos() - self.start_pos                    # 当前位置-起始位置=差值
-            self.point = self.point + self.end_pos / self.scale        # 左上角的距离变化
-            self.start_pos = e.pos()
-            self.repaint()
-
-    def mousePressEvent(self, e):
-        if e.button() == Qt.LeftButton:
-            self.left_click = True
-            self.start_pos = e.pos()
-
-    def mouseReleaseEvent(self, e):
-        if e.button() == Qt.LeftButton:
-            self.left_click = False
-
-
-class Ui_Form(QWidget):
-    def setupUi(self, Form):
-        Form.setObjectName(&quot;Form&quot;)
-        Form.resize(900, 1080)
-        self.scrollArea = QtWidgets.QScrollArea(Form)
-        self.scrollArea.setGeometry(QtCore.QRect(150, 10, 680, 990))
-        self.scrollArea.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-        self.scrollArea.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-        # self.scrollArea.setWidgetResizable(True)
-        self.scrollArea.setObjectName(&quot;scrollArea&quot;)
-
-        self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.box = ImageBox()
-
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 680, 990))
-        self.scrollAreaWidgetContents.setMinimumSize(QtCore.QSize(100, 100))
-        self.scrollAreaWidgetContents.setObjectName(&quot;scrollAreaWidgetContents&quot;)
-        self.gridLayout = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
-        self.gridLayout.setObjectName(&quot;gridLayout&quot;)
-
-        self.gridLayout.addWidget(self.box, 0, 0, 1, 1)
-        self.scrollArea.setWidget(self.scrollAreaWidgetContents)
-
-        self.open_file = QtWidgets.QPushButton(Form)
-        self.open_file.setGeometry(QtCore.QRect(30, 100, 81, 41))
-        font = QtGui.QFont()
-        font.setFamily(&quot;Aharoni&quot;)
-        font.setPointSize(10)
-        font.setBold(True)
-        font.setWeight(75)
-        self.open_file.setFont(font)
-        self.open_file.setObjectName(&quot;open_file&quot;)
-        self.open_file.clicked.connect(self.open_image)
-
-        self.retranslateUi(Form)
-        QtCore.QMetaObject.connectSlotsByName(Form)
-
-    def retranslateUi(self, Form):
-        _translate = QtCore.QCoreApplication.translate
-        Form.setWindowTitle(_translate(&quot;Form&quot;, &quot;Form&quot;))
-        self.open_file.setText(_translate(&quot;Form&quot;, &quot;选择文件&quot;))
-
-    def open_image(self):
-        img_name, _ = QFileDialog.getOpenFileName(None, &quot;Open Image File&quot;,&quot;&quot;,&quot;All Files(*);;*.jpg;;*.png;;*.jpeg&quot;)
-        self.box.set_image(img_name)
-
-
-if __name__ == &quot;__main__&quot;:
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_Form()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())
-</code></pre>
  
       <!-- reward -->
       

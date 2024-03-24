@@ -154,6 +154,72 @@
     
     
     <article
+  id="post-PostgreSQL常用ALTER语句"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/03/14/PostgreSQL%E5%B8%B8%E7%94%A8ALTER%E8%AF%AD%E5%8F%A5/"
+    >PostgreSql常用ALTER语句</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/03/14/PostgreSQL%E5%B8%B8%E7%94%A8ALTER%E8%AF%AD%E5%8F%A5/" class="article-date">
+  <time datetime="2023-03-14T15:11:55.000Z" itemprop="datePublished">2023-03-14</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <ul>
+<li><p>数据库操作</p>
+<p>  ALTER DATABASE name ALLOW_CONNECTIONS true|false;<br>  ALTER DATABASE name CONNECTION LIMIT connlimit;<br>  ALTER DATABASE name CONNECTION IS_TEMPLATE true|false;<br>  ALTER DATABASE name RENAME TO new_name;<br>  ALTER DATABASE name OWNER TO new_owner;<br>  ALTER DATABASE name SET TABLESPACE new_tablespace;<br>  ALTER DATABASE name SET configuration_parameter {TO|=} {value|DEFAULT};<br>  ALTER DATABASE name SET configuration_parameter FROM CURRENT;<br>  ALTER DATABASE name RESET configuration_parameter;<br>  ALTER DATABASE name RESET ALL;</p>
+</li>
+<li><p>用户角色操作</p>
+<p>  ALTER ROLE|USER role_name WITH PASSWORD ‘password’;<br>  ALTER ROLE|USER role_name WITH PASSWORD NULL;<br>  ALTER ROLE|USER role_name VALID UNTIL ‘May 4 12:00:00 2015 +1’;<br>  ALTER ROLE|USER role_name VALID UNTIL ‘infinity’;<br>  ALTER ROLE|USER role_name CREATEROLE CREATEDB;<br>  ALTER ROLE|USER role_name SET maintenance_work_mem = 100000;<br>  ALTER ROLE|USER role_name {IN DATABASE name} SET configuration_parameter {TO|=} {value|DEFAULT};<br>  ALTER ROLE|USER role_name {IN DATABASE name} SET configuration_parameter FROM CURRENT;<br>  ALTER ROLE|USER role_name {IN DATABASE name} RESET configuration_parameter;<br>  ALTER ROLE|USER role_name {IN DATABASE name} RESET ALL;</p>
+</li>
+<li><p>SCHEMA 操作</p>
+<p>  ALTER SCHEMA schema_name RENAME TO new_name;<br>  ALTER SCHEMA schema_name OWNER TO new_owner;</p>
+</li>
+<li><p>表操作</p>
+<p>  ALTER TABLE table_name RENAME TO new_name;<br>  ALTER TABLE table_name SET SCHEMA new_schema;<br>  ALTER TABLE table_name OWNER TO role_name;<br>  ALTER TABLE table_name SET TABLESPACE tablespace_name;<br>  ALTER TABLE table_name ADD column_name datatype;<br>  ALTER TABLE table_name DROP column_name;<br>  ALTER TABLE table_name ALTER column_name TYPE datatype;<br>  ALTER TABLE table_name RENAME column_name TO new_column_name;<br>  ALTER TABLE table_name ALTER column_name {SET|DROP} NOT NULL;<br>  ALTER TABLE table_name ALTER column_name SET DEFAULT expression;<br>  ALTER TABLE table_name RENAME CONSTRAINT constraint_name TO new_constraint_name;<br>  ALTER TABLE table_name ADD CONSTRAINT constraint_name PRIMARY KEY(id);<br>  ALTER TABLE table_name ADD CONSTRAINT constraint_name UNIQUE(id);<br>  ALTER TABLE table_name ADD CONSTRAINT constraint_name CHECK(id &gt; 100);<br>  ALTER TABLE table_name ADD CONSTRAINT constraint_name FOREIGN KEY(id) REFERENCES reftable(id);<br>  ALTER TABLE table_name DROP CONSTRAINT constraint_name;</p>
+</li>
+</ul>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-PostgreSQL更改字段默认值、设置字段默认值、删除字段默认值"
   class="article article-type-post"
   itemscope
@@ -626,204 +692,6 @@ public class MyCorsConfig &#123;
     <footer class="article-footer">
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%B7%A8%E5%9F%9F%E5%A4%84%E7%90%86/" rel="tag">跨域处理</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Springboot-Postgresql-FastAutoGenerator-2"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/03/08/Springboot-Postgresql-FastAutoGenerator-2/"
-    >Springboot+Postgresql+FastAutoGenerator（二）</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/03/08/Springboot-Postgresql-FastAutoGenerator-2/" class="article-date">
-  <time datetime="2023-03-08T07:04:40.000Z" itemprop="datePublished">2023-03-08</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>执行日志如下，SQL语句备用：</p>
-<pre><code>14:55:09.076 [main] DEBUG com.baomidou.mybatisplus.generator.AutoGenerator - ==========================准备生成文件...==========================
-14:55:10.014 [main] DEBUG com.baomidou.mybatisplus.generator.config.querys.PostgreSqlQuery - 执行SQL:
-
-SELECT A.tablename, obj_description(relfilenode, &#39;pg_class&#39;) AS comments FROM pg_tables A, pg_class B WHERE A.schemaname=&#39;system&#39; AND A.tablename = B.relname AND tablename IN (&#39;sys_role_menu&#39;,&#39;sys_user_role&#39;,&#39;sys_user&#39;,&#39;sys_menu&#39;,&#39;sys_role&#39;)
-
-14:55:10.029 [main] DEBUG com.baomidou.mybatisplus.generator.config.querys.PostgreSqlQuery - 返回记录数:5,耗时(ms):19
-14:55:10.076 [main] DEBUG com.baomidou.mybatisplus.generator.config.querys.PostgreSqlQuery - 执行SQL:
-SELECT
-   A.attname AS name,format_type (A.atttypid,A.atttypmod) AS type,col_description (A.attrelid,A.attnum) AS comment,
-     D.column_default,
-   CASE WHEN length(B.attname) &gt; 0 THEN &#39;PRI&#39; ELSE &#39;&#39; END AS key
-FROM
-   pg_attribute A
-LEFT JOIN (
-    SELECT
-        pg_attribute.attname
-    FROM
-        pg_index,
-        pg_class,
-        pg_attribute
-    WHERE
-        pg_class.oid =&#39;&quot;sys_menu&quot;&#39; :: regclass
-    AND pg_index.indrelid = pg_class.oid
-    AND pg_attribute.attrelid = pg_class.oid
-    AND pg_attribute.attnum = ANY (pg_index.indkey)
-) B ON A.attname = b.attname
-INNER JOIN pg_class C on A.attrelid = C.oid
-INNER JOIN information_schema.columns D on A.attname = D.column_name
-WHERE A.attrelid =&#39;&quot;sys_menu&quot;&#39; :: regclass AND A.attnum&gt; 0 AND NOT A.attisdropped AND D.table_name = &#39;sys_menu&#39;
-ORDER BY A.attnum;
-
-14:55:10.107 [main] DEBUG com.baomidou.mybatisplus.generator.config.querys.PostgreSqlQuery - 返回记录数:10,耗时(ms):31
-14:55:10.107 [main] DEBUG com.baomidou.mybatisplus.generator.config.querys.PostgreSqlQuery - 执行SQL:
-
-SELECT
-   A.attname AS name,format_type (A.atttypid,A.atttypmod) AS type,col_description (A.attrelid,A.attnum) AS comment,
-     D.column_default,
-   CASE WHEN length(B.attname) &gt; 0 THEN &#39;PRI&#39; ELSE &#39;&#39; END AS key
-FROM
-   pg_attribute A
-LEFT JOIN (
-    SELECT
-        pg_attribute.attname
-    FROM
-        pg_index,
-        pg_class,
-        pg_attribute
-    WHERE
-        pg_class.oid =&#39;&quot;sys_role&quot;&#39; :: regclass
-    AND pg_index.indrelid = pg_class.oid
-    AND pg_attribute.attrelid = pg_class.oid
-    AND pg_attribute.attnum = ANY (pg_index.indkey)
-) B ON A.attname = b.attname
-INNER JOIN pg_class C on A.attrelid = C.oid
-INNER JOIN information_schema.columns D on A.attname = D.column_name
-WHERE A.attrelid =&#39;&quot;sys_role&quot;&#39; :: regclass AND A.attnum&gt; 0 AND NOT A.attisdropped AND D.table_name = &#39;sys_role&#39;
-ORDER BY A.attnum;
-
-14:55:10.123 [main] DEBUG com.baomidou.mybatisplus.generator.config.querys.PostgreSqlQuery - 返回记录数:3,耗时(ms):5
-14:55:10.123 [main] DEBUG com.baomidou.mybatisplus.generator.config.querys.PostgreSqlQuery - 执行SQL:
-
-SELECT
-   A.attname AS name,format_type (A.atttypid,A.atttypmod) AS type,col_description (A.attrelid,A.attnum) AS comment,
-     D.column_default,
-   CASE WHEN length(B.attname) &gt; 0 THEN &#39;PRI&#39; ELSE &#39;&#39; END AS key
-FROM
-   pg_attribute A
-LEFT JOIN (
-    SELECT
-        pg_attribute.attname
-    FROM
-        pg_index,
-        pg_class,
-        pg_attribute
-    WHERE
-        pg_class.oid =&#39;&quot;sys_role_menu&quot;&#39; :: regclass
-    AND pg_index.indrelid = pg_class.oid
-    AND pg_attribute.attrelid = pg_class.oid
-    AND pg_attribute.attnum = ANY (pg_index.indkey)
-) B ON A.attname = b.attname
-INNER JOIN pg_class C on A.attrelid = C.oid
-INNER JOIN information_schema.columns D on A.attname = D.column_name
-WHERE A.attrelid =&#39;&quot;sys_role_menu&quot;&#39; :: regclass AND A.attnum&gt; 0 AND NOT A.attisdropped AND D.table_name = &#39;sys_role_menu&#39;
-ORDER BY A.attnum;
-
-14:55:10.123 [main] DEBUG com.baomidou.mybatisplus.generator.config.querys.PostgreSqlQuery - 返回记录数:3,耗时(ms):5
-14:55:10.139 [main] DEBUG com.baomidou.mybatisplus.generator.config.querys.PostgreSqlQuery - 执行SQL:
-
-SELECT
-   A.attname AS name,format_type (A.atttypid,A.atttypmod) AS type,col_description (A.attrelid,A.attnum) AS comment,
-     D.column_default,
-   CASE WHEN length(B.attname) &gt; 0 THEN &#39;PRI&#39; ELSE &#39;&#39; END AS key
-FROM
-   pg_attribute A
-LEFT JOIN (
-    SELECT
-        pg_attribute.attname
-    FROM
-        pg_index,
-        pg_class,
-        pg_attribute
-    WHERE
-        pg_class.oid =&#39;&quot;sys_user&quot;&#39; :: regclass
-    AND pg_index.indrelid = pg_class.oid
-    AND pg_attribute.attrelid = pg_class.oid
-    AND pg_attribute.attnum = ANY (pg_index.indkey)
-) B ON A.attname = b.attname
-INNER JOIN pg_class C on A.attrelid = C.oid
-INNER JOIN information_schema.columns D on A.attname = D.column_name
-WHERE A.attrelid =&#39;&quot;sys_user&quot;&#39; :: regclass AND A.attnum&gt; 0 AND NOT A.attisdropped AND D.table_name = &#39;sys_user&#39;
-ORDER BY A.attnum;
-
-14:55:10.139 [main] DEBUG com.baomidou.mybatisplus.generator.config.querys.PostgreSqlQuery - 返回记录数:11,耗时(ms):6
-14:55:10.139 [main] DEBUG com.baomidou.mybatisplus.generator.config.querys.PostgreSqlQuery - 执行SQL:
-
-SELECT
-   A.attname AS name,format_type (A.atttypid,A.atttypmod) AS type,col_description (A.attrelid,A.attnum) AS comment,
-     D.column_default,
-   CASE WHEN length(B.attname) &gt; 0 THEN &#39;PRI&#39; ELSE &#39;&#39; END AS key
-FROM
-   pg_attribute A
-LEFT JOIN (
-    SELECT
-        pg_attribute.attname
-    FROM
-        pg_index,
-        pg_class,
-        pg_attribute
-    WHERE
-        pg_class.oid =&#39;&quot;sys_user_role&quot;&#39; :: regclass
-    AND pg_index.indrelid = pg_class.oid
-    AND pg_attribute.attrelid = pg_class.oid
-    AND pg_attribute.attnum = ANY (pg_index.indkey)
-) B ON A.attname = b.attname
-INNER JOIN pg_class C on A.attrelid = C.oid
-INNER JOIN information_schema.columns D on A.attname = D.column_name
-WHERE A.attrelid =&#39;&quot;sys_user_role&quot;&#39; :: regclass AND A.attnum&gt; 0 AND NOT A.attisdropped AND D.table_name = &#39;sys_user_role&#39;
-ORDER BY A.attnum;
-
-14:55:10.154 [main] DEBUG com.baomidou.mybatisplus.generator.config.querys.PostgreSqlQuery - 返回记录数:3,耗时(ms):5
-
-14:55:10.373 [main] DEBUG com.baomidou.mybatisplus.generator.AutoGenerator - ==========================文件生成完成！！！==========================
-
-Process finished with exit code 0
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SpringBoot/" rel="tag">SpringBoot</a></li></ul>
 
     </footer>
   </div>
