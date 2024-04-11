@@ -154,6 +154,79 @@
     
     
     <article
+  id="post-How-QGIS-Serve-a-project"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/03/03/How-QGIS-Serve-a-project/"
+    >How QGIS Serve a project</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/03/03/How-QGIS-Serve-a-project/" class="article-date">
+  <time datetime="2023-03-03T06:07:30.000Z" itemprop="datePublished">2023-03-03</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>Now that QGIS Server is installed and running, we just have to use it.</p>
+<p>Obviously, we need a QGIS project to work on. Of course, you can fully customize your project by defining contact information, precise some restrictions on CRS or even exclude some layers. Everything you need to know about that is described later in Configure your project.</p>
+<p>But for now, we are going to use a simple project already configured and previously downloaded in /home/qgis/projects/world.qgs, as described above.</p>
+<p>By opening the project and taking a quick look on layers, we know that 4 layers are currently available:</p>
+<p>airports<br>places<br>countries<br>countries_shapeburst</p>
+<p>You don’t have to understand the full request for now but you may retrieve a map with some of the previous layers thanks to QGIS Server by doing something like this in your web browser to retrieve the countries layer:</p>
+<pre><code>http://qgis.demo/qgisserver?
+  MAP=/home/qgis/projects/world.qgs&amp;
+  LAYERS=countries&amp;
+  SERVICE=WMS&amp;
+  VERSION=1.3.0&amp;
+  REQUEST=GetMap&amp;
+  CRS=EPSG:4326&amp;
+  WIDTH=400&amp;
+  HEIGHT=200&amp;
+  BBOX=-90,-180,90,180
+</code></pre>
+<p>If you obtain the next image, then QGIS Server is running correctly:</p>
+<p>Note that you may define QGIS_PROJECT_FILE environment variable to use a project by default instead of giving a MAP parameter (see Environment variables).</p>
+<p>For example with spawn-fcgi:</p>
+<p>export QGIS_PROJECT_FILE=/home/qgis/projects/world.qgs<br>spawn-fcgi -f /usr/lib/bin/cgi-bin/qgis_mapserv.fcgi <br>           -s /var/run/qgisserver.socket <br>           -U www-data -G www-data -n</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/QGIS/" rel="tag">QGIS</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-QGIS-Server-Installation-on-Windows"
   class="article article-type-post"
   itemscope
@@ -583,126 +656,6 @@ user=waterpass
 <p>The service file should be saved in Unix format in order to work. One way to do it is to open it with Notepad++ and Edit ► EOL Conversion ► UNIX Format ► File save.</p>
 <p>You can add environmental variables in various ways; a tested one, known to work reliably, is Control Panel ► System and Security ► System ► Advanced system settings ► Environment Variables adding PGSERVICEFILE with the path - e.g. C:\Users\John\pg_service.conf</p>
 <p>After adding an environment variable you may also need to restart the computer.</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-在windows上使用pg-service-conf配置服务连接PostgreSQL数据库"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/02/25/%E5%9C%A8windows%E4%B8%8A%E4%BD%BF%E7%94%A8pg-service-conf%E9%85%8D%E7%BD%AE%E6%9C%8D%E5%8A%A1%E8%BF%9E%E6%8E%A5PostgreSQL%E6%95%B0%E6%8D%AE%E5%BA%93/"
-    >在windows上使用pg_service.conf配置服务连接PostgreSQL数据库</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/02/25/%E5%9C%A8windows%E4%B8%8A%E4%BD%BF%E7%94%A8pg-service-conf%E9%85%8D%E7%BD%AE%E6%9C%8D%E5%8A%A1%E8%BF%9E%E6%8E%A5PostgreSQL%E6%95%B0%E6%8D%AE%E5%BA%93/" class="article-date">
-  <time datetime="2023-02-25T15:35:03.000Z" itemprop="datePublished">2023-02-25</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>在windows上使用PostgreSQL的连接服务文件(Connection Service File)连接到数据库中。</p>
-<p>参考：<a target="_blank" rel="noopener" href="https://www.postgresql.org/docs/11/libpq-pgservice.html">https://www.postgresql.org/docs/11/libpq-pgservice.html</a></p>
-<p>作者注：<br>PostgreSQL的连接服务文件(Connection Service File)存放了ip地址，数据库名，端口号等信息，作用类似于Oracle database的tnsnames.ora文件。</p>
-<pre><code>C:\&gt;set lc_messages=C
-C:\&gt;d:\postgresql\pg11.5\bin\pg_config --sysconfdir
-d:/postgresql/pg11.5/etc
- 
-C:\&gt;d:\postgresql\pg11.5\bin\pg_config
-BINDIR = d:/postgresql/pg11.5/bin
-DOCDIR = d:/postgresql/pg11.5/doc
-HTMLDIR = d:/postgresql/pg11.5/doc
-INCLUDEDIR = d:/postgresql/pg11.5/include
-PKGINCLUDEDIR = d:/postgresql/pg11.5/include
-INCLUDEDIR-SERVER = d:/postgresql/pg11.5/include/server
-LIBDIR = d:/postgresql/pg11.5/lib
-PKGLIBDIR = d:/postgresql/pg11.5/lib
-LOCALEDIR = d:/postgresql/pg11.5/share/locale
-MANDIR = d:/postgresql/pg11.5/man
-SHAREDIR = d:/postgresql/pg11.5/share
-SYSCONFDIR = d:/postgresql/pg11.5/etc
-PGXS = d:/postgresql/pg11.5/lib/pgxs/src/makefiles/pgxs.mk
-CONFIGURE = --enable-thread-safety --enable-nls --with-ldap --with-openssl --with-ossp-uuid --with-libxml --with-libxslt --with-icu --with-tcl --with-perl --with-python
-CC = not recorded
-CPPFLAGS = not recorded
-CFLAGS = not recorded
-CFLAGS_SL = not recorded
-LDFLAGS = not recorded
-LDFLAGS_EX = not recorded
-LDFLAGS_SL = not recorded
-LIBS = not recorded
-VERSION = PostgreSQL 11.5
-</code></pre>
-<p>注意上面的输出：SYSCONFDIR = d:/postgresql/pg11.5/etc</p>
-<p>在SYSCONFDIR = d:/postgresql/pg11.5/etc下建立名为pg_service.conf的文件（该文件的模板存放在SHAREDIR = d:/postgresql/pg11.5/share 目录中，可copy过来）</p>
-<p>pg_service.conf的文件内容如下：</p>
-<pre><code>#
-#    Connection configuration file
-#
-# A service is a set of named connection parameters.  You may specify
-# multiple services in this file.  Each starts with a service name in
-# brackets.  Subsequent lines have connection configuration parameters of
-# the pattern &quot;param=value&quot; or LDAP URLs starting with &quot;ldap://&quot;
-# to look up such parameters.  A sample configuration for postgres is
-# included in this file.  Lines beginning with &#39;#&#39; are comments.
-#
-# Copy this to your sysconf directory (typically /usr/local/pgsql/etc) and
-# rename it pg_service.conf.
-#
-#
-#[postgres service name]
-[pg12bt2-cluster]  ---&gt;&gt;&gt;这个是服务名，请自行定义，在psql连接时使用。
-host=192.168.80.187
-dbname=postgres
-user=pg12bt2
-port=7432
-</code></pre>
-<p>下面做登录测试：</p>
-<pre><code>C:\&gt;d:\postgresql\pg11.5\bin\psql service=pg12bt2-cluster
-用户 pg12bt2 的口令：
-psql (11.5, 服务器 12beta2)
-警告：psql 主版本11,服务器主版本为12.
-     一些psql功能可能无法正常使用.
-输入 &quot;help&quot; 来获取帮助信息.
-
-postgres=# \q
-</code></pre>
-<p>注意：<br>1.PostgreSQL的连接服务文件(Connection Service File)中的关键字清单见：<br><a target="_blank" rel="noopener" href="https://www.postgresql.org/docs/11/libpq-connect.html#LIBPQ-PARAMKEYWORDS">https://www.postgresql.org/docs/11/libpq-connect.html#LIBPQ-PARAMKEYWORDS</a><br>2.psql登录方式不止“psql service=pg12bt2-cluster”，<br>其他的登录方式请见：<br><a target="_blank" rel="noopener" href="https://www.postgresql.org/docs/11/libpq-pgservice.html">https://www.postgresql.org/docs/11/libpq-pgservice.html</a><br><a target="_blank" rel="noopener" href="https://www.cybertec-postgresql.com/en/pg_service-conf-the-forgotten-config-file/">https://www.cybertec-postgresql.com/en/pg_service-conf-the-forgotten-config-file/</a></p>
-<p>————————————————<br>版权声明：本文为CSDN博主「msdnchina」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/msdnchina/article/details/100933935">https://blog.csdn.net/msdnchina/article/details/100933935</a></p>
  
       <!-- reward -->
       

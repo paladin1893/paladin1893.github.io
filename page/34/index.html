@@ -154,6 +154,77 @@
     
     
     <article
+  id="post-服务器性能监控及其指标介绍"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/06/07/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7%E5%8F%8A%E5%85%B6%E6%8C%87%E6%A0%87%E4%BB%8B%E7%BB%8D/"
+    >服务器性能监控及其指标介绍</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/06/07/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7%E5%8F%8A%E5%85%B6%E6%8C%87%E6%A0%87%E4%BB%8B%E7%BB%8D/" class="article-date">
+  <time datetime="2023-06-07T03:07:01.000Z" itemprop="datePublished">2023-06-07</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>服务器的性能监控，在历史的长河里，随时计算机的发展也在进行着变化。从最开始的手动登录服务器检查问题，包括有哪些人登录到服务器，打开日志，运行过哪些命令，慢慢地变为现在的专业监控软件，集成化的监测性能指标，智能关联分析，使服务器的性能监控更加全完更加完善。那么针对服务器的性能我们需要了解具体哪些性能点，才能更好的判断服务器的运行状态呢？ 以下介绍一些较重要的性能汇总要点和软件。</p>
+<h1 id="性能汇总要点"><a href="#性能汇总要点" class="headerlink" title="性能汇总要点"></a>性能汇总要点</h1><h2 id="CPU使用率"><a href="#CPU使用率" class="headerlink" title="CPU使用率"></a>CPU使用率</h2><p>检查CPU使用情况，查看正在处理器使用的百分比。根据具体需求，你可能需要了解CPU总体使用情况以及按流程或用户划分的细节，查看流程和用户的额外颗粒度，在问题出现时更容易进行故障排除。</p>
+<h2 id="内存使用情况"><a href="#内存使用情况" class="headerlink" title="内存使用情况"></a>内存使用情况</h2><p>总共用了多少内存以及单个进程和用户进和。根据需要，可以按百分比和/或GB/MB监控内存之使用情况。</p>
+<h2 id="磁盘使用情况"><a href="#磁盘使用情况" class="headerlink" title="磁盘使用情况"></a>磁盘使用情况</h2><p>使用了多少磁盘空间。与内存使用情况类似，可以按百分比或空间来监控磁盘使用情况。还应该跟踪inode的使用情况，Inode用于存储系统中文件系统对象的信息。耗尽inode不常见，但还是要检查一下，如果你碰巧知道服务器上运行的应用程序往往有很多小文件，就像一些CI/CD工具那样。</p>
+<h2 id="运行时间"><a href="#运行时间" class="headerlink" title="运行时间"></a>运行时间</h2><p>对于虚拟服务器，正常运行时间是服务器运行的时间。监控主要是为了查看服务器是否经历了意外重启。</p>
+<h2 id="网络活动"><a href="#网络活动" class="headerlink" title="网络活动"></a>网络活动</h2><p>监控网络流量需要哪些精确度，取决于服务器托管的内容。在通常情况下，即使运行静态站点但未主动访问的服务器也会看到运行在其上的其他进程的I/O，服务器网络不应该降到0。</p>
+<h2 id="Swap使用"><a href="#Swap使用" class="headerlink" title="Swap使用"></a>Swap使用</h2><p>Swap交换空间是保留的磁盘空间，是在可用内存不足时补充内存使用量。你的系统如何积极地使用交换空间取决于如何在1（低）到100（高）的范围内配置它的“swappiness”。如果要在系统内出现内存问题时允许进行一些交换而不完全禁用它（为0），使用10或更小的值是一个常态。当查看“交换空间使用情况”时，我们通常会看交换空间使用情况是否显著上升。如果真是如此，需要查内存和其他资源，看看自己是否可以挖掘到原因。</p>
+<h1 id="Linux下相关命令"><a href="#Linux下相关命令" class="headerlink" title="Linux下相关命令"></a>Linux下相关命令</h1><h2 id="top"><a href="#top" class="headerlink" title="top"></a>top</h2><p>一个很方便的工具，允许我们查看正常运行时间，内存使用情况，CPU使用情况以及交换空间等内容。我们还可以查看其它信息：包括其它正在运行的进程，用于运行该进程的命令等。通过按q键退出top命令行。</p>
+<h2 id="htop"><a href="#htop" class="headerlink" title="htop"></a>htop</h2><p>htop是Linux系统中的一个互动的进程查看器，一个文本模式的应用程序(在控制台或者X终端中)，需要ncurses。与传统的top相比，htop更加人性化。它可让用户交互式操作，支持颜色主题，可横向或纵向滚动浏览进程列表，并支持鼠标操作。与top相比，htop有如下的优点：</p>
+<p>可以横向或纵向滚动浏览进程列表，以便看到所有的进程和完整的命令行。</p>
+<p>在启动上，比top 更快。杀进程时不需要输入进程号。htop 支持鼠标操作。</p>
+<h2 id="tcpdump"><a href="#tcpdump" class="headerlink" title="tcpdump"></a>tcpdump</h2><p>这是一个监控网络数据包的强大工具。例如，我们可以使用它来侦听服务器实例上的所有网络流量，或限制为仅侦听来自特定源和/或目标端口的流量。可以使用ctrl + C退出。</p>
+<h2 id="netstat"><a href="#netstat" class="headerlink" title="netstat"></a>netstat</h2><p>允许我们查看服务器上的网络连接的内容和方式，包括将表信息路由为TCP/UDP连接及其进程。后者的常见组合是-tlnpu。如果你需要，还可以使用-c运行命令以进行连续监控。</p>
+<h2 id="nmon"><a href="#nmon" class="headerlink" title="nmon"></a>nmon</h2><p>a.k.a. Nigel的监控器，允许我们查看有关服务器的更详细的信息。与htop命令类似，nmon也是交互式的，因此需要通过一系列菜单来查看有关CPU处理器，磁盘等的信息。退出时，请使用q或ctrl + C。</p>
+<h2 id="uptime"><a href="#uptime" class="headerlink" title="uptime"></a>uptime</h2><p>查看服务器运行时间的简便方法。如果你希望查看持续时间的正常运行时间而不是服务器启动的时间戳，请使用 -pretty参数。</p>
+<h2 id="proc-meminfo"><a href="#proc-meminfo" class="headerlink" title="/proc/meminfo"></a>/proc/meminfo</h2><p>可以使用自己喜欢的编辑器来查看此文件，能够深入了解当前的活动/可用内存的使用情况。</p>
+<h2 id="free"><a href="#free" class="headerlink" title="free"></a>free</h2><p>要查看没有进程信息的空闲与已用内存，请使用free命令。默认情况下，这些值以字节为单位，如果你希望以兆字节或千兆字节的形式查看输出，建议附加-h 参数。</p>
+<h2 id="df"><a href="#df" class="headerlink" title="df"></a>df</h2><p>允许管理员查看系统上安装的所有卷的总磁盘使用情况。默认为1K块大小，建议附加-h以查看兆字节和/或千兆字节的输出结果 df -h。</p>
+<h2 id="du"><a href="#du" class="headerlink" title="du"></a>du</h2><p>以指定目录中的所有对象（文件，目录）递归打印文件系统对象的磁盘使用情况。要注意：如果没有指定目录，则使用root根目录（/），结果很快超过你的终端！如果只想查看目录中项目使用了多少磁盘，请使用-sh。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%80%A7%E8%83%BD/" rel="tag">服务器性能</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%9B%91%E6%8E%A7%E6%8C%87%E6%A0%87/" rel="tag">监控指标</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-2022年中国新能源汽车保有量达1310万辆，同比增长67-13"
   class="article article-type-post"
   itemscope
@@ -561,80 +632,6 @@
 <p>总结大概就这么多吧，很多东西新能源专业的人员写可能会更好些。</p>
 <p>某些图片和数据来源于网络，若有侵权，请联系删除。带来不便请见谅。</p>
 <p>微信公众号：严同笔记 —- 定期写文，供交流讨论</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%94%B5%E5%8A%9B/" rel="tag">电力</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-分布式能源与微电网、电站的关系"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/06/01/%E5%88%86%E5%B8%83%E5%BC%8F%E8%83%BD%E6%BA%90%E4%B8%8E%E5%BE%AE%E7%94%B5%E7%BD%91%E3%80%81%E7%94%B5%E7%AB%99%E7%9A%84%E5%85%B3%E7%B3%BB/"
-    >分布式能源与微电网、电站的关系</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/06/01/%E5%88%86%E5%B8%83%E5%BC%8F%E8%83%BD%E6%BA%90%E4%B8%8E%E5%BE%AE%E7%94%B5%E7%BD%91%E3%80%81%E7%94%B5%E7%AB%99%E7%9A%84%E5%85%B3%E7%B3%BB/" class="article-date">
-  <time datetime="2023-05-31T22:09:15.000Z" itemprop="datePublished">2023-06-01</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>电站没什么好说的，就说说分布式能源和微电网的区别吧。</p>
-<p>分布式能源（DER）：一般定义为包括分布式发电（DG）、储能装置（ES）和与公共电网相连的系统。其中DG是指满足终端用户的特殊需求，接在用户侧的小型发电系统，主要有内燃机，微型燃气轮机、燃料电池、太阳能、风能等发电系统。</p>
-<p>分布式能源有很多优点，比如可实现能源综合梯级利用，弥补大电网稳定性方面不足，环境友好等，但是它的最本质缺点在于不可控和随机波动性，从而造成高渗透率下对电网稳定的负面影响。</p>
-<p>所以，分布式能源和微电网的本质区别就在于前者不可控，后者可控。</p>
-<p>微电网把分布式发电、储能装置、负荷通过控制系统协调控制，形成单一可控单元，直接接在用户侧，优点是非常明显的。</p>
-<p>微电网的控制模式和策略是里面的关键部分，无论是系统级的主从、对等和综合性控制模式，还是逆变器级的P/Q、U/f、下垂控制，乃至和储能相结合的控制方式，都是微电网的核心部分。而这些，在分布式能源系统里面是不会涉及的。</p>
-<p>所以说，很多外面在搞的微网项目，特别是中国人在国外援建，都是在混淆概念，没有控制系统，其实只能叫做分布式发电（分布式能源系统都算不上）。</p>
-<p>作者：严同<br>链接：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/22515671/answer/35688123">https://www.zhihu.com/question/22515671/answer/35688123</a><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
-<p>作者：林石边<br>链接：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/22515671/answer/35666153">https://www.zhihu.com/question/22515671/answer/35666153</a><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
-<p>1、电站：</p>
-<p>传统电网分为发输变配用，或者说（电）源-（电）网-（负）荷。电能是单相流动的，大型的电站发电，长距离电网送电，到用户这里用电。</p>
-<p>2、分布式能源：</p>
-<p>电网里中一种利用可再生能源的方法，因为风能、太阳能的分布不会像煤矿、天然气那样集中，所以在西北之类风光资源充足的地方修建大型风电场、光伏电站的同时，可以在用户侧接入小型的风机、光伏、储能、燃气轮机等电源设备，省去了在电网中传输的损耗，提高可再生能源的比例。这里风机、官府、燃料电池、微型燃气轮机成为分布式发电（Distributed Generations，DGs），带上储能设备称为分布式电源（Distuibuted Energy Resource，DER）。</p>
-<p>3、分布式的问题：</p>
-<p>由于用户侧出现了电源，传统源-网-荷的单向能量流变成了双向，导致电网既定的调度、保护策略面临了新考验，加上风、光资源具有波动性和随机性，发电难以控制，分布式电源直接并网最终会导致整个电网络不稳定。随着2012年底国家开放分布式并网政策，2013年国电电网公司规定6MW以下分布式电源免费接入10kv线路，2014年又规定20MW以下光伏电站（实际是分布式电源，所以所分布式电源其实就是小型的电站）可以接入35KV线路售电，部分地区已经出现过因为光伏发电比例过大（渗透率高）导致系统崩溃的事故。于是，为了让分布式电源可控，大约06年开始提出了各种方案，最有前途的是两种，微电网（Mircogrid，MG）和虚拟电厂（Virtual power Plant，VPP）。</p>
-<p>4、微电网：</p>
-<p>微电网是把分布式电源和它所供能的负荷以及能量转换、保护、监控等装置作为一个系统，形成一个小型的完整电网，以储能设备或者微型燃气轮机这类可控的电源维持系统的稳定，使之可以消纳光伏、风电这些可再生能源，整个微电网与大电网有一个公共连接点（PCC），当微电网电源功能不足时可以通过大电网补充缺额，发电量大时可以将多余电网馈送回大电网。分布式电源以微电网方式并网和直接并网的却别主要是两点：a、微电网可以通过控制策略决定并网点的功率流向，比如发电多时用储能存储，负荷大时储能放电；b、标准意义上的微电网可以和大电网断开，从并网模式切换成孤岛运行模式，两种模式能否实现无缝切换是微电网成功的标志。从这个意义上说，目前全世界范围内文献可知的微电网不到500个，大部分不能实现真正的无缝切换，当然有些是无电地区纯孤岛运行的微电网，对大电网没影响。所以有分布式电源和负荷通过PCC点并网，但做不到孤岛的，还应该认为是分布式电源直接并网。</p>
-<p>5、虚拟电厂：</p>
-<p>微电网要求网内的设备在地理上是集中的，电源、负荷都相互靠近，网内设备都可控（比如最简单的孤岛控制策略：高频减载、低频减源），对于大电网来说化整为零，系统内会出现多个自治的小系统。和微电网的思路相反，虚拟电厂的思路是化零为整，把一定范围内所有分布式电源看做一个电厂来管理，可以通过中央控制器的方式集中控制每个电源，实现协调控制，也可以通过需求响应等手段，调控各个独立控制的分布式电源。</p>
-<p>6、主动配电网：</p>
-<p>由于国内之前把需求侧管理的能效电厂概念和虚拟电厂概念不加区分，所以国内的虚拟电厂会特指通过工商业用户的节能改造带来的能源节约，把省的电等效成一个虚拟的电厂多发了这些电，这一纯粹蒙事骗补贴的概念（以上文字三观不正确）。所以近年来又出现了主动配电网（Acvtie Distuibtion Network，ADN）的概念，这个概念也被翻译成有源配电网，因为电专业里active通常翻译成有源，比如有源元件、有源滤波器等，这甚至导致国内各门派为争论那种译法科学而水了不少文章。简单来说所有含分布式电源并网的配电网络都是ADN，以为配电网也有电源了，但是为了强调配电网由受转攻，额，我说的是由受电端变成供电端，所以称之为主动，好似翻身农奴做主人，从此配电不在受输电鄙视，从此站了起来。其本质还是虚拟电厂的思想，强调对整个配电网范围内的分布式电源实现协调控制。相比于微电网，它的优势是控制的分布式电源规模可以更大，范围更广。缺点是现在也就是个概念，用于各种水论文，申基金申项目。主要问题在于：a、想调动分布式电源或者你拥有控制权或者你可以利益驱动用户按你的期望调度，前者的通信控制问题目前配电网范围似乎还没谁真做出实际系统来，不是仿真算例就是控制规模只能算微电网，后者因为电价掌握在发改委手里，通过能源管理合同之类的激励方式获取控制权就把问题变成了前者。所以主动配电网也算是今后水文章的一大方向，短期内实践无望。</p>
-<p>转自<br><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/22515671/answer/35688123">https://www.zhihu.com/question/22515671/answer/35688123</a></p>
  
       <!-- reward -->
       

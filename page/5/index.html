@@ -154,6 +154,84 @@
     
     
     <article
+  id="post-在Linux环境下运行jar文件"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/11/26/%E5%9C%A8Linux%E7%8E%AF%E5%A2%83%E4%B8%8B%E8%BF%90%E8%A1%8Cjar%E6%96%87%E4%BB%B6/"
+    >在Linux环境下运行jar文件</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/11/26/%E5%9C%A8Linux%E7%8E%AF%E5%A2%83%E4%B8%8B%E8%BF%90%E8%A1%8Cjar%E6%96%87%E4%BB%B6/" class="article-date">
+  <time datetime="2023-11-26T12:14:23.000Z" itemprop="datePublished">2023-11-26</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>在Linux环境下运行jar文件</p>
+<h1 id="方式一："><a href="#方式一：" class="headerlink" title="方式一："></a>方式一：</h1><p>命令：</p>
+<pre><code>java -jar xxxx.jar
+</code></pre>
+<p>特点：当前ssh窗口被锁定，可按ctrl+c打断程序运行，或直接关闭窗口，程序退出。</p>
+<h1 id="方式二："><a href="#方式二：" class="headerlink" title="方式二："></a>方式二：</h1><p>命令：</p>
+<pre><code>java -jar xxxx.jar &amp;
+</code></pre>
+<p>特点：&amp;表示在后台运行。当前ssh窗口不被锁定，但是当窗口关闭时，程序中止运行。</p>
+<h1 id="方式三："><a href="#方式三：" class="headerlink" title="方式三："></a>方式三：</h1><p>命令：</p>
+<pre><code>nohup java -jar xxxx.jar &amp;
+</code></pre>
+<p>特点：nohup 意思是不挂断运行命令，当账户退出或终端关闭时，程序仍然运行。当用 nohup 命令执行作业时，缺省情况下该作业的所有输出被重定向到nohup.out的文件中，除非另外指定了输出文件。</p>
+<h1 id="方式四："><a href="#方式四：" class="headerlink" title="方式四："></a>方式四：</h1><p>命令：</p>
+<pre><code>nohup java -jar xxxx.jar &gt;/log.file &amp;
+</code></pre>
+<p>特点：将日志输出到log.file指定的文件内。</p>
+<h2 id="shell-命令中，几个基本符号及其含义"><a href="#shell-命令中，几个基本符号及其含义" class="headerlink" title="shell 命令中，几个基本符号及其含义"></a>shell 命令中，几个基本符号及其含义</h2><pre><code>&gt;&gt;      输出重定向
+2&gt;&amp;1    (2)标准错误输出   (&gt;) 重定向到  (&amp;1)标准输出
+2&gt;&amp;1 标准错误输出重定向到标准输出
+&amp;       标识进程为后台进程
+</code></pre>
+<p>0 表示stdin标准输入 1 表示stdout标准输出 2 表示stderr标准错误</p>
+<h2 id="拓展"><a href="#拓展" class="headerlink" title="拓展:"></a>拓展:</h2><p>无论是否将 nohup 命令的输出重定向到终端，输出都将附加到当前目录的 nohup.out 文件中，如果当前目录的 nohup.out 文件不可写，输出重定向到 $HOME/nohup.out 文件中</p>
+<p>命令改为 nohup java -jar project.jar &gt;&gt; log.out 2&gt;&amp;1 &amp; 完美解决问题，日志追加到 log.out 文件中 ，且线程在后台不挂断运行</p>
+<p>报错nohup找不到java</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-Centos7 的 Systemctl 与 创建系统服务"
   class="article article-type-post"
   itemscope
@@ -820,101 +898,6 @@ systemctl status nginx
 #开机启动: 
 systemctl enable nginx
 </code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/activeMq/" rel="tag">activeMq</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-CentOS 安装 activeMq"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/11/20/CentOS%20%E5%AE%89%E8%A3%85%20activeMq/"
-    >CentOS 安装 activeMq</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/11/20/CentOS%20%E5%AE%89%E8%A3%85%20activeMq/" class="article-date">
-  <time datetime="2023-11-20T12:14:23.000Z" itemprop="datePublished">2023-11-20</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>Apache ActiveMQ是一个免费的开源消息代理和集成模式服务器。它支持来自JAVA、c++、C、Python、Perl、PHP等多种语言的客户端和协议。它提供了许多功能，如消息组、虚拟目的地、通配符和组合目的地等。它可以很容易地集成到spring应用程序中。</p>
-<p>工欲善其事必先利其器，那么再使用这个mq之前，我们得先安装activemq，那么我们就来看一下如何安装activemq。由于activemq是基于java开发的，所以环境上必须得安装jdk。</p>
-<h1 id="activeMq的安装"><a href="#activeMq的安装" class="headerlink" title="activeMq的安装"></a>activeMq的安装</h1><p>ActiveMQ为Unix系统提供了预先编译的二进制文件，可以直接使用。唯一需要的依赖项是在系统中安装JAVA。由于我们已经安装了JAVA，我们可以进一步下载ActiveMQ。您总是可以从Apache ActiveMQ的官方发布页面获得最新的稳定版本。</p>
-<h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><p>本次安装的版本是5.15.5.使用以下命令进行下载。</p>
-<p>wget <a target="_blank" rel="noopener" href="http://archive.apache.org/dist/activemq/5.15.5/apache-activemq-5.15.5-bin.tar.gz">http://archive.apache.org/dist/activemq/5.15.5/apache-activemq-5.15.5-bin.tar.gz</a></p>
-<p>下载完成之后，我们接着进行解压，把该压缩包解压到/opt目录下。</p>
-<pre><code>sudo tar -zvxf apache-activemq-5.15.12-bin.tar.gz -C /opt
-</code></pre>
-<p>接着为了方便起见，您可以创建一个与版本无关的软链接，指向当前Apache ActiveMQ版本所在的目录。这种做法对以后的更新很有帮助。这样的话，后续进行安装新的版本的话，只需要修改一下软连接对应的版本，就不要每次都把升级的文件全部移动到指定的文件夹下。</p>
-<pre><code>sudo ln -s /opt/apache-activemq-5.15.12/  /opt/activemq
-</code></pre>
-<p>接着创建完软连接之后，我们进入到对应的/opt/activemq目录下，进行启动mq。并且查看启动状态，以及如何停止mq。</p>
-<p>虽然可以使用上面的命令轻松运行ActiveMQ，但建议使用systemd服务来管理ActiveMQ进程。使用Systemd服务将确保ActiveMQ在启动时和故障时自动启动。</p>
-<h2 id="创建系统服务进行启动"><a href="#创建系统服务进行启动" class="headerlink" title="创建系统服务进行启动"></a>创建系统服务进行启动</h2><p>通过以下命令来创建系统服务，在/usr/lib/systemd/system/创建一个activemq.service的文件。</p>
-<pre><code>sudo vi /usr/lib/systemd/system/activemq.service
-</code></pre>
-<p>输入以下内容到文件中。</p>
-<pre><code>[Unit]
-Description=activemq message queue
-After=network.target
-
-[Service]
-PIDFile=/opt/activemq/data/activemq.pid
-ExecStart=/opt/activemq/bin/activemq start
-ExecStop=/opt/activemq/bin/activemq stop
-User=root
-Group=root
-Restart=always
-RestartSec=9
-StandardOutput=syslog
-StandardError=syslog
-SyslogIdentifier=activemq
- 
-[Install]
-WantedBy=multi-user.target
-</code></pre>
-<p>保存完毕，接着我们来检验一下启动是否能够成功，并且是否能够停止。</p>
-<p>sudo systemctl enable activemq<br>sudo systemctl start activemq<br>sudo systemctl status activemq<br>sudo systemctl stop activemq</p>
-<p>6，配置通过web进行展示</p>
-<p>安装完成之后，启动mq，接着我们可以通过web来访问mq的控制面板，在浏览器的地址栏输入：<a target="_blank" rel="noopener" href="http://xxxxxx:8161/admin.%E5%9C%A8%E8%AE%BF%E9%97%AE%E4%B9%8B%E5%89%8D%E5%BE%97%E6%89%93%E5%BC%80%E4%B8%80%E4%B8%8B%E7%AB%AF%E5%8F%A3%E3%80%82%E9%80%9A%E8%BF%87%E4%BB%A5%E4%B8%8B%E5%91%BD%E4%BB%A4%E3%80%82">http://xxxxxx:8161/admin.在访问之前得打开一下端口。通过以下命令。</a></p>
-<p>sudo firewall-cmd –zone=public –permanent –add-port=8161/tcp<br>sudo firewall-cmd –reload</p>
-<p>接着我们通过浏览器来访问一下。默认用户名密码是admin，进入之后可以修改。</p>
-<p>最后，听过以上步骤已经安装完成activemq。</p>
  
       <!-- reward -->
       

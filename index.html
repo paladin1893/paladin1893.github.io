@@ -154,6 +154,213 @@
     
     
     <article
+  id="post-计算当前年月"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/12/20/%E8%AE%A1%E7%AE%97%E5%BD%93%E5%89%8D%E5%B9%B4%E6%9C%88/"
+    >vue获取时间年月日代码示例</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/12/20/%E8%AE%A1%E7%AE%97%E5%BD%93%E5%89%8D%E5%B9%B4%E6%9C%88/" class="article-date">
+  <time datetime="2023-12-20T02:22:00.000Z" itemprop="datePublished">2023-12-20</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="vue获取时间年月日"><a href="#vue获取时间年月日" class="headerlink" title="vue获取时间年月日"></a>vue获取时间年月日</h1><p>在Vue中获取当前时间的年月日，可以通过计算属性或者方法来实现。以下是一个简单的例子：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    当前日期: &#123;&#123; currentDate &#125;&#125;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+export default &#123;
+  computed: &#123;
+    currentDate() &#123;
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = (now.getMonth() + 1).toString().padStart(2, &#39;0&#39;);
+      const day = now.getDate().toString().padStart(2, &#39;0&#39;);
+      return `$&#123;year&#125;-$&#123;month&#125;-$&#123;day&#125;`;
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>在这个例子中，currentDate是一个计算属性，它返回一个格式化的日期字符串（例如：”2023-03-31”）。getFullYear()方法用于获取当前年份，getMonth()方法返回的月份是从0开始的，因此需要加1，getDate()方法用于获取当前是哪一天。padStart(2, ‘0’)确保月份和日期始终保持两位数字的格式。</p>
+<h1 id="uvue获取时间年月日"><a href="#uvue获取时间年月日" class="headerlink" title="uvue获取时间年月日"></a>uvue获取时间年月日</h1><p>在UVue中获取当前时间的年月日，你可以使用JavaScript的Date对象。以下是一个简单的例子，展示了如何在UVue组件中获取并显示当前的年月日：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;p&gt;当前日期: &#123;&#123; currentDate &#125;&#125;&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+export default &#123;
+  data() &#123;
+    return &#123;
+      currentDate: this.getCurrentDate()
+    &#125;;
+  &#125;,
+  methods: &#123;
+    getCurrentDate() &#123;
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = (now.getMonth() + 1).toString().padStart(2, &#39;0&#39;);
+      const day = now.getDate().toString().padStart(2, &#39;0&#39;);
+      return `$&#123;year&#125;-$&#123;month&#125;-$&#123;day&#125;`;
+    &#125;
+  &#125;
+&#125;;
+&lt;/script&gt;
+</code></pre>
+<p>在这个例子中，我们定义了一个getCurrentDate方法，它创建了一个新的Date对象，然后使用getFullYear、getMonth和getDate方法来获取当前的年、月、日，并将它们格式化为YYYY-MM-DD的字符串。我们还使用了padStart方法来确保月份和日期始终是两位数字。然后，我们在组件的数据对象中返回这个方法的结果，并在模板中显示它。</p>
+<h1 id="vue获取当日范围"><a href="#vue获取当日范围" class="headerlink" title="vue获取当日范围"></a>vue获取当日范围</h1><p>在Vue中获取当日的日期范围，可以通过计算当日的开始时间戳和结束时间戳来实现。以下是一个简单的例子，展示了如何在Vue组件中获取当日的日期范围：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;p&gt;今日开始时间戳: &#123;&#123; todayStart &#125;&#125;&lt;/p&gt;
+    &lt;p&gt;今日结束时间戳: &#123;&#123; todayEnd &#125;&#125;&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+ 
+&lt;script&gt;
+export default &#123;
+  data() &#123;
+    return &#123;
+      todayStart: 0,
+      todayEnd: 0
+    &#125;;
+  &#125;,
+  created() &#123;
+    this.getTodayRange();
+  &#125;,
+  methods: &#123;
+    getTodayRange() &#123;
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = now.getMonth();
+      const day = now.getDate();
+ 
+      const start = new Date(year, month, day, 0, 0, 0);
+      const end = new Date(year, month, day, 23, 59, 59);
+ 
+      this.todayStart = start.getTime();
+      this.todayEnd = end.getTime();
+    &#125;
+  &#125;
+&#125;;
+&lt;/script&gt;
+</code></pre>
+<p>这段代码中，我们在Vue组件的data函数中定义了todayStart和todayEnd两个属性来存储计算得出的当日开始和结束时间戳。在created生命周期钩子中调用了getTodayRange方法，该方法计算了当日的开始和结束时间，并将它们的时间戳分别赋值给todayStart和todayEnd。在模板中展示了这两个属性的值。</p>
+<h1 id="时间转字符串"><a href="#时间转字符串" class="headerlink" title="时间转字符串"></a>时间转字符串</h1><p>代码如下，提供了两个方法</p>
+<pre><code>let timeStartStr1 = this.timeFormat(&#123;date:this.timeStart&#125;)
+let timeEndStr1 = this.timeFormat(&#123;date:this.timeEnd&#125;)
+
+let timeStartStr = this.formatDate(&#123;date:this.timeStart, formatStr:&#39;yyyy-MM-dd HH:mm:ss&#39;&#125;)
+let timeEndStr = this.formatDate(&#123;date:this.timeEnd, formatStr:&#39;yyyy-MM-dd HH:mm:ss&#39;&#125;)
+
+console.log(typeof this.timeStart,&quot;this.timeStart&quot;,this.timeStart)
+console.log(typeof this.timeEnd,&quot;this.timeEnd&quot;,this.timeEnd)
+
+console.log(typeof timeStartStr,&quot;timeStartStr&quot;,timeStartStr)
+console.log(typeof timeEndStr,&quot;timeEndStr&quot;,timeEndStr)
+
+this.datetimerange = [timeStartStr, timeEndStr]
+              
+timeFormat(params) &#123;
+    let defalutParams = &#123;
+      date: new Date(new Date().getTime()),
+    &#125;;
+    params = &#123; ...defalutParams, ...params &#125;;
+    
+    let date = new Date(new Date(params.date).getTime());
+    
+    // 获取年份
+    let Y = date.getFullYear() + &#39;-&#39;
+    //获取当前年的月份 月份要 + 1 （0代表1月）date.getMonth() + 1
+    let M = date.getMonth() + 1 &lt; 10 ? &#39;0&#39; + (date.getMonth() + 1) + &#39;-&#39; : (date.getMonth() + 1) +&#39;-&#39;
+    //获取当前日（1 - 31）
+    let D = date.getDate() &lt; 10 ? &#39;0&#39; + (date.getDate()) + &#39; &#39; : (date.getDate()) + &#39; &#39;
+    //获取当前小时（0-23）
+    let h = date.getHours() &lt; 10 ? (&#39;0&#39; + date.getHours() + &#39;:&#39;) : (date.getHours() + &#39;:&#39;);
+    //获取当前分钟（0-59）
+    let m = date.getMinutes() &lt; 10 ? (&#39;0&#39; + date.getMinutes() + &#39;:&#39;) : (date.getMinutes() + &#39;:&#39;);
+    //获取当前秒数（0-59）
+    let s = date.getSeconds() &lt; 10 ? (&#39;0&#39; + date.getSeconds()) : date.getSeconds();
+    
+    return (Y + M + D + h + m + s)
+&#125;,
+formatDate(params) &#123;
+  let defalutParams = &#123;
+    date: new Date(new Date().getTime()),
+    formatStr: &#39;yyyy-MM-dd HH:mm:ss&#39;
+  &#125;;
+  params = &#123; ...defalutParams, ...params &#125;;
+
+  let date = new Date(new Date(params.date).getTime());
+  let formatStr = params.formatStr;
+  
+  // 获取年份
+  formatStr = formatStr.replace(new RegExp(&#39;yyyy&#39;), `$&#123;date.getFullYear()&#125;`);
+  //获取当前年的月份 月份要 + 1 （0代表1月）date.getMonth() + 1
+  const month = date.getMonth() + 1;
+  formatStr = formatStr.replace(new RegExp(&#39;MM&#39;), `$&#123;month &gt; 9 ? month : &#39;0&#39; + month&#125;`);
+  //获取当前日（1 - 31）
+  const day = date.getDate();
+  formatStr = formatStr.replace(new RegExp(&#39;dd&#39;), `$&#123;day &gt; 9 ? day : &#39;0&#39; + day&#125;`);
+  //获取当前小时（0-23）
+  const hour = date.getHours();
+  formatStr = formatStr.replace(new RegExp(&#39;HH&#39;), `$&#123;hour &gt; 9 ? hour : &#39;0&#39; + hour&#125;`);
+  //获取当前分钟（0-59）
+  const min = date.getMinutes();
+  formatStr = formatStr.replace(new RegExp(&#39;mm&#39;), `$&#123;min &gt; 9 ? min : &#39;0&#39; + min&#125;`);
+  //获取当前秒数（0-59）
+  const sec = date.getSeconds();
+  formatStr = formatStr.replace(new RegExp(&#39;ss&#39;), `$&#123;sec &gt; 9 ? sec : &#39;0&#39; + sec&#125;`);
+
+  return formatStr;
+&#125;
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-Dev-cpp及其衍生系列"
   class="article article-type-post"
   itemscope
@@ -686,91 +893,6 @@ id的命名:
     <footer class="article-footer">
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%94%B5%E5%8A%9B/" rel="tag">电力</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Qt实现简单的显示网页（QtWebkit、QtWebEngine、QAxWidget）"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/12/14/Qt%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84%E6%98%BE%E7%A4%BA%E7%BD%91%E9%A1%B5%EF%BC%88QtWebkit%E3%80%81QtWebEngine%E3%80%81QAxWidget%EF%BC%89/"
-    >Qt实现简单的显示网页（QtWebkit、QtWebEngine、QAxWidget）</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/12/14/Qt%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84%E6%98%BE%E7%A4%BA%E7%BD%91%E9%A1%B5%EF%BC%88QtWebkit%E3%80%81QtWebEngine%E3%80%81QAxWidget%EF%BC%89/" class="article-date">
-  <time datetime="2023-12-14T02:22:00.000Z" itemprop="datePublished">2023-12-14</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>首先先说说QtWebkit、QtWebEngine、QAxWidget三种方式显示网页的应用场景<br>QtWebkit：在Qt5.6以前，都是使用QtWebkit组件，但Qt5.6以后，移除了QtWebkit这个组件<br>QtWebEngine：Qt5.6以后的MSVC版本，引进了基于Chromium的浏览器引擎 QtWebEngine<br>QAxWidget：Qt5.6以后的mingw版本，由于移除了QtWebkit，mingw版本不能使用QtWebEngine，因此只能使用QAxWidget控件</p>
-<h1 id="QtWebkit"><a href="#QtWebkit" class="headerlink" title="QtWebkit"></a>QtWebkit</h1><p>QtWebKit提供一个Web浏览器引擎，可以轻松地将来自万维网的内容嵌入到Qt应用程序中。同时，可以使用本机控件增强Web内容。<br>QtWebKit提供用于呈现超文本标记语言(HTML)、可扩展超文本标记语言(XHTML)和可伸缩矢量图形(SVG)文档的工具，这些文档使用级联样式表(CSS)样式，并使用JavaScript编写脚本。<br>JavaScript执行环境与Qt对象模型之间的桥梁使定制成为可能QObjects写剧本。有关详细文档，请参阅QtWebkit桥，通过与Qt网络模块的集成，可以透明地从Web服务器、本地文件系统甚至Qt资源系统加载Web页面。<br>除了提供纯呈现功能之外，还可以通过使用contenteditable属性设置在HTML元素上。<br>QtWebKit已经得到了增强，在移动领域也变得更有吸引力。有关更多信息，请参见QtWebKit Go Mobile.<br>QtWebKit是基于开放源码WebKit引擎。更多关于WebKit本身可以在WebKit开源项目网站。<br>关于交互部分需要与JavaScript联合使用，下面只简单的介绍如何显示网页。</p>
-<pre><code>QWebView view;
-view.load(QUrl(https://blog.csdn.net/qq_36651243));
-view.show();
-</code></pre>
-<h1 id="QtWebEngine"><a href="#QtWebEngine" class="headerlink" title="QtWebEngine"></a>QtWebEngine</h1><p>QtWebEngine模块提供了一个Web浏览器引擎，可以方便地在没有本地Web引擎的平台上将来自万维网的内容嵌入到Qt应用程序中。<br>QtWebEngine提供C+类和QML类型，用于呈现HTML、XHTML和SVG文档，样式为级联样式表(CSS)，并使用JavaScript编写脚本。用户可以通过使用contenteditable属性设置在HTML元素上。</p>
-<p>小编开发环境：Qt5.9.6+VS2015</p>
-<pre><code>QWebEngineView *LiveView = new QWebEngineView;
-LiveView-&gt;settings()-&gt;setAttribute(QWebEngineSettings::PluginsEnabled, true);
-LiveView-&gt;setAttribute(Qt::WA_DeleteOnClose);
-LiveView-&gt;load(QUrl(&quot;https://blog.csdn.net/qq_36651243&quot;));
-//LiveView-&gt;setWindowFlags(Qt::FramelessWindowHint);   //去除边框
-//LiveView-&gt;setAttribute(Qt::WA_TranslucentBackground, true); //透明
-LiveView-&gt;resize(1024, 768);
-LiveView-&gt;show();
-</code></pre>
-<h1 id="QAxWidget"><a href="#QAxWidget" class="headerlink" title="QAxWidget"></a>QAxWidget</h1><p>QAxWidget可以使用它应该包装的ActiveX控件的名称，或者使用指向ActiveX控件的现有接口指针，将其实例化为空对象。ActiveX控件的属性、方法和事件，这些属性、方法和事件仅使用QAxBase受支持的数据类型，可作为Qt属性、槽和信号使用。基类QAxBase控件直接访问ActiveX的API。IUnknown指针。</p>
-<p>小编开发环境：Qt5.9.6+VS2015<br>使用QAxWidget前需要注意两点：<br>1.QAxContainer.lib,QAxServer.lib库不可缺。<br>2.开发机本身具有相应的IE游览器（注册表文件一致）</p>
-<p>QAxContainer.lib,QAxServer.lib引用方式：</p>
-<p>关于注册表文件：</p>
-<pre><code>QAxWidget *flash = new QAxWidget(0, 0);      //QAxWidget使用的是ActiveX插件
-flash-&gt;resize(600, 400);                    //设置该控件的初始大小
-flash-&gt;setControl(QString::fromUtf8(&quot;&#123;8856F961-340A-11D0-A96B-00C04FD705A2&#125;&quot;));//注册组件ID
-flash-&gt;setProperty(&quot;DisplayAlerts&quot;, false);//不显示警告信息
-flash-&gt;setProperty(&quot;DisplayScrollBars&quot;, true);//不显示滚动条
-QString webstr = QString(&quot;www.baidu.com&quot;);//设置要打开的网页
-flash-&gt;dynamicCall(&quot;Navigate(const QString&amp;)&quot;, webstr);//显示网页
-flash-&gt;show();
-</code></pre>
-<h1 id="更多资料"><a href="#更多资料" class="headerlink" title="更多资料"></a>更多资料</h1><p><a target="_blank" rel="noopener" href="https://doc.qt.io/archives/qt-4.8/qtwebkit-module.html">https://doc.qt.io/archives/qt-4.8/qtwebkit-module.html</a><br><a target="_blank" rel="noopener" href="https://doc.qt.io/archives/qt-5.11/qtwebengine-overview.html">https://doc.qt.io/archives/qt-5.11/qtwebengine-overview.html</a><br><a target="_blank" rel="noopener" href="https://doc.qt.io/archives/qt-5.11/qaxwidget.html">https://doc.qt.io/archives/qt-5.11/qaxwidget.html</a><br><a target="_blank" rel="noopener" href="https://doc.qt.io/qt-5/qtwebenginewidgets-qtwebkitportingguide.html">https://doc.qt.io/qt-5/qtwebenginewidgets-qtwebkitportingguide.html</a></p>
-<p>————————————————</p>
-<p>版权声明：本文为博主原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接和本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36651243/article/details/93173395">https://blog.csdn.net/qq_36651243/article/details/93173395</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Qt/" rel="tag">Qt</a></li></ul>
 
     </footer>
   </div>

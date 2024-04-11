@@ -154,6 +154,95 @@
     
     
     <article
+  id="post-PyQt5中未包含QtWebEngine,QtWebEngineWidgets也就是老版本的QWebView"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/10/21/PyQt5%E4%B8%AD%E6%9C%AA%E5%8C%85%E5%90%ABQtWebEngine,QtWebEngineWidgets%E4%B9%9F%E5%B0%B1%E6%98%AF%E8%80%81%E7%89%88%E6%9C%AC%E7%9A%84QWebView/"
+    >PyQt5中未包含QtWebEngine,QtWebEngineWidgets也就是老版本的QWebView</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/10/21/PyQt5%E4%B8%AD%E6%9C%AA%E5%8C%85%E5%90%ABQtWebEngine,QtWebEngineWidgets%E4%B9%9F%E5%B0%B1%E6%98%AF%E8%80%81%E7%89%88%E6%9C%AC%E7%9A%84QWebView/" class="article-date">
+  <time datetime="2023-10-21T02:21:00.000Z" itemprop="datePublished">2023-10-21</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h1><p>新版本的PyQt5 没有web引擎(至少5.15.4版本没有),需要自己改写</p>
+<h1 id="思路步骤"><a href="#思路步骤" class="headerlink" title="思路步骤"></a>思路步骤</h1><p>1、额外安装模块PyQtWebEngine</p>
+<pre><code>pip install PyQtWebEngine
+</code></pre>
+<p>2、先选择Widget控件</p>
+<p>3、将Widget升级成WebEngine</p>
+<p>4、在ui转成的py文件中添加URL 修改尺寸位置等</p>
+<pre><code>self.webview = QtWebEngineWidgets.QWebEngineView(self.centralwidget)
+self.webview.setGeometry(QtCore.QRect(280, 470, 120, 80))
+self.webview.setUrl(QtCore.QUrl(&quot;https://www.baidu.com/&quot;))
+self.webview.setObjectName(&quot;webview&quot;)
+</code></pre>
+<h1 id="具体代码"><a href="#具体代码" class="headerlink" title="具体代码"></a>具体代码</h1><pre><code>from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QVBoxLayout
+from PyQt5.QtCore import QUrl
+from PyQt5.QtWebEngineWidgets import QWebEngineView
+
+if __name__ == &#39;__main__&#39;:
+    app = QApplication([])
+    main_window = QMainWindow()
+    main_window.setGeometry(300, 300, 800, 600)
+    main_window.setWindowTitle(&quot;web引擎&quot;)
+
+    main_widget = QWidget()
+    main_window.setCentralWidget(main_widget)
+
+    main_layout = QVBoxLayout()
+    main_widget.setLayout(main_layout)
+
+    web = QWebEngineView()
+    main_layout.addWidget(web)
+
+    web.setUrl(QUrl(&quot;https://www.baidu.com&quot;))
+
+    main_window.show()
+    app.exec_()
+</code></pre>
+<p>————————————————<br>版权声明：本文为CSDN博主「qq_65932616」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_65932616/article/details/128364939">https://blog.csdn.net/qq_65932616/article/details/128364939</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Qt/" rel="tag">Qt</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-Python替换文件"
   class="article article-type-post"
   itemscope
@@ -1346,94 +1435,6 @@ source_dir/realpython.md                   2021-08-31 09:31:22          428
 </code></pre>
 <p>此代码在工作目录中创建一个名为 sample.zip 的压缩文件。此 ZIP 文件将包含输入目录 source_dir/ 中的所有文件。当您需要一种快速且高级的方式在 Python 中创建 ZIP 文件时，make_archive() 函数非常方便。</p>
 <h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p>当需要从 ZIP 归档中读取、写入、压缩、解压和提取文件时，Python 的 zipfile 是一个方便的工具。ZIP 文件格式已经成为行业标准，可以打包和压缩数字数据。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-利用Python的zipfile模块批量压缩指定文件夹下子文件夹"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/10/15/%E5%88%A9%E7%94%A8Python%E7%9A%84zipfile%E6%A8%A1%E5%9D%97%E6%89%B9%E9%87%8F%E5%8E%8B%E7%BC%A9%E6%8C%87%E5%AE%9A%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%8B%E5%AD%90%E6%96%87%E4%BB%B6%E5%A4%B9/"
-    >Python删除目录下的所有文件</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/10/15/%E5%88%A9%E7%94%A8Python%E7%9A%84zipfile%E6%A8%A1%E5%9D%97%E6%89%B9%E9%87%8F%E5%8E%8B%E7%BC%A9%E6%8C%87%E5%AE%9A%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%8B%E5%AD%90%E6%96%87%E4%BB%B6%E5%A4%B9/" class="article-date">
-  <time datetime="2023-10-15T02:15:00.000Z" itemprop="datePublished">2023-10-15</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>废话不多说，直接上代码，<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qz_CSDN/article/details/127745062">https://blog.csdn.net/qz_CSDN/article/details/127745062</a></p>
-<pre><code>import zipfile
-import os
-
-
-def zip_folder(dir_path, zip_full_name):
-    &quot;&quot;&quot;
-    压缩文件夹下所有子文件夹和文件
-    :param dirpath: 目标文件夹路径
-    :param zip_full_name: zip文件绝对路径
-    &quot;&quot;&quot;
-    with zipfile.ZipFile(zip_full_name, &#39;w&#39;, zipfile.ZIP_DEFLATD) as zf:
-        for dir_full_path, dir_names, file_names in os.walk(dir_path):
-            # zip压缩包内的相对路径
-            dir_path_inzip = dir_full_path.replace(dirpath, &#39;&#39;)
-            for dir_name in dir_names:
-                zf.write(os.path.join(dir_full_path, dir_name), os.path.join(dir_path_inzip, dir_name))
-            for file_name in file_names:
-                zf.write(os.path.join(dir_full_path, file_name), os.path.join(dir_path_inzip, file_name))
-    zf.close()
-
-
-if __name__ == &#39;__name__&#39;:
-    in_path = u&quot;F:\\测试\\1&quot;
-    out_path = u&quot;F:\\测试\\输出&quot;
-    
-    folder_name_list = os.listdir(in_path)
-    count = 0
-    # 遍历输入路径下所有子文件夹，分别压缩
-    for folder_name in folder_name_list:
-        count += 1
-        zip_file_fullname = os.path.join(out_path, folder_name + &quot;.zip&quot;)
-        print(&quot;&#123;0&#125;、&#123;1&#125;&quot;.format(count, folder_name))
-        print(&quot;    &#123;0&#125;&quot;.format(zip_file_fullname))
-        zip_folder(os.path.join(in_path, folder_name), zip_file_fullname)
-</code></pre>
  
       <!-- reward -->
       

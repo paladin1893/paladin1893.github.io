@@ -154,6 +154,82 @@
     
     
     <article
+  id="post-gSoap的工具用法说明"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/05/02/gSoap%E7%9A%84%E5%B7%A5%E5%85%B7%E7%94%A8%E6%B3%95%E8%AF%B4%E6%98%8E/"
+    >gSOAP的工具用法说明</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/05/02/gSoap%E7%9A%84%E5%B7%A5%E5%85%B7%E7%94%A8%E6%B3%95%E8%AF%B4%E6%98%8E/" class="article-date">
+  <time datetime="2023-05-02T06:31:46.000Z" itemprop="datePublished">2023-05-02</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>gSOAP是一个绑定SOAP/XML到C/C++语言的工具，使用它可以简单快速地开发出SOAP/XML的服务器端和客户端。由于 gSOAP具 有相当不错的兼容性，通过gSOAP，我们就可以调用由Java, .Net, Delhpi, PHP等语言开发的SOAP服务，或者向它们提供SOAP服务。</p>
+<p>gSOAP的主页是:</p>
+<p><a target="_blank" rel="noopener" href="http://sourceforge.net/projects/gsoap2">http://sourceforge.net/projects/gsoap2</a></p>
+<p>下载解压后，可以在gsoap\bin\win32里 找到wsdl2h.exe和soapcpp2.exe（另外还有linux和mac版本）。</p>
+<p>wsdl2h.exe的作用是根据WSDL生成C/C++风格的头文件<br>soapcpp2.exe的作用是根据头文件自动生成调用远程SOAP服务的客户端代码（称为存根:Stub）和提供SOAP服务的框架代码（称为框架：Skeleton），另外它也能从头文件生成WSDL文件。<br>gsoap\stdsoap2.cpp则是gSOAP的核心代码，要使用gSOAP只要在项目里包含这个文件以及由soapcpp2.exe生成的代码即可。另外还有个stdsoap2.c，内容与stdsoap2.cpp一模一样，用于纯C项目。</p>
+<p>gSOAP两大工具的用法</p>
+<p>从WSDL中产生头文件<br>用法：</p>
+<p>wsdl2h -o 头文件名 WSDL文件名或URL<br>wsdl2h常用选项</p>
+<p>-o 文件名，指定输出头文件<br>-n 名空间前缀 代替默认的ns<br>-c 产生纯C代码，否则是C++代码<br>-s 不要使用STL代码<br>-t 文件名，指定type map文件，默认为typemap.dat<br>-e 禁止为enum成员加上名空间前缀<br>type map文件用于指定SOAP/XML中的类型与C/C++之间的转换规则，比如在wsmap.dat里写</p>
+<p>xsd__string = | std::wstring | wchar_t*<br>那么SOAP/XML中的string将转换成std::wstring或wchar_t*，这样能更好地支持中文。</p>
+<p>例:</p>
+<p>wsdl2h -o ayandy.h <br> -n ay -t wsmap.dat <br> <a target="_blank" rel="noopener" href="http://www.ayandy.com/Service.asmx?WSDL">http://www.ayandy.com/Service.asmx?WSDL</a></p>
+<p>从<a target="_blank" rel="noopener" href="http://www.ayandy.com/Service.asmx?WSDL">http://www.ayandy.com/Service.asmx?WSDL</a> 生成ayandy.h文件，名空间为ay，使用wsmap.dat指定的转换规则。</p>
+<p>wsdl2h生成的头文件里的变量、类型等名称的前面都会加上名空间前缀，以两个下划线分隔。如上面的命令生成的头文件，有这样的定义：</p>
+<p>class ay1__ArrayOfString;<br>enum ay1__theDayFlagEnum<br>{<br> ay1__theDayFlagEnum__Today,<br> ay1__theDayFlagEnum__Tomorrow,<br> ay1__theDayFlagEnum__theDayafterTomorrow,<br>};<br>前面的ayandy1__的是名空间前缀，用以防止名称冲突。 wsdl2h的-n选项可以改变这个名空间前缀(默认为ns)。对于枚举ay1__theDayFlagEnum内的成员，如果嫌它太长的话，可以用-e命令选项禁止加入名空间前缀。</p>
+<p>从头文件生成存根(stub)和框架(Skeleton)源文件<br>编写SOAP程序除了头文件是不够的，还要有连接、通信、XML解析、序列/反序列化等工作。gSOAP提供的socapcpp2.exe就是用于从头文件中生成这些代码的，我们只要关心真正的业务逻辑就行了。</p>
+<p>用法</p>
+<p>soapcpp2 头文件<br>例:</p>
+<p>soapcpp2 ayandy.h<br>将生成下面这些文件</p>
+<p>soapStub.h    // soap的存根文件，定义了ayandy.h里对应的远程调用模型<br>soapC.c soapH.h  // soap的序列和反序列代码，它已经包含了soapStub.h，服务器端与客户端都要包含它<br>soapClient.c soapClientLib.c // 客户端代码，soapClientLib.c文件则只是简单地包含soapClient.c和soapC.c<br>soapServer.c soapServerLib.c // 服务器端代码,soapServerLib.c文件则只是简单地包含soapServer.c和soapC.c<br>ServiceSoap.nsmap ServiceSoap12.nsmap // 名空间定义，服务器端与客户端都要包含它<br>soapServiceSoapProxy.h soapServiceSoap12Proxy.h // 客户端的C++简单包装(如果头文件是纯C代码，这两个文件就不会生成)</p>
+<p>综上所述</p>
+<p>如果编写服务器端，项目里应该加入soapServerLib.c，代码里包含头文件soapH.h<br>如果编写客户端，项目里应该加入soapClientLib.c，代码里包含头文件SoapH.h（或xxxxProxy.h）<br>当然，还要加入gsoap库里的stdsoap2.cpp文件（如果是写C代码，则加入stdsoap2.c）<br>如果看到soapcpp2提示:”Critical error: #import: Cannot open file “stlvector.h” for reading.“， 那是因为我们的头文件使用了STL(wsdl2h 没用-s选项)，这时要使用-I选项指定gSOAP的 import文件路径，这个路径是”$gsoap\gsoap\import”:</p>
+<p>soapcpp2 ayandy.h -I D:\gsoap-2.7\gsoap\import<br>soapcpp2常用选项</p>
+<p>-C 仅生成客户端代码<br>-S 仅生成服务器端代码<br>-L 不要产生soapClientLib.c和soapServerLib.c文件<br>-c 产生纯C代码，否则是C++代码(与头文件有关)<br>-I 指定import路径（见上文）<br>-x 不要产生XML示例文件<br>-i 生成C++包装，客户端为xxxxProxy.h(.cpp)，服务器端为xxxxService.h(.cpp)。<br>转自：<a target="_blank" rel="noopener" href="https://www.oschina.net/question/10320_7573">https://www.oschina.net/question/10320_7573</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gSOAP/" rel="tag">gSOAP</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-vcpkg使用说明"
   class="article article-type-post"
   itemscope
@@ -639,77 +715,6 @@ VCPKG community triplets:
 <p>基于嵌入式EMS的微电网分层协同控制架构在微电网层中，通过1个嵌入式EMS实现对1个微电网优化调控，包括内部源网荷的直接控制、微电网运行模式切换、微网稳定运行以及与外部电网的能量交互，满足微网自治优化运行需求。一方面，微电网层上送关键的基础数据，包括设备的状态、需求响应潜力评估和策略执行反馈等，共协同控制层决策参考。另一方面，微电网层接受上级下发的分解指令，包括调度策略、响应顺序和设备状态调节指令等，根据微电网自身状态，管理微电网内部源荷储资源，保障微网内部的功率平衡，有效保障系统的稳定性和经济性。在协同控制层中，由嵌入式EMS和可视化平台构成，是架构中的中间层，是上下层数据和指令交互媒介，具备边缘计算、边缘互联、云边协同能力。一方面，协同控制层接收系统平台层下发的调控指令和下层微网群上发数据信息，制定考虑多目标约束的微网群优化调控策略，并下发控制指令下发给微电网层，实现微网群互联互济、协同运行。另一方面，将微网群执行情况，响应能力等信息反馈至系统平台层，辅助电网调度策略制定。在系统平台层中，主要是电网调度中心与能源大数据中心，是区域的能源智能大脑。一方面，根据所辖区域内的能源消费特征以及微电网群的状态，制定区域调度策略，并下发至协同控制层。另一方面，接受系统控制层上报的执行情况、响应能力等数据，以此为重要的数据参考制定下阶段的调度策略。</p>
 <p>操作面板在这样的系统架构下，单个微电网能够实现“最大功率输出模式、可调度模式、孤岛运行模式”及其他控制模式之间的切换，并且根据用户计划调度以及故障场景可以在并网和离网状态之间进行无缝切换，在孤岛模式下实现微电网自供电，依靠分布式电源和储能为电网用户供电。同时，微电网与微电网群之间进行能源、信息的交互互动，微电网与大电网实现电能的灵活互济，实现“企业收益最大、电网稳定运行、碳排总量最小”等多方面平衡，满足政府、用户、电网多方利益诉求，实现共建共享共赢。在经济效益方面，微电网控制系统的建设成本下降超60%以上，系统运维由需要2个及以上专业编程人员降至1个兼职巡检人员。随着微电网数量地不断增多，系统建设边际成本将会进一步下降。在系统运营期间，光伏预期发电量（现有+新建）2700万度电/年，按照“80%自发自用，20%余量上网”的原则，预计可节约电费约2000万元／年，储能（现有+新建）通过“低充高放”等方式盈利约420万元／年，通过参与电网日前削峰响应获得补贴约380万元／年（按浙江省需求响应按照4元/千瓦时的上限标准进行补偿）。在安全运行方面，微电网具备自平衡、自管理、自调节能力，独立运行时能保障内部负荷连续供电不低于2小时，微电网群的电量交换率接近50%，外部电网输入功率峰谷差下降比例超过25%，帮助实现日前削峰填谷20MW/次，每次大约为1.8小时，帮助电网稳定运行，极端事故条件下，配合需求响应和储能，内部非可调负荷可短时孤岛运行。此外，采取分层分区协同控制架构后，有效提高了系统的运行可靠性，不仅降低电网调度中心的调节负担。在低碳发展方面，光伏发电占总用电比例高于100%的有9家，50%-100%之间7家，微电网群的光伏发电占总用电整体比例超过50%，新能源消纳率达100%，平均每年减少二氧化碳13500吨。</p>
 <p>屋顶光伏受益于嵌入式EMS是产品化的解决方案，微电网群的建设边际成本会进一步降低，并为微电网群提供了一个“交流沟通”的平台，邀请微电网们“加入群聊”，实现微电网群分层分区的协调控制。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%BE%AE%E5%9E%8B%E7%94%B5%E7%BD%91/" rel="tag">微型电网</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-智能微电网优点"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/04/26/%E6%99%BA%E8%83%BD%E5%BE%AE%E7%94%B5%E7%BD%91%E4%BC%98%E7%82%B9/"
-    >智能微电网优点</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/04/26/%E6%99%BA%E8%83%BD%E5%BE%AE%E7%94%B5%E7%BD%91%E4%BC%98%E7%82%B9/" class="article-date">
-  <time datetime="2023-04-26T14:20:12.000Z" itemprop="datePublished">2023-04-26</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>作者：汉碳云<br>链接：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/372948858/answer/3030184012">https://www.zhihu.com/question/372948858/answer/3030184012</a><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
-<p>随着环保意识日益增强，越来越多的国家和地区开始重视碳中和，加快绿色经济和可持续发展的步伐。而智能微电网作为一种新兴的电力供应方式，在实现碳中和方面有着重要的意义，本文将从以下几个方面进行探讨。</p>
-<ul>
-<li>促进清洁能源发展：</li>
-</ul>
-<p>智能微电网是一种小型、灵活、可靠的电力供应系统，它具备能源的自治管理和分配功能，可以灵活应对不同的需求，使清洁能源更容易被广泛使用。在智能微电网的支持下，太阳能、风能等新能源可以更加广泛的应用，而传统的化石燃料可以得到替代。这有助于实现碳中和的目标，减少二氧化碳的排放，推动清洁能源的发展。</p>
-<ul>
-<li>提高能源供应效率：</li>
-</ul>
-<p>智能微电网是一种灵活的能量供应方式，能够将化繁为简，优化能源管理，减少能源浪费，从而实现更高效的能源利用，降低能源成本。随着技术和管理能力的不断提升，智能微电网能够更好地分配和管理能源，使其更加合理、高效地使用，从而有助于减少碳排放，实现碳中和。</p>
-<ul>
-<li>提高电网稳定性：</li>
-</ul>
-<p>智能微电网是一种小型的分布式电力系统，分布式能源的优越性在于可以充分利用地方资源，降低长距离输电功率损耗和线路故障的风险。而且智能微电网可以对接到传统的电力系统，通过智能化的控制，调节电量、提高电网的稳定性和可靠性，减少电网对环境的影响，从而更加适合碳中和的发展需求。</p>
-<ul>
-<li>促进能源去中心化：</li>
-</ul>
-<p>智能微电网的自治化管理可以将较小的电力系统转化为具有独立运行能力的电力区域。这些电力区域可以充分利用当地的可再生能源资源，减轻对集中供电系统的依赖，降低对化石燃料的需求，从而实现碳中和的目标。此外，去中心化还可以加强能源系统的安全性和独立性，使其免受对中央能源控制的可能性和黑客攻击的威胁。</p>
-<p>综上所述，汉碳云智能微电网不仅有助于碳中和的实现，还可以提高能源利用效率，降低污染排放，促进能源去中心化等。它是一种前景广阔的电力供应方式，相信随着技术和经验的不断积累，将会在未来得到更广泛的应用。</p>
  
       <!-- reward -->
       

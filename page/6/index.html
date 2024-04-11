@@ -154,6 +154,101 @@
     
     
     <article
+  id="post-CentOS 安装 activeMq"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/11/20/CentOS%20%E5%AE%89%E8%A3%85%20activeMq/"
+    >CentOS 安装 activeMq</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/11/20/CentOS%20%E5%AE%89%E8%A3%85%20activeMq/" class="article-date">
+  <time datetime="2023-11-20T12:14:23.000Z" itemprop="datePublished">2023-11-20</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>Apache ActiveMQ是一个免费的开源消息代理和集成模式服务器。它支持来自JAVA、c++、C、Python、Perl、PHP等多种语言的客户端和协议。它提供了许多功能，如消息组、虚拟目的地、通配符和组合目的地等。它可以很容易地集成到spring应用程序中。</p>
+<p>工欲善其事必先利其器，那么再使用这个mq之前，我们得先安装activemq，那么我们就来看一下如何安装activemq。由于activemq是基于java开发的，所以环境上必须得安装jdk。</p>
+<h1 id="activeMq的安装"><a href="#activeMq的安装" class="headerlink" title="activeMq的安装"></a>activeMq的安装</h1><p>ActiveMQ为Unix系统提供了预先编译的二进制文件，可以直接使用。唯一需要的依赖项是在系统中安装JAVA。由于我们已经安装了JAVA，我们可以进一步下载ActiveMQ。您总是可以从Apache ActiveMQ的官方发布页面获得最新的稳定版本。</p>
+<h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><p>本次安装的版本是5.15.5.使用以下命令进行下载。</p>
+<p>wget <a target="_blank" rel="noopener" href="http://archive.apache.org/dist/activemq/5.15.5/apache-activemq-5.15.5-bin.tar.gz">http://archive.apache.org/dist/activemq/5.15.5/apache-activemq-5.15.5-bin.tar.gz</a></p>
+<p>下载完成之后，我们接着进行解压，把该压缩包解压到/opt目录下。</p>
+<pre><code>sudo tar -zvxf apache-activemq-5.15.12-bin.tar.gz -C /opt
+</code></pre>
+<p>接着为了方便起见，您可以创建一个与版本无关的软链接，指向当前Apache ActiveMQ版本所在的目录。这种做法对以后的更新很有帮助。这样的话，后续进行安装新的版本的话，只需要修改一下软连接对应的版本，就不要每次都把升级的文件全部移动到指定的文件夹下。</p>
+<pre><code>sudo ln -s /opt/apache-activemq-5.15.12/  /opt/activemq
+</code></pre>
+<p>接着创建完软连接之后，我们进入到对应的/opt/activemq目录下，进行启动mq。并且查看启动状态，以及如何停止mq。</p>
+<p>虽然可以使用上面的命令轻松运行ActiveMQ，但建议使用systemd服务来管理ActiveMQ进程。使用Systemd服务将确保ActiveMQ在启动时和故障时自动启动。</p>
+<h2 id="创建系统服务进行启动"><a href="#创建系统服务进行启动" class="headerlink" title="创建系统服务进行启动"></a>创建系统服务进行启动</h2><p>通过以下命令来创建系统服务，在/usr/lib/systemd/system/创建一个activemq.service的文件。</p>
+<pre><code>sudo vi /usr/lib/systemd/system/activemq.service
+</code></pre>
+<p>输入以下内容到文件中。</p>
+<pre><code>[Unit]
+Description=activemq message queue
+After=network.target
+
+[Service]
+PIDFile=/opt/activemq/data/activemq.pid
+ExecStart=/opt/activemq/bin/activemq start
+ExecStop=/opt/activemq/bin/activemq stop
+User=root
+Group=root
+Restart=always
+RestartSec=9
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=activemq
+ 
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+<p>保存完毕，接着我们来检验一下启动是否能够成功，并且是否能够停止。</p>
+<p>sudo systemctl enable activemq<br>sudo systemctl start activemq<br>sudo systemctl status activemq<br>sudo systemctl stop activemq</p>
+<p>6，配置通过web进行展示</p>
+<p>安装完成之后，启动mq，接着我们可以通过web来访问mq的控制面板，在浏览器的地址栏输入：<a target="_blank" rel="noopener" href="http://xxxxxx:8161/admin.%E5%9C%A8%E8%AE%BF%E9%97%AE%E4%B9%8B%E5%89%8D%E5%BE%97%E6%89%93%E5%BC%80%E4%B8%80%E4%B8%8B%E7%AB%AF%E5%8F%A3%E3%80%82%E9%80%9A%E8%BF%87%E4%BB%A5%E4%B8%8B%E5%91%BD%E4%BB%A4%E3%80%82">http://xxxxxx:8161/admin.在访问之前得打开一下端口。通过以下命令。</a></p>
+<p>sudo firewall-cmd –zone=public –permanent –add-port=8161/tcp<br>sudo firewall-cmd –reload</p>
+<p>接着我们通过浏览器来访问一下。默认用户名密码是admin，进入之后可以修改。</p>
+<p>最后，听过以上步骤已经安装完成activemq。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/activeMq/" rel="tag">activeMq</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/" rel="tag">部署运维</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-CentOS 搭建 ElasticSearch"
   class="article article-type-post"
   itemscope
@@ -898,131 +993,6 @@ brew tap --custom-remote --force-auto-update homebrew/core https://mirrors.tuna.
     <footer class="article-footer">
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Homebrew/" rel="tag">Homebrew</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-conda 基本操作"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/11/14/conda%20%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/"
-    >conda 基本操作</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/11/14/conda%20%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" class="article-date">
-  <time datetime="2023-11-14T13:14:23.000Z" itemprop="datePublished">2023-11-14</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="conda-基本操作"><a href="#conda-基本操作" class="headerlink" title="conda 基本操作"></a>conda 基本操作</h1><p>查看 conda 版本</p>
-<pre><code>conda --version
-</code></pre>
-<p>更新 conda</p>
-<pre><code>conda update conda
-</code></pre>
-<p>查看 conda 环境配置</p>
-<pre><code>conda config --show
-</code></pre>
-<p>设置镜像源</p>
-<pre><code># 设置清华镜像
-conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
-conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
-conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/
-conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/bioconda/
-
-# 设置 bioconda
-conda config --add channels bioconda
-conda config --add channels conda-forge
-
-# 设置搜索时显示通道地址
-conda config --set show_channel_urls yes
-</code></pre>
-<p>查询指定命令的功能</p>
-<p>conda command_name –help</p>
-<h1 id="管理环境"><a href="#管理环境" class="headerlink" title="管理环境"></a>管理环境</h1><p>显示所有虚拟环境</p>
-<pre><code>conda env list
-</code></pre>
-<p>创建虚拟环境</p>
-<pre><code>conda create -n env_name package_name
-</code></pre>
-<p>如果需要指定 package 版本，可直接在 package_name 之后加上 = 号以及 package 版本号，例如：</p>
-<pre><code>conda create -n env_name python=3.x
-</code></pre>
-<p>如果需要安装多个 package ，在 env_name 之后用空格分隔多个 package_name 即可，例如：</p>
-<pre><code>conda create -n python310 python=3.10 numpy pandas
-</code></pre>
-<p>激活环境</p>
-<pre><code>activate env_name
-</code></pre>
-<p>退出环境</p>
-<pre><code>deactivate env_name
-</code></pre>
-<p>删除虚拟环境</p>
-<pre><code>conda env remove -n env_name
-</code></pre>
-<p>导出虚拟环境</p>
-<pre><code>conda env export --name env_name &gt; environment.yml
-</code></pre>
-<p>导入虚拟环境</p>
-<pre><code>conda env create -n env_name -f environment.yml
-</code></pre>
-<h1 id="管理-package"><a href="#管理-package" class="headerlink" title="管理 package"></a>管理 package</h1><p>查看当前环境包含的所有 package</p>
-<pre><code>conda list
-</code></pre>
-<p>更新当前环境包含的所有 package</p>
-<pre><code>conda update --all
-</code></pre>
-<p>更新指定 package</p>
-<pre><code>conda update package_name
-</code></pre>
-<p>安装指定 package</p>
-<pre><code>conda install package_name
-</code></pre>
-<p>安装装多个 package ：</p>
-<pre><code>conda installl package_name_1 package_name_2 package_name_3
-</code></pre>
-<p>安装固定版本的 package ：</p>
-<pre><code>conda install package_name=package_version_number
-</code></pre>
-<p>移除指定 package</p>
-<pre><code>conda remove package_name 
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
 
     </footer>
   </div>

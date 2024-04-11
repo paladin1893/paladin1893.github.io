@@ -154,6 +154,94 @@
     
     
     <article
+  id="post-利用Python的zipfile模块批量压缩指定文件夹下子文件夹"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/10/15/%E5%88%A9%E7%94%A8Python%E7%9A%84zipfile%E6%A8%A1%E5%9D%97%E6%89%B9%E9%87%8F%E5%8E%8B%E7%BC%A9%E6%8C%87%E5%AE%9A%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%8B%E5%AD%90%E6%96%87%E4%BB%B6%E5%A4%B9/"
+    >Python删除目录下的所有文件</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/10/15/%E5%88%A9%E7%94%A8Python%E7%9A%84zipfile%E6%A8%A1%E5%9D%97%E6%89%B9%E9%87%8F%E5%8E%8B%E7%BC%A9%E6%8C%87%E5%AE%9A%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%8B%E5%AD%90%E6%96%87%E4%BB%B6%E5%A4%B9/" class="article-date">
+  <time datetime="2023-10-15T02:15:00.000Z" itemprop="datePublished">2023-10-15</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>废话不多说，直接上代码，<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qz_CSDN/article/details/127745062">https://blog.csdn.net/qz_CSDN/article/details/127745062</a></p>
+<pre><code>import zipfile
+import os
+
+
+def zip_folder(dir_path, zip_full_name):
+    &quot;&quot;&quot;
+    压缩文件夹下所有子文件夹和文件
+    :param dirpath: 目标文件夹路径
+    :param zip_full_name: zip文件绝对路径
+    &quot;&quot;&quot;
+    with zipfile.ZipFile(zip_full_name, &#39;w&#39;, zipfile.ZIP_DEFLATD) as zf:
+        for dir_full_path, dir_names, file_names in os.walk(dir_path):
+            # zip压缩包内的相对路径
+            dir_path_inzip = dir_full_path.replace(dirpath, &#39;&#39;)
+            for dir_name in dir_names:
+                zf.write(os.path.join(dir_full_path, dir_name), os.path.join(dir_path_inzip, dir_name))
+            for file_name in file_names:
+                zf.write(os.path.join(dir_full_path, file_name), os.path.join(dir_path_inzip, file_name))
+    zf.close()
+
+
+if __name__ == &#39;__name__&#39;:
+    in_path = u&quot;F:\\测试\\1&quot;
+    out_path = u&quot;F:\\测试\\输出&quot;
+    
+    folder_name_list = os.listdir(in_path)
+    count = 0
+    # 遍历输入路径下所有子文件夹，分别压缩
+    for folder_name in folder_name_list:
+        count += 1
+        zip_file_fullname = os.path.join(out_path, folder_name + &quot;.zip&quot;)
+        print(&quot;&#123;0&#125;、&#123;1&#125;&quot;.format(count, folder_name))
+        print(&quot;    &#123;0&#125;&quot;.format(zip_file_fullname))
+        zip_folder(os.path.join(in_path, folder_name), zip_file_fullname)
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-Python删除目录下的所有文件"
   class="article article-type-post"
   itemscope
@@ -638,84 +726,6 @@ if __name__ == &#39;__main__&#39;:
 --hidden-import：打包特定的Python库，例如--hidden-import=PIL
 --version：显示版本信息
 --help：显示帮助信息
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-PyCharm安装PyQt5及工具（Qt Designer、PyUIC、PyRcc）详细教程"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/10/09/PyCharm%E5%AE%89%E8%A3%85PyQt5%E5%8F%8A%E5%B7%A5%E5%85%B7%EF%BC%88Qt%20Designer%E3%80%81PyUIC%E3%80%81PyRcc%EF%BC%89%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/"
-    >PyCharm安装PyQt5及工具（Qt Designer、PyUIC、PyRcc）详细教程</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/10/09/PyCharm%E5%AE%89%E8%A3%85PyQt5%E5%8F%8A%E5%B7%A5%E5%85%B7%EF%BC%88Qt%20Designer%E3%80%81PyUIC%E3%80%81PyRcc%EF%BC%89%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/" class="article-date">
-  <time datetime="2023-10-09T02:09:00.000Z" itemprop="datePublished">2023-10-09</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>需要安装PyQt5，pyqt5-tools</p>
-<pre><code>pip install PyQt5 -i https://pypi.tuna.tsinghua.edu.cn/simple
-pip install pyqt5-tools -i https://pypi.tuna.tsinghua.edu.cn/simple
-
-# 如有需要安装PyQtWebEngine
-pip install PyQtWebEngine -i https://pypi.tuna.tsinghua.edu.cn/simple
-</code></pre>
-<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><p>PyCharm点击菜单栏“File”，弹出下拉框，选择“Setting”，弹出设置界面。在设置界面中选择“Tools”→“External Tools”，</p>
-<h2 id="Qt-Designer"><a href="#Qt-Designer" class="headerlink" title="Qt Designer"></a>Qt Designer</h2><p>在“Name”一栏填写“Qt-Designer”；在“Program”一栏填写designer.exe文件位置</p>
-<h2 id="PyUIC"><a href="#PyUIC" class="headerlink" title="PyUIC"></a>PyUIC</h2><p>1、在“Name”一栏填写“PyUIC”；</p>
-<p>2、Program中填写pyuic5.exe这个程序的文件路径，一般在“Python环境目录\Scripts\pyuic5.exe”（此处需根据实际情况修改）</p>
-<p>3、在Arguments中内容填写如下：</p>
-<pre><code>$FileName$ -o $FileNameWithoutExtension$.py
-</code></pre>
-<p>4、Working directory内容填写如下：</p>
-<pre><code>$FileDir$
-</code></pre>
-<p>5、完成填写后，点击“OK”，以上步骤参考图片中的步骤。</p>
-<h2 id="PyRCC"><a href="#PyRCC" class="headerlink" title="PyRCC"></a>PyRCC</h2><p>1、在“Name”一栏填写“PyRCC”；</p>
-<p>2、Program中填写pyrcc5.exe这个程序的文件路径，一般在“Python环境目录\Scripts\pyrcc5.exe”（此处需根据实际情况修改），也可以点击右侧的文件夹选择按钮浏览文件夹选中该位置；</p>
-<p>3、在Arguments中内容填写如下：</p>
-<pre><code>$FileName$ -o $FileNameWithoutExtension$_rc.py
-</code></pre>
-<p>4、Working directory内容填写如下：</p>
-<pre><code>$FileDir$
 </code></pre>
  
       <!-- reward -->

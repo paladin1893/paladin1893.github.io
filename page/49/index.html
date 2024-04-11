@@ -154,6 +154,127 @@
     
     
     <article
+  id="post-跨域处理"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/03/09/%E8%B7%A8%E5%9F%9F%E5%A4%84%E7%90%86/"
+    >跨域处理</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/03/09/%E8%B7%A8%E5%9F%9F%E5%A4%84%E7%90%86/" class="article-date">
+  <time datetime="2023-03-09T15:42:59.000Z" itemprop="datePublished">2023-03-09</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>注意事项：</p>
+<ul>
+<li>import org.springframework.web.filter.CorsFilter;</li>
+<li>configuration.addAllowedOriginPattern(“*”);</li>
+</ul>
+<p>示例代码：</p>
+<pre><code>package com.energy.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
+
+@Configuration
+public class MyCorsConfig &#123;
+
+//    @Bean
+//    public CorsFilter corsFilter()&#123;
+//        CorsConfiguration configuration = new CorsConfiguration();
+//        configuration.addAllowedOriginPattern(&quot;*&quot;);
+//        configuration.setAllowCredentials(true);
+//        configuration.addAllowedMethod(&quot;*&quot;);
+//        configuration.addAllowedHeader(&quot;*&quot;);
+//
+//        UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
+//        urlBasedCorsConfigurationSource.registerCorsConfiguration(&quot;/**&quot;,configuration);
+//
+//        return  new CorsFilter(urlBasedCorsConfigurationSource);
+//    &#125;
+
+//-------------------------------------------------------------
+
+//    private CorsConfiguration buildConfig() &#123;
+//        CorsConfiguration corsConfiguration = new CorsConfiguration();
+//        corsConfiguration.addAllowedOriginPattern(&quot;*&quot;); // 允许任何域名使用
+//        corsConfiguration.addAllowedHeader(&quot;*&quot;); // 允许任何头
+//        corsConfiguration.addAllowedMethod(&quot;*&quot;); // 允许任何方法（post、get等）
+//        corsConfiguration.setAllowCredentials(true);
+//        return corsConfiguration;
+//    &#125;
+//
+//    @Bean
+//    public CorsFilter corsFilter() &#123;
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration(&quot;/**&quot;, buildConfig());
+//        return new CorsFilter(source);
+//    &#125;
+
+//-------------------------------------------------------------
+
+    @Bean
+    public CorsFilter corsFilter() &#123;
+        final UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
+        final CorsConfiguration corsConfiguration = new CorsConfiguration();
+        /*是否允许请求带有验证信息*/
+        corsConfiguration.setAllowCredentials(true);
+        /*允许访问的客户端域名*/
+        corsConfiguration.addAllowedOriginPattern(&quot;*&quot;);
+        /*允许服务端访问的客户端请求头*/
+        corsConfiguration.addAllowedHeader(&quot;*&quot;);
+        /*允许访问的方法名,GET POST等*/
+        corsConfiguration.addAllowedMethod(&quot;*&quot;);
+        urlBasedCorsConfigurationSource.registerCorsConfiguration(&quot;/**&quot;, corsConfiguration);
+        return new CorsFilter(urlBasedCorsConfigurationSource);
+    &#125;
+
+&#125;
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%B7%A8%E5%9F%9F%E5%A4%84%E7%90%86/" rel="tag">跨域处理</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-Springboot-Postgresql-FastAutoGenerator-2"
   class="article article-type-post"
   itemscope
@@ -756,79 +877,6 @@ public class CodeGenerator &#123;
 <p>The query string, normally passed by the web server. This variable can be useful while testing QGIS server binary from the command line.</p>
 <p>For example for testing a GetCapabilities request on the command line to a project that also requires a PostgreSQL connection defined in a pg_service.conf file:</p>
 <p>PGSERVICEFILE=/etc/pg_service.conf <br>QUERY_STRING=”MAP=/home/projects/world.qgs&amp;SERVICE=WMS&amp;REQUEST=GetCapabilities” <br>/usr/lib/cgi-bin/qgis_mapserv.fcgi<br>The result should be either the content of the GetCapabilities response or, if something is wrong, an error message.</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/QGIS/" rel="tag">QGIS</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-How-QGIS-Serve-a-project"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/03/03/How-QGIS-Serve-a-project/"
-    >How QGIS Serve a project</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/03/03/How-QGIS-Serve-a-project/" class="article-date">
-  <time datetime="2023-03-03T06:07:30.000Z" itemprop="datePublished">2023-03-03</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>Now that QGIS Server is installed and running, we just have to use it.</p>
-<p>Obviously, we need a QGIS project to work on. Of course, you can fully customize your project by defining contact information, precise some restrictions on CRS or even exclude some layers. Everything you need to know about that is described later in Configure your project.</p>
-<p>But for now, we are going to use a simple project already configured and previously downloaded in /home/qgis/projects/world.qgs, as described above.</p>
-<p>By opening the project and taking a quick look on layers, we know that 4 layers are currently available:</p>
-<p>airports<br>places<br>countries<br>countries_shapeburst</p>
-<p>You don’t have to understand the full request for now but you may retrieve a map with some of the previous layers thanks to QGIS Server by doing something like this in your web browser to retrieve the countries layer:</p>
-<pre><code>http://qgis.demo/qgisserver?
-  MAP=/home/qgis/projects/world.qgs&amp;
-  LAYERS=countries&amp;
-  SERVICE=WMS&amp;
-  VERSION=1.3.0&amp;
-  REQUEST=GetMap&amp;
-  CRS=EPSG:4326&amp;
-  WIDTH=400&amp;
-  HEIGHT=200&amp;
-  BBOX=-90,-180,90,180
-</code></pre>
-<p>If you obtain the next image, then QGIS Server is running correctly:</p>
-<p>Note that you may define QGIS_PROJECT_FILE environment variable to use a project by default instead of giving a MAP parameter (see Environment variables).</p>
-<p>For example with spawn-fcgi:</p>
-<p>export QGIS_PROJECT_FILE=/home/qgis/projects/world.qgs<br>spawn-fcgi -f /usr/lib/bin/cgi-bin/qgis_mapserv.fcgi <br>           -s /var/run/qgisserver.socket <br>           -U www-data -G www-data -n</p>
  
       <!-- reward -->
       

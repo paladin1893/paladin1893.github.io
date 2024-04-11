@@ -154,6 +154,171 @@
     
     
     <article
+  id="post-Python 用pip批量安装包 requirements.txt"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/09/27/Python%20%E7%94%A8pip%E6%89%B9%E9%87%8F%E5%AE%89%E8%A3%85%E5%8C%85%20requirements.txt/"
+    >Python 用pip批量安装包 requirements.txt</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/09/27/Python%20%E7%94%A8pip%E6%89%B9%E9%87%8F%E5%AE%89%E8%A3%85%E5%8C%85%20requirements.txt/" class="article-date">
+  <time datetime="2023-09-27T07:49:27.000Z" itemprop="datePublished">2023-09-27</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="一、python用pip批量安装包"><a href="#一、python用pip批量安装包" class="headerlink" title="一、python用pip批量安装包"></a>一、python用pip批量安装包</h1><p>python查看安装的第三方扩展包,就是使用命令 pip freeze。</p>
+<p>在已经配置好的一台机器上，将需要的包导出到requirements.txt</p>
+<pre><code>./pip freeze &gt; requirements.txt
+</code></pre>
+<p>此种方式会将环境中所有的包都打包进去，适合单虚拟环境（每个项目都处在不同的虚拟环境里，这个环境里是这个项目所需要的所有包）。因此，如果不是Python虚拟环境Virtualenv。我们不推荐这么使用，推荐使用 使用pipreqs 写入requirements.txt。</p>
+<p>pip安装包的方式中，有如下一种安装方式：</p>
+<pre><code>pip install -r requirements.txt
+</code></pre>
+<p>而文件requirement.txt里面内容的格式和pip freeze的格式完全一样。因此我们可以将pip freeze的内容输出至requirements.txt。</p>
+<p>推荐如下使用方式</p>
+<pre><code>./pip freeze | tee requirements.txt # 输出本地包环境至文件
+./pip install -r requirements.txt # 根据文件进行包安装
+</code></pre>
+<p>pip freeze 为什么比 pip list 的包少几个呢？<br>因为pip , wheel , setuptools 等包，是自带的而无法(un)install的。考虑到pip freeze的用途，所以这些包并没有显示。</p>
+<p>ps：<br>如果一定要用pip freeze来显示所有包，可以加上参数-all，即pip freeze -all</p>
+<h1 id="二、-推荐-使用pipreqs-写入requirements-txt"><a href="#二、-推荐-使用pipreqs-写入requirements-txt" class="headerlink" title="二、[推荐]使用pipreqs 写入requirements.txt"></a>二、[推荐]使用pipreqs 写入requirements.txt</h1><p>使用pipreqs 写入requirements.txt，只是程序中所用到的包，并不是电脑中安装的所有的包。</p>
+<pre><code>pip install pipreqs
+</code></pre>
+<p>cd 到程序所在的文件夹位置</p>
+<p>执行下面的语句，Windows下得加encoding=utf8，不然会出现编码问题。</p>
+<pre><code>pipreqs ./ --encoding=utf8 
+</code></pre>
+<h1 id="三、利用requirements-txt离线安装依赖包"><a href="#三、利用requirements-txt离线安装依赖包" class="headerlink" title="三、利用requirements.txt离线安装依赖包"></a>三、利用requirements.txt离线安装依赖包</h1><p>1、下载离线的包到指定目录</p>
+<p>将requirements.txt中导入的包离线下载到 package_tmp_dir 文件夹</p>
+<pre><code>pip wheel -w package_tmp_dir -r requirements.txt
+pip download -d package_tmp_dir -r requirements.txt
+</code></pre>
+<p>2、安装离线的包</p>
+<pre><code>pip install --no-index --find-links=package_tmp_dir  -r requirements.txt
+</code></pre>
+<ol>
+<li>使用 pip wheel 实现 Python 依赖包的离线安装</li>
+</ol>
+<p>Wheel 也是一种 built 包，而且是官方推荐的打包方式。也许你曾经遇见或使用过 egg 包，但现在 wheel 是官方推荐的打包方式（<a target="_blank" rel="noopener" href="https://wheel.readthedocs.io/en/stable/%EF%BC%89%E3%80%82">https://wheel.readthedocs.io/en/stable/）。</a><br>wheel 包的优点：</p>
+<p> 1.更快地安装纯 Python 和本机 C 扩展包。<br> 2.避免安装时执行任意代码。 （避免 setup.py）<br> 3.在 Windows 或 macOS 上安装 C 扩展不需要编译器。<br> 4.为测试和持续集成提供更好的缓存。<br> 5.创建 .pyc 文件作为安装的一部分，以确保它们与使用的 Python 解释器匹配。<br> 6.跨平台和机器的更一致的安装。</p>
+<p>没有网络连接, 借助 wheel把整个 Python 应用做成离线安装包。</p>
+<p>安装 wheel:</p>
+<pre><code>pip install wheel
+</code></pre>
+<p>下载依赖包的 wheel 文件</p>
+<pre><code>pip wheel -r requirements.txt
+</code></pre>
+<p>默认情况下, 上述命令会下载 requirements.txt 中每个包的 wheel 包到当前目录的 wheelhouse 文件夹, 包括依赖的依赖。</p>
+<p>在你的安装脚本中执行:</p>
+<pre><code>pip install --use-wheel --no-index --find-links=wheelhouse -r requirements.txt
+</code></pre>
+<ol start="2">
+<li>下载命令</li>
+</ol>
+<p>一、对于单个包的安装</p>
+<p>1、离线</p>
+<p>(1)pip离线下载</p>
+<pre><code>pip download 你的包名 -d “下载的路径(windows下双引号来表示文件夹)”
+pip download pymysql -d &quot;D:\pipDownloadTest&quot;
+</code></pre>
+<p>(2)pip 离线安装</p>
+<pre><code>pip install 包路径
+pip install PyMySQL-0.9.3-py2.py3-none-any.whl
+</code></pre>
+<p>2、在线</p>
+<pre><code>pip install pymysql
+</code></pre>
+<p>二、对于多个包的安装与下载</p>
+<p>1、离线</p>
+<p>离线下载</p>
+<pre><code>pip download -d packages -r requirements.txt
+</code></pre>
+<p>离线安装</p>
+<pre><code>pip install --no-index --find-links=packages -r requirements.txt
+</code></pre>
+<p>2、在线</p>
+<pre><code>pip install -r requirements.txt
+</code></pre>
+<p>总结：多个包下载就多了一个 -r requirements.txt。</p>
+<ol start="3">
+<li>pip download 和 pip wheel 这两个命令的区别</li>
+</ol>
+<ul>
+<li><p>下载的文件格式不同</p>
+<p>  pip download 下载的是源代码的压缩包,通常是 .tar.gz 格式<br>  pip wheel 下载的是编译好的 wheel 二进制包,以 .whl 作为文件扩展名</p>
+</li>
+<li><p>是否编译</p>
+<p>  pip download 仅仅下载源码,不会编译<br>  pip wheel 会自动为所支持的平台编译Wheel包</p>
+</li>
+<li><p>下载位置不同</p>
+<p>  pip download 会下载到当前目录<br>  pip wheel 默认下载到 ~/.cache/pip/wheels 目录</p>
+</li>
+<li><p>用途不同<br>  pip download 用于获取源码包以便查看或自定义编译<br>  pip wheel 常用于离线环境,下载好Wheel包后直接pip install使用</p>
+</li>
+</ul>
+<p>所以,简单来说:</p>
+<p>需要源码包 - 使用pip download<br>需要离线安装 - 使用pip wheel</p>
+<p>两者有不同的使用场景。</p>
+<h1 id="四、pip-install-工作常见报错"><a href="#四、pip-install-工作常见报错" class="headerlink" title="四、pip install 工作常见报错"></a>四、pip install 工作常见报错</h1><p>Python.h: No such file or directory报错</p>
+<ul>
+<li>CentOS7 pip3 安装psycopg2出错</li>
+</ul>
+<p>参考URL: <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/fbbe3bdf1905">https://www.jianshu.com/p/fbbe3bdf1905</a><br>原因是：</p>
+<p>As mentioned in psycopg documentation <a target="_blank" rel="noopener" href="http://initd.org/psycopg/docs/install.html">http://initd.org/psycopg/docs/install.html</a></p>
+<p>C compiler<br>Python header files</p>
+<ul>
+<li><p>没有安装python的环境：</p>
+<p>  For apt (Ubuntu, Debian…):</p>
+<pre><code>  sudo apt-get install python-dev # for python2.x installs
+  sudo apt-get install python3-dev # for python3.x installs
+</code></pre>
+<p>  For yum (CentOS, RHEL…):</p>
+<pre><code>  sudo yum install python-devel # for python2.x installs
+  sudo yum install python3-devel # for python3.x installs
+</code></pre>
+</li>
+</ul>
+<p>————————————————<br>版权声明：本文为CSDN博主「西京刀客」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/inthat/article/details/117026589">https://blog.csdn.net/inthat/article/details/117026589</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-conda、python环境配置"
   class="article article-type-post"
   itemscope
@@ -919,200 +1084,6 @@ console.log(sum)
 </code></pre>
 <p>本文为大家讲解了17个vue常用的数组方法总结与实例演示，包括：VUE数组转换字符串，VUE数组遍历，VUE数组过滤，VUE数组查询等功能</p>
 <p><a target="_blank" rel="noopener" href="https://www.jb51.net/article/269686.htm">https://www.jb51.net/article/269686.htm</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Vue中下载不同文件五种常用的方式"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/09/21/Vue%E4%B8%AD%E4%B8%8B%E8%BD%BD%E4%B8%8D%E5%90%8C%E6%96%87%E4%BB%B6%E4%BA%94%E7%A7%8D%E5%B8%B8%E7%94%A8%E7%9A%84%E6%96%B9%E5%BC%8F/"
-    >Vue中下载不同文件五种常用的方式</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/09/21/Vue%E4%B8%AD%E4%B8%8B%E8%BD%BD%E4%B8%8D%E5%90%8C%E6%96%87%E4%BB%B6%E4%BA%94%E7%A7%8D%E5%B8%B8%E7%94%A8%E7%9A%84%E6%96%B9%E5%BC%8F/" class="article-date">
-  <time datetime="2023-09-21T13:42:03.000Z" itemprop="datePublished">2023-09-21</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>当在Vue中需要实现文件下载功能时，我们可以有多种方式来完成。下面将介绍五种常用的方法。</p>
-<h1 id="1-使用window-open方法下载文件"><a href="#1-使用window-open方法下载文件" class="headerlink" title="1. 使用window.open方法下载文件"></a>1. 使用window.open方法下载文件</h1><pre><code>&lt;template&gt;
-  &lt;div&gt;
-    &lt;button @click=&quot;downloadFile(&#39;file1.pdf&#39;)&quot;&gt;下载文件1&lt;/button&gt;
-    &lt;button @click=&quot;downloadFile(&#39;file2.jpg&#39;)&quot;&gt;下载文件2&lt;/button&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-&lt;script&gt;
-export default &#123;
-  methods: &#123;
-    downloadFile(fileName) &#123;
-      const fileUrl = &#39;/path/to/&#39; + fileName; // 文件的URL地址
-      window.open(fileUrl);
-    &#125;
-  &#125;
-&#125;;
-&lt;/script&gt;
-</code></pre>
-<p>在上面的示例中，我们使用了window.open方法来打开一个新窗口，并直接访问文件的URL地址，从而触发文件下载。</p>
-<h1 id="2-使用标签进行文件下载"><a href="#2-使用标签进行文件下载" class="headerlink" title="2. 使用标签进行文件下载"></a>2. 使用<a>标签进行文件下载</a></h1><pre><code>&lt;template&gt;
-  &lt;div&gt;
-    &lt;button @click=&quot;downloadFile(&#39;file1.pdf&#39;)&quot;&gt;下载文件1&lt;/button&gt;
-    &lt;button @click=&quot;downloadFile(&#39;file2.jpg&#39;)&quot;&gt;下载文件2&lt;/button&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-&lt;script&gt;
-export default &#123;
-  methods: &#123;
-    downloadFile(fileName) &#123;
-      const fileUrl = &#39;/path/to/&#39; + fileName; // 文件的URL地址
-      const link = document.createElement(&#39;a&#39;);
-      link.href = fileUrl;
-      link.setAttribute(&#39;download&#39;, fileName);
-      link.click();
-    &#125;
-  &#125;
-&#125;;
-&lt;/script&gt;
-</code></pre>
-<p>在上面的示例中，我们首先创建一个<a>标签，然后设置其href属性为文件的URL地址，download属性为要下载的文件名。最后，通过调用click()方法触发链接的点击事件，实现文件的下载。</a></p>
-<h1 id="3-使用axios下载文件"><a href="#3-使用axios下载文件" class="headerlink" title="3. 使用axios下载文件"></a>3. 使用axios下载文件</h1><pre><code>&lt;template&gt;
-  &lt;div&gt;
-    &lt;button @click=&quot;downloadFile(&#39;file1.pdf&#39;)&quot;&gt;下载文件1&lt;/button&gt;
-    &lt;button @click=&quot;downloadFile(&#39;file2.jpg&#39;)&quot;&gt;下载文件2&lt;/button&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-&lt;script&gt;
-import axios from &#39;axios&#39;;
-export default &#123;
-  methods: &#123;
-    downloadFile(fileName) &#123;
-      const fileUrl = &#39;/path/to/&#39; + fileName; // 文件的URL地址
-      axios.get(fileUrl, &#123; responseType: &#39;blob&#39; &#125;)
-        .then(response =&gt; &#123;
-          const url = window.URL.createObjectURL(new Blob([response.data]));
-          const link = document.createElement(&#39;a&#39;);
-          link.href = url;
-          link.setAttribute(&#39;download&#39;, fileName);
-          document.body.appendChild(link);
-          link.click();
-        &#125;)
-        .catch(error =&gt; &#123;
-          console.error(error);
-        &#125;);
-    &#125;
-  &#125;
-&#125;;
-&lt;/script&gt;
-</code></pre>
-<p>在上面的示例中，我们使用了axios发送GET请求，设置responseType为blob以便获取文件的二进制数据。然后，通过创建临时URL、创建<a>标签并设置下载属性，实现文件的下载。</a></p>
-<h1 id="4-使用Fetch-API下载文件"><a href="#4-使用Fetch-API下载文件" class="headerlink" title="4. 使用Fetch API下载文件"></a>4. 使用Fetch API下载文件</h1><pre><code>&lt;template&gt;
-  &lt;div&gt;
-    &lt;button @click=&quot;downloadFile(&#39;file1.pdf&#39;)&quot;&gt;下载文件1&lt;/button&gt;
-    &lt;button @click=&quot;downloadFile(&#39;file2.jpg&#39;)&quot;&gt;下载文件2&lt;/button&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-&lt;script&gt;
-export default &#123;
-  methods: &#123;
-    downloadFile(fileName) &#123;
-      const fileUrl = &#39;/path/to/&#39; + fileName; // 文件的URL地址
-      fetch(fileUrl)
-        .then(response =&gt; response.blob())
-        .then(blob =&gt; &#123;
-          const url = window.URL.createObjectURL(blob);
-          const link = document.createElement(&#39;a&#39;);
-          link.href = url;
-          link.setAttribute(&#39;download&#39;, fileName);
-          document.body.appendChild(link);
-          link.click();
-        &#125;)
-        .catch(error =&gt; &#123;
-          console.error(error);
-        &#125;);
-    &#125;
-  &#125;
-&#125;;
-&lt;/script&gt;
-</code></pre>
-<p>在上面的示例中，我们使用了Fetch API发送GET请求，并使用.blob()方法将返回的数据转换为blob对象。然后，通过创建临时URL、创建<a>标签并设置下载属性，实现文件的下载。</a></p>
-<h1 id="5-使用Vue的-download方法下载文件"><a href="#5-使用Vue的-download方法下载文件" class="headerlink" title="5. 使用Vue的$download方法下载文件"></a>5. 使用Vue的$download方法下载文件</h1><pre><code>&lt;template&gt;
-  &lt;div&gt;
-    &lt;button @click=&quot;downloadFile(&#39;file1.pdf&#39;)&quot;&gt;下载文件1&lt;/button&gt;
-    &lt;button @click=&quot;downloadFile(&#39;file2.jpg&#39;)&quot;&gt;下载文件2&lt;/button&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-&lt;script&gt;
-export default &#123;
-  methods: &#123;
-    downloadFile(fileName) &#123;
-      const fileUrl = &#39;/path/to/&#39; + fileName; // 文件的URL地址
-      this.$download(fileUrl, fileName);
-    &#125;
-  &#125;
-&#125;;
-&lt;/script&gt;
-</code></pre>
-<p>在这个示例中，我们直接调用Vue实例的$download方法，并传入文件的URL地址和下载的文件名，即可实现文件的下载。</p>
-<h1 id="6-使用创建a标签方法下载文件"><a href="#6-使用创建a标签方法下载文件" class="headerlink" title="6. 使用创建a标签方法下载文件"></a>6. 使用创建a标签方法下载文件</h1><pre><code>&lt;template&gt;
-  &lt;div&gt;
-    &lt;button @click=&quot;downloadFile(&#39;file1.pdf&#39;)&quot;&gt;下载文件1&lt;/button&gt;
-    &lt;button @click=&quot;downloadFile(&#39;file2.jpg&#39;)&quot;&gt;下载文件2&lt;/button&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-&lt;script&gt;
-export default &#123;
-  methods: &#123;
-    downloadFile(fileName) &#123;
-      const folderPath = &#39;/path/to/folder/&#39;; // 文件所在的文件夹路径
-      const fileUrl = folderPath + fileName; // 拼接文件夹路径和文件名
-      const link = document.createElement(&#39;a&#39;);
-      link.href = fileUrl;
-      link.setAttribute(&#39;download&#39;, fileName);
-      link.click();
-    &#125;
-  &#125;
-&#125;;
-&lt;/script&gt;
-</code></pre>
-<p>在这个示例中，我们首先定义了文件所在的文件夹路径folderPath，然后通过拼接文件夹路径和文件名来构建完整的文件URL地址fileUrl。接着，我们创建一个<a>标签，并设置其href属性为文件URL，download属性为要下载的文件名。最后，通过调用click()方法触发链接的点击事件，实现文件的下载。</a></p>
-<p>以上是六种常用的在Vue中实现文件下载的方式，请根据项目需求选择合适的方式来完成文件下载功能。</p>
-<p><a target="_blank" rel="noopener" href="https://www.jb51.net/javascript/2987938qn.htm">https://www.jb51.net/javascript/2987938qn.htm</a></p>
  
       <!-- reward -->
       

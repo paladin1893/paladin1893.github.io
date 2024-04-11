@@ -154,6 +154,76 @@
     
     
     <article
+  id="post-最新docker部署ownCloud指南"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/07/29/%E6%9C%80%E6%96%B0docker%E9%83%A8%E7%BD%B2ownCloud%E6%8C%87%E5%8D%97/"
+    >最新docker部署ownCloud指南</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/07/29/%E6%9C%80%E6%96%B0docker%E9%83%A8%E7%BD%B2ownCloud%E6%8C%87%E5%8D%97/" class="article-date">
+  <time datetime="2023-07-29T06:21:51.000Z" itemprop="datePublished">2023-07-29</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><p><a target="_blank" rel="noopener" href="https://doc.owncloud.com/server/10.12/admin_manual/installation/docker/">Installing with Docker</a></p>
+<h1 id="安装命令"><a href="#安装命令" class="headerlink" title="安装命令"></a>安装命令</h1><pre><code>docker pull owncloud
+docker pull mariadb
+
+docker run --name mariadb -e MYSQL_ROOT_PASSWORD=owncloud -v /home/owncloud/mariadb:/var/lib/mysql --restart=always -d mariadb
+docker run --name owncloud -p 10080:80 -v /home/owncloud/owncloud:/var/www/html/data --link mariadb:mysql --restart=always -d owncloud
+</code></pre>
+<h1 id="信任域问题"><a href="#信任域问题" class="headerlink" title="信任域问题"></a>信任域问题</h1><p> find / -name config.php<br>编辑 …/config/config.php文件</p>
+<pre><code>A typical configuration may look like this:
+
+&#39;trusted_domains&#39; =&gt; [
+   0 =&gt; &#39;localhost&#39;,
+   1 =&gt; &#39;server1.example.com&#39;,
+   2 =&gt; &#39;192.168.1.50&#39;,
+],
+</code></pre>
+<p>仿照格式添加信任域，然后重新访问 http://公网IP:端口，问题解决了</p>
+<h1 id="数据库连接"><a href="#数据库连接" class="headerlink" title="数据库连接"></a>数据库连接</h1><p>登录<a href="http://ip:9780，第一次登录需要配置，配置信息如下：">http://ip:9780，第一次登录需要配置，配置信息如下：</a><br>管理员账号密码<br>数据目录（默认值，不改）<br>数据库：选择mysql/mariadb。数据库用户root，数据库密码ownCloud，数据库名owncloud，localhost设为mariadb</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/" rel="tag">Docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ownCloud/" rel="tag">ownCloud</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-最新docker部署gitlab指南"
   class="article article-type-post"
   itemscope
@@ -523,144 +593,6 @@ systemctl restart firewalld.service     //重启防火墙
     <footer class="article-footer">
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-WebGIS开源时空架构方案"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/07/23/WebGIS%E5%BC%80%E6%BA%90%E6%97%B6%E7%A9%BA%E6%9E%B6%E6%9E%84%E6%96%B9%E6%A1%88/"
-    >WebGIS开源时空架构方案</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/07/23/WebGIS%E5%BC%80%E6%BA%90%E6%97%B6%E7%A9%BA%E6%9E%B6%E6%9E%84%E6%96%B9%E6%A1%88/" class="article-date">
-  <time datetime="2023-07-23T05:10:12.000Z" itemprop="datePublished">2023-07-23</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h1><p>一套WebGIS架构方案包含以下几个基本要素：</p>
-<h2 id="1-前端框架"><a href="#1-前端框架" class="headerlink" title="1. 前端框架"></a>1. 前端框架</h2><p>前端框架选择主要考虑到易用性、维护性和功能性。目前比较流行的前端框架有Vue、React和Angular等，其中Vue最为轻量级、易上手和扩展性好，因此可以选择Vue作为前端框架。</p>
-<h2 id="2-后端框架"><a href="#2-后端框架" class="headerlink" title="2. 后端框架"></a>2. 后端框架</h2><p>后端框架主要负责处理数据接口请求和数据存储。根据项目规模和需求，可以选择Flask、Django、Express、Spring等框架。其中，Flask是一款轻量级、灵活的框架，易于搭建，因此可以选择Flask作为后端框架。</p>
-<h2 id="3-数据库选择"><a href="#3-数据库选择" class="headerlink" title="3. 数据库选择"></a>3. 数据库选择</h2><p>数据库主要用于存储和管理各种数据，包括地理空间数据、非地理空间数据等。目前较为常见的数据库有MySQL、PostgreSQL、MongoDB等，其中PostgreSQL是一款可扩展性和稳定性较好的数据库，支持地理空间数据的存储和查询，因此可以选择PostgreSQL作为数据库。</p>
-<h2 id="4-数据库管理工具"><a href="#4-数据库管理工具" class="headerlink" title="4. 数据库管理工具"></a>4. 数据库管理工具</h2><p>数据库管理工具可以方便地对数据库进行管理、维护和优化。目前比较优质的数据库管理工具有PgAdmin、Navicat等，其中PgAdmin是一款免费且开源的数据库管理工具，支持PostgreSQL的管理和维护。</p>
-<h2 id="5-地图渲染引擎"><a href="#5-地图渲染引擎" class="headerlink" title="5. 地图渲染引擎"></a>5. 地图渲染引擎</h2><p>地图渲染引擎负责将地理空间数据转换为可视化的地图，并提供丰富的地图交互功能。目前较为流行的地图渲染引擎有Mapbox、Leaflet、OpenLayers等，其中Leaflet是一款轻量级、易扩展的地图渲染引擎，提供丰富的地图渲染和交互功能，因此可以选择Leaflet作为地图渲染引擎。</p>
-<h2 id="6-地理编码服务"><a href="#6-地理编码服务" class="headerlink" title="6. 地理编码服务"></a>6. 地理编码服务</h2><p>地理编码服务主要用于将地址转换为经纬度坐标或者将经纬度坐标转换为地址。目前市面上比较好的地理编码服务有Google Maps API、ArcGIS Online等，其中Google Maps API是一款大众使用的地理编码服务，免费版可以提供较准确的地址解析和逆地址解析功能，因此可以选择Google Maps API作为地理编码服务。</p>
-<h2 id="7-部署环境"><a href="#7-部署环境" class="headerlink" title="7. 部署环境"></a>7. 部署环境</h2><p>部署环境在开源WebGIS方案中也是十分关键的，可以选择Linux操作系统、Nginx服务器和Docker容器。其中，Linux操作系统是开源、快速、安全和稳定的操作系统，适用于部署Web应用、网络服务器等；Nginx服务器是一款高性能的Web服务器和反向代理服务器，可以提高Web应用程序的性能和规模化适应能力；Docker容器是一款轻量级、移植性强的容器技术平台，可以确保应用程序在任何环境下都能够正常运行。</p>
-<p>以此为基本架构，可以根据实际情况进行灵活的定制和优化，以满足项目需求。</p>
-<p>目前国际上著名的地理空间信息生产商大都拥有了成熟的产品线， 基本涵盖了从数据采集、数据编辑、数据管理、空间数据互操作、空间分析到网络地理信息服务注册、发布、聚合等所有地理信息工程相关的功能模块 。有时候，在商业软件价格比较昂贵的情况下，使用开源WebGIS也是一个不错的选择。</p>
-<h1 id="二、开源WebGIS架构"><a href="#二、开源WebGIS架构" class="headerlink" title="二、开源WebGIS架构"></a>二、开源WebGIS架构</h1><p>一套开源WebGIS架构方案包含以下三个部分：</p>
-<h2 id="2-1-地理信息数据库和业务数据库"><a href="#2-1-地理信息数据库和业务数据库" class="headerlink" title="2.1 地理信息数据库和业务数据库"></a>2.1 地理信息数据库和业务数据库</h2><p>地理信息数据库用于存储地理信息数据（包含矢量、地名地址、专题及瓦片数据）；<br>业务数据库用于存储前端网站或者行业应用的关系型数据；</p>
-<h2 id="2-2-GIS服务器"><a href="#2-2-GIS服务器" class="headerlink" title="2.2 GIS服务器"></a>2.2 GIS服务器</h2><p>GIS服务器则用于提供WMS、WTMS、WFS和WCS等GIS服务；</p>
-<h2 id="2-3-Web应用服务器"><a href="#2-3-Web应用服务器" class="headerlink" title="2.3 Web应用服务器"></a>2.3 Web应用服务器</h2><p>Web应用服务器主要针对行业应用，用于调取GIS服务和后台的业务数据，并在前端展示。</p>
-<p>提供Web信息浏览服务，通常你看到的是一个网站。</p>
-<h2 id="2-4-开源WebGIS解决方案"><a href="#2-4-开源WebGIS解决方案" class="headerlink" title="2.4 开源WebGIS解决方案"></a>2.4 开源WebGIS解决方案</h2><p>针对WebGIS以上组成部分，一套开源WebGIS有着相应的解决方案，其架构方式如下 ：</p>
-<p>数据生产（桌面软件–uDig、QGIS等）<br>数据存储（关系型或非关系型数据库：postgreSQL、mySQL、mongodb）<br>GIS服务（GIS服务器：mapserver、Geoserver）<br>Web服务（Web服务器：tomcat、apache、nginx）<br>前端渲染（OpenLayers 、cesium、mapbox、leaflet）<br>当然还需要提供这一整套架构方式的外围软件环境：</p>
-<p>虚拟化或者云环境(VirtualBox、OpenStack、docker)<br>操作系统（linux：centos、ubuntu）<br>堡垒机( teleport )<br>运维系统( spug )<br>Nas服务器(TrueNas)</p>
-<ul>
-<li>2.4.1 地图数据生产</li>
-</ul>
-<p>使用uDig、QGIS、Grass等开源桌面GIS软件采集、加工地理信息数据<br>uDig：<a target="_blank" rel="noopener" href="http://udig.refractions.net/">http://udig.refractions.net/</a><br>QGIS：<a target="_blank" rel="noopener" href="https://www.qgis.org/">https://www.qgis.org/</a><br>Grass：<a target="_blank" rel="noopener" href="https://grass.osgeo.org/">https://grass.osgeo.org/</a><br>OpenEV：<a target="_blank" rel="noopener" href="http://openev.sourceforge.net/">http://openev.sourceforge.net/</a><br>gvSIG ：<a target="_blank" rel="noopener" href="http://www.gvsig.com/">http://www.gvsig.com/</a><br>OpenJUMP：<a target="_blank" rel="noopener" href="http://www.openjump.org/">http://www.openjump.org/</a><br>OSSIM：<a target="_blank" rel="noopener" href="http://trac.osgeo.org/ossim/">http://trac.osgeo.org/ossim/</a><br>InterImage：<a target="_blank" rel="noopener" href="http://www.lvc.ele.puc-rio.br/projects/interimage/%EF%BC%88%E4%B8%93%E6%B3%A8%E5%BD%B1%E5%83%8F%E8%A7%A3%E8%AF%91%EF%BC%89">http://www.lvc.ele.puc-rio.br/projects/interimage/（专注影像解译）</a><br>PolSARPro：<a target="_blank" rel="noopener" href="https://earth.esa.int/web/polsarpro%EF%BC%88%E6%9E%81%E5%8C%96%E9%9B%B7%E8%BE%BE%E5%A4%84%E7%90%86%EF%BC%89">https://earth.esa.int/web/polsarpro（极化雷达处理）</a><br>E-foto：<a target="_blank" rel="noopener" href="http://www.efoto.eng.uerj.br/en">http://www.efoto.eng.uerj.br/en</a> 航空摄影测量</p>
-<ul>
-<li>2.4.2 地理信息数据存储</li>
-</ul>
-<p>关系型数据使用PostGIS或者MySQL Spatial数据库存储地理信息数据和关系型业务数据，</p>
-<p>非关系型数据使用mongodb数据库（瓦片、图像）<br>PostGIS：<a target="_blank" rel="noopener" href="http://postgis.net/">http://postgis.net/</a><br>PostgreSQL：<a target="_blank" rel="noopener" href="https://www.postgresql.org/">https://www.postgresql.org/</a><br>MySQL：<a target="_blank" rel="noopener" href="https://www.mysql.com/">https://www.mysql.com</a><br>mongodb ：<a target="_blank" rel="noopener" href="https://www.mongodb.com/">https://www.mongodb.com/</a><br>rasdaman：<a target="_blank" rel="noopener" href="http://www.rasdaman.org/">http://www.rasdaman.org/</a> （栅格数据库）<br>SpatiaLite:<a target="_blank" rel="noopener" href="http://www.gaia-gis.it/gaia-sins/">http://www.gaia-gis.it/gaia-sins/</a> (轻量级数据库SQLite空间扩展)</p>
-<ul>
-<li>2.4.3 GIS服务器</li>
-</ul>
-<p>使用GeoServer、MapServer生产地图瓦片，注册、发布地理信息服务。</p>
-<p>GeoServer：<a target="_blank" rel="noopener" href="http://geoserver.org/">http://geoserver.org/</a><br>MapServer：<a target="_blank" rel="noopener" href="http://mapserver.org/">http://mapserver.org/</a><br>Mapnik：<a target="_blank" rel="noopener" href="http://mapnik.org/">http://mapnik.org/</a><br>TileCache：<a target="_blank" rel="noopener" href="http://tilecache.org/">http://tilecache.org/</a><br>MapTiler:<a target="_blank" rel="noopener" href="https://www.maptiler.com/">https://www.maptiler.com/</a></p>
-<ul>
-<li>2.4.4 Web服务器应用</li>
-</ul>
-<p>使用Geomajas、Tomcat或apache搭建网站，在网页中嵌入地图容器加载地图；使用niginx作为反向代理或者负载均衡。</p>
-<p>Tomcat：<a target="_blank" rel="noopener" href="http://tomcat.apache.org/">http://tomcat.apache.org/</a> （网站服务器）<br>apache:<a target="_blank" rel="noopener" href="https://www.apache.org/(apache%E5%8D%B3%E5%8F%AF%E5%81%9A%E7%BD%91%E7%AB%99%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8F%88%E5%8F%AF%E4%BD%9C%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E3%80%81%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1)">https://www.apache.org/(apache即可做网站服务器又可作反向代理、负载均衡)</a><br>nginx：<a target="_blank" rel="noopener" href="http://nginx.org/">http://nginx.org/</a> （负载均衡、反向代理）</p>
-<p>地图网站专用服务器<br>GeoMoose：<a target="_blank" rel="noopener" href="https://demo.geomoose.org/">https://demo.geomoose.org/</a><br>Geomajas：<a target="_blank" rel="noopener" href="http://www.geomajas.org/">http://www.geomajas.org/</a></p>
-<ul>
-<li>2.4.5 个人客户端或者web应用服务器的前端展示：</li>
-</ul>
-<p>地理信息服务使用OpenScales、支持Java的Openlayers或Leaflet地图容器前端展示。前端其他数据展示使用Java、vue等流行网页API。</p>
-<p>openlayers(Java): <a target="_blank" rel="noopener" href="http://openlayers.org/">http://openlayers.org/</a><br>openscales(Flex): <a target="_blank" rel="noopener" href="http://openscales.org/">http://openscales.org/</a><br>LeafLet：<a target="_blank" rel="noopener" href="https://leafletjs.com/">https://leafletjs.com</a><br>Cesium:<a target="_blank" rel="noopener" href="https://github.com/CesiumGS/cesium">https://github.com/CesiumGS/cesium</a><br>ol-cesium:<a target="_blank" rel="noopener" href="https://openlayers.org/ol-cesium/">https://openlayers.org/ol-cesium/</a><br>注：这里的web应用服务器相对于GIS服务器而言是客户端，相对于浏览者而言是服务器。</p>
-<p>以上给出使用开源软件实现WebGIS各个环节可采用的软件，在实际项目中，应根据项目需要做一下筛选。</p>
-<p>比如：uDig (QGIS)+ PostgreSQL/PostGIS （mongodb）+ GeoServer + Tomcat +Openlayers组合。</p>
-<p>倘若有高性能、高可用的需求，还应使用集群技术，搭建数据库集群、GIS服务器集群和web应用服务器集群生态，增加服务的冗余，提高服务性能，毕竟地图服务不是简单的网页服务，其消耗的资源是非常大的，即便是一个空间查询语句，对数据库的性能消耗也是非常可观的。</p>
-<h1 id="三、开源地理数据函数库"><a href="#三、开源地理数据函数库" class="headerlink" title="三、开源地理数据函数库"></a>三、开源地理数据函数库</h1><p>以下列出所有开源软地理信息软件或者商业地理信息软件都可能有到的开源地理信息函数库。其中，GDAL/ORG、PROJ.4、GEOS是地理信息软件或者系统开发的三架马车，它们搭建了地理信息软件的基础。</p>
-<p>GDAL/OGR:<a target="_blank" rel="noopener" href="https://gdal.org/">https://gdal.org/</a> 开源栅格/矢量空间数据转换库<br>PROJ.4:<a target="_blank" rel="noopener" href="https://proj.org/">https://proj.org/</a> 地图投影库<br>GEOS:<a target="_blank" rel="noopener" href="http://trac.osgeo.org/geos">http://trac.osgeo.org/geos</a> 开源地理空间数据引擎<br>pyshp:<a target="_blank" rel="noopener" href="https://pypi.org/project/pyshp/">https://pypi.org/project/pyshp/</a> 用于处理shapfile的简单函数库<br>Shapely:<a target="_blank" rel="noopener" href="https://pypi.org/project/Shapely/">https://pypi.org/project/Shapely/</a> 基于 GEOS，用于操作和分析平面几何对象的函数库<br>Fiona:<a target="_blank" rel="noopener" href="https://pypi.org/project/Fiona/">https://pypi.org/project/Fiona/</a> 基于GDAL,用于读取空间矢量数据的函数库<br>Rasterio:<a target="_blank" rel="noopener" href="https://pypi.org/project/rasterio/">https://pypi.org/project/rasterio/</a> 基于GDAL和Numpy，用于读取地理空间栅格数据的函数库<br>PIL:<a target="_blank" rel="noopener" href="https://pypi.org/project/PIL/">https://pypi.org/project/PIL/</a> 用于处理影像的python库<br>NumPy：<a target="_blank" rel="noopener" href="https://pypi.org/project/numpy/">https://pypi.org/project/numpy/</a> 用于矩阵科学计算的函数库<br>Scikit-image：基于scipy的一款图像处理python库<br>GeoPandas:<a target="_blank" rel="noopener" href="http://geopandas.org/">http://geopandas.org/</a> 用于空间分析的函数库<br>SPy:<a target="_blank" rel="noopener" href="http://www.spectralpython.net/">http://www.spectralpython.net/</a> 用于高光谱遥感影像处理的python库<br>GML4J：<a target="_blank" rel="noopener" href="http://gml4j.sourceforge.net/">http://gml4j.sourceforge.net/</a> 用于读取gml数据的函数库<br>GSLIB：<a target="_blank" rel="noopener" href="http://www.gslib.com/">http://www.gslib.com/</a> 用于空间统计的函数库<br>JTS：<a target="_blank" rel="noopener" href="https://sourceforge.net/projects/jts-topo-suite/">https://sourceforge.net/projects/jts-topo-suite/</a> （支持JAVA的空间分析包）<br>GeoTools：<a target="_blank" rel="noopener" href="https://www.geotools.org/">https://www.geotools.org/</a> （支持JAVA的地理处理工具箱）<br>GeoMesa：<a target="_blank" rel="noopener" href="https://www.geomesa.org/">https://www.geomesa.org/</a> 分布式时空大数据分析工具，配合hadoop使用</p>
-<h1 id="四、开放网络地图引擎"><a href="#四、开放网络地图引擎" class="headerlink" title="四、开放网络地图引擎"></a>四、开放网络地图引擎</h1><p>OSM:<a target="_blank" rel="noopener" href="https://www.openstreetmap.org/">https://www.openstreetmap.org/</a> 地图<br>Navit:<a target="_blank" rel="noopener" href="https://www.navit-project.org/">https://www.navit-project.org/</a> 导航</p>
-<h1 id="五、开放三维引擎"><a href="#五、开放三维引擎" class="headerlink" title="五、开放三维引擎"></a>五、开放三维引擎</h1><p>Cesium：<a target="_blank" rel="noopener" href="https://cesium.com/">https://cesium.com/</a><br>OSG earth:<a target="_blank" rel="noopener" href="http://www.openscenegraph.org/">http://www.openscenegraph.org/</a><br>ogre:<a target="_blank" rel="noopener" href="https://www.ogre3d.org/">https://www.ogre3d.org/</a><br>marble:<a target="_blank" rel="noopener" href="https://marble.kde.org/">https://marble.kde.org/</a></p>
-<h1 id="六、开放地理处理工具"><a href="#六、开放地理处理工具" class="headerlink" title="六、开放地理处理工具"></a>六、开放地理处理工具</h1><p>GeoTools：<a target="_blank" rel="noopener" href="https://www.geotools.org/">https://www.geotools.org/</a> 地理处理工具箱<br>GeoNetwork：<a target="_blank" rel="noopener" href="https://geonetwork-opensource.org/">https://geonetwork-opensource.org/</a> 网络地图查看和目录工具<br>Orfeo ToolBox：<a target="_blank" rel="noopener" href="https://www.orfeo-toolbox.org/">https://www.orfeo-toolbox.org/</a> 可以处理TB级的高分辨率光学，多光谱和雷达图像。 </p>
-<h1 id="七、时空大数据框架"><a href="#七、时空大数据框架" class="headerlink" title="七、时空大数据框架"></a>七、时空大数据框架</h1><p>随着全球化和信息化的发展，数据已经成为一种非常宝贵的资源。时空大数据处理技术也因其在军事、环境、气象、交通和金融等领域的广泛应用而备受关注。为了提高数据处理效率和准确度，许多企业和机构开始采用开源框架来构建他们的时空大数据应用。</p>
-<p>在本文中，我们介绍几个流行的时空大数据开源框架。</p>
-<ul>
-<li><ol>
-<li>Apache Hadoop</li>
-</ol>
-</li>
-</ul>
-<p>Apahce Hadoop是一款流行的分布式存储和分析平台，它可以处理大规模数据和时间序列数据。Hadoop是一种完全开源的框架，旨在处理大数据集并在集群中分发数据。它主要由HDFS（Hadoop 分布式文件系统）和MapReduce（一种计算框架）组成。Hadoop有着广泛的数据处理能力，因此可以在很多大型企业、政府机构和科研团队中得到应用。</p>
-<ul>
-<li><ol start="2">
-<li>Apache Spark</li>
-</ol>
-</li>
-</ul>
-<p>Apache Spark是一款快速的大数据计算系统，其可以在内存中快速处理大数据。它能够支持复杂的数据分析任务和像机器学习这样的数据科学工作负载。Spark比Hadoop处理速度更快，并且可以在不占用太多资源的情况下进行大数据处理。它也支持Python、Java和Scala等多种编程语言。Apache Spark常被用来对时空数据进行分析和可视化。</p>
-<ul>
-<li><ol start="3">
-<li>GeoMesa</li>
-</ol>
-</li>
-</ul>
-<p>GeoMesa是一个地理信息系统（GIS）库，可以用于管理和分析大规模时空数据集。它是一个开源库，形成了在云中处理海量时空数据的技术基础，并提供了一些用于时空数据管理和分析的工具。GeoMesa支持多种数据源，如Hadoop、Spark和Accumulo等。利用GeoMesa框架，可以实现时空数据的存储、查询、分析和可视化等操作。</p>
-<ul>
-<li><ol start="4">
-<li>GeoSpark</li>
-</ol>
-</li>
-</ul>
-<p>GeoSpark是基于Spark的时空数据处理、分析和可视化框架。与Apache Spark相似，GeoSpark使用内存计算技术，利于大规模数据的处理。该框架支持多种时空数据源，包括点、线、面、栅格等各种空间数据类型，并提供了丰富的时空数据分析算法。GeoSpark发挥了Spark和Hadoop的优点，使它成为一种非常强大的时空数据分析框架，被广泛应用于城市规划、交通管理和环境监测等领域。</p>
-<p>总之，这些时空大数据开源框架可以帮助企业和组织快速处理和分析时空数据，最大程度地实现数据价值。以上框架都是经过长期测试的，应用广泛的开源框架，因此用户可以根据项目需求和特点对其进行灵活的选择和定制。</p>
-<h1 id="八、开放协会或组织"><a href="#八、开放协会或组织" class="headerlink" title="八、开放协会或组织"></a>八、开放协会或组织</h1><p><a target="_blank" rel="noopener" href="https://www.osgeo.org/">https://www.osgeo.org/</a> 开源地理空间基金会<br><a target="_blank" rel="noopener" href="https://www.osgeo.cn/">https://www.osgeo.cn/</a> 中国开放地理空间实验室<br><a target="_blank" rel="noopener" href="https://www.opengeospatial.org/">https://www.opengeospatial.org/</a> OGC开放地理空间信息联盟</p>
-<p>加利福利亚大学荧光动力学实验室python 库:<br><a target="_blank" rel="noopener" href="https://www.lfd.uci.edu/~gohlke/pythonlibs/">https://www.lfd.uci.edu/~gohlke/pythonlibs/</a></p>
-<p>也可参见grss-ieee地球科学与遥感学会与遥感相关的开源函数库和软件列表：<br><a target="_blank" rel="noopener" href="http://www.grss-ieee.org/open-source-software-related-to-geoscience-and-remote-sensing/">http://www.grss-ieee.org/open-source-software-related-to-geoscience-and-remote-sensing/</a></p>
-<p>OSGeoLive 目录：<br><a target="_blank" rel="noopener" href="http://live.osgeo.org/en/overview/overview.html">http://live.osgeo.org/en/overview/overview.html</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OpenSource/" rel="tag">OpenSource</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebGIS/" rel="tag">WebGIS</a></li></ul>
 
     </footer>
   </div>

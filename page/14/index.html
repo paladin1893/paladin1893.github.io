@@ -154,6 +154,182 @@
     
     
     <article
+  id="post-Java8中LambdaQueryWrapper对象使用(学习笔记)"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/10/03/Java8%E4%B8%ADLambdaQueryWrapper%E5%AF%B9%E8%B1%A1%E4%BD%BF%E7%94%A8(%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0)/"
+    >Java8中LambdaQueryWrapper对象使用(学习笔记)</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/10/03/Java8%E4%B8%ADLambdaQueryWrapper%E5%AF%B9%E8%B1%A1%E4%BD%BF%E7%94%A8(%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0)/" class="article-date">
+  <time datetime="2023-10-03T02:03:00.000Z" itemprop="datePublished">2023-10-03</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="eq："><a href="#eq：" class="headerlink" title="eq："></a>eq：</h1><p>说明：等于=</p>
+<p>例：</p>
+<pre><code>eq(&quot;name&quot;,&quot;老王&quot;)--------&gt; name = &#39;老王&#39;
+</code></pre>
+<h1 id="ne："><a href="#ne：" class="headerlink" title="ne："></a>ne：</h1><p>说明：不等于&lt;&gt;</p>
+<p>例：</p>
+<pre><code>ne(&quot;name&quot;,&quot;老王&quot;)--------&gt; name &lt;&gt; &#39;老王&#39;
+</code></pre>
+<h1 id="gt："><a href="#gt：" class="headerlink" title="gt："></a>gt：</h1><p>说明：大于&gt;</p>
+<p>例：</p>
+<pre><code>gt(&quot;age&quot;,18)--------&gt; age &gt; 18
+</code></pre>
+<h1 id="ge："><a href="#ge：" class="headerlink" title="ge："></a>ge：</h1><p>说明：大于等于&gt;=</p>
+<p>例：</p>
+<pre><code>ge(&quot;age&quot;,18)--------&gt; age &gt;= 18
+</code></pre>
+<h1 id="lt："><a href="#lt：" class="headerlink" title="lt："></a>lt：</h1><p>说明：小于&lt;</p>
+<p>例：</p>
+<pre><code>lt(&quot;age&quot;,18)--------&gt; age &lt; 18
+</code></pre>
+<h1 id="le："><a href="#le：" class="headerlink" title="le："></a>le：</h1><p>说明：小于等于&lt;=</p>
+<p>例：</p>
+<pre><code>le(&quot;age&quot;,18)--------&gt; age &lt;= 18
+</code></pre>
+<h1 id="between："><a href="#between：" class="headerlink" title="between："></a>between：</h1><p>说明：BETWEEN 值1 AND 值2</p>
+<p>例：</p>
+<pre><code>between(&quot;age&quot;,18,30)--------&gt; age between 18 and 30
+</code></pre>
+<h1 id="notBetween："><a href="#notBetween：" class="headerlink" title="notBetween："></a>notBetween：</h1><p>说明：NOT BETWEEN 值1 AND 值2</p>
+<p>例：</p>
+<pre><code>notBetween(&quot;age&quot;,18,30)--------&gt; age not between 18 and 30
+</code></pre>
+<h1 id="like："><a href="#like：" class="headerlink" title="like："></a>like：</h1><p>说明：LIKE ‘%值%’</p>
+<p>例：</p>
+<pre><code>like(&quot;name&quot;,&quot;王&quot;)--------&gt; name like &#39;%王%&#39;
+</code></pre>
+<h1 id="notLike："><a href="#notLike：" class="headerlink" title="notLike："></a>notLike：</h1><p>说明：NOT LIKE ‘%值%’</p>
+<p>例：</p>
+<pre><code>notLike(&quot;name&quot;,&quot;王&quot;)--------&gt; name not like &#39;%王%&#39;
+</code></pre>
+<h1 id="likeLeft："><a href="#likeLeft：" class="headerlink" title="likeLeft："></a>likeLeft：</h1><p>说明：LIKE ‘%值’</p>
+<p>例：</p>
+<pre><code>likeLeft(&quot;name&quot;,&quot;王&quot;)--------&gt; name like &#39;%王&#39;
+</code></pre>
+<h1 id="likeRight："><a href="#likeRight：" class="headerlink" title="likeRight："></a>likeRight：</h1><p>说明：LIKE ‘值%’</p>
+<p>例：</p>
+<pre><code>likeRight(&quot;name&quot;,&quot;王&quot;)--------&gt; name like &#39;王%&#39;
+</code></pre>
+<h1 id="isNull："><a href="#isNull：" class="headerlink" title="isNull："></a>isNull：</h1><p>说明：字段 IS NULL</p>
+<p>例：</p>
+<pre><code>isNull(&quot;name&quot;)--------&gt; name is null
+</code></pre>
+<h1 id="isNotNull："><a href="#isNotNull：" class="headerlink" title="isNotNull："></a>isNotNull：</h1><p>说明：字段 IS NOT NULL</p>
+<p>例：</p>
+<pre><code>isNotNull(&quot;name&quot;)--------&gt; name is not null
+</code></pre>
+<h1 id="in："><a href="#in：" class="headerlink" title="in："></a>in：</h1><p>说明：字段 IN (v0, v1, …)</p>
+<p>例：</p>
+<pre><code>in(&quot;age&quot;,&#123;1,2,3&#125;)--------&gt; age in (1,2,3)
+</code></pre>
+<h1 id="notIn："><a href="#notIn：" class="headerlink" title="notIn："></a>notIn：</h1><p>说明：字段 NOT IN (v0, v1, …)</p>
+<p>例：</p>
+<pre><code>notIN(&quot;age&quot;,&#123;1,2,3&#125;)--------&gt; age not in (1,2,3)
+</code></pre>
+<h1 id="inSql："><a href="#inSql：" class="headerlink" title="inSql："></a>inSql：</h1><p>说明：字段 IN ( SQL语句 )</p>
+<p>例：</p>
+<pre><code>inSql(&quot;id&quot;,&quot;select id from table where id &lt; 3&quot;)--------&gt; id in (select id from table where id &lt; 3)
+</code></pre>
+<h1 id="notInSql："><a href="#notInSql：" class="headerlink" title="notInSql："></a>notInSql：</h1><p>说明：字段 NOT IN ( SQL语句 )</p>
+<p>例：</p>
+<pre><code>notInSql(&quot;id&quot;,&quot;select id from table where id &lt; 3&quot;)--------&gt; id not in (select id from table where id &lt; 3)
+</code></pre>
+<h1 id="groupBy："><a href="#groupBy：" class="headerlink" title="groupBy："></a>groupBy：</h1><p>说明：分组 GROUP BY 字段， …</p>
+<p>例：</p>
+<pre><code>groupBy(&quot;id&quot;,&quot;name&quot;)--------&gt; group by id,name
+</code></pre>
+<h1 id="orderByAsc："><a href="#orderByAsc：" class="headerlink" title="orderByAsc："></a>orderByAsc：</h1><p>说明：排序 ORDER BY 字段，… ASC</p>
+<p>例：</p>
+<pre><code>orderByAsc(&quot;id&quot;,&quot;name&quot;)--------&gt; order by id ASC,name ASC
+</code></pre>
+<h1 id="orderByDesc："><a href="#orderByDesc：" class="headerlink" title="orderByDesc："></a>orderByDesc：</h1><p>说明：排序 ORDER BY 字段，… DESC</p>
+<p>例：</p>
+<pre><code>orderByDesc(&quot;id&quot;,&quot;name&quot;)--------&gt; order by id DESC,name DESC
+</code></pre>
+<h1 id="orderBy："><a href="#orderBy：" class="headerlink" title="orderBy："></a>orderBy：</h1><p>说明：排序 ORDER BY 字段，…</p>
+<p>例：</p>
+<pre><code>orderBy(&quot;id&quot;,&quot;name&quot;)--------&gt; order by id ASC,name ASC
+</code></pre>
+<h1 id="having："><a href="#having：" class="headerlink" title="having："></a>having：</h1><p>说明：HAVING ( SQL语句 )</p>
+<p>例：</p>
+<pre><code>having(&quot;sum(age) &gt; &#123;0&#125;&quot;,11)--------&gt; having sum(age) &gt; 11
+</code></pre>
+<h1 id="or："><a href="#or：" class="headerlink" title="or："></a>or：</h1><p>说明：拼接 OR</p>
+<p>注意事项：主动调用 OR 表示紧接着下一个方法不是用 AND 连接！(不调用 OR 则默认使用 AND 连接)</p>
+<p>例：</p>
+<pre><code>eq.(&quot;id&quot;,1).or().eq(&quot;name&quot;,&quot;老王&quot;)--------&gt; id = 1 or name = &#39;老王&#39;
+</code></pre>
+<h1 id="and："><a href="#and：" class="headerlink" title="and："></a>and：</h1><p>说明：AND 嵌套</p>
+<p>例：</p>
+<pre><code>and(i -&gt; i.eq(&quot;name&quot;,&quot;老王&quot;).ne(&quot;status&quot;,1))--------&gt; and (name = &#39;老王&#39; and status &lt;&gt; 1)
+</code></pre>
+<h1 id="apply："><a href="#apply：" class="headerlink" title="apply："></a>apply：</h1><p>说明：拼接 SQL</p>
+<p>注意事项：该方法可用于数据库函数，动态入参的 params 对应前面 sqlHaving 内部的 {index} 部分，这样是不会有 SQL 注入风险的，反之会有！</p>
+<p>例：</p>
+<pre><code>apply(&quot;date_format(dateColumn,&#39;%Y-%m-%d&#39;) = &#123;0&#125;&quot;,&quot;2021-08-08&quot;)--------&gt; date_format(dateColumn,&#39;%Y-%m-%d&#39;) = &#39;2021-08-08&#39;
+</code></pre>
+<h1 id="last："><a href="#last：" class="headerlink" title="last："></a>last：</h1><p>说明：无视优化规则直接拼接到 SQL 的最后</p>
+<p>注意事项：只能调用一次，多次调用以最后一次为准，有 SQL 注入的风险，请谨慎使用</p>
+<p>例：</p>
+<pre><code>last(&quot;limit 1&quot;)
+</code></pre>
+<h1 id="exists："><a href="#exists：" class="headerlink" title="exists："></a>exists：</h1><p>说明：拼接 EXISTS ( SQL 语句 )</p>
+<p>例：</p>
+<pre><code>exists(&quot;select id from table where age = 1&quot;)--------&gt; exists (select id from table where age = 1)
+</code></pre>
+<h1 id="notExists："><a href="#notExists：" class="headerlink" title="notExists："></a>notExists：</h1><p>说明：拼接 NOT EXISTS ( SQL 语句 )</p>
+<p>例：</p>
+<pre><code>notExists(&quot;select id from table where age = 1&quot;)--------&gt; not exists (select id from table where age = 1)
+</code></pre>
+<h1 id="nested："><a href="#nested：" class="headerlink" title="nested："></a>nested：</h1><p>说明：正常嵌套 不带 AND 或者 OR</p>
+<p>例：</p>
+<pre><code>nested(i -&gt; i.eq(&quot;name&quot;,&quot;老王&quot;).ne(&quot;status&quot;,1))--------&gt; (name = &#39;老王&#39; and status &lt;&gt; 1)
+</code></pre>
+<p>————————————————<br>版权声明：本文为CSDN博主「woyaniya」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/woyaniya/article/details/129416870">https://blog.csdn.net/woyaniya/article/details/129416870</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-Avue-crud 常用方法、属性"
   class="article article-type-post"
   itemscope
@@ -769,171 +945,6 @@ Mopidy-Dirble ~= 1.1    # 兼容版本。与&gt;=1.1，==1.* 相同
     <footer class="article-footer">
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flask/" rel="tag">flask</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Python 用pip批量安装包 requirements.txt"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/09/27/Python%20%E7%94%A8pip%E6%89%B9%E9%87%8F%E5%AE%89%E8%A3%85%E5%8C%85%20requirements.txt/"
-    >Python 用pip批量安装包 requirements.txt</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/09/27/Python%20%E7%94%A8pip%E6%89%B9%E9%87%8F%E5%AE%89%E8%A3%85%E5%8C%85%20requirements.txt/" class="article-date">
-  <time datetime="2023-09-27T07:49:27.000Z" itemprop="datePublished">2023-09-27</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="一、python用pip批量安装包"><a href="#一、python用pip批量安装包" class="headerlink" title="一、python用pip批量安装包"></a>一、python用pip批量安装包</h1><p>python查看安装的第三方扩展包,就是使用命令 pip freeze。</p>
-<p>在已经配置好的一台机器上，将需要的包导出到requirements.txt</p>
-<pre><code>./pip freeze &gt; requirements.txt
-</code></pre>
-<p>此种方式会将环境中所有的包都打包进去，适合单虚拟环境（每个项目都处在不同的虚拟环境里，这个环境里是这个项目所需要的所有包）。因此，如果不是Python虚拟环境Virtualenv。我们不推荐这么使用，推荐使用 使用pipreqs 写入requirements.txt。</p>
-<p>pip安装包的方式中，有如下一种安装方式：</p>
-<pre><code>pip install -r requirements.txt
-</code></pre>
-<p>而文件requirement.txt里面内容的格式和pip freeze的格式完全一样。因此我们可以将pip freeze的内容输出至requirements.txt。</p>
-<p>推荐如下使用方式</p>
-<pre><code>./pip freeze | tee requirements.txt # 输出本地包环境至文件
-./pip install -r requirements.txt # 根据文件进行包安装
-</code></pre>
-<p>pip freeze 为什么比 pip list 的包少几个呢？<br>因为pip , wheel , setuptools 等包，是自带的而无法(un)install的。考虑到pip freeze的用途，所以这些包并没有显示。</p>
-<p>ps：<br>如果一定要用pip freeze来显示所有包，可以加上参数-all，即pip freeze -all</p>
-<h1 id="二、-推荐-使用pipreqs-写入requirements-txt"><a href="#二、-推荐-使用pipreqs-写入requirements-txt" class="headerlink" title="二、[推荐]使用pipreqs 写入requirements.txt"></a>二、[推荐]使用pipreqs 写入requirements.txt</h1><p>使用pipreqs 写入requirements.txt，只是程序中所用到的包，并不是电脑中安装的所有的包。</p>
-<pre><code>pip install pipreqs
-</code></pre>
-<p>cd 到程序所在的文件夹位置</p>
-<p>执行下面的语句，Windows下得加encoding=utf8，不然会出现编码问题。</p>
-<pre><code>pipreqs ./ --encoding=utf8 
-</code></pre>
-<h1 id="三、利用requirements-txt离线安装依赖包"><a href="#三、利用requirements-txt离线安装依赖包" class="headerlink" title="三、利用requirements.txt离线安装依赖包"></a>三、利用requirements.txt离线安装依赖包</h1><p>1、下载离线的包到指定目录</p>
-<p>将requirements.txt中导入的包离线下载到 package_tmp_dir 文件夹</p>
-<pre><code>pip wheel -w package_tmp_dir -r requirements.txt
-pip download -d package_tmp_dir -r requirements.txt
-</code></pre>
-<p>2、安装离线的包</p>
-<pre><code>pip install --no-index --find-links=package_tmp_dir  -r requirements.txt
-</code></pre>
-<ol>
-<li>使用 pip wheel 实现 Python 依赖包的离线安装</li>
-</ol>
-<p>Wheel 也是一种 built 包，而且是官方推荐的打包方式。也许你曾经遇见或使用过 egg 包，但现在 wheel 是官方推荐的打包方式（<a target="_blank" rel="noopener" href="https://wheel.readthedocs.io/en/stable/%EF%BC%89%E3%80%82">https://wheel.readthedocs.io/en/stable/）。</a><br>wheel 包的优点：</p>
-<p> 1.更快地安装纯 Python 和本机 C 扩展包。<br> 2.避免安装时执行任意代码。 （避免 setup.py）<br> 3.在 Windows 或 macOS 上安装 C 扩展不需要编译器。<br> 4.为测试和持续集成提供更好的缓存。<br> 5.创建 .pyc 文件作为安装的一部分，以确保它们与使用的 Python 解释器匹配。<br> 6.跨平台和机器的更一致的安装。</p>
-<p>没有网络连接, 借助 wheel把整个 Python 应用做成离线安装包。</p>
-<p>安装 wheel:</p>
-<pre><code>pip install wheel
-</code></pre>
-<p>下载依赖包的 wheel 文件</p>
-<pre><code>pip wheel -r requirements.txt
-</code></pre>
-<p>默认情况下, 上述命令会下载 requirements.txt 中每个包的 wheel 包到当前目录的 wheelhouse 文件夹, 包括依赖的依赖。</p>
-<p>在你的安装脚本中执行:</p>
-<pre><code>pip install --use-wheel --no-index --find-links=wheelhouse -r requirements.txt
-</code></pre>
-<ol start="2">
-<li>下载命令</li>
-</ol>
-<p>一、对于单个包的安装</p>
-<p>1、离线</p>
-<p>(1)pip离线下载</p>
-<pre><code>pip download 你的包名 -d “下载的路径(windows下双引号来表示文件夹)”
-pip download pymysql -d &quot;D:\pipDownloadTest&quot;
-</code></pre>
-<p>(2)pip 离线安装</p>
-<pre><code>pip install 包路径
-pip install PyMySQL-0.9.3-py2.py3-none-any.whl
-</code></pre>
-<p>2、在线</p>
-<pre><code>pip install pymysql
-</code></pre>
-<p>二、对于多个包的安装与下载</p>
-<p>1、离线</p>
-<p>离线下载</p>
-<pre><code>pip download -d packages -r requirements.txt
-</code></pre>
-<p>离线安装</p>
-<pre><code>pip install --no-index --find-links=packages -r requirements.txt
-</code></pre>
-<p>2、在线</p>
-<pre><code>pip install -r requirements.txt
-</code></pre>
-<p>总结：多个包下载就多了一个 -r requirements.txt。</p>
-<ol start="3">
-<li>pip download 和 pip wheel 这两个命令的区别</li>
-</ol>
-<ul>
-<li><p>下载的文件格式不同</p>
-<p>  pip download 下载的是源代码的压缩包,通常是 .tar.gz 格式<br>  pip wheel 下载的是编译好的 wheel 二进制包,以 .whl 作为文件扩展名</p>
-</li>
-<li><p>是否编译</p>
-<p>  pip download 仅仅下载源码,不会编译<br>  pip wheel 会自动为所支持的平台编译Wheel包</p>
-</li>
-<li><p>下载位置不同</p>
-<p>  pip download 会下载到当前目录<br>  pip wheel 默认下载到 ~/.cache/pip/wheels 目录</p>
-</li>
-<li><p>用途不同<br>  pip download 用于获取源码包以便查看或自定义编译<br>  pip wheel 常用于离线环境,下载好Wheel包后直接pip install使用</p>
-</li>
-</ul>
-<p>所以,简单来说:</p>
-<p>需要源码包 - 使用pip download<br>需要离线安装 - 使用pip wheel</p>
-<p>两者有不同的使用场景。</p>
-<h1 id="四、pip-install-工作常见报错"><a href="#四、pip-install-工作常见报错" class="headerlink" title="四、pip install 工作常见报错"></a>四、pip install 工作常见报错</h1><p>Python.h: No such file or directory报错</p>
-<ul>
-<li>CentOS7 pip3 安装psycopg2出错</li>
-</ul>
-<p>参考URL: <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/fbbe3bdf1905">https://www.jianshu.com/p/fbbe3bdf1905</a><br>原因是：</p>
-<p>As mentioned in psycopg documentation <a target="_blank" rel="noopener" href="http://initd.org/psycopg/docs/install.html">http://initd.org/psycopg/docs/install.html</a></p>
-<p>C compiler<br>Python header files</p>
-<ul>
-<li><p>没有安装python的环境：</p>
-<p>  For apt (Ubuntu, Debian…):</p>
-<pre><code>  sudo apt-get install python-dev # for python2.x installs
-  sudo apt-get install python3-dev # for python3.x installs
-</code></pre>
-<p>  For yum (CentOS, RHEL…):</p>
-<pre><code>  sudo yum install python-devel # for python2.x installs
-  sudo yum install python3-devel # for python3.x installs
-</code></pre>
-</li>
-</ul>
-<p>————————————————<br>版权声明：本文为CSDN博主「西京刀客」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/inthat/article/details/117026589">https://blog.csdn.net/inthat/article/details/117026589</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
 
     </footer>
   </div>

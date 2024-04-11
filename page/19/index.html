@@ -154,6 +154,110 @@
     
     
     <article
+  id="post-Vue2传值方式详解03"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/09/03/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A303/"
+    >Vue2传值方式详解03-兄弟组件通信（bus总线）</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/09/03/Vue2%E4%BC%A0%E5%80%BC%E6%96%B9%E5%BC%8F%E8%AF%A6%E8%A7%A303/" class="article-date">
+  <time datetime="2023-09-03T11:19:19.000Z" itemprop="datePublished">2023-09-03</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>main.js</p>
+<pre><code>// main.js 文件
+import Vue from &#39;vue&#39;
+import App from &#39;./App.vue&#39;
+
+Vue.config.productionTip = false
+
+new Vue(&#123;
+  render: h =&gt; h(App),
+  beforeCreate() &#123;
+    // 需要在全局添加一个属性
+    Vue.prototype.$bus = this
+  &#125;
+&#125;).$mount(&#39;#app&#39;)
+</code></pre>
+<p>Father.vue</p>
+<pre><code>// Father.vue 文件
+&lt;template&gt;
+  &lt;div id=&quot;father&quot;&gt;
+    &lt;button @click=&quot;btn&quot;&gt;我要给 Brother 组件传数据&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default &#123;
+  name: &quot;Father&quot;,
+  methods: &#123;
+    btn() &#123;
+      this.$bus.$emit(&quot;change&quot;, 66666);
+    &#125;,
+  &#125;,
+&#125;;
+&lt;/script&gt;
+</code></pre>
+<p>Brother.vue</p>
+<pre><code>// Brother.vue 文件
+&lt;template&gt;
+  &lt;div id=&quot;brother&quot;&gt;&lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default &#123;
+  name: &quot;Brother&quot;,
+  mounted() &#123;
+    this.$bus.$on(&quot;change&quot;, (msg) =&gt; &#123;
+      console.log(msg);
+    &#125;);
+  &#125;,
+&#125;;
+&lt;/script&gt;
+</code></pre>
+<p>————————————————<br>版权声明：本文为CSDN博主「codeCat!」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_60547084/article/details/124408513">https://blog.csdn.net/weixin_60547084/article/details/124408513</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-Vue2传值方式详解02"
   class="article article-type-post"
   itemscope
@@ -1162,64 +1266,6 @@ console.log(a) //[&#39;name&#39;, &#39;age&#39;, &#39;height&#39;]
         
 </code></pre>
 <p>————————————————<br>版权声明：本文为CSDN博主「Maidangchen」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/A1123352950/article/details/132687113">https://blog.csdn.net/A1123352950/article/details/132687113</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Vue使用RegExp"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/08/28/Vue%E4%BD%BF%E7%94%A8RegExp/"
-    >Vue使用RegExp</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/08/28/Vue%E4%BD%BF%E7%94%A8RegExp/" class="article-date">
-  <time datetime="2023-08-28T07:44:55.000Z" itemprop="datePublished">2023-08-28</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>vue 把字符串的所有=替换成&amp;&amp;&amp;的方法</p>
-<pre><code>//把字符串中所有=换成&amp;&amp;&amp;
-let reg=new RegExp(&#39;=&#39;,&#39;g&#39;)//g代表全部
-let newMsg=JSON.stringify(msg).replace(reg,&#39;&amp;&amp;&amp;&#39;);
-console.log(newMsg)
-</code></pre>
  
       <!-- reward -->
       

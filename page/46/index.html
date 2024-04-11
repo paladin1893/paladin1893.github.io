@@ -154,6 +154,157 @@
     
     
     <article
+  id="post-java读取JSON文件的多种方式"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/03/27/java%E8%AF%BB%E5%8F%96JSON%E6%96%87%E4%BB%B6%E7%9A%84%E5%A4%9A%E7%A7%8D%E6%96%B9%E5%BC%8F/"
+    >java读取JSON文件的多种方式</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/03/27/java%E8%AF%BB%E5%8F%96JSON%E6%96%87%E4%BB%B6%E7%9A%84%E5%A4%9A%E7%A7%8D%E6%96%B9%E5%BC%8F/" class="article-date">
+  <time datetime="2023-03-27T15:32:06.000Z" itemprop="datePublished">2023-03-27</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>在开发过程中有时会遇到需要读取本地.json文件的需求，通常会自己写Reader代码去读，但是这么做写出来的代码有些繁琐（需要关流、创建StringBuilder对象等操作）。最近发现几个小工具可以让需求代码变得更加简洁。</p>
+<h1 id="准备："><a href="#准备：" class="headerlink" title="准备："></a>准备：</h1><p>json文件：D:\test.json</p>
+<pre><code>&#123;
+    &quot;ID&quot;: 10001,
+    &quot;detail&quot;: &quot;detail&quot;,
+    &quot;json_format_version&quot;: 1.0,
+    &quot;other_info&quot;: &#123;
+        &quot;array_one&quot;: [
+            [855, 410],
+            [854, 411],
+            [847, 411],
+            [846, 410],
+            [845, 410],
+            [844, 409]
+        ],
+        &quot;array_two&quot;: [
+            [832, 303],
+            [829, 303],
+            [828, 302],
+            [825, 302],
+            [824, 301]
+        ],
+        &quot;array_three&quot;: [
+            [1013, 224],
+            [1012, 225],
+            [1010, 225],
+            [1009, 226],
+            [1023, 224]
+        ],
+        &quot;point&quot;: [853, 310],
+        &quot;boolean&quot;: true
+    &#125;
+&#125;
+</code></pre>
+<h1 id="1-使用FileReader读取json文件"><a href="#1-使用FileReader读取json文件" class="headerlink" title="1.使用FileReader读取json文件"></a>1.使用FileReader读取json文件</h1><h2 id="1-1、添加依赖"><a href="#1-1、添加依赖" class="headerlink" title="1.1、添加依赖"></a>1.1、添加依赖</h2><pre><code>&lt;dependencies&gt;
+    &lt;dependency&gt;
+       &lt;groupId&gt;com.alibaba&lt;/groupId&gt;
+       &lt;artifactId&gt;fastjson&lt;/artifactId&gt;
+       &lt;version&gt;2.0.12&lt;/version&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;
+</code></pre>
+<h2 id="1-2源代码"><a href="#1-2源代码" class="headerlink" title="1.2源代码"></a>1.2源代码</h2><p>import com.alibaba.fastjson.JSON;</p>
+<p>import java.io.*;</p>
+<p>public class ReadLocalJsonFileDemo {<br>    publicstatic void main(String[] args) throws IOException {<br>        Filefile = new File(“D:\test.json”);<br>       readerMethod(file);</p>
+<pre><code>&#125;
+
+privatestatic void readerMethod(File file) throws IOException &#123;
+   FileReader fileReader = new FileReader(file);
+    Readerreader = new InputStreamReader(new FileInputStream(file), &quot;Utf-8&quot;);
+    int ch= 0;
+   StringBuffer sb = new StringBuffer();
+    while((ch = reader.read()) != -1) &#123;
+       sb.append((char) ch);
+    &#125;
+   fileReader.close();
+   reader.close();
+    StringjsonStr = sb.toString();
+   System.out.println(JSON.parseObject(jsonStr));
+&#125;
+</code></pre>
+<p>}</p>
+<h2 id="1-3-控制台输出"><a href="#1-3-控制台输出" class="headerlink" title="1.3.控制台输出"></a>1.3.控制台输出</h2><p>{“other_info”:{“array_two”:[[832,303],[829,303],[828,302],[825,302],[824,301]],”array_three”:[[1013,224],[1012,225],[1010,225],[1009,226],[1023,224]],”boolean”:true,”array_one”:[[855,410],[854,411],[847,411],[846,410],[845,410],[844,409]],”point”:[853,310]},”ID”:10001,”detail”:”detail”,”json_format_version”:1.0}</p>
+<h1 id="2-使用jacksonAPI读取json文件"><a href="#2-使用jacksonAPI读取json文件" class="headerlink" title="2.使用jacksonAPI读取json文件"></a>2.使用jacksonAPI读取json文件</h1><h2 id="2-1、添加依赖"><a href="#2-1、添加依赖" class="headerlink" title="2.1、添加依赖"></a>2.1、添加依赖</h2><pre><code>&lt;dependencies&gt;
+    &lt;dependency&gt;
+       &lt;groupId&gt;com.fasterxml.jackson.core&lt;/groupId&gt;
+       &lt;artifactId&gt;jackson-databind&lt;/artifactId&gt;
+       &lt;version&gt;2.13.3&lt;/version&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;
+</code></pre>
+<h2 id="2-2源代码"><a href="#2-2源代码" class="headerlink" title="2.2源代码"></a>2.2源代码</h2><p>import com.fasterxml.jackson.databind.ObjectMapper;</p>
+<p>import java.io.File;<br>import java.io.IOException;<br>import java.util.Map;</p>
+<p>public class ReadLocalJsonFileDemo {<br>    publicstatic void main(String[] args) throws IOException {<br>        Filefile = new File(“D:\test.json”);<br>       jacksonMethod(file);<br>    }</p>
+<pre><code>privatestatic void jacksonMethod(File file) throws IOException &#123;
+   ObjectMapper objectMapper = new ObjectMapper();
+   System.out.println(objectMapper.readValue(file, Map.class));
+&#125;
+</code></pre>
+<p>}</p>
+<h2 id="2-3-控制台输出"><a href="#2-3-控制台输出" class="headerlink" title="2.3.控制台输出"></a>2.3.控制台输出</h2><p>{ID=10001,detail=detail, json_format_version=1.0, other_info={array_one=[[855, 410],[854, 411], [847, 411], [846, 410], [845, 410], [844, 409]], array_two=[[832,303], [829, 303], [828, 302], [825, 302], [824, 301]], array_three=[[1013,224], [1012, 225], [1010, 225], [1009, 226], [1023, 224]], point=[853, 310],boolean=true}}</p>
+<h1 id="3-使用nio读取json文件"><a href="#3-使用nio读取json文件" class="headerlink" title="3.使用nio读取json文件"></a>3.使用nio读取json文件</h1><h2 id="3-1、添加依赖"><a href="#3-1、添加依赖" class="headerlink" title="3.1、添加依赖"></a>3.1、添加依赖</h2><pre><code>&lt;dependencies&gt;
+    &lt;dependency&gt;
+       &lt;groupId&gt;com.alibaba&lt;/groupId&gt;
+       &lt;artifactId&gt;fastjson&lt;/artifactId&gt;
+       &lt;version&gt;2.0.12&lt;/version&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;
+</code></pre>
+<h2 id="3-2源代码"><a href="#3-2源代码" class="headerlink" title="3.2源代码"></a>3.2源代码</h2><p>import com.alibaba.fastjson.JSONObject;</p>
+<p>import java.io.File;<br>import java.io.IOException;<br>import java.nio.file.Files;<br>import java.nio.file.Paths;</p>
+<p>public class ReadLocalJsonFileDemo {<br>    publicstatic void main(String[] args) throws IOException {<br>        Filefile = new File(“D:\test.json”);<br>       nioMethod(file);<br>    }</p>
+<pre><code>privatestatic void nioMethod(File file) throws IOException &#123;
+    StringjsonString = new String(Files.readAllBytes(Paths.get(file.getPath())));
+   System.out.println(JSONObject.parseObject(jsonString));
+&#125;
+</code></pre>
+<p>}</p>
+<h2 id="3-3-控制台输出"><a href="#3-3-控制台输出" class="headerlink" title="3.3.控制台输出"></a>3.3.控制台输出</h2><p>{“other_info”:{“array_two”:[[832,303],[829,303],[828,302],[825,302],[824,301]],”array_three”:[[1013,224],[1012,225],[1010,225],[1009,226],[1023,224]],”boolean”:true,”array_one”:[[855,410],[854,411],[847,411],[846,410],[845,410],[844,409]],”point”:[853,310]},”ID”:10001,”detail”:”detail”,”json_format_version”:1.0}</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JSON/" rel="tag">JSON</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-maven中quickstart与webapp的区别"
   class="article article-type-post"
   itemscope
@@ -461,76 +612,6 @@ nacos.core.auth.plugin.nacos.token.secret.key=VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMT
     <footer class="article-footer">
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nacos/" rel="tag">nacos</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-cargo基础命令"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/03/21/cargo%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/"
-    >cargo基础命令</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/03/21/cargo%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/" class="article-date">
-  <time datetime="2023-03-21T14:48:38.000Z" itemprop="datePublished">2023-03-21</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <pre><code># 查看cargo版本
-cargo --version
-
-# 新建项目
-cargo new &lt;project_name&gt;
-
-# 构建项目
-cargo build
-
-# 运行项目
-cargo run
-
-# 检查项目
-cargo check
-
-# 查看帮助
-cargo -h
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rust/" rel="tag">rust</a></li></ul>
 
     </footer>
   </div>

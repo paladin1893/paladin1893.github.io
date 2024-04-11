@@ -154,6 +154,91 @@
     
     
     <article
+  id="post-Qt实现简单的显示网页（QtWebkit、QtWebEngine、QAxWidget）"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/12/14/Qt%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84%E6%98%BE%E7%A4%BA%E7%BD%91%E9%A1%B5%EF%BC%88QtWebkit%E3%80%81QtWebEngine%E3%80%81QAxWidget%EF%BC%89/"
+    >Qt实现简单的显示网页（QtWebkit、QtWebEngine、QAxWidget）</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/12/14/Qt%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84%E6%98%BE%E7%A4%BA%E7%BD%91%E9%A1%B5%EF%BC%88QtWebkit%E3%80%81QtWebEngine%E3%80%81QAxWidget%EF%BC%89/" class="article-date">
+  <time datetime="2023-12-14T02:22:00.000Z" itemprop="datePublished">2023-12-14</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>首先先说说QtWebkit、QtWebEngine、QAxWidget三种方式显示网页的应用场景<br>QtWebkit：在Qt5.6以前，都是使用QtWebkit组件，但Qt5.6以后，移除了QtWebkit这个组件<br>QtWebEngine：Qt5.6以后的MSVC版本，引进了基于Chromium的浏览器引擎 QtWebEngine<br>QAxWidget：Qt5.6以后的mingw版本，由于移除了QtWebkit，mingw版本不能使用QtWebEngine，因此只能使用QAxWidget控件</p>
+<h1 id="QtWebkit"><a href="#QtWebkit" class="headerlink" title="QtWebkit"></a>QtWebkit</h1><p>QtWebKit提供一个Web浏览器引擎，可以轻松地将来自万维网的内容嵌入到Qt应用程序中。同时，可以使用本机控件增强Web内容。<br>QtWebKit提供用于呈现超文本标记语言(HTML)、可扩展超文本标记语言(XHTML)和可伸缩矢量图形(SVG)文档的工具，这些文档使用级联样式表(CSS)样式，并使用JavaScript编写脚本。<br>JavaScript执行环境与Qt对象模型之间的桥梁使定制成为可能QObjects写剧本。有关详细文档，请参阅QtWebkit桥，通过与Qt网络模块的集成，可以透明地从Web服务器、本地文件系统甚至Qt资源系统加载Web页面。<br>除了提供纯呈现功能之外，还可以通过使用contenteditable属性设置在HTML元素上。<br>QtWebKit已经得到了增强，在移动领域也变得更有吸引力。有关更多信息，请参见QtWebKit Go Mobile.<br>QtWebKit是基于开放源码WebKit引擎。更多关于WebKit本身可以在WebKit开源项目网站。<br>关于交互部分需要与JavaScript联合使用，下面只简单的介绍如何显示网页。</p>
+<pre><code>QWebView view;
+view.load(QUrl(https://blog.csdn.net/qq_36651243));
+view.show();
+</code></pre>
+<h1 id="QtWebEngine"><a href="#QtWebEngine" class="headerlink" title="QtWebEngine"></a>QtWebEngine</h1><p>QtWebEngine模块提供了一个Web浏览器引擎，可以方便地在没有本地Web引擎的平台上将来自万维网的内容嵌入到Qt应用程序中。<br>QtWebEngine提供C+类和QML类型，用于呈现HTML、XHTML和SVG文档，样式为级联样式表(CSS)，并使用JavaScript编写脚本。用户可以通过使用contenteditable属性设置在HTML元素上。</p>
+<p>小编开发环境：Qt5.9.6+VS2015</p>
+<pre><code>QWebEngineView *LiveView = new QWebEngineView;
+LiveView-&gt;settings()-&gt;setAttribute(QWebEngineSettings::PluginsEnabled, true);
+LiveView-&gt;setAttribute(Qt::WA_DeleteOnClose);
+LiveView-&gt;load(QUrl(&quot;https://blog.csdn.net/qq_36651243&quot;));
+//LiveView-&gt;setWindowFlags(Qt::FramelessWindowHint);   //去除边框
+//LiveView-&gt;setAttribute(Qt::WA_TranslucentBackground, true); //透明
+LiveView-&gt;resize(1024, 768);
+LiveView-&gt;show();
+</code></pre>
+<h1 id="QAxWidget"><a href="#QAxWidget" class="headerlink" title="QAxWidget"></a>QAxWidget</h1><p>QAxWidget可以使用它应该包装的ActiveX控件的名称，或者使用指向ActiveX控件的现有接口指针，将其实例化为空对象。ActiveX控件的属性、方法和事件，这些属性、方法和事件仅使用QAxBase受支持的数据类型，可作为Qt属性、槽和信号使用。基类QAxBase控件直接访问ActiveX的API。IUnknown指针。</p>
+<p>小编开发环境：Qt5.9.6+VS2015<br>使用QAxWidget前需要注意两点：<br>1.QAxContainer.lib,QAxServer.lib库不可缺。<br>2.开发机本身具有相应的IE游览器（注册表文件一致）</p>
+<p>QAxContainer.lib,QAxServer.lib引用方式：</p>
+<p>关于注册表文件：</p>
+<pre><code>QAxWidget *flash = new QAxWidget(0, 0);      //QAxWidget使用的是ActiveX插件
+flash-&gt;resize(600, 400);                    //设置该控件的初始大小
+flash-&gt;setControl(QString::fromUtf8(&quot;&#123;8856F961-340A-11D0-A96B-00C04FD705A2&#125;&quot;));//注册组件ID
+flash-&gt;setProperty(&quot;DisplayAlerts&quot;, false);//不显示警告信息
+flash-&gt;setProperty(&quot;DisplayScrollBars&quot;, true);//不显示滚动条
+QString webstr = QString(&quot;www.baidu.com&quot;);//设置要打开的网页
+flash-&gt;dynamicCall(&quot;Navigate(const QString&amp;)&quot;, webstr);//显示网页
+flash-&gt;show();
+</code></pre>
+<h1 id="更多资料"><a href="#更多资料" class="headerlink" title="更多资料"></a>更多资料</h1><p><a target="_blank" rel="noopener" href="https://doc.qt.io/archives/qt-4.8/qtwebkit-module.html">https://doc.qt.io/archives/qt-4.8/qtwebkit-module.html</a><br><a target="_blank" rel="noopener" href="https://doc.qt.io/archives/qt-5.11/qtwebengine-overview.html">https://doc.qt.io/archives/qt-5.11/qtwebengine-overview.html</a><br><a target="_blank" rel="noopener" href="https://doc.qt.io/archives/qt-5.11/qaxwidget.html">https://doc.qt.io/archives/qt-5.11/qaxwidget.html</a><br><a target="_blank" rel="noopener" href="https://doc.qt.io/qt-5/qtwebenginewidgets-qtwebkitportingguide.html">https://doc.qt.io/qt-5/qtwebenginewidgets-qtwebkitportingguide.html</a></p>
+<p>————————————————</p>
+<p>版权声明：本文为博主原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接和本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36651243/article/details/93173395">https://blog.csdn.net/qq_36651243/article/details/93173395</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Qt/" rel="tag">Qt</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-QGIS加载XYZ地图"
   class="article article-type-post"
   itemscope
@@ -459,70 +544,6 @@
     <footer class="article-footer">
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Github/" rel="tag">Github</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-nohup命令"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/12/08/nohup%E5%91%BD%E4%BB%A4/"
-    >nohup命令</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/12/08/nohup%E5%91%BD%E4%BB%A4/" class="article-date">
-  <time datetime="2023-12-08T12:25:23.000Z" itemprop="datePublished">2023-12-08</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>nohup命令</p>
-<p>后台运行：</p>
-<pre><code>sh test.sh &amp;
-</code></pre>
-<p>关闭终端也运行：</p>
-<pre><code>nohup sh test.sh &amp;
-</code></pre>
-<p>一般使用：</p>
-<pre><code>nohup sh test.sh &gt; nohup.out  2&gt;&amp;1 &amp;
-</code></pre>
-<p>2&gt;&amp;1 解释：<br>将标准错误 2 重定向到标准输出 &amp;1 ，标准输出 &amp;1 再被重定向输入到 nohup.out 文件中。</p>
-<p>————————————————<br>版权声明：本文为CSDN博主「小赵小赵福星高照～」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/attemptendeavor/article/details/125501870">https://blog.csdn.net/attemptendeavor/article/details/125501870</a></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OSGeo4W/" rel="tag">OSGeo4W</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/QGIS/" rel="tag">QGIS</a></li></ul>
 
     </footer>
   </div>

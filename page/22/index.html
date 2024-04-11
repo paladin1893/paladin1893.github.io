@@ -154,6 +154,75 @@
     
     
     <article
+  id="post-flask实用入门案例06"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/08/16/flask%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B06/"
+    >flask实用入门案例06--跨域</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/08/16/flask%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B06/" class="article-date">
+  <time datetime="2023-08-16T04:32:49.000Z" itemprop="datePublished">2023-08-16</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>#场景：<br>问题：跨域问题<br>原因分析：由于前后端分离，服务的端口号不同导致的</p>
+<p>#解决方案<br>引入flask_cors，并配置<br>CORS(app, resources=r’/*’)<br>即可解决跨域问题</p>
+<pre><code>from flask import Flask
+from flask_cors import CORS
+
+app = Flask(__name__)
+CORS(app, resources=r&#39;/*&#39;)
+
+
+@app.route(&#39;/&#39;)
+def hello_world():  # put application&#39;s code here
+    return &#39;Hello World!&#39;
+
+
+if __name__ == &#39;__main__&#39;:
+    app.run()
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flask/" rel="tag">flask</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-flask实用入门案例05"
   class="article article-type-post"
   itemscope
@@ -709,65 +778,6 @@ if __name__ == &#39;__main__&#39;:
     <footer class="article-footer">
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flask/" rel="tag">flask</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-mysql5.7之后版本datetime默认值不能设置为0000-00-00的问题"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/08/10/mysql5.7%E4%B9%8B%E5%90%8E%E7%89%88%E6%9C%ACdatetime%E9%BB%98%E8%AE%A4%E5%80%BC%E4%B8%8D%E8%83%BD%E8%AE%BE%E7%BD%AE%E4%B8%BA0000-00-00%E7%9A%84%E9%97%AE%E9%A2%98/"
-    >mysql5.7之后版本datetime默认值不能设置为0000-00-00的问题</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/08/10/mysql5.7%E4%B9%8B%E5%90%8E%E7%89%88%E6%9C%ACdatetime%E9%BB%98%E8%AE%A4%E5%80%BC%E4%B8%8D%E8%83%BD%E8%AE%BE%E7%BD%AE%E4%B8%BA0000-00-00%E7%9A%84%E9%97%AE%E9%A2%98/" class="article-date">
-  <time datetime="2023-08-10T06:27:23.000Z" itemprop="datePublished">2023-08-10</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>根据报错猜测可能是因为MySQL版本的问题，导出的SQL文件是从MySQL 5.6导出的， 目前Mac上面的MySQL版本是5.7</p>
-<p>查询官网发现：</p>
-<p>参考地址<a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/5.7/en/datetime.html">https://dev.mysql.com/doc/refman/5.7/en/datetime.html</a></p>
-<p>The DATE type is used for values with a date part but no time part. MySQL retrieves and displays DATE values in ‘YYYY-MM-DD’<br>format. The supported range is ‘1000-01-01’ to ‘9999-12-31’.</p>
-<p>The DATETIME type is used for values that contain both date and time parts. MySQL retrieves and displays DATETIME values<br>in ‘YYYY-MM-DD HH:MM:SS’ format. The supported range is ‘1000-01-01 00:00:00’ to ‘9999-12-31 23:59:59’.</p>
-<p>The TIMESTAMP data type is used for values that contain both date and time parts. TIMESTAMP has a range of<br>‘1970-01-01 00:00:01’ UTC to ‘2038-01-19 03:14:07’ UTC.<br>故相关的默认值需要设置成’1000-01-01 00:00:00’ 到 ‘9999-12-31 23:59:59’ 之间即可</p>
-<p>作者：全栈运维<br>链接：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/90bb8c825f2f">https://www.jianshu.com/p/90bb8c825f2f</a><br>来源：简书<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li></ul>
 
     </footer>
   </div>

@@ -154,6 +154,84 @@
     
     
     <article
+  id="post-PyCharm安装PyQt5及工具（Qt Designer、PyUIC、PyRcc）详细教程"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/10/09/PyCharm%E5%AE%89%E8%A3%85PyQt5%E5%8F%8A%E5%B7%A5%E5%85%B7%EF%BC%88Qt%20Designer%E3%80%81PyUIC%E3%80%81PyRcc%EF%BC%89%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/"
+    >PyCharm安装PyQt5及工具（Qt Designer、PyUIC、PyRcc）详细教程</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/10/09/PyCharm%E5%AE%89%E8%A3%85PyQt5%E5%8F%8A%E5%B7%A5%E5%85%B7%EF%BC%88Qt%20Designer%E3%80%81PyUIC%E3%80%81PyRcc%EF%BC%89%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/" class="article-date">
+  <time datetime="2023-10-09T02:09:00.000Z" itemprop="datePublished">2023-10-09</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>需要安装PyQt5，pyqt5-tools</p>
+<pre><code>pip install PyQt5 -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install pyqt5-tools -i https://pypi.tuna.tsinghua.edu.cn/simple
+
+# 如有需要安装PyQtWebEngine
+pip install PyQtWebEngine -i https://pypi.tuna.tsinghua.edu.cn/simple
+</code></pre>
+<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><p>PyCharm点击菜单栏“File”，弹出下拉框，选择“Setting”，弹出设置界面。在设置界面中选择“Tools”→“External Tools”，</p>
+<h2 id="Qt-Designer"><a href="#Qt-Designer" class="headerlink" title="Qt Designer"></a>Qt Designer</h2><p>在“Name”一栏填写“Qt-Designer”；在“Program”一栏填写designer.exe文件位置</p>
+<h2 id="PyUIC"><a href="#PyUIC" class="headerlink" title="PyUIC"></a>PyUIC</h2><p>1、在“Name”一栏填写“PyUIC”；</p>
+<p>2、Program中填写pyuic5.exe这个程序的文件路径，一般在“Python环境目录\Scripts\pyuic5.exe”（此处需根据实际情况修改）</p>
+<p>3、在Arguments中内容填写如下：</p>
+<pre><code>$FileName$ -o $FileNameWithoutExtension$.py
+</code></pre>
+<p>4、Working directory内容填写如下：</p>
+<pre><code>$FileDir$
+</code></pre>
+<p>5、完成填写后，点击“OK”，以上步骤参考图片中的步骤。</p>
+<h2 id="PyRCC"><a href="#PyRCC" class="headerlink" title="PyRCC"></a>PyRCC</h2><p>1、在“Name”一栏填写“PyRCC”；</p>
+<p>2、Program中填写pyrcc5.exe这个程序的文件路径，一般在“Python环境目录\Scripts\pyrcc5.exe”（此处需根据实际情况修改），也可以点击右侧的文件夹选择按钮浏览文件夹选中该位置；</p>
+<p>3、在Arguments中内容填写如下：</p>
+<pre><code>$FileName$ -o $FileNameWithoutExtension$_rc.py
+</code></pre>
+<p>4、Working directory内容填写如下：</p>
+<pre><code>$FileDir$
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-MyBatis-Plus 通用IService使用时的一些方法"
   class="article article-type-post"
   itemscope
@@ -980,182 +1058,6 @@ List&lt;User&gt; user = userMapper.selectList(lambdaQueryWrapper)
 <p>3.2 方法解释</p>
 <pre><code>看上面的
 </code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-Java8中LambdaQueryWrapper对象使用(学习笔记)"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/10/03/Java8%E4%B8%ADLambdaQueryWrapper%E5%AF%B9%E8%B1%A1%E4%BD%BF%E7%94%A8(%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0)/"
-    >Java8中LambdaQueryWrapper对象使用(学习笔记)</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/10/03/Java8%E4%B8%ADLambdaQueryWrapper%E5%AF%B9%E8%B1%A1%E4%BD%BF%E7%94%A8(%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0)/" class="article-date">
-  <time datetime="2023-10-03T02:03:00.000Z" itemprop="datePublished">2023-10-03</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="eq："><a href="#eq：" class="headerlink" title="eq："></a>eq：</h1><p>说明：等于=</p>
-<p>例：</p>
-<pre><code>eq(&quot;name&quot;,&quot;老王&quot;)--------&gt; name = &#39;老王&#39;
-</code></pre>
-<h1 id="ne："><a href="#ne：" class="headerlink" title="ne："></a>ne：</h1><p>说明：不等于&lt;&gt;</p>
-<p>例：</p>
-<pre><code>ne(&quot;name&quot;,&quot;老王&quot;)--------&gt; name &lt;&gt; &#39;老王&#39;
-</code></pre>
-<h1 id="gt："><a href="#gt：" class="headerlink" title="gt："></a>gt：</h1><p>说明：大于&gt;</p>
-<p>例：</p>
-<pre><code>gt(&quot;age&quot;,18)--------&gt; age &gt; 18
-</code></pre>
-<h1 id="ge："><a href="#ge：" class="headerlink" title="ge："></a>ge：</h1><p>说明：大于等于&gt;=</p>
-<p>例：</p>
-<pre><code>ge(&quot;age&quot;,18)--------&gt; age &gt;= 18
-</code></pre>
-<h1 id="lt："><a href="#lt：" class="headerlink" title="lt："></a>lt：</h1><p>说明：小于&lt;</p>
-<p>例：</p>
-<pre><code>lt(&quot;age&quot;,18)--------&gt; age &lt; 18
-</code></pre>
-<h1 id="le："><a href="#le：" class="headerlink" title="le："></a>le：</h1><p>说明：小于等于&lt;=</p>
-<p>例：</p>
-<pre><code>le(&quot;age&quot;,18)--------&gt; age &lt;= 18
-</code></pre>
-<h1 id="between："><a href="#between：" class="headerlink" title="between："></a>between：</h1><p>说明：BETWEEN 值1 AND 值2</p>
-<p>例：</p>
-<pre><code>between(&quot;age&quot;,18,30)--------&gt; age between 18 and 30
-</code></pre>
-<h1 id="notBetween："><a href="#notBetween：" class="headerlink" title="notBetween："></a>notBetween：</h1><p>说明：NOT BETWEEN 值1 AND 值2</p>
-<p>例：</p>
-<pre><code>notBetween(&quot;age&quot;,18,30)--------&gt; age not between 18 and 30
-</code></pre>
-<h1 id="like："><a href="#like：" class="headerlink" title="like："></a>like：</h1><p>说明：LIKE ‘%值%’</p>
-<p>例：</p>
-<pre><code>like(&quot;name&quot;,&quot;王&quot;)--------&gt; name like &#39;%王%&#39;
-</code></pre>
-<h1 id="notLike："><a href="#notLike：" class="headerlink" title="notLike："></a>notLike：</h1><p>说明：NOT LIKE ‘%值%’</p>
-<p>例：</p>
-<pre><code>notLike(&quot;name&quot;,&quot;王&quot;)--------&gt; name not like &#39;%王%&#39;
-</code></pre>
-<h1 id="likeLeft："><a href="#likeLeft：" class="headerlink" title="likeLeft："></a>likeLeft：</h1><p>说明：LIKE ‘%值’</p>
-<p>例：</p>
-<pre><code>likeLeft(&quot;name&quot;,&quot;王&quot;)--------&gt; name like &#39;%王&#39;
-</code></pre>
-<h1 id="likeRight："><a href="#likeRight：" class="headerlink" title="likeRight："></a>likeRight：</h1><p>说明：LIKE ‘值%’</p>
-<p>例：</p>
-<pre><code>likeRight(&quot;name&quot;,&quot;王&quot;)--------&gt; name like &#39;王%&#39;
-</code></pre>
-<h1 id="isNull："><a href="#isNull：" class="headerlink" title="isNull："></a>isNull：</h1><p>说明：字段 IS NULL</p>
-<p>例：</p>
-<pre><code>isNull(&quot;name&quot;)--------&gt; name is null
-</code></pre>
-<h1 id="isNotNull："><a href="#isNotNull：" class="headerlink" title="isNotNull："></a>isNotNull：</h1><p>说明：字段 IS NOT NULL</p>
-<p>例：</p>
-<pre><code>isNotNull(&quot;name&quot;)--------&gt; name is not null
-</code></pre>
-<h1 id="in："><a href="#in：" class="headerlink" title="in："></a>in：</h1><p>说明：字段 IN (v0, v1, …)</p>
-<p>例：</p>
-<pre><code>in(&quot;age&quot;,&#123;1,2,3&#125;)--------&gt; age in (1,2,3)
-</code></pre>
-<h1 id="notIn："><a href="#notIn：" class="headerlink" title="notIn："></a>notIn：</h1><p>说明：字段 NOT IN (v0, v1, …)</p>
-<p>例：</p>
-<pre><code>notIN(&quot;age&quot;,&#123;1,2,3&#125;)--------&gt; age not in (1,2,3)
-</code></pre>
-<h1 id="inSql："><a href="#inSql：" class="headerlink" title="inSql："></a>inSql：</h1><p>说明：字段 IN ( SQL语句 )</p>
-<p>例：</p>
-<pre><code>inSql(&quot;id&quot;,&quot;select id from table where id &lt; 3&quot;)--------&gt; id in (select id from table where id &lt; 3)
-</code></pre>
-<h1 id="notInSql："><a href="#notInSql：" class="headerlink" title="notInSql："></a>notInSql：</h1><p>说明：字段 NOT IN ( SQL语句 )</p>
-<p>例：</p>
-<pre><code>notInSql(&quot;id&quot;,&quot;select id from table where id &lt; 3&quot;)--------&gt; id not in (select id from table where id &lt; 3)
-</code></pre>
-<h1 id="groupBy："><a href="#groupBy：" class="headerlink" title="groupBy："></a>groupBy：</h1><p>说明：分组 GROUP BY 字段， …</p>
-<p>例：</p>
-<pre><code>groupBy(&quot;id&quot;,&quot;name&quot;)--------&gt; group by id,name
-</code></pre>
-<h1 id="orderByAsc："><a href="#orderByAsc：" class="headerlink" title="orderByAsc："></a>orderByAsc：</h1><p>说明：排序 ORDER BY 字段，… ASC</p>
-<p>例：</p>
-<pre><code>orderByAsc(&quot;id&quot;,&quot;name&quot;)--------&gt; order by id ASC,name ASC
-</code></pre>
-<h1 id="orderByDesc："><a href="#orderByDesc：" class="headerlink" title="orderByDesc："></a>orderByDesc：</h1><p>说明：排序 ORDER BY 字段，… DESC</p>
-<p>例：</p>
-<pre><code>orderByDesc(&quot;id&quot;,&quot;name&quot;)--------&gt; order by id DESC,name DESC
-</code></pre>
-<h1 id="orderBy："><a href="#orderBy：" class="headerlink" title="orderBy："></a>orderBy：</h1><p>说明：排序 ORDER BY 字段，…</p>
-<p>例：</p>
-<pre><code>orderBy(&quot;id&quot;,&quot;name&quot;)--------&gt; order by id ASC,name ASC
-</code></pre>
-<h1 id="having："><a href="#having：" class="headerlink" title="having："></a>having：</h1><p>说明：HAVING ( SQL语句 )</p>
-<p>例：</p>
-<pre><code>having(&quot;sum(age) &gt; &#123;0&#125;&quot;,11)--------&gt; having sum(age) &gt; 11
-</code></pre>
-<h1 id="or："><a href="#or：" class="headerlink" title="or："></a>or：</h1><p>说明：拼接 OR</p>
-<p>注意事项：主动调用 OR 表示紧接着下一个方法不是用 AND 连接！(不调用 OR 则默认使用 AND 连接)</p>
-<p>例：</p>
-<pre><code>eq.(&quot;id&quot;,1).or().eq(&quot;name&quot;,&quot;老王&quot;)--------&gt; id = 1 or name = &#39;老王&#39;
-</code></pre>
-<h1 id="and："><a href="#and：" class="headerlink" title="and："></a>and：</h1><p>说明：AND 嵌套</p>
-<p>例：</p>
-<pre><code>and(i -&gt; i.eq(&quot;name&quot;,&quot;老王&quot;).ne(&quot;status&quot;,1))--------&gt; and (name = &#39;老王&#39; and status &lt;&gt; 1)
-</code></pre>
-<h1 id="apply："><a href="#apply：" class="headerlink" title="apply："></a>apply：</h1><p>说明：拼接 SQL</p>
-<p>注意事项：该方法可用于数据库函数，动态入参的 params 对应前面 sqlHaving 内部的 {index} 部分，这样是不会有 SQL 注入风险的，反之会有！</p>
-<p>例：</p>
-<pre><code>apply(&quot;date_format(dateColumn,&#39;%Y-%m-%d&#39;) = &#123;0&#125;&quot;,&quot;2021-08-08&quot;)--------&gt; date_format(dateColumn,&#39;%Y-%m-%d&#39;) = &#39;2021-08-08&#39;
-</code></pre>
-<h1 id="last："><a href="#last：" class="headerlink" title="last："></a>last：</h1><p>说明：无视优化规则直接拼接到 SQL 的最后</p>
-<p>注意事项：只能调用一次，多次调用以最后一次为准，有 SQL 注入的风险，请谨慎使用</p>
-<p>例：</p>
-<pre><code>last(&quot;limit 1&quot;)
-</code></pre>
-<h1 id="exists："><a href="#exists：" class="headerlink" title="exists："></a>exists：</h1><p>说明：拼接 EXISTS ( SQL 语句 )</p>
-<p>例：</p>
-<pre><code>exists(&quot;select id from table where age = 1&quot;)--------&gt; exists (select id from table where age = 1)
-</code></pre>
-<h1 id="notExists："><a href="#notExists：" class="headerlink" title="notExists："></a>notExists：</h1><p>说明：拼接 NOT EXISTS ( SQL 语句 )</p>
-<p>例：</p>
-<pre><code>notExists(&quot;select id from table where age = 1&quot;)--------&gt; not exists (select id from table where age = 1)
-</code></pre>
-<h1 id="nested："><a href="#nested：" class="headerlink" title="nested："></a>nested：</h1><p>说明：正常嵌套 不带 AND 或者 OR</p>
-<p>例：</p>
-<pre><code>nested(i -&gt; i.eq(&quot;name&quot;,&quot;老王&quot;).ne(&quot;status&quot;,1))--------&gt; (name = &#39;老王&#39; and status &lt;&gt; 1)
-</code></pre>
-<p>————————————————<br>版权声明：本文为CSDN博主「woyaniya」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/woyaniya/article/details/129416870">https://blog.csdn.net/woyaniya/article/details/129416870</a></p>
  
       <!-- reward -->
       
