@@ -15,7 +15,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1"
       />
-      <title>vue获取时间年月日代码示例 |  帕拉丁的游鱼</title>
+      <title>Auxre-全屏-退出全屏-JavaScript |  帕拉丁的游鱼</title>
   <meta name="generator" content="hexo-theme-ayer">
       
       <link rel="shortcut icon" href="/favicon.ico" />
@@ -58,7 +58,7 @@
     <main class="content on">
       <section class="outer">
   <article
-  id="post-前端-vue中的cron表达式插件"
+  id="post-Auxre-全屏-退出全屏-JavaScript"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -69,7 +69,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  vue获取时间年月日代码示例
+  Auxre-全屏-退出全屏-JavaScript
 </h1>
  
 
@@ -77,11 +77,11 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2023/12/25/%E5%89%8D%E7%AB%AF-vue%E4%B8%AD%E7%9A%84cron%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%8F%92%E4%BB%B6/" class="article-date">
-  <time datetime="2023-12-25T02:22:00.000Z" itemprop="datePublished">2023-12-25</time>
+      <a href="/2023/12/24/Auxre-%E5%85%A8%E5%B1%8F-%E9%80%80%E5%87%BA%E5%85%A8%E5%B1%8F-JavaScript/" class="article-date">
+  <time datetime="2023-12-24T04:48:48.000Z" itemprop="datePublished">2023-12-24</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
   </div>
   
 <div class="word_count">
@@ -89,7 +89,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">187</span>
+            <span class="post-count">740</span>
         </span>
     </span>
 
@@ -98,51 +98,75 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">1 分钟</span>
+            <span class="post-count">2 分钟</span>
         </span>
     </span>
 </div>
  
     </div>
       
+    <div class="tocbot"></div>
+
 
 
 
   
     <div class="article-entry" itemprop="articleBody">
        
-  <p>vue中的cron表达式插件</p>
-<pre><code>git地址：https://gitee.com/CzRger/CzrVueCron
-</code></pre>
-<p>安装</p>
-<p>可通过npm的方式进行安装</p>
-<pre><code>npm install czr-vue-cron
-</code></pre>
-<p>引入</p>
-<pre><code>&lt;template&gt;
-  &lt;div id=&quot;app&quot;&gt;
-    cron表达式：&lt;input v-model=&quot;cronVal&quot;/&gt;
-    &lt;CzrVueCron :cron.sync=&quot;cronVal&quot; :recent=&quot;[5, 5]&quot;/&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-&lt;script&gt;
-import CzrVueCron from &#39;czr-vue-cron&#39;
-export default &#123;
-  components: &#123;
-    CzrVueCron
-  &#125;,
-  data() &#123;
-    return &#123;
-      cronVal: &#39;&#39;
-    &#125;
-  &#125;
+  <p>在我们设计使用大屏模板或大屏报表时，都会需要浏览器全屏展示预览的需求，通常我们都需要通过键盘F11来切换浏览器全屏效果。但是，也发现了一个问题就是我们面对的很多客户，他们并不懂F11可以全屏，给产品设计沟通带来了不便。那有没有什么方式可以直接通过鼠标点击按钮来切换全屏。答案是肯定有的，今天符号作者教大家如何利用前端的JS代码来实现浏览器全屏效果。</p>
+<p>注意：</p>
+<p>在看教程之前，请行了解一下，什么时javascirpt，JavaScript入门教程自行百度。当然，今天的案例RP也会免费提供给大家下载学习，也欢迎应用到更多的产品实践中去</p>
+<h1 id="JavaScript介绍："><a href="#JavaScript介绍：" class="headerlink" title="JavaScript介绍："></a>JavaScript介绍：</h1><p>JavaScript是一种直译式脚本语言，是一种动态类型、弱类型、基于原型的语言，内置支持类型。它的解释器被称为JavaScript引擎，为浏览器的一部分，广泛用于客户端的脚本语言，最早是在HTML（标准通用标记语言下的一个应用）网页上使用，用来给HTML网页增加动态功能。</p>
+<h1 id="JS代码准备："><a href="#JS代码准备：" class="headerlink" title="JS代码准备："></a>JS代码准备：</h1><p>1、全屏代码：</p>
+<pre><code>javascript:
+
+function requestFullScreen(element) &#123;
+var requestMethod = element.requestFullScreen ||
+element.webkitRequestFullScreen ||
+element.mozRequestFullScreen ||
+element.msRequestFullScreen;
+if (requestMethod) &#123;
+requestMethod.call(element);
+&#125; else if (typeof window.ActiveXObject !== &quot;undefined&quot;) &#123;
+var wscript = new ActiveXObject(&quot;WScript.Shell&quot;);
+if (wscript !== null) &#123;
+wscript.SendKeys(&quot;&#123;F11&#125;&quot;);
 &#125;
-&lt;/script&gt;
+&#125;
+&#125;;
+requestFullScreen(document.documentElement);
 </code></pre>
-<p>参数</p>
-<p>参数名    参数值    是否必填    备注<br>cron    String类型    是    绑定值<br>recent    [last, will]    否    last-过去运行次数，will-未来运行次数（不传则不显示最近运行情况）</p>
-<p>联系方式</p>
-<p>如有问题请联系：<a href="mailto:&#x35;&#50;&#54;&#x39;&#x34;&#x38;&#51;&#x39;&#x32;&#x40;&#113;&#113;&#x2e;&#x63;&#x6f;&#x6d;">&#x35;&#50;&#54;&#x39;&#x34;&#x38;&#51;&#x39;&#x32;&#x40;&#113;&#113;&#x2e;&#x63;&#x6f;&#x6d;</a></p>
+<p>2、退出全屏代码：</p>
+<pre><code>javascript:
+
+function exitFull() &#123;
+var exitMethod = document.exitFullscreen ||
+document.mozCancelFullScreen ||
+document.webkitExitFullscreen ||
+document.webkitExitFullscreen;
+if (exitMethod) &#123;
+exitMethod.call(document);
+&#125; else if (typeof window.ActiveXObject !== &quot;undefined&quot;) &#123;
+var wscript = new ActiveXObject(&quot;WScript.Shell&quot;);
+if (wscript !== null) &#123;
+wscript.SendKeys(&quot;&#123;F11&#125;&quot;);
+&#125;
+&#125;
+
+&#125;;
+
+exitFull();
+</code></pre>
+<h1 id="Axure添加JS代码："><a href="#Axure添加JS代码：" class="headerlink" title="Axure添加JS代码："></a>Axure添加JS代码：</h1><h2 id="步骤一："><a href="#步骤一：" class="headerlink" title="步骤一："></a>步骤一：</h2><p>打开Axure，拉取一个动态面板，创建2个State面板。一个面板里放一个矩形，命名为：全屏。另一个命名为：退出。如图：</p>
+<h2 id="步骤二：全屏交互制作"><a href="#步骤二：全屏交互制作" class="headerlink" title="步骤二：全屏交互制作"></a>步骤二：全屏交互制作</h2><p>打开Axure，进入-全屏面板，点击添加鼠标点击事件，打开-当前链接-fx。</p>
+<p>将前面准备好的全屏JS代码复制到FX里保存即可。要注意的是开头必须要加。javascript:</p>
+<p>设置面板切换效果，如图，当点击时面板切换为退出面板。</p>
+<h2 id="步骤三：退出交互制作"><a href="#步骤三：退出交互制作" class="headerlink" title="步骤三：退出交互制作"></a>步骤三：退出交互制作</h2><p>打开Axure，进入-退出面板，点击添加鼠标点击事件，打开-当前链接-fx。</p>
+<p>同样的将前面准备好的退出全屏JS代码复制到FX里保存即可。通样要注意的是开头必须要加。javascript:</p>
+<p>至此，保存文件F5预览试试吧。教程相关文件下载：RP下载</p>
+<p>————————————————</p>
+<p>版权声明：本文为博主原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接和本声明。</p>
+<p>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/huangzbin/article/details/121155551">https://blog.csdn.net/huangzbin/article/details/121155551</a></p>
  
       <!-- reward -->
       
@@ -207,12 +231,12 @@ export default &#123;
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://paladin1893.github.io/2023/12/25/%E5%89%8D%E7%AB%AF-vue%E4%B8%AD%E7%9A%84cron%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%8F%92%E4%BB%B6/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://paladin1893.gitee.io/2023/12/24/Auxre-%E5%85%A8%E5%B1%8F-%E9%80%80%E5%87%BA%E5%85%A8%E5%B1%8F-JavaScript/" alt="微信分享二维码">
     </div>
 </div>
 
 <div id="share-mask"></div>  
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Axure-RP/" rel="tag">Axure RP</a></li></ul>
 
     </footer>
   </div>
@@ -220,10 +244,19 @@ export default &#123;
    
   <nav class="article-nav">
     
+      <a href="/2023/12/25/cron%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            vue获取时间年月日代码示例
+          
+        </div>
+      </a>
     
-      <a href="/2023/12/24/cron%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="article-nav-link">
+    
+      <a href="/2023/12/23/MariaDB/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">vue获取时间年月日代码示例</div>
+        <div class="article-nav-title">MariaDB在docker中的备份还原</div>
       </a>
     
   </nav>

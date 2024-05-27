@@ -154,6 +154,334 @@
     
     
     <article
+  id="post-flask实用入门案例03"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/08/13/flask%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B03/"
+    >flask实用入门案例03--Flask-RESTful</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/08/13/flask%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B03/" class="article-date">
+  <time datetime="2023-08-13T11:55:21.000Z" itemprop="datePublished">2023-08-13</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>使用flask可以快速开发restful风格的后台服务，下面展示几种常用实用接口案例。</p>
+<p>Flask-RESTful 提供的最主要的基础就是资源(resources)。资源(Resources)是构建在 Flask 可拔插视图 之上，只要在你的资源(resource)上定义方法就能够容易地访问多个 HTTP 方法.</p>
+<p>其实就是想表达，在资源路由上（resources）定义多个方法（get，post，put等），就可以实现多种效果</p>
+<pre><code>from flask import Flask, request
+from flask_restful import Api, Resource
+ 
+app = Flask(__name__)
+api = Api(app)
+ 
+todos = &#123;&#125;
+ 
+class TodoSimple(Resource):
+ def get(self, todo_id):
+  return &#123;todo_id: todos[todo_id]&#125;
+ 
+ def put(self, todo_id):
+  todos[todo_id] = request.form[&#39;data&#39;]
+  return &#123;todo_id: todos[todo_id]&#125;
+ 
+api.add_resource(TodoSimple, &#39;/&lt;string:todo_id&gt;&#39;)
+ 
+if __name__ == &#39;__main__&#39;:
+ app.run(debug=True)
+ 
+</code></pre>
+<p>解释：<br>（1）TodoSimple类定义了2种方法，最终地址/string:todo_id’下面，就可以实现2种请求方法<br>（2）add_resource方法中第一个参数：视图函数名；第二个参数：路由的具体地址，以及string:todo_id代表传递的是一个字符串，且是必要参数。<br>（3）request.form[‘data’]获取request里面，form表单的key为data的参数，如果request里面，没有data参数，那报错。如果有包含data的多个参数，那也只会取data这一个参数</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flask/" rel="tag">flask</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-flask实用入门案例02"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/08/12/flask%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B02/"
+    >flask实用入门案例02</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/08/12/flask%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B02/" class="article-date">
+  <time datetime="2023-08-12T12:19:46.000Z" itemprop="datePublished">2023-08-12</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>使用flask可以快速开发restful风格的后台服务，下面展示几种常用实用接口案例。</p>
+<pre><code>from flask import Flask, request, jsonify, send_from_directory
+from werkzeug.utils import secure_filename
+import os
+import uuid
+
+app = Flask(__name__)
+
+# 设置文件上传保存路径
+app.config[&#39;UPLOAD_FOLDER&#39;] = &#39;static/upload/&#39;
+# MAX_CONTENT_LENGTH设置上传文件的大小，单位字节
+app.config[&#39;MAX_CONTENT_LENGTH&#39;] = 1 * 1024 * 1024
+
+
+@app.route(&#39;/upload&#39;, methods=[&#39;POST&#39;])
+def upload():
+    f = request.files[&#39;file&#39;]
+    fname = secure_filename(f.filename)
+    ext = fname.rsplit(&#39;.&#39;)[-1]
+    # 生成一个uuid作为文件名
+    fileName = str(uuid.uuid4()) + &quot;.&quot; + ext
+    # os.path.join拼接地址，上传地址，f.filename获取文件名
+    f.save(os.path.join(app.config[&#39;UPLOAD_FOLDER&#39;], fileName))
+    return jsonify(&#123;&#39;result&#39;: &#39;success&#39;&#125;)
+
+
+# 图片下载
+@app.route(&#39;/download/&lt;filename&gt;&#39;, methods=[&#39;GET&#39;])
+def download(filename):
+    if request.method == &quot;GET&quot;:
+        # 通过文件名下载文件
+        path = os.path.isfile(os.path.join(app.config[&#39;UPLOAD_FOLDER&#39;], filename))
+        if path:
+            return send_from_directory(app.config[&#39;UPLOAD_FOLDER&#39;], filename, as_attachment=True)
+
+@app.route(&#39;/&#39;)
+def hello_world():  # put application&#39;s code here
+    return &#39;Hello World!&#39;
+
+
+if __name__ == &#39;__main__&#39;:
+    app.run()
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flask/" rel="tag">flask</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-flask实用入门案例01"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/08/11/flask%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B01/"
+    >flask实用入门案例01</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/08/11/flask%E5%AE%9E%E7%94%A8%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B01/" class="article-date">
+  <time datetime="2023-08-11T06:27:23.000Z" itemprop="datePublished">2023-08-11</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>使用flask可以快速开发restful风格的后台服务，下面展示几种常用实用接口案例。</p>
+<pre><code>from flask import Flask, abort, request, jsonify
+
+# import requests
+
+app = Flask(__name__)
+tasks = []
+
+
+@app.route(&#39;/add_user&#39;, methods=[&#39;POST&#39;])
+def add_user():
+    if not request.json or &#39;id&#39; not in request.json or &#39;name&#39; not in request.json:
+        abort(400)
+    task = &#123;
+        &#39;id&#39;: request.json[&#39;id&#39;],
+        &#39;name&#39;: request.json[&#39;name&#39;]
+    &#125;
+    tasks.append(task)
+    return jsonify(&#123;&#39;result&#39;: &#39;success&#39;&#125;)
+
+
+@app.route(&#39;/get_user&#39;, methods=[&#39;GET&#39;])
+def get_user():
+    if not request.args or &#39;id&#39; not in request.args:
+        return jsonify(tasks)
+    else:
+        task_id = request.args[&#39;id&#39;]
+        task = filter(lambda t: t[&#39;id&#39;] == int(task_id), tasks)
+        return jsonify(task) if task else jsonify(&#123;&#39;result&#39;: &#39;not found&#39;&#125;)
+
+
+@app.route(&#39;/getUser/&lt;userName&gt;&#39;)
+def getUser(userName):
+    return &quot;Hello:&#123;&#125;!&quot;.format(userName)
+
+
+@app.route(&#39;/hello_world&#39;)
+def hello_world():  # put application&#39;s code here
+    return &#39;Hello World!&#39;
+
+
+if __name__ == &#39;__main__&#39;:
+    app.run()
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flask/" rel="tag">flask</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-mysql5.7之后版本datetime默认值不能设置为0000-00-00的问题"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/08/10/mysql5.7%E4%B9%8B%E5%90%8E%E7%89%88%E6%9C%ACdatetime%E9%BB%98%E8%AE%A4%E5%80%BC%E4%B8%8D%E8%83%BD%E8%AE%BE%E7%BD%AE%E4%B8%BA0000-00-00%E7%9A%84%E9%97%AE%E9%A2%98/"
+    >mysql5.7之后版本datetime默认值不能设置为0000-00-00的问题</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/08/10/mysql5.7%E4%B9%8B%E5%90%8E%E7%89%88%E6%9C%ACdatetime%E9%BB%98%E8%AE%A4%E5%80%BC%E4%B8%8D%E8%83%BD%E8%AE%BE%E7%BD%AE%E4%B8%BA0000-00-00%E7%9A%84%E9%97%AE%E9%A2%98/" class="article-date">
+  <time datetime="2023-08-10T06:27:23.000Z" itemprop="datePublished">2023-08-10</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>根据报错猜测可能是因为MySQL版本的问题，导出的SQL文件是从MySQL 5.6导出的， 目前Mac上面的MySQL版本是5.7</p>
+<p>查询官网发现：</p>
+<p>参考地址<a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/5.7/en/datetime.html">https://dev.mysql.com/doc/refman/5.7/en/datetime.html</a></p>
+<p>The DATE type is used for values with a date part but no time part. MySQL retrieves and displays DATE values in ‘YYYY-MM-DD’<br>format. The supported range is ‘1000-01-01’ to ‘9999-12-31’.</p>
+<p>The DATETIME type is used for values that contain both date and time parts. MySQL retrieves and displays DATETIME values<br>in ‘YYYY-MM-DD HH:MM:SS’ format. The supported range is ‘1000-01-01 00:00:00’ to ‘9999-12-31 23:59:59’.</p>
+<p>The TIMESTAMP data type is used for values that contain both date and time parts. TIMESTAMP has a range of<br>‘1970-01-01 00:00:01’ UTC to ‘2038-01-19 03:14:07’ UTC.<br>故相关的默认值需要设置成’1000-01-01 00:00:00’ 到 ‘9999-12-31 23:59:59’ 之间即可</p>
+<p>作者：全栈运维<br>链接：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/90bb8c825f2f">https://www.jianshu.com/p/90bb8c825f2f</a><br>来源：简书<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-SF6气体"
   class="article article-type-post"
   itemscope
@@ -285,312 +613,13 @@
 </article>
 
     
-    <article
-  id="post-finereport入门系列（四）"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/08/07/finereport%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97%EF%BC%88%E5%9B%9B%EF%BC%89/"
-    >finereport入门系列（四）</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/08/07/finereport%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97%EF%BC%88%E5%9B%9B%EF%BC%89/" class="article-date">
-  <time datetime="2023-08-07T05:02:05.000Z" itemprop="datePublished">2023-08-07</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="决策报表自动查询"><a href="#决策报表自动查询" class="headerlink" title="决策报表自动查询"></a>决策报表自动查询</h1><ol>
-<li>概述</li>
-<li>1 应用场景<br>在决策报表中，控件可以添加到参数界面使用「查询」按钮查询数据，也可以直接在 body 中使用，但是在 body 中使用时，控件是无法直接使用查询按钮来查询数据的，那我们要如何实现控件联动查询数据呢？</li>
-</ol>
-<p>例如：在 body 中的下拉框控件选择「地区」，其他使用了地区参数的组件能根据选择的地区展示对应数据。预期效果 </p>
-<p>1.2 实现思路<br>在数据集中定义地区参数为 $area ，将下拉框控件的名称修改为与地区参数相同的名称 area，即可使用参数联动控件实现自动查询。</p>
-<p>若想要实现在参数界面实现自动查询请参考：JS实现决策报表参数界面自动查询。</p>
-<ol start="2">
-<li>示例</li>
-<li>1 数据准备<br>1）点击设计器左上角「文件&gt;新建决策报表」，新建空白模板。</li>
-</ol>
-<p>2）新建一个数据库查询 ds1，SQL 查询语句为：</p>
-<pre><code>SELECT * FROM 销量 where 1=1 $&#123;if(len(area)=0,&quot;&quot;,&quot; and 地区=&#39;&quot;+area+&quot;&#39;&quot;)&#125;
-</code></pre>
-<p>即定义 area 参数，值为「地区」字段，且当 参数为空时展示全部数据 。</p>
-<p>2.2 决策报表设计<br>1）将 body 的布局方式修改为「绝对布局」，再向 body 中拖入「报表块」、「饼图」、「标签控件」和「下拉框控件」。 </p>
-<p>2）设置「标签控件」的控件值为「地区：」；「下拉框控件」的控件名称为「area」，即将下拉框控件与参数 $area 绑定。</p>
-<p>注：必须保证「下拉框控件」的控件名称与参数名称 area 保持一致。</p>
-<p>3）设置「下拉框控件」的数据字典为「数据库表」销量表，实际值和显示值均为「地区」。 </p>
-<p>2.3 设计报表块<br>双击报表块，进入报表块编辑界面，拖入「地区、销售员、销量」字段，设置 C2 单元格的数据设置为「汇总&gt;求和」。单元格样式可在「单元格属性&gt;样式」中自行设置。</p>
-<p>2.4 绑定图表数据<br>双击饼图，设置饼图的数据来源：数据集为 ds1，系列名为「销售员」，值为「销量」，汇总方式为「求和」。 </p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/finereport/" rel="tag">finereport</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-finereport入门系列（三）"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/08/06/finereport%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97%EF%BC%88%E4%B8%89%EF%BC%89/"
-    >finereport入门系列（三）</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/08/06/finereport%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97%EF%BC%88%E4%B8%89%EF%BC%89/" class="article-date">
-  <time datetime="2023-08-06T11:56:23.000Z" itemprop="datePublished">2023-08-06</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="钻取地图示例"><a href="#钻取地图示例" class="headerlink" title="钻取地图示例"></a>钻取地图示例</h1><p>3.1 准备数据<br>新建决策报表，新建内置数据集， </p>
-<p>注：这边因跨数据取数问题，也就直接分了两个数据集，供参考。</p>
-<p>3.2 插入地图<br>1）决策报表中插入报表块和钻取地图， </p>
-<p>2）报表块中有 2 个数据集的数据，所以要进行数据集关联，设置下过滤条件， </p>
-<p>3.3 绑定数据<br>钻取地图添加需要的钻取层级，将报表块中处理好的单元格数据添加至地图单元格数据集中， </p>
-<p>注：第 1 层和第 2 层都要设置，图中只给了第 1 层的，别漏掉了。</p>
-<p>3.4 添加事件<br>1）决策报表 body 添加初始化事件， </p>
-<p>JavaScript 代码如下：</p>
-<pre><code>setTimeout(function()&#123;
-var vanchart =FR.Chart.WebUtils.getChart(&quot;chart0&quot;).getChartWithIndex(0); //获取图表对象
-vanchart.openAutoTooltip(); //开启数据点提示轮播
-&#125;,500)
-</code></pre>
-<p>2）在钻取地图「特效&gt;交互属性」下添加 JavaScript 类型的超级链接， </p>
-<p>JavaScript 代码如下：</p>
-<pre><code>FR.Chart.WebUtils.getChart(&quot;chart0&quot;).getChartWithIndex(0).openAutoTooltip();
-//钻取时触发超链，实现轮播
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/finereport/" rel="tag">finereport</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-finereport入门系列（二）"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/08/05/finereport%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97%EF%BC%88%E4%BA%8C%EF%BC%89/"
-    >finereport入门系列（二）</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/08/05/finereport%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97%EF%BC%88%E4%BA%8C%EF%BC%89/" class="article-date">
-  <time datetime="2023-08-05T04:23:51.000Z" itemprop="datePublished">2023-08-05</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="地图开启数据点提示轮播"><a href="#地图开启数据点提示轮播" class="headerlink" title="地图开启数据点提示轮播"></a>地图开启数据点提示轮播</h1><h2 id="1-实现思路"><a href="#1-实现思路" class="headerlink" title="1 实现思路"></a>1 实现思路</h2><p>获取 图表对象 后，调用方法chart.openAutoTooltip([delay, initPoints]);即可开启数据点提示自动轮播。</p>
-<p>方法中的delay为轮播间隔时间，initPoints为数据点集合。</p>
-<p>如果不设置参数，直接调用chart.openAutoTooltip()，表示采用默认设置，轮播间隔为 3 秒，数据点集合为当前图表下的所有数据点。</p>
-<p>注：该接口不支持扩展图表。</p>
-<p>注：FVS 可视化看板详情可见：FVS基础图表实现数据点提示轮播 。</p>
-<h2 id="2-普通地图示例"><a href="#2-普通地图示例" class="headerlink" title="2. 普通地图示例"></a>2. 普通地图示例</h2><h3 id="2-1-准备数据"><a href="#2-1-准备数据" class="headerlink" title="2.1 准备数据"></a>2.1 准备数据</h3><p>新建决策报表，新建内置数据集 Embedded1</p>
-<h3 id="2-2-插入地图"><a href="#2-2-插入地图" class="headerlink" title="2.2 插入地图"></a>2.2 插入地图</h3><p>将「地图」拖到决策报表中，「编辑」地图，地图类型选择区域地图，地图边界选择「安徽省」，GIS图层选择「无」</p>
-<h3 id="2-3-绑定数据"><a href="#2-3-绑定数据" class="headerlink" title="2.3 绑定数据"></a>2.3 绑定数据</h3><p>属性面板点击「数据」，绑定地图数据</p>
-<h3 id="4-设置图例"><a href="#4-设置图例" class="headerlink" title="4 设置图例"></a>4 设置图例</h3><p>此处是对地图区域的预览颜色进行设置。</p>
-<p>属性面板点击「样式&gt;图例」，勾选「图例可见」，形态选择「渐变色」，区间配置自定义最小值为「0」，最大值为「200」，自定义「主题颜色」，划分阶段修改为1</p>
-<h3 id="5-设置提示"><a href="#5-设置提示" class="headerlink" title="5 设置提示"></a>5 设置提示</h3><p>此处修改提示信息的背景样式，提升提示清晰度。</p>
-<p>属性面板点击「样式&gt;提示」，勾选「使用数据点提示」，背景填充颜色选择「黑色」，不透明度设置为「50」</p>
-<h3 id="6-修改悬浮颜色"><a href="#6-修改悬浮颜色" class="headerlink" title="6 修改悬浮颜色"></a>6 修改悬浮颜色</h3><p>鼠标悬浮在地图区域上会有高亮效果，地图数据点提示轮播时也会显示这个高亮效果，但是默认的高亮效果不明显，需要进行修改。</p>
-<p>属性面板选择「特效&gt;条件显示」，给地图添加一个「悬浮颜色」类型的条件属性，自定义颜色后，将「区域名」和内置数据集字段「区域」绑定，点击「增加」按钮即可</p>
-<h3 id="7-添加事件"><a href="#7-添加事件" class="headerlink" title="7 添加事件"></a>7 添加事件</h3><p>选中「body」，添加一个「初始化后事件」</p>
-<p>JavaScript 代码如下：</p>
-<pre><code>setTimeout(function () &#123;
-    //获取图表对象
-    var vanchart = FR.Chart.WebUtils.getChart(&quot;chart0&quot;).getChartWithIndex(0);
-    //开启数据点提示轮播，轮播间隔为1秒，作用于该系列下的所有数据点
-    vanchart.openAutoTooltip(1000, vanchart.series[0].points);
-&#125;, 3000);
-</code></pre>
-<h3 id="8-设置报表背景"><a href="#8-设置报表背景" class="headerlink" title="8 设置报表背景"></a>8 设置报表背景</h3><p>选中「body」，属性下点击样式「编辑」按钮，修改决策报表的背景填充颜色为「深蓝色」</p>
-<h3 id="9-效果预览"><a href="#9-效果预览" class="headerlink" title="9 效果预览"></a>9 效果预览</h3><p>保存报表，点击「PC端预览」，效果如「1.1预期效果」所示。</p>
-<p>注：不支持移动端。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/finereport/" rel="tag">finereport</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-finereport入门系列（一）"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/08/04/finereport%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97%EF%BC%88%E4%B8%80%EF%BC%89/"
-    >finereport入门系列（一）</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/08/04/finereport%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97%EF%BC%88%E4%B8%80%EF%BC%89/" class="article-date">
-  <time datetime="2023-08-04T04:35:46.000Z" itemprop="datePublished">2023-08-04</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="JS实现切换Tab块时进行数据联动"><a href="#JS实现切换Tab块时进行数据联动" class="headerlink" title="JS实现切换Tab块时进行数据联动"></a>JS实现切换Tab块时进行数据联动</h1><h2 id="1-准备数据"><a href="#1-准备数据" class="headerlink" title="1 准备数据"></a>1 准备数据</h2><p>点击设计器左上角「文件&gt;新建决策报表」，新建数据库查询 ds1，输出 SQL 查询语句：</p>
-<pre><code>SELECT * FROM 地图
-</code></pre>
-<h2 id="2-设计模板"><a href="#2-设计模板" class="headerlink" title="2 设计模板"></a>2 设计模板</h2><h3 id="1-设计-Tab-块"><a href="#1-设计-Tab-块" class="headerlink" title="1 设计 Tab 块"></a>1 设计 Tab 块</h3><p>1）向决策报表 body 中拖入一个 Tab 块，并调整其大小和位置。<br>2）双击 Tab 块，点击 Tab 块右上角添加按钮，再添加两个 Tab 页。接着向每个 Tab 页中拖入一个地图图表。<br>3）分别设置地图：单击选中地图图表，在属性面板中取消勾选「标题可见」。<br>再双击图表进入编辑状态，将三个地图的边界分别设置为「江苏省、山东省、浙江省」，GIS图层均设置为「标准&gt;幻影黑」。<br>本文主要演示 Tab 切换时的联动，所以这里地图无需绑定数据。<br>4）选中 Tab 块整体，开启 Tab 块轮播，轮播间隔时间为 2 秒。再选中 Tab 块标题，将标题组件大小修改为 0 ，即可实现隐藏 Tab 块标题。</p>
-<h3 id="2-添加模板参数"><a href="#2-添加模板参数" class="headerlink" title="2 添加模板参数"></a>2 添加模板参数</h3><p>为了实现联动，需添加一个模板参数。<br>点击「模板&gt;模板参数」，新增一个参数并重命名为 area ，设置默认值为「江苏省」，对应第一个 Tab 页中的地图边界。</p>
-<h3 id="3-设计报表块"><a href="#3-设计报表块" class="headerlink" title="3 设计报表块"></a>3 设计报表块</h3><p>1）向 body 中拖入一个 报表块，并调整其大小和位置。<br>2）双击报表块进入编辑界面，将 pid 、销售额字段分别拖入 A1、A2 单元格，并设置其字体、大小、颜色等。<br>再选中 A2 单元格，设置销售额的「数据设置」为「汇总&gt;求和」，左父格设置为「自定义&gt; A1 」。<br>3）双击 A1 单元格，设置过滤条件为 pid 等于参数 $area ，则会根据参数过滤显示数据。<br>4）点击表格左下角「表单」返回 body 界面，将报表块背景设置为与地图背景同样的颜色。 </p>
-<h3 id="4-添加控件"><a href="#4-添加控件" class="headerlink" title="4 添加控件"></a>4 添加控件</h3><p>为了配合 JS 和数据集传参实现联动，需添加一个控件。<br>1）向 body 中拖入一个 下拉框控件 ，将控件名称设置为 area ，即可与参数 $area 绑定 。取消勾选「可见」，则预览时不会显示该控件。<br>2）选中控件，设置其数据字典为 ds1 数据集的 pid 字段。 </p>
-<h3 id="5-添加事件"><a href="#5-添加事件" class="headerlink" title="5 添加事件"></a>5 添加事件</h3><p>选中 Tab 块的标题面板 tabpane0 ，添加一个「Tab块切换」事件。输入 JavaScript 代码如下：</p>
-<pre><code>setTimeout(function() &#123; 
-//TAB切换后,获取到当前TAB块的标题索引
-FR.IndexNum = _g().getWidgetByName(&quot;tabpane0&quot;).getShowIndex();
-var a = 0;
-a = FR.IndexNum;
-if(a==0)&#123;
-    x=&#39;江苏省&#39;;
-    &#125;
-else if(a==1)&#123;
-        x=&#39;山东省&#39;;
-    &#125;
-else if(a==2)&#123;
-        x=&#39;浙江省&#39;;
-    &#125;      
-var cc = _g().getWidgetByName(&quot;area&quot;) //获取控件
-cc.setValue(x);    //给控件赋值
-&#125;, 50);
-</code></pre>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/finereport/" rel="tag">finereport</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
   </article>
   
 
   
   <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/23/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="page-number" href="/page/23/">23</a><span class="page-number current">24</span><a class="page-number" href="/page/25/">25</a><a class="page-number" href="/page/26/">26</a><span class="space">&hellip;</span><a class="page-number" href="/page/59/">59</a><a class="extend next" rel="next" href="/page/25/">下一页</a>
+    <a class="extend prev" rel="prev" href="/page/23/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="page-number" href="/page/23/">23</a><span class="page-number current">24</span><a class="page-number" href="/page/25/">25</a><a class="page-number" href="/page/26/">26</a><span class="space">&hellip;</span><a class="page-number" href="/page/60/">60</a><a class="extend next" rel="next" href="/page/25/">下一页</a>
   </nav>
   
 </section>

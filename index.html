@@ -154,6 +154,214 @@
     
     
     <article
+  id="post-springboot+mybatisplus 拦截 updatexml"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/12/27/springboot+mybatisplus%20%E6%8B%A6%E6%88%AA%20updatexml/"
+    >springboot+mybatisplus 拦截 updatexml</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/12/27/springboot+mybatisplus%20%E6%8B%A6%E6%88%AA%20updatexml/" class="article-date">
+  <time datetime="2023-12-27T12:14:23.000Z" itemprop="datePublished">2023-12-27</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>在Spring Boot项目中使用MyBatis-Plus时，可以通过自定义拦截器来实现对UPDATEXML函数的拦截和处理。以下是一个简单的示例，展示了如何创建一个拦截器来拦截UPDATEXML函数的使用。</p>
+<p>首先，创建拦截器类：</p>
+<pre><code>import com.baomidou.mybatisplus.core.parser.ISqlParser;
+import com.baomidou.mybatisplus.extension.parsers.IbatisSqlSessionFactoryBean;
+import org.apache.ibatis.executor.statement.StatementHandler;
+import org.apache.ibatis.plugin.*;
+ 
+@Intercepts(&#123;
+    @Signature(type = StatementHandler.class, method = &quot;prepare&quot;, args = &#123;java.sql.Connection.class, Integer.class&#125;)
+&#125;)
+public class UpdateXmlInterceptor implements Interceptor &#123;
+ 
+    @Override
+    public Object intercept(Invocation invocation) throws Throwable &#123;
+        // 获取StatementHandler，实际处理者
+        StatementHandler statementHandler = (StatementHandler) invocation.getTarget();
+        // 获得SQL
+        String sql = statementHandler.getBoundSql().getSql();
+        // 判断是否包含UPDATEXML函数
+        if (sql.contains(&quot;UPDATEXML&quot;)) &#123;
+            // 这里可以做相应的处理，比如替换或者抛出异常
+            throw new RuntimeException(&quot;Illegal use of UPDATEXML function detected.&quot;);
+        &#125;
+        // 继续执行
+        return invocation.proceed();
+    &#125;
+ 
+    @Override
+    public Object plugin(Object target) &#123;
+        return Plugin.wrap(target, this);
+    &#125;
+ 
+    @Override
+    public void setProperties(Properties properties) &#123;
+        // 可以接收配置的属性
+    &#125;
+&#125;
+</code></pre>
+<p>然后，在MyBatis-Plus配置中注册拦截器：</p>
+<pre><code>import com.baomidou.mybatisplus.core.config.GlobalConfig;
+import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+ 
+@Configuration
+public class MyBatisPlusConfig &#123;
+ 
+    @Bean
+    public MybatisPlusInterceptor mybatisPlusInterceptor() &#123;
+        MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+        // 添加分页插件
+        interceptor.addInnerInterceptor(new PaginationInnerInterceptor());
+        // 添加自定义拦截器
+        interceptor.addInnerInterceptor(new UpdateXmlInterceptor());
+        return interceptor;
+    &#125;
+&#125;
+</code></pre>
+<p>在这个配置中，我们创建了一个MyBatisPlusInterceptor实例，并向其添加了PaginationInnerInterceptor（分页插件）和我们自定义的UpdateXmlInterceptor。这样，每当执行SQL时，MyBatis都会先通过我们的拦截器，从而实现对UPDATEXML函数的拦截。</p>
+<p>请注意，这只是一个简单的示例，实际项目中可能需要更复杂的逻辑来处理SQL解析和安全性检查。在生产环境中，你应该根据实际情况对UpdateXmlInterceptor进行相应的扩展和优化。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
+  id="post-springboot拦截get请求"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/12/27/springboot%E6%8B%A6%E6%88%AAget%E8%AF%B7%E6%B1%82/"
+    >springboot拦截get请求</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/12/27/springboot%E6%8B%A6%E6%88%AAget%E8%AF%B7%E6%B1%82/" class="article-date">
+  <time datetime="2023-12-27T12:14:23.000Z" itemprop="datePublished">2023-12-27</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>在Spring Boot中，你可以通过创建一个HandlerInterceptor来拦截GET请求。以下是一个简单的例子：</p>
+<p>创建一个拦截器类实现HandlerInterceptor接口：</p>
+<pre><code>import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.HandlerInterceptor;
+ 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+ 
+@Component
+public class GetRequestInterceptor implements HandlerInterceptor &#123;
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) &#123;
+        if (request.getMethod().equalsIgnoreCase(&quot;GET&quot;)) &#123;
+            // 在这里编写拦截GET请求时需要执行的逻辑
+            // 如果返回true，则继续请求处理；如果返回false，则中断请求
+            return false;
+        &#125;
+        
+        return true;
+    &#125;
+&#125;
+</code></pre>
+<p>注册拦截器。在Spring Boot配置类中添加拦截器：</p>
+<pre><code>import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+ 
+@Configuration
+public class WebConfig implements WebMvcConfigurer &#123;
+ 
+    @Autowired
+    private GetRequestInterceptor getRequestInterceptor;
+ 
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) &#123;
+        registry.addInterceptor(getRequestInterceptor)
+                .addPathPatterns(&quot;/**&quot;); // 这里可以指定拦截的路径
+    &#125;
+&#125;
+</code></pre>
+<p>在这个例子中，GetRequestInterceptor类拦截了所有请求，并检查请求是否为GET。如果是GET请求，你可以在preHandle方法中编写自己的逻辑，比如返回一个错误消息或者重定向到其他页面。如果不是GET请求，则继续请求处理流程。</p>
+<p>注意：这里的拦截器会在请求处理之前执行，你可以根据需要在preHandle方法中实现更复杂的逻辑。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/" rel="tag">JAVA</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-前端-vue中的cron表达式插件"
   class="article article-type-post"
   itemscope
@@ -165,7 +373,7 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/12/25/%E5%89%8D%E7%AB%AF-vue%E4%B8%AD%E7%9A%84cron%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%8F%92%E4%BB%B6/"
+  <a class="article-title" href="/2023/12/27/%E5%89%8D%E7%AB%AF-vue%E4%B8%AD%E7%9A%84cron%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%8F%92%E4%BB%B6/"
     >vue获取时间年月日代码示例</a> 
 </h2>
  
@@ -174,8 +382,8 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2023/12/25/%E5%89%8D%E7%AB%AF-vue%E4%B8%AD%E7%9A%84cron%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%8F%92%E4%BB%B6/" class="article-date">
-  <time datetime="2023-12-25T02:22:00.000Z" itemprop="datePublished">2023-12-25</time>
+      <a href="/2023/12/27/%E5%89%8D%E7%AB%AF-vue%E4%B8%AD%E7%9A%84cron%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%8F%92%E4%BB%B6/" class="article-date">
+  <time datetime="2023-12-27T02:22:00.000Z" itemprop="datePublished">2023-12-27</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -216,7 +424,7 @@ export default &#123;
 <p>参数</p>
 <p>参数名    参数值    是否必填    备注<br>cron    String类型    是    绑定值<br>recent    [last, will]    否    last-过去运行次数，will-未来运行次数（不传则不显示最近运行情况）</p>
 <p>联系方式</p>
-<p>如有问题请联系：<a href="mailto:&#x35;&#50;&#54;&#x39;&#x34;&#x38;&#51;&#x39;&#x32;&#x40;&#113;&#113;&#x2e;&#x63;&#x6f;&#x6d;">&#x35;&#50;&#54;&#x39;&#x34;&#x38;&#51;&#x39;&#x32;&#x40;&#113;&#113;&#x2e;&#x63;&#x6f;&#x6d;</a></p>
+<p>如有问题请联系：<a href="mailto:&#x35;&#x32;&#x36;&#x39;&#52;&#56;&#51;&#57;&#50;&#x40;&#x71;&#x71;&#x2e;&#x63;&#111;&#x6d;">&#x35;&#x32;&#x36;&#x39;&#52;&#56;&#51;&#57;&#50;&#x40;&#x71;&#x71;&#x2e;&#x63;&#111;&#x6d;</a></p>
  
       <!-- reward -->
       
@@ -238,6 +446,102 @@ export default &#123;
 
     
     <article
+  id="post-Axure滚动条样式自定义"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/12/26/Axure%E6%BB%9A%E5%8A%A8%E6%9D%A1%E6%A0%B7%E5%BC%8F%E8%87%AA%E5%AE%9A%E4%B9%89/"
+    >Axure滚动条样式自定义</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/12/26/Axure%E6%BB%9A%E5%8A%A8%E6%9D%A1%E6%A0%B7%E5%BC%8F%E8%87%AA%E5%AE%9A%E4%B9%89/" class="article-date">
+  <time datetime="2023-12-26T04:48:48.000Z" itemprop="datePublished">2023-12-26</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="载入时"><a href="#载入时" class="headerlink" title="载入时"></a>载入时</h1><pre><code>javascript:
+$(&#39;&lt;style&gt; 
+.sgundong::-webkit-scrollbar &#123;width: 8px; height:8px; background:transprent;&#125; 
+.sgundong:hover::-webkit-scrollbar &#123;width: 8px; height:8px; background:transprent;&#125; 
+.sgundong:hover::-webkit-scrollbar-thumb &#123;border-radius:10px; background:rgba(32,136,214,0.9);&#125;
+.sgundong:hover::-webkit-scrollbar-track-pice &#123;background:rgba(32,136,214,0.08);&#125; &lt;/style&gt;&#39;)
+.appendTo(&#39;head&#39;); 
+$(&#39;[data-label=&quot;[[This.name]]&quot;]&#39;)
+.find (&quot;div:eq(0)&quot;)
+.addClass(&quot;sgundong&quot;);
+</code></pre>
+<h1 id="单击时"><a href="#单击时" class="headerlink" title="单击时"></a>单击时</h1><pre><code>javascript:
+$(&#39;&lt;style&gt; 
+.sgundong::-webkit-scrollbar &#123;width: 8px; height:8px; background:transprent;&#125; 
+.sgundong:hover::-webkit-scrollbar &#123;width: 8px; height:8px; background:transprent;&#125; 
+.sgundong:hover::-webkit-scrollbar-thumb &#123;border-radius:10px; background:rgba(32,136,214,0.9);&#125;
+.sgundong:hover::-webkit-scrollbar-track-pice &#123;background:rgba(32,136,214,0.08);&#125; &lt;/style&gt;&#39;)
+.appendTo(&#39;head&#39;); 
+$(&#39;[data-label=&quot;[[This.name]]&quot;]&#39;)
+.find (&quot;div:eq(0)&quot;)
+.addClass(&quot;sgundong&quot;);
+</code></pre>
+<h1 id="鼠标按下时"><a href="#鼠标按下时" class="headerlink" title="鼠标按下时"></a>鼠标按下时</h1><pre><code>javascript:
+$(&#39;&lt;style&gt; 
+.sgundong::-webkit-scrollbar &#123;width: 8px; height:8px; background:transprent;&#125; 
+.sgundong:hover::-webkit-scrollbar &#123;width: 8px; height:8px; background:transprent;&#125; 
+.sgundong:hover::-webkit-scrollbar-thumb &#123;border-radius:10px; background:rgba(32,136,214,0.9);&#125;
+.sgundong:hover::-webkit-scrollbar-track-pice &#123;background:rgba(32,136,214,0.08);&#125; &lt;/style&gt;&#39;)
+.appendTo(&#39;head&#39;); 
+$(&#39;[data-label=&quot;[[This.name]]&quot;]&#39;)
+.find (&quot;div:eq(0)&quot;)
+.addClass(&quot;sgundong&quot;);
+</code></pre>
+<h1 id="状态改变时"><a href="#状态改变时" class="headerlink" title="状态改变时"></a>状态改变时</h1><pre><code>javascript:
+$(&#39;&lt;style&gt; 
+.sgundong::-webkit-scrollbar &#123;width: 8px; height:8px; background:transprent;&#125; 
+.sgundong:hover::-webkit-scrollbar &#123;width: 8px; height:8px; background:transprent;&#125; 
+.sgundong:hover::-webkit-scrollbar-thumb &#123;border-radius:10px; background:rgba(32,136,214,0.9);&#125;
+.sgundong:hover::-webkit-scrollbar-track-pice &#123;background:rgba(32,136,214,0.08);&#125; &lt;/style&gt;&#39;)
+.appendTo(&#39;head&#39;); 
+$(&#39;[data-label=&quot;[[This.name]]&quot;]&#39;)
+.find (&quot;div:eq(0)&quot;)
+.addClass(&quot;sgundong&quot;);
+</code></pre>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Axure-RP/" rel="tag">Axure RP</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+    
+</article>
+
+    
+    <article
   id="post-cron表达式"
   class="article article-type-post"
   itemscope
@@ -249,7 +553,7 @@ export default &#123;
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/12/24/cron%E8%A1%A8%E8%BE%BE%E5%BC%8F/"
+  <a class="article-title" href="/2023/12/25/cron%E8%A1%A8%E8%BE%BE%E5%BC%8F/"
     >vue获取时间年月日代码示例</a> 
 </h2>
  
@@ -258,8 +562,8 @@ export default &#123;
     </header>
      
     <div class="article-meta">
-      <a href="/2023/12/24/cron%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="article-date">
-  <time datetime="2023-12-24T02:22:00.000Z" itemprop="datePublished">2023-12-24</time>
+      <a href="/2023/12/25/cron%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="article-date">
+  <time datetime="2023-12-25T02:22:00.000Z" itemprop="datePublished">2023-12-25</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
@@ -316,7 +620,7 @@ export default &#123;
 
     
     <article
-  id="post-MariaDB"
+  id="post-Auxre-全屏-退出全屏-JavaScript"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -327,8 +631,8 @@ export default &#123;
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2023/12/23/MariaDB/"
-    >MariaDB在docker中的备份还原</a> 
+  <a class="article-title" href="/2023/12/24/Auxre-%E5%85%A8%E5%B1%8F-%E9%80%80%E5%87%BA%E5%85%A8%E5%B1%8F-JavaScript/"
+    >Auxre-全屏-退出全屏-JavaScript</a> 
 </h2>
  
 
@@ -336,362 +640,71 @@ export default &#123;
     </header>
      
     <div class="article-meta">
-      <a href="/2023/12/23/MariaDB/" class="article-date">
-  <time datetime="2023-12-23T02:22:00.000Z" itemprop="datePublished">2023-12-23</time>
+      <a href="/2023/12/24/Auxre-%E5%85%A8%E5%B1%8F-%E9%80%80%E5%87%BA%E5%85%A8%E5%B1%8F-JavaScript/" class="article-date">
+  <time datetime="2023-12-24T04:48:48.000Z" itemprop="datePublished">2023-12-24</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
+    <a class="article-category-link" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/">知识分享</a>
   </div>
    
     </div>
       
     <div class="article-entry" itemprop="articleBody">
        
-  <h1 id="update-root-password"><a href="#update-root-password" class="headerlink" title="update root password"></a>update root password</h1><p>As specified in MariaDB docker documentation, since mariadb:11 (mariadb:latest) has no mysql executable or symlink. mariadb is the official command line executable. Use of a mysql named executable will result in a deprecation warning.</p>
-<p><a target="_blank" rel="noopener" href="https://mariadb.com/kb/en/mariadb-11-0-1-release-notes/#docker-official-images">https://mariadb.com/kb/en/mariadb-11-0-1-release-notes/#docker-official-images</a></p>
-<p>To keep compatibility with existing scripts you can fix the docker image version number to a previous release that supports the mysql command, like mariadb:10.4</p>
-<p>To use the latest version, you should rename calls to mysql command in any related script to mariadb.</p>
-<pre><code>UPDATE mysql.user SET password=PASSWORD(&#39;owncloud&#39;) WHERE User=&#39;root&#39;;
-UPDATE mysql.user SET authentication_string=PASSWORD(&#39;owncloud&#39;) WHERE User=&#39;root&#39;;
-ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;owncloud&#39;;
-UPDATE user SET password=PASSWORD(&#39;owncloud&#39;) WHERE User=&#39;root&#39; AND Host = &#39;localhost&#39;;
+  <p>在我们设计使用大屏模板或大屏报表时，都会需要浏览器全屏展示预览的需求，通常我们都需要通过键盘F11来切换浏览器全屏效果。但是，也发现了一个问题就是我们面对的很多客户，他们并不懂F11可以全屏，给产品设计沟通带来了不便。那有没有什么方式可以直接通过鼠标点击按钮来切换全屏。答案是肯定有的，今天符号作者教大家如何利用前端的JS代码来实现浏览器全屏效果。</p>
+<p>注意：</p>
+<p>在看教程之前，请行了解一下，什么时javascirpt，JavaScript入门教程自行百度。当然，今天的案例RP也会免费提供给大家下载学习，也欢迎应用到更多的产品实践中去</p>
+<h1 id="JavaScript介绍："><a href="#JavaScript介绍：" class="headerlink" title="JavaScript介绍："></a>JavaScript介绍：</h1><p>JavaScript是一种直译式脚本语言，是一种动态类型、弱类型、基于原型的语言，内置支持类型。它的解释器被称为JavaScript引擎，为浏览器的一部分，广泛用于客户端的脚本语言，最早是在HTML（标准通用标记语言下的一个应用）网页上使用，用来给HTML网页增加动态功能。</p>
+<h1 id="JS代码准备："><a href="#JS代码准备：" class="headerlink" title="JS代码准备："></a>JS代码准备：</h1><p>1、全屏代码：</p>
+<pre><code>javascript:
 
-select user,password,authentication_string from user;
-</code></pre>
-<h1 id="mariadb-root-修改密码"><a href="#mariadb-root-修改密码" class="headerlink" title="mariadb root 修改密码"></a>mariadb root 修改密码</h1><p>在MariaDB中修改root用户的密码可以通过以下步骤进行：</p>
-<p>以root用户登录到MariaDB数据库。</p>
-<pre><code>mariadb -u root -p
-</code></pre>
-<p>选择MariaDB数据库。</p>
-<pre><code>USE mysql;
-</code></pre>
-<p>更新root用户的密码。</p>
-<pre><code>UPDATE user SET authentication_string=PASSWORD(&#39;新密码&#39;) WHERE User=&#39;root&#39;;
-</code></pre>
-<p>或者，如果你使用的是MariaDB 10.4及以上版本，你应该更新mysql.user表中 的 authentication_string 列设置新密码，并且需要使用ALTER USER语句来刷新权限。</p>
-<pre><code>ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;新密码&#39;;
-</code></pre>
-<p>刷新权限使更改生效。</p>
-<pre><code>FLUSH PRIVILEGES;
-</code></pre>
-<p>退出mysql客户端。</p>
-<pre><code>EXIT;
-</code></pre>
-<p>请确保替换新密码为你想要设置的实际密码。如果你在远程连接时也需要修改root用户的密码，你可能还需要更新root用户的%主机记录。</p>
-<p>这是一个简化的流程，根据你的实际环境，可能需要额外的步骤，例如，如果你在使用的是远程连接，你可能还需要更新用户表以允许远程连接。</p>
-<h1 id="docker-中操作"><a href="#docker-中操作" class="headerlink" title="docker 中操作"></a>docker 中操作</h1><h2 id="启动命令窗"><a href="#启动命令窗" class="headerlink" title="启动命令窗"></a>启动命令窗</h2><p>docker exec -it mariadb /bin/bash</p>
-<h2 id="复制本地文件到docker容器"><a href="#复制本地文件到docker容器" class="headerlink" title="复制本地文件到docker容器"></a>复制本地文件到docker容器</h2><p>1.查看正在使用的容器的ID<br>命令：</p>
-<pre><code>docker ps -a
-</code></pre>
-<p>2.将本地文件先上传xftp（建立与当前创建容器的服务器的连接），然后复制到docker容器</p>
-<p>命令：</p>
-<pre><code>docker cp 【在xftp中的路径】【容器ID】:【要复制到容器的路径】
-</code></pre>
-<p>例子：</p>
-<pre><code>docker cp /home/ubuntu/rpg_e2depth-master 47dbcce9fce4:/workspace
-</code></pre>
-<h2 id="启动即执行命令脚本"><a href="#启动即执行命令脚本" class="headerlink" title="启动即执行命令脚本"></a>启动即执行命令脚本</h2><p>例子如下：</p>
-<pre><code>docker run --rm \
-  --link mariadb-container:mariadb \
-  --volume $(pwd):/dump \
-  renaudlocube/mariadb-dump \
-  --host mariadb --user root --password my-secret-pw --all-databases &gt; /dump/all_databases.sql
-</code></pre>
-<h1 id="mariadb备份还原命令"><a href="#mariadb备份还原命令" class="headerlink" title="mariadb备份还原命令"></a>mariadb备份还原命令</h1><p>这三个命令都是 MariaDB 数据库系统中用于数据备份和恢复的工具。</p>
-<h2 id="mariadb-dump"><a href="#mariadb-dump" class="headerlink" title="mariadb-dump"></a>mariadb-dump</h2><p>mariadb-dump 是一个用于导出整个数据库或者单个表的 SQL 文件的命令行工具。它可以导出整个数据库到一个文件，或者只导出单个表。导出的 SQL 文件可以用 mariadb-import 命令来恢复。</p>
-<p>使用方法：</p>
-<pre><code>mariadb-dump -u [username] -p [database_name] &gt; [output_file].sql
-</code></pre>
-<h2 id="mariadb-hotcopy"><a href="#mariadb-hotcopy" class="headerlink" title="mariadb-hotcopy"></a>mariadb-hotcopy</h2><p>mariadb-hotcopy 是一个用于备份运行中的 MariaDB 或 MySQL 数据库的工具。它会创建数据库的热备份，即不需要锁定表或关闭数据库服务的备份。</p>
-<p>使用方法：</p>
-<pre><code>mariadb-hotcopy [database_name] [backup_directory]
-</code></pre>
-<h2 id="mariadb-import"><a href="#mariadb-import" class="headerlink" title="mariadb-import"></a>mariadb-import</h2><p>mariadb-import 是一个用于导入由 mariadb-dump 导出的 SQL 文件的命令行工具。</p>
-<p>使用方法：</p>
-<pre><code>mariadb-import -u [username] -p [database_name] &lt; [input_file].sql
-</code></pre>
-<p>请注意，这些命令可能需要在命令行中运行，并且可能需要具有相应的权限。此外，这些命令的具体用法可能会根据你的操作系统和 MariaDB 的版本有所不同。如果你在使用这些命令时遇到问题，请参考你的 MariaDB 文档或使用 man 命令查看每个命令的手册页。</p>
-<h2 id="mariadb-恢复数据"><a href="#mariadb-恢复数据" class="headerlink" title="mariadb 恢复数据"></a>mariadb 恢复数据</h2><p>mariadb-import 是 MariaDB 提供的一个用于导入数据的工具，但它不是用来恢复数据的。恢复数据通常使用 mysql 命令行工具或者 source 命令在 MariaDB 或 MySQL 的命令行界面中执行。</p>
-<p>如果你有一个导出的 SQL 文件，你可以使用以下命令恢复数据：</p>
-<pre><code>mysql -u username -p database_name &lt; file.sql
-</code></pre>
-<p>替换 username 为你的数据库用户名，database_name 为你要恢复到的数据库名称，file.sql 为你的导出文件。</p>
-<p>如果你需要从备份文件恢复，可以使用以下命令：</p>
-<pre><code>mysql -u username -p database_name &lt; backup.sql
-</code></pre>
-<p>如果备份文件是压缩的（例如 .gz 或 .bz2），你可以使用 zcat 或 bzcat 来解压缩后再导入：</p>
-<pre><code>zcat backup.sql.gz | mysql -u username -p database_name
-</code></pre>
-<p>或者</p>
-<pre><code>bzcat backup.sql.bz2 | mysql -u username -p database_name
-</code></pre>
-<p>确保在执行这些命令前你已经创建好了数据库，或者导入的 SQL 文件包含了创建数据库的语句。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MariaDB/" rel="tag">MariaDB</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/" rel="tag">docker</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-linux查找文件命令"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/12/22/linux%E6%9F%A5%E6%89%BE%E6%96%87%E4%BB%B6%E5%91%BD%E4%BB%A4/"
-    >linux查找文件命令</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/12/22/linux%E6%9F%A5%E6%89%BE%E6%96%87%E4%BB%B6%E5%91%BD%E4%BB%A4/" class="article-date">
-  <time datetime="2023-12-22T02:22:00.000Z" itemprop="datePublished">2023-12-22</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>Linux查找文件的命令通常有以下几种实现方法：</p>
-<h1 id="方法1：使用find命令"><a href="#方法1：使用find命令" class="headerlink" title="方法1：使用find命令"></a>方法1：使用find命令</h1><p>find /path/to/search -name “filename”<br>使用find命令可以在指定的路径下（包括其子目录）递归查找具有指定文件名的文件。</p>
-<h1 id="方法2：使用locate命令"><a href="#方法2：使用locate命令" class="headerlink" title="方法2：使用locate命令"></a>方法2：使用locate命令</h1><p>locate filename<br>locate命令会搜索并显示与指定文件名匹配的所有文件路径，该命令需要基于数据库进行搜索，因此首次使用前可能需要通过updatedb命令更新数据库。</p>
-<h1 id="方法3：使用grep命令"><a href="#方法3：使用grep命令" class="headerlink" title="方法3：使用grep命令"></a>方法3：使用grep命令</h1><p>grep -r “filename” /path/to/search<br>grep命令可以用于搜索文本文件中的特定字符串，通过使用选项-r可以递归搜索指定路径下的所有文件。</p>
-<h1 id="方法4：使用ls命令配合通配符"><a href="#方法4：使用ls命令配合通配符" class="headerlink" title="方法4：使用ls命令配合通配符"></a>方法4：使用ls命令配合通配符</h1><p>ls /path/to/search/<em>filename</em><br>使用ls命令结合通配符*可以获取指定路径下包含给定文件名的文件列表。该方法无法递归搜索子目录。</p>
-<h1 id="方法5：使用find命令配合通配符"><a href="#方法5：使用find命令配合通配符" class="headerlink" title="方法5：使用find命令配合通配符"></a>方法5：使用find命令配合通配符</h1><p>find /path/to/search -name “<em>filename</em>“<br>在find命令中结合通配符*可以查找指定路径下（包括子目录）所有包含给定文件名的文件。</p>
-<p>请注意，在以上所有方法中，需要将”/path/to/search”替换为实际要搜索的路径，而”filename”替换为实际要查找的文件名或者通配符。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/find/" rel="tag">find</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-计算当前年月"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/12/20/%E8%AE%A1%E7%AE%97%E5%BD%93%E5%89%8D%E5%B9%B4%E6%9C%88/"
-    >vue获取时间年月日代码示例</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/12/20/%E8%AE%A1%E7%AE%97%E5%BD%93%E5%89%8D%E5%B9%B4%E6%9C%88/" class="article-date">
-  <time datetime="2023-12-20T02:22:00.000Z" itemprop="datePublished">2023-12-20</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h1 id="vue获取时间年月日"><a href="#vue获取时间年月日" class="headerlink" title="vue获取时间年月日"></a>vue获取时间年月日</h1><p>在Vue中获取当前时间的年月日，可以通过计算属性或者方法来实现。以下是一个简单的例子：</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    当前日期: &#123;&#123; currentDate &#125;&#125;
-  &lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-export default &#123;
-  computed: &#123;
-    currentDate() &#123;
-      const now = new Date();
-      const year = now.getFullYear();
-      const month = (now.getMonth() + 1).toString().padStart(2, &#39;0&#39;);
-      const day = now.getDate().toString().padStart(2, &#39;0&#39;);
-      return `$&#123;year&#125;-$&#123;month&#125;-$&#123;day&#125;`;
-    &#125;
-  &#125;
+function requestFullScreen(element) &#123;
+var requestMethod = element.requestFullScreen ||
+element.webkitRequestFullScreen ||
+element.mozRequestFullScreen ||
+element.msRequestFullScreen;
+if (requestMethod) &#123;
+requestMethod.call(element);
+&#125; else if (typeof window.ActiveXObject !== &quot;undefined&quot;) &#123;
+var wscript = new ActiveXObject(&quot;WScript.Shell&quot;);
+if (wscript !== null) &#123;
+wscript.SendKeys(&quot;&#123;F11&#125;&quot;);
 &#125;
-&lt;/script&gt;
-</code></pre>
-<p>在这个例子中，currentDate是一个计算属性，它返回一个格式化的日期字符串（例如：”2023-03-31”）。getFullYear()方法用于获取当前年份，getMonth()方法返回的月份是从0开始的，因此需要加1，getDate()方法用于获取当前是哪一天。padStart(2, ‘0’)确保月份和日期始终保持两位数字的格式。</p>
-<h1 id="uvue获取时间年月日"><a href="#uvue获取时间年月日" class="headerlink" title="uvue获取时间年月日"></a>uvue获取时间年月日</h1><p>在UVue中获取当前时间的年月日，你可以使用JavaScript的Date对象。以下是一个简单的例子，展示了如何在UVue组件中获取并显示当前的年月日：</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    &lt;p&gt;当前日期: &#123;&#123; currentDate &#125;&#125;&lt;/p&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-export default &#123;
-  data() &#123;
-    return &#123;
-      currentDate: this.getCurrentDate()
-    &#125;;
-  &#125;,
-  methods: &#123;
-    getCurrentDate() &#123;
-      const now = new Date();
-      const year = now.getFullYear();
-      const month = (now.getMonth() + 1).toString().padStart(2, &#39;0&#39;);
-      const day = now.getDate().toString().padStart(2, &#39;0&#39;);
-      return `$&#123;year&#125;-$&#123;month&#125;-$&#123;day&#125;`;
-    &#125;
-  &#125;
-&#125;;
-&lt;/script&gt;
-</code></pre>
-<p>在这个例子中，我们定义了一个getCurrentDate方法，它创建了一个新的Date对象，然后使用getFullYear、getMonth和getDate方法来获取当前的年、月、日，并将它们格式化为YYYY-MM-DD的字符串。我们还使用了padStart方法来确保月份和日期始终是两位数字。然后，我们在组件的数据对象中返回这个方法的结果，并在模板中显示它。</p>
-<h1 id="vue获取当日范围"><a href="#vue获取当日范围" class="headerlink" title="vue获取当日范围"></a>vue获取当日范围</h1><p>在Vue中获取当日的日期范围，可以通过计算当日的开始时间戳和结束时间戳来实现。以下是一个简单的例子，展示了如何在Vue组件中获取当日的日期范围：</p>
-<pre><code>&lt;template&gt;
-  &lt;div&gt;
-    &lt;p&gt;今日开始时间戳: &#123;&#123; todayStart &#125;&#125;&lt;/p&gt;
-    &lt;p&gt;今日结束时间戳: &#123;&#123; todayEnd &#125;&#125;&lt;/p&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
- 
-&lt;script&gt;
-export default &#123;
-  data() &#123;
-    return &#123;
-      todayStart: 0,
-      todayEnd: 0
-    &#125;;
-  &#125;,
-  created() &#123;
-    this.getTodayRange();
-  &#125;,
-  methods: &#123;
-    getTodayRange() &#123;
-      const now = new Date();
-      const year = now.getFullYear();
-      const month = now.getMonth();
-      const day = now.getDate();
- 
-      const start = new Date(year, month, day, 0, 0, 0);
-      const end = new Date(year, month, day, 23, 59, 59);
- 
-      this.todayStart = start.getTime();
-      this.todayEnd = end.getTime();
-    &#125;
-  &#125;
-&#125;;
-&lt;/script&gt;
-</code></pre>
-<p>这段代码中，我们在Vue组件的data函数中定义了todayStart和todayEnd两个属性来存储计算得出的当日开始和结束时间戳。在created生命周期钩子中调用了getTodayRange方法，该方法计算了当日的开始和结束时间，并将它们的时间戳分别赋值给todayStart和todayEnd。在模板中展示了这两个属性的值。</p>
-<h1 id="时间转字符串"><a href="#时间转字符串" class="headerlink" title="时间转字符串"></a>时间转字符串</h1><p>代码如下，提供了两个方法</p>
-<pre><code>let timeStartStr1 = this.timeFormat(&#123;date:this.timeStart&#125;)
-let timeEndStr1 = this.timeFormat(&#123;date:this.timeEnd&#125;)
-
-let timeStartStr = this.formatDate(&#123;date:this.timeStart, formatStr:&#39;yyyy-MM-dd HH:mm:ss&#39;&#125;)
-let timeEndStr = this.formatDate(&#123;date:this.timeEnd, formatStr:&#39;yyyy-MM-dd HH:mm:ss&#39;&#125;)
-
-console.log(typeof this.timeStart,&quot;this.timeStart&quot;,this.timeStart)
-console.log(typeof this.timeEnd,&quot;this.timeEnd&quot;,this.timeEnd)
-
-console.log(typeof timeStartStr,&quot;timeStartStr&quot;,timeStartStr)
-console.log(typeof timeEndStr,&quot;timeEndStr&quot;,timeEndStr)
-
-this.datetimerange = [timeStartStr, timeEndStr]
-              
-timeFormat(params) &#123;
-    let defalutParams = &#123;
-      date: new Date(new Date().getTime()),
-    &#125;;
-    params = &#123; ...defalutParams, ...params &#125;;
-    
-    let date = new Date(new Date(params.date).getTime());
-    
-    // 获取年份
-    let Y = date.getFullYear() + &#39;-&#39;
-    //获取当前年的月份 月份要 + 1 （0代表1月）date.getMonth() + 1
-    let M = date.getMonth() + 1 &lt; 10 ? &#39;0&#39; + (date.getMonth() + 1) + &#39;-&#39; : (date.getMonth() + 1) +&#39;-&#39;
-    //获取当前日（1 - 31）
-    let D = date.getDate() &lt; 10 ? &#39;0&#39; + (date.getDate()) + &#39; &#39; : (date.getDate()) + &#39; &#39;
-    //获取当前小时（0-23）
-    let h = date.getHours() &lt; 10 ? (&#39;0&#39; + date.getHours() + &#39;:&#39;) : (date.getHours() + &#39;:&#39;);
-    //获取当前分钟（0-59）
-    let m = date.getMinutes() &lt; 10 ? (&#39;0&#39; + date.getMinutes() + &#39;:&#39;) : (date.getMinutes() + &#39;:&#39;);
-    //获取当前秒数（0-59）
-    let s = date.getSeconds() &lt; 10 ? (&#39;0&#39; + date.getSeconds()) : date.getSeconds();
-    
-    return (Y + M + D + h + m + s)
-&#125;,
-formatDate(params) &#123;
-  let defalutParams = &#123;
-    date: new Date(new Date().getTime()),
-    formatStr: &#39;yyyy-MM-dd HH:mm:ss&#39;
-  &#125;;
-  params = &#123; ...defalutParams, ...params &#125;;
-
-  let date = new Date(new Date(params.date).getTime());
-  let formatStr = params.formatStr;
-  
-  // 获取年份
-  formatStr = formatStr.replace(new RegExp(&#39;yyyy&#39;), `$&#123;date.getFullYear()&#125;`);
-  //获取当前年的月份 月份要 + 1 （0代表1月）date.getMonth() + 1
-  const month = date.getMonth() + 1;
-  formatStr = formatStr.replace(new RegExp(&#39;MM&#39;), `$&#123;month &gt; 9 ? month : &#39;0&#39; + month&#125;`);
-  //获取当前日（1 - 31）
-  const day = date.getDate();
-  formatStr = formatStr.replace(new RegExp(&#39;dd&#39;), `$&#123;day &gt; 9 ? day : &#39;0&#39; + day&#125;`);
-  //获取当前小时（0-23）
-  const hour = date.getHours();
-  formatStr = formatStr.replace(new RegExp(&#39;HH&#39;), `$&#123;hour &gt; 9 ? hour : &#39;0&#39; + hour&#125;`);
-  //获取当前分钟（0-59）
-  const min = date.getMinutes();
-  formatStr = formatStr.replace(new RegExp(&#39;mm&#39;), `$&#123;min &gt; 9 ? min : &#39;0&#39; + min&#125;`);
-  //获取当前秒数（0-59）
-  const sec = date.getSeconds();
-  formatStr = formatStr.replace(new RegExp(&#39;ss&#39;), `$&#123;sec &gt; 9 ? sec : &#39;0&#39; + sec&#125;`);
-
-  return formatStr;
 &#125;
+&#125;;
+requestFullScreen(document.documentElement);
 </code></pre>
+<p>2、退出全屏代码：</p>
+<pre><code>javascript:
+
+function exitFull() &#123;
+var exitMethod = document.exitFullscreen ||
+document.mozCancelFullScreen ||
+document.webkitExitFullscreen ||
+document.webkitExitFullscreen;
+if (exitMethod) &#123;
+exitMethod.call(document);
+&#125; else if (typeof window.ActiveXObject !== &quot;undefined&quot;) &#123;
+var wscript = new ActiveXObject(&quot;WScript.Shell&quot;);
+if (wscript !== null) &#123;
+wscript.SendKeys(&quot;&#123;F11&#125;&quot;);
+&#125;
+&#125;
+
+&#125;;
+
+exitFull();
+</code></pre>
+<h1 id="Axure添加JS代码："><a href="#Axure添加JS代码：" class="headerlink" title="Axure添加JS代码："></a>Axure添加JS代码：</h1><h2 id="步骤一："><a href="#步骤一：" class="headerlink" title="步骤一："></a>步骤一：</h2><p>打开Axure，拉取一个动态面板，创建2个State面板。一个面板里放一个矩形，命名为：全屏。另一个命名为：退出。如图：</p>
+<h2 id="步骤二：全屏交互制作"><a href="#步骤二：全屏交互制作" class="headerlink" title="步骤二：全屏交互制作"></a>步骤二：全屏交互制作</h2><p>打开Axure，进入-全屏面板，点击添加鼠标点击事件，打开-当前链接-fx。</p>
+<p>将前面准备好的全屏JS代码复制到FX里保存即可。要注意的是开头必须要加。javascript:</p>
+<p>设置面板切换效果，如图，当点击时面板切换为退出面板。</p>
+<h2 id="步骤三：退出交互制作"><a href="#步骤三：退出交互制作" class="headerlink" title="步骤三：退出交互制作"></a>步骤三：退出交互制作</h2><p>打开Axure，进入-退出面板，点击添加鼠标点击事件，打开-当前链接-fx。</p>
+<p>同样的将前面准备好的退出全屏JS代码复制到FX里保存即可。通样要注意的是开头必须要加。javascript:</p>
+<p>至此，保存文件F5预览试试吧。教程相关文件下载：RP下载</p>
+<p>————————————————</p>
+<p>版权声明：本文为博主原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接和本声明。</p>
+<p>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/huangzbin/article/details/121155551">https://blog.csdn.net/huangzbin/article/details/121155551</a></p>
  
       <!-- reward -->
       
@@ -702,69 +715,7 @@ formatDate(params) &#123;
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
-
-    </footer>
-  </div>
-
-   
-    
-</article>
-
-    
-    <article
-  id="post-linux中cp-a和cp-r的区别是什么"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/12/20/linux%E4%B8%ADcp-a%E5%92%8Ccp-r%E7%9A%84%E5%8C%BA%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88/"
-    >linux中cp命令</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/12/20/linux%E4%B8%ADcp-a%E5%92%8Ccp-r%E7%9A%84%E5%8C%BA%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88/" class="article-date">
-  <time datetime="2023-12-20T02:22:00.000Z" itemprop="datePublished">2023-12-20</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4/">部署运维</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>linux中cp-a和cp-r的区别是什么</p>
-<p>Linux cp（英文全拼：copy file）命令主要用于复制文件或目录。</p>
-<p>参数说明：</p>
-<p>-a：此选项通常在复制目录时使用，它保留链接、文件属性，并复制目录下的所有内容。其作用等于dpR参数组合。</p>
-<p>-r：若给出的源文件是一个目录文件，此时将复制该目录下所有的子目录和文件。</p>
-<p>cp -a : 递归复制，复制的数据会保留原有数据的时间戳等信息（具体：时间戳+所有权+复制连结文件属性而非档案本身）</p>
-<p>cp -r : 递归复制，复制的数据会使用新的时间戳等信息</p>
-<p>简单总结下：</p>
-<p>使用cp -a相当于将原数据原封不动的拷贝过来，不改变里面的任何信息</p>
-<p>使用cp -r拷贝数据，拷贝的结果是生成新的时间戳等信息</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cp/" rel="tag">cp</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Axure-RP/" rel="tag">Axure RP</a></li></ul>
 
     </footer>
   </div>
@@ -780,7 +731,7 @@ formatDate(params) &#123;
   
   <nav class="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/59/">59</a><a class="extend next" rel="next" href="/page/2/">下一页</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/60/">60</a><a class="extend next" rel="next" href="/page/2/">下一页</a>
   </nav>
   
 </section>

@@ -1,8 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>springboot+mybatisplus 拦截 updatexml</title>
+    <url>/2023/12/27/springboot+mybatisplus%20%E6%8B%A6%E6%88%AA%20updatexml/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>在Spring Boot项目中使用MyBatis-Plus时，可以通过自定义拦截器来实现对UPDATEXML函数的拦截和处理。以下是一个简单的示例，展示了如何创建一个拦截器来拦截UPDATEXML函数的使用。</p>
+<p>首先，创建拦截器类：</p>
+<pre><code>import com.baomidou.mybatisplus.core.parser.ISqlParser;
+import com.baomidou.mybatisplus.extension.parsers.IbatisSqlSessionFactoryBean;
+import org.apache.ibatis.executor.statement.StatementHandler;
+import org.apache.ibatis.plugin.*;
+ 
+@Intercepts(&#123;
+    @Signature(type = StatementHandler.class, method = &quot;prepare&quot;, args = &#123;java.sql.Connection.class, Integer.class&#125;)
+&#125;)
+public class UpdateXmlInterceptor implements Interceptor &#123;
+ 
+    @Override
+    public Object intercept(Invocation invocation) throws Throwable &#123;
+        // 获取StatementHandler，实际处理者
+        StatementHandler statementHandler = (StatementHandler) invocation.getTarget();
+        // 获得SQL
+        String sql = statementHandler.getBoundSql().getSql();
+        // 判断是否包含UPDATEXML函数
+        if (sql.contains(&quot;UPDATEXML&quot;)) &#123;
+            // 这里可以做相应的处理，比如替换或者抛出异常
+            throw new RuntimeException(&quot;Illegal use of UPDATEXML function detected.&quot;);
+        &#125;
+        // 继续执行
+        return invocation.proceed();
+    &#125;
+ 
+    @Override
+    public Object plugin(Object target) &#123;
+        return Plugin.wrap(target, this);
+    &#125;
+ 
+    @Override
+    public void setProperties(Properties properties) &#123;
+        // 可以接收配置的属性
+    &#125;
+&#125;
+</code></pre>
+<p>然后，在MyBatis-Plus配置中注册拦截器：</p>
+<pre><code>import com.baomidou.mybatisplus.core.config.GlobalConfig;
+import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+ 
+@Configuration
+public class MyBatisPlusConfig &#123;
+ 
+    @Bean
+    public MybatisPlusInterceptor mybatisPlusInterceptor() &#123;
+        MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+        // 添加分页插件
+        interceptor.addInnerInterceptor(new PaginationInnerInterceptor());
+        // 添加自定义拦截器
+        interceptor.addInnerInterceptor(new UpdateXmlInterceptor());
+        return interceptor;
+    &#125;
+&#125;
+</code></pre>
+<p>在这个配置中，我们创建了一个MyBatisPlusInterceptor实例，并向其添加了PaginationInnerInterceptor（分页插件）和我们自定义的UpdateXmlInterceptor。这样，每当执行SQL时，MyBatis都会先通过我们的拦截器，从而实现对UPDATEXML函数的拦截。</p>
+<p>请注意，这只是一个简单的示例，实际项目中可能需要更复杂的逻辑来处理SQL解析和安全性检查。在生产环境中，你应该根据实际情况对UpdateXmlInterceptor进行相应的扩展和优化。</p>
+]]></content>
+      <categories>
+        <category>软件开发</category>
+      </categories>
+      <tags>
+        <tag>JAVA</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>springboot拦截get请求</title>
+    <url>/2023/12/27/springboot%E6%8B%A6%E6%88%AAget%E8%AF%B7%E6%B1%82/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>在Spring Boot中，你可以通过创建一个HandlerInterceptor来拦截GET请求。以下是一个简单的例子：</p>
+<p>创建一个拦截器类实现HandlerInterceptor接口：</p>
+<pre><code>import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.HandlerInterceptor;
+ 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+ 
+@Component
+public class GetRequestInterceptor implements HandlerInterceptor &#123;
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) &#123;
+        if (request.getMethod().equalsIgnoreCase(&quot;GET&quot;)) &#123;
+            // 在这里编写拦截GET请求时需要执行的逻辑
+            // 如果返回true，则继续请求处理；如果返回false，则中断请求
+            return false;
+        &#125;
+        
+        return true;
+    &#125;
+&#125;
+</code></pre>
+<p>注册拦截器。在Spring Boot配置类中添加拦截器：</p>
+<pre><code>import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+ 
+@Configuration
+public class WebConfig implements WebMvcConfigurer &#123;
+ 
+    @Autowired
+    private GetRequestInterceptor getRequestInterceptor;
+ 
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) &#123;
+        registry.addInterceptor(getRequestInterceptor)
+                .addPathPatterns(&quot;/**&quot;); // 这里可以指定拦截的路径
+    &#125;
+&#125;
+</code></pre>
+<p>在这个例子中，GetRequestInterceptor类拦截了所有请求，并检查请求是否为GET。如果是GET请求，你可以在preHandle方法中编写自己的逻辑，比如返回一个错误消息或者重定向到其他页面。如果不是GET请求，则继续请求处理流程。</p>
+<p>注意：这里的拦截器会在请求处理之前执行，你可以根据需要在preHandle方法中实现更复杂的逻辑。</p>
+]]></content>
+      <categories>
+        <category>软件开发</category>
+      </categories>
+      <tags>
+        <tag>JAVA</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>vue获取时间年月日代码示例</title>
-    <url>/2023/12/25/%E5%89%8D%E7%AB%AF-vue%E4%B8%AD%E7%9A%84cron%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%8F%92%E4%BB%B6/</url>
+    <url>/2023/12/27/%E5%89%8D%E7%AB%AF-vue%E4%B8%AD%E7%9A%84cron%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%8F%92%E4%BB%B6/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>vue中的cron表达式插件</p>
 <pre><code>git地址：https://gitee.com/CzRger/CzrVueCron
 </code></pre>
@@ -34,7 +160,7 @@ export default &#123;
 <p>参数</p>
 <p>参数名    参数值    是否必填    备注<br>cron    String类型    是    绑定值<br>recent    [last, will]    否    last-过去运行次数，will-未来运行次数（不传则不显示最近运行情况）</p>
 <p>联系方式</p>
-<p>如有问题请联系：<a href="mailto:&#x35;&#50;&#54;&#x39;&#x34;&#x38;&#51;&#x39;&#x32;&#x40;&#113;&#113;&#x2e;&#x63;&#x6f;&#x6d;">&#x35;&#50;&#54;&#x39;&#x34;&#x38;&#51;&#x39;&#x32;&#x40;&#113;&#113;&#x2e;&#x63;&#x6f;&#x6d;</a></p>
+<p>如有问题请联系：<a href="mailto:&#x35;&#x32;&#x36;&#x39;&#52;&#56;&#51;&#57;&#50;&#x40;&#x71;&#x71;&#x2e;&#x63;&#111;&#x6d;">&#x35;&#x32;&#x36;&#x39;&#52;&#56;&#51;&#57;&#50;&#x40;&#x71;&#x71;&#x2e;&#x63;&#111;&#x6d;</a></p>
 ]]></content>
       <categories>
         <category>软件开发</category>
@@ -44,8 +170,63 @@ export default &#123;
       </tags>
   </entry>
   <entry>
+    <title>Axure滚动条样式自定义</title>
+    <url>/2023/12/26/Axure%E6%BB%9A%E5%8A%A8%E6%9D%A1%E6%A0%B7%E5%BC%8F%E8%87%AA%E5%AE%9A%E4%B9%89/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="载入时"><a href="#载入时" class="headerlink" title="载入时"></a>载入时</h1><pre><code>javascript:
+$(&#39;&lt;style&gt; 
+.sgundong::-webkit-scrollbar &#123;width: 8px; height:8px; background:transprent;&#125; 
+.sgundong:hover::-webkit-scrollbar &#123;width: 8px; height:8px; background:transprent;&#125; 
+.sgundong:hover::-webkit-scrollbar-thumb &#123;border-radius:10px; background:rgba(32,136,214,0.9);&#125;
+.sgundong:hover::-webkit-scrollbar-track-pice &#123;background:rgba(32,136,214,0.08);&#125; &lt;/style&gt;&#39;)
+.appendTo(&#39;head&#39;); 
+$(&#39;[data-label=&quot;[[This.name]]&quot;]&#39;)
+.find (&quot;div:eq(0)&quot;)
+.addClass(&quot;sgundong&quot;);
+</code></pre>
+<h1 id="单击时"><a href="#单击时" class="headerlink" title="单击时"></a>单击时</h1><pre><code>javascript:
+$(&#39;&lt;style&gt; 
+.sgundong::-webkit-scrollbar &#123;width: 8px; height:8px; background:transprent;&#125; 
+.sgundong:hover::-webkit-scrollbar &#123;width: 8px; height:8px; background:transprent;&#125; 
+.sgundong:hover::-webkit-scrollbar-thumb &#123;border-radius:10px; background:rgba(32,136,214,0.9);&#125;
+.sgundong:hover::-webkit-scrollbar-track-pice &#123;background:rgba(32,136,214,0.08);&#125; &lt;/style&gt;&#39;)
+.appendTo(&#39;head&#39;); 
+$(&#39;[data-label=&quot;[[This.name]]&quot;]&#39;)
+.find (&quot;div:eq(0)&quot;)
+.addClass(&quot;sgundong&quot;);
+</code></pre>
+<h1 id="鼠标按下时"><a href="#鼠标按下时" class="headerlink" title="鼠标按下时"></a>鼠标按下时</h1><pre><code>javascript:
+$(&#39;&lt;style&gt; 
+.sgundong::-webkit-scrollbar &#123;width: 8px; height:8px; background:transprent;&#125; 
+.sgundong:hover::-webkit-scrollbar &#123;width: 8px; height:8px; background:transprent;&#125; 
+.sgundong:hover::-webkit-scrollbar-thumb &#123;border-radius:10px; background:rgba(32,136,214,0.9);&#125;
+.sgundong:hover::-webkit-scrollbar-track-pice &#123;background:rgba(32,136,214,0.08);&#125; &lt;/style&gt;&#39;)
+.appendTo(&#39;head&#39;); 
+$(&#39;[data-label=&quot;[[This.name]]&quot;]&#39;)
+.find (&quot;div:eq(0)&quot;)
+.addClass(&quot;sgundong&quot;);
+</code></pre>
+<h1 id="状态改变时"><a href="#状态改变时" class="headerlink" title="状态改变时"></a>状态改变时</h1><pre><code>javascript:
+$(&#39;&lt;style&gt; 
+.sgundong::-webkit-scrollbar &#123;width: 8px; height:8px; background:transprent;&#125; 
+.sgundong:hover::-webkit-scrollbar &#123;width: 8px; height:8px; background:transprent;&#125; 
+.sgundong:hover::-webkit-scrollbar-thumb &#123;border-radius:10px; background:rgba(32,136,214,0.9);&#125;
+.sgundong:hover::-webkit-scrollbar-track-pice &#123;background:rgba(32,136,214,0.08);&#125; &lt;/style&gt;&#39;)
+.appendTo(&#39;head&#39;); 
+$(&#39;[data-label=&quot;[[This.name]]&quot;]&#39;)
+.find (&quot;div:eq(0)&quot;)
+.addClass(&quot;sgundong&quot;);
+</code></pre>
+]]></content>
+      <categories>
+        <category>知识分享</category>
+      </categories>
+      <tags>
+        <tag>Axure RP</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>vue获取时间年月日代码示例</title>
-    <url>/2023/12/24/cron%E8%A1%A8%E8%BE%BE%E5%BC%8F/</url>
+    <url>/2023/12/25/cron%E8%A1%A8%E8%BE%BE%E5%BC%8F/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>常用cron表达式例子</p>
 <pre><code>（1）0/2 * * * * ?   表示每2秒 执行任务
 （1）0 0/2 * * * ?    表示每2分钟 执行任务
@@ -78,6 +259,71 @@ export default &#123;
       </categories>
       <tags>
         <tag>Vue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Auxre-全屏-退出全屏-JavaScript</title>
+    <url>/2023/12/24/Auxre-%E5%85%A8%E5%B1%8F-%E9%80%80%E5%87%BA%E5%85%A8%E5%B1%8F-JavaScript/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>在我们设计使用大屏模板或大屏报表时，都会需要浏览器全屏展示预览的需求，通常我们都需要通过键盘F11来切换浏览器全屏效果。但是，也发现了一个问题就是我们面对的很多客户，他们并不懂F11可以全屏，给产品设计沟通带来了不便。那有没有什么方式可以直接通过鼠标点击按钮来切换全屏。答案是肯定有的，今天符号作者教大家如何利用前端的JS代码来实现浏览器全屏效果。</p>
+<p>注意：</p>
+<p>在看教程之前，请行了解一下，什么时javascirpt，JavaScript入门教程自行百度。当然，今天的案例RP也会免费提供给大家下载学习，也欢迎应用到更多的产品实践中去</p>
+<h1 id="JavaScript介绍："><a href="#JavaScript介绍：" class="headerlink" title="JavaScript介绍："></a>JavaScript介绍：</h1><p>JavaScript是一种直译式脚本语言，是一种动态类型、弱类型、基于原型的语言，内置支持类型。它的解释器被称为JavaScript引擎，为浏览器的一部分，广泛用于客户端的脚本语言，最早是在HTML（标准通用标记语言下的一个应用）网页上使用，用来给HTML网页增加动态功能。</p>
+<h1 id="JS代码准备："><a href="#JS代码准备：" class="headerlink" title="JS代码准备："></a>JS代码准备：</h1><p>1、全屏代码：</p>
+<pre><code>javascript:
+
+function requestFullScreen(element) &#123;
+var requestMethod = element.requestFullScreen ||
+element.webkitRequestFullScreen ||
+element.mozRequestFullScreen ||
+element.msRequestFullScreen;
+if (requestMethod) &#123;
+requestMethod.call(element);
+&#125; else if (typeof window.ActiveXObject !== &quot;undefined&quot;) &#123;
+var wscript = new ActiveXObject(&quot;WScript.Shell&quot;);
+if (wscript !== null) &#123;
+wscript.SendKeys(&quot;&#123;F11&#125;&quot;);
+&#125;
+&#125;
+&#125;;
+requestFullScreen(document.documentElement);
+</code></pre>
+<p>2、退出全屏代码：</p>
+<pre><code>javascript:
+
+function exitFull() &#123;
+var exitMethod = document.exitFullscreen ||
+document.mozCancelFullScreen ||
+document.webkitExitFullscreen ||
+document.webkitExitFullscreen;
+if (exitMethod) &#123;
+exitMethod.call(document);
+&#125; else if (typeof window.ActiveXObject !== &quot;undefined&quot;) &#123;
+var wscript = new ActiveXObject(&quot;WScript.Shell&quot;);
+if (wscript !== null) &#123;
+wscript.SendKeys(&quot;&#123;F11&#125;&quot;);
+&#125;
+&#125;
+
+&#125;;
+
+exitFull();
+</code></pre>
+<h1 id="Axure添加JS代码："><a href="#Axure添加JS代码：" class="headerlink" title="Axure添加JS代码："></a>Axure添加JS代码：</h1><h2 id="步骤一："><a href="#步骤一：" class="headerlink" title="步骤一："></a>步骤一：</h2><p>打开Axure，拉取一个动态面板，创建2个State面板。一个面板里放一个矩形，命名为：全屏。另一个命名为：退出。如图：</p>
+<h2 id="步骤二：全屏交互制作"><a href="#步骤二：全屏交互制作" class="headerlink" title="步骤二：全屏交互制作"></a>步骤二：全屏交互制作</h2><p>打开Axure，进入-全屏面板，点击添加鼠标点击事件，打开-当前链接-fx。</p>
+<p>将前面准备好的全屏JS代码复制到FX里保存即可。要注意的是开头必须要加。javascript:</p>
+<p>设置面板切换效果，如图，当点击时面板切换为退出面板。</p>
+<h2 id="步骤三：退出交互制作"><a href="#步骤三：退出交互制作" class="headerlink" title="步骤三：退出交互制作"></a>步骤三：退出交互制作</h2><p>打开Axure，进入-退出面板，点击添加鼠标点击事件，打开-当前链接-fx。</p>
+<p>同样的将前面准备好的退出全屏JS代码复制到FX里保存即可。通样要注意的是开头必须要加。javascript:</p>
+<p>至此，保存文件F5预览试试吧。教程相关文件下载：RP下载</p>
+<p>————————————————</p>
+<p>版权声明：本文为博主原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接和本声明。</p>
+<p>原文链接：<a href="https://blog.csdn.net/huangzbin/article/details/121155551">https://blog.csdn.net/huangzbin/article/details/121155551</a></p>
+]]></content>
+      <categories>
+        <category>知识分享</category>
+      </categories>
+      <tags>
+        <tag>Axure RP</tag>
       </tags>
   </entry>
   <entry>
@@ -24782,6 +25028,9 @@ alter user ‘root’@’::1′ identified by ‘MySql@123’;
 <p>其他衍生版本，基于微软出品：最新版本5.0.14</p>
 <p><a href="https://github.com/tporadowski/redis/releases">https://github.com/tporadowski/redis/releases</a></p>
 <p><a href="https://github.com/microsoftarchive/redis/releases">https://github.com/microsoftarchive/redis/releases</a></p>
+<p>另外，对伸手党又有新福利了。<br>在Github上找到了其他已编译好的适用于Windows的，较新版本的redis：</p>
+<p><a href="https://github.com/zkteco-home/redis-windows/releases">https://github.com/zkteco-home/redis-windows/releases</a></p>
+<p><a href="https://github.com/redis-windows/redis-windows/releases">https://github.com/redis-windows/redis-windows/releases</a></p>
 ]]></content>
       <categories>
         <category>部署运维</category>
